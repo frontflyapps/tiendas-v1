@@ -1,0 +1,85 @@
+<div class="dialog-content-wrapper">
+
+  <mat-toolbar class="mb-2" matDialogTitle color="primary" id="toolbarHeader">
+    <mat-toolbar-row fxLayoutAlign="space-between center">
+      <span class="mat-title mb-0">{{'Add region'|translate}}</span>
+      <button mat-icon-button (click)="dialogRef.close()" aria-label="Close dialog">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <div mat-dialog-content class="my-dialog-content">
+    <form [formGroup]="form">
+      <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="gappx">
+
+        <!-- <div fxLayout="row" class="mt-2" fxLayoutAlign="start start" fxLayoutGap="gappx">
+          <span class="mat-body-2" style="text-transform: uppercase;">{{'Select your creation language'|translate}}
+            <mat-icon matTooltip="{{'Default is Spanish'|translate}}" class="iconHelp">help</mat-icon></span>
+        </div>
+
+        <div fxLayout="row" class="mt-2" fxLayoutAlign="start start" fxLayoutGap="gappx">
+          <mat-form-field fxFlex="100" appearance="outline">
+            <mat-label> {{'Language'|translate}}</mat-label>
+            <mat-select [compareWith]="compareFn" required [formControl]="languageForm"
+              placeholder="{{'Language'|translate}}">
+              <mat-option *ngFor="let language of this.languages;let i=index" [value]="language">
+                <div fxLayout="row" fxLayoutAlign="start center">
+                  <img [src]="language.image" style="height: 30px; width: 30px;">
+                  <span class="ml-2 mat-body-2">
+                    {{language.name}}
+                  </span>
+                </div>
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <mat-divider class="mb-2"></mat-divider> -->
+
+        <mat-form-field appearance="outline">
+          <mat-label>{{'Name'|translate}}</mat-label>
+          <input required type="text" [formControl]="form.controls['name']" matInput placeholder="{{'Name'|translate}}">
+          <mat-icon class="greyIcon" matSuffix>unarchive</mat-icon>
+          <mat-error *ngIf="form.controls['name'].hasError('required')">
+            {{'Name'|translate}} <strong>{{'is required'|translate}}</strong>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field fxFlex.lt-sm="100" appearance="outline">
+          <mat-label>{{'Country'|translate}}</mat-label>
+          <button *ngIf="!isEditing" matSuffix mat-icon-button (click)="form.controls['CountryId'].reset()">
+            <mat-icon class="mat-18">clear</mat-icon>
+          </button>
+          <input type="text" placeholder="{{'Country'|translate}}" aria-label="Assignee" matInput [formControl]="form.controls['CountryId']"
+            [matAutocomplete]="auto">
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+            <mat-option *ngFor="let country of allCountries" [value]="country">
+              {{country.name['es']}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+
+        <div fxLayout="row wrap" fxLayoutAlign="space-between start" fxLayoutGap="gappx">
+          <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline">
+            <mat-label>{{'Latitude'|translate}}</mat-label>
+            <input type="number" [formControl]="form.controls['lat']" matInput placeholder="{{'Latitude'|translate}}">
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline">
+            <mat-label>{{'Longitude'|translate}}</mat-label>
+            <input type="number" [formControl]="form.controls['lng']" matInput placeholder="{{'Longitude'|translate}}">
+          </mat-form-field>
+
+        </div>
+
+      </div>
+    </form>
+  </div>
+
+  <div mat-dialog-actions fxLayout="row" fxLayoutAlign="end start">
+    <button mat-flat-button (click)="onSave()" [disabled]="this.form.invalid" color="primary">{{'Save'|translate}}</button>
+
+  </div>
+
+</div>

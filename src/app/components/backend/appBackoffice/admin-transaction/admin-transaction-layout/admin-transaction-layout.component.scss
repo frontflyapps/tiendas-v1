@@ -1,0 +1,12 @@
+@import "../../../../../../assets/scss/mixins/breakpoints";
+@import "../../../../../../assets/scss/theme/variables";
+
+.LayoutTabs {
+  background-color: #fff;
+  // padding: 8px 16px;
+  // min-height: 800px !important;
+
+  @include media-breakpoint("xs") {
+    padding: 2px !important;
+  }
+}

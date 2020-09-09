@@ -1,0 +1,104 @@
+@import "../../../../../../assets/scss/theme/variables";
+@import "../../../../../../assets/scss/mixins/breakpoints";
+
+app-edit-product {
+
+  .LayoutTabs {
+    background-color: #fff;
+    padding: 16px;
+  }
+
+  .mat-form-field {
+    max-width: 40rem !important;
+  }
+
+  .SteeperLayout {
+    margin-left: 8% !important;
+    overflow: auto;
+    // max-height: 100rem;
+
+    @include media-breakpoint('lt-sm') {
+      margin-left: 0px !important;
+    }
+  }
+
+  .CustomMat {
+    width: 73%;
+
+    @include media-breakpoint('lt-md') {
+      width: 100%;
+    }
+
+    @include media-breakpoint('xs') {
+      width: 100% !important;
+    }
+  }
+
+  .iconHelp {
+    font-size: 14px;
+    color: $grey4;
+    width: 14px;
+    height: 14px;
+  }
+
+  .w-73 {
+    width: 73% !important;
+  }
+
+  .listItem {
+    .iconDelete {
+      position: absolute;
+      bottom: 25%;
+      opacity: 0.0;
+      right: 18px;
+
+      @include media-breakpoint('lt-lg') {
+        opacity: 1.0 !important;
+      }
+    }
+
+    .addIcon {
+      position: absolute;
+      bottom: 50%;
+      opacity: 0.0;
+      right: 18px;
+
+      @include media-breakpoint('lt-lg') {
+        opacity: 1.0 !important;
+      }
+    }
+
+    margin-top: 16px !important;
+
+    cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, .12);
+
+    &:hover {
+      background-color: #fafafa;
+      border: 1px solid rgba(0, 0, 0, .60);
+      transition: all .5s ease;
+
+      .iconDelete {
+        opacity: 1.0;
+        transition: opacity .25s ease;
+      }
+
+      .addIcon {
+        opacity: 1.0;
+        transition: opacity .25s ease;
+      }
+    }
+  }
+
+  .mat-ink-bar {
+    height: 4px !important;
+    border-radius: 2px;
+  }
+
+
+  .max-width {
+    max-width: 40rem !important;
+  }
+
+
+}

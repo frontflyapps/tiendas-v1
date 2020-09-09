@@ -1,0 +1,73 @@
+.bannerCard {
+  background-color: #f5f5f5;
+  border-radius: 4px;
+
+  // padding-left: 16px;
+  // padding-right: 16px;
+  a {
+    color: rgba(0, 0, 0, 0.81);
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.module {
+  width: 100%;
+  margin: 0 0 0em 0;
+  overflow: hidden;
+}
+
+.line-clamp {
+  display: -webkit-box !important;
+  -webkit-line-clamp: 3 !important;
+  -webkit-box-orient: vertical !important;
+  line-height: 1.4rem;
+  height: 4.2rem;
+
+  @media (max-width:800px) {
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    line-height: 1.4rem;
+    height: 2.8rem;
+
+  }
+}
+
+.module-text {
+  width: 100%;
+  margin: 0 0 1em 0;
+  overflow: hidden;
+}
+
+.line-clamp-text {
+  display: -webkit-box !important;
+  -webkit-line-clamp: 3 !important;
+  -webkit-box-orient: vertical !important;
+  line-height: 1.3rem;
+  height: 3.9rem;
+}
+
+.image-section {
+  width: 100%;
+  height: 150px;
+
+  @media (max-width:800px) {
+    height: 100px;
+
+  }
+
+  position: relative;
+
+  img {
+    position: relative;
+    max-width: 100%;
+    max-height: 100%;
+    margin: auto;
+    width: auto;
+    height: auto;
+    object-fit: cover;
+    object-position: center;
+  }
+}

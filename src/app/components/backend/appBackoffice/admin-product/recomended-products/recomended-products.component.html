@@ -1,0 +1,41 @@
+<div fxLayout="row" id="ChipContainer" fxLayoutAlign="start start" fxLayoutGap="gappx">
+  <mat-form-field fxFlex="60" fxFlex.lt-md="80" fxFlex.xs="100" appearance="outline">
+    <mat-chip-list #chipList aria-label="Fruit selection">
+      <mat-chip *ngFor="let recomendedProduct of this.recomendedProducts" [selectable]="selectable" [removable]="removable"
+        (removed)="remove(recomendedProduct)">
+        <div class="imageContent">
+          <img *ngIf="recomendedProduct.Image && recomendedProduct.Image.length" class="carAvatar"
+            [src]="imageUrl + recomendedProduct.Image[0].image" alt="">
+          <img *ngIf="!recomendedProduct.Image || !recomendedProduct.Image.length" class="carAvatar"
+            src="../../../../../../assets/images/brands/brand-4.png" alt="">
+        </div>
+        <span class="mat-body-2" style="text-transform: capitalize !important; margin-left:16px;">
+          {{(recomendedProduct.name[language])?recomendedProduct.name[language]:recomendedProduct.name.es}}
+        </span>
+        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+      </mat-chip>
+      <input placeholder="{{'Add recomended product...'|translate}}" #recomendedProductInput [formControl]="recomendedProductCtrl"
+        [matAutocomplete]="auto" [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+        [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="onAddRecomendedProduct($event)">
+    </mat-chip-list>
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelectedRecomendedProduct($event)">
+      <mat-option *ngFor="let product of filteredProducts" [value]="product">
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="gappx">
+          <img *ngIf="product.Image && product.Image.length" style="height: 40px; width: 40px;object-fit: cover;object-position: center;
+                  border-radius: 50%;" [src]="imageUrl + product.Image[0].image" alt="">
+          <img *ngIf="!product.Image || !product.Image.length" style="height: 40px; width: 40px;object-fit: cover;object-position: center;
+                  border-radius: 50%;" src="../../../../../../assets/images/brands/brand-4.png" alt="">
+          <span class="mx-3" style="text-transform: capitalize">
+            {{(product.name[language])?product.name[language]:product.name.es}}
+          </span>
+        </div>
+
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</div>
+
+<!-- <div *ngIf="saveInternal" fxLayout="row" class="w-60" ngClass.lt-md="w-80" ngClass.xs="w-100" fxLayoutAlign="end center"
+  fxLayoutGap="gappx">
+  <button (click)="onSetRecomended()" mat-raised-button color="primary">{{'SAVE'|translate}}</button>
+</div> -->

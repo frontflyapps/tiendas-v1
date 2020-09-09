@@ -1,0 +1,142 @@
+<div *ngIf="this.notificacion.status =='read'" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()" class="NotificationRead">
+
+  <div fxLayout="row" class="NotificationBody" fxLayoutAlign="start start" fxLayoutGap="gappx">
+
+    <div class='CircleIcon'>
+      <!-- <mat-icon (click)="onClickNotification()" class="IconNavBar">{{this.GetIconofNavBar()}}</mat-icon> -->
+      <mat-icon (click)="onClickNotification()">{{this.GetIconofNavBar()}}</mat-icon>
+    </div>
+    <div fxLayout="row" (click)="onClickNotification()" class="textNotification" style="margin-left:10px;" fxLayoutAlign="start start"
+      fxLayoutGap="gappx">
+      <span class="mat-body-1">
+        {{this.notificacion.message|translate}}</span>
+    </div>
+
+  </div>
+
+  <div fxLayout="row" style="padding-left: 57px;" fxLayoutAlign="space-between center" fxLayoutGap="gappx">
+    <!-- <mat-icon class="iconFecha">date_range</mat-icon> -->
+    <div>
+      <span class="mat-caption">{{this.notificacion.createdAt | date:'longDate'}}</span>
+      <button *ngIf="showBtnClear" class="ml-2" mat-icon-button (click)="onEliminarNotification()">
+        <mat-icon class="mat-18">delete</mat-icon>
+      </button>
+
+    </div>
+
+    <span class="mat-caption ml-2">
+      <button mat-icon-button class="mat-18" *ngIf="!expandedElement" (click)="onShowDetails()">
+        <mat-icon>keyboard_arrow_right</mat-icon>
+      </button>
+      <button mat-icon-button class="mat-18" *ngIf="expandedElement" (click)="onHideDetails()">
+        <mat-icon>keyboard_arrow_down</mat-icon>
+      </button>
+    </span>
+  </div>
+
+  <div *ngIf="notificacion.type == 'payment-confirmed' || notificacion.type=='payment-cancelled' || notificacion.type == 'payment-error'"
+    (click)="onClickNotification()" fxLayout="column" class="LayoutTable px-5"
+    [@detailExpand]="this.expandedElement ? 'expanded' : 'collapsed'" fxLayoutAlign="start stretch">
+    <mat-divider class="my-2"></mat-divider>
+    <div fxLayout="row" class="w-100" fxLayoutAlign="space-between center">
+      <div fxLayout="column" fxFlex="65" fxLayoutAlign="start start" fxLayoutGap="gappx">
+
+        <div fxLayout="row" style="width: 100% !important" fxLayoutAlign="space-between start">
+          <div fxFlex="90" fxLayout="column" fxLayoutAlign="start start" style="margin-top: 2px;">
+            <span class="mat-caption grey-500">Order</span>
+            <span class="mat-body-1" style="text-transform: capitalize;">{{order.order}}</span>
+          </div>
+        </div>
+
+
+
+        <div fxLayout="row" class="mb-3" fxLayoutAlign="start center">
+          <div fxFlex="100" fxLayout="column" fxLayoutAlign="start start" style="margin-top: 2px;">
+            <span class="mat-caption grey-700">{{'Estado'|translate}}</span>
+            <span [class]="this.status[this.order.status].class">
+              {{this.utilsService.parserLanguage(this.status[this.order.status].status,this.language)}}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div fxLayout="column" fxFlex="35" fxLayoutAlign="center center">
+        <span class="showPrice">{{ order.totalPrice  | currency:order.currency }}
+        </span>
+      </div>
+    </div>
+
+  </div>
+
+
+</div>
+
+<div fxLayout="column" *ngIf="this.notificacion.status =='not-read'" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()"
+  class="NotificationnoRead">
+
+  <div class="mb-3" fxLayout="row" class="NotificationBody" fxLayoutAlign="start start" fxLayoutGap="gappx">
+
+    <div class='CircleIcon'>
+      <mat-icon (click)="onClickNotification()">{{this.GetIconofNavBar()}}</mat-icon>
+    </div>
+    <div fxLayout="row" (click)="onClickNotification()" class="textNotification" style="margin-left:10px;" fxLayoutAlign="start start"
+      fxLayoutGap="gappx">
+      <p class="mat-body-1">
+        {{this.notificacion.message|translate}}</p>
+    </div>
+
+  </div>
+
+  <div fxLayout="row" class="mt-4" style="padding-left: 57px;" fxLayoutAlign="space-between center" fxLayoutGap="gappx">
+    <!-- <mat-icon class="iconFecha">date_range</mat-icon> -->
+    <div>
+      <span class="mat-caption">{{this.notificacion.createdAt | date:'longDate'}}</span>
+      <button *ngIf="showBtnClear" class="ml-2" mat-icon-button (click)="onEliminarNotification()">
+        <mat-icon class="mat-18">delete</mat-icon>
+      </button>
+
+    </div>
+
+    <span class="mat-caption ml-2">
+      <button mat-icon-button class="mat-18" *ngIf="!expandedElement" (click)="onShowDetails()">
+        <mat-icon>keyboard_arrow_right</mat-icon>
+      </button>
+      <button mat-icon-button class="mat-18" *ngIf="expandedElement" (click)="onHideDetails()">
+        <mat-icon>keyboard_arrow_down</mat-icon>
+      </button>
+    </span>
+  </div>
+  <div *ngIf="notificacion.type.split('-')[0]=='payment'" (click)="onClickNotification()" fxLayout="column" class="LayoutTable px-5"
+    [@detailExpand]="this.expandedElement ? 'expanded' : 'collapsed'" fxLayoutAlign="start stretch">
+    <mat-divider class="my-2"></mat-divider>
+    <div fxLayout="row" class="w-100" fxLayoutAlign="space-between center">
+      <div fxLayout="column" fxFlex="65" fxLayoutAlign="start start" fxLayoutGap="gappx">
+
+        <div fxLayout="row" style="width: 100% !important" fxLayoutAlign="space-between start">
+          <div fxFlex="90" fxLayout="column" fxLayoutAlign="start start" style="margin-top: 2px;">
+            <span class="mat-caption grey-500">Order</span>
+            <span class="mat-body-1" style="text-transform: capitalize;">{{order.order}}</span>
+          </div>
+        </div>
+
+
+
+        <div fxLayout="row" class="mb-2" fxLayoutAlign="start center">
+          <div fxFlex="100" fxLayout="column" fxLayoutAlign="start start" style="margin-top: 2px;">
+            <span class="mat-caption grey-700">{{'Estado'|translate}}</span>
+            <span [class]="this.status[this.order.status].class">
+              {{this.utilsService.parserLanguage(this.status[this.order.status].status,this.language)}}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div fxLayout="column" fxFlex="35" fxLayoutAlign="center center">
+        <span class="showPrice">{{ order.totalPrice  | currency:order.currency }}
+        </span>
+      </div>
+    </div>
+
+  </div>
+
+</div>

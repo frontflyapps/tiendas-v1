@@ -1,0 +1,74 @@
+@import "../../../../assets/scss/mixins/breakpoints";
+@import "../../../../assets/scss/theme/variables";
+
+.container-main-slider {
+  max-width: 1280px;
+
+}
+
+.myBtn {
+  padding: 5px 24px;
+  width: 180px !important;
+
+  @include media-breakpoint('lt-md') {
+    padding: 5px 8px !important;
+    width: 90px !important;
+
+  }
+
+}
+
+.content {
+  max-width: 60% !important;
+}
+
+
+.title {
+  margin: 8px 0 !important;
+  font-size: 45px;
+  line-height: 45px;
+  font-weight: 600;
+  text-align: left;
+  color: #24303E;
+  letter-spacing: 2px;
+
+  @media (max-width:800px) {
+    font-size: 26px;
+    line-height: 26px;
+  }
+
+  @media (max-width:599px) {
+    font-size: 20px;
+    line-height: 20px;
+  }
+
+
+
+}
+
+.subtitle {
+  font-size: 45px;
+  line-height: 45px;
+  font-weight: 600;
+  text-align: left;
+  letter-spacing: 2px;
+  color: #fcba69;
+
+  @media (max-width:800px) {
+    font-size: 26px;
+    line-height: 26px;
+  }
+
+  @media (max-width:599px) {
+    font-size: 20px;
+    line-height: 20px;
+  }
+}
+
+.container-carrusel {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 0px 15px;
+  box-sizing: border-box;
+  width: 100%;
+}

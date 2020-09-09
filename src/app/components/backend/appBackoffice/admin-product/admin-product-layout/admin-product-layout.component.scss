@@ -1,0 +1,27 @@
+@import "../../../../../../assets/scss/theme/variables";
+@import "../../../../../../assets/scss/mixins/breakpoints";
+
+
+.LayoutTabs {
+  background-color: #fff;
+
+  @include media-breakpoint("xs") {
+    padding: 2px !important;
+  }
+}
+
+.btnAdd {
+  position: absolute;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 900;
+
+  @media (max-width:800px) {
+    position: fixed;
+  }
+}
+
+// .mat-tab-list .mat-tab-labels .mat-tab-label-active {
+//   color: red !important;
+//   background-color: green !important;
+// }

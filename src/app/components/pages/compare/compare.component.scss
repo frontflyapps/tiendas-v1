@@ -1,0 +1,87 @@
+@import "../../../../assets/scss/theme/variables";
+
+/***************************************
+*  Compare page styles
+****************************************/
+.compare-component {
+  .table-responsive {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+
+    table {
+      width: 100%;
+      border: 1px solid $grey2;
+
+      thead {
+        .th-compare {
+          td {
+            padding: 15px;
+            vertical-align: top;
+            border-bottom: 1px solid $grey2;
+            border-top: 1px solid $grey2;
+            border-right: 1px solid $grey2;
+            background: $gray-lighter;
+            font-weight: 600;
+            font-size: 14px;
+          }
+
+          a {
+            cursor: pointer;
+          }
+        }
+      }
+
+      tbody {
+        tr {
+          th {
+            padding: 15px;
+            vertical-align: top;
+            border-bottom: 1px solid $grey2;
+            border-top: 1px solid $grey2;
+            border-right: 1px solid $grey2;
+            background: $gray-lighter;
+            text-align: left;
+          }
+
+          .product-name {
+            width: 15%;
+            font-size: 14px;
+          }
+
+          td {
+            .description-compare {
+              font-size: 14px;
+              line-height: 22px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  img.img-fluid.mb-4 {
+    max-width: 100px;
+  }
+
+  .empty-cart-cls {
+    h4 {
+      font-weight: 500;
+      color: $grey5;
+    }
+
+    h3 {
+      text-align: center;
+    }
+  }
+}
+
+
+.compare-component .table-responsive .table tbody tr td,
+.compare-component .table-responsive .table tbody tr th {
+  padding: 15px;
+  vertical-align: top;
+  border-top: 1px solid $grey2;
+}

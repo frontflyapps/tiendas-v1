@@ -1,0 +1,44 @@
+<div class="blog-container" fxLayout="column" fxLayout.gt-xs="row" fxLayoutAlign.gt-sm="center center">
+  <ng-container *ngIf="allArticles.length === 1">
+    <div *ngFor="let article of allArticles;let i=index" class="blog" fxFlex.lt-sm="100" fxFlex.gt-xs="50">
+      <div class="info">
+        <div class="img-box">
+          <a [routerLink]="['/blog',article.id]">
+            <img *ngIf="article.image" ngp-lazy ngp-threshold="0.1" [src]="imageUrl + article.image" alt="">
+          </a>
+
+          <img *ngIf="!article.image" ngp-lazy ngp-threshold="0.1" src="../../../../assets/images/noImage.jpg" alt="">
+        </div>
+        <div class="text-box" fxLayout="column">
+          <h4>{{utilsService.parserLanguage(article.title,language)}}</h4>
+          <p class="module line-clamp">{{utilsService.parserLanguage(article.sumarize,language)}}</p>
+          <a class="mt-2" [routerLink]="['/blog',article.id]">{{"See More"|translate}}</a>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="allArticles.length > 1">
+    <div *ngFor="let article of allArticles;let i=index" class="blog" fxFlex>
+      <div class="info">
+        <div class="img-box">
+          <a [routerLink]="['/blog']" [routerLink]="['/blog',article.id]">
+            <img *ngIf="article.image" ngp-lazy ngp-threshold="0.1" [src]="imageUrl + article.image" alt="">
+          </a>
+
+          <img *ngIf="!article.image" ngp-lazy ngp-threshold="0.1" src="../../../../assets/images/noImage.jpg" alt="">
+        </div>
+        <div class="text-box" fxLayout="column">
+          <h4 class="module line-clamp mb-2"
+            style="-webkit-line-clamp: 2 !important;height:3.2rem !important;text-transform: none !important;">
+            {{utilsService.parserLanguage(article.title,language)}}</h4>
+          <p class="module line-clamp">{{utilsService.parserLanguage(article.sumarize,language)}}</p>
+          <a class="mt-2" [routerLink]="['/blog',article.id]">{{"See More"|translate}}</a>
+
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+
+</div>

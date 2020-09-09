@@ -1,0 +1,57 @@
+<div *ngIf="this.loadingSearch" class="loading-shade-full" style="background: rgba(0,0,0,0.12) !important;">
+  <mat-spinner *ngIf="this.loadingSearch" diameter="60" color="primary"></mat-spinner>
+</div>
+
+<div class="container">
+  <section class="py-4" style="background-color: #fafafa;">
+    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="gappx">
+
+      <span class="py-3" style="text-align: center;color: #616161; font-size: 24px;">
+        <mat-icon style="text-align: center;color: #616161; font-size: 24px;height: 24px;width: 24px;">attach_money
+        </mat-icon>
+        {{'CANCELACIÓN DE PAGO'|translate}}
+      </span>
+    </div>
+
+    <div style="height: 2px;background-color: #eeeeee;">
+    </div>
+
+    <div *ngIf="showError" class="py-4" fxLayout="column" fxLayoutAlign="center center">
+      <div fxLayout="column" fxLayoutAlign="start center">
+
+        <img style="max-height: 80px;" src="assets/images/logo-accent.png" class="mb-3">
+
+        <h3 style="color: #666768; font-size: 24px; font-weight: 500;">{{'Ups!'|translate}}</h3>
+        <h1 style="color: #B5252A; font-size: 20px; text-align: center;" class="mb-3"><span
+            style="color: #666768;font-size: 20px;">{{"Cancelación de pago"|translate}}</span>
+          &nbsp;{{'Fallida'|translate}}</h1>
+
+        <img src="assets/images/pago_fallido.png" class="mb-4 mt-4" style="max-width: 260px;">
+
+        <a [routerLink]="['/checkout']" mat-raised-button color="primary" class="mb-3 mt-3 px-4 py-2">
+          <mat-icon class="mr-2">arrow_back</mat-icon>{{ 'Aceptar' | translate | uppercase }}
+        </a>
+
+      </div>
+
+    </div>
+    <div *ngIf="showCancelled" class="py-4" fxLayout="column" fxLayoutAlign="center center">
+      <div fxLayout="column" fxLayoutAlign="start center">
+
+        <img style="max-height: 80px;" src="../../../../assets/images/logo-accent.png" class="mb-3">
+
+        <h3 style="color: #666768; font-size: 24px; font-weight: 500;">{{'Que lástima!'|translate}}</h3>
+        <h1 style="color: #B5252A; font-size: 20px;text-align: center;" class="mb-3"><span
+            style="color: #666768;font-size: 20px;">{{"Cancelación de pago"|translate}}</span>
+          &nbsp;{{'Completada'|translate}}</h1>
+
+        <img src="assets/images/pago_cancelado.png" class="mb-3 mt-2" style="max-width: 260px;">
+
+        <a [routerLink]="['/checkout']" mat-raised-button color="primary" class="mb-3 mt-3 px-4 py-2">
+          <mat-icon class="mr-2">arrow_back</mat-icon>
+          {{ 'Aceptar' | translate | uppercase }}
+        </a>
+      </div>
+    </div>
+  </section>
+</div>

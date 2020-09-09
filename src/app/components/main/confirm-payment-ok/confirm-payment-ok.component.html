@@ -1,0 +1,233 @@
+<div class="dialog-content-wrapper">
+  <mat-toolbar *ngIf="action == 'confirmed'" id="successPay" matDialogTitle>
+    <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+      <mat-icon>done_all</mat-icon>
+      <span class="mat-title mb-0">{{'Pago Confirmado'|translate}}</span>
+      <button mat-icon-button (click)="dialogRef.close()" aria-label="Close dialog">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <mat-toolbar *ngIf="action == 'cancelled'" id="cancelledPay" matDialogTitle>
+    <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+      <mat-icon>cancel</mat-icon>
+      <span class="mat-title mb-0">{{'Pago Cancelado'|translate}}</span>
+      <button mat-icon-button (click)="dialogRef.close()" aria-label="Close dialog">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <div mat-dialog-content class="my-dialog-content">
+    <div class="pyro">
+      <div class="before"></div>
+      <div class="after"></div>
+    </div>
+
+    <div *ngIf="this.selectedPayment" fxLayout="column" class="container-bulling w-100" fxLayoutAlign="start stretch" fxLayoutGap="gappx">
+
+      <div fxLayout="row wrap " fxLayoutAlign="space-between center" fxLayoutGap="gappx">
+        <div fxFlex="33" fxFlex.lt-sm="50" fxFlex.xs="100" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="gappx">
+          <span class="mb-0 mt-1 main-primary-700 mat-body-2">{{'Id de pago'}}</span>
+          <span class="mb-0 mt-1 main-primary-700 mat-body-2">{{selectedPayment.order}}</span>
+        </div>
+
+        <div fxFlex="33" fxFlex.lt-sm="50" fxFlex.xs="100" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="gappx">
+          <span class="mb-0 mt-1 main-primary-700 mat-body-2">{{'fecha de creación'}}</span>
+          <span class="mb-0 mt-1 main-primary-700 mat-body-2">{{selectedPayment.createdAt|date:'short'}}</span>
+        </div>
+
+        <div fxFlex="33" fxFlex.lt-sm="50" fxFlex.xs="100" *ngIf="selectedPayment.cancelledAt" fxLayout="column" fxLayoutAlign="start start"
+          fxLayoutGap="gappx">
+          <span class="mb-0 mt-1 main-primary-700 mat-body-2">{{'fecha de cancelación'}}</span>
+          <span class="mb-0 mt-1 main-primary-700 mat-body-2">{{selectedPayment.cancelledAt|date:'short'}}</span>
+        </div>
+
+
+      </div>
+
+      <mat-divider class="my-2"></mat-divider>
+
+
+      <div fxLayout="row wrap" class="mt-1" fxLayoutAlign="start center" fxLayoutGap="gappx">
+        <div fxLayout="column" ngClass.gt-xs="py-3" ngClass.lt-sm="py-2 border-bottom" fxFlex="33" fxFlex.lt-sm="50" fxFlex.xs="100"
+          fxLayoutAlign="start start" fxLayoutGap="gappx">
+          <span class="mat-caption color-grey-800">
+            {{'Country'|translate}}
+          </span>
+          <span>
+            {{ utilsService.parserLanguage(selectedPayment.Country.name,language)}}
+          </span>
+        </div>
+
+        <ng-container *ngIf="selectedPayment.CountryId != 59">
+          <div fxLayout="column" ngClass.gt-xs="py-3" ngClass.lt-sm="py-2 border-bottom" fxFlex="33" fxFlex.lt-sm="50" fxFlex.xs="100"
+            fxLayoutAlign="start start" fxLayoutGap="gappx">
+            <span class="mat-caption color-grey-800">
+              {{'City'|translate}}
+            </span>
+            <span>
+              {{this.selectedPayment.city}}
+            </span>
+          </div>
+
+          <div fxLayout="column" ngClass.gt-xs="py-3" ngClass.lt-sm="py-2 border-bottom" fxFlex="33" fxFlex.lt-sm="50" fxFlex.xs="100"
+            fxLayoutAlign="start start" fxLayoutGap="gappx">
+            <span class="mat-caption color-grey-800">
+              {{'Region / Province / State'|translate}}
+            </span>
+            <span>
+              {{this.selectedPayment.regionProvinceState}}
+            </span>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="selectedPayment.CountryId == 59">
+          <div fxLayout="column" ngClass.gt-xs="py-3" ngClass.lt-sm="py-2 border-bottom" fxFlex="33" fxFlex.lt-sm="50" fxFlex.xs="100"
+            fxLayoutAlign="start start" fxLayoutGap="gappx">
+            <span class="mat-caption color-grey-800">
+              {{'Municipio'|translate}}
+            </span>
+            <span>
+              {{this.selectedPayment.Municipality?.name}}
+            </span>
+          </div>
+
+          <div fxLayout="column" ngClass.gt-xs="py-3" ngClass.lt-sm="py-2 border-bottom" fxFlex="33" fxFlex.lt-sm="50" fxFlex.xs="100"
+            fxLayoutAlign="start start" fxLayoutGap="gappx">
+            <span class="mat-caption color-grey-800">
+              {{'Provincia'|translate}}
+            </span>
+            <span>
+              {{this.selectedPayment.Province?.name}}
+            </span>
+          </div>
+        </ng-container>
+
+        <div fxLayout="column" ngClass.gt-xs="py-3" ngClass.lt-sm="py-2 border-bottom" fxFlex="33" fxFlex.lt-sm="50" fxFlex.xs="100"
+          fxLayoutAlign="start start" fxLayoutGap="gappx">
+          <span class="mat-caption color-grey-800">
+            {{'Dirección'|translate}}
+          </span>
+          <span>
+            {{this.selectedPayment.address}}
+          </span>
+        </div>
+        <div fxLayout="column" ngClass.gt-xs="py-3" ngClass.lt-sm="py-2 border-bottom" fxFlex="33" fxFlex.lt-sm="50" fxFlex.xs="100"
+          fxLayoutAlign="start start" fxLayoutGap="gappx">
+          <span class="mat-caption color-grey-800">
+            {{'Teléfono'|translate}}
+          </span>
+          <span>
+            {{this.selectedPayment.phone}}
+          </span>
+        </div>
+        <div fxLayout="column" ngClass.gt-xs="py-3" ngClass.lt-sm="py-2 border-bottom" fxFlex="33" fxFlex.lt-sm="50" fxFlex.xs="100"
+          fxLayoutAlign="start start" fxLayoutGap="gappx">
+          <span class="mat-caption color-grey-800">
+            {{'Client'|translate}}
+          </span>
+          <span>
+            {{this.selectedPayment.name + ' ' + (this.selectedPayment.lastname||'')}}
+          </span>
+        </div>
+      </div>
+
+      <mat-divider fxHide.lt-sm></mat-divider>
+
+      <div fxLayout="row wrap" class="mt-1" fxLayoutAlign="start center" fxLayoutGap="gappx">
+
+        <div fxLayout="column" ngClass.gt-xs="py-3" ngClass.lt-sm="py-2 border-bottom" fxFlex="33" fxFlex.lt-sm="50" fxFlex.xs="100"
+          fxLayoutAlign="start start" fxLayoutGap="gappx">
+          <span class="mat-caption color-grey-800">
+            {{'No. of order'|translate}}
+          </span>
+          <span>
+            {{this.selectedPayment.order}}
+          </span>
+        </div>
+
+        <div fxLayout="column" ngClass.gt-xs="py-3" ngClass.lt-sm="py-2 border-bottom" fxFlex="33" fxFlex.lt-sm="50" fxFlex.xs="100"
+          fxLayoutAlign="start start" fxLayoutGap="gappx">
+          <ng-container *ngIf="this.selectedPayment.status == 'cancelled'">
+            <span class="mat-caption color-grey-800">
+              {{'Devolución'|translate}}
+            </span>
+            <span>
+              {{this.selectedPayment.cancelRefund |currency:this.selectedPayment.currency}}
+            </span>
+          </ng-container>
+          <ng-container *ngIf="this.selectedPayment.status != 'cancelled' ">
+            <span class="mat-caption color-grey-800">
+              {{'Amount'|translate}}
+            </span>
+            <span>
+              {{this.selectedPayment.amount |currency:this.selectedPayment.currency}}
+            </span>
+          </ng-container>
+        </div>
+
+        <div fxLayout="column" ngClass.gt-xs="py-3" ngClass.lt-sm="py-2 border-bottom" fxFlex="33" fxFlex.lt-sm="50" fxFlex.xs="100"
+          fxLayoutAlign="start start" fxLayoutGap="gappx">
+          <span class="mat-caption color-grey-800">
+            {{'Status'|translate}}
+          </span>
+          <span [class]="this.status[this.selectedPayment.status].class">
+            {{this.utilsService.parserLanguage(this.status[this.selectedPayment.status].status,this.language)}}
+          </span>
+        </div>
+
+      </div>
+
+      <mat-divider fxHide.lt-sm></mat-divider>
+
+      <div fxLayout="row wrap" class="mt-1" fxLayoutAlign="start center" fxLayoutGap="gappx">
+        <div fxLayout="column" ngClass.gt-xs="py-3" ngClass.lt-sm="py-2 border-bottom" fxFlex="33" fxFlex.lt-sm="50" fxFlex.xs="100"
+          fxLayoutAlign="start start" fxLayoutGap="gappx">
+          <span class="mat-caption color-grey-800">
+            {{'TPV'|translate}}
+          </span>
+          <span>
+            {{this.selectedPayment.paymentType}}
+          </span>
+        </div>
+
+        <div fxLayout="column" ngClass.gt-xs="py-3" ngClass.lt-sm="py-2 border-bottom" fxFlex="33" fxFlex.lt-sm="50" fxFlex.xs="100"
+          fxLayoutAlign="start start" fxLayoutGap="gappx">
+          <span class="mat-caption color-grey-800">
+            {{'Email'|translate}}
+          </span>
+          <span>
+            {{this.selectedPayment.email}}
+          </span>
+        </div>
+
+      </div>
+
+      <mat-divider fxHide.lt-sm></mat-divider>
+
+      <ng-container *ngIf=" this.selectedPayment.status=='cancelled'">
+        <p class="mat-title my-2" ngClass.xs="mat-body-2">{{'Comentario acerca de la cancelación' |translate}}</p>
+        <blockquote class="cancelNote">
+          <p>{{selectedPayment.cancelNote}}</p>
+        </blockquote>
+      </ng-container>
+
+      <div class="mt-3" fxLayout="row wrap" fxLayoutAlign="end center" fxLayoutGap="gappx">
+
+        <button class="mx-2" matTooltip="{{'Obtener el vouvher de pago'|translate}}"
+          *ngIf="this.selectedPayment.status == 'confirmed' || this.selectedPayment.status == 'delivered' "
+          (click)="onGetVoucher(this.selectedPayment)" mat-stroked-button color="primary">
+          <mat-icon>cloud_download</mat-icon>
+          {{'VOUCHER'|translate}}
+        </button>
+
+        <button class="mx-2" (click)="onAccept(this.selectedPayment)" mat-flat-button color="primary">
+          {{'ACEPTAR'|translate}}
+        </button>
+
+
+      </div>
+
+    </div>
+
+  </div>

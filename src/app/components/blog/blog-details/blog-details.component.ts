@@ -1,0 +1,52 @@
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { BlogService } from '../../backend/services/blog/blog.service';
+import { environment } from 'src/environments/environment';
+import { UtilsService } from 'src/app/core/services/utils/utils.service';
+import { LoggedInUserService } from 'src/app/core/services/loggedInUser/logged-in-user.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { DomSanitizer } from '@angular/platform-browser';
+
+@Component({
+  selector: 'app-blog-details',
+  templateUrl: './blog-details.component.html',
+  styleUrls: ['./blog-details.component.scss'],
+})
+export class BlogDetailsComponent implements OnInit, OnDestroy {
+  selectedArticle = undefined;
+  showData = false;
+  imageUrl: any = environment.apiUrl;
+  language = 'es';
+  _unsubscribeAll: Subject<any> = new Subject();
+
+  constructor(
+    private route: ActivatedRoute,
+    private blogService: BlogService,
+    public sanitaizer: DomSanitizer,
+    public utilsService: UtilsService,
+    private loggedInUserService: LoggedInUserService,
+  ) {
+    this.route.params.subscribe((data) => {
+      // console.log('BlogDetailsComponent -> data', data);
+      this.blogService.getBlog(data.id).subscribe((result) => {
+        this.selectedArticle = result.data;
+        console.log('BlogDetailsComponent -> constructor ->  this.selectedArticle', this.selectedArticle);
+        this.showData = true;
+      });
+    });
+    // ------------------------------------------------
+    this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
+    // -------------------------------------------------
+  }
+
+  ngOnInit(): void {
+    this.loggedInUserService.$languageChanged.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {
+      this.language = data.lang;
+    });
+  }
+  ngOnDestroy() {
+    this._unsubscribeAll.next(true);
+    this._unsubscribeAll.complete();
+  }
+}

@@ -1,0 +1,30 @@
+<ng-container *ngIf="showNavItem(item.displayName)">
+
+  <a mat-list-item matRipple fxLayoutAlign="start center" [ngStyle]="{'padding-left': (depth * 16) + 'px'}" (click)="onItemSelected(item)"
+    [ngClass]="{'active': item.route ? router.isActive(item.route, true): false, 'expanded': expanded}" class="menu-list-item grey-700">
+    <div class="menu-icons" fxLayoutAlign="start center">
+      <mat-icon *ngIf="item.material && item.iconName">{{item.iconName}}</mat-icon>
+      <span class="mat-body-1 ml-3" style="font-size: 15px;">{{item.displayName | translate}}</span>
+    </div>
+
+    <span fxFlex *ngIf="item.children && item.children.length">
+      <span fxFlex></span>
+      <mat-icon style="margin:0px !important;" [@indicatorRotate]="expanded ? 'expanded': 'collapsed'">
+        expand_more
+      </mat-icon>
+    </span>
+    <span style="transform: translateY(-5px); margin-left: 12px;" *ngIf="item.badge && item.badgeCount" [matBadge]="item.badgeCount"
+      matBadgePosition="after">
+    </span>
+    <div class="tabActive"></div>
+
+  </a>
+  <mat-divider *ngIf="item.divider" class="my-2"></mat-divider>
+
+  <div *ngIf="expanded">
+    <app-sidebar *ngFor="let child of item.children" [item]="child" [depth]="depth+1">
+    </app-sidebar>
+  </div>
+
+
+</ng-container>

@@ -1,0 +1,89 @@
+<table mat-table [dataSource]="[1]">
+
+  <ng-container matColumnDef="Country">
+    <th mat-header-cell *matHeaderCellDef>{{'Country'|translate}}</th>
+    <td mat-cell *matCellDef="let element">
+      {{selectedOrder.Country.name['es']}}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="City">
+    <th mat-header-cell *matHeaderCellDef> {{'Ciudad / Provincia'|translate}} </th>
+    <td mat-cell *matCellDef="let element">
+      <ng-container *ngIf="selectedOrder.CountryId == 59">
+        {{selectedOrder.Province.name}}
+      </ng-container>
+      <ng-container *ngIf="selectedOrder.CountryId != 59">
+        {{selectedOrder.city}}
+      </ng-container>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Address">
+    <th mat-header-cell *matHeaderCellDef> {{'Dirección'|translate}} </th>
+    <td mat-cell *matCellDef="let element"> {{selectedOrder.address}} </td>
+  </ng-container>
+
+
+  <tr mat-header-row *matHeaderRowDef="['Country','City','Address']"></tr>
+  <tr mat-row *matRowDef="let row; columns: ['Country','City','Address'];"></tr>
+</table>
+
+<table mat-table [dataSource]="[1]">
+
+  <ng-container matColumnDef="Region">
+    <th mat-header-cell *matHeaderCellDef> {{'Region / State / Municipio'|translate}} </th>
+    <td mat-cell *matCellDef="let element">
+      <ng-container *ngIf="selectedOrder.CountryId == 59">
+        {{selectedOrder.Municipality?.name}}
+      </ng-container>
+      <ng-container *ngIf="selectedOrder.CountryId != 59">
+        {{selectedOrder.regionProvinceState}}
+      </ng-container>
+
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Client">
+    <th mat-header-cell *matHeaderCellDef>{{'Client'|translate}}</th>
+    <td mat-cell *matCellDef="let element">
+      {{selectedOrder.Client.name}}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Amount">
+    <th mat-header-cell *matHeaderCellDef> {{'Amount'|translate}} </th>
+    <td mat-cell *matCellDef="let element">
+      {{selectedOrder.amount| currency:currencyService.getCurrency().code}}
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="['Region','Client','Amount']"></tr>
+  <tr mat-row *matRowDef="let row; columns: ['Region','Client','Amount'];"></tr>
+</table>
+
+<table mat-table [dataSource]="[1]">
+
+  <ng-container matColumnDef="Email">
+    <th mat-header-cell *matHeaderCellDef>{{'Email'|translate}}</th>
+    <td mat-cell *matCellDef="let element">
+      {{selectedOrder.Client.email}}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="ZipCode">
+    <th mat-header-cell *matHeaderCellDef> {{'ZipCode'|translate}} </th>
+    <td mat-cell *matCellDef="let element">
+      {{selectedOrder.zipCode}}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Phone">
+    <th mat-header-cell *matHeaderCellDef> {{'Phone'|translate}} </th>
+    <td mat-cell *matCellDef="let element"> {{selectedOrder.phone}} </td>
+  </ng-container>
+
+
+  <tr mat-header-row *matHeaderRowDef="['Email','ZipCode','Phone']"></tr>
+  <tr mat-row *matRowDef="let row; columns: ['Email','ZipCode','Phone'];"></tr>
+</table>

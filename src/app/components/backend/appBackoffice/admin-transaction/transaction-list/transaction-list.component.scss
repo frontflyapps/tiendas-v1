@@ -1,0 +1,39 @@
+@import "../../../../../../assets/scss/theme/variables";
+
+app-transaction-list {
+  .price {
+    font-size: 18px;
+    font-weight: 500;
+  }
+
+  .total {
+    font-size: 18px;
+    font-weight: 500;
+    color: $theme-main-red;
+  }
+
+
+
+  .mat-table {
+    display: table;
+    // width: 100%;
+    border-collapse: collapse;
+
+    max-width: 600px !important;
+
+    th {
+      width: 100px !important;
+      max-width: 120px !important;
+      min-width: 120px !important;
+    }
+
+    background-color: #fafafa;
+    border: 1px solid rgba(0, 0, 0, 0.12) !important;
+  }
+
+  tr.mat-header-row {
+    border-bottom: 2px solid rgba(0, 0, 0, 0.12) !important;
+    background-color: #EEEEEE !important;
+  }
+
+}

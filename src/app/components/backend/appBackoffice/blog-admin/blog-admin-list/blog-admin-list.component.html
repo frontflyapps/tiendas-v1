@@ -1,0 +1,103 @@
+<div *ngIf="this.loadingSearch" class="loading-shade-full">
+  <mat-spinner *ngIf="this.loadingSearch" diameter="60" color="primary"></mat-spinner>
+</div>
+
+<div class="blog-list">
+
+  <div class="container blog-list-wrapper sec-padding">
+
+    <form class="mobile-search my-search" fxLayout="row" fxLayoutAlign="start center">
+      <input #search fxFlex type="search" placeholder="{{'Escriba para buscar...'}}">
+      <button (click)="onSearch(search.value)" type="submit">
+        <mat-icon>
+          search
+        </mat-icon>
+      </button>
+    </form>
+
+    <ng-container *ngIf="blogArray.length">
+      <div *ngFor="let item of blogArray" class="main-blog-panel">
+        <div class="single-blog-list" fxLayout="row" fxLayoutAlign="center start">
+          <mat-card class="w-100" style="max-width: 900px !important;box-sizing: border-box;">
+            <mat-card-content>
+              <div fxLayout="column" fxLayoutAlign="space-between center" fxLayoutAlign="start stretch" fxLayoutGap=" gappx">
+                <div fxFlex="100" fxFlex.gt-sm="50" class="image-box">
+                  <a><img appLazyLoad [src]="imageUrl + item.image" alt=""> </a>
+                </div>
+                <div class="text-box">
+
+                  <h2 class="my-3"> {{utilsService.parserLanguage(item.title,this.language)}}</h2>
+
+                  <ul fxLayout="row">
+                    <li><i class="material-icons">access_time </i>{{item.createdAt | date: 'short'}}</li>
+                    <li><i class="material-icons">person </i>{{item.Creator.name +' '+ item.Creator.lastName}}</li>
+                    <!-- <li><i class="material-icons">sms</i>05 Comments</li> -->
+                  </ul>
+                  <p *ngIf="!item.expandable">{{ utilsService.parserLanguage(item.sumarize,this.language)}}</p>
+
+                  <div [id]="'expandibleDetails'+item.id" class="hidden-details">
+                    <div [id]="'textContent'+item.id" style="word-wrap: break-word !important;font-size: 13px;
+                    line-height: 1.6;">
+
+                    </div>
+
+                    <p>
+                      <mat-chip-list aria-label="Tags selection">
+                        <mat-chip *ngFor="let tag of item.tags">
+                          {{tag}}
+                        </mat-chip>
+                      </mat-chip-list>
+                    </p>
+                    <p *ngIf="item.link">
+                      Link de referencia:
+                      <a [href]="item.link" target="_blank">{{item.link}}</a>
+                    </p>
+
+                  </div>
+
+
+
+
+                </div>
+
+              </div>
+
+            </mat-card-content>
+            <div id="actionsBtn">
+              <button mat-icon-button class="mx-1">
+                <mat-icon (click)="onEditArticle(item.id)">edit</mat-icon>
+              </button>
+              <button mat-icon-button class="mx-1">
+                <mat-icon (click)="onDeleteArticle(item)">delete</mat-icon>
+              </button>
+              <button *ngIf="item.expandable" mat-icon-button class="mx-1">
+                <mat-icon (click)="onExpand(item)">keyboard_arrow_up</mat-icon>
+              </button>
+              <button *ngIf="!item.expandable" mat-icon-button class="mx-1">
+                <mat-icon (click)="onExpand(item)">keyboard_arrow_down</mat-icon>
+              </button>
+            </div>
+          </mat-card>
+        </div>
+      </div>
+    </ng-container>
+
+    <div *ngIf="!blogArray.length" style="padding:32px 0px" fxLayout="column" fxLayoutAlign="center center">
+
+      <img src="../../../../../assets/images/empty.svg" alt="Empty" style="height: 160px; width: 160px;">
+      <h1 class="text-muted mt-3">
+        No tienes ninguna publicación aún.
+      </h1>
+    </div>
+    <mat-paginator (page)="OnPaginatorChange($event)" [pageSize]="query.limit" [length]="this.query.total"
+      [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+  </div>
+
+
+</div>
+
+<a [routerLink]="[ '/backend/blog/create']" id="AddBtn" mat-fab color="accent">
+  <mat-icon>
+    add
+  </mat-icon>
+</a>

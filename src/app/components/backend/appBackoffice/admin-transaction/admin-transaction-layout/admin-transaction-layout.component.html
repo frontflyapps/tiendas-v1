@@ -1,0 +1,60 @@
+<div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="gappx">
+
+  <mat-tab-group (selectedTabChange)="onChangeTab($event.index)" [selectedIndex]="index" [color]="'accent'" [backgroundColor]="'primary'">
+
+    <mat-tab *ngIf="loggedInUserService.isAdminOrOwnerUser()">
+      <ng-template mat-tab-label>
+        <mat-icon class="example-tab-icon">attach_money</mat-icon>
+        {{'CONFIRMED'|translate}}
+      </ng-template>
+      <ng-template matTabContent>
+        <div class="LayoutTabs" fxFlexFill fxLayout="column" fxLayoutAlign="start stretch">
+          <app-orders-confirmed-table></app-orders-confirmed-table>
+        </div>
+      </ng-template>
+
+    </mat-tab>
+
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon class="example-tab-icon">local_shipping</mat-icon>
+        <span class="ml-2">{{'ON DELIVERY'|translate}}</span>
+      </ng-template>
+
+      <ng-template matTabContent>
+        <div class="LayoutTabs" fxFlexFill fxLayout="column" fxLayoutAlign="start stretch">
+          <app-orders-on-delivery-table></app-orders-on-delivery-table>
+        </div>
+      </ng-template>
+    </mat-tab>
+
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon class="example-tab-icon">attach_money</mat-icon>
+        <span>{{'ENTREGADO'|translate}}</span>
+      </ng-template>
+
+      <ng-template matTabContent>
+        <div class="LayoutTabs" fxFlexFill fxLayout="column" fxLayoutAlign="start stretch">
+          <app-orders-recieved-table></app-orders-recieved-table>
+        </div>
+      </ng-template>
+
+    </mat-tab>
+
+    <mat-tab *ngIf="loggedInUserService.isAdminOrOwnerUser()">
+
+      <ng-template mat-tab-label>
+        <mat-icon class="example-tab-icon">cancel</mat-icon>
+        <span class="ml-2">{{'CANCELLED'|translate}}</span>
+      </ng-template>
+      <ng-template matTabContent>
+        <div class="LayoutTabs" fxFlexFill fxLayout="column" fxLayoutAlign="start stretch">
+          <app-orders-cancelled-table></app-orders-cancelled-table>
+        </div>
+      </ng-template>
+
+    </mat-tab>
+
+  </mat-tab-group>
+</div>

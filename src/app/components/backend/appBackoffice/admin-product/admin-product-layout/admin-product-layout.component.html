@@ -1,0 +1,54 @@
+<mat-tab-group (selectedTabChange)="onChangeTab($event.index)" [selectedIndex]="index" [color]="'accent'" [backgroundColor]="'primary'">
+  <mat-tab>
+
+    <ng-template mat-tab-label>
+      <mat-icon class="example-tab-icon">dns</mat-icon>
+      <span class="mat-body-2 mx-2 uppercase" color="primary">{{'Productos Físicos'|translate}}</span>
+    </ng-template>
+
+    <ng-template matTabContent>
+      <div class="LayoutTabs" fxFlexFill fxLayout="column" fxLayoutAlign="start stretch">
+        <app-admin-list-product [type]="'physical'"></app-admin-list-product>
+      </div>
+    </ng-template>
+
+  </mat-tab>
+
+  <mat-tab *ngIf="uploadDigitalProduct">
+
+    <ng-template mat-tab-label>
+      <mat-icon class="example-tab-icon">devices</mat-icon>
+      <span class="mat-body-2 mx-2 uppercase">{{'Digitals'|translate}}</span>
+    </ng-template>
+
+    <ng-template matTabContent>
+      <div class="LayoutTabs" fxFlexFill fxLayout="column" fxLayoutAlign="start stretch">
+        <app-admin-list-product [type]="'digital'"></app-admin-list-product>
+      </div>
+    </ng-template>
+
+  </mat-tab>
+
+  <mat-tab *ngIf="uploadServicesProduct">
+
+    <ng-template mat-tab-label>
+      <mat-icon class="example-tab-icon">insert_chart</mat-icon>
+      <span class="mat-body-2 mx-2 uppercase" color="primary">{{'Services'|translate}}</span>
+    </ng-template>
+
+    <ng-template matTabContent>
+      <div class="LayoutTabs" fxFlexFill fxLayout="column" fxLayoutAlign="start stretch">
+        <app-admin-list-product [type]="'service'"></app-admin-list-product>
+      </div>
+    </ng-template>
+
+  </mat-tab>
+
+</mat-tab-group>
+
+
+<!-- <button class="btnAdd" (click)="onAddProduct()" mat-fab color="accent">
+  <mat-icon>
+    add
+  </mat-icon>
+</button> -->

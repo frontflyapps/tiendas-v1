@@ -1,0 +1,17 @@
+export const environment = {
+  production: true,
+  apiUrl: 'https://api.sinkoola.com/v1/',
+  apiUrlRepositoy: 'https://apirepo.cinesoft.cu/v1/',
+  imageUrl: 'https://api.sinkoola.com/v1/',
+  urlAboutUs: 'https://www.sinkoola.com/',
+  defaultLanguage: 'es',
+  version: '1.2.0',
+  secretKeyCaptcha: '6LeH1-IUAAAAAHm8MIBzdQs33bDEk7ArL_DvD0xh',
+  url: 'https://wwww.sinkoola.com',
+  serviceName: 'https://wwww.sinkoola.com',
+  authUrl: 'https://seguridad.cinesoft.cu',
+  address: 'SinKoola SA / Quinta Avenida,18204, Playa, La Habana.',
+  localDatabaseUsers: true,
+  uploadDigitalProduct: false,
+  uploadServicesProduct: false,
+};

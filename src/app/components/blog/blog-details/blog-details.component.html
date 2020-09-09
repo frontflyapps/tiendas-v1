@@ -1,0 +1,31 @@
+<div id="app-blog-details" class="container">
+  <ng-container *ngIf="!showData">
+    <div class="loader imageBlog">
+
+    </div>
+    <div class="loader my-2 w-100" *ngFor="let item of [1,2,3,4,5,6,7,8,9,11]"></div>
+  </ng-container>
+
+  <ng-container *ngIf="showData">
+    <img ngp-lazy ngp-threshold="0.1" class="loader imageBlog" [src]="imageUrl + this.selectedArticle?.image"
+      onerror="this.onerror=null;this.src='assets/images/noImage.jpg';" />
+    <div class="text-box">
+      <h4 class="my-3" style="text-transform: none !important;">
+        {{utilsService.parserLanguage(selectedArticle.title,language)}}
+      </h4>
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <span class="color-grey-600">{{selectedArticle.createdAt | date: 'short'}}</span>
+        <img class="avatar ml-3" [src]="imageUrl + selectedArticle?.Creator?.avatar"
+          onerror="this.onerror=null;this.src='assets/images/noImage.jpg';" />
+        <span class="ml-2 color-grey-600">
+          {{selectedArticle?.Creator?.name +' '+ selectedArticle?.Creator?.lastName}}
+        </span>
+      </div>
+      <div [innerHtml]="sanitaizer.bypassSecurityTrustHtml(utilsService.parserLanguage(selectedArticle.text,language))">
+
+      </div>
+    </div>
+
+  </ng-container>
+
+</div>

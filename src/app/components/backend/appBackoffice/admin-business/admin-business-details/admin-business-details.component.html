@@ -1,0 +1,240 @@
+<div class="container-business">
+  <!-- <a [routerLink]="['backend/business']">
+    <button mat-raised-button>
+      <mat-icon aria-label="Example icon-button with a heart icon">undo</mat-icon>
+      <span class="mat-button">{{ 'ATRAS' }}</span>
+    </button>
+  </a> -->
+
+  <mat-tab-group *ngIf="showData" class="mt-3">
+    <mat-tab label="DATOS GENERALES">
+      <ng-template matTabContent>
+
+        <form [formGroup]="form" class="mt-3">
+          <div style="position: relative;" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="gappx">
+
+            <div fxLayout="column" fxLayoutAlign="start end" style="position: absolute; top: 0; right: 2px;">
+              <button class="mb-2" *ngIf="(this.loggedInUserService.isAdminUser() || this.loggedInUserService.isOwnerOfABussines(selectedBusiness.OwnerId))
+              && (selectedBusiness.status != 'approved' && selectedBusiness.status != 'published')" (click)="onEnableBusiness()"
+                mat-stroked-button color="primary">
+                Habilitar Comercio
+              </button>
+
+              <button
+                *ngIf="(this.loggedInUserService.isAdminUser() || this.loggedInUserService.isOwnerOfABussines(selectedBusiness.OwnerId))
+               && (selectedBusiness.status == 'approved' || selectedBusiness.status == 'published' || selectedBusiness.status == 'created' )"
+                (click)="onDisabledBusiness()" mat-stroked-button color="primary">
+                Deshabilitar Comercio
+              </button>
+            </div>
+
+            <p class="mat-body-2 uppercase mb-1 ">
+              {{'Logo del negocio'|translate}}
+            </p>
+
+            <ngp-image-picker [_imageSrc]="imageUrl + selectedBusiness.logo" [_config]="imagePickerConf"
+              ($imageChanged)="onImageChange($event)">
+            </ngp-image-picker>
+
+            <p class="mat-body-2 uppercase mt-2 mb-1">
+              {{'Nombre del negocio'|translate}}
+            </p>
+
+            <mat-form-field class="form-field-width" appearance="outline">
+              <input type="text" [formControl]="form.controls['name']" matInput placeholder="Mi Negocio">
+              <mat-error *ngIf="form.controls['name'].hasError('required')">
+                {{'Nombre'}} <strong>{{'es requerido'}}</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <p class="mat-body-2 uppercase mb-1 ">
+              {{'Teléfono fijo de contacto'|translate}}
+            </p>
+
+            <mat-form-field class="form-field-width" appearance="outline">
+              <input type="tel" [formControl]="form.controls['telephone']" matInput placeholder="ej: 72053519">
+              <mat-icon class="greyIcon" matSuffix>phone</mat-icon>
+            </mat-form-field>
+
+            <p class="mat-body-2 uppercase mb-1 ">
+              {{'No. de celular'|translate}}
+            </p>
+
+            <mat-form-field class="form-field-width" appearance="outline">
+              <input type="tel" [formControl]="form.controls['cellphone']" matInput placeholder="ej: 5353621645">
+              <mat-icon class="greyIcon" matSuffix>smartphone</mat-icon>
+            </mat-form-field>
+
+            <p class="mat-body-2 uppercase mb-1 ">
+              {{'Correo electrónico'|translate}}
+            </p>
+
+            <mat-form-field class="form-field-width" appearance="outline">
+              <input required type="tel" [formControl]="form.controls['email']" matInput placeholder="ej: example@gmail.com">
+              <mat-icon class="greyIcon" matSuffix>mail</mat-icon>
+              <mat-error *ngIf="form.controls['email'].hasError('required')">
+                {{'Emial'}} <strong>{{'es requerido'}}</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <p class="mat-body-2 uppercase mb-1 ">
+              {{'Dirección'|translate}}
+            </p>
+
+            <mat-form-field class="form-field-width" appearance="outline">
+              <input required type="tel" [formControl]="form.controls['address']" matInput
+                placeholder="ej: 39 #3022 e/ 30 y 36 , La Sierra, Playa">
+              <mat-icon class="greyIcon" matSuffix>mail</mat-icon>
+              <mat-error *ngIf="form.controls['address'].hasError('required')">
+                {{'Dirección'}} <strong>{{'es requerido'}}</strong>
+              </mat-error>
+            </mat-form-field>
+
+
+            <p class="mat-body-2 uppercase mb-1 mt-3">
+              {{'Breve descripción del negocio'|translate}}
+            </p>
+
+            <mat-form-field class="form-field-width" appearance="outline">
+              <textarea maxlength="140" rows="3" matInput [formControl]="form.controls['description']"
+                placeholder="{{'Description'}}"></textarea>
+              <mat-error *ngIf="form.controls['description'].hasError('required')">
+                {{'Descripción'}} <strong>{{'is required'}}</strong>
+              </mat-error>
+              <mat-hint>
+                Una descripción de texto libre de la aplicación. El número máximo de caracteres es 140.
+              </mat-hint>
+            </mat-form-field>
+
+
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="gappx">
+              <button *ngIf="this.canEditBusiness" (click)="onSaveBasicInfo()" mat-flat-button color="primary">GUARDAR</button>
+            </div>
+          </div>
+
+        </form>
+
+      </ng-template>
+    </mat-tab>
+    <mat-tab label="OTROS DATOS">
+      <ng-template matTabContent>
+
+        <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="gappx">
+
+          <p *ngIf="selectedBusiness.status !== 'approved'" class="mat-body-2 uppercase mt-2 mb-1">
+            {{'Datos del usuario solicitante'|translate}}
+          </p>
+          <p *ngIf="selectedBusiness.status =='approved'" class="mat-body-2 uppercase mt-2 mb-1">
+            {{'Datos del usuario dueño'|translate}}
+          </p>
+          <ul>
+            <li>
+              <span>Nombre completo:</span> &nbsp; <strong>{{(selectedBusiness?.Owner?.name + selectedBusiness?.Owner?.lastName ) || '-'}}
+              </strong>
+            </li>
+            <li>
+              <span>Teléfono:</span> &nbsp; <strong>{{selectedBusiness?.Owner?.phone || '-'}} </strong>
+            </li>
+            <li>
+              <span>Email:</span> &nbsp; <strong>{{selectedBusiness?.Owner?.email || '-'}} </strong>
+            </li>
+            <li>
+              <span>fecha de nacimiento:</span> &nbsp; <strong>{{selectedBusiness?.Owner?.birthday | date}} </strong>
+            </li>
+            <li>
+              <span>carne:</span> &nbsp; <strong>{{selectedBusiness?.Owner?.ci}} </strong>
+            </li>
+          </ul>
+
+          <p class="mat-body-2 uppercase mt-2 mb-1">
+            {{'Datos de la localización del negocio'|translate}}
+          </p>
+          <mat-form-field class="form-field-width" appearance="outline">
+            <mat-label>{{'Country'|translate}}</mat-label>
+            <mat-select [compareWith]="compareById" required type="text" placeholder="{{'Country name'|translate}}"
+              [formControl]="locationForm.controls['CountryId']">
+              <mat-option *ngFor="let country of allCountries" [value]="country.id">
+                {{country.name['es']}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="locationForm.controls['CountryId'].hasError('required')">
+              {{'Country'|translate}} <strong>{{'is required'|translate}}</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <!-- SOLO PARA CUBANOS -->
+          <ng-container *ngIf="true">
+            <div class="form-field-width" fxLayout="row wrap" fxLayoutAlign="space-between center">
+              <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline">
+                <mat-label>{{'Provincia'|translate}}</mat-label>
+                <mat-select [compareWith]="compareById" required type="text" placeholder="{{'Nombre de la provincia'|translate}}"
+                  [formControl]="locationForm.controls['ProvinceId']" (selectionChange)="onSelectProvince($event.value)">
+                  <mat-option *ngFor="let province of allProvinces" [value]="province.id">
+                    {{province.name}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="locationForm.controls['ProvinceId'].hasError('required')">
+                  {{'Provincia'|translate}} <strong>{{'is required'|translate}}</strong>
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline">
+                <mat-label>{{'Municipio'|translate}}</mat-label>
+                <mat-select [compareWith]="compareById" required type="text" placeholder="{{'Nombre del Municipio'|translate}}"
+                  [formControl]="locationForm.controls['MunicipalityId']">
+                  <mat-option *ngFor=" let municipio of municipalities" [value]="municipio.id">
+                    {{municipio.name}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="locationForm.controls['MunicipalityId'].hasError('required')">
+                  {{'Municipio'|translate}} <strong>{{'is required'|translate}}</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </ng-container>
+
+
+          <!-- <ul>
+            <li>
+              <span>País:</span> &nbsp; <strong>{{(selectedBusiness?.Country?.name['es'] ) || '-'}}
+              </strong>
+            </li>
+            <li>
+              <span>Provincia / Estado / Region:</span> &nbsp; <strong>{{selectedBusiness?.Province?.name || '-'}} </strong>
+            </li>
+            <li>
+              <span>Municipio / Ciudad:</span> &nbsp; <strong>{{selectedBusiness?.Municipality?.name || '-'}} </strong>
+            </li>
+            <li>
+              <span>Dirección:</span> &nbsp; <strong>{{selectedBusiness?.address}} </strong>
+            </li>
+          </ul> -->
+
+          <p class="mat-body-2 uppercase mb-1">
+            {{'Targeta de crédito'|translate}}
+          </p>
+
+          <mat-form-field class="form-field-width" appearance="outline">
+            <input type="{{hideSecret}}" [formControl]="moneyForm.controls['card']" placeholder="xxxx-xxxx-xxxx-xxxx" matInput>
+            <mat-icon style="cursor: pointer;" matSuffix class="grey-700" (click)="showSecret()">
+              <ng-container *ngIf="hideSecret == 'password'">visibility_off</ng-container>
+              <ng-container *ngIf="hideSecret == 'text'">remove_red_eye</ng-container>
+            </mat-icon>
+          </mat-form-field>
+
+          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="gappx">
+            <button [disabled]="locationForm.invalid || moneyForm.invalid" *ngIf="this.canEditBusiness" (click)="onSaveSecondForm()"
+              mat-flat-button color="primary">GUARDAR</button>
+          </div>
+
+        </div>
+
+      </ng-template>
+    </mat-tab>
+
+  </mat-tab-group>
+
+
+
+
+</div>

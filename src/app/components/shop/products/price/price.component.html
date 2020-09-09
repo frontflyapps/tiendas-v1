@@ -1,0 +1,18 @@
+<div class="price-slider">
+
+  <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="filter-price text-muted">
+    <div fxLayout="column" fxLayoutAlign="start start" fxFlex="45">
+      <p>{{"Desde:"|translate}}</p>
+      <input [formControl]="priceForm.get('priceFrom')" (change)="priceFilter()" [min]="0" class="priceInput" type="number"
+        [ngClass]="{'errorInput':priceForm.get('priceFrom').invalid }" />
+    </div>
+    <div fxLayout="column" fxLayoutAlign="start start" fxFlex="45">
+      <p>{{"Hasta:"|translate}}</p>
+      <input [formControl]="priceForm.get('priceTo')" [min]="priceForm.get('priceFrom')" (change)="priceFilter()" [max]="100000"
+        class="priceInput" type="number" [ngClass]="{'errorInput':priceForm.get('priceTo').invalid }" />
+    </div>
+
+
+
+  </div>
+</div>

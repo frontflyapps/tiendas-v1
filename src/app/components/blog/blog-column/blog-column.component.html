@@ -1,0 +1,141 @@
+<div *ngIf="this.loadingSearch" class="loading-shade-full" style="background: rgba(0, 0, 0, 0.08) !important;">
+  <mat-spinner *ngIf="this.loadingSearch" diameter="60" color="primary"></mat-spinner>
+</div>
+
+<div class="blog-column">
+  <div class="container">
+    <ng-container *ngIf="blogArray.length">
+      <div fxLayout="row wrap" fxLayoutAlign="start start" class="blog-list-wrapper sec-padding">
+        <div fxHide fxShow.lt-md class="search mb-30 w-100">
+          <input [(ngModel)]="searchText" class="form-control" placeholder="{{'Search...'|translate}}" type="search">
+          <button (click)="onSearchArticle()" [disabled]="searchText===null" mat-button type="submit">
+            <mat-icon>
+              search
+            </mat-icon>
+          </button>
+        </div>
+
+        <div ngClass.gt-sm="pr-3" fxLayout="column" fxFlex="100" fxFlex.gt-sm="70" fxLayoutAlign="start stretch" fxLayoutGap="gappx">
+          <div [id]="'element'+item.id" *ngFor="let item of blogArray;let i=index" class="main-blog-panel">
+
+            <a [routerLink]="['/blog',item.id]" class="single-blog-list" fxLayout="row" fxLayout.lt-md="column">
+              <mat-card class="cardArticle">
+                <mat-card-content>
+                  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="start stretch" fxLayoutGap=" gappx">
+                    <div fxLayoutAlign="center stretch" fxFlex="100" fxFlex.gt-sm="50" class="image-box">
+                      <a *ngIf="item.link" [href]="item.link" target="_blank">
+                        <img ngp-lazy ngp-threshold="0.1" [ngClass]="{'imageDroped':!item.expandable,'imageExpanded':item.expandable}"
+                          [src]="imageUrl + item.image" [alt]="item.title[language]">
+                      </a>
+
+                      <img *ngIf="!item.link" ngp-lazy ngp-threshold="0.1"
+                        [ngClass]="{'imageDroped':!item.expandable,'imageExpanded':item.expandable}" [src]="imageUrl + item.image"
+                        [alt]="item.title[language]">
+
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="50" class="text-box">
+
+                      <h4 style="text-transform: none !important;">
+                        {{utilsService.parserLanguage(item.title,language)}}
+                      </h4>
+
+                      <ul fxLayout="row">
+                        <li><i class="material-icons">access_time </i>{{item.createdAt | date: 'short'}}</li>
+                        <li><i class="material-icons">person </i>{{item.Creator.name +' '+ item.Creator.lastName}}</li>
+                        <!-- <li><i class="material-icons">sms</i>05 Comments</li> -->
+                      </ul>
+
+                      <div *ngIf="!item.expandable" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="gappx">
+                        <p class="module1 line-clamp1">{{utilsService.parserLanguage(item.sumarize,language)}}</p>
+                      </div>
+
+                    </div>
+                  </div>
+
+                </mat-card-content>
+              </mat-card>
+            </a>
+
+          </div>
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="30" class="sidebar">
+          <div class="blog-sidebar">
+            <div fxHide.lt-md class="search mb-30">
+              <input [(ngModel)]="searchText" class="form-control" placeholder="{{'Search...'|translate}}" type="search">
+              <button (click)="onSearchArticle()" mat-button type="submit">
+                <mat-icon>
+                  search
+                </mat-icon>
+              </button>
+            </div>
+            <div class="single-sidebar-widget mb-30">
+              <div class="post-widget">
+                <div class="title">
+                  <h4>{{'Latest News'|translate}}</h4>
+                  <div class="decor-line"></div>
+                </div>
+                <ul>
+                  <li *ngFor="let item of latestArray;let i =index" fxLayout="row">
+                    <div fxFlex="100" fxFlex.gt-sm="30" class="icon-box"><img [src]="imageUrl + item.image" alt="Awesome Image"></div>
+                    <div fxFlex="100" fxFlex.gt-sm="70" class="text-box">
+                      <h5> {{utilsService.parserLanguage(item.title,language)}} </h5>
+                      <span>{{item.createdAt | date: 'short'}}</span>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="single-sidebar-widget mb-30">
+              <div class="tags-widget post-widget">
+                <div class="title">
+                  <h4>{{"Tags widget"|translate}}</h4>
+                </div>
+                <ul class="list-inline">
+                  <li *ngFor="let tag of tags"><a>{{tag}}</a></li>
+                </ul>
+              </div>
+            </div>
+            <!-- <div class="single-sidebar-widget mb-30">
+              <div class="post-widget">
+                <div class="title">
+                  <h4>{{"Become a colaborator"|translate}}</h4>
+                </div>
+                <div class="sale-widget" style="border-radius: 4px !important;">
+                  <span class="sale-widget1">
+                    {{"You can"|translate}}
+                  </span>
+                  <span class="sale-widget2">
+                    {{"work with us"|translate}}
+                  </span>
+                  <div class="mt-2" style="text-align: left">
+                    <p style="color:rgba(0,0,0,.87); font-weight: 500;" class="mat-body-2">
+                      {{'Become a collaborator of our site.'|translate}}</p>
+                    <p style="color:rgba(0,0,0,.87); font-weight: 500;" class="mat-body-2">
+                      {{'You can be part of us and earn money simply giving us promotion.'|translate}}</p>
+                  </div>
+                  <p> <a mat-stroked-button [href]="collaboratorUrl" target="_blank" class="px-4 mt-3"
+                      color="accent">{{'READ MORE'|translate}}</a></p>
+                </div>
+              </div>
+            </div> -->
+          </div>
+        </div>
+      </div>
+      <div fxLayout="row" *ngIf="this.query.offset < this.query.total" class="py-3" fxLayoutAlign="center center">
+        <button (click)="onGetMore()" *ngIf="this.query.offset < this.query.total" mat-stroked-button class="px-4"
+          color="accent">{{'LOAD MORE...'|translate}}</button>
+      </div>
+
+    </ng-container>
+
+
+
+    <div *ngIf="isEmptyArray" class="sec-padding" fxLayout="column" fxLayoutAlign="center center">
+      <img src="../../../../assets/images/empty.svg" alt="Empty" style="height: 160px; width: 160px;">
+      <h3 class="text-muted mt-3">
+        {{'The blog articles is empty'|translate}}
+      </h3>
+    </div>
+
+  </div>
+</div>

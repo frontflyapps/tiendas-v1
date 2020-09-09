@@ -1,0 +1,10 @@
+<div class="brands-items">
+
+  <mat-checkbox color="accent" fxLayout="row" class="example-radio-button py-1" *ngFor="let brand of brands"
+    (click)="$event.stopPropagation()" (change)="$event ? onChangeSelection(brand) : null"
+    [checked]="selection.isSelected(brand)">
+    <span class="mat-body-2"
+      style="color:#757575;font-size: 15px !important;">{{(brand.name[language])?brand.name[language]:brand.name['es']}}</span>
+  </mat-checkbox>
+
+</div>

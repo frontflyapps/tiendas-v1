@@ -1,0 +1,56 @@
+.headerTitle {
+  margin-bottom: 16px !important;
+  font-size: 20px !important;
+
+  @media (min-width: 320px) and (max-width: 767px) {
+
+    font-size: 18px;
+
+  }
+
+}
+
+section {
+  background-color: #F8F9Fa !important;
+}
+
+p {
+  color: #212529 !important;
+  line-height: 1.5rem;
+
+  @media (min-width: 320px) and (max-width: 767px) {
+    font-size: 14px;
+  }
+}
+
+.container-Term {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+@media (min-width: 576px) {
+  .container-Term {
+    max-width: 540px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container-Term {
+    max-width: 720px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container-Term {
+    max-width: 960px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container-Term {
+    max-width: 1140px;
+  }
+}

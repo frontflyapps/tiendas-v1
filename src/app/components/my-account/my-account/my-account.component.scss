@@ -1,0 +1,137 @@
+@import "../../../../assets/scss/theme/variables";
+@import "../../../../assets/scss/mixins/breakpoints";
+
+$topbar: $theme-main;
+
+app-my-account {
+
+  .mat-form-field-wrapper {
+    padding-bottom: 16px;
+  }
+
+  .rc-anchor-normal {
+    height: 84px !important;
+    width: 320px !important;
+  }
+
+  .container {
+    @include media-breakpoint("xs") {
+      padding-left: 0px !important;
+      padding-right: 0px !important;
+    }
+
+  }
+
+  #loadingSpinnerData {
+    position: absolute !important;
+    left: 45% !important;
+    top: 45% !important;
+  }
+
+  .FormLayout {
+    // max-height: 60vh !important;
+    overflow: auto;
+    padding: 16px 32px;
+
+    @include media-breakpoint('lt-md') {
+      padding: 16px 16px !important;
+    }
+
+
+  }
+
+  .login-logo {
+    height: 60px;
+    // width: 100px;
+    // object-fit: cover;
+    // border-radius: 50%;
+    // object-fit: cover;
+    // object-position: center;
+  }
+
+  .span-link {
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 4px;
+  }
+
+  .span-link:hover {
+    background-color: #f5f5f5;
+  }
+
+  .example-full-width {
+    width: 100%;
+  }
+
+  #BackRow {
+    position: absolute !important;
+    left: 15px !important;
+    top: 20px !important;
+  }
+
+  .MsgFinal {
+    min-height: 120px;
+    border-radius: 8px;
+    border: 1px solid #323232;
+    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
+  }
+
+  @media only screen and (max-width: 480px) {
+    .dialog-title {
+      width: 100%;
+    }
+
+    .title-login {
+      margin-top: 20px;
+      font-size: 18px;
+      width: 70%;
+      text-align: center;
+    }
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .mat-expansion-panel-header {
+    height: 78px !important;
+  }
+
+  .icon-panel-header {
+    background-color: $topbar;
+    color: white;
+    border-radius: 50%;
+  }
+
+  .shared-offer {
+    color: $theme-main;
+  }
+
+  #CardLogin {
+    padding: 0px !important;
+    background-color: $theme-main;
+    padding-top: 8px;
+    padding-bottom: 16px;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 30rem !important;
+
+
+    #CardBodyLoggin {
+      width: 96%;
+      margin-top: 16px;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      min-height: 400px;
+      z-index: 64;
+      background-color: #fff !important;
+    }
+
+    .RegisterBtn {
+      width: 310px !important;
+
+    }
+  }
+}

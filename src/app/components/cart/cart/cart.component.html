@@ -1,0 +1,215 @@
+<div class="container">
+  <div class="cart-wrapper">
+    <div fxLayout="column" fxLayoutAlign="space-around center" *ngIf="!carts.length">
+      <div class="col-sm-12 empty-cart-cls text-center" *ngIf="!carts.length">
+        <img src="assets/images/backet-01.png" class="img-fluid mb-4">
+        <h3 class="mb-5"><strong>{{"YOUR SHOPPING CART IS EMPTY"|translate}}.</strong></h3>
+        <p class="mt-2 color-grey-700" style="font-size: 18px;font-weight: 500;">
+          {{'Explore more to shortlist some items.'|translate}}
+        </p>
+      </div>
+      <div class="mt-3">
+        <a mat-raised-button [routerLink]="['/products/search']" color="primary" style="color: #fff !important; ">
+          <span style="color: #fff !important; ">{{'Continue shopping'|translate}}</span>
+        </a>
+      </div>
+    </div>
+    <section *ngIf="carts.length" fxHide.lt-md>
+      <mat-card *ngFor="let cart of carts" class="p-0 mb-4" style="border-radius: 8px;">
+        <div class="mat-table cart-table">
+          <div class="mat-header-row">
+            <div class="mat-header-cell">{{"Product"|translate}}</div>
+            <div class="mat-header-cell">{{"Name"|translate}}</div>
+            <div class="mat-header-cell">{{"Category"|translate}}</div>
+            <div class="mat-header-cell">{{"Price"|translate}}</div>
+            <div class="mat-header-cell">{{"Quantity"|translate}}</div>
+            <div class="mat-header-cell">{{"Total"|translate}}</div>
+            <div class="mat-header-cell">{{"Action"|translate}}</div>
+          </div>
+          <div *ngFor="let item of cart?.CartItems" class="mat-row">
+            <div class="mat-cell">
+              <img *ngIf="item.Product.Image && item.Product.Image.length" [src]="imageUrl + item.Product.Image[0].image">
+              <img *ngIf="!(item.Product.Image && item.Product.Image.length)" src="../../../../assets/images/noImage.jpg">
+            </div>
+            <div class="mat-cell"><a [routerLink]="[ '/product', item.Product.id ]"
+                class="link-nav-a">{{item.Product.name[language]?item.Product.name[language]:item.Product.name['es']}}</a>
+            </div>
+            <div class="mat-cell"><a class="product-name">{{utilsServ.parserLanguage(item.Product.Category.name,language)}}</a>
+            </div>
+            <div class="mat-cell price">
+              <ng-container *ngIf="item.Product.offerValue">
+                <p class="deletePrice m-0"><del>{{currencyService.getPriceLabel(item.Product)}}</del></p>
+                <p class="mat-body-2 m-0" matTooltip="{{'Existe una oferta asociada a este producto'|translate}}">
+                  {{currencyService.getOfferLabel(item.Product)}}
+                </p>
+              </ng-container>
+              <ng-container *ngIf="!item.Product.offerValue">
+                <p class="mat-body-2 m-0">
+                  {{currencyService.getPriceLabel(item.Product)}}
+                </p>
+                <p class="mat-body-2 m-0" style="font-size: 15px;">
+                  {{'Desde '|translate}}
+                  {{item.Product.minSale}}
+                  {{' unidades'|translate}}
+                </p>
+              </ng-container>
+            </div>
+            <div class="mat-cell text-muted">
+              <div fxLayout="row" fxLayoutAlign="center center" class="text-muted">
+                <div *ngIf="item.Product.type=='physical'" fxLayout="row" fxLayoutAlign="center start">
+                  <div class="addQuantity">
+                    <button [disabled]="item.Product.minSale >=item.quantity" class="leftBtn" matTooltip="Remove"
+                      (click)="decrement(item.Product)">
+                      <mat-icon>keyboard_arrow_left</mat-icon>
+                    </button>
+                    <input [min]="item.Product.minSale" [max]="item.Product.maxSale" class="inputBtn" type="text"
+                      [(ngModel)]="item.quantity" disabled>
+
+                    <button [disabled]="item.Product.maxSale<= item.quantity" class="rightBtn" matTooltip="Add"
+                      (click)="increment(item.Product)">
+                      <mat-icon>keyboard_arrow_right</mat-icon>
+                    </button>
+                  </div>
+
+                </div>
+                <div *ngIf="item.Product.type!='physical'" fxLayout="row" fxLayoutAlign="center center">
+                  <input type="text" name="quantity" [(ngModel)]="item.quantity" disabled class="form-control input-number">
+                </div>
+                <!-- <div *ngIf="type!='wish'">
+                         <button mat-icon-button matTooltip="Add to wishlist" (click)="addToWishList(product)"><mat-icon>favorite</mat-icon></button>
+                         <button mat-icon-button matTooltip="Add to cart" *ngIf="product?.availibilityCount > 0" (click)="addToCart(product)"><mat-icon>shopping_cart</mat-icon></button>
+                         <button mat-icon-button matTooltip="Add to compare" (click)="addToCompare(product)"><mat-icon>compare</mat-icon></button>
+                         <button *ngIf="type!='all'" mat-icon-button matTooltip="Quick view" (click)="openProductDialog(product)"><mat-icon>remove_red_eye</mat-icon></button>
+                         </div> -->
+              </div>
+            </div>
+            <div class="mat-cell total">
+              {{getTotalPricePerItem(item) |currency:currencyService.getCurrency().code }}</div>
+            <div class="mat-cell text-center">
+              <div class="p-1">
+                <button matTooltip="{{'Remove from cart'|translate}}" (click)="removeItem(item)" mat-icon-button color="warn">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="mat-row">
+            <div class="mat-cell"><a mat-raised-button class="btn-project" [routerLink]="['/products/search']" style="color: #fff;"><span
+                  style="color: #fff;">{{'Continue shopping'|translate}}</span></a></div>
+            <div class="mat-cell"></div>
+            <div class="mat-cell" fxLayout="row" fxLayoutAlign="center center">
+              <img style="height: 32px; width: 32px; border-radius: 50%; object-fit: cover;" [src]="imageUrl + cart?.Business?.logo" />
+              <span class="mat-body-2 ml-2 uppercase">{{cart.Business?.name}}</span>
+            </div>
+            <div class="mat-cell text-right">
+              <div fxLayout="column" fxLayoutAlign="center end" class="grand-total px-2">
+                <span class="new-price">Total a pagar:
+                  {{getTotal(cart)  |currency:currencyService.getCurrency().code}}</span>
+              </div>
+            </div>
+            <div class="mat-cell text-center">
+              <a mat-raised-button class="btn-project" (click)="goToCheckout(cart)">
+                <span style=" color: #fff;">{{"Proceed To Checkout"|translate}}</span></a>
+            </div>
+          </div>
+        </div>
+      </mat-card>
+    </section>
+
+    <section *ngIf="carts.length" fxHide fxShow.lt-md>
+      <div *ngFor="let cart of carts" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="gappx">
+        <div class="py-2" fxLayout="row" fxLayoutAlign="start center">
+          <img style="height: 32px; width: 32px; border-radius: 50%; object-fit: cover;" [src]="imageUrl + cart?.Business?.logo" />
+          <span class="mat-body-2 ml-2 uppercase">{{cart.Business?.name}}</span>
+        </div>
+        <mat-card ngClass.sm="w-75 mx-auto" class="pt-0 my-2 px-0" *ngFor="let item of cart.CartItems">
+          <p class="text-align-center py-2" style="background-color: #fafafa;">
+            <img class="imageProduct" *ngIf="item.Product.Image && item.Product.Image.length"
+              [src]="imageUrl + item.Product.Image[0].image">
+            <img class="imageProduct" *ngIf="!(item.Product.Image && item.Product.Image.length)"
+              src="../../../../assets/images/noImage.jpg">
+          </p>
+          <mat-card-content fxLayout="column" fxLayoutAlign="start start" class="px-3 py-2 mb-0">
+
+            <p class="module line-clamp" style="font-size: 15px;text-align: left;">
+              {{item.Product.name[language]?item.Product.name[language]:item.Product.name['es']}}
+            </p>
+
+            <p class="text-muted mb-0">
+              {{utilsServ.parserLanguage(item.Product.Category.name,language)}}
+            </p>
+
+            <div class="mt-1">
+              <ng-container *ngIf="item.Product.offerValue">
+                <p class="deletePrice mb-0" style="text-align: left;"><del>{{currencyService.getPriceLabel(item.Product)}}</del></p>
+                <p class="mat-body-2 mb-0" style="text-align: left;"
+                  matTooltip="{{'Existe una oferta asociada a este producto'|translate}}">
+                  {{currencyService.getOfferLabel(item.Product)}}
+                </p>
+                <p>{{'Desde '|translate}}
+                  {{item.Product.minSale}}
+                  {{' unidades'|translate}}
+                </p>
+              </ng-container>
+              <ng-container *ngIf="!item.Product.offerValue">
+                <p class="mat-body-2" style="text-align: left;">
+                  {{currencyService.getPriceLabel(item.Product)}}
+                </p>
+                <p class="mat-body-2" style="font-size: 14px;">
+                  {{'Desde '|translate}}
+                  {{item.Product.minSale}}
+                  {{' unidades'|translate}}
+                </p>
+              </ng-container>
+            </div>
+
+            <div id="inputQuantity" fxLayout="row" fxLayout.xs="column" class="text-muted">
+              <div fxLayout="row" fxLayoutAlign="center center">
+                <button [disabled]="item.Product.minSale >=item.quantity" mat-icon-button matTooltip="Remove"
+                  (click)="decrement(item.Product)">
+                  <mat-icon>remove</mat-icon>
+                </button>
+                <input type="text" name="quantity" [(ngModel)]="item.quantity" disabled class="input-number">
+                <button [disabled]="item.Product.maxSale<= item.quantity" mat-icon-button matTooltip="Add"
+                  (click)="increment(item.Product)">
+                  <mat-icon>add</mat-icon>
+                </button>
+              </div>
+            </div>
+
+            <div id="totalPrice">
+              <span> {{getTotalPricePerItem(item) |currency:currencyService.getCurrency().code }}</span>
+            </div>
+          </mat-card-content>
+          <mat-card-actions class="px-3">
+            <mat-divider></mat-divider>
+            <div fxLayout="row" fxLayoutAlign="end end">
+
+              <button matTooltip="{{'Remove from cart'|translate}}" (click)="removeItem(item)" mat-icon-button color="warn">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+
+          </mat-card-actions>
+        </mat-card>
+
+        <mat-toolbar class="mt-2" *ngIf="cart.CartItems.length">
+          <mat-toolbar-row fxLayoutAlign="space-between center">
+            <span class="total">Total:
+              {{getTotal(cart)  |currency:currencyService.getCurrency().code}}</span>
+            <div class="mat-cell text-center">
+              <a mat-raised-button color="primary" (click)="goToCheckout(cart)">
+                <span style="color: #fff;">{{"Pagar"|translate}}</span>
+              </a>
+            </div>
+          </mat-toolbar-row>
+        </mat-toolbar>
+
+        <div class="my-3">
+          <mat-divider *ngFor="let item of [1,2,3,4]"></mat-divider>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>

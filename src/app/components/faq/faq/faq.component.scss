@@ -1,0 +1,55 @@
+@import "../../../../assets/scss/theme/variables";
+
+/***************************************
+*  FAQ page styles
+****************************************/
+.faq {
+  .questions {
+    padding-right: 15px;
+
+    .faq-wrap {
+      .mat-expansion-panel {
+        border-top-right-radius: 4px;
+        border-top-left-radius: 4px;
+        border: 1px solid $grey-light;
+        box-shadow: none;
+        margin-bottom: 20px;
+
+        .mat-expansion-panel-header {
+          height: auto !important;
+          min-height: 50px !important;
+          padding: 8px 24px !important;
+          box-sizing: border-box !important;
+        }
+
+        .mat-expansion-panel-header-title {
+          span {
+            font-size: 17px;
+            font-weight: 500;
+            line-height: 1;
+          }
+        }
+
+        .mat-expansion-panel-body {
+          p {
+            line-height: 24px;
+          }
+        }
+      }
+    }
+  }
+
+  .faq-form {
+    padding-left: 15px;
+
+    .text-wrap {
+      p {
+        line-height: 26px;
+      }
+    }
+
+    form {
+      margin: 30px 0;
+    }
+  }
+}

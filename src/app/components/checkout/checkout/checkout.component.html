@@ -1,0 +1,418 @@
+<!-- <div *ngIf="this.loadingSearch" class="loading-shade-full">
+  <mat-spinner *ngIf="this.loadingSearch" diameter="60" color="primary"></mat-spinner>
+</div> -->
+
+<div class="container-checkout" ngClass.lt-md="px-2">
+  <div class="checkout sec-padding" ngClass.lt-md="py-2">
+    <div *ngIf="loadingPayment" class="w-100 my-3" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="gappx">
+      <div class="loading-dots mat-title">{{'Procesando los datos'|translate}}</div>
+    </div>
+    <div fxLayout="row wrap">
+      <div class="billing-details" ngClass.gt-sm="pr-5" ngClass.sm="pr-2" ngClass.xs="pr-0" fxFlex="100" fxFlex.gt-md="50" fxFlex.md="50">
+        <div *ngIf="!loadingPayment" class="header-title">
+          <h3 class="grey-800" ngClass.gt-sm="h2" ngClass.xs="h4">{{"Billing Details"|translate}}</h3>
+        </div>
+
+        <form *ngIf="!loadingPayment" [formGroup]="form" fxLayout="row wrap" fxLayoutAlign="start start" class="mt-3">
+          <div fxLayout="column" fxLayoutAlign="start stretch" fxFlex="100" class="mt-2" ngClass.sm="mt-2" ngClass.xs="mt-2">
+
+
+            <p class="mat-body-2 my-2" style="text-transform: uppercase;">{{'Datos personales del destinatario'|translate}}
+              <mat-icon style="cursor: pointer;" matTooltip="{{'Name and surname of the client as well as a confirmation email'|translate}}"
+                class="iconHelp">help
+              </mat-icon>
+            </p>
+
+
+            <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+              <mat-form-field fxFlex="100" fxFlex.gt-md="48" fxFlex.md="48" appearance="outline">
+                <mat-label>{{'Name'|translate}}</mat-label>
+                <input required matInput placeholder="{{'Name'|translate}}" required [formControl]="this.form.controls['name']">
+                <mat-error *ngIf="form.controls['name'].hasError('required')">
+                  {{'Name'|translate}} <strong>{{'is required'|translate}}</strong>
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field fxFlex="100" fxFlex.gt-md="48" fxFlex.md="48" appearance="outline">
+                <mat-label>{{'Lastname'|translate}}</mat-label>
+                <input required matInput placeholder="{{'Lastname'|translate}}" required [formControl]="this.form.controls['lastName']">
+                <mat-error *ngIf="form.controls['lastName'].hasError('required')">
+                  {{'Lastname'|translate}} <strong>{{'is required'|translate}}</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <mat-form-field appearance="outline">
+              <mat-label>{{'Email'|translate}}</mat-label>
+              <input matInput placeholder="{{'Mail for order confirmation and customer contact '|translate}}" required
+                [formControl]="this.form.controls['email']">
+              <mat-error *ngIf="form.controls['email'].hasError('required')">
+                {{'Email'|translate}} <strong>{{'is required'|translate}}</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <!-- <p class="mat-body-2 my-2" style="text-transform: uppercase;">{{'¿Es usted de nacionalidad cubano(a)?'|translate}}
+              <mat-icon style="cursor: pointer;" matTooltip="{{'Necesitamos daber hacia donde va dirigido el producto'|translate}}"
+                class="iconHelp">help
+              </mat-icon>
+            </p>
+
+            <mat-form-field appearance="outline">
+              <mat-select required type="text" placeholder="{{'Nacionalidad'|translate}}" [formControl]="form.controls['isForCuban']"
+                (selectionChange)="onSelectNationality($event.value)">
+                <mat-option *ngFor="let na of nationalitiy" [value]="na.id">
+                  {{na.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field> -->
+
+            <p class="mat-body-2 my-2" style="text-transform: uppercase;">{{'Direccíon del destinatario'|translate}}
+              <mat-icon style="cursor: pointer;" matTooltip="{{'Street address and more information about the shipping address'|translate}}"
+                class="iconHelp">help
+              </mat-icon>
+            </p>
+
+            <!-- SOLO PARA CUBANOS -->
+            <ng-container *ngIf="onlyCubanPeople">
+
+              <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+                <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline">
+                  <mat-label>{{'Provincia'|translate}}</mat-label>
+                  <mat-select [compareWith]="compareById" required type="text" placeholder="{{'Nombre de la provincia'|translate}}"
+                    [formControl]="form.controls['ProvinceId']" (selectionChange)="onSelectProvince($event.value)">
+                    <mat-option *ngFor="let province of allProvinces" [value]="province.id">
+                      {{province.name}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="form.controls['ProvinceId'].hasError('required')">
+                    {{'Provincia'|translate}} <strong>{{'is required'|translate}}</strong>
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline">
+                  <mat-label>{{'Municipio'|translate}}</mat-label>
+                  <mat-select [compareWith]="compareById" required type="text" placeholder="{{'Nombre del Municipio'|translate}}"
+                    [formControl]="form.controls['MunicipalityId']">
+                    <mat-option *ngFor=" let municipio of municipalities" [value]="municipio.id">
+                      {{municipio.name}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="form.controls['MunicipalityId'].hasError('required')">
+                    {{'Municipio'|translate}} <strong>{{'is required'|translate}}</strong>
+                  </mat-error>
+                </mat-form-field>
+
+
+              </div>
+
+
+            </ng-container>
+
+            <!-- SOLO PARA EXTRANGEROS -->
+            <ng-container *ngIf="!onlyCubanPeople">
+              <p class="mat-body-2 my-2" style="text-transform: uppercase;">{{'Customer\'s location data'|translate}}
+                <mat-icon style="cursor: pointer;"
+                  matTooltip="{{'Country, city, region and more information about the shipping location'|translate}}" class="iconHelp">help
+                </mat-icon>
+              </p>
+
+              <mat-form-field appearance="outline">
+                <mat-label>{{'Country'|translate}}</mat-label>
+                <mat-select [compareWith]="compareById" required type="text" placeholder="{{'Country name'|translate}}"
+                  [formControl]="form.controls['CountryId']">
+                  <mat-option *ngFor="let country of allCountries" [value]="country.id">
+                    {{utilsService.parserLanguage(country.name,language)}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="form.controls['CountryId'].hasError('required')">
+                  {{'Country'|translate}} <strong>{{'is required'|translate}}</strong>
+                </mat-error>
+              </mat-form-field>
+
+              <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+                <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline">
+                  <mat-label>{{'City'|translate}}</mat-label>
+                  <input type="text" required matInput placeholder="{{'City'|translate}}" required
+                    [formControl]="this.form.controls['city']">
+                  <mat-error *ngIf="form.controls['city'].hasError('required')">
+                    {{'City'|translate}} <strong>{{'is required'|translate}}</strong>
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline">
+                  <mat-label>{{'State / Province / Region'|translate}}</mat-label>
+                  <input type="text" required matInput placeholder="{{'State / Province / Region'|translate}}" required
+                    [formControl]="this.form.controls['regionProvinceState']">
+                  <mat-error *ngIf="form.controls['regionProvinceState'].hasError('required')">
+                    {{'State / Province / Region'|translate}} <strong>{{'is required'|translate}}</strong>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+            </ng-container>
+
+
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>{{'Street address'|translate}}</mat-label>
+              <textarea required placeholder="{{'Street address or your location'|translate}}" matInput rows="2"
+                [formControl]="this.form.controls['address']"></textarea>
+              <mat-error *ngIf="form.controls['address'].hasError('required')">
+                {{'Address'|translate}} <strong>{{'is required'|translate}}</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <!-- <mat-form-field fxFlex="100" fxFlex.gt-md="48" fxFlex.md="48" appearance="outline">
+              <mat-label>{{'More info about your address'|translate}}</mat-label>
+              <input matInput placeholder="{{'Apartment, suite, unit, building, floor'|translate}}"
+                [formControl]="this.form.controls['address2']">
+            </mat-form-field> -->
+
+
+            <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+
+              <mat-form-field fxFlex="100" fxFlex.gt-md="48" fxFlex.md="48" appearance="outline">
+                <mat-label>{{'Zip code'|translate}}</mat-label>
+                <input matInput placeholder="{{'Zip code'|translate}}" type="number" required [formControl]="this.form.controls['zipCode']">
+                <mat-error *ngIf="form.controls['zipCode'].hasError('required')">
+                  {{'Zip code'|translate}} <strong>{{'is required'|translate}}</strong>
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field fxFlex="100" fxFlex.gt-md="48" fxFlex.md="48" appearance="outline">
+                <mat-label>{{'Phone'|translate}}</mat-label>
+                <input matInput placeholder="{{'Phone'|translate}}" type="tel" [formControl]="this.form.controls['phone']">
+                <mat-error *ngIf="form.controls['phone'].hasError('required')">
+                  {{'Phone'|translate}} <strong>{{'is required'|translate}}</strong>
+                </mat-error>
+                <mat-error *ngIf="form.controls['phone'].hasError('minlength')">
+                  {{'El teléfono debe tener 10 dígitos'|translate}}
+                </mat-error>
+                <mat-error *ngIf="form.controls['phone'].hasError('maxlength')">
+                  {{'El teléfono debe tener 10 dígitos'|translate}}
+                </mat-error>
+                <mat-error *ngIf="form.controls['phone'].hasError('pattern')">
+                  {{'El teléfono debe tener solo dígitos'|translate}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+          </div>
+
+          <div class="add-info">
+            <h3 class="grey-800" ngClass.gt-sm="h2" ngClass.xs="h4">{{"Aditional information"|translate}}</h3>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="100" class="mt-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+            <mat-form-field appearance="outline" class="w-100">
+              <textarea placeholder="{{'Some information about your address or something important'|translate}}" matInput rows="2"
+                [formControl]="this.form.controls['info']"></textarea>
+            </mat-form-field>
+          </div>
+        </form>
+
+        <div *ngIf="loadingPayment" style="width: 100%; min-height: 500px;height: 100%;" class="loader"></div>
+      </div>
+
+
+      <div class="mainOrder-wrapper pl-15" fxFlex="100" fxFlex.gt-md="50" fxFlex.md="50">
+        <div *ngIf="!loadingPayment" class="header-title" ngClass.xs="mt-3" ngClass.sm="mt-3">
+          <h3 class="grey-800" ngClass.gt-sm="h2" ngClass.xs="h4">{{"My Order"|translate}}</h3>
+        </div>
+        <div *ngIf="!loadingPayment" class="main-order" style="margin-top:26px;">
+          <div class="order-box">
+            <div class="title-box">
+              <div>{{"Product"|translate}} <span class="tl-amount"> {{"Total"|translate}}</span></div>
+            </div>
+            <ul class="price-list" *ngIf='buyProducts.length'>
+              <li *ngFor="let item of buyProducts">
+                <div fxLayout="row" fxLayoutAlign="start center" class="py-2" fxLayoutGap="gappx">
+                  <div fxFlex="63" class="product" fxLayout="row" fxLayoutAlign="start center">
+                    <img fxHide.xs *ngIf="item.Product.Image && item.Product.Image.length" [src]="imageUrl + item.Product.Image[0].image">
+                    <img fxHide.xs *ngIf="!(item.Product.Image && item.Product.Image.length)" src="../../../../assets/images/noImage.jpg">
+
+                    <p class="name">
+                      <a [href]="'/product/' + item.id"><strong
+                          class="color-grey-800">{{item.Product.name[language]?item.Product.name[language]:item.Product.name['es']}}</strong></a>
+                      &nbsp; <strong style="font-size: 17px;">x {{ item.quantity }}</strong>
+                    </p>
+                  </div>
+
+                  <div fxFlex fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="gappx">
+                    <span>
+                      {{ getTotalPricePerItem(item) |currency:currencyService.getCurrency().code }}
+                    </span>
+                    <button (click)="removeItem(item)" class="ml-auto" mat-icon-button color="warn"
+                      matTooltip="{{'Eliminar producto del carrito'|translate}}">
+                      <mat-icon>clear
+                      </mat-icon>
+                    </button>
+                  </div>
+                </div>
+              </li>
+            </ul>
+            <ul class="quantity" *ngIf='buyProducts.length <= 0'>
+              <li class="empty-checkout"> {{"There are no products in cart"|translate}} </li>
+            </ul>
+            <ul *ngIf="!loadingCart && this.form.get('ProvinceId').valid && this.form.get('MunicipalityId').valid " class="total-amount">
+              <li>
+                {{'Subtotal'|translate}}: <span class="amount px-2">{{ getTotalAmout() |currency:currencyService.getCurrency().code}}</span>
+              </li>
+            </ul>
+
+            <!-- ////////////////TARIFAS DE ENVIO/////////////////////////////////////////// -->
+
+            <div class="mb-3 pb-3" *ngIf="!loadingCart && this.form.get('ProvinceId').valid && this.form.get('MunicipalityId').valid "
+              fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="gappx" style="border-bottom: 1px solid #e5e5e5;">
+              <p matTooltip="{{'Sistemas de precio del envio de sus productos a la localización brindada'}}"
+                style="font-size: 16px; font-weight: 500; margin-bottom: 12px !important;">{{'Seleccione una tarifa de envío*'|translate}}:
+              </p>
+
+              <mat-radio-group [formControl]="form.get('ShippingId')" class="w-100">
+                <mat-radio-button matTooltip="{{shipping?.Business?.name}}" style="height: 50px;" class="w-100"
+                  *ngFor="let shipping of shippingData" [value]="shipping.id">
+                  <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="gappx">
+                    <div fxLayoutAlign="start center">
+                      <img style="height: 32px; width: 32px; border-radius: 50%; object-fit: cover; margin-left: 8px;"
+                        [src]="imageUrl + shipping?.Business?.logo" />
+                      <span fxHide.xs class="ml-2 mat-caption" style="color:black">
+                        {{'Entrega a través de '|translate}}
+                      </span>
+                      <span class="ml-2 mat-caption" style="color:black">
+                        ({{shipping?.Business?.name}})
+                      </span>
+
+
+
+                    </div>
+
+                    <span fxFlex="38" class="taxAmount"
+                      style="font-size: 20px;">{{(shipping.totalPrice||0)|currency:currencyService.getCurrency().code}}
+                    </span>
+                  </div>
+                </mat-radio-button>
+              </mat-radio-group>
+
+              <ng-container *ngIf="!canBeDelivery">
+                <span class="my-2" style="font-size: 16px;font-weight: 500;color:#f44336">
+                  {{'*Estos productos no pueden ser enviados a la localización proporcionada'|translate}}
+                </span>
+              </ng-container>
+
+            </div>
+
+            <ng-container *ngIf="loadingCart">
+              <div class="py-2 my-2 w-100 loader" style="border-radius: 4px;" fxLayout="row" fxLayoutAlign="start center"
+                fxLayoutGap="gappx">
+              </div>
+              <div class="py-2 my-2 w-100 loader" style="border-radius: 4px;" fxLayout="row" fxLayoutAlign="start center"
+                fxLayoutGap="gappx">
+              </div>
+              <div class="py-2 my-2 w-100 loader" style="border-radius: 4px;" fxLayout="row" fxLayoutAlign="start center"
+                fxLayoutGap="gappx">
+              </div>
+              <div class="py-2 my-2 w-100 loader" style="border-radius: 4px;" fxLayout="row" fxLayoutAlign="start center"
+                fxLayoutGap="gappx">
+              </div>
+              <div class="py-2 my-2 w-100 loader" style="border-radius: 4px;" fxLayout="row" fxLayoutAlign="start center"
+                fxLayoutGap="gappx">
+              </div>
+              <div class="py-2 my-2 w-100 loader" style="border-radius: 4px;" fxLayout="row" fxLayoutAlign="start center"
+                fxLayoutGap="gappx">
+              </div>
+            </ng-container>
+            <ul class="total">
+              <li>{{"Total"|translate}} <span
+                  class="count px-2">{{ getTotalWithShippingIncluded() |currency:currencyService.getCurrency().code}}</span>
+              </li>
+            </ul>
+            <p class="my-2">
+              <strong>{{'Pasarelas para efectuar el pago'|translate}}</strong>
+            </p>
+            <div class="paymentFinal">
+              <mat-radio-group [formControl]="form.get('paymentType')">
+                <mat-radio-button *ngIf="this.onlyCubanPeople" [value]="payments[0].id" class="w-100">
+                  <div fxLayout="row" fxLayoutAlign="start center" class="w-100">
+                    <span fxFlex="30" fxFlex.lt-md="50" class="mat-body-2 uppercase mr-3"
+                      style="font-size: 17px;">{{payments[0].name}}</span>
+                    <img [src]="payments[0].logo" style="height: 45px; width: 45px; border-radius: 50%;object-fit: cover;" />
+                  </div>
+                </mat-radio-button>
+                <mat-radio-button *ngIf="this.onlyCubanPeople" [value]="payments[1].id" class="w-100">
+                  <div fxLayout="row" fxLayoutAlign="start center" class="w-100">
+                    <span fxFlex="30" fxFlex.lt-md="50" class="mat-body-2 uppercase mr-3"
+                      style="font-size: 17px;">{{payments[1].name}}</span>
+                    <img [src]="payments[1].logo" style="height: 45px; width: 45px; border-radius: 50%;object-fit: cover;" />
+                  </div>
+                </mat-radio-button>
+                <mat-radio-button *ngIf="!this.onlyCubanPeople" [value]="payments[2].id" class="w-100">
+                  <div fxLayout="row" fxLayoutAlign="start center" class="w-100">
+                    <span fxFlex="30" fxFlex.lt-md="50" class="mat-body-2 uppercase mr-3"
+                      style="font-size: 17px;">{{payments[2].name}}</span>
+                    <img [src]="payments[2].logo" style="height: 45px; width: 45px; border-radius: 50%;object-fit: cover;" />
+                  </div>
+                </mat-radio-button>
+              </mat-radio-group>
+            </div>
+            <!-- <p class="my-2">
+              <strong>{{'*Taxes and shipping included'|translate}}</strong>
+            </p> -->
+            <div fxLayout="row" class="w-100" fxLayoutAlign="center stretch">
+
+              <button
+                [ngClass]="{'paypalBtn': (form.valid && buyProducts.length) , 'paypalBtnInvalid':(form.invalid || !buyProducts.length)}"
+                mat-raised-button [disabled]="form.invalid || !buyProducts.length" (click)="onPayOrder()">
+                <p style="text-align: center;">
+                  PAGAR
+                </p>
+              </button>
+              <a style="display: none;" id="pasarelaLink"></a>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="loadingPayment" style="width: 100%; min-height: 500px;height: 100%;" class="loader"></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div *ngIf="showTransfermovilImage" class="popup">
+  <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="gappx">
+    <button mat-icon-button (click)="onCancelarTranfermovilPayment()">
+      <mat-icon matTooltip="{{'Cancelar la confirmación de pago con transfermóvil'|translate}}" class="mat-18">clear</mat-icon>
+    </button>
+  </div>
+  <div fxLayout="column" fxLayoutAlign="start center" fxLayoutAlign.lt-md="start start" fxLayoutGap="gappx">
+    <p ngClass.gt-sm="mat-title" ngClass.lt-md="mat-title" style="color:#fff">
+      Confirmación de pago usando transfermóvil.
+    </p>
+    <ul style="color:#fff">
+      <div fxHide.lt-md>
+        <li>
+          Abra la aplicación de transfermóvil en su teléfono.
+        </li>
+        <li>
+          Seleccione su banco y autentíquese.
+        </li>
+        <li>
+          Entre en la opción de "Operaciones" y pulse la opción de pago en línea.
+        </li>
+        <li>
+          Precione el botón de lectura de qr y realize su pago.
+        </li>
+      </div>
+      <a [href]="domSanitizer.bypassSecurityTrustUrl(this.launchTM)" class="mt-2" mat-flat-button>Abrir la app de tranfermovil</a>
+    </ul>
+  </div>
+
+
+
+  <div fxFlexFill fxLayout="column" fxLayoutAlign="start center">
+    <img class="mt-4" [src]="this.qrTransfermovilImage" />
+    <div style="max-width: 20rem;" fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="gappx">
+      <span class="mat-title mt-3">
+        Total: &nbsp;{{finalPrice|currency:currencyService.getCurrency().code}}
+      </span>
+
+    </div>
+  </div>
+</div>

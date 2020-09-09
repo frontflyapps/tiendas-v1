@@ -1,0 +1,17 @@
+.title {
+  overflow: hidden;
+  width: 100%;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+
+  @media (max-width:480px) {
+    h5 {
+      font-size: 14px !important;
+    }
+  }
+}
+
+.media {
+  margin-right: 10px !important;
+}

@@ -1,0 +1,73 @@
+@import "../../../../assets/scss/mixins/breakpoints";
+
+#succesMsg {
+
+  padding: 30px !important;
+  max-width: 600px !important;
+  width: 100% !important;
+
+  @include media-breakpoint("lt-md") {
+    padding: 16px !important;
+    max-width: inherit !important;
+    width: inherit !important;
+  }
+
+}
+
+.titleSucces {
+
+  @include media-breakpoint("lt-md") {
+    mat-icon {
+      margin-top: 4px;
+      font-size: 80px !important;
+      height: 80px !important;
+      width: 80px !important;
+      color: #4caf50;
+    }
+  }
+
+  mat-icon {
+    margin-top: 4px;
+    font-size: 80px !important;
+    height: 80px !important;
+    width: 80px !important;
+    color: #4caf50;
+  }
+}
+
+
+.titleError {
+
+  @include media-breakpoint("lt-md") {
+    mat-icon {
+      margin-top: 4px;
+      font-size: 80px !important;
+      height: 80px !important;
+      width: 80px !important;
+      color: #4caf50;
+    }
+  }
+
+  mat-icon {
+    margin-top: 4px;
+    font-size: 80px !important;
+    height: 80px !important;
+    width: 80px !important;
+    color: #f44336;
+  }
+}
+
+#errorMsg {
+
+  padding: 30px !important;
+  max-width: 600px !important;
+  width: 100% !important;
+  border: 2px solid #f44336 !important;
+
+  @include media-breakpoint("lt-md") {
+    padding: 16px !important;
+    max-width: inherit !important;
+    width: inherit !important;
+  }
+
+}

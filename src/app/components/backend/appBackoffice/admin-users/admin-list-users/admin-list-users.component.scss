@@ -1,0 +1,33 @@
+@import "../../../../../../assets/scss/theme/variables";
+@import "../../../../../../assets/scss/mixins/breakpoints";
+
+
+
+.LayoutTabs {
+  // background-color: #fff;
+  // padding: 8px;
+
+  // @include media-breakpoint("xs") {
+  //   padding: 2px !important;
+  // }
+}
+
+// .mat-tab-header {
+//   display: flex;
+//   overflow: hidden;
+//   position: relative;
+//   flex-shrink: 0;
+//   background-color: $theme-main-300 !important;
+//   color: #fff !important;
+// }
+
+// .mat-tab-group.mat-primary .mat-ink-bar,
+// .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+//   background-color: $theme-main-dark !important;
+// }
+
+
+.mat-ink-bar {
+  height: 4px !important;
+  border-radius: 2px !important;
+}

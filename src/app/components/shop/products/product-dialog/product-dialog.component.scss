@@ -1,0 +1,88 @@
+@import "../../../../../assets/scss/mixins/breakpoints";
+
+table,
+th,
+td {
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 8px;
+}
+
+th {
+  text-align: left;
+  color: #616161;
+}
+
+
+.nameProduct {
+  font-size: 26px;
+  overflow: hidden;
+  width: 100%;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+
+  @include media-breakpoint('lt-md') {
+    font-size: 20px !important;
+  }
+}
+
+input {
+  width: 80px;
+  text-align: center;
+  background-color: #fff;
+  height: 35px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+}
+
+.btn-custom {
+  min-width: 160px !important;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  margin-left: 4px;
+  margin-right: 4px;
+}
+
+.discription {
+
+  // .module {
+  //   width: 100%;
+  //   margin: 0 0 1em 0;
+  //   overflow: hidden;
+  // }
+
+  // .line-clamp {
+  //   display: -webkit-box !important;
+  //   -webkit-line-clamp: 20 !important;
+  //   -webkit-box-orient: vertical !important;
+  //   line-height: 1.6rem;
+  //   height: 32rem;
+  // }
+}
+
+.productImage {
+  max-height: 400px;
+  max-width: 100%;
+  object-fit: cover !important;
+  object-position: center;
+  margin: auto !important;
+
+  @media (max-width:800px) {
+    max-height: 200px !important;
+  }
+}
+
+.product-right {
+  min-width: 280px !important;
+  max-width: 360px !important;
+
+  @media (max-width:500px) {
+    max-width: 290px !important;
+  }
+
+}

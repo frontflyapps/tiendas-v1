@@ -1,0 +1,101 @@
+<div class="dialog-content-wrapper">
+
+  <mat-toolbar class="mb-2" matDialogTitle color="primary" id="toolbarHeader">
+    <mat-toolbar-row fxLayoutAlign="space-between center">
+      <span class="mat-title mb-0">{{'Message'|translate}}</span>
+      <button mat-icon-button (click)="dialogRef.close()" aria-label="Close dialog">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <div mat-dialog-content class="my-dialog-content">
+
+
+
+    <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="gappx">
+
+      <div fxLayout="row wrap" fxLayoutAlign="space-between start" fxLayoutGap="gappx">
+        <div fxLayout="column" class="py-2" fxFlex="40" fxFlex.xs="100" fxLayoutAlign="start start" fxLayoutGap="gappx">
+          <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="gappx">
+            <span class="mat-body-2 uppercase underline">{{'Sent by'|translate}}</span>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="gappx">
+            <span class="mat-body-2">{{this.selectedMessage.name}}</span>
+          </div>
+        </div>
+        <div fxLayout="column" class="py-2" fxFlex="40" fxFlex.xs="100" fxLayoutAlign="start start" fxLayoutGap="gappx">
+          <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="gappx">
+            <span class="mat-body-2 uppercase underline">{{'Email'|translate}}</span>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="gappx">
+            <span class="mat-body-2">{{this.selectedMessage.email}}</span>
+          </div>
+
+        </div>
+        <div fxLayout="column" class="py-2" fxFlex="40" fxFlex.xs="100" fxLayoutAlign="start start" fxLayoutGap="gappx">
+          <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="gappx">
+            <span class="mat-body-2 uppercase underline">{{'Creation date'|translate}}</span>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="gappx">
+            <span class="mat-body-2">{{this.selectedMessage.createdAt|date:'fullDate'}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="gappx">
+      <span class="mat-body-2 uppercase underline">{{'Message'|translate}}</span>
+    </div>
+
+    <section fxLayout="row" fxLayoutAlign="space-between center"
+      class="layoutMsg py-3 px-3 mt-2 bg-light mat-elevation-z2">
+      <div fxLayout="column" fxFlex="15" fxLayoutAlign="center center" fxLayoutGap="gappx">
+        <mat-icon class="personIcon">person</mat-icon>
+      </div>
+      <div fxLayout="column" fxFlex="85" fxLayoutAlign="start stretch" fxLayoutGap="gappx">
+        <span class="mat-body-2">{{this.selectedMessage.message}}</span>
+      </div>
+
+    </section>
+
+    <ng-container *ngIf="this.selectedMessage.response">
+      <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="gappx">
+        <span class="mat-body-2 mt-3 uppercase underline">{{'Recent response'|translate}}</span>
+      </div>
+
+      <section fxLayout="row" fxLayoutAlign="space-between center"
+        class="layoutMsg py-3 px-3 mt-2 background-color-teal-100 mat-elevation-z2">
+        <div fxLayout="column" fxFlex="15" fxLayoutAlign="center center" fxLayoutGap="gappx">
+          <mat-icon class="personIcon">offline_pin</mat-icon>
+        </div>
+        <div fxLayout="column" fxFlex="85" fxLayoutAlign="start stretch" fxLayoutGap="gappx">
+          <span class="mat-body-2">{{this.selectedMessage.response}}</span>
+        </div>
+      </section>
+
+    </ng-container>
+
+
+    <form [formGroup]="form" class="mt-3" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="gappx">
+
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{'Response'|translate}}</mat-label>
+        <textarea formControlName="response" matInput rows="4" placeholder="{{'Response'|translate}}"></textarea>
+        <mat-icon matSuffix>edit</mat-icon>
+        <mat-error *ngIf="form.controls['response'].hasError('required')">
+          {{'Response'|translate}} <strong>{{'is required'|translate}}</strong>
+        </mat-error>
+      </mat-form-field>
+
+    </form>
+  </div>
+
+  <div mat-dialog-actions fxLayout="row" fxLayoutAlign="end start">
+    <button mat-flat-button (click)="onSave()" [disabled]="this.form.invalid"
+      color="primary">{{'Save'|translate}}</button>
+
+  </div>
+
+</div>

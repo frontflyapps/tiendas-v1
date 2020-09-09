@@ -1,0 +1,207 @@
+<div class="dialog-content-wrapper">
+
+  <mat-toolbar class="mb-2" matDialogTitle color="primary" id="toolbarHeader">
+    <mat-toolbar-row fxLayoutAlign="space-between center">
+      <span class="mat-title mb-0">{{'Add shipping'|translate}}</span>
+      <button mat-icon-button (click)="dialogRef.close()" aria-label="Close dialog">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <div mat-dialog-content class="my-dialog-content">
+    <mat-horizontal-stepper labelPosition="bottom" [linear]="'true'" #stepper>
+      <mat-step [stepControl]="form">
+        <ng-template matStepLabel>{{'Localización'|translate | uppercase}}</ng-template>
+        <p class="mat-body-2 uppercase mb-3">
+          {{'*Establece la localización del sitio al aque vas a permitir envíos'|translate}}
+        </p>
+
+        <p class="mat-body-2 uppercase mb-1 ">
+          {{'País'|translate}}
+        </p>
+        <mat-form-field class="form-field-width" appearance="outline">
+          <mat-select [disabled]="true" required placeholder="{{'País'|translate}}" [formControl]="form.controls['CountryId']">
+            <mat-option *ngFor="let country of allCountries" [value]="country.id">
+              {{country.name['es']}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="form.controls['CountryId'].hasError('required')">
+            {{'El país es requerido'|translate}} <strong>{{'is required'|translate}}</strong>
+          </mat-error>
+        </mat-form-field>
+
+        <div class="form-field-width" fxLayout="row wrap" fxLayoutAlign="space-between center">
+          <div fxFlex="49" fxFlex.lt-md="100" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="gappx">
+            <p class="mat-body-2 uppercase mb-1 ">
+              {{'Provincia'|translate}}
+            </p>
+            <mat-form-field class="form-field-width" appearance="outline">
+              <mat-select required placeholder="{{'Nombre de la provincia'|translate}}" [formControl]="form.controls['ProvinceId']"
+                (selectionChange)="onSelectProvince($event.value)">
+                <mat-option *ngFor="let province of allProvinces" [value]="province.id">
+                  {{province.name}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="form.controls['ProvinceId'].hasError('required')">
+                {{'Provincia'|translate}} <strong>{{'is required'|translate}}</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div fxFlex="49" fxFlex.lt-md="100" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="gappx">
+            <p class="mat-body-2 uppercase mb-1 ">
+              {{'Municipios'|translate}}
+            </p>
+
+            <mat-form-field class="form-field-width" fxFlex="49" fxFlex.lt-md="100" appearance="outline">
+              <mat-select multiple required placeholder="{{'Municipios'|translate}}" [formControl]="form.controls['MunicipalityIds']">
+                <mat-option (click)="onSelectAllMunicipalities()">
+                  {{'Marcar todos'}}
+                </mat-option>
+                <mat-option *ngFor=" let municipio of municipalities" [value]="municipio">
+                  {{municipio.name}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="form.controls['MunicipalityIds'].hasError('minlength')">
+                {{'Debe seleccionar al menos'|translate}} <strong>{{'1 municipio'|translate}}</strong>
+              </mat-error>
+            </mat-form-field>
+
+          </div>
+        </div>
+
+        <p class="mat-body-2 uppercase mb-3">
+          {{'*Seleccione los productos para establecer las tarifas'|translate}}
+        </p>
+
+        <mat-form-field class="form-field-width" appearance="outline">
+          <mat-select multiple required placeholder="{{'Productos'|translate}}" [formControl]="form.controls['ProductIds']">
+            <mat-option *ngFor="let product of allProducts" [value]="product">
+              <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="gappx">
+                <img
+                  style="height: 36px;width: 36px; object-fit: cover;object-position: center; border-radius: 50%;border: 1.5px solid rgba(0, 0, 0, .12);"
+                  ngp-lazy ngp-threshold="0.1" *ngIf="product.Image && product.Image.length" [src]="imageUrl + product.Image[0].image">
+                <img style="height: 36px;width: 36px; object-fit: cover;object-position: center; border-radius: 50%;
+                border: 1.5px solid rgba(0, 0, 0, .12);" ngp-lazy ngp-threshold="0.1" *ngIf="!(product.Image && product.Image.length)"
+                  src="assets/images/noImage.jpg">
+                <span class="mat-body-2 ml-2">{{product.name['es']}}</span>
+              </div>
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="form.controls['ProductIds'].hasError('minlength')">
+            {{'Debe seleccionar al menos'|translate}} <strong>{{'1 producto'|translate}}</strong>
+          </mat-error>
+        </mat-form-field>
+
+        <p class="mat-body-2 uppercase mb-1 ">
+          {{'Precio general de envío para todos los municipios y productos seleccionados'|translate}}
+        </p>
+        <mat-form-field class="form-field-width" appearance="outline">
+          <input type='number' matInput required placeholder="{{'Precio'|translate}}" [formControl]="form.controls['generalPrice']" />
+        </mat-form-field>
+
+        <div>
+          <button mat-button matStepperPrevious class="uppercase">{{'Anterior'|translate}}</button>
+          <button mat-button matStepperNext (click)="onPreparatePrices()" class="uppercase"
+            [disabled]="form.invalid">{{'Siguiente'|translate}}</button>
+        </div>
+
+
+      </mat-step>
+
+      <mat-step [stepControl]="priceForm">
+        <ng-template matStepLabel>{{'Precios x producto'|translate}}</ng-template>
+        <ng-container *ngIf="priceForm">
+          <div fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="gappx">
+            <ng-container *ngFor="let municipalityForm of priceForm.controls">
+
+              <section class="mx-2 my-3">
+                <h3 class="mat-title mb-0">
+                  {{municipalityForm.get('Municipality').value.name}}
+                </h3>
+
+                <mat-card class="p-2 pb-4 mx-2" style="border-radius: 8px;">
+                  <div>
+                    <table mat-table [dataSource]="getFormArray(municipalityForm,'prices').controls">
+
+                      <ng-container matColumnDef="product">
+                        <th style="width: 150px;" mat-header-cell *matHeaderCellDef>
+                          <span class="uppercase mat-body-2">
+                            Product
+                          </span>
+                        </th>
+                        <td mat-cell *matCellDef="let elementForm">
+                          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="gappx">
+                            <img
+                              style="height: 36px;width: 36px; object-fit: cover;object-position: center; border-radius: 50%;border: 1.5px solid rgba(0, 0, 0, .12);"
+                              ngp-lazy ngp-threshold="0.1"
+                              *ngIf="elementForm.get('Product').value.Image && elementForm.get('Product').value.Image.length"
+                              [src]="imageUrl + elementForm.get('Product').value.Image[0].image">
+                            <img style="height: 36px;width: 36px; object-fit: cover;object-position: center; border-radius: 50%;
+                          border: 1.5px solid rgba(0, 0, 0, .12);" ngp-lazy ngp-threshold="0.1"
+                              *ngIf="!(elementForm.get('Product').value.Image && elementForm.get('Product').value.Image.length)"
+                              src="assets/images/noImage.jpg">
+                            <span class="mat-body-2 ml-2" [ngStyle]="{'textDecoration': (elementForm.disabled)?'line-through':'none'}">
+                              {{elementForm.get('Product').value.name['es']}}</span>
+                          </div>
+
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="price">
+                        <th style="width: 100px;" class="headerData" mat-header-cell *matHeaderCellDef>
+                          <span class="uppercase mat-body-2">
+                            Precio de envio
+                          </span>
+                        </th>
+                        <td style="text-align: left" mat-cell *matCellDef="let elementForm">
+                          <mat-form-field style="width: 80px;" appearance="outline">
+                            <input required matInput type="number" [formControl]="elementForm.get('price')">
+                          </mat-form-field>
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="action">
+                        <th style="width:5%;overflow:hidden;" mat-header-cell *matHeaderCellDef mat-sort-header>
+                          <mat-slide-toggle [checked]="municipalityForm.enabled" color="primary"
+                            (change)="onDisabledAll(municipalityForm,$event.checked)">
+                          </mat-slide-toggle>
+                        </th>
+                        <td mat-cell *matCellDef="let element;let i=index">
+                          <div id="actionsHover" fxLayout="row" fxLayoutAlign="end center">
+                            <mat-slide-toggle [checked]="element.enabled" color="primary"
+                              (change)="onRemoveProduct(element,$event.checked)">
+                            </mat-slide-toggle>
+                          </div>
+                        </td>
+                      </ng-container>
+
+                      <tr mat-header-row *matHeaderRowDef="['product','price','action']"></tr>
+                      <tr mat-row *matRowDef="let row; columns: ['product','price','action'];"></tr>
+                    </table>
+
+                  </div>
+
+                </mat-card>
+
+              </section>
+            </ng-container>
+          </div>
+        </ng-container>
+
+
+        <div>
+          <button mat-button matStepperPrevious class="uppercase">{{'Anterior'|translate}}</button>
+          <button (click)="onSave()" mat-button matStepperNext class="uppercase">{{'Guardar'|translate}}</button>
+        </div>
+
+
+      </mat-step>
+    </mat-horizontal-stepper>
+  </div>
+
+  <div mat-dialog-actions fxLayout="row" fxLayoutAlign="end start">
+  </div>
+
+</div>

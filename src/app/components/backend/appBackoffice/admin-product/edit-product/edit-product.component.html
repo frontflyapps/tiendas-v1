@@ -1,0 +1,628 @@
+<mat-tab-group [color]="'accent'" [backgroundColor]="'primary'">
+  <mat-tab>
+
+    <ng-template mat-tab-label>
+      <mat-icon class="example-tab-icon">info</mat-icon>
+      <span class="mat-body-2 mx-2" color="primary">{{'Basic Info'|translate}}</span>
+    </ng-template>
+
+    <ng-template matTabContent>
+      <div class="LayoutTabs" fxFlexFill fxLayout="column" fxLayoutAlign="start stretch">
+
+        <form [formGroup]="this.BasicInfo">
+          <ng-template matStepLabel>{{'BASIC'|translate}}</ng-template>
+          <div fxLayout="column" class="SteeperLayout" fxLayoutAlign="start stretch" fxLayoutGap="gappx">
+            <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="gappx">
+              <span class="mat-body-2" style="text-transform: uppercase;">{{'Select your creation language'|translate}}
+                <mat-icon matTooltip="{{'Default is Spanish'|translate}}" class="iconHelp">help</mat-icon></span>
+            </div>
+
+            <div fxLayout="row" class="mt-2" fxLayoutAlign="start start" fxLayoutGap="gappx">
+              <mat-form-field fxFlex="60" fxFlex.lt-md="80" fxFlex.xs="100" appearance="outline">
+                <mat-label> {{'Language'|translate}}</mat-label>
+                <mat-select [compareWith]="compareFn" required [formControl]="languageForm" placeholder="{{'Language'|translate}}">
+                  <mat-option *ngFor="let language of this.languages;let i=index" [value]="language">
+                    <div fxLayout="row" fxLayoutAlign="start center">
+                      <img [src]="language.image" style="height: 30px; width: 30px;">
+                      <span class="ml-2 mat-body-2">
+                        {{language.name}}
+                      </span>
+                    </div>
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="gappx">
+              <span class="mat-body-2 uppercase">{{'Type of Product'|translate}}</span>
+            </div>
+
+            <div fxLayout="row" class="mt-2" fxLayoutAlign="start start" fxLayoutGap="gappx">
+              <mat-form-field fxFlex="60" fxFlex.lt-md="80" fxFlex.xs="100" appearance="outline">
+                <mat-label>{{'Type of product'|translate}}</mat-label>
+                <mat-select (selectionChange)="onTypesProductosChange($event)" placeholder="{{'Type of product'|translate}}"
+                  [formControl]="this.BasicInfo.controls['type']">
+                  <mat-option *ngFor="let type of this.typesProducts;let i=index" [value]="type.id">
+                    <div fxLayout="row" fxLayoutAlign="start center">
+                      <span style=" text-transform:capitalize !important; ">
+                        {{type.name[language]?type.name[language]:type.name['es']}}
+                      </span>
+                    </div>
+                  </mat-option>
+                </mat-select>
+
+                <mat-error *ngIf="BasicInfo.controls['type'].hasError('required')">
+                  {{'Type of product'|translate}} <strong>{{'is required'|translate}}</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="gappx">
+              <span class="mat-body-2">{{'NAME OF THE NEW PRODUCT'|translate}}</span>
+            </div>
+
+            <div fxLayout="row" class="mt-2" fxLayoutAlign="start start" fxLayoutGap="gappx">
+              <mat-form-field fxFlex="60" fxFlex.lt-md="80" fxFlex.xs="100" appearance="outline">
+                <mat-label>{{'Product name'|translate}}</mat-label>
+                <input matInput placeholder="{{'Product'|translate}}" [formControl]="this.BasicInfo.controls['name']">
+                <mat-icon class="greyIcon" matSuffix>add_shopping_cart</mat-icon>
+                <mat-error *ngIf="BasicInfo.controls['name'].hasError('required')">
+                  {{'Product'|translate}} <strong>{{'is required'|translate}}</strong>
+                </mat-error>
+                <mat-error *ngIf="BasicInfo.controls['name'].hasError('minlength')">
+                  {{'El nombre del producto debe tener al menos 5 caracteres'|translate}}
+                </mat-error>
+                <mat-error *ngIf="BasicInfo.controls['name'].hasError('pattern')">
+                  {{'El nombre debe contener carateres alfanuméricos'|translate}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="gappx">
+              <span class="mat-body-2">{{'DESCRIBE YOUR PRODUCT'|translate}}</span>
+            </div>
+
+            <div fxLayout="row" class="mt-2" fxLayoutAlign="start start" fxLayoutGap="gappx">
+              <mat-form-field fxFlex="60" fxFlex.lt-md="80" fxFlex.xs="100" appearance="outline" appearance="outline">
+                <mat-label>{{'Short description'|translate}}</mat-label>
+                <textarea maxlength="250" #message rows="2" matInput [formControl]="BasicInfo.controls['shortDescription']"
+                  placeholder="{{'Description'|translate}}"></textarea>
+                <mat-icon class="greyIcon" matSuffix>edit</mat-icon>
+                <mat-hint align="end">{{message.value.length}} / 250</mat-hint>
+                <mat-error *ngIf="BasicInfo.controls['shortDescription'].hasError('required')">
+                  {{'Description'|translate}} <strong>{{'is required'|translate}}</strong>
+                </mat-error>
+                <mat-error *ngIf="BasicInfo.controls['shortDescription'].hasError('minlength')">
+                  {{'La descripción del producto debe tener al menos 10 caracteres'|translate}}
+                </mat-error>
+                <mat-error *ngIf="BasicInfo.controls['shortDescription'].hasError('pattern')">
+                  {{'La descripción del producto debe contener carateres alfanuméricos'|translate}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+
+            <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="gappx">
+              <span class="mat-body-2">{{'SELECT YOUR PRODUCT CATEGORY'|translate}}</span>
+            </div>
+
+            <div fxLayout="row" class="mt-2" fxLayoutAlign="start start" fxLayoutGap="gappx">
+              <mat-form-field fxFlex="60" fxFlex.lt-md="80" fxFlex.xs="100" appearance="outline">
+                <mat-label> {{'Category'|translate}}</mat-label>
+                <mat-select [formControl]="this.BasicInfo.controls['CategoryId']" placeholder="{{'Category'|translate}}">
+                  <mat-option *ngFor="let category of this.Categories;let i=index" [value]="category.id">
+                    <div fxLayout="row" fxLayoutAlign="start center">
+                      <span style=" text-transform:capitalize !important; ">
+                        {{(category.name[language]?category.name[language]:category.name['es'])}}
+                      </span>
+                    </div>
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="BasicInfo.controls['CategoryId'].hasError('required')">
+                  {{'La categoría del producto es requerida'|translate}}
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <ng-container *ngIf="this.BasicInfo.get('type').value == 'physical'">
+              <p class="mat-body-2 mb-2" style="text-transform: uppercase;">{{'Límites de compra'|translate}}
+                <mat-icon
+                  matTooltip="{{'Establece los limites inferiores y superiores para adquirir este producto. Ej: la catidad mínima para comprar unproducto es 5 unidades'|translate}}"
+                  class="iconHelp">help</mat-icon>
+              </p>
+
+              <div fxLayout="row wrap" class="mt-2 max-width" fxLayoutAlign="start center" fxLayoutGap="gappx">
+                <mat-form-field ngClass.xs="mx-0 w-100" appearance="outline"
+                  matTooltip="{{'Note que el cliente no podrá adquirir el producto sino compra unidades por encima de esta cantidad'|translate}}">
+                  <mat-label>{{'límite inferior'|translate}}</mat-label>
+                  <input [readonly]="this.typeProduct !='physical'" min="1" type="number" matInput
+                    placeholder="{{'Limite inferior para adquirir el producto'|translate}}" [formControl]="BasicInfo.controls['minSale']">
+                  <mat-error *ngIf="BasicInfo.controls['minSale'].hasError('required')">
+                    {{'Es requerido'|translate}}
+                  </mat-error>
+                  <mat-error *ngIf="BasicInfo.controls['minSale'].hasError('min')">
+                    {{'No cumple con la cantidad mínima para comprar el producto'|translate}}
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="mx-3" ngClass.xs="mx-0 w-100" appearance="outline">
+                  <mat-label>{{'límite superior'|translate}}</mat-label>
+                  <input [readonly]="this.typeProduct !='physical'" [min]="BasicInfo.get('minSale').value" type="number" matInput
+                    max="10000" placeholder="{{'Limite superior para adquirir el producto'|translate}}"
+                    [formControl]="BasicInfo.controls['maxSale']"
+                    matTooltip="{{'Note que el cliente no podrá adquirir más unidades por encima de esta cantidad'|translate}}">
+                  <mat-error *ngIf="BasicInfo.controls['maxSale'].hasError('required')">
+                    {{'Es requerido'|translate}}
+                  </mat-error>
+                  <mat-error *ngIf="BasicInfo.controls['maxSale'].hasError('min')">
+                    {{'No cumple con la cantidad mínima para comprar el producto'|translate}}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </ng-container>
+
+            <p *ngIf="this.BasicInfo.get('type').value == 'physical'" class="mat-body-2 mb-2" style="text-transform: uppercase;">
+              {{'Sistema de precios'|translate}}
+              <mat-icon matTooltip="{{'Establece los precios según la cantidad de unidades que se adquieran, \n
+                si usted esta interesado en realizar ventas al por mayor esta es una característica \n
+                que le permite establecer rangos de precios segun cantidad de unidades.'|translate}}" class="iconHelp">help</mat-icon>
+            </p>
+
+            <p *ngIf="this.BasicInfo.get('type').value != 'physical'" class="mat-body-2 mb-2" style="text-transform: uppercase;">
+              {{'Precio de venta'|translate}}
+              <mat-icon matTooltip="{{'Establezca el precio de su producto'|translate}}" class="iconHelp">help</mat-icon>
+            </p>
+
+            <div fxLayout="column" class="mt-2 w-100" fxLayoutAlign="start start" fxLayoutGap="gappx">
+              <div fxLayout="row" class="w-100" fxLayoutAlign="start center" *ngFor="let form of getArrayPrices();let i = index">
+                <ng-container *ngIf="this.BasicInfo.get('type').value == 'physical'">
+                  <mat-form-field style="width: 80px;" appearance="outline">
+                    <mat-label>{{'De:'|translate}}</mat-label>
+                    <input matTooltip="{{'Desde esta cantidad de unidades'|translate}}" [readonly]="true" type="number" matInput
+                      placeholder="{{'De:'|translate}}" [formControl]="form.controls['min']">
+                  </mat-form-field>
+                  <mat-form-field class="ml-3" style="width: 80px;" appearance="outline">
+                    <mat-label>{{'hasta:'|translate}}</mat-label>
+                    <input matTooltip="{{'Hasta esta cantidad de unidades'|translate}}"
+                      [readonly]="i!= getArrayPrices().length-1 || this.typeProduct !='physical'" type="number" matInput
+                      placeholder="{{'hasta:'|translate}}" [formControl]="form.controls['max']">
+                  </mat-form-field>
+                  <mat-form-field class="ml-3" style="width: 80px;" appearance="outline">
+                    <mat-label>{{'price'|translate}}</mat-label>
+                    <input matTooltip="{{'Precio de venta por unidad si se solicita una cantidad comprendida en este rango'|translate}}"
+                      type="number" matInput placeholder="{{'price'|translate}}" [formControl]="form.controls['price'] ">
+                    <span style="font-size:16px" class="greyIcon" matSuffix>$</span>
+                  </mat-form-field>
+                </ng-container>
+
+                <mat-form-field *ngIf="this.BasicInfo.get('type').value != 'physical'" class="w-100" ngClass.xs="mx-0" appearance="outline">
+                  <mat-label>{{'price'|translate}}</mat-label>
+                  <input matTooltip="{{'Precio de venta por unidad si se solicita una cantidad comprendida en este rango'|translate}}"
+                    type="number" matInput placeholder="{{'price'|translate}}" [formControl]="form.controls['price'] ">
+                  <span style="font-size:16px" class="greyIcon" matSuffix>$</span>
+                </mat-form-field>
+
+                <ng-container *ngIf="this.BasicInfo.get('type').value == 'physical'">
+                  <button style="width: 30px;
+                  height: 30px;
+                  flex-shrink: 0;
+                  line-height: 30px;" (click)="onRemoveRangePrice(i)" *ngIf="i == getArrayPrices().length - 1 && i" class="mx-2"
+                    mat-icon-button color="warn">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+
+                  <button style="width: 30px;
+                  height: 30px;
+                  flex-shrink: 0;
+                  line-height: 30px;" *ngIf="i ==  getArrayPrices().length - 1" (click)="addPriceRange()" mat-icon-button color="primary">
+                    <mat-icon>add</mat-icon>
+                  </button>
+                </ng-container>
+
+              </div>
+
+            </div>
+
+
+            <div fxLayout="column" fxFlex="46" fxFlex.lt-md="100" fxLayoutAlign="start stretch" fxLayoutGap="gappx">
+              <span class="mat-body-2 uppercase">{{'Rating'|translate}}
+                <mat-icon matTooltip="{{'Enable an initial rating for the product based on its popularity and quality'|translate}}"
+                  class="iconHelp">help
+                </mat-icon>
+              </span>
+              <div class="mt-2">
+                <ngp-rating-material [config]="{label:'estrellas', size:'22px', showNumber:true , showClearBtn:true}"
+                  [formControl]="this.BasicInfo.get('rating')">
+                </ngp-rating-material>
+              </div>
+            </div>
+
+            <!-- CAMPOS PARA PRODUCTOS FISICOS -->
+            <ng-container *ngIf="typeProduct == 'physical'">
+              <p class="uppercase mat-body-2 my-3">
+                {{'Physical Product Parameters'|translate}}
+              </p>
+
+              <form [formGroup]="physicalProductForm">
+                <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="gappx">
+                  <span class="mat-body-2">{{'SELECT YOUR PRODUCT BRAND'|translate}}</span>
+                </div>
+
+                <div fxLayout="row" class="mt-2" fxLayoutAlign="start start" fxLayoutGap="gappx">
+                  <mat-form-field fxFlex="60" fxFlex.lt-md="70" fxFlex.xs="100" appearance="outline">
+                    <mat-label> {{'Brand'|translate}}</mat-label>
+                    <mat-select [formControl]="this.physicalProductForm.controls['BrandId']" placeholder="{{'Brand'|translate}}">
+                      <mat-option *ngFor="let brand of this.Brands;let i=index" [value]="brand.id">
+                        <div fxLayout="row" fxLayoutAlign="start center">
+                          <img *ngIf="brand.image" [src]="imageUrl + brand.image" style="width: auto;height:32px" alt="">
+                          <span style=" text-transform:capitalize !important; margin-left:16px !important;">
+                            {{(brand.name[language]?brand.name[language]:brand.name['es'])}}
+                          </span>
+                        </div>
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+
+                <!-- <div fxLayout="row" class="mt-2" fxLayoutAlign="start start" fxLayoutGap="gappx">
+                  <span class="mat-body-2">{{'PRODUCT DIMENSIONS'|translate}}</span>
+                </div> -->
+
+                <!-- <div fxLayout="row wrap" class="mt-2 w-60" ngClass.lt-md="w-80" ngClass.xs="w-100" fxLayoutAlign="start start"
+                  fxLayoutGap="gappx">
+
+                  <mat-form-field style="width: 250px;" class="mx-2" appearance="outline">
+                    <mat-label>{{'Weigth(g)'|translate}}</mat-label>
+                    <input type="number" matInput placeholder="{{'Weigth(g)'|translate}}"
+                      [formControl]="physicalProductForm.controls['weigth']">
+                    <span style="font-size:17px" class="greyIcon" matSuffix>g</span>
+                  </mat-form-field>
+                  <mat-form-field style="width: 250px;" class="mx-2" appearance="outline">
+                    <mat-label>{{'Length(cm)'|translate}}</mat-label>
+                    <input type="number" matInput placeholder="{{'Length(cm)'|translate}}"
+                      [formControl]="physicalProductForm.controls['length']">
+                    <span style="font-size:17px" class="greyIcon" matSuffix>cm</span>
+                  </mat-form-field>
+
+                  <mat-form-field style="width: 250px;" class="mx-2" appearance="outline">
+                    <mat-label>{{'Width(cm)'|translate}}</mat-label>
+                    <input type="number" matInput placeholder="{{'Width(cm)'|translate}}"
+                      [formControl]="physicalProductForm.controls['width']">
+                    <span style="font-size:17px" class="greyIcon" matSuffix>cm</span>
+                  </mat-form-field>
+
+                  <mat-form-field style="width: 250px;" class="mx-2" appearance="outline">
+                    <mat-label>{{'Height(cm)'|translate}}</mat-label>
+                    <input type="number" matInput placeholder="{{'Height(cm)'|translate}}"
+                      [formControl]="physicalProductForm.controls['height']">
+                    <span style="font-size:17px" class="greyIcon" matSuffix>cm</span>
+                  </mat-form-field>
+
+                </div> -->
+
+
+
+
+                <!-- <mat-divider class="mt-2 w-60" ngClass.lt-md="w-80" ngClass.xs="w-100"></mat-divider> -->
+
+                <div fxLayout="row wrap" class="mt-2 max-width" fxLayoutAlign="space-between start" fxLayoutGap="gappx">
+                  <div fxLayout="column" fxFlex="46" fxFlex.lt-md="100" fxLayoutAlign="start stretch" fxLayoutGap="gappx">
+                    <span class="mat-body-2 mb-2">{{'Cantidad en almacén '|translate}}
+                    </span>
+                    <mat-form-field fxFlex="46" fxFlex.lt-md="100" appearance="outline">
+                      <mat-label>{{'Cantidad en almacén'|translate}}</mat-label>
+                      <input [formControl]="physicalProductForm.controls['stock']" type="number" step="1" matInput
+                        placeholder="{{'Cantidad en almacén'|translate}}">
+                      <mat-icon class="greyIcon" matSuffix>business</mat-icon>
+                      <mat-error *ngIf="physicalProductForm.controls['stock'].hasError('required')">
+                        {{'Stock'|translate}} <strong>{{'is required'|translate}}</strong>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div fxLayout="column" fxFlex="46" fxFlex.lt-md="100" fxLayoutAlign="start stretch" fxLayoutGap="gappx">
+                    <span class="mat-body-2 mb-2">{{'Límite de aviso en almacén'|translate}}
+                      <mat-icon matTooltip="{{'Value below which it is notified'|translate}}" class="iconHelp">help
+                      </mat-icon>
+                    </span>
+                    <mat-form-field fxFlex="46" fxFlex.lt-md="100" appearance="outline">
+                      <mat-label>{{'Límite de aviso en almacén'|translate}}</mat-label>
+                      <input [formControl]="physicalProductForm.controls['stockThreshold']" step="1" type="number" matInput
+                        placeholder="{{'Límite de aviso en almacén'|translate}}">
+                      <mat-icon class="greyIcon" matSuffix>business</mat-icon>
+                      <mat-error *ngIf="physicalProductForm.controls['stockThreshold'].hasError('required')">
+                        {{'Stock threshold'|translate}} <strong>{{'is required'|translate}}</strong>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+
+                  <div fxLayout="column" fxFlex="46" fxFlex.lt-md="100" fxLayoutAlign="start stretch" fxLayoutGap="gappx">
+                    <span class="mat-body-2">{{'Stock actions'|translate}}
+                    </span>
+                    <mat-checkbox [formControl]="physicalProductForm.controls['showStockQuantity']" class="my-1">
+                      {{'Show stock quantity'|translate}}</mat-checkbox>
+                  </div>
+
+                </div>
+
+              </form>
+
+            </ng-container>
+
+            <!-- CAMPOS PARA PRODUCTOS DIGITALES -->
+            <ng-container *ngIf="typeProduct == 'digital'">
+              <p class="uppercase mat-body-2 my-3">
+                {{'Digital Product Parameters'|translate}}
+              </p>
+              <form fxLayout="column" fxLayoutAlign="start stretch" [formGroup]="digitallProductForm">
+                <span class="mat-body-2 uppercase">{{'Preview url'|translate}}
+                  <mat-icon matTooltip="{{'A Product preview can be a link to a video, a pdf or a downloadable file'|translate}}"
+                    class="iconHelp">help
+                  </mat-icon>
+                </span>
+                <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="gappx">
+                  <mat-form-field fxFlex appearance="outline">
+                    <mat-label>{{'Preview url'|translate}}
+                    </mat-label>
+                    <input matInput type="text" [formControl]="digitallProductForm.controls['previewUrl']"
+                      placeholder="{{'Link'|translate}}">
+                    <mat-icon class="greyIcon" matSuffix>link</mat-icon>
+                    <mat-error *ngIf="digitallProductForm.controls['previewUrl'].hasError('pattern')">
+                      {{'Url'|translate}} <strong>{{'is not valid'|translate}}</strong>
+                    </mat-error>
+                  </mat-form-field>
+                  <button matTooltip="Subir archivo que se mostrará en la vista previa vista previa del cliente" class="ml-2 mt-2"
+                    (click)="onUploadPreviewData()" mat-mini-fab color="accent" aria-label="Subir videos">
+                    <mat-icon>cloud_upload</mat-icon>
+                  </button>
+                </div>
+
+                <mat-radio-group formControlName="formatTypePreviewUrl">
+                  <mat-radio-button class="m-2" *ngFor="let format of formatTypes" [value]="format.id">
+                    {{(format.name[language]?format.name[language]:format.name['es'])}}
+                  </mat-radio-button>
+                </mat-radio-group>
+
+                <span class="mat-body-2 uppercase mt-3">{{'Link to download or view this product'|translate}}
+                  <mat-icon matTooltip="{{'Link to download or view this product on our servers once purchased'|translate}}"
+                    class="iconHelp">
+                    help
+                  </mat-icon>
+                </span>
+
+                <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="gappx">
+                  <mat-form-field fxFlex appearance="outline">
+                    <mat-label>{{'Link to download'|translate}}
+                    </mat-label>
+                    <input matInput type="text" [formControl]="digitallProductForm.controls['referenceUrl']"
+                      placeholder="{{'Link'|translate}}">
+                    <mat-icon class="greyIcon" matSuffix>link</mat-icon>
+                    <mat-error *ngIf="digitallProductForm.controls['referenceUrl'].hasError('pattern')">
+                      {{'Url'|translate}} <strong>{{'is not valid'|translate}}</strong>
+                    </mat-error>
+                  </mat-form-field>
+                  <button matTooltip="Subir archivo que podrá descargar el cliente una vez haya pagado por este proiducto" class="ml-2 mt-2"
+                    (click)="onUploadContentData()" mat-mini-fab color="accent" aria-label="Subir videos">
+                    <mat-icon>cloud_upload</mat-icon>
+                  </button>
+                </div>
+
+                <mat-radio-group formControlName="formatTypereferenceUrl">
+                  <mat-radio-button class="m-2" *ngFor="let format of formatTypes" [value]="format.id">
+                    {{(format.name[language]?format.name[language]:format.name['es'])}}
+                  </mat-radio-button>
+                </mat-radio-group>
+              </form>
+            </ng-container>
+            <!-- CAMPOS PARA PRODUCTOS SERVICIOS -->
+            <ng-container *ngIf="typeProduct == 'service'">
+              <p class="uppercase mat-body-2 my-3">
+                {{'Contacts for services'|translate}}
+              </p>
+              <form fxLayout="column" fxLayoutAlign="start stretch" [formGroup]="serviceProductForm">
+                <ng-container *ngFor="let formContact of getFormArray(serviceProductForm,'contactInfo').controls;let i =index">
+                  <div fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="gappx">
+                    <mat-form-field style="width: 250px;" appearance="outline">
+                      <mat-label> {{'Type'|translate}}</mat-label>
+                      <mat-select (selectionChange)="onChangeType(formContact.get('contact'),$event.value)"
+                        [formControl]="formContact.get('type')" placeholder="{{'Type'|translate}}">
+                        <mat-option *ngFor="let contact of this.constactInfoType" [value]="contact.id">
+                          <div fxLayout="row" fxLayoutAlign="start center">
+                            <span style=" text-transform:capitalize !important; ">
+                              {{(contact.name[language]?contact.name[language]:contact.name['es'])}}
+                            </span>
+                          </div>
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field style="width: 250px;" *ngIf="formContact.get('type').value == 'phone'" ngClass.gt-sm="mx-2"
+                      appearance="outline">
+                      <mat-label>{{'phone'|translate}}</mat-label>
+                      <input type="text" matInput placeholder="{{'phone +72053546'|translate}}" [formControl]="formContact.get('contact')">
+                      <mat-icon matSuffix>phone</mat-icon>
+                      <mat-error *ngIf="formContact.get('contact').hasError('required')">
+                        {{'El teléfono'|translate}} <strong>{{'is required'|translate}}</strong>
+                      </mat-error>
+                      <mat-error *ngIf="formContact.get('contact').hasError('pattern')">
+                        {{'El teléfono presenta un formato inválido'|translate}}
+                      </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field style="width: 250px;" *ngIf="formContact.get('type').value == 'email'" ngClass.gt-sm="mx-2"
+                      appearance="outline">
+                      <mat-label>{{'Email'|translate}}</mat-label>
+                      <input type="email" matInput placeholder="{{'exaple@gmail.com'|translate}}"
+                        [formControl]="formContact.get('contact')">
+                      <mat-icon matSuffix>mail</mat-icon>
+                      <mat-error *ngIf="formContact.get('contact').hasError('required')">
+                        {{'El email'|translate}} <strong>{{'is required'|translate}}</strong>
+                      </mat-error>
+                      <mat-error *ngIf="formContact.get('contact').hasError('email')">
+                        {{'El email presenta un formato inválido'|translate}}
+                      </mat-error>
+                    </mat-form-field>
+
+                    <button (click)="onRemoveContactService(i)" *ngIf="i" class="mx-2" mat-icon-button color="warn">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+
+                    <button *ngIf="i == getFormArray(serviceProductForm,'contactInfo').controls.length-1"
+                      (click)="addNewContactForService()" class="mx-2" mat-icon-button color="primary">
+                      <mat-icon>add</mat-icon>
+                    </button>
+
+                  </div>
+
+                </ng-container>
+
+
+              </form>
+
+            </ng-container>
+
+
+            <div fxLayout="row" class="w-60 mt-3" ngClass.lt-md="w-80" ngClass.xs="w-100" fxLayoutAlign="end center" fxLayoutGap="gappx">
+              <button [disabled]="!validatorStepOne()" (click)="onSaveBasicProduct()" mat-raised-button
+                color="primary">{{'Guardar'|translate}}</button>
+            </div>
+
+          </div>
+
+        </form>
+      </div>
+    </ng-template>
+
+  </mat-tab>
+
+  <mat-tab>
+
+    <ng-template mat-tab-label>
+      <mat-icon class="example-tab-icon">image</mat-icon>
+      <span class="mat-body-2 mx-2" color="primary">{{'DESCRIPTION'|translate}}</span>
+    </ng-template>
+
+    <ng-template matTabContent>
+      <div class="container" style="margin-top: 16px;">
+        <ckeditor [(ngModel)]="description" #myckeditor="ngModel" name="myckeditor" required [config]="ckeConfig" debounce="500"
+          [ngModelOptions]="{standalone: true}">
+        </ckeditor>
+        <div class="my-3" fxLayout="row" fxLayoutAlign="end start" fxLayoutGap="gappx">
+          <button (click)="onAsignDescription()" [disabled]="!(description && description.length)" mat-raised-button class="ml-2"
+            color="primary">{{'Guardar'|translate}}</button>
+        </div>
+      </div>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab>
+
+    <ng-template mat-tab-label>
+      <mat-icon class="example-tab-icon">image</mat-icon>
+      <span class="mat-body-2 mx-2" color="primary">{{'Images'|translate}}</span>
+    </ng-template>
+
+    <ng-template matTabContent>
+      <div class="LayoutTabs" fxFlexFill fxLayout="column" fxLayoutAlign="start stretch">
+        <app-galery-images-product [ProductId]="(selectedProduct)?selectedProduct.id:null">
+        </app-galery-images-product>
+      </div>
+    </ng-template>
+
+  </mat-tab>
+
+
+
+  <mat-tab>
+
+    <ng-template mat-tab-label>
+      <mat-icon class="example-tab-icon">star</mat-icon>
+      <span class="mat-body-2 mx-2" color="primary">{{'Recomended Prod.'|translate}}</span>
+    </ng-template>
+
+    <ng-template matTabContent>
+      <div class="LayoutTabs" fxFlexFill fxLayout="column" fxLayoutAlign="start stretch">
+        <div fxLayout="column" class="SteeperLayout" fxLayoutAlign="start stretch" fxLayoutGap="gappx">
+          <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="gappx">
+            <span class="mat-body-2 mt-2">{{'SELECT THE RECOMENDED PRODUCTS'|translate}}</span>
+          </div>
+          <app-recomended-products [language]="language" [productId]="this.selectedProduct.id" [recomendedProducts]="recomendedProducts">
+          </app-recomended-products>
+
+          <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="gappx">
+            <span class="mat-body-2 mt-2">{{'SELECT TAGS FOR SEARCHING'|translate}}
+              <mat-icon matTooltip="{{'To improve the search, assign search tags related to the product.'|translate}}" class="iconHelp">help
+              </mat-icon>
+            </span>
+          </div>
+          <app-list-tags-product [language]="language" [productId]="this.selectedProduct.id" [tags]="tags">
+          </app-list-tags-product>
+          <div fxLayout="row" class="w-60 mt-3" ngClass.lt-md="w-80" ngClass.xs="w-100" fxLayoutAlign="start center" fxLayoutGap="gappx">
+            <button (click)="onSaveRecomendedTags()" mat-raised-button color="primary">{{'Guardar'|translate}}</button>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+
+  </mat-tab>
+
+  <!-- <mat-tab>
+
+    <ng-template mat-tab-label>
+      <mat-icon class="example-tab-icon">import_export</mat-icon>
+      <span class="mat-body-2 mx-2" color="primary">{{'Tax & Shipping'|translate}}</span>
+    </ng-template>
+
+    <ng-template matTabContent>
+      <div class="LayoutTabs" fxFlexFill fxLayout="column" fxLayoutAlign="start stretch">
+        <div fxLayout="column" class="SteeperLayout" fxLayoutAlign="space-around stretch" fxLayoutGap="gappx">
+          <span class="mat-body-2 mt-3" style="text-transform: uppercase;">{{'Taxes associated with this product'|translate}}
+            <mat-icon matTooltip="{{'Taxes are determined by a specific region, for a product or group of products'|translate}}"
+              class="iconHelp">help
+            </mat-icon>
+          </span>
+
+          <mat-selection-list *ngIf="taxes.length" class="mt-2 w-60" ngClass.lt-md="w-80" ngClass.xs="w-100">
+            <mat-list-item class="listItem" *ngFor="let tax of taxes;let i=index">
+              <mat-icon mat-list-icon>monetization_on</mat-icon>
+              <div mat-line>
+                <span class="mat-body-2 grey7">{{'Name: '|translate}}</span>
+                <span class="mat-body-1 ml-2">{{(tax.name[language])?tax.name[language]:tax.name['es']}}</span>
+              </div>
+              <div mat-line>
+                <span class="mat-body-2">{{'Country: '|translate}}</span>
+                <span class="mat-body-1 ml-2">{{(tax.Country.name['es'])}}</span>
+              </div>
+              <div mat-line>
+                <span class="mat-body-2">{{'tax: '|translate}}</span>
+                <span class="mat-body-1 ml-2">{{tax.price|currency:currencyService.getCurrency().code}}</span>
+              </div>
+              <div mat-line>
+                <span class="mat-body-2">{{'Created at: '|translate}}</span>
+                <span class="mat-body-1 ml-2">{{tax.createdAt | date:'shortDate'}}</span>
+              </div>
+              <button (click)="onEditTax(tax)" class="addIcon greyIcon" mat-icon-button>
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button (click)="onDeleteTax([tax])" class="iconDelete greyIcon" mat-icon-button>
+                <mat-icon>delete</mat-icon>
+              </button>
+              <mat-divider *ngIf="i == taxes.length-1"></mat-divider>
+            </mat-list-item>
+          </mat-selection-list>
+
+          <div fxLayout="row" style="border:solid 1px rgba(0,0,0,0.12);border-radius:4px;" *ngIf="!taxes.length"
+            fxLayoutAlign="start center" fxLayoutGap="gappx" class="mt-2 w-60 p-3 greyIcon" ngClass.lt-md="w-80" ngClass.xs="w-100">
+            <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="gappx">
+              <span class="mat-title mb-0">{{'There are no taxes associated with this product'|translate}}</span>
+            </div>
+
+          </div>
+
+
+        </div>
+      </div>
+    </ng-template>
+
+  </mat-tab> -->
+
+</mat-tab-group>

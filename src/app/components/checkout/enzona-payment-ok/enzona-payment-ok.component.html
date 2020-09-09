@@ -1,0 +1,161 @@
+<div *ngIf="this.loadingSearch" class="loading-shade-full">
+  <mat-spinner *ngIf="this.loadingSearch" diameter="60" color="primary"></mat-spinner>
+</div>
+
+<div class="container">
+  <section class="py-4" style="background-color: #fafafa;">
+    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="gappx">
+
+      <span class="py-3" style="text-align: center;color: #616161; font-size: 30px;">
+        <mat-icon style="text-align: center;color: #616161; font-size: 30px;height: 30px;width: 30px;">attach_money
+        </mat-icon>
+        {{'MAKE A PAYMENT'|translate}}
+      </span>
+    </div>
+
+    <div style="height: 2px;background-color: #eeeeee;">
+    </div>
+
+    <!-- <div *ngIf="!showError && !ifSuccess" class="py-4" fxLayout="column" fxLayoutAlign="center center">
+      <div class="header-title">
+        <h3 class="grey-800" ngClass.gt-sm="h2" ngClass.xs="h4">{{"Billing Details"|translate}}</h3>
+      </div>
+
+      <form [formGroup]="form" fxLayout="row wrap" fxLayoutAlign="start start" class="mt-3">
+        <div fxLayout="column" fxLayoutAlign="start stretch" fxFlex="100" class="mt-2" ngClass.sm="mt-2" ngClass.xs="mt-2">
+
+          <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+            <mat-form-field fxFlex="100" fxFlex.gt-md="48" fxFlex.md="48" appearance="outline">
+              <mat-label>{{'Name'|translate}}</mat-label>
+              <input ng-disabled="all" matInput placeholder="{{'Name'|translate}}" required [formControl]="this.form.controls['name']">
+              <mat-error *ngIf="form.controls['name'].hasError('required')">
+                {{'Name'|translate}} <strong>{{'is required'|translate}}</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="100" fxFlex.gt-md="48" fxFlex.md="48" appearance="outline">
+              <mat-label>{{'Lastname'|translate}}</mat-label>
+              <input matInput placeholder="{{'Lastname'|translate}}" required [formControl]="this.form.controls['lastName']">
+              <mat-error *ngIf="form.controls['lastName'].hasError('required')">
+                {{'Lastname'|translate}} <strong>{{'is required'|translate}}</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <mat-form-field appearance="outline">
+            <mat-label>{{'Email'|translate}}</mat-label>
+            <input matInput placeholder="{{'Email'|translate}}" required [formControl]="this.form.controls['email']">
+            <mat-error *ngIf="form.controls['email'].hasError('required')">
+              {{'Email'|translate}} <strong>{{'is required'|translate}}</strong>
+            </mat-error>
+          </mat-form-field>
+
+
+          <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+
+            <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline">
+              <mat-label>{{'Country'|translate}}</mat-label>
+              <input matInput placeholder="{{'Country name'|translate}}" required [formControl]="this.form.controls['CountryId']">
+            </mat-form-field>
+
+            <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline">
+              <mat-label>{{'City'|translate}}</mat-label>
+              <input matInput placeholder="{{'City, State, Location'|translate}}" required [formControl]="this.form.controls['CityId']">
+            </mat-form-field>
+
+          </div>
+
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>{{'Address'|translate}}</mat-label>
+            <textarea required placeholder="{{'Address of your location'|translate}}" matInput rows="2"
+              [formControl]="this.form.controls['address']"></textarea>
+            <mat-error *ngIf="form.controls['address'].hasError('required')">
+              {{'Address'|translate}} <strong>{{'is required'|translate}}</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="100" fxFlex.gt-md="48" fxFlex.md="48" appearance="outline">
+            <mat-label>{{'Address 2 (Opcional)'|translate}}</mat-label>
+            <input matInput placeholder="{{'Apartment, suite, unit, building, floor'|translate}}"
+              [formControl]="this.form.controls['address2']">
+          </mat-form-field>
+
+
+
+          <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+
+            <mat-form-field fxFlex="100" fxFlex.gt-md="48" fxFlex.md="48" appearance="outline">
+              <mat-label>{{'Zip code'|translate}}</mat-label>
+              <input matInput placeholder="{{'Zip code'|translate}}" type="number" required [formControl]="this.form.controls['zipCode']">
+              <mat-error *ngIf="form.controls['zipCode'].hasError('required')">
+                {{'Zip code'|translate}} <strong>{{'is required'|translate}}</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="100" fxFlex.gt-md="48" fxFlex.md="48" appearance="outline">
+              <mat-label>{{'Phone'|translate}}</mat-label>
+              <input matInput placeholder="{{'Phone'|translate}}" type="number" [formControl]="this.form.controls['phone']">
+              <mat-error *ngIf="form.controls['phone'].hasError('required')">
+                {{'Phone'|translate}} <strong>{{'is required'|translate}}</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+        </div>
+
+        <div class="add-info">
+          <h3 class="grey-800" ngClass.gt-sm="h2" ngClass.xs="h4">{{"Aditional information"|translate}}</h3>
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="100" class="mt-1" ngClass.sm="mt-1" ngClass.xs="mt-1">
+          <mat-form-field appearance="outline" class="w-100">
+            <textarea placeholder="{{'Some information about your address or something important'|translate}}" matInput rows="4"
+              [formControl]="this.form.controls['info']"></textarea>
+          </mat-form-field>
+        </div>
+      </form>
+    </div> -->
+
+    <div *ngIf="ifSuccess" class="py-4" fxLayout="column" fxLayoutAlign="center center">
+      <div fxLayout="column" fxLayoutAlign="start center">
+
+        <img style="max-height: 80px;" src="assets/images/logo-accent.png" class="mb-3">
+
+        <h3 style="color: #666768;font-size: 24px; font-weight: 500;">{{'¡Enhorabuena!'|translate}}</h3>
+        <h1 style="color: #09CA5F;font-size: 20px;text-align: center;" class="mb-3"><span
+            style="color: #666768;font-size: 20px;">{{"Pago"|translate}}</span>
+          &nbsp;{{'Completado'|translate}}</h1>
+
+        <img src="assets/images/pago_aceptado.png" class="mb-3 mt-2" style="max-width: 260px;">
+
+        <a [routerLink]="['/my-orders']" mat-raised-button color="primary" class="mb-3 mt-3 px-4 py-2">
+          <mat-icon class="mr-2">arrow_back</mat-icon>
+          {{ 'VOLVER' | translate }}
+        </a>
+
+      </div>
+    </div>
+
+
+    <div *ngIf="showError" class="py-4" fxLayout="column" fxLayoutAlign="center center">
+      <div fxLayout="column" fxLayoutAlign="start center">
+
+        <img style="max-height: 80px;" src="assets/images/logo-accent.png" class="mb-3">
+
+        <h3 style="color: #666768; font-size: 24px; font-weight: 500;">{{'Ups!'|translate}}</h3>
+        <h1 style="color: #B5252A; font-size: 20px; text-align: center;" class="mb-3"><span
+            style="color: #666768;font-size: 20px;">{{"Confirmación de pago"|translate}}</span>
+          &nbsp;{{'Fallida'|translate}}</h1>
+
+        <img src="assets/images/pago_fallido.png" class="mb-4 mt-4" style="max-width: 260px;">
+
+        <a [routerLink]="['/checkout']" mat-raised-button color="primary" class="mb-3 mt-3 px-4 py-2">
+          <mat-icon class="mr-2">arrow_back</mat-icon>{{ 'Aceptar' | translate | uppercase }}
+        </a>
+
+      </div>
+    </div>
+
+  </section>
+
+
+</div>

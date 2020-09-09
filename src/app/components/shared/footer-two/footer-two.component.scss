@@ -1,0 +1,36 @@
+@import "../../../../assets/scss/theme/variables";
+
+.router-link-active {
+  text-decoration: underline !important;
+}
+
+.section-2 {
+  min-height: 80px;
+  background-color: #111111 !important;
+}
+
+.footer-one {
+  min-height: 80px;
+  background-color: $theme-main;
+}
+
+.page-title {
+  font-weight: 500 !important;
+  color: #FFF;
+  font-size: 17px !important;
+}
+
+.footerItems {
+  margin-right: 24px;
+}
+
+.item-selector {
+  min-width: 120px;
+  color: #fff;
+  border: 1px solid #fff;
+  border-radius: 16px;
+}
+
+span {
+  color: #fff;
+}

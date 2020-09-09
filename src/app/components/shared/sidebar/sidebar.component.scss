@@ -1,0 +1,81 @@
+@import '../../../../assets/scss/theme/variables';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  outline: none;
+  width: 100%;
+
+  .mat-list-item.active {
+    background-color: $theme-main;
+    color: #fff;
+    border-top-right-radius: 24px;
+    border-bottom-right-radius: 24px;
+    transition: border-radius .7s ease;
+
+    .tabActive {
+      transition: all .5s ease;
+      opacity: 1;
+    }
+
+    .mat-badge-content {
+      color: #fff !important;
+      background: $theme-main-accent !important;
+    }
+
+    mat-icon {
+      color: #fff;
+    }
+  }
+
+  .tabActive {
+    position: absolute;
+    transition: all .5s ease;
+    opacity: 0;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 48px;
+    background-color: $theme-main-accent;
+    z-index: 4;
+    border-radius: 4px;
+  }
+
+  &:hover,
+  &:focus {
+    >.mat-list-item:not(.expanded) {
+      border-radius: 16px;
+      transition: border-radius .7s ease;
+    }
+  }
+
+}
+
+
+.mat-list-item {
+  padding: 2px 0;
+  position: relative;
+  display: flex;
+  width: auto;
+  color: rgba(0, 0, 0, 0.87);
+
+  .mat-badge-content {
+    color: #fff !important;
+    background: $theme-main-accent !important;
+  }
+
+
+  .routeIcon {
+    margin-right: 30px;
+  }
+}
+
+.menu-icons {
+  font-size: 18px !important;
+
+  mat-icon {
+    color: rgba(0, 0, 0, 0.87);
+    margin: 0px !important;
+  }
+
+}
