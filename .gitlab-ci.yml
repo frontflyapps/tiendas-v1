@@ -6,7 +6,7 @@ cache:
 
 deploy_sinkoola:
   only:
-    - shop-b2b
+    - master
   when: always
   script:
     - npm install
