@@ -23,7 +23,6 @@ import { ShowToastrService } from './../../../../../core/services/show-toastr/sh
   selector: 'app-admin-carrusel-table',
   templateUrl: './admin-carrusel-table.component.html',
   styleUrls: ['./admin-carrusel-table.component.scss'],
-  encapsulation: ViewEncapsulation.None,
 })
 export class AdminCarruselTableComponent implements OnInit, OnDestroy {
   urlImage: string;

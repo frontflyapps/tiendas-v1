@@ -23,7 +23,6 @@ import { BiconService } from '../../../services/bicon/bicon.service';
   selector: 'app-admin-bicon-table',
   templateUrl: './admin-bicon-table.component.html',
   styleUrls: ['./admin-bicon-table.component.scss'],
-  encapsulation: ViewEncapsulation.None,
 })
 export class AdminBiconTableComponent implements OnInit, OnDestroy {
   urlImage: string;

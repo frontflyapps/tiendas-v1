@@ -23,7 +23,6 @@ import { ConfirmationDialogComponent } from '../../../common-dialogs-module/conf
   selector: 'app-admin-banners-table',
   templateUrl: './admin-banners-table.component.html',
   styleUrls: ['./admin-banners-table.component.scss'],
-  encapsulation: ViewEncapsulation.None,
 })
 export class AdminBannersTableComponent implements OnInit, OnDestroy {
   urlImage: string;
