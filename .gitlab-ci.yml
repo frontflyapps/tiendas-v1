@@ -6,7 +6,7 @@ cache:
 
 deploy_sinkoola:
   only:
-    - shop-b2b
+    - master
   when: always
   script:
     - npm install
@@ -19,6 +19,6 @@ deploy_sinkoola:
     - chmod 755 ossutil64
     - cp ossutil64 /usr/local/bin
     - ./ossutil64 config -e oss-us-east-1.aliyuncs.com -i LTAI4G6GVkW5YmjsuA1tBrZb -k 4s1ZkbfQjNVKNcZ6S65BBbhriRhIaB -L EN -c ~/ossutil64config
-    - ./ossutil64 cp -r dist/tienda-angular-b2b oss://sinkoola/ -u -c ~/ossutil64config
+    - ./ossutil64 cp -r dist/tienda-angular-b2b oss://sinkoola/ -u --meta=Cache-Control:max-age=86400 -c ~/ossutil64config
     - aliyun cdn RefreshObjectCaches --ObjectType Directory --ObjectPath https://www.sinkoola.com/
     - aliyun cdn RefreshObjectCaches --ObjectType Directory --ObjectPath https://sinkoola.com/
