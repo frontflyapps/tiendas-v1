@@ -28,7 +28,6 @@ import { ProductService } from '../../../../shared/services/product.service';
   selector: 'app-admin-list-brands',
   templateUrl: './admin-list-brands.component.html',
   styleUrls: ['./admin-list-brands.component.scss'],
-  encapsulation: ViewEncapsulation.None,
 })
 export class AdminListBrandsComponent implements OnInit, OnDestroy {
   @Input() role;

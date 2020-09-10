@@ -32,9 +32,12 @@
               {{'Logo del negocio'|translate}}
             </p>
 
-            <ngp-image-picker [_imageSrc]="imageUrl + selectedBusiness.logo" [_config]="imagePickerConf"
-              ($imageChanged)="onImageChange($event)">
-            </ngp-image-picker>
+            <div class="imageBusiness">
+              <ngp-image-picker [_imageSrc]="imageUrl + selectedBusiness.logo" [_config]="imagePickerConf"
+                ($imageChanged)="onImageChange($event)">
+              </ngp-image-picker>
+
+            </div>
 
             <p class="mat-body-2 uppercase mt-2 mb-1">
               {{'Nombre del negocio'|translate}}
