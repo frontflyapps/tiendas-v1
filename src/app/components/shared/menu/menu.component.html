@@ -1,35 +1,3 @@
-<!-- <mat-toolbar-row id="toolbar-menu" fxHide fxShow.gt-sm class="container" fxLayout="row" fxLayoutAlign="space-between center">
-  <div class="main-menu" fxLayout="row" fxHide fxShow.gt-sm>
-    <a [routerLink]="['/home']" routerLinkActive="router-link-active" mat-button class="mat-button">{{'Inicio'|translate}}</a>
-    <a [routerLink]="['/products/search']" routerLinkActive="router-link-active" mat-button class="mat-button">{{'Products'|translate}}</a>
-
-    <a [routerLink]="['/blog']" routerLinkActive="router-link-active" mat-button class="mat-button">{{'Blog'|translate}}</a>
-
-    <a *ngIf="loggedInUser" [routerLink]="['/checkout']" routerLinkActive="router-link-active" mat-button
-      class="mat-button">{{'Pagar'|translate}}</a>
-
-    <a [routerLink]="['/cart']" routerLinkActive="router-link-active" mat-button class="mat-button">
-      <span *ngIf="shoppingCartItems.length" [matBadge]="shoppingCartItems.length" matBadgePosition="after"
-        matBadgeColor="accent">{{'Cart'|translate}}</span>
-      <span *ngIf="!shoppingCartItems.length">{{'Cart'|translate}}</span>
-    </a>
-
-    <a *ngIf="loggedInUser" [routerLink]="['/my-orders']" routerLinkActive="router-link-active" mat-button
-      class="mat-button">{{'My Orders'|translate}}</a>
-
-
-    <a mat-button class="mat-button">Alimentos y bebidas</a>
-    <a mat-button class="mat-button">Aseo</a>
-    <a mat-button class="mat-button">Limpieza</a>
-    <a mat-button class="mat-button">Electrodomésticos</a>
-    <a mat-button class="mat-button">Ropa y calzado</a>
-    <a mat-button class="mat-button">Celulares</a>
-    <a mat-button class="mat-button">Televisores</a>
-
-  </div>
-
-</mat-toolbar-row> -->
-
 <div class="container">
   <div class="showCategoriesMenu" id="showCategoriesMenu" fxLayout="row" fxLayoutAlign.xs="start center" fxLayoutAlign.sm="center center"
     fxLayoutGap="gappx" fxHide fxShow.gt-sm>
