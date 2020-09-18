@@ -303,7 +303,7 @@ export class ShippingTableComponent implements OnInit, OnDestroy {
     // console.log('ShippingTableComponent -> showProducts -> shipping', shipping);
     let s = `Productos:\n`;
     shipping?.ShippingProducts.map((item) => {
-      s = s + item?.Product.name['es'] + ', \n';
+      s = s + item?.Product?.name['es'] + ', \n';
     });
     return s;
   }
