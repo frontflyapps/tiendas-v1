@@ -4,12 +4,13 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://192.168.10.45:8998/v1/',
-  imageUrl: 'http://192.168.10.45:8998/v1/',
+  apiUrl: 'http://localhost:8998/v1/',
+  imageUrl: 'http://localhost:8998/v1/',
+  apiUrlRepositoy: 'http://localhost:8998/v1/',
   defaultLanguage: 'es',
   version: '1.2.0',
   url: 'http://localhost:4200',
-  apiUrlRepositoy: 'http://192.168.10.45:8888/v1/',
+  urlAboutUs: 'http://localhost:4200',
   address: 'Sin Cola SA / Quinta Avenida,18204, Playa, La Habana.',
   localDatabaseUsers: true,
   uploadDigitalProduct: false,

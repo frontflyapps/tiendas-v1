@@ -42,10 +42,6 @@ export class MyAccountComponent implements OnInit {
   showNewPassForm = false;
   queryParams = null;
   language = null;
-  secretKeyCaptcha = environment.secretKeyCaptcha;
-  authUrl = environment.authUrl;
-  redirectServiceUrl = environment.serviceName;
-
   isRegisterToPay = false;
   isRegisterToBecomeASeller = false;
   routeToNavigate = '/checkout';
@@ -89,8 +85,6 @@ export class MyAccountComponent implements OnInit {
     this.createValidationForm();
     this.createChangePassForm();
     this.createNewPassForm();
-
-    console.log('MyAccountComponent -> secretKeyCaptcha', this.secretKeyCaptcha);
   }
 
   showPass() {
