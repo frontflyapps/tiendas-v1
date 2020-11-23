@@ -32,7 +32,6 @@ import { NgpMaterialRatingModule } from '../shared/ngp-material-rating/ngp-mater
 import { NgpImageLazyLoadModule } from 'ngp-lazy-image';
 import { BannerPromotionComponent } from './banner-promotion/banner-promotion.component';
 import { BannerPromotion2Component } from './banner-promotion2/banner-promotion2.component';
-import { DialogFiltersMComponent } from './products/dialog-filters-m/dialog-filters-m.component';
 import { MatDialogModule } from '@angular/material/dialog';
 @NgModule({
   declarations: [
@@ -52,7 +51,6 @@ import { MatDialogModule } from '@angular/material/dialog';
     ProductZoomComponent,
     BannerPromotionComponent,
     BannerPromotion2Component,
-    DialogFiltersMComponent,
   ],
   imports: [
     CommonModule,
