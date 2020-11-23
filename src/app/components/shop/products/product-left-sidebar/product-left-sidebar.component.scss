@@ -17,8 +17,10 @@
 }
 
 .container-search {
-  max-width: 1280px;
+  max-width: 1360px;
   padding: 0 16px;
+  width: 100%;
+  box-sizing: border-box;
   margin: 0px auto;
 
   @media (max-width:480px) {

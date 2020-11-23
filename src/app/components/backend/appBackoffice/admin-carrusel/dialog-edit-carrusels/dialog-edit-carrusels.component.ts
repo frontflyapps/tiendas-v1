@@ -18,9 +18,7 @@ import { takeUntil } from 'rxjs/operators';
 import { CarruselService } from '../../../services/carrusel/carrusel.service';
 import { UtilsService } from './../../../../../core/services/utils/utils.service';
 import { LoggedInUserService } from './../../../../../core/services/loggedInUser/logged-in-user.service';
-import { ShowToastrService } from './../../../../../core/services/show-toastr/show-toastr.service';
 import { ShowSnackbarService } from './../../../../../core/services/show-snackbar/show-snackbar.service';
-import { CompressImageService } from './../../../../../core/services/image/compress-image.service';
 import { ImagePickerConf } from 'ngp-image-picker';
 
 @Component({
@@ -53,6 +51,7 @@ export class DialogEditCarruselsComponent implements OnInit, OnDestroy {
     borderRadius: '4px',
     language: 'es',
     height: '180px',
+    width: 'auto',
   };
   imagePickerConfXs: ImagePickerConf = {
     borderRadius: '4px',
@@ -70,7 +69,6 @@ export class DialogEditCarruselsComponent implements OnInit, OnDestroy {
     public utilsService: UtilsService,
     private translate: TranslateService,
     private carruselService: CarruselService,
-    private compressImage: CompressImageService,
     private showSnackbar: ShowSnackbarService,
   ) {
     this.dialogRef.disableClose = true;
@@ -82,7 +80,7 @@ export class DialogEditCarruselsComponent implements OnInit, OnDestroy {
     console.log('TCL: DialogEditBannersComponent -> selectedCarrusel', this.selectedCarrusel);
     this.imageUrl = environment.imageUrl;
 
-    // ------------------LANGUAGE INITIALIZATION----------------
+    // ------------------LANGUAGE INITIALIZATION---------------- ////
     this.languages = this.loggedInUserService.getlaguages();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
     this.languageForm = new FormControl(
@@ -133,8 +131,8 @@ export class DialogEditCarruselsComponent implements OnInit, OnDestroy {
           ],
         ],
       });
-      this.imageCarrusel = this.selectedCarrusel.image;
-      this.imageCarruselXs = this.selectedCarrusel.imageXs;
+      this.imageCarrusel = this.selectedCarrusel?.image;
+      this.imageCarruselXs = this.selectedCarrusel?.imageXs;
     } else {
       this.form = this.fb.group({
         title: [null, [Validators.minLength(5), Validators.pattern(/^\w((?!\s{2}).)*/), Validators.required]],
@@ -149,7 +147,7 @@ export class DialogEditCarruselsComponent implements OnInit, OnDestroy {
         ],
       });
 
-      this.colorTitle = this.selectedCarrusel.colorTitle;
+      this.colorTitle = this.selectedCarrusel?.colorTitle;
     }
   }
 

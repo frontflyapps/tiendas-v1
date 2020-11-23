@@ -55,9 +55,7 @@ export class BigBannerComponent implements OnInit {
     public utilsService: UtilsService,
     private showSnackbar: ShowSnackbarService,
     public spinner: NgxSpinnerService,
-    private translate: TranslateService,
     private dialog: MatDialog,
-    private settingService: SettingService,
     private breadcrumbService: BreadcrumbService,
     private configService: ConfiguracionService,
   ) {}
