@@ -9,7 +9,7 @@
     </div>
 
     <div id="topLeftSidebar" class="sidebar-wrapper" fxLayout='row wrap' fxLayoutAlign="center start">
-      <div fxFlex="25" fxFlex.lt-md="100" class="filter-sidenav" perfectScrollbar>
+      <div fxFlex="25" fxFlex.lt-md="100" class="filter-sidenav" perfectScrollbar fxHide.xs>
         <div class="toggles-wrapper border-right" fxLayout="column" fxLayout.lt-md="column">
           <div class="toggles" fxFlex.lt-md="100">
             <mat-accordion [multi]="true">
@@ -87,7 +87,7 @@
         </div>
 
         <div *ngIf="!loading" fxLayout="row wrap" fxLayoutAlign="start start" class="w-100">
-          <app-product *ngFor="let products of allProducts" [product]="products"></app-product>
+          <app-product fxFlex.lt-md="100" *ngFor="let products of allProducts" [product]="products"></app-product>
           <ng-container *ngIf="allProducts.length == 0">
             <h3 class="py-4" style="text-align: center;">
               No hay ningún producto disponible

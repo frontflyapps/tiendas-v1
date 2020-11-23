@@ -1,5 +1,5 @@
 <div [id]="'ProductCardId' + product.id" class="card-product" style="position: relative;">
-  <div fxLayoutAlign="center center" class="image-layout ">
+  <div fxLayoutAlign="center center" class="image-layout " ngClass.gt-sm="p-4">
     <a class="product-link" [routerLink]="['/product', product.id]">
       <img class="image" ngp-lazy ngp-threshold="0.1" *ngIf="product.Image && product.Image.length "
         onerror="this.onerror=null;this.src='../../../../assets/images/noImage.jpg';" [src]="imageUrl + product.Image[0].image"
@@ -8,7 +8,7 @@
         src="../../../../assets/images/noImage.jpg" alt="Sinkoola shop">
     </a>
   </div>
-  <div class="product-info-wrapper" ngClass.gt-sm="p-3" ngClass.lt-sm="p-2">
+  <div class="product-info-wrapper" ngClass.gt-sm="p-3" ngClass.lt-md="p-2">
     <span class="category">
       {{utilsService.parserLanguage(product.Category.name,language)}}
     </span>
@@ -25,7 +25,10 @@
       {{(product.shortDescription[language])?product.shortDescription[language]:product.shortDescription['es']}}</p> -->
 
     <div class="price mt-2" fxLayout="row" fxLayoutAlign="space-between start">
-      <div></div>
+      <button matTooltip="{{'Añadir al carrito'|translate}}" class="btnAddCart" mat-mini-fab (click)="addToCart(product)"
+              style="z-index: 10;">
+        <mat-icon>shopping_cart</mat-icon>
+      </button>
       <div>
         <div *ngIf="product.offerValue">
           <p style="font-size: 12px;" class="m-0">
@@ -33,7 +36,7 @@
             <!-- <span style="color: #e53935; font-size: 12px;" class="ml-2 px-0">{{product.offerValue}}<span
                 style="color: #e53935; font-size: 12px;" *ngIf="product.isPercent">% </span>off</span> -->
           </p>
-          <p class="mat-body-2 m-0" style="font-size: 14px;font-weight: 600;">{{currencyService.getOfferLabel(product)}}</p>
+          <p class="mat-body-2 m-0 price-offer">{{currencyService.getOfferLabel(product)}}</p>
           <!-- <p class="mat-body-2 m-0" style="font-size: 15px;">
             {{'Desde'|translate}}
             {{product.minSale}}
@@ -42,7 +45,7 @@
         </div>
 
         <div *ngIf="!product.offerValue">
-          <p class="mat-body-2 m-0" style="font-size: 14px;font-weight: 600;">{{currencyService.getPriceLabel(product)}}</p>
+          <p class="mat-body-2 m-0 price-offer">{{currencyService.getPriceLabel(product)}}</p>
           <!-- <p class="mat-body-2 m-0" style="font-size: 15px;">
             {{'Desde'|translate}}
             {{product.minSale}}
@@ -53,10 +56,7 @@
 
       </div>
 
-      <!-- <button matTooltip="{{'Añadir al carrito'|translate}}" class="btnAddCart" mat-mini-fab (click)="addToCart(product)"
-        style="z-index: 10;">
-        <mat-icon>shopping_cart</mat-icon>
-      </button> -->
+
     </div>
     <div class="icons" fxLayout="column">
       <!-- <a (click)="addToWishlist(product)">

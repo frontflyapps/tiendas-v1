@@ -1,5 +1,6 @@
 @import"../../.././../../assets/scss/theme/variables";
 
+
 .module {
   width: 100%;
   margin: 0 0 1em 0;
@@ -27,6 +28,7 @@
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
   height: 200px;
+
 }
 
 .card-product {
@@ -38,6 +40,7 @@
   border-radius: 16px;
 
   .product-info-wrapper {
+    width: 100%;
     .category {
       font-size: 14px;
       color: #555555;
@@ -137,3 +140,31 @@
   // box-shadow: 1px 2px 2px rgba(0, 0, 0, .12);
   // border-bottom-left-radius: 4px;
 }
+.price-offer {
+  font-size: 14px;
+  font-weight: 600;
+}
+@media (max-width: 800px) {
+  .card-product {
+    width: 95%;
+    flex-direction: row !important;
+  }
+  .image {
+    max-height: 140px;
+    height: auto;
+    width: 120px;
+  }
+  .image-layout {
+    min-height: 140px !important;
+    height: auto;
+    padding-left: 16px;
+    padding-right: 16px;
+    border-top-right-radius: 0 !important;
+    border-bottom-left-radius: 16px !important;
+  }
+  .price-offer {
+    font-size: 10px !important;
+  }
+}
+
+
