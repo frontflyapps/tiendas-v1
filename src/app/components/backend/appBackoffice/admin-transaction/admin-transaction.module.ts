@@ -43,7 +43,7 @@ import { OrderDetailsComponent } from './order-details/order-details.component';
 import { OrdersCancelledTableComponent } from './orders-cancelled-table/orders-cancelled-table.component';
 import { OrdersOnDeliveryTableComponent } from './orders-on-delivery-table/orders-on-delivery-table.component';
 import { OrdersRecievedTableComponent } from './orders-recieved-table/orders-recieved-table.component';
-import { PdfGenService } from 'src/app/core/services/get-pdf/pdf-gen.service';
+
 @NgModule({
   imports: [
     CommonModule,

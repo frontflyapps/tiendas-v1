@@ -18,7 +18,6 @@ import { CurrencyService } from './../../../core/services/currency/currency.serv
 import { ConfirmationDialogFrontComponent } from '../../shared/confirmation-dialog-front/confirmation-dialog-front.component';
 import { HttpClient } from '@angular/common/http';
 import { CancelOrderComponent } from '../cancel-order/cancel-order.component';
-import { PdfGenService } from '../../../core/services/get-pdf/pdf-gen.service';
 @Component({
   selector: 'app-my-orders',
   templateUrl: './my-orders.component.html',
@@ -128,7 +127,6 @@ export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
     public currencyService: CurrencyService,
     private breakpointObserver: BreakpointObserver,
     private httpClient: HttpClient,
-    private pdfGenService: PdfGenService,
     private showToastr: ShowToastrService,
   ) {
     this._unsubscribeAll = new Subject<any>();

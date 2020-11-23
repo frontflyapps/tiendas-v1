@@ -4,9 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from './../../../../../environments/environment';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class TaxesShippingService {
   urlTax = environment.apiUrl + 'tax';
   urlTaxId = environment.apiUrl + 'tax/:taxId';

@@ -11,8 +11,8 @@ import { BlogAdminCreateComponent } from './blog-admin-create/blog-admin-create.
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ListTagsBlogComponent } from './list-tags-blog/list-tags-blog.component';
-import { CKEditorModule } from 'ng2-ckeditor';
 import { SharedModule } from 'src/app/components/shared/shared.module';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 @NgModule({
   imports: [

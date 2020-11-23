@@ -1,4 +1,3 @@
-import { PdfGenService } from './../../core/services/get-pdf/pdf-gen.service';
 import { CancelOrderComponent } from './cancel-order/cancel-order.component';
 import { NgpImageLazyLoadModule } from 'ngp-lazy-image';
 import { MatCardModule } from '@angular/material/card';
@@ -53,6 +52,6 @@ import { NgpMaterialRatingModule } from 'ngp-material-rating';
   ],
   declarations: [MyOrdersComponent, CancelOrderComponent],
   entryComponents: [CancelOrderComponent],
-  providers: [PdfGenService],
+  providers: [],
 })
 export class MyOrdersModule {}

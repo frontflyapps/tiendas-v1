@@ -12,7 +12,8 @@ import { takeUntil } from 'rxjs/operators';
 import { BreadcrumbService } from '../../../common-layout-components/breadcrumd/service/breadcrumb.service';
 import { CompressImageService } from 'src/app/core/services/image/compress-image.service';
 import { ShowToastrService } from 'src/app/core/services/show-toastr/show-toastr.service';
-
+import * as Editor from '../../../../../../assets/js/ckeditor/build/ckeditor';
+import { cdkEditorBasicConfig } from '../../../../../core/classes/cdkeditor-full-config';
 @Component({
   selector: 'app-blog-admin-create',
   templateUrl: './blog-admin-create.component.html',
@@ -34,17 +35,16 @@ export class BlogAdminCreateComponent implements OnInit, OnDestroy {
   tags: any[] = [];
   editorValue = null;
   ////////////////////////////////////////////
-  name = 'ng2-ckeditor';
-  ckeConfig: any;
-  text: string;
-  log: string = '';
-  @ViewChild('myckeditor') ckeditor: any;
+  ///////////////////////////////////////////////////////////////
+  public Editor = Editor;
+  config = cdkEditorBasicConfig;
+  text = '';
+  ///////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////
   compareFn: ((f1: any, f2: any) => boolean) | null = this.compareByValue;
 
   constructor(
     public utilsService: UtilsService,
-    private compressImage: CompressImageService,
     private blogService: BlogService,
     public spinner: NgxSpinnerService,
     private showToastr: ShowToastrService,
@@ -71,6 +71,7 @@ export class BlogAdminCreateComponent implements OnInit, OnDestroy {
       title: [null, [Validators.required]],
       text: [null, [Validators.required]],
       sumarize: [null, [Validators.maxLength(150)]],
+      status: ['pending'],
       link: [
         null,
         [
@@ -84,19 +85,17 @@ export class BlogAdminCreateComponent implements OnInit, OnDestroy {
     this.languageForm.valueChanges.pipe(takeUntil(this._unsubscribeAll)).subscribe((data) => {
       this.language = data.lang;
     });
-
-    this.ckeConfig = {
-      allowedContent: false,
-      extraPlugins: 'divarea',
-      forcePasteAsPlainText: true,
-      defaultLanguage: 'es',
-      height: '25rem',
-    };
   }
 
   ngOnDestroy() {
     this._unsubscribeAll.next();
     this._unsubscribeAll.complete();
+  }
+
+  public onReady(editor) {
+    editor.ui
+      .getEditableElement()
+      .parentElement.insertBefore(editor.ui.view.toolbar.element, editor.ui.getEditableElement());
   }
 
   onChangeTags(event): void {

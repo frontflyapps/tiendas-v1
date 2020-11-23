@@ -1,4 +1,3 @@
-import { PreviousRouteService } from './../../core/services/previous-route/previous-route.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BackendRoutingModule } from './backend-routing.module';
@@ -30,8 +29,10 @@ import { MenuListItemComponent } from './common-layout-components/menu-list-item
 import { PanelNotificationsComponent } from './common-layout-components/panel-notifications/panel-notifications.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { AdminTransactionService } from './appBackoffice/admin-transaction/services/admin-orders/admin-transaction.service';
-import { PdfGenService } from 'src/app/core/services/get-pdf/pdf-gen.service';
-
+import { TaxesShippingService } from './services/taxes-shipping/taxes-shipping.service';
+import { ExportExcelService } from './services/export-excel/export-excel.service';
+import { StateCreatingProductService } from './services/state-creating-product/state-creating-product.service';
+import { PreviousRouteService } from './services/previous-route/previous-route.service';
 ///////////////////////////////////////////////////////////////////
 @NgModule({
   imports: [
@@ -61,7 +62,15 @@ import { PdfGenService } from 'src/app/core/services/get-pdf/pdf-gen.service';
   ],
   declarations: [LayoutComponent, PanelNotificationsComponent, MenuListItemComponent, BreadcrumdComponent],
   entryComponents: [],
-  providers: [BreadcrumbService, NavService, PreviousRouteService, PdfGenService, AdminTransactionService],
+  providers: [
+    BreadcrumbService,
+    NavService,
+    PreviousRouteService,
+    AdminTransactionService,
+    ExportExcelService,
+    StateCreatingProductService,
+    TaxesShippingService,
+  ],
   exports: [],
 })
 export class BackendModule {}

@@ -20,6 +20,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { ShowToastrService } from './../../../../../core/services/show-toastr/show-toastr.service';
 import { DialogAddEditTaxesComponent } from '../../../common-dialogs-module/dialog-add-edit-taxes/dialog-add-edit-taxes.component';
 import { DialogUploadMediaComponent } from '../dialog-upload-media/dialog-upload-media.component';
+import * as Editor from '../../../../../../assets/js/ckeditor/build/ckeditor';
+import { cdkEditorBasicConfig } from '../../../../../core/classes/cdkeditor-full-config';
 
 @Component({
   selector: 'app-edit-product',
@@ -72,13 +74,10 @@ export class EditProductComponent implements OnInit, OnDestroy {
   ];
 
   ////////////////////////////////////////////
-  name = 'ng2-ckeditor';
-  ckeConfig: any;
-  text: string;
-  log: string = '';
-  @ViewChild('myckeditor', { static: true }) ckeditor: any;
   ///////////////////////////////////////////////////////////////
-
+  public Editor = Editor;
+  config = cdkEditorBasicConfig;
+  ///////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////
   compareFn: ((f1: any, f2: any) => boolean) | null = this.compareByValue;
 
@@ -208,14 +207,6 @@ export class EditProductComponent implements OnInit, OnDestroy {
         });
       }
     });
-
-    this.ckeConfig = {
-      allowedContent: false,
-      extraPlugins: 'divarea',
-      forcePasteAsPlainText: true,
-      defaultLanguage: 'es',
-      height: '35rem',
-    };
   }
 
   ngOnDestroy() {

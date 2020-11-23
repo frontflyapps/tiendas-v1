@@ -96,10 +96,12 @@
               </mat-error>
             </mat-form-field> -->
 
+          <div class="text-field">
+            <ckeditor [editor]="this.Editor" [(ngModel)]="text" [config]="config" [formControl]="this.form.get('text')"
+              (ready)="onReady($event)">
+            </ckeditor>
+          </div>
 
-          <ckeditor [(ngModel)]="text" #myckeditor="ngModel" name="myckeditor" required [config]="ckeConfig" debounce="500"
-            (paste)="onPaste($event)" (change)="onChange($event)" [ngModelOptions]="{standalone: true}">
-          </ckeditor>
 
           <div fxLayout="row" fxLayoutAlign="start center">
             <span class="mat-title mt-3">{{'Añade algunas etiquetas'}}</span>
@@ -107,6 +109,21 @@
 
           <app-list-tags-blog [language]="language" [blogId]="null" [tags]="[]" ($changeTags)="onChangeTags($event)">
           </app-list-tags-blog>
+
+          <!-- <p class="mat-body-2 uppercase"> Estado</p>
+          <mat-form-field class="text-field" appearance="outline">
+            <mat-select required [formControl]="form.get('status')" placeholder="{{'Estado'|translate}}">
+              <mat-option *ngFor="let status of [{id:'pending',name:'pendiente'},
+              {id:'enabled',name:'habilitado'},
+              {id:'disabled',name:'deshabilitado'}];let i=index" [value]="status.id">
+                <div fxLayout="row" fxLayoutAlign="start center">
+                  <span class="mat-body-2 uppercase">
+                    {{status.name}}
+                  </span>
+                </div>
+              </mat-option>
+            </mat-select>
+          </mat-form-field> -->
 
           <div fxLayout="row" class="mt-2" fxLayoutAlign="start start" fxLayoutGap="gappx">
             <span class="mat-body-2" style="text-transform: uppercase;">{{'Ingrese un enlace para referir'}}

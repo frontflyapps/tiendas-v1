@@ -43,12 +43,12 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ListTagsProductComponent } from './list-tags-product/list-tags-product.component';
 import { MatRadioModule } from '@angular/material/radio';
-import { CKEditorModule } from 'ng2-ckeditor';
 import { AdminProductLayoutComponent } from './admin-product-layout/admin-product-layout.component';
 import { TreeCategoryComponent } from './admin-list-categories/tree-category/tree-category.component';
 import { DialogUploadMediaComponent } from './dialog-upload-media/dialog-upload-media.component';
 import { CuFormLoadFileModule } from 'guachos-cu-form-load-file';
 import { NgpMaterialRatingModule } from 'src/app/components/shared/ngp-material-rating/ngp-material-rating.module';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 ///////////////////////////////////////////////////////////////////
 
 @NgModule({

@@ -4,9 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from './../../../../../environments/environment';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class StateCreatingProductService {
   url = environment.apiUrl + 'category';
   urlId = environment.apiUrl + 'category/:categoryId';

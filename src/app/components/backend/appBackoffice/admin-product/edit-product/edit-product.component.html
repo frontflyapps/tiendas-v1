@@ -503,8 +503,7 @@
 
     <ng-template matTabContent>
       <div class="container" style="margin-top: 16px;">
-        <ckeditor [(ngModel)]="description" #myckeditor="ngModel" name="myckeditor" required [config]="ckeConfig" debounce="500"
-          [ngModelOptions]="{standalone: true}">
+        <ckeditor [config]="config" [(ngModel)]="description" [editor]="Editor" tagName="textarea" [ngModelOptions]="{standalone: true}">
         </ckeditor>
         <div class="my-3" fxLayout="row" fxLayoutAlign="end start" fxLayoutGap="gappx">
           <button (click)="onAsignDescription()" [disabled]="!(description && description.length)" mat-raised-button class="ml-2"

@@ -13,6 +13,8 @@ import { BreadcrumbService } from '../../../common-layout-components/breadcrumd/
 import { environment } from 'src/environments/environment';
 import { CompressImageService } from 'src/app/core/services/image/compress-image.service';
 import { ShowToastrService } from 'src/app/core/services/show-toastr/show-toastr.service';
+import * as Editor from '../../../../../../assets/js/ckeditor/build/ckeditor';
+import { cdkEditorBasicConfig } from '../../../../../core/classes/cdkeditor-full-config';
 
 @Component({
   selector: 'app-blog-admin-edit',
@@ -35,11 +37,9 @@ export class BlogAdminEditComponent implements OnInit, OnDestroy {
   languageForm: FormControl;
   selectedArticle: any;
   ////////////////////////////////////////////
-  name = 'ng2-ckeditor';
-  ckeConfig: any;
-  text: string;
-  log: string = '';
-  @ViewChild('myckeditor') ckeditor: any;
+  public Editor = Editor;
+  config = cdkEditorBasicConfig;
+  text = '';
   ///////////////////////////////////////////////////////////////
 
   ///////////////////////////////////////////////////////////////
@@ -72,6 +72,7 @@ export class BlogAdminEditComponent implements OnInit, OnDestroy {
           title: [this.selectedArticle.title[this.language], [Validators.required]],
           text: [this.selectedArticle.text[this.language], [Validators.required, Validators.minLength(50)]],
           sumarize: [this.selectedArticle.sumarize[this.language], [Validators.required, Validators.maxLength(150)]],
+          status: [this.selectedArticle.status, [Validators.required]],
           link: [
             this.selectedArticle.link,
             [
@@ -105,13 +106,12 @@ export class BlogAdminEditComponent implements OnInit, OnDestroy {
       this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage() : this.languages[0],
     );
     // -------------------------------------------------------------------------------------------------
-    this.ckeConfig = {
-      allowedContent: false,
-      extraPlugins: 'divarea',
-      forcePasteAsPlainText: true,
-      defaultLanguage: 'es',
-      height: '25rem',
-    };
+  }
+
+  public onReady(editor) {
+    editor.ui
+      .getEditableElement()
+      .parentElement.insertBefore(editor.ui.view.toolbar.element, editor.ui.getEditableElement());
   }
 
   onChange(event: any): void {

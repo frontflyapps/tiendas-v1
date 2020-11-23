@@ -489,9 +489,10 @@
     <mat-step [editable]="validatorStepOne()" [stepControl]="this.descriptionForm">
       <ng-template matStepLabel>{{'DESCRIPTION'|translate}}</ng-template>
       <div class="container py-3">
-        <ckeditor (ngModelChange)="onDescriptionChange($event)" [(ngModel)]="description" #myckeditor="ngModel" name="myckeditor" required
-          [config]="ckeConfig" debounce="500" [ngModelOptions]="{standalone: true}">
+        <ckeditor [config]="config" (ngModelChange)="onDescriptionChange($event)" [(ngModel)]="description" [editor]="Editor"
+          tagName="textarea" [ngModelOptions]="{standalone: true}">
         </ckeditor>
+
       </div>
 
 

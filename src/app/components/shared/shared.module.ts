@@ -42,6 +42,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatRippleModule, MatNativeDateModule } from '@angular/material/core';
 import { ConfirmationDialogFrontComponent } from './confirmation-dialog-front/confirmation-dialog-front.component';
 import { MatBadgeModule } from '@angular/material/badge';
+import { PreviousRouteService } from '../backend/services/previous-route/previous-route.service';
 @NgModule({
   declarations: [
     MenuComponent,
@@ -128,6 +129,6 @@ import { MatBadgeModule } from '@angular/material/badge';
   ],
   entryComponents: [],
 
-  providers: [ProductService, SidebarMenuService],
+  providers: [ProductService, SidebarMenuService, PreviousRouteService],
 })
 export class SharedModule {}

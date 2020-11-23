@@ -16,7 +16,7 @@ mat-toolbar {
 }
 
 :host {
-  padding: 16px 48px;
+  padding: 16px 16px;
 
   @include media-breakpoint('lt-md') {
     padding: 8px 4px;

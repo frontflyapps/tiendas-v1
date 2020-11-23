@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { PreviousRouteService } from './../../../../core/services/previous-route/previous-route.service';
 import { NavService } from './nav.service';
+import { PreviousRouteService } from '../../services/previous-route/previous-route.service';
 
 @Component({
   selector: 'app-menu-list-item',
@@ -20,7 +20,8 @@ import { NavService } from './nav.service';
 })
 export class MenuListItemComponent implements OnInit, OnDestroy {
   expanded: boolean;
-  @HostBinding('attr.aria-expanded') ariaExpanded = this.expanded;
+  @HostBinding('attr.aria-expanded') ariaExpanded;
+
   @Input() item: any;
   @Input() depth: number;
 
@@ -29,6 +30,7 @@ export class MenuListItemComponent implements OnInit, OnDestroy {
   _unsubscribeAll: Subject<any>;
 
   constructor(public navService: NavService, public previousRouteService: PreviousRouteService, public router: Router) {
+    this.ariaExpanded = this.expanded;
     if (this.depth === undefined) {
       this.depth = 0;
     }

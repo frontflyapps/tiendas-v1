@@ -13,12 +13,12 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { UtilsService } from './../../../../../core/services/utils/utils.service';
 import { LoggedInUserService } from './../../../../../core/services/loggedInUser/logged-in-user.service';
-import { ShowToastrService } from './../../../../../core/services/show-toastr/show-toastr.service';
 import { ShowSnackbarService } from './../../../../../core/services/show-snackbar/show-snackbar.service';
-import { CurrencyService } from './../../../../../core/services/currency/currency.service';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { DialogUploadMediaComponent } from '../dialog-upload-media/dialog-upload-media.component';
 import { Location } from '@angular/common';
+import * as Editor from '../../../../../../assets/js/ckeditor/build/ckeditor';
+import { cdkEditorBasicConfig } from '../../../../../core/classes/cdkeditor-full-config';
 @Component({
   selector: 'app-create-product',
   templateUrl: './create-product.component.html',
@@ -72,18 +72,15 @@ export class CreateProductComponent implements OnInit, OnDestroy {
   typeProduct = 'physical';
   editorValue = null;
   description = null;
-  ////////////////////////////////////////////
-  name = 'ng2-ckeditor';
-  ckeConfig: any;
-  text: string;
-  log: string = '';
-  @ViewChild('myckeditor', { static: true }) ckeditor: any;
-  pricesArray: FormArray;
   descriptionForm: FormControl = new FormControl(null, [Validators.required]);
+  ////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////
-
+  public Editor = Editor;
+  config = cdkEditorBasicConfig;
+  ///////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////
   compareFn: ((f1: any, f2: any) => boolean) | null = this.compareByValue;
+
   show = false;
   constructor(
     private breadcrumbService: BreadcrumbService,
@@ -174,14 +171,6 @@ export class CreateProductComponent implements OnInit, OnDestroy {
         });
       }
     });
-
-    this.ckeConfig = {
-      allowedContent: false,
-      extraPlugins: 'divarea',
-      forcePasteAsPlainText: true,
-      defaultLanguage: 'es',
-      height: '25rem',
-    };
     /////////////////////////////////////////////
     this.route.queryParams.subscribe((data: any) => {
       console.log('CreateProductComponent -> ngOnInit -> data', data);

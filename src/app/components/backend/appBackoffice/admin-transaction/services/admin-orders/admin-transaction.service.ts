@@ -3,7 +3,6 @@ import { IPagination } from './../../../../../../core/classes/pagination.class';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { PdfGenService } from 'src/app/core/services/get-pdf/pdf-gen.service';
 
 @Injectable()
 export class AdminTransactionService {
@@ -12,7 +11,7 @@ export class AdminTransactionService {
   urlDelivery = environment.apiUrl + 'delivery';
   urlCancelAdminOrder = environment.apiUrl + 'admin/payment/:id/cancel';
 
-  constructor(private httpClient: HttpClient, private pdfGenService: PdfGenService) {}
+  constructor(private httpClient: HttpClient) {}
 
   ///////////////////////////////ADMIN PAYMENT///////////////////////////////////
   getAllOrders(query?: IPagination, params?: any) {
@@ -157,16 +156,29 @@ export class AdminTransactionService {
   }
 
   public getVoucher(order) {
-    console.log('AdminTransactionService -> getVoucher -> order', order);
     const urlDownload = environment.apiUrl + 'payment/' + order.id + '/voucher';
+    // this.httpClient
+    //   .get(urlDownload)
+    //   .toPromise()
+    //   .then((data: any) => {
+    //     if (data.OK == true) {
+    //       this.pdfGenService.genReservationVoucher(order);
+    //     }
+    //   })
+    //   .catch((e) => {});
+
+    const httpOptions = {
+      responseType: 'blob' as 'json',
+    };
     this.httpClient
-      .get(urlDownload)
+      .get(urlDownload, httpOptions)
       .toPromise()
-      .then((data: any) => {
-        if (data.OK == true) {
-          this.pdfGenService.genReservationVoucher(order);
-        }
-      })
-      .catch((e) => {});
+      .then((data) => {
+        const downloadURL = window.URL.createObjectURL(data);
+        const link = document.createElement('a');
+        link.href = downloadURL;
+        link.download = `Voucher-${order.order}.pdf`;
+        link.click();
+      });
   }
 }
