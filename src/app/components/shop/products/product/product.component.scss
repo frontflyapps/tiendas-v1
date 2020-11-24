@@ -11,7 +11,7 @@
   @media(max-width:800px) {
     background-color: #fafafa;
     border-top-left-radius: 16px;
-    border-bottom-right-radius: 16px;
+    border-bottom-left-radius: 16px;
     border-top-right-radius: 0px;
     height: 160px
   }
@@ -149,6 +149,6 @@
   }
 
   .price-offer {
-    font-size: 10px !important;
+    font-size: 13px !important;
   }
 }
