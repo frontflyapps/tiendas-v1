@@ -22,7 +22,7 @@ export class MyOrdersGuard implements CanActivate, CanLoad {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot,
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (this.loggedInUserService.getLoggedInUser() && !this.loggedInUserService.isMessengerUser()) {
+    if (this.loggedInUserService.getLoggedInUser()) {
       return true;
     } else {
       this.route.navigate(['/error/acceso-prohibido']);
@@ -30,7 +30,7 @@ export class MyOrdersGuard implements CanActivate, CanLoad {
     }
   }
   canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean {
-    if (this.loggedInUserService.getLoggedInUser() && !this.loggedInUserService.isMessengerUser()) {
+    if (this.loggedInUserService.getLoggedInUser()) {
       return true;
     } else {
       this.route.navigate(['/error/acceso-prohibido']);
