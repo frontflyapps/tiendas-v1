@@ -15,6 +15,7 @@ import { CurrencyPipe } from '@angular/common';
 })
 export class UtilsService {
   urlImage = environment.apiUrl;
+  showErrorState = false;
 
   constructor(
     public sanitizer: DomSanitizer,
@@ -45,6 +46,11 @@ export class UtilsService {
   }
 
   errorHandle(error, nomenclator?, action?) {
+    if (this.showErrorState) {
+      return;
+    }
+    this.showErrorState = true;
+
     let alternative = nomenclator
       ? action
         ? this.translateService.instant('Error ') + action + ' ' + nomenclator
@@ -62,7 +68,12 @@ export class UtilsService {
     } else {
       msg = error.error.message;
     }
-    this.showToastr.showError(msg, 'Error', 9000);
+    this.showToastr
+      .showError(msg, 'Error', 5000)
+      .toastRef.afterClosed()
+      .subscribe((data) => {
+        this.showErrorState = false;
+      });
   }
 
   errorHandle2(error, nomenclator?, action?) {
@@ -99,5 +110,27 @@ export class UtilsService {
     } else {
       return item['es'];
     }
+  }
+
+  public isObjectEquals(x, y): boolean {
+    if (x === y) return true;
+
+    if (!(x instanceof Object) || !(y instanceof Object)) return false;
+
+    if (x.constructor !== y.constructor) return false;
+
+    for (let p in x) {
+      if (!x.hasOwnProperty(p)) continue;
+
+      if (!y.hasOwnProperty(p)) return false;
+
+      if (x[p] === y[p]) continue;
+
+      if (typeof x[p] !== 'object') return false;
+
+      if (!this.isObjectEquals(x[p], y[p])) return false;
+    }
+    for (let p in y) if (y.hasOwnProperty(p) && !x.hasOwnProperty(p)) return false;
+    return true;
   }
 }
