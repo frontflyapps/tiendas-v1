@@ -34,6 +34,8 @@ import { BannerPromotionComponent } from './banner-promotion/banner-promotion.co
 import { BannerPromotion2Component } from './banner-promotion2/banner-promotion2.component';
 import { DialogFiltersMComponent } from './products/dialog-filters-m/dialog-filters-m.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { CategoriesMComponent } from './widgets/categories-m/categories-m.component';
+import { BrandsMComponent } from './widgets/brands-m/brands-m.component';
 @NgModule({
   declarations: [
     MainCarouselComponent,
@@ -53,6 +55,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     BannerPromotionComponent,
     BannerPromotion2Component,
     DialogFiltersMComponent,
+    CategoriesMComponent,
+    BrandsMComponent,
   ],
   imports: [
     CommonModule,
@@ -75,6 +79,6 @@ import { MatDialogModule } from '@angular/material/dialog';
   ],
   exports: [ProductDialogComponent],
 
-  entryComponents: [],
+  entryComponents: [DialogFiltersMComponent],
 })
 export class ShopModule {}

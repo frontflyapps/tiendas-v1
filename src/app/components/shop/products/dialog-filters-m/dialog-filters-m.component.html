@@ -1,12 +1,42 @@
-<h1 mat-dialog-title>More filter</h1>
-<div mat-dialog-content>
-  <p>What's your favorite animal?</p>
-  <mat-form-field>
-    <mat-label>Favorite Animal</mat-label>
-    <input matInput>
-  </mat-form-field>
-</div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button>
-</div>
+
+<h2 mat-dialog-title>{{'More filters' | translate}}</h2>
+
+<mat-dialog-content>
+
+  <mat-accordion [multi]="true">
+    <mat-expansion-panel class="mat-elevation-z0 no-border bg-acordion" [expanded]=" this.categoriesIds.length ">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <span>{{'Categories'|translate}}</span>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <app-categories-m [categoriesIds]="this.categoriesIds" (categoryChanged)="onCategoriesChanged($event)"></app-categories-m>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel class="mat-elevation-z0 no-border bg-acordion" [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <span>{{'Brands'|translate}}</span>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="brands">
+        <app-brands-m (brandChanged)="onBrandsChanged($event)"></app-brands-m>
+      </div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel class="mat-elevation-z0 no-border bg-acordion" [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <span>{{"Price"|translate}}</span>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <app-price [reset]="resetPrices" (priceFilters)="updatePriceFilters($event)"></app-price>
+    </mat-expansion-panel>
+
+  </mat-accordion>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button class="mat-raised-button"(click)="close()" style="margin-right: 10px">Close</button>
+  <button class="mat-raised-button mat-primary"(click)="save()">Save</button>
+</mat-dialog-actions>

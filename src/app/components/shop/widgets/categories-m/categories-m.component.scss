@@ -1,0 +1,41 @@
+.layoutCheck {
+  height: 46px !important;
+  position: relative;
+
+}
+
+.clearChipBtn {
+  width: 24px !important;
+  height: 24px !important;
+  margin-left: 8px;
+  position: absolute;
+  right: 0px;
+  top: 10px;
+
+  mat-icon {
+    // height: 16px;
+    // width: 16px;
+    // font-size: 18px;
+    line-height: 8px;
+    font-size: 18px;
+  }
+}
+.category-filter{
+  margin-top: 10px;
+  margin-right: 10px;
+  padding: 6px;
+  border-style: solid;
+  border-color: #b5b5b5;
+  border-radius: 16px;
+  color: black;
+}
+.category-filter-clicked{
+  margin-top: 10px;
+  margin-right: 10px;
+  padding: 6px;
+  border-style: solid;
+  border-color: #717171;
+  border-radius: 16px;
+  color: white;
+  background-color: #717171;
+}

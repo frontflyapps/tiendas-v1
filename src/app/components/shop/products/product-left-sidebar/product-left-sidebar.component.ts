@@ -10,6 +10,8 @@ import { UtilsService } from './../../../../core/services/utils/utils.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { CategoriesService } from 'src/app/components/backend/services/categories/catagories.service';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { DialogFiltersMComponent } from '../dialog-filters-m/dialog-filters-m.component';
 
 @Component({
   selector: 'app-product-left-sidebar',
@@ -63,6 +65,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
     public loggedInUserService: LoggedInUserService,
     private breakpointObserver: BreakpointObserver,
     private route: ActivatedRoute,
+    private dialog: MatDialog,
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
@@ -283,5 +286,13 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
         }
       });
     }
+  }
+
+  openDialog() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '100%';
+    this.dialog.open(DialogFiltersMComponent, dialogConfig);
   }
 }

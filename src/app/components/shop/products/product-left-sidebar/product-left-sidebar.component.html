@@ -7,9 +7,12 @@
         <mat-chip *ngFor="let chip of this.showChips()">{{chip.name['es']}}</mat-chip>
       </mat-chip-list>
     </div>
-
+    <button mat-raised-button (click)="openDialog()" fxHide fxShow.lt-md>
+      <mat-icon>search</mat-icon> {{'more filters' | translate}}
+    </button>
     <div id="topLeftSidebar" class="sidebar-wrapper" fxLayout='row wrap' fxLayoutAlign="center start">
-      <div fxFlex="25" fxFlex.lt-md="100" class="filter-sidenav" perfectScrollbar fxHide.xs>
+
+      <div fxFlex="25" fxFlex.lt-md="100" class="filter-sidenav" perfectScrollbar fxHide.lt-md>
         <div class="toggles-wrapper border-right" fxLayout="column" fxLayout.lt-md="column">
           <div class="toggles" fxFlex.lt-md="100">
             <mat-accordion [multi]="true">
