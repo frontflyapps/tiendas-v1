@@ -1,5 +1,5 @@
 import { CategoriesService } from './../../../backend/services/categories/catagories.service';
-import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy, Input } from '@angular/core';
 import { UtilsService } from './../../../../core/services/utils/utils.service';
 import { LoggedInUserService } from './../../../../core/services/loggedInUser/logged-in-user.service';
 import { takeUntil } from 'rxjs/operators';
@@ -20,6 +20,14 @@ export class BrandsComponent implements OnInit, OnDestroy {
   selection: SelectionModel<any>;
 
   @Output() brandChanged = new EventEmitter();
+  @Input() set brandsIds(value) {
+    if (value) {
+      // this.selection.clear();
+      value.map((id) => {
+        this.selection.select(+id);
+      });
+    }
+  }
   constructor(
     private utilsService: UtilsService,
     private brandService: CategoriesService,
@@ -47,11 +55,20 @@ export class BrandsComponent implements OnInit, OnDestroy {
 
   onChangeSelection(brand) {
     this.selection.toggle(brand);
-    const arrayBrandIds = [
-      ...this.selection.selected.map((item) => {
-        return item.id;
-      }),
-    ];
-    this.brandChanged.emit(arrayBrandIds);
+    if (this.selection.isSelected(brand)) {
+      this.brands
+        .filter((item) => item.id == brand)
+        .map((item) => {
+          this.selection.select(item.id);
+        });
+    } else {
+      this.brands
+        .filter((item) => item.id == brand)
+        .map((item) => {
+          this.selection.deselect(item.id);
+        });
+    }
+    console.log('estoy aqui, ', this.selection.selected);
+    this.brandChanged.emit(this.selection.selected);
   }
 }

@@ -52,6 +52,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
   _unsubscribeAll: Subject<any>;
   isOnlyTwoProducts = false;
   categoriesIds: any[] = [];
+  brandsIds: any[] = [];
   isHandset = false;
   productId = null;
   allCategories: any[] = [];
@@ -109,6 +110,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
       }
 
       this.categoriesIds = [...this.paramsSearch.categoryIds];
+      this.brandsIds = [...this.paramsSearch.brandIds];
       this.allProducts = [];
       this.search();
     });
@@ -293,6 +295,14 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
     dialogConfig.disableClose = false;
     dialogConfig.autoFocus = true;
     dialogConfig.width = '100%';
-    this.dialog.open(DialogFiltersMComponent, dialogConfig);
+    dialogConfig.maxWidth = '100vw';
+    let dialogRef = this.dialog.open(DialogFiltersMComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe((data)  => {
+      if (data) {
+        this.paramsSearch = {...data.paramsSearch};
+        this.queryProduct = {...data.queryProduct};
+        this.searchProducts();
+      }
+    });
   }
 }

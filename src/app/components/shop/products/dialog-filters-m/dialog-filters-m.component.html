@@ -1,8 +1,8 @@
-
-<h2 mat-dialog-title>{{'More filters' | translate}}</h2>
-
+<div fxLayout="row" fxLayoutAlign="space-between start" >
+  <h2 mat-dialog-title>{{'More filters' | translate}}</h2>
+    <mat-icon (click)="close()">close</mat-icon>
+</div>
 <mat-dialog-content>
-
   <mat-accordion [multi]="true">
     <mat-expansion-panel class="mat-elevation-z0 no-border bg-acordion" [expanded]=" this.categoriesIds.length ">
       <mat-expansion-panel-header>
@@ -10,7 +10,8 @@
           <span>{{'Categories'|translate}}</span>
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <app-categories-m [categoriesIds]="this.categoriesIds" (categoryChanged)="onCategoriesChanged($event)"></app-categories-m>
+      <app-categories-m [categoriesIds]="this.categoriesIds"
+                        (categoryChanged)="onCategoriesChanged($event)"></app-categories-m>
     </mat-expansion-panel>
 
     <mat-expansion-panel class="mat-elevation-z0 no-border bg-acordion" [expanded]="true">
@@ -20,7 +21,7 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div class="brands">
-        <app-brands-m (brandChanged)="onBrandsChanged($event)"></app-brands-m>
+        <app-brands-m [brandsIds]="this.brandsIds" (brandChanged)="onBrandsChanged($event)"></app-brands-m>
       </div>
     </mat-expansion-panel>
 
@@ -35,8 +36,8 @@
 
   </mat-accordion>
 </mat-dialog-content>
-
-<mat-dialog-actions>
-  <button class="mat-raised-button"(click)="close()" style="margin-right: 10px">Close</button>
-  <button class="mat-raised-button mat-primary"(click)="save()">Save</button>
-</mat-dialog-actions>
+<div fxLayout="row" fxLayoutAlign="end end">
+  <mat-dialog-actions>
+    <button class="mat-raised-button mat-primary" (click)="save()">{{'Guardar' | translate}}</button>
+  </mat-dialog-actions>
+</div>

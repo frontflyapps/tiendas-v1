@@ -1,7 +1,6 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { IPagination } from '../../../../core/classes/pagination.class';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CurrencyService } from '../../../../core/services/currency/currency.service';
 import { Subject } from 'rxjs';
@@ -20,12 +19,9 @@ export interface DialogData {
   templateUrl: './dialog-filters-m.component.html',
   styleUrls: ['./dialog-filters-m.component.scss']
 })
-export class DialogFiltersMComponent implements OnInit {
+export class DialogFiltersMComponent implements OnInit, OnDestroy {
   public animation: any; // Animation
-  public sortByOrder: any = ''; // sorting
   public page: any;
-  public viewType = 'grid';
-  public viewCol = 100;
 
   public allProducts: any[] = [];
   initLimit = 10;
@@ -54,6 +50,7 @@ export class DialogFiltersMComponent implements OnInit {
   _unsubscribeAll: Subject<any>;
   isOnlyTwoProducts = false;
   categoriesIds: any[] = [];
+  brandsIds: any[] = [];
   isHandset = false;
   productId = null;
   allCategories: any[] = [];
@@ -65,7 +62,6 @@ export class DialogFiltersMComponent implements OnInit {
     private categoryService: CategoriesService,
     private router: Router,
     public loggedInUserService: LoggedInUserService,
-    private breakpointObserver: BreakpointObserver,
     private route: ActivatedRoute,
     public dialogRef: MatDialogRef<DialogFiltersMComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData
@@ -112,8 +108,8 @@ export class DialogFiltersMComponent implements OnInit {
       }
 
       this.categoriesIds = [...this.paramsSearch.categoryIds];
+      this.brandsIds = [...this.paramsSearch.brandIds];
       this.allProducts = [];
-      this.search();
     });
   }
 
@@ -121,16 +117,9 @@ export class DialogFiltersMComponent implements OnInit {
     this.loggedInUserService.$languageChanged.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {
       this.language = data.lang;
     });
-
-    this.breakpointObserver
-      .observe([Breakpoints.Medium, Breakpoints.Small, Breakpoints.XSmall])
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((data) => {
-        this.isHandset = data.matches;
-      });
-
     this.categoryService.getAllCategories().subscribe((data) => {
       this.allCategories = data.data;
+      console.log('todas las categorias', data.data);
     });
   }
 
@@ -138,68 +127,6 @@ export class DialogFiltersMComponent implements OnInit {
     this._unsubscribeAll.next(true);
     this._unsubscribeAll.complete();
   }
-
-  //////////////////////////// BUSQUEDA ////////////////////////////////
-
-  searchProducts() {
-    this.loading = true;
-    // console.log('ProductLeftSidebarComponent -> searchProducts -> queryParams', this.queryProduct);
-
-    this.router.navigate(['/products/search'], {
-      queryParams: {
-        ...this.paramsSearch,
-        ...this.queryProduct,
-      },
-    });
-  }
-
-  search() {
-    this.productService.searchProduct({ ...this.queryProduct }, { ...this.paramsSearch }).subscribe(
-      (data) => {
-        this.allProducts = data.data;
-        // this.queryProduct.offset += data.meta.pagination.count;
-        this.queryProduct.total = data.meta.pagination.total;
-        this.loading = false;
-        this.gotToProductId();
-      },
-      () => {
-        this.loading = false;
-      },
-    );
-  }
-  showChips() {
-    let chips = [];
-    for (let cat of this.allCategories) {
-      let a = this.categoriesIds.find((i) => i == cat.id);
-      if (a) {
-        chips.push(cat);
-      }
-    }
-    return chips;
-  }
-
-  // Animation Effect fadeIn
-  public fadeIn() {
-    this.animation = 'fadeIn';
-  }
-
-  OnPaginatorChange(event) {
-    console.log('Entre qui en el evento');
-    if (event) {
-      console.log('ProductLeftSidebarComponent -> OnPaginatorChange -> event', event);
-      this.queryProduct.limit = event.pageSize || this.initLimit;
-      this.queryProduct.offset = event.pageIndex * event.pageSize;
-      this.queryProduct.page = event.pageIndex;
-    } else {
-      this.queryProduct.limit = this.initLimit;
-      this.queryProduct.offset = 0;
-      this.queryProduct.page = 1;
-    }
-    this.searchProducts();
-    const element = document.getElementById('topSearchBar');
-    element.scrollIntoView();
-  }
-
   // Update price filter
   updatePriceFilters(price: any) {
     // console.log(price);
@@ -209,22 +136,15 @@ export class DialogFiltersMComponent implements OnInit {
     this.queryProduct.offset = 0;
     this.queryProduct.total = 0;
     this.allProducts = [];
-    setTimeout(() => {
-      this.searchProducts();
-    }, 250);
   }
   // Update Brands filter
   onBrandsChanged(brandIds) {
+    console.log(brandIds);
     this.paramsSearch.brandIds = brandIds;
     this.queryProduct.limit = this.initLimit;
     this.queryProduct.offset = 0;
     this.queryProduct.total = 0;
     this.allProducts = [];
-    console.log('Entre en el cambio de Brands');
-    this.paginator.firstPage();
-    setTimeout(() => {
-      this.searchProducts();
-    }, 150);
   }
 
   // Update Categories filter
@@ -235,27 +155,12 @@ export class DialogFiltersMComponent implements OnInit {
     this.queryProduct.total = 0;
     this.allProducts = [];
     console.log('Entre en el cambio de Categories');
-    this.paginator.firstPage();
-    setTimeout(() => {
-      this.searchProducts();
-    }, 150);
-  }
-
-  //////////////////////////
-  gotToProductId() {
-    // console.log('ProductLeftSidebarComponent -> gotToProductId -> this.productId', this.productId);
-    if (this.productId) {
-      setTimeout(() => {
-        const element = document.getElementById(`ProductCardId${this.productId}`);
-        if (element) {
-          element.scrollIntoView(false);
-          this.productService.productIdDetails = undefined;
-        }
-      });
-    }
   }
   save() {
-    this.dialogRef.close();
+    this.dialogRef.close({
+        paramsSearch: this.paramsSearch,
+      queryProduct: this.queryProduct,
+  });
   }
   close() {
     this.dialogRef.close();

@@ -8,7 +8,7 @@
       </mat-chip-list>
     </div>
     <button mat-raised-button (click)="openDialog()" fxHide fxShow.lt-md>
-      <mat-icon>search</mat-icon> {{'more filters' | translate}}
+      <mat-icon>search</mat-icon> {{'Filtros de búsqueda' | translate}}
     </button>
     <div id="topLeftSidebar" class="sidebar-wrapper" fxLayout='row wrap' fxLayoutAlign="center start">
 
@@ -32,7 +32,7 @@
                   </mat-panel-title>
                 </mat-expansion-panel-header>
                 <div class="brands">
-                  <app-brands (brandChanged)="onBrandsChanged($event)"></app-brands>
+                  <app-brands [brandsIds]="this.brandsIds" (brandChanged)="onBrandsChanged($event)"></app-brands>
                 </div>
               </mat-expansion-panel>
               <!-- <mat-expansion-panel class="mat-elevation-z0 no-border bg-acordion" [expanded]="!isHandset">

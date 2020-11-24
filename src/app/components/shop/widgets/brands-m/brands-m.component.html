@@ -1,11 +1,16 @@
 <div class="brands-items">
-  <a
-    [class]="selection.isSelected(brand) ? 'brand-filter-clicked' : 'brand-filter'"
-    (click)="$event ? onChangeSelection(brand) : null "
-    (change)="$event.stopPropagation()"
-    href="javascript:void(0)" *ngFor="let brand of brands">
-    {{(brand.name[language])?brand.name[language]:brand.name['es']}}
-  </a>
+  <ul>
+    <li *ngFor="let brand of brands">
+      <a
+        [class]="selection.isSelected(brand.id) ? 'brand-filter-clicked' : 'brand-filter'"
+        (click)="$event ? onChangeSelection(brand.id) : null "
+        (change)="$event.stopPropagation()"
+        href="javascript:void(0)" >
+        {{(brand.name[language])?brand.name[language]:brand.name['es']}}
+      </a>
+    </li>
+  </ul>
+
   <p class="m-0" *ngIf="!brands.length" style="text-align: center;">
     {{'No hay ningún elemento'|translate}}
   </p>

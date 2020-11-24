@@ -1,12 +1,17 @@
 <div class="brands-items">
-  <a
-    [class]="selection.isSelected(category) ? 'category-filter-clicked' : 'category-filter'"
-    (click)="$event ? onChangeSelection(category) : null "
-    (change)="$event.stopPropagation()"
-    href="javascript:void(0)"
-    *ngFor="let category of categories">
-    {{this.showNameCategory(category)}}
-  </a>
+  <ul>
+    <li *ngFor="let category of allCategories">
+      <a
+        [class]="selection.isSelected(category.id) ? 'category-filter-clicked' : 'category-filter'"
+        (click)="$event ? onChangeSelection(category.id) : null "
+        (change)="$event.stopPropagation()"
+        href="javascript:void(0)"
+      >
+        {{this.showNameCategory(category)}}
+      </a>
+    </li>
+  </ul>
+
   <p class="m-0" *ngIf="!categories.length" style="text-align: center;">
     {{'No hay ningún elemento'|translate}}
   </p>
