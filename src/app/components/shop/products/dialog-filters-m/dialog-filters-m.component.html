@@ -1,23 +1,22 @@
-<div fxLayout="row" fxLayoutAlign="space-between start" >
-  <h2 mat-dialog-title>{{'More filters' | translate}}</h2>
-    <mat-icon (click)="close()">close</mat-icon>
+<div fxLayout="row" fxLayoutAlign="space-between start">
+  <h2 mat-dialog-title>{{'Filtros de búsqueda' | translate}}</h2>
+  <mat-icon (click)="close()">close</mat-icon>
 </div>
-<mat-dialog-content>
+<mat-dialog-content class="my-filters">
   <mat-accordion [multi]="true">
     <mat-expansion-panel class="mat-elevation-z0 no-border bg-acordion" [expanded]=" this.categoriesIds.length ">
       <mat-expansion-panel-header>
         <mat-panel-title>
-          <span>{{'Categories'|translate}}</span>
+          <h3>{{'Categories'|translate}}</h3>
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <app-categories-m [categoriesIds]="this.categoriesIds"
-                        (categoryChanged)="onCategoriesChanged($event)"></app-categories-m>
+      <app-categories-m [categoriesIds]="this.categoriesIds" (categoryChanged)="onCategoriesChanged($event)"></app-categories-m>
     </mat-expansion-panel>
 
     <mat-expansion-panel class="mat-elevation-z0 no-border bg-acordion" [expanded]="true">
       <mat-expansion-panel-header>
         <mat-panel-title>
-          <span>{{'Brands'|translate}}</span>
+          <h3>{{'Brands'|translate}}</h3>
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div class="brands">

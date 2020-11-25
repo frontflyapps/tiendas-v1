@@ -54,17 +54,13 @@
   }
 
 }
-.select-search{
+
+.select-search {
   width: 220px !important;
-  height: 36px !important;
   background-color: white;
-  border-radius: 5px;
+  border: 1.5px solid rgba(0, 0, 0, 0.12);
+  border-radius: 10px;
   margin-right: 5px;
-  box-shadow: 2px 2px 4px #b5b5b5;
-  padding-left: 10px;
-  -webkit-appearance:none;
-  border-color: white;
-  background-image: url('../../../../../assets/images/background/drowdown.jpg');
-  background-position : right center;
-  background-repeat: no-repeat;
+  height: 38px;
+  padding: 0px 10px;
 }

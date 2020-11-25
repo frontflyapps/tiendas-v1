@@ -76,7 +76,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
     });
 
     this.route.queryParams.pipe(takeUntil(this._unsubscribeAll)).subscribe((data) => {
-      console.log('Subscricion de navegacion -> data', data);
+      // console.log('Subscricion de navegacion -> data', data);
       this.loading = true;
       this.paramsSearch.categoryIds = data && data.categoryIds ? data.categoryIds : this.paramsSearch.categoryIds;
       this.paramsSearch.brandIds = data && data.brandIds ? data.brandIds : [];
@@ -297,10 +297,10 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
     dialogConfig.width = '100%';
     dialogConfig.maxWidth = '100vw';
     let dialogRef = this.dialog.open(DialogFiltersMComponent, dialogConfig);
-    dialogRef.afterClosed().subscribe((data)  => {
+    dialogRef.afterClosed().subscribe((data) => {
       if (data) {
-        this.paramsSearch = {...data.paramsSearch};
-        this.queryProduct = {...data.queryProduct};
+        this.paramsSearch = { ...data.paramsSearch };
+        this.queryProduct = { ...data.queryProduct };
         this.searchProducts();
       }
     });

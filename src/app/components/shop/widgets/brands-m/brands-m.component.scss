@@ -1,22 +1,26 @@
-.brand-filter{
+.brand-filter {
   margin-top: 10px;
   margin-right: 10px;
-  padding: 6px;
+  padding: 6px 10px;
+  border-width: 1px;
   border-style: solid;
   border-color: #b5b5b5;
   border-radius: 16px;
   color: black;
 }
-.brand-filter-clicked{
+
+.brand-filter-clicked {
   margin-top: 10px;
   margin-right: 10px;
-  padding: 6px;
+  padding: 6px 10px;
+  border-width: 1px;
   border-style: solid;
   border-color: #717171;
   border-radius: 16px;
   color: white;
   background-color: #717171;
 }
+
 ul {
   list-style-type: none;
   margin: 0;

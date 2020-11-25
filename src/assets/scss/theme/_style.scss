@@ -71,13 +71,13 @@ h1 {
   font-size: 60px;
   color: $theme-main-dark;
   font-weight: 700;
-  text-transform: uppercase;
+  // text-transform: uppercase;
 }
 
 h2 {
   font-size: 36px;
   color: $theme-main-dark;
-  text-transform: capitalize;
+  // text-transform: capitalize;
   font-weight: 700;
   line-height: 1;
   letter-spacing: 0.02em;
@@ -2217,22 +2217,6 @@ span {
     padding-left: 17px;
     background: $white;
 
-    select {
-      /* margin: 50px; */
-      width: 150px;
-      padding: 5px 35px 5px 5px;
-      font-size: 16px;
-      border: none;
-      height: 34px;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
-      background: transparent;
-
-      cursor: pointer;
-      background: url(/assets/images/dropdown.png) no-repeat 90%;
-    }
-
     .col {
       padding: 9px 0 9px 0px;
 
@@ -2249,15 +2233,6 @@ span {
 
           .product-img {
             background: $gray-lighter;
-
-            // img {
-            //   max-width: 200px;
-            //   height: 200px;
-            //   margin-bottom: 12px;
-            //   display: block;
-            //   margin-left: auto;
-            //   margin-right: auto;
-            // }
           }
 
           .product-info-wrapper {
@@ -3336,6 +3311,7 @@ span {
 
 .brands-items {
   margin-top: 20px;
+
   .mat-radio-button {
     margin-bottom: 15px;
   }

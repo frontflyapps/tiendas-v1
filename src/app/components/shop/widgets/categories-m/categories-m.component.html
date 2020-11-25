@@ -1,12 +1,8 @@
 <div class="brands-items">
   <ul>
     <li *ngFor="let category of allCategories">
-      <a
-        [class]="selection.isSelected(category.id) ? 'category-filter-clicked' : 'category-filter'"
-        (click)="$event ? onChangeSelection(category.id) : null "
-        (change)="$event.stopPropagation()"
-        href="javascript:void(0)"
-      >
+      <a [class]="selection.isSelected(category.id) ? 'category-filter-clicked' : 'category-filter'"
+        (click)="$event ? onChangeSelection(category.id) : null " (change)="$event.stopPropagation()" href="javascript:void(0)">
         {{this.showNameCategory(category)}}
       </a>
     </li>
@@ -17,4 +13,3 @@
   </p>
 
 </div>
-

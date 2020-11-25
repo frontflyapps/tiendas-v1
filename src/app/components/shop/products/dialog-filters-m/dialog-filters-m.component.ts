@@ -17,7 +17,7 @@ export interface DialogData {
 @Component({
   selector: 'app-dialog-filters-m',
   templateUrl: './dialog-filters-m.component.html',
-  styleUrls: ['./dialog-filters-m.component.scss']
+  styleUrls: ['./dialog-filters-m.component.scss'],
 })
 export class DialogFiltersMComponent implements OnInit, OnDestroy {
   public animation: any; // Animation
@@ -64,7 +64,7 @@ export class DialogFiltersMComponent implements OnInit, OnDestroy {
     public loggedInUserService: LoggedInUserService,
     private route: ActivatedRoute,
     public dialogRef: MatDialogRef<DialogFiltersMComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
@@ -74,7 +74,7 @@ export class DialogFiltersMComponent implements OnInit, OnDestroy {
     });
 
     this.route.queryParams.pipe(takeUntil(this._unsubscribeAll)).subscribe((data) => {
-      console.log('Subscricion de navegacion -> data', data);
+      // console.log('Subscricion de navegacion -> data', data);
       this.loading = true;
       this.paramsSearch.categoryIds = data && data.categoryIds ? data.categoryIds : this.paramsSearch.categoryIds;
       this.paramsSearch.brandIds = data && data.brandIds ? data.brandIds : [];
@@ -84,6 +84,7 @@ export class DialogFiltersMComponent implements OnInit, OnDestroy {
       this.queryProduct.offset = data && data.offset ? data.offset : 0;
       this.queryProduct.total = data && data.total ? data.total : 0;
       this.queryProduct.page = data && data.page ? data.page : 0;
+      this.queryProduct.order = data.order || '-rating';
       this.productId = this.productService.productIdDetails ? this.productService.productIdDetails : null;
       if (data.CategoryId) {
         this.paramsSearch.categoryIds = [data.CategoryId];
@@ -119,7 +120,7 @@ export class DialogFiltersMComponent implements OnInit, OnDestroy {
     });
     this.categoryService.getAllCategories().subscribe((data) => {
       this.allCategories = data.data;
-      console.log('todas las categorias', data.data);
+      // console.log('todas las categorias', data.data);
     });
   }
 
@@ -158,12 +159,11 @@ export class DialogFiltersMComponent implements OnInit, OnDestroy {
   }
   save() {
     this.dialogRef.close({
-        paramsSearch: this.paramsSearch,
+      paramsSearch: this.paramsSearch,
       queryProduct: this.queryProduct,
-  });
+    });
   }
   close() {
     this.dialogRef.close();
   }
-
 }
