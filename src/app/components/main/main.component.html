@@ -217,10 +217,12 @@
   <div fxHide fxShow.lt-md class="home-header-2 p-2">
     <div fxLayout="column" fxLayoutAlign="start stretch">
       <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="gappx">
-        <button mat-icon-button (click)="start.toggle()" style="width: 130px">
-          <mat-icon>menu</mat-icon>
-          <img class="ml-2" style="width: 100px" src="../../../assets/images/logo.png">
-        </button>
+        <div fxLayoutAlign="start center">
+          <button mat-icon-button (click)="start.toggle()">
+            <mat-icon>menu</mat-icon>
+          </button>
+          <img style="width: 100px" src="../../../assets/images/logo.png">
+        </div>
 
         <div class="userWidgets m-0 p-0" fxLayoutAlign="start center">
           <a class="px-3" fxLayoutAlign="start center" fxShow="true" *ngIf="!loggedInUser" [routerLink]="['/my-account']"
