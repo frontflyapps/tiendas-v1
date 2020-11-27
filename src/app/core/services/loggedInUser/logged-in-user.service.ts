@@ -69,6 +69,29 @@ export class LoggedInUserService {
     this.$loggedInUserUpdated.next(this.loggedInUser);
   }
 
+  public hasRolUser(...args: any[]) {
+    let roleTypes = [...args];
+    for (let type of roleTypes) {
+      if (type.constructor != String) {
+        console.log(`Al llamar la función de check de roles, los argumentos deben ser strings`);
+        return false;
+      }
+    }
+    const user = this.getLoggedInUser();
+    if (!user) {
+      return false;
+    }
+    let flag = false;
+    for (let role of user?.roles) {
+      let findIndex = roleTypes.findIndex((i) => i == role.type);
+      if (findIndex > -1) {
+        flag = true;
+        return flag;
+      }
+    }
+    return flag;
+  }
+
   public isAdminUser() {
     let flag = false;
     const user = this.getLoggedInUser();
