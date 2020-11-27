@@ -28,18 +28,18 @@
 
       <div fxLayout="row wrap " fxLayoutAlign="space-between center" fxLayoutGap="gappx">
         <div fxFlex="33" fxFlex.lt-sm="50" fxFlex.xs="100" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="gappx">
-          <span class="mb-0 mt-1 main-primary-700 mat-body-2">{{'Id de pago'}}</span>
+          <span class="mb-0 mt-1 main-primary-700 mat-body-2">{{'Id de pago' | translate}}</span>
           <span class="mb-0 mt-1 main-primary-700 mat-body-2">{{selectedPayment.order}}</span>
         </div>
 
         <div fxFlex="33" fxFlex.lt-sm="50" fxFlex.xs="100" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="gappx">
-          <span class="mb-0 mt-1 main-primary-700 mat-body-2">{{'fecha de creación'}}</span>
+          <span class="mb-0 mt-1 main-primary-700 mat-body-2">{{'fecha de creación' | translate}}</span>
           <span class="mb-0 mt-1 main-primary-700 mat-body-2">{{selectedPayment.createdAt|date:'short'}}</span>
         </div>
 
         <div fxFlex="33" fxFlex.lt-sm="50" fxFlex.xs="100" *ngIf="selectedPayment.cancelledAt" fxLayout="column" fxLayoutAlign="start start"
           fxLayoutGap="gappx">
-          <span class="mb-0 mt-1 main-primary-700 mat-body-2">{{'fecha de cancelación'}}</span>
+          <span class="mb-0 mt-1 main-primary-700 mat-body-2">{{'fecha de cancelación' | translate}}</span>
           <span class="mb-0 mt-1 main-primary-700 mat-body-2">{{selectedPayment.cancelledAt|date:'short'}}</span>
         </div>
 

@@ -1,4 +1,5 @@
 const fs = require('fs');
+const process = require('process');
 
 var dataEs = require('./es.json');
 var dataEn = require('./en.json');
@@ -33,7 +34,7 @@ async function translateLang(lang = 'en') {
                 i++;
                 console.log("********Error traduciendo: ", key, ' status: ', err.response.status);
             } else {
-                console.log("********Error desconocido: ", );
+                console.log("********Error desconocido: ",);
             }
         }
     }
@@ -48,11 +49,13 @@ async function translateLang(lang = 'en') {
 }
 
 function DataLang(lang = 'en') {
-    switch (lang){
+    switch (lang) {
         case 'en':
             return dataEn;
         case 'es':
             return dataEs;
+        default:
+            throw new Error('No cumple con los idiomas permitidos, los valores validos son, es, en y fr')
     }
 }
 
@@ -64,4 +67,5 @@ function waits(delay = 1) {
     })
 }
 
-translateLang('es');
+const lang = process.argv[2];
+translateLang(lang);
