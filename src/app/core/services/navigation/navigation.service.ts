@@ -257,9 +257,27 @@ export class NavigationService {
       children: [],
       display: true,
     },
+    {
+      id: 'Carrusel',
+      displayName: 'Derechos de autor',
+      iconName: ['gavel'],
+      route: 'backend/copy-right',
+      material: true,
+      children: [],
+      display: true,
+    },
+    {
+      id: 'Carrusel',
+      displayName: 'Términos y condiciones',
+      iconName: ['note'],
+      route: 'backend/term-conditions',
+      material: true,
+      children: [],
+      display: true,
+    },
   ];
 
-  constructor() {}
+  constructor() { }
 
   public getNavItems() {
     return this.navItems;

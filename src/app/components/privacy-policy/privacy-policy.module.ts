@@ -6,6 +6,7 @@ import { PrivacyPolicyComponent } from './privacy-policy.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
+import { PipesModule } from 'src/app/core/pipes/pipes.module';
 
 const routes: Routes = [
   {
@@ -23,7 +24,8 @@ const routes: Routes = [
     FlexLayoutModule,
     MatCardModule,
     MatIconModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    PipesModule
   ]
 })
 export class PrivacyPolicyModule { }

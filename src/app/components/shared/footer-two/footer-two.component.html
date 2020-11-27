@@ -109,9 +109,13 @@
           </button>
         </span>
       </mat-menu>
-      <a [routerLink]="['privacy-policy']" routerLinkActive=" router-link-active" class="item-selector mx-3 my-2"
+      <a [routerLink]="['term-conditions']" routerLinkActive=" router-link-active" class="item-selector mx-3 my-2"
         fxLayoutAlign="start center" mat-button>
         <span>{{'Términos y condiciones'|translate}}</span>
+      </a>
+      <a [routerLink]="['privacy-policy']" routerLinkActive=" router-link-active" class="item-selector mx-3 my-2"
+        fxLayoutAlign="start center" mat-button>
+        <span>{{'Políticas de privacidad' |translate}}</span>
       </a>
     </div>
 

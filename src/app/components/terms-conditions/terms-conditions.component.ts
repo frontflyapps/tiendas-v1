@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Subject } from 'rxjs';
+import { LoggedInUserService } from 'src/app/core/services/loggedInUser/logged-in-user.service';
+import { takeUntil } from 'rxjs/operators';
+import { CopyTermsService } from '../../core/services/copy-terms/copy-terms.service';
 
 
 @Component({
@@ -8,10 +12,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TermsConditionsComponent implements OnInit {
 
-  constructor() {
+  language = null;
+  _unsubscribeAll: Subject<any> = new Subject();
+  text: undefined;
+  constructor(private loggedInUserService: LoggedInUserService, private termService: CopyTermsService) {
   }
 
   ngOnInit() {
+
+    this.loggedInUserService.$languageChanged.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {
+      this.language = data.lang;
+    });
+    this.termService.getTermsConditions().subscribe((data: any) => {
+      this.text = data?.data[0].text;
+    })
+  }
+
+  ngOnDestroy() {
+    this._unsubscribeAll.next(true);
+    this._unsubscribeAll.complete();
   }
 
 }

@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { TermsConditionsComponent } from './terms-conditions.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatIconModule } from '@angular/material/icon';
+import { PipesModule } from 'src/app/core/pipes/pipes.module';
 
 const routes: Routes = [
   { path: '', component: TermsConditionsComponent }
@@ -20,7 +21,8 @@ const routes: Routes = [
     FlexLayoutModule,
     MatIconModule,
     TranslateModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    PipesModule
   ]
 })
 export class TermsConditionsModule { }

@@ -1,5 +1,4 @@
 import { AdminBussinesGuard } from './appBackoffice/admin-business/admin-bussines.guard';
-import { AdminCarruselGuard } from './appBackoffice/admin-carrusel/admin-carrusel.guard';
 import { AdminTaxesGuard } from './appBackoffice/admin-taxes/admin-taxes.guard';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -104,6 +103,20 @@ const routes: Routes = [
         loadChildren: () =>
           import('./appBackoffice/admin-transaction/admin-transaction.module').then((m) => m.AdminTransactionModule),
       },
+      {
+        path: 'copy-right',
+        loadChildren: () =>
+          import('./appBackoffice/copy-right/copy-right.module').then((m) => m.CopyRightModule),
+        canActivate: [OnlyAdminGuard],
+        canLoad: [OnlyAdminGuard],
+      },
+      {
+        path: 'term-conditions',
+        loadChildren: () =>
+          import('./appBackoffice/term-conditions/term-conditions.module').then((m) => m.TermConditionsModule),
+        canActivate: [OnlyAdminGuard],
+        canLoad: [OnlyAdminGuard],
+      },
     ],
   },
   // {
@@ -116,4 +129,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class BackendRoutingModule {}
+export class BackendRoutingModule { }
