@@ -30,12 +30,7 @@ export class CheckoutGuard implements CanActivate, CanLoad {
     state: RouterStateSnapshot,
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (this.loggedInUserService.getLoggedInUser()) {
-      if (this.loggedInUserService.isMessengerUser()) {
-        this.route.navigate(['/error/acceso-prohibido']);
-        return false;
-      } else {
-        return true;
-      }
+      return true;
     } else {
       localStorage.setItem('isRegisterToPay', 'true');
       this.showSnackBar.showSucces(
@@ -49,12 +44,7 @@ export class CheckoutGuard implements CanActivate, CanLoad {
 
   canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean {
     if (this.loggedInUserService.getLoggedInUser()) {
-      if (this.loggedInUserService.isMessengerUser()) {
-        this.route.navigate(['/error/acceso-prohibido']);
-        return false;
-      } else {
-        return true;
-      }
+      return true;
     } else {
       localStorage.setItem('isRegisterToPay', 'true');
       this.showSnackBar.showSucces(

@@ -92,9 +92,9 @@ export class CartService implements OnDestroy {
 
   // Add to cart
   public async addToCart(product: any, quantity: number) {
-    if (this.loggedInUser && this.loggedInUserService.isMessengerUser()) {
-      return alert(this.translate.instant('You can not make this action'));
-    }
+    // if (this.loggedInUser && this.loggedInUserService.isMessengerUser()) {
+    //   return alert(this.translate.instant('You can not make this action'));
+    // }
 
     let message, status;
     const productName = product.name[this.language] ? product.name[this.language] : product.name['es'];
@@ -114,7 +114,11 @@ export class CartService implements OnDestroy {
             console.log('CartService -> addToCart -> cart', data);
             this.carts = data.data;
             message =
-              this.translate.instant('The product ') + productName + this.translate.instant(' has been added to cart.');
+              this.translate.instant('The product ') +
+              '  ' +
+              productName +
+              '  ' +
+              this.translate.instant(' has been added to cart.');
             status = 'success';
             this.snackBar.open(message, '×', { panelClass: ['succes'], verticalPosition: 'top', duration: 5000 });
             this.loggedInUserService._setDataToStorage('cartItem', JSON.stringify(this.carts));
@@ -147,7 +151,11 @@ export class CartService implements OnDestroy {
         cart.CartItems = [...shoppingCartItems];
         cart.totalPrice = this._calcTotalPrice(cart);
         message =
-          this.translate.instant('The product ') + productName + this.translate.instant(' has been added to cart.');
+          this.translate.instant('The product ') +
+          ' ' +
+          productName +
+          '  ' +
+          this.translate.instant(' has been added to cart.');
         status = 'success';
         this.snackBar.open(message, '×', { panelClass: ['succes'], verticalPosition: 'top', duration: 5000 });
         this._setSimpleCart(cart);
@@ -162,10 +170,14 @@ export class CartService implements OnDestroy {
         // }
         return this.postCart({ ProductId: product.id, quantity: quantity })
           .then((data) => {
-            console.log('CartService -> addToCart -> cart', data);
+            // console.log('CartService -> addToCart -> cart', data);
             this.carts = data.data;
             message =
-              this.translate.instant('The product ') + productName + this.translate.instant(' has been added to cart.');
+              this.translate.instant('The product ') +
+              '  ' +
+              productName +
+              '  ' +
+              this.translate.instant(' has been added to cart.');
             status = 'success';
             this.snackBar.open(message, '×', { panelClass: ['succes'], verticalPosition: 'top', duration: 5000 });
             this.loggedInUserService._setDataToStorage('cartItem', JSON.stringify(this.carts));
@@ -201,7 +213,11 @@ export class CartService implements OnDestroy {
         cart.totalPrice = this._calcTotalPrice(cart);
         console.log('CartService -> addToCart ->  this.cart.totalPrice', cart.totalPrice);
         message =
-          this.translate.instant('The product ') + productName + this.translate.instant(' has been added to cart.');
+          this.translate.instant('The product ') +
+          ' ' +
+          productName +
+          '  ' +
+          this.translate.instant(' has been added to cart.');
         status = 'success';
         this.snackBar.open(message, '×', { panelClass: ['succes'], verticalPosition: 'top', duration: 5000 });
         this._setSimpleCart(cart);
@@ -249,10 +265,10 @@ export class CartService implements OnDestroy {
   ////////////////////////////////////////////////////////////////////
 
   public async addToCartQuickly(product: any, quantity: number) {
-    console.log(product);
-    if (this.loggedInUser && this.loggedInUserService.isMessengerUser()) {
-      return alert(this.translate.instant('You can not make this action'));
-    }
+    // console.log(product);
+    // if (this.loggedInUser && this.loggedInUserService.isMessengerUser()) {
+    //   return alert(this.translate.instant('You can not make this action'));
+    // }
 
     let message, status;
     const hasItem = false;
@@ -304,7 +320,11 @@ export class CartService implements OnDestroy {
         cart.CartItems = [...shoppingCartItems];
         cart.totalPrice = this._calcTotalPrice(cart);
         message =
-          this.translate.instant('The product ') + productName + this.translate.instant(' has been added to cart.');
+          this.translate.instant('The product ') +
+          ' ' +
+          productName +
+          '  ' +
+          this.translate.instant(' has been added to cart.');
         status = 'success';
         this.snackBar.open(message, '×', { panelClass: ['succes'], verticalPosition: 'top', duration: 5000 });
         this._setSimpleCart(cart);
@@ -320,7 +340,11 @@ export class CartService implements OnDestroy {
           .then((data) => {
             this.carts = data.data;
             message =
-              this.translate.instant('The product ') + productName + this.translate.instant(' has been added to cart.');
+              this.translate.instant('The product ') +
+              '  ' +
+              productName +
+              '  ' +
+              this.translate.instant(' has been added to cart.');
             status = 'success';
             this.snackBar.open(message, '×', { panelClass: ['succes'], verticalPosition: 'top', duration: 5000 });
             this.loggedInUserService._setDataToStorage('cartItem', JSON.stringify(this.carts));
@@ -353,7 +377,11 @@ export class CartService implements OnDestroy {
         cart.CartItems = [...shoppingCartItems];
         cart.totalPrice = this._calcTotalPrice(cart);
         message =
-          this.translate.instant('The product ') + productName + this.translate.instant(' has been added to cart.');
+          this.translate.instant('The product ') +
+          ' ' +
+          productName +
+          '  ' +
+          this.translate.instant(' has been added to cart.');
         status = 'success';
         this.snackBar.open(message, '×', { panelClass: ['succes'], verticalPosition: 'top', duration: 5000 });
         this._setSimpleCart(cart);
@@ -518,7 +546,7 @@ export class CartService implements OnDestroy {
 
   /////////////////////////////////////////////////////////
   async registerData() {
-    if (this.loggedInUser && !this.loggedInUserService.isMessengerUser()) {
+    if (this.loggedInUser) {
       try {
         console.log('entre Aqui en el cart************************************');
         const localStorageCarts: Cart[] = this.loggedInUserService._getDataFromStorage('cartItem') || [];

@@ -26,6 +26,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
+import { TaxesShippingService } from '../backend/services/taxes-shipping/taxes-shipping.service';
 @NgModule({
   imports: [
     CommonModule,
@@ -57,5 +58,6 @@ import { MatMenuModule } from '@angular/material/menu';
     DialogEnzonaConfirmToPayComponent,
     DialogNoCartSelectedComponent,
   ],
+  providers: [TaxesShippingService],
 })
 export class CheckoutModule {}
