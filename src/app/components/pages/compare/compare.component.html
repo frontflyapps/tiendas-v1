@@ -15,9 +15,9 @@
             <tr class="th-compare">
               <td>{{"Action"|translate}}</td>
               <th style="max-width: 180px;" class="item-row" *ngFor="let product of products">
-                <a class="mx-3 color-grey-700" matTooltip="Eliminar de la lista" (click)="removeItem(product)"><i
+                <a class="mx-3 color-grey-700" matTooltip="{{'Eliminar de la lista' | translate}}" (click)="removeItem(product)"><i
                     class="material-icons">highlight_off</i></a>
-                <a class="mx-3 color-grey-700" matTooltip="Añadir al carrito" (click)="addToCart(product)"><i
+                <a class="mx-3 color-grey-700" matTooltip="{{'Añadir al carrito' | translate}}" (click)="addToCart(product)"><i
                     class="material-icons">shopping_cart</i></a>
               </th>
             </tr>

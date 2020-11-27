@@ -103,7 +103,7 @@
             </div>
             <div class="mat-cell text-right">
               <div fxLayout="column" fxLayoutAlign="center end" class="grand-total px-2">
-                <span class="new-price">Total a pagar:
+                <span class="new-price">{{'Total a pagar' | translate }}:
                   {{getTotal(cart)  |currency:currencyService.getCurrency().code}}</span>
               </div>
             </div>

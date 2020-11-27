@@ -77,7 +77,7 @@
           <mat-form-field fxFlex="49" fxFlex.lt-md="100" appearance="outline">
             <mat-label>{{'Phone'|translate}}</mat-label>
             <input type="text" matInput [formControl]="form.controls['phone']" placeholder="{{'Phone'|translate}}">
-            <mat-icon class="greyIcon" matSuffix>my_location</mat-icon>
+            <mat-icon class="greyIcon" matSuffix>phone</mat-icon>
             <mat-error *ngIf="form.controls['phone'].hasError('required')">
               {{'Phone'|translate}} <strong>{{'is required'|translate}}</strong>
             </mat-error>
@@ -105,7 +105,7 @@
           </mat-select>
         </mat-form-field>
 
-        <!-- ///////////////////////////////////PERSISOS////////////////////////////////////////// -->
+        <!-- ///////////////////////////////////PERMSISOS////////////////////////////////////////// -->
         <p class="mat-body-2 uppercase my-2">Permisos</p>
         <mat-slide-toggle matTooltip="Permite al usuario la creación edición y eliminación de este recurso (Solo los creados por él )"
           [formControl]="this.permitsForm.get('canCreateProduct')">

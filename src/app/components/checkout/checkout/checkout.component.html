@@ -361,7 +361,7 @@
                 [ngClass]="{'paypalBtn': (form.valid && buyProducts.length) , 'paypalBtnInvalid':(form.invalid || !buyProducts.length)}"
                 mat-raised-button [disabled]="form.invalid || !buyProducts.length" (click)="onPayOrder()">
                 <p style="text-align: center;">
-                  PAGAR
+                  {{'PAGAR' | translate }}
                 </p>
               </button>
               <a style="display: none;" id="pasarelaLink"></a>
@@ -383,24 +383,25 @@
   </div>
   <div fxLayout="column" fxLayoutAlign="start center" fxLayoutAlign.lt-md="start start" fxLayoutGap="gappx">
     <p ngClass.gt-sm="mat-title" ngClass.lt-md="mat-title" style="color:#fff">
-      Confirmación de pago usando transfermóvil.
+      {{ 'Confirmación de pago usando transfermóvil.' | translate }}
     </p>
     <ul style="color:#fff">
       <div fxHide.lt-md>
         <li>
-          Abra la aplicación de transfermóvil en su teléfono.
+          {{'Abra la aplicación de transfermóvil en su teléfono.' | translate }}
         </li>
         <li>
-          Seleccione su banco y autentíquese.
+          {{'Seleccione su banco y autentíquese.' | translate}}
         </li>
         <li>
-          Entre en la opción de "Operaciones" y pulse la opción de pago en línea.
+          {{'Entre en la opción de "Operaciones" y pulse la opción de pago en línea.' | translate}}
         </li>
         <li>
-          Precione el botón de lectura de qr y realize su pago.
+          {{'Precione el botón de lectura de qr y realize su pago.' | translate}}
         </li>
       </div>
-      <a [href]="domSanitizer.bypassSecurityTrustUrl(this.launchTM)" class="mt-2" mat-flat-button>Abrir la app de tranfermovil</a>
+      <a [href]="domSanitizer.bypassSecurityTrustUrl(this.launchTM)" class="mt-2" mat-flat-button>
+        {{'Abrir la app de tranfermovil' | translate}}</a>
     </ul>
   </div>
 
@@ -410,7 +411,7 @@
     <img class="mt-4" [src]="this.qrTransfermovilImage" />
     <div style="max-width: 20rem;" fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="gappx">
       <span class="mat-title mt-3">
-        Total: &nbsp;{{finalPrice|currency:currencyService.getCurrency().code}}
+        {{'Total' | translate}}: &nbsp;{{finalPrice|currency:currencyService.getCurrency().code}}
       </span>
 
     </div>
