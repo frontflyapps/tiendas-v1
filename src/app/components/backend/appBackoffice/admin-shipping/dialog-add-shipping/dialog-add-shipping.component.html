@@ -57,7 +57,7 @@
             <mat-form-field class="form-field-width" fxFlex="49" fxFlex.lt-md="100" appearance="outline">
               <mat-select multiple required placeholder="{{'Municipios'|translate}}" [formControl]="form.controls['MunicipalityIds']">
                 <mat-option (click)="onSelectAllMunicipalities()">
-                  {{'Marcar todos'}}
+                  {{'Marcar todos' | translate}
                 </mat-option>
                 <mat-option *ngFor=" let municipio of municipalities" [value]="municipio">
                   {{municipio.name}}

@@ -50,7 +50,7 @@
         <mat-form-field class="form-field-width" fxFlex="49" fxFlex.lt-md="100" appearance="outline">
           <mat-select [disabled]="true" required placeholder="{{'Municipios'|translate}}" [formControl]="form.controls['MunicipalityId']">
             <mat-option (click)="onSelectAllMunicipalities()">
-              {{'Marcar todos'}}
+              {{'Marcar todos' | translate}}
             </mat-option>
             <mat-option *ngFor=" let municipio of municipalities" [value]="municipio.id">
               {{municipio.name}}
@@ -139,7 +139,7 @@
           <ng-container matColumnDef="price">
             <th style="width: 100px;" class="headerData" mat-header-cell *matHeaderCellDef>
               <span class="uppercase mat-body-2">
-                Precio de envio
+                {{'Precio de envio' | translate}}
               </span>
             </th>
             <td style="text-align: left" mat-cell *matCellDef="let elementForm">
@@ -174,7 +174,7 @@
 
   <div mat-dialog-actions fxLayout="row" fxLayoutAlign="end start">
     <button mat-flat-button (click)="onSave()" [disabled]="this.form.invalid ||this.priceForm.invalid"
-      color="primary">{{'Guardar'}}</button>
+      color="primary">{{'Guardar' | translate}}</button>
   </div>
 
 </div>

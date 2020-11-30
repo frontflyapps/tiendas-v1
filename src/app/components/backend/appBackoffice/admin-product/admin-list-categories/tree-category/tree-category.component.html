@@ -22,8 +22,8 @@
     <a mat-list-item class="listItem" (click)="onNavToChildren(category.id)" *ngFor="let category of this.allCategories">
       {{utils.parserLanguage(category.name,language)}}
       &nbsp;
-      <span *ngIf="category.showInNavBar" fxHide.xs class="color-grey-600 mat-caption">(Mostrado en la barra de navegación)</span>
-      <span *ngIf="category.showInNavBar" fxHide fxShow.xs class="color-grey-600 mat-caption">(Barra de navegación)</span>
+      <span *ngIf="category.showInNavBar" fxHide.xs class="color-grey-600 mat-caption">{{'(Mostrado en la barra de navegación)' | translate}}</span>
+      <span *ngIf="category.showInNavBar" fxHide fxShow.xs class="color-grey-600 mat-caption">{{'(Barra de navegación)' | translate}}</span>
       <div class="btnOp" fxLayout="row" fxLayoutAlign="start center">
         <button mat-icon-button (click)="onEditCategory(category,$event)">
           <mat-icon>edit</mat-icon>

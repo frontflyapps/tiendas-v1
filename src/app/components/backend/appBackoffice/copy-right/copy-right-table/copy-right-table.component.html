@@ -5,20 +5,20 @@
 <mat-toolbar class="toolbar-table">
   <mat-toolbar-row *ngIf="!selection.selected.length && !showFilterCopyRight">
     <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex="100">
-      <span fxHide.xs class="mat-title mb-0">{{'Derechos de autos'}}</span>
-      <span fxHide fxShow.xs class="mat-title mb-0">{{'Derechos de autos'}}</span>
+      <span fxHide.xs class="mat-title mb-0">{{'Derechos de autos' | translate}}</span>
+      <span fxHide fxShow.xs class="mat-title mb-0">{{'Derechos de autos' | translate}}</span>
       <div fxHide.xs>
         <button mat-button (click)="showSearchForm()">
           <mat-icon>search</mat-icon>
-          <span fxHide.xs>{{'Buscar'}}</span>
+          <span fxHide.xs>{{'Buscar' | translate}</span>
         </button>
         <button mat-button (click)="refreshData()">
           <mat-icon>refresh</mat-icon>
-          <span fxHide.xs>{{'Refrescar'}}</span>
+          <span fxHide.xs>{{'Refrescar' | translate}}</span>
         </button>
         <button mat-button (click)="onCreateCopyRight()">
           <mat-icon>add</mat-icon>
-          <span fxHide.xs>{{'Adicionar'}}</span>
+          <span fxHide.xs>{{'Adicionar' | translate}}</span>
         </button>
       </div>
       <div fxHide fxShow.xs>
@@ -41,7 +41,7 @@
         <button mat-icon-button>
           <mat-icon matPrefix>search</mat-icon>
         </button>
-        <input [formControl]="searchForm.controls['textCtrl']" placeholder="{{'Entre su texto de búsqueda'}}"
+        <input [formControl]="searchForm.controls['textCtrl']" placeholder="{{'Entre su texto de búsqueda' | translate}}"
           class="example-full-width search-input" type="text" autofocus>
         <div>
           <button mat-icon-button (click)="hideSearchForm()">

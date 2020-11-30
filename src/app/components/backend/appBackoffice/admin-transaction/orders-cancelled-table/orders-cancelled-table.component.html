@@ -63,7 +63,7 @@
         </mat-select>
       </mat-form-field>
 
-      <button (click)="this.refreshData()" class="ml-3" mat-flat-button color="primary">BUSCAR</button>
+      <button (click)="this.refreshData()" class="ml-3" mat-flat-button color="primary">{{'BUSCAR' | translate}}</button>
     </form>
   </section>
 </mat-card>
@@ -279,10 +279,10 @@
         </th>
         <td mat-cell *matCellDef="let element" (click)="onExpandOrder(element)">
           <span *ngIf="element.status == 'cancelled'" class="cancelledLabel">
-            cancelado
+            {{'cancelado' | translate}}
           </span>
           <span *ngIf="element.status == 'processing-cancel'" class="processingCancelLabel">
-            proce. cancelación
+            {{'proce. cancelación' | translate}}
           </span>
         </td>
       </ng-container>

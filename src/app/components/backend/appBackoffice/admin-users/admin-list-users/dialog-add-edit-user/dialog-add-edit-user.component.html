@@ -34,7 +34,7 @@
               </button>
             </div>
             <mat-error *ngIf="showErrorImage">
-              La imagen sobrepasa los <strong>500 Kb</strong>
+              {{'La imagen sobrepasa los' | translate}} <strong>500 Kb</strong>
             </mat-error>
             <input type="file" class="hide-style" id="filePicker" (change)="handleFileSelect($event)">
           </div>
@@ -109,38 +109,38 @@
         <p class="mat-body-2 uppercase my-2">Permisos</p>
         <mat-slide-toggle matTooltip="Permite al usuario la creación edición y eliminación de este recurso (Solo los creados por él )"
           [formControl]="this.permitsForm.get('canCreateProduct')">
-          Gestionar Productos
+          {{'Gestionar Productos' | translate}}
         </mat-slide-toggle>
         <mat-slide-toggle
-          matTooltip="Permite al usuario la creación edición y eliminación de este recurso (Solo los credos por él en su Negocio correspondiente)"
+          matTooltip="{{'Permite al usuario la creación edición y eliminación de este recurso (Solo los credos por él en su Negocio correspondiente)' | translate}}"
           [formControl]="this.permitsForm.get('canCreatePerson')">
-          Gestionar Usuarios
+          {{'Gestionar Usuarios'| translate}}
         </mat-slide-toggle>
         <mat-slide-toggle
           matTooltip="Permite al usuario la creacion de entregas y poner las entregas pendientes como entregadas(Solo los credos por él en su Negocio correspondiente)"
           [formControl]="this.permitsForm.get('canDelivery')">
-          Gestionar entregas
+          {{'Gestionar entregas'| translate}}
         </mat-slide-toggle>
         <mat-slide-toggle matTooltip="Permite al usuario la creación edición y eliminación de este articulos en el blog del sistema"
           [formControl]="this.permitsForm.get('canPublish')">
-          Gestionar Blog
+          {{'Gestionar Blog'| translate}}
         </mat-slide-toggle>
         <mat-slide-toggle matTooltip="Permite al usuario la creación edición y eliminación de este articulos en el blog del sistema"
           [formControl]="this.permitsForm.get('canCancel')">
-          Realizar cancelaciones
+          {{'Realizar cancelaciones'| translate}}
         </mat-slide-toggle>
         <mat-slide-toggle matTooltip="Permite al usuario la creación edición y eliminación de ofertas para sus productos"
           [formControl]="this.permitsForm.get('canCreateOffer')">
-          Realizar ofertas
+          {{'Realizar ofertas'| translate}}
         </mat-slide-toggle>
 
         <mat-slide-toggle matTooltip="Permite al usuario la edición de los parámetros del negocio"
           [formControl]="this.permitsForm.get('canEditBusiness')">
-          Editar negocios
+          {{'Editar negocios'| translate}}
         </mat-slide-toggle>
         <mat-slide-toggle matTooltip="Permite al usuario gestion de las tariafas de envío de productos a las diferentes localizaciones"
           [formControl]="this.permitsForm.get('canCreateShipping')">
-          Gestionar tarifas de envío
+          {{'Gestionar tarifas de envío'| translate}}
         </mat-slide-toggle>
 
         <!-- ////////////////////////////////////////////////////////////////////////////////////// -->

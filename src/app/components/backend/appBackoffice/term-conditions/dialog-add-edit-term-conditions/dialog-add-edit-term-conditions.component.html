@@ -2,8 +2,8 @@
 
   <mat-toolbar class="mb-2" matDialogTitle color="primary" id="toolbarHeader">
     <mat-toolbar-row fxLayoutAlign="space-between center">
-      <span *ngIf="!isEditing" class="mat-title mb-0">{{'Adicionar Términos y condiciones'}}</span>
-      <span *ngIf="isEditing" class="mat-title mb-0">{{'Editar términos y condiciones'}}</span>
+      <span *ngIf="!isEditing" class="mat-title mb-0">{{'Adicionar Términos y condiciones' | translate}}</span>
+      <span *ngIf="isEditing" class="mat-title mb-0">{{'Editar términos y condiciones' | translate}}</span>
       <button mat-icon-button (click)="dialogRef.close()" aria-label="Close dialog">
         <mat-icon>close</mat-icon>
       </button>
@@ -15,15 +15,15 @@
       <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="gappx">
 
         <div fxLayout="row" class="mt-2" fxLayoutAlign="start start" fxLayoutGap="gappx">
-          <span class="mat-body-2" style="text-transform: uppercase">{{ 'Seleccione su idioma de creación' }}
-            <mat-icon matTooltip="{{ 'El predeterminado es español' }}" class="iconHelp">help</mat-icon>
+          <span class="mat-body-2" style="text-transform: uppercase">{{ 'Seleccione su idioma de creación' | translate}}
+            <mat-icon matTooltip="{{ 'El predeterminado es español' | translate}}" class="iconHelp">help</mat-icon>
           </span>
         </div>
 
         <div fxLayout="row" class="mt-2" fxLayoutAlign="start start" fxLayoutGap="gappx">
           <mat-form-field fxFlex="100" appearance="outline">
-            <mat-label> {{ 'Language' }}</mat-label>
-            <mat-select required [formControl]="languageForm" placeholder="{{ 'Language' }}">
+            <mat-label> {{ 'Language' | translate}}</mat-label>
+            <mat-select required [formControl]="languageForm" placeholder="{{ 'Language' | translate}}">
               <mat-option *ngFor="let language of this.languages; let i = index" [value]="language.lang">
                 <div fxLayout="row" fxLayoutAlign="start center">
                   <img [src]="language.image" style="height: 30px; width: 30px" />
@@ -77,7 +77,7 @@
   </div>
 
   <div mat-dialog-actions fxLayout="row" fxLayoutAlign="end start">
-    <button mat-flat-button (click)="onSave()" [disabled]="this.form.invalid || isSaving" color="primary">{{'Guardar'}}</button>
+    <button mat-flat-button (click)="onSave()" [disabled]="this.form.invalid || isSaving" color="primary">{{'Guardar' | translate}}</button>
 
   </div>
 

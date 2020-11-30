@@ -32,7 +32,7 @@
           </textarea>
           <mat-hint align="end">{{input.value?.length || 0}}/250</mat-hint>
           <mat-error *ngIf="form.controls['description'].hasError('required')">
-            {{'Description'}} <strong>{{'is required'}}</strong>
+            {{'Description' | translate} <strong>{{'is required' | translate}}</strong>
           </mat-error>
         </mat-form-field>
 

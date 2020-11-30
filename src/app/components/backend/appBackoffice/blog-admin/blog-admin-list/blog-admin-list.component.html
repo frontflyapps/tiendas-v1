@@ -7,7 +7,7 @@
   <div class="container blog-list-wrapper sec-padding">
 
     <form class="mobile-search my-search" fxLayout="row" fxLayoutAlign="start center">
-      <input #search fxFlex type="search" placeholder="{{'Escriba para buscar...'}}">
+      <input #search fxFlex type="search" placeholder="{{'Escriba para buscar...' | translate}}">
       <button (click)="onSearch(search.value)" type="submit">
         <mat-icon>
           search
@@ -49,7 +49,7 @@
                       </mat-chip-list>
                     </p>
                     <p *ngIf="item.link">
-                      Link de referencia:
+                      {{'Link de referencia' | translate}}:
                       <a [href]="item.link" target="_blank">{{item.link}}</a>
                     </p>
 
@@ -86,7 +86,7 @@
 
       <img src="../../../../../assets/images/empty.svg" alt="Empty" style="height: 160px; width: 160px;">
       <h1 class="text-muted mt-3">
-        No tienes ninguna publicación aún.
+        {{'No tienes ninguna publicación aún.' | translate}}
       </h1>
     </div>
     <mat-paginator (page)="OnPaginatorChange($event)" [pageSize]="query.limit" [length]="this.query.total"

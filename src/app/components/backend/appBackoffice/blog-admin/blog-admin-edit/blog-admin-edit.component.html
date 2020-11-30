@@ -30,7 +30,7 @@
         </div>
 
         <div fxLayout="row" fxLayoutAlign="start center">
-          <span class="mat-title">{{'Selecciona la imagen de tu publicación'}}</span>
+          <span class="mat-title">{{'Selecciona la imagen de tu publicación' | translate}</span>
         </div>
         <div class="image-box">
           <div fxLayout="row" fxLayoutAlign="start center" class="ImageLayout">
@@ -54,7 +54,7 @@
                 </button>
               </div>
               <mat-error *ngIf="showErrorImage">
-                La imagen sobrepasa los <strong>1000 Kb</strong>
+                {{'La imagen sobrepasa los' | translate}} <strong>1000 Kb</strong>
               </mat-error>
               <input type="file" class="hide-style" id="filePicker" (change)="handleFileSelect($event)">
             </div>
@@ -62,32 +62,32 @@
         </div>
         <div class="text-box" fxLayout="column" fxLayoutAlign="start stretch">
           <div fxLayout="row" fxLayoutAlign="start center">
-            <span class="mat-title">{{'Seleccione el título de su publicación'}}</span>
+            <span class="mat-title">{{'Seleccione el título de su publicación' | translate}}</span>
           </div>
           <mat-form-field class="text-field" appearance="outline">
-            <mat-label>{{'Título'}}</mat-label>
-            <input [formControl]="this.form.controls['title']" matInput type="text" placeholder="{{'Título'}}" required>
+            <mat-label>{{'Título' | translate}</mat-label>
+            <input [formControl]="this.form.controls['title']" matInput type="text" placeholder="{{'Título' | translate}}" required>
             <mat-error *ngIf="this.form.controls['title'].invalid">
-              {{'Título is invalid'}}
+              {{'Título is invalid' | translate}}
             </mat-error>
           </mat-form-field>
 
           <div fxLayout="row" fxLayoutAlign="start center">
-            <span class="mat-title">{{'Escribe una pequeña descripción'}}</span>
+            <span class="mat-title">{{'Escribe una pequeña descripción' | translate}</span>
           </div>
           <mat-form-field class="text-field" appearance="outline">
-            <mat-label>{{'Resumen'}}</mat-label>
-            <textarea required maxlength="150" [formControl]="this.form.controls['sumarize']" #message placeholder="{{'Resumen'}}" matInput
+            <mat-label>{{'Resumen' | translate}}</mat-label>
+            <textarea required maxlength="150" [formControl]="this.form.controls['sumarize']" #message placeholder="{{'Resumen' | translate}" matInput
               cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2" cdkAutosizeMaxRows="4"></textarea>
             <mat-icon matSuffix>edit</mat-icon>
             <mat-hint align="end">{{message.value.length}} / 150</mat-hint>
             <mat-error *ngIf="this.form.controls['sumarize'].invalid">
-              {{'Resumen is invalid'}}
+              {{'Resumen is invalid' | translate}
             </mat-error>
           </mat-form-field>
 
           <div fxLayout="row" fxLayoutAlign="start center">
-            <span class="mat-title">{{'Escribe una publicación'}}</span>
+            <span class="mat-title">{{'Escribe una publicación' | translate}}</span>
           </div>
           <!-- <mat-form-field appearance="outline">
               <mat-label>{{'Publicación'}}</mat-label>
@@ -108,7 +108,7 @@
           </div>
 
           <div fxLayout="row" fxLayoutAlign="start center">
-            <span class="mat-title mt-3">{{'Añade algunas etiquetas'}}</span>
+            <span class="mat-title mt-3">{{'Añade algunas etiquetas' | translate}}</span>
           </div>
 
           <div class="text-field">
@@ -133,25 +133,25 @@
           </mat-form-field> -->
 
           <div fxLayout="row" class="mt-2" fxLayoutAlign="start start" fxLayoutGap="gappx">
-            <span class="mat-body-2" style="text-transform: uppercase;">{{'Ingrese un enlace para referir'}}
+            <span class="mat-body-2" style="text-transform: uppercase;">{{'Ingrese un enlace para referir' | translate}}
               <mat-icon
-                matTooltip="{{'Es un enlace al que le gustaría referirse en caso de un anuncio u otra página para visitar, es opcional'}}"
+                matTooltip="{{'Es un enlace al que le gustaría referirse en caso de un anuncio u otra página para visitar, es opcional' | translate}"
                 class="iconHelp">help</mat-icon></span>
           </div>
 
           <mat-form-field class="text-field" appearance="outline">
-            <mat-label>{{'Hipérvinculo'}}
+            <mat-label>{{'Hipérvinculo' | translate}}
             </mat-label>
             <input type="text" [formControl]="form.controls['link']" matInput placeholder="{{'Link'}}">
             <mat-icon class="greyIcon" matSuffix>link</mat-icon>
             <mat-error *ngIf="form.controls['link'].hasError('pattern')">
-              {{'Url'}} <strong>{{'is not valid'}}</strong>
+              {{'Url' | translate}} <strong>{{'is not valid' | translate}}</strong>
             </mat-error>
           </mat-form-field>
         </div>
         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="gappx">
           <button mat-flat-button class="px-4" color="primary" [disabled]="this.form.invalid || !imageArticle"
-            (click)="onEditPublication()">{{'EDITAR'}}</button>
+            (click)="onEditPublication()">{{'EDITAR' | translate}}</button>
         </div>
       </form>
     </div>
