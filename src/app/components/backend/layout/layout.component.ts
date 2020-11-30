@@ -216,15 +216,17 @@ export class LayoutComponent implements OnInit, OnDestroy {
           navItemTransaction.matTooltipText = 'Ordenes confirmadas que esperan entregadas';
         }
       });
-    this.businessService
-      .getAllBussiness({ limit: 1, offset: 0 }, { status: 'created', onDelivery: 0 })
-      .subscribe((data) => {
-        let navItemBusiness = this.navigationData.find((item) => item.id == 'Business');
-        if (navItemBusiness) {
-          navItemBusiness.badgeCount = data.meta.pagination.total;
-          navItemBusiness.matTooltipText = 'Negocios pendientes ha ser integrados';
-        }
-      });
+    if (this.loggedInUserService.hasRolUser('Admin', 'Owner')) {
+      this.businessService
+        .getAllBussiness({ limit: 1, offset: 0 }, { status: 'created', onDelivery: 0 })
+        .subscribe((data) => {
+          let navItemBusiness = this.navigationData.find((item) => item.id == 'Business');
+          if (navItemBusiness) {
+            navItemBusiness.badgeCount = data.meta.pagination.total;
+            navItemBusiness.matTooltipText = 'Negocios pendientes ha ser integrados';
+          }
+        });
+    }
   }
 
   updatingNavigationItems() {

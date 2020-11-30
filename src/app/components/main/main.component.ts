@@ -211,12 +211,12 @@ export class MainComponent implements OnInit, OnDestroy {
 
   onGotoBackend() {
     let linkNav: any = document.getElementById('linkNavBack');
-    if (this.loggedInUserService.isAdminOrOwnerUser()) {
+    if (this.loggedInUserService.hasRolUser('Admin', 'Owner')) {
       linkNav.href = '/backend/product';
       linkNav.click();
       // return this.router.navigate(['/backend/product']);
     }
-    if (this.loggedInUserService.isMessengerUser()) {
+    if (this.loggedInUserService.hasRolUser('Messenger')) {
       linkNav.href = '/backend/transaction';
       linkNav.click();
       // return this.router.navigate(['/backend/transaction']);

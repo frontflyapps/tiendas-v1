@@ -29,31 +29,6 @@ p {
   padding-left: 15px;
   margin-right: auto;
   margin-left: auto;
-}
-
-@media (min-width: 576px) {
-  .container-Term {
-    max-width: 540px;
-  }
-}
-
-@media (min-width: 768px) {
-  .container-Term {
-    max-width: 720px;
-  }
-}
-
-@media (min-width: 992px) {
-  .container-Term {
-    max-width: 960px;
-  }
-}
-
-@media (min-width: 1200px) {
-  .container-Term {
-    max-width: 1140px;
-  }
-}
-.ck-content {
-  padding: 80px;
+  box-sizing: border-box;
+  max-width: 1366px;
 }
