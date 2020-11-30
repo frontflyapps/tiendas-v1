@@ -17,14 +17,14 @@
               <button class="mb-2" *ngIf="(this.loggedInUserService.isAdminUser() || this.loggedInUserService.isOwnerOfABussines(selectedBusiness.OwnerId))
               && (selectedBusiness.status != 'approved' && selectedBusiness.status != 'published')" (click)="onEnableBusiness()"
                 mat-stroked-button color="primary">
-                Habilitar Comercio
+                {{'Habilitar Comercio' | translate}}
               </button>
 
               <button
                 *ngIf="(this.loggedInUserService.isAdminUser() || this.loggedInUserService.isOwnerOfABussines(selectedBusiness.OwnerId))
                && (selectedBusiness.status == 'approved' || selectedBusiness.status == 'published' || selectedBusiness.status == 'created' )"
                 (click)="onDisabledBusiness()" mat-stroked-button color="primary">
-                Deshabilitar Comercio
+                {{'Deshabilitar Comercio' | translate}}
               </button>
             </div>
 
@@ -46,7 +46,7 @@
             <mat-form-field class="form-field-width" appearance="outline">
               <input type="text" [formControl]="form.controls['name']" matInput placeholder="Mi Negocio">
               <mat-error *ngIf="form.controls['name'].hasError('required')">
-                {{'Nombre'}} <strong>{{'es requerido'}}</strong>
+                {{'Nombre' | translate}} <strong>{{'es requerido' | translate}}</strong>
               </mat-error>
             </mat-form-field>
 
@@ -76,7 +76,7 @@
               <input required type="tel" [formControl]="form.controls['email']" matInput placeholder="ej: example@gmail.com">
               <mat-icon class="greyIcon" matSuffix>mail</mat-icon>
               <mat-error *ngIf="form.controls['email'].hasError('required')">
-                {{'Emial'}} <strong>{{'es requerido'}}</strong>
+                {{'Emial' | translate}} <strong>{{'es requerido' | translate}}</strong>
               </mat-error>
             </mat-form-field>
 
@@ -89,7 +89,7 @@
                 placeholder="ej: 39 #3022 e/ 30 y 36 , La Sierra, Playa">
               <mat-icon class="greyIcon" matSuffix>mail</mat-icon>
               <mat-error *ngIf="form.controls['address'].hasError('required')">
-                {{'Dirección'}} <strong>{{'es requerido'}}</strong>
+                {{'Dirección' | translate} <strong>{{'es requerido' | translate}</strong>
               </mat-error>
             </mat-form-field>
 
@@ -102,16 +102,16 @@
               <textarea maxlength="140" rows="3" matInput [formControl]="form.controls['description']"
                 placeholder="{{'Description'}}"></textarea>
               <mat-error *ngIf="form.controls['description'].hasError('required')">
-                {{'Descripción'}} <strong>{{'is required'}}</strong>
+                {{'Descripción' | translate}} <strong>{{'is required' | translate}</strong>
               </mat-error>
               <mat-hint>
-                Una descripción de texto libre de la aplicación. El número máximo de caracteres es 140.
+                {{'Una descripción de texto libre de la aplicación. El número máximo de caracteres es 140.' | translate}}
               </mat-hint>
             </mat-form-field>
 
 
             <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="gappx">
-              <button *ngIf="this.canEditBusiness" (click)="onSaveBasicInfo()" mat-flat-button color="primary">GUARDAR</button>
+              <button *ngIf="this.canEditBusiness" (click)="onSaveBasicInfo()" mat-flat-button color="primary">{{'GUARDAR' | translate}}</button>
             </div>
           </div>
 
@@ -132,20 +132,20 @@
           </p>
           <ul>
             <li>
-              <span>Nombre completo:</span> &nbsp; <strong>{{(selectedBusiness?.Owner?.name + selectedBusiness?.Owner?.lastName ) || '-'}}
+              <span>{{'Nombre completo' | translate}}:</span> &nbsp; <strong>{{(selectedBusiness?.Owner?.name + selectedBusiness?.Owner?.lastName ) || '-'}}
               </strong>
             </li>
             <li>
-              <span>Teléfono:</span> &nbsp; <strong>{{selectedBusiness?.Owner?.phone || '-'}} </strong>
+              <span>{{'Teléfono' | translate}}:</span> &nbsp; <strong>{{selectedBusiness?.Owner?.phone || '-'}} </strong>
             </li>
             <li>
-              <span>Email:</span> &nbsp; <strong>{{selectedBusiness?.Owner?.email || '-'}} </strong>
+              <span>{{'Email' | translate}}:</span> &nbsp; <strong>{{selectedBusiness?.Owner?.email || '-'}} </strong>
             </li>
             <li>
-              <span>fecha de nacimiento:</span> &nbsp; <strong>{{selectedBusiness?.Owner?.birthday | date}} </strong>
+              <span>{{'fecha de nacimiento' | translate}}:</span> &nbsp; <strong>{{selectedBusiness?.Owner?.birthday | date}} </strong>
             </li>
             <li>
-              <span>carne:</span> &nbsp; <strong>{{selectedBusiness?.Owner?.ci}} </strong>
+              <span>{{'carne' | translate}}:</span> &nbsp; <strong>{{selectedBusiness?.Owner?.ci}} </strong>
             </li>
           </ul>
 
@@ -227,7 +227,7 @@
 
           <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="gappx">
             <button [disabled]="locationForm.invalid || moneyForm.invalid" *ngIf="this.canEditBusiness" (click)="onSaveSecondForm()"
-              mat-flat-button color="primary">GUARDAR</button>
+              mat-flat-button color="primary">{{'GUARDAR' | translate}}</button>
           </div>
 
         </div>

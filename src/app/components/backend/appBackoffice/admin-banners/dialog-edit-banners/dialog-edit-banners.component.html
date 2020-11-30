@@ -41,7 +41,7 @@
               </button>
             </div>
             <mat-error *ngIf="showErrorImage">
-              La imagen sobrepasa los <strong>1000 Kb</strong>
+              {{'La imagen sobrepasa los' | translate}} <strong>1000 Kb</strong>
             </mat-error>
             <input type="file" class="hide-style" id="filePicker" (change)="handleFileSelect($event)">
           </div>
