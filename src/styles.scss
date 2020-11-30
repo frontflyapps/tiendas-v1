@@ -8,6 +8,7 @@
 // Color 1 scss
 @import "./assets/scss/color1";
 @import "~ngx-toastr/toastr";
+@import './assets/scss/css/ckeditor-style.css';
 
 // ---------------Material Themin -----------------///
 @import "~@angular/material/theming";
@@ -464,6 +465,7 @@ h4 {
     padding-bottom: 0px !important;
   }
 }
+
 .mat-dialog-content {
   max-height: 80vh;
 }
