@@ -1,3 +1,4 @@
+import { CreateBusinessComponent } from './create-business/create-business.component';
 import { AdminListBussinesComponent } from './admin-list-bussines/admin-list-bussines.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -31,6 +32,9 @@ import { MatSortModule } from '@angular/material/sort';
 import { AdminBusinessRoutingModule } from './admin-business-routing.module';
 import { AdminBusinessDetailsComponent } from './admin-business-details/admin-business-details.component';
 import { NgpImagePickerModule } from 'ngp-image-picker';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 ///////////////////////////////////////////////////////////////////
 
 @NgModule({
@@ -65,8 +69,11 @@ import { NgpImagePickerModule } from 'ngp-image-picker';
     AdminBusinessRoutingModule,
     MatSortModule,
     NgpImagePickerModule,
+    MatStepperModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
-  declarations: [AdminListBussinesComponent, AdminBusinessDetailsComponent],
+  declarations: [AdminListBussinesComponent, AdminBusinessDetailsComponent, CreateBusinessComponent],
   entryComponents: [],
 })
 export class AdminBusinessModule {}

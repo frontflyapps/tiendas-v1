@@ -15,6 +15,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { BreadcrumbService } from '../../../common-layout-components/breadcrumd/service/breadcrumb.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-list-bussines',
@@ -64,6 +65,7 @@ export class AdminListBussinesComponent implements OnInit, OnDestroy {
     public utilsService: UtilsService,
     private businessService: BussinessService,
     private showToastr: ShowToastrService,
+    private router: Router,
   ) {
     this.dataSource = new MatTableDataSource([]);
     this.selection = new SelectionModel<any>(true, []);
@@ -236,6 +238,10 @@ export class AdminListBussinesComponent implements OnInit, OnDestroy {
         this.refreshData();
       }
     });
+  }
+
+  onCreateBusiness() {
+    this.router.navigate(['backend/business/crear']);
   }
 
   // onChangeStatus(event, id) {

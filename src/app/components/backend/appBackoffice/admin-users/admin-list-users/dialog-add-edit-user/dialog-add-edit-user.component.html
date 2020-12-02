@@ -10,7 +10,7 @@
   </mat-toolbar>
 
   <div mat-dialog-content class="my-dialog-content">
-    <form [formGroup]="form">
+    <form [formGroup]="form" *ngIf="show">
       <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="gappx">
 
         <div fxLayout="row" fxLayoutAlign="center center" class="ImageLayout">
@@ -94,6 +94,21 @@
           </mat-error>
         </mat-form-field> -->
 
+        <mat-form-field *ngIf="this.role == 'Owner'" fxFlex="100" fxFlex.lt-md="100" appearance="outline">
+          <mat-label>
+            <span style="text-transform: capitalize;">{{'Negocio al que pertenece'}}</span>
+          </mat-label>
+          <mat-select required [formControl]="form.get('BusinessId')" placeholder="{{'BusinessId'}}">
+            <mat-option *ngFor="let x of allBusiness ;let i=index" [value]="x.id">
+              <div fxLayout="row" fxLayoutAlign="start center">
+                <span class="mat-body-2">
+                  {{x.name}}
+                </span>
+              </div>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
         <mat-form-field appearance="outline">
           <mat-label>{{'Tipo de usuario'|translate}}</mat-label>
           <mat-select multiple placeholder="{{'Tipo de usuario'|translate}}" [formControl]="form.controls['roles']" required>
@@ -145,7 +160,22 @@
 
         <!-- ////////////////////////////////////////////////////////////////////////////////////// -->
 
-        <mat-form-field class="mt-2" *ngIf="localDatabaseUsers" appearance="outline">
+        <mat-form-field class="mt-3" fxFlex="48" fxFlex.lt-md="100" appearance="outline">
+          <mat-label>
+            <span style="text-transform: capitalize;">{{'Estado del usuario'}}</span>
+          </mat-label>
+          <mat-select required [formControl]="form.get('status')" placeholder="{{'status'}}">
+            <mat-option *ngFor="let status of allStatus ;let i=index" [value]="status">
+              <div fxLayout="row" fxLayoutAlign="start center">
+                <span class="mat-body-2 uppercase">
+                  {{status|translate}}
+                </span>
+              </div>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="localDatabaseUsers" appearance="outline">
           <mat-label>{{'Username'|translate}}</mat-label>
           <input required type="text" matInput [formControl]="form.controls['username']" placeholder="{{'Username'|translate}}">
           <mat-icon class="greyIcon" matSuffix>person</mat-icon>

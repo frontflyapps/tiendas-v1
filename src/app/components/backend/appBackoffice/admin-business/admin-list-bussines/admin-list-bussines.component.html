@@ -17,10 +17,10 @@
               <mat-icon>refresh</mat-icon>
               <span fxHide.xs>{{'Refrescar' | translate}}</span>
             </button>
-            <!-- <button mat-button (click)="onCreateBrand()">
+            <button mat-button (click)="onCreateBusiness()">
               <mat-icon>add</mat-icon>
               <span fxHide.xs>{{'Adicionar'}}</span>
-            </button> -->
+            </button>
           </div>
           <div fxHide fxShow.xs>
             <button mat-icon-button (click)="showSearchForm()">
@@ -29,9 +29,9 @@
             <button mat-icon-button (click)="refreshData()">
               <mat-icon>refresh</mat-icon>
             </button>
-            <!-- <button mat-icon-button (click)="onCreateBrand()">
+            <button mat-icon-button (click)="onCreateBusiness()">
               <mat-icon>add</mat-icon>
-            </button> -->
+            </button>
           </div>
         </div>
       </mat-toolbar-row>
@@ -130,7 +130,7 @@
           <td mat-cell *matCellDef="let element">
             <ul>
               <li>
-                <span>{{'Tel. móvil' | translate}:</span> &nbsp; <strong>{{element.cellphone || '-'}} </strong>
+                <span>{{'Tel. móvil' | translate}}:</span> &nbsp; <strong>{{element.cellphone || '-'}} </strong>
               </li>
               <li>
                 <span>{{'Tel. fijo' | translate}}:</span> &nbsp; <strong>{{element.telephone || '-'}} </strong>
@@ -143,7 +143,7 @@
 
         <ng-container matColumnDef="status">
           <th style="width:15%;" mat-header-cell *matHeaderCellDef mat-sort-header>
-            <span class="mat-body-2">{{'Estado' | translate}</span>
+            <span class="mat-body-2">{{'Estado' | translate}}</span>
           </th>
           <td mat-cell *matCellDef="let element">
             <span [ngClass]="{'warning': element.status == 'created','success': (element.status == 'approved'||element.status == 'published'),

@@ -1083,11 +1083,13 @@
   "created": "creado",
   "approved": "aprobado",
   "published": "publicado",
-  "disabled": "deshabilitado",
   "disabledByAdmin": "deshabilitado por admin",
   "Tienda": "Tienda",
   "Ofertas": "Ofertas",
   "Negocios": "Negocios",
   "Ventas": "Ventas",
-  "Derechos de autor": "Derechos de autor"
+  "Derechos de autor": "Derechos de autor",
+  "pending": "pendiente",
+  "enabled": "habilitado",
+  "disabled": "deshabilitado"
 }

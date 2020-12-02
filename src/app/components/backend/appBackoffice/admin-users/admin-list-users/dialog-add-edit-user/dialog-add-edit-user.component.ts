@@ -10,6 +10,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { UtilsService } from './../../../../../../core/services/utils/utils.service';
 import { TranslateService } from '@ngx-translate/core';
 import { UserService } from './../../../../services/user/user.service';
+import { BussinessService } from 'src/app/components/backend/services/business/business.service';
 
 @Component({
   selector: 'app-dialog-add-edit-user',
@@ -37,7 +38,10 @@ export class DialogAddEditUserComponent implements OnInit {
   isChangePass = false;
   role: any;
   Roles: any[] = ['Admin', 'Client'];
+  allStatus: any[] = ['pending', 'enabled', 'disabled'];
+  allBusiness: any[] = [];
   localDatabaseUsers = environment.localDatabaseUsers;
+  show = false;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -49,6 +53,7 @@ export class DialogAddEditUserComponent implements OnInit {
     private translate: TranslateService,
     private userService: UserService,
     private showSnackbar: ShowSnackbarService,
+    private businessService: BussinessService,
   ) {
     this.urlImage = environment.apiUrl;
     this.dialogRef.disableClose = true;
@@ -78,6 +83,14 @@ export class DialogAddEditUserComponent implements OnInit {
     } else if (this.role == 'Client') {
       this.Roles = ['Client'];
     }
+    this.businessService.getAllBussiness().subscribe(
+      (data) => {
+        this.allBusiness = data.data;
+      },
+      (e) => {
+        //catch error
+      },
+    );
   }
 
   createForm(): void {
@@ -99,6 +112,8 @@ export class DialogAddEditUserComponent implements OnInit {
           [Validators.required, Validators.email],
         ],
         description: [this.selectedUser && this.selectedUser.description ? this.selectedUser.description : null],
+        status: [this.selectedUser?.status || 'enabled', [Validators.required]],
+        BusinessId: [this.selectedUser?.Businesses[0]?.id, [Validators.required]],
         roles: [
           this.selectedUser && this.selectedUser.roles ? this.selectedUser.roles.map((item) => item.type) : null,
           [Validators.required],
@@ -137,6 +152,8 @@ export class DialogAddEditUserComponent implements OnInit {
         password: this.formPass,
         description: [null],
         roles: [[this.role], [Validators.required]],
+        status: ['enabled', [Validators.required]],
+        BusinessId: [null, [Validators.required]],
       });
       this.permitsForm = this.fb.group({
         canCreateProduct: [true, [Validators.required]],
@@ -149,6 +166,11 @@ export class DialogAddEditUserComponent implements OnInit {
         canCreateShipping: [false, [Validators.required]],
       });
     }
+    if (this.role != 'Owner') {
+      this.form.removeControl('BusinessId');
+      this.form.updateValueAndValidity();
+    }
+    this.show = true;
   }
 
   matchValidator(group: FormGroup) {

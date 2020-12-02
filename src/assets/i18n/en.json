@@ -1083,11 +1083,13 @@
   "created": "created",
   "approved": "approved",
   "published": "published",
-  "disabled": "disabled",
   "disabledByAdmin": "disabledByAdmin",
   "Tienda": "Store",
   "Ofertas": "Offers",
   "Negocios": "Bussiness",
   "Ventas": "Sells",
-  "Derechos de autor": "Copy Rigth"
+  "Derechos de autor": "Copy Rigth",
+  "pending": "pending",
+  "enabled": "enabled",
+  "disabled": "disabled"
 }

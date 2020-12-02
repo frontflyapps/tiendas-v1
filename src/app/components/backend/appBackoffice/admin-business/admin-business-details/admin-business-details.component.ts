@@ -61,7 +61,8 @@ export class AdminBusinessDetailsComponent implements OnInit {
       this.businessService.getBussines(data.businessId).subscribe((result) => {
         this.selectedBusiness = result.data;
         console.log('AdminBusinessDetailsComponent -> this.selectedBusiness', this.selectedBusiness);
-        this.canEditBusiness = this.loggedInUser.id == this.selectedBusiness.OwnerId;
+        this.canEditBusiness =
+          this.loggedInUser.id == this.selectedBusiness.OwnerId || this.loggedInUserService.hasRolUser('Admin');
         this.buildForm();
         this.showData = true;
         this.spinner.hide();

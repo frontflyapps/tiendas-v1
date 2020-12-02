@@ -18,6 +18,10 @@ export class BussinessService {
     return this.httpClient.post<any>(this.url, body);
   }
 
+  createAdminBussines(body: any): Observable<any> {
+    return this.httpClient.post<any>(this.url + '/admin', body);
+  }
+
   editBussines(data) {
     return this.httpClient.patch<any>(this.urlId.replace(':businessId', data.id), data, this.httpOptions);
   }

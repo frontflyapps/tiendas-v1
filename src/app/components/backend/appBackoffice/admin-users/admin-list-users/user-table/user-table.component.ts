@@ -1,3 +1,4 @@
+import { NgxSpinnerService } from 'ngx-spinner';
 import { UserService } from './../../../../services/user/user.service';
 import { ShowSnackbarService } from './../../../../../../core/services/show-snackbar/show-snackbar.service';
 import { ShowToastrService } from './../../../../../../core/services/show-toastr/show-toastr.service';
@@ -67,6 +68,7 @@ export class UserTableComponent implements OnInit {
     public dialog: MatDialog,
     private showToastr: ShowToastrService,
     public utilsService: UtilsService,
+    private spinner: NgxSpinnerService,
   ) {
     this.dataSource = new MatTableDataSource([]);
     this.selection = new SelectionModel<any>(true, []);
@@ -287,6 +289,7 @@ export class UserTableComponent implements OnInit {
     dialogRef.afterClosed().subscribe(async (result) => {
       try {
         if (result) {
+          this.spinner.show();
           if (this.role === 'Messenger') {
             const data = await Promise.all(users.map((item) => this.userService.removeMEssenger(item)));
             this.showToastr.showSucces(this.translate.instant('Messengers successfully removed'), 'Succes', 7500);
@@ -297,8 +300,10 @@ export class UserTableComponent implements OnInit {
             this.refreshData();
           }
         }
+        this.spinner.hide();
       } catch (error) {
         this.refreshData();
+        this.spinner.hide();
       }
     });
   }
