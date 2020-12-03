@@ -10,13 +10,13 @@
             <div fxLayout="column" fxLayoutAlign="center left" class="content">
               <div>
                 <p *ngIf="slide.colorTitle" class="title" [ngStyle]="{'color': slide.colorTitle}">
-                  {{utilsService.parserLanguage(slide.title,language)}}
+                  {{slide.title|parseLang:language}}
                 </p>
                 <p *ngIf="!slide.colorTitle" class="title">
-                  {{utilsService.parserLanguage(slide.title,language)}}
+                  {{slide.title|parseLang:language}}
                 </p>
                 <p class="subtitle">
-                  {{utilsService.parserLanguage(slide.subTitle,language)}}
+                  {{slide.subTitle|parseLang:language}}
                 </p>
               </div>
               <a *ngIf="slide.link" [href]="slide.link" target="_blank" class="myBtn" ngClass.gt-sm="uppercase" mat-raised-button

@@ -1,3 +1,4 @@
+import { PipesModule } from './../../core/pipes/pipes.module';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MainCarouselComponent } from './main-carousel/main-carousel.component';
@@ -76,6 +77,7 @@ import { BrandsMComponent } from './widgets/brands-m/brands-m.component';
     MatPaginatorModule,
     MatDialogModule,
     NgpMaterialRatingModule,
+    PipesModule,
   ],
   exports: [ProductDialogComponent],
 

@@ -1,3 +1,4 @@
+import { PipesModule } from 'src/app/core/pipes/pipes.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -67,6 +68,7 @@ import { NgpImagePickerModule } from 'ngp-image-picker';
     MatSortModule,
     NgpImagePickerModule,
     ColorPickerModule,
+    PipesModule,
   ],
   declarations: [AdminCarruselTableComponent, DialogEditCarruselsComponent],
   entryComponents: [],
