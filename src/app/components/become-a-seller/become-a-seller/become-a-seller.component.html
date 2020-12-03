@@ -29,7 +29,7 @@
             </p>
 
             <mat-form-field class="form-field-width" appearance="outline">
-              <input type="text" [formControl]="basicForm.controls['name']" matInput placeholder="{{'Mi Negocio' | translate}">
+              <input type="text" [formControl]="basicForm.controls['name']" matInput placeholder="{{'Mi Negocio' | translate}}">
               <mat-error *ngIf="basicForm.controls['name'].hasError('required')">
                 {{'Nombre' | translate}} <strong>{{'es requerido' | translate}}</strong>
               </mat-error>
@@ -194,7 +194,7 @@
                 <input type="text" matInput [formControl]="sellerForm.controls['lastName']" placeholder="{{'Lastname'|translate}}">
                 <mat-icon class="greyIcon" matSuffix>person</mat-icon>
                 <mat-error *ngIf="sellerForm.controls['lastName'].hasError('required')">
-                  {{'Apellidos' | translate}} <strong>{{'es requerido' | translate}</strong>
+                  {{'Apellidos' | translate}} <strong>{{'es requerido' | translate}}</strong>
                 </mat-error>
               </mat-form-field>
             </div>
@@ -228,7 +228,8 @@
           <mat-form-field class="form-field-width" appearance="outline">
             <input required type="text" [formControl]="sellerForm.controls['card']" matInput placeholder="{{'xxxx-xxxx-xxxx-xxxx'}}">
             <mat-error *ngIf="sellerForm.controls['card'].invalid">
-              {{'Tarjeta' | translate}} <strong>{{'está inválido (debe contener solo números y un tamaño de 16 )' | translate}}</strong>
+              {{'Tarjeta' | translate}}
+              <strong>{{'está inválido (debe contener solo números y un tamaño de 16 )' | translate}}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -285,7 +286,8 @@
           <mat-panel-description>
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <p>{{'Comprueba si has introducido tu número de teléfono en el formato correcto o la cuenta de correo es válida. Solicita el PIN de nuevo.' | translate }}
+        <p>
+          {{'Comprueba si has introducido tu número de teléfono en el formato correcto o la cuenta de correo es válida. Solicita el PIN de nuevo.' | translate }}
         </p>
       </mat-expansion-panel>
       <mat-expansion-panel class="mat-elevation-z0">
@@ -298,7 +300,8 @@
           <mat-panel-description>
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <p>{{'Además de enviar el pin de validación de la cuenta de vendedor, todas las notificaciones de ventas y entregas relacionadas con sus productos se harán a través de esta cuenta de correo' | translate}}
+        <p>
+          {{'Además de enviar el pin de validación de la cuenta de vendedor, todas las notificaciones de ventas y entregas relacionadas con sus productos se harán a través de esta cuenta de correo' | translate}}
         </p>
       </mat-expansion-panel>
     </mat-accordion>

@@ -11,7 +11,7 @@
 <div class="w-100 mt-3" fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="gappx">
   <div fxFlex.gt-sm="70" fxFlex.lt-md="100" fxLayout="column" fxLayoutAlign="start stretch" class="stepperForm">
     <div class="container-stepper">
-      <mat-horizontal-stepper color="accent" labelPosition="bottom" [linear]="'false'" #stepper>
+      <mat-horizontal-stepper color="accent" labelPosition="bottom" [linear]="'true'" #stepper>
         <mat-step [stepControl]="basicForm">
           <ng-template matStepLabel>{{'Información de su Negocio'|translate}}</ng-template>
           <form [formGroup]="basicForm">
@@ -35,7 +35,7 @@
               </mat-error>
             </mat-form-field>
 
-            <p class=" mat-body-2 uppercase mt-2 mb-1">
+            <!-- <p class=" mat-body-2 uppercase mt-2 mb-1">
               {{'Usuario encargado del negocio'|translate}}
             </p>
 
@@ -52,7 +52,7 @@
                   </div>
                 </mat-option>
               </mat-select>
-            </mat-form-field>
+            </mat-form-field> -->
 
             <div fxLayout=" row wrap" class="form-field-width" fxLayoutAlign="space-between start" fxLayoutGap="gappx">
               <div fxFlex="49" fxFlex.lt-md="100" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="gappx">
@@ -181,87 +181,94 @@
 
           <div>
             <button mat-button matStepperPrevious class="uppercase">{{'Anterior'|translate}}</button>
-            <!-- <button mat-button matStepperNext class="uppercase">{{'Siguiente'|translate}}</button> -->
-            <button (click)="onCreateBusiness()" mat-button matStepperNext class="uppercase"
-              [disabled]="locationForm.invalid">{{'Guardar'|translate}}</button>
+            <button mat-button matStepperNext class="uppercase">{{'Siguiente'|translate}}</button>
           </div>
 
 
         </mat-step>
 
-        <!-- <mat-step [stepControl]="sellerForm">
-      <ng-template matStepLabel>{{'Información del Vendedor'|translate}}</ng-template>
-      <div class="form-field-width" fxLayout="row wrap" fxLayoutAlign="space-between start" fxLayoutGap="gappx">
-        <div fxFlex="49" fxFlex.lt-md="100" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="gappx">
-          <p class="mat-body-2 uppercase mb-1 ">
-            {{'Nombre'|translate}}
-          </p>
-          <mat-form-field class="form-field-width" fxFlex="49" fxFlex.lt-md="100" appearance="outline">
-            <mat-label>{{'Nombre' | translate}}</mat-label>
-            <input type="text" [formControl]="sellerForm.controls['name']" matInput placeholder="{{'Name'|translate}}">
-            <mat-icon class="greyIcon" matSuffix>person</mat-icon>
-            <mat-error *ngIf="sellerForm.controls['name'].hasError('required')">
-              {{'Nombre' | translate}} <strong>{{'es requerido' | translate}}</strong>
-            </mat-error>
-          </mat-form-field>
-
-        </div>
-        <div fxFlex="49" fxFlex.lt-md="100" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="gappx">
-          <p class="mat-body-2 uppercase mb-1 ">
-            {{'Apellidos'|translate}}
-          </p>
-          <mat-form-field class="form-field-width" appearance="outline">
-            <mat-label>{{'Apellidos' | translate}}</mat-label>
-            <input type="text" matInput [formControl]="sellerForm.controls['lastName']" placeholder="{{'Lastname'|translate}}">
-            <mat-icon class="greyIcon" matSuffix>person</mat-icon>
-            <mat-error *ngIf="sellerForm.controls['lastName'].hasError('required')">
-              {{'Apellidos' | translate}} <strong>{{'es requerido' | translate}</strong>
-                </mat-error>
-              </mat-form-field>
-            </div>
+        <mat-step [stepControl]="sellerForm">
+          <ng-template matStepLabel>{{'Información del Vendedor'|translate}}</ng-template>
+          <div fxLayout="row wrap" class="form-field-width" fxLayoutAlign="space-between start" fxLayoutGap="gappx">
+            <p class="mat-body-2 uppercase" fxFlex="100">
+              Defina los datos del usuario Owner del negocio
+            </p>
+            <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline">
+              <mat-label>
+                <span style="text-transform: capitalize;">{{'Nombre'}}</span>
+              </mat-label>
+              <input matInput [formControl]="sellerForm.get('name')" placeholder="{{'Nombre'}}" required type="text">
+            </mat-form-field>
+            <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline">
+              <mat-label>
+                <span style="text-transform: capitalize;">{{'Apellido'}}</span>
+              </mat-label>
+              <input matInput [formControl]="sellerForm.get('lastName')" placeholder="{{'Apellido'}}" required type="text">
+            </mat-form-field>
+            <mat-form-field fxFlex="100" fxFlex.lt-md="100" appearance="outline">
+              <mat-label>
+                <span style="text-transform: capitalize;">{{'email'}}</span>
+              </mat-label>
+              <input matInput [formControl]="sellerForm.get('email')" placeholder="{{'email'}}" required type="email">
+            </mat-form-field>
+            <mat-form-field fxFlex="100" fxFlex.lt-md="100" appearance="outline">
+              <mat-label>
+                <span style="text-transform: capitalize;">{{'Nomb. de usuario'}}</span>
+              </mat-label>
+              <input matInput [formControl]="sellerForm.get('username')" placeholder="{{'Nomb. de usuario'}}" required type="text">
+            </mat-form-field>
+            <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline">
+              <mat-label>
+                <span style="text-transform: capitalize;">{{'ci'}}</span>
+              </mat-label>
+              <input matInput [formControl]="sellerForm.get('ci')" placeholder="{{'ci'}}" type="text">
+            </mat-form-field>
+            <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline">
+              <mat-label>
+                <span>{{'Fecha de nacimiento'}}</span>
+              </mat-label>
+              <input [formControl]="sellerForm.get('birthday')" matInput [matDatepicker]="picker5">
+              <mat-datepicker-toggle matSuffix [for]="picker5"></mat-datepicker-toggle>
+              <mat-datepicker #picker5 startView="year" [startAt]="startDate"></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline">
+              <mat-label>
+                <span style="text-transform: capitalize;">{{'Contraseña'}}</span>
+              </mat-label>
+              <input matInput [formControl]="formPass.get('password')" placeholder="{{'Contraseña'}}" required [type]="passwordType">
+              <mat-icon style="cursor:pointer;" *ngIf="this.passwordType == 'password'" class="greyIcon" matSuffix
+                (click)="this.passwordType = 'text'">
+                visibility</mat-icon>
+              <mat-icon style="cursor:pointer;" *ngIf="this.passwordType == 'text'" class="greyIcon" matSuffix
+                (click)="this.passwordType = 'password'">
+                visibility_off</mat-icon>
+            </mat-form-field>
+            <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline">
+              <mat-label>
+                <span>{{'Repita la contraseña'}}</span>
+              </mat-label>
+              <input matInput [formControl]="formPass.get('repeatPassword')" placeholder="{{'Repita la contraseña'}}" required
+                [type]="passwordType" [ngClass]="{'ng-invalid': formPass.invalid}">
+              <mat-icon style="cursor:pointer;" *ngIf="this.passwordType == 'password'" class="greyIcon" matSuffix
+                (click)="this.passwordType = 'text'">
+                visibility</mat-icon>
+              <mat-icon style="cursor:pointer;" *ngIf="this.passwordType == 'text'" class="greyIcon" matSuffix
+                (click)="this.passwordType = 'password'">
+                visibility_off</mat-icon>
+              <mat-error *ngIf="this.formPass.invalid">
+                Las contraseñas deben ser iguales
+              </mat-error>
+            </mat-form-field>
           </div>
 
-          <p class="mat-body-2 uppercase mb-1 ">
-            {{'Fecha de nacimiento'|translate}}
-                </p>
 
-                <mat-form-field class="form-field-width" appearance="outline">
-                  <input matInput [matDatepicker]="picker" [formControl]="sellerForm.controls['birthday']">
-                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                  <mat-datepicker #picker startView="year" [startAt]="startDate"></mat-datepicker>
-                </mat-form-field>
+          <div>
+            <button mat-button matStepperPrevious class="uppercase">{{'Anterior'|translate}}</button>
+            <button (click)="onCreateBusiness()" mat-button matStepperNext class="uppercase"
+              [disabled]="sellerForm.invalid">{{'Guardar'|translate}}</button>
+          </div>
 
-                <p class="mat-body-2 uppercase mb-1">
-                  {{'Carné de identidad'|translate}}
-                </p>
-
-                <mat-form-field class="form-field-width" appearance="outline">
-                  <input required type="text" [formControl]="sellerForm.controls['ci']" matInput placeholder="{{'950929XXXXX'}}">
-                  <mat-error *ngIf="sellerForm.controls['ci'].invalid">
-                    {{'CI'}} <strong>{{'es inválido' | translate}}</strong>
-                  </mat-error>
-                </mat-form-field>
-
-                <p class="mat-body-2 uppercase mb-1 ">
-                  {{'Número de tarjeta banco'|translate}}
-                </p>
-
-                <mat-form-field class="form-field-width" appearance="outline">
-                  <input required type="text" [formControl]="sellerForm.controls['card']" matInput placeholder="{{'xxxx-xxxx-xxxx-xxxx'}}">
-                  <mat-error *ngIf="sellerForm.controls['card'].invalid">
-                    {{'Tarjeta' | translate}}
-                    <strong>{{'está inválido (debe contener solo números y un tamaño de 16 )' | translate}}</strong>
-                  </mat-error>
-                </mat-form-field>
-
-
-                <div>
-                  <button mat-button matStepperPrevious class="uppercase">{{'Anterior'|translate}}</button>
-                  <button (click)="onCreateBusiness()" mat-button matStepperNext class="uppercase"
-                    [disabled]="sellerForm.invalid">{{'Guardar'|translate}}</button>
-                </div>
-
-    </mat-step> -->
+        </mat-step>
       </mat-horizontal-stepper>
     </div>
   </div>

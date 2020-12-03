@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder, ValidatorFn } from '@angular/forms';
 import { ImagePickerConf } from 'ngp-image-picker';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
@@ -20,10 +20,12 @@ export class CreateBusinessComponent implements OnInit {
   basicForm: FormGroup;
   locationForm: FormGroup;
   sellerForm: FormGroup;
+  formPass: FormGroup;
   allProvinces: any[] = [];
   municipalities: any[] = [];
   allMunicipalities: any[] = [];
   isBasicInfoChanged = false;
+  passwordType = 'password';
   startDate = new Date(1985, 1, 1);
   // zoom = 12;
   // center: google.maps.LatLngLiteral;
@@ -79,7 +81,7 @@ export class CreateBusinessComponent implements OnInit {
       email: [null, [Validators.required, Validators.email]],
       telephone: [null, []],
       description: [null, [Validators.required]],
-      PersonId: [null, [Validators.required]],
+      // PersonId: [null, [Validators.required]],
     });
 
     this.locationForm = this.fb.group({
@@ -89,6 +91,24 @@ export class CreateBusinessComponent implements OnInit {
       address: [null, [Validators.required]],
       longitude: [null, []],
       latitude: [null, []],
+    });
+
+    this.formPass = this.fb.group(
+      {
+        password: [null, [Validators.required, Validators.minLength(6)]],
+        repeatPassword: [null, [Validators.required]],
+      },
+      { validator: this.passwordsMatch.bind(this) },
+    );
+
+    this.sellerForm = this.fb.group({
+      name: [null, [Validators.required]],
+      lastName: [null, [Validators.required]],
+      email: [null, [Validators.required]],
+      username: [null, [Validators.required]],
+      ci: [null, []],
+      birthday: [null, []],
+      password: this.formPass,
     });
   }
 
@@ -125,9 +145,11 @@ export class CreateBusinessComponent implements OnInit {
 
   onCreateBusiness() {
     this.spinner.show();
+    let person = this.sellerForm.value;
+    person.password = this.formPass.get('password').value;
     let data = {
       business: { ...this.basicForm.value, ...this.locationForm.value },
-      PersonId: this.basicForm.get('PersonId').value,
+      person: { ...person },
     };
     data.business.logo = this.imageBusiness;
     // console.log(JSON.stringify(data));
@@ -144,5 +166,23 @@ export class CreateBusinessComponent implements OnInit {
         this.spinner.hide();
       },
     );
+  }
+
+  passwordsMatch(fg: FormGroup): any {
+    const pass = fg.controls['password'].value;
+    const repeat = fg.controls['repeatPassword'].value;
+    if (pass === repeat && pass && repeat && pass !== '') {
+      return null;
+    } else if (!pass && !repeat) {
+      return null;
+    } else {
+      return {
+        mismatch: true,
+      };
+    }
+  }
+
+  areEquals(a, b) {
+    return a && b && a.trim() == b.trim();
   }
 }

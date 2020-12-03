@@ -63,7 +63,7 @@
 
         <mat-form-field appearance="outline">
           <mat-label>{{'Title'|translate}}</mat-label>
-          <input required type="text" [formControl]="form.controls['title']" matInput placeholder="{{'Title'|translate}}">
+          <input type="text" [formControl]="form.controls['title']" matInput placeholder="{{'Title'|translate}}">
           <mat-icon class="greyIcon" matSuffix>unarchive</mat-icon>
           <mat-error *ngIf="form.controls['title'].hasError('required')">
             {{'Title'|translate}} <strong>{{'is required'|translate}}</strong>

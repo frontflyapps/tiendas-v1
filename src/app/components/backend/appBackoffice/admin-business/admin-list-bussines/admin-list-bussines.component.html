@@ -17,7 +17,7 @@
               <mat-icon>refresh</mat-icon>
               <span fxHide.xs>{{'Refrescar' | translate}}</span>
             </button>
-            <button mat-button (click)="onCreateBusiness()">
+            <button *ngIf="this.loggedInUserService.hasRolUser('Admin')" mat-button (click)="onCreateBusiness()">
               <mat-icon>add</mat-icon>
               <span fxHide.xs>{{'Adicionar'}}</span>
             </button>
@@ -29,7 +29,7 @@
             <button mat-icon-button (click)="refreshData()">
               <mat-icon>refresh</mat-icon>
             </button>
-            <button mat-icon-button (click)="onCreateBusiness()">
+            <button *ngIf="this.loggedInUserService.hasRolUser('Admin')" mat-icon-button (click)="onCreateBusiness()">
               <mat-icon>add</mat-icon>
             </button>
           </div>

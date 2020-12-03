@@ -114,7 +114,7 @@ export class DialogEditCarruselsComponent implements OnInit, OnDestroy {
       this.form = this.fb.group({
         title: [
           this.selectedCarrusel && this.selectedCarrusel.title ? this.selectedCarrusel.title[this.language] : null,
-          [Validators.minLength(5), Validators.pattern(/^\w((?!\s{2}).)*/), Validators.required],
+          [Validators.minLength(5), Validators.pattern(/^\w((?!\s{2}).)*/)],
         ],
         subTitle: [
           this.selectedCarrusel && this.selectedCarrusel.subTitle
