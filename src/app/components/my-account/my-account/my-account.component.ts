@@ -74,11 +74,7 @@ export class MyAccountComponent implements OnInit {
     this.isRegisterToBecomeASeller = localStorage.getItem('isRegisterToBecomeASeller') ? true : false;
     localStorage.removeItem('isRegisterToPay');
     localStorage.removeItem('isRegisterToBecomeASeller');
-    this.routeToNavigate = this.isRegisterToPay
-      ? '/checkout'
-      : this.isRegisterToBecomeASeller
-      ? '/become-a-seller'
-      : '';
+    this.routeToNavigate = this.isRegisterToPay ? '/cart' : this.isRegisterToBecomeASeller ? '/become-a-seller' : '';
 
     this.createForm();
     this.createRegistrationForm();
