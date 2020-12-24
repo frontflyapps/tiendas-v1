@@ -29,5 +29,5 @@ export const environment = {
 // import 'zone.js/dist/zone-error';  // Included with Angular CLI.
 
 /**
- * Esto es la tienda Online B2b De Jose
+ * Esto es la tienda Online B2b De Jose Alejandro Concepcion
  */
