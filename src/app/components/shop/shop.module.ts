@@ -1,6 +1,5 @@
 import { MatButtonModule } from '@angular/material/button';
 import { BannersFourComponent } from './banners-four/banners-four.component';
-import { RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatFormFieldModule } from '@angular/material/form-field';
