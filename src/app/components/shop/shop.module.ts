@@ -1,3 +1,13 @@
+import { MatButtonModule } from '@angular/material/button';
+import { BannersFourComponent } from './banners-four/banners-four.component';
+import { RouterModule } from '@angular/router';
+import { MatCardModule } from '@angular/material/card';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
 import { PipesModule } from './../../core/pipes/pipes.module';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -10,7 +20,6 @@ import { ProductLeftSidebarComponent } from './products/product-left-sidebar/pro
 import { ProductVerticalComponent } from './products/product-vertical/product-vertical.component';
 import { CommonModule } from '@angular/common';
 import { ShopRoutingModule } from './shop-routing.module';
-import { SharedModule } from '../shared/shared.module';
 import { SwiperModule } from 'ngx-swiper-wrapper';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -37,6 +46,8 @@ import { DialogFiltersMComponent } from './products/dialog-filters-m/dialog-filt
 import { MatDialogModule } from '@angular/material/dialog';
 import { CategoriesMComponent } from './widgets/categories-m/categories-m.component';
 import { BrandsMComponent } from './widgets/brands-m/brands-m.component';
+import { BlogSectionComponent } from './blog-section/blog-section.component';
+import { MatInputModule } from '@angular/material/input';
 @NgModule({
   declarations: [
     MainCarouselComponent,
@@ -58,11 +69,12 @@ import { BrandsMComponent } from './widgets/brands-m/brands-m.component';
     DialogFiltersMComponent,
     CategoriesMComponent,
     BrandsMComponent,
+    BlogSectionComponent,
+    BannersFourComponent,
   ],
   imports: [
     CommonModule,
     ShopRoutingModule,
-    SharedModule,
     SwiperModule,
     FormsModule,
     ReactiveFormsModule,
@@ -78,9 +90,15 @@ import { BrandsMComponent } from './widgets/brands-m/brands-m.component';
     MatDialogModule,
     NgpMaterialRatingModule,
     PipesModule,
+    MatListModule,
+    MatIconModule,
+    MatChipsModule,
+    MatExpansionModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatTabsModule,
+    MatCardModule,
+    MatButtonModule,
   ],
-  exports: [ProductDialogComponent],
-
-  entryComponents: [DialogFiltersMComponent],
 })
 export class ShopModule {}

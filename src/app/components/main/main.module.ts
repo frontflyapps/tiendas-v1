@@ -31,6 +31,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatListModule } from '@angular/material/list';
 import { MatInputModule } from '@angular/material/input';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { PreviousRouteService } from '../backend/services/previous-route/previous-route.service';
 
 @NgModule({
   declarations: [
@@ -69,6 +70,6 @@ import { EditProfileComponent } from './edit-profile/edit-profile.component';
     MatButtonModule,
     MatDialogModule,
   ],
-  providers: [SidebarMenuService],
+  providers: [SidebarMenuService, PreviousRouteService],
 })
 export class MainModule {}

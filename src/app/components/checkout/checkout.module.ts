@@ -27,6 +27,7 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
 import { TaxesShippingService } from '../backend/services/taxes-shipping/taxes-shipping.service';
+import { ConfirmationDialogFrontModule } from 'src/app/components/shared/confirmation-dialog-front/confirmation-dialog-front.module';
 @NgModule({
   imports: [
     CommonModule,
@@ -50,6 +51,7 @@ import { TaxesShippingService } from '../backend/services/taxes-shipping/taxes-s
     NgxSkeletonLoaderModule,
     MatMenuModule,
     MatDialogModule,
+    ConfirmationDialogFrontModule,
   ],
   declarations: [
     CheckoutComponent,

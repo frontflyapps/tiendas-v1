@@ -25,26 +25,14 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
 import { OrderByPipe } from './pipes/order-by.pipe';
-import { BannersFourComponent } from './banners-four/banners-four.component';
-import { BlogSectionComponent } from './blog-section/blog-section.component';
-import { CategoriesMenuComponent } from './categories-menu/categories-menu.component';
-import { CategoriesSectionComponent } from './categories-section/categories-section.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { TranslateModule } from '@ngx-translate/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatRippleModule, MatNativeDateModule } from '@angular/material/core';
-import { ConfirmationDialogFrontComponent } from './confirmation-dialog-front/confirmation-dialog-front.component';
 import { MatBadgeModule } from '@angular/material/badge';
 import { PreviousRouteService } from '../backend/services/previous-route/previous-route.service';
 @NgModule({
-  declarations: [
-    OrderByPipe,
-    BannersFourComponent,
-    BlogSectionComponent,
-    CategoriesMenuComponent,
-    CategoriesSectionComponent,
-    ConfirmationDialogFrontComponent,
-  ],
+  declarations: [OrderByPipe],
   imports: [
     ReactiveFormsModule,
     MatBadgeModule,
@@ -103,11 +91,6 @@ import { PreviousRouteService } from '../backend/services/previous-route/previou
     OrderByPipe,
     FlexLayoutModule,
     MatRippleModule,
-    BannersFourComponent,
-    BlogSectionComponent,
-    CategoriesMenuComponent,
-    CategoriesSectionComponent,
-    ConfirmationDialogFrontComponent,
     MatTooltipModule,
   ],
   entryComponents: [],

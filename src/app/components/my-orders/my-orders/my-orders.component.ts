@@ -15,7 +15,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { MyOrdersService } from '../service/my-orders.service';
 import { LoggedInUserService } from './../../../core/services/loggedInUser/logged-in-user.service';
 import { CurrencyService } from './../../../core/services/currency/currency.service';
-import { ConfirmationDialogFrontComponent } from '../../shared/confirmation-dialog-front/confirmation-dialog-front.component';
 import { HttpClient } from '@angular/common/http';
 import { CancelOrderComponent } from '../cancel-order/cancel-order.component';
 @Component({
