@@ -4,7 +4,7 @@ cache:
   paths:
     - node_modules
 
-deploy_sinkoola:
+deploy_Sinkoola:
   only:
     - master
   when: always
