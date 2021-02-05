@@ -10,13 +10,9 @@ import { MainHomeComponent } from './main-home/main-home.component';
 // Routes
 const routes: Routes = [
   {
-    path:'',
-    redirectTo:'home',
-    pathMatch:'full'
-},
-  {
-    path: 'home', component: MainHomeComponent,
- },
+    path: '',
+    component: MainHomeComponent,
+  },
   { path: 'two', component: MainHomeComponent },
   // { path: 'three', component: HomeThreeComponent },
   // { path: 'four', component: HomeFourComponent },
@@ -27,6 +23,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class ShopRoutingModule { }
+export class ShopRoutingModule {}

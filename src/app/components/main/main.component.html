@@ -250,7 +250,7 @@
       </div>
 
       <div class="showCategories" fxLayout="row" fxLayoutAlign.xs="start center" fxLayoutAlign.sm="center center" fxLayoutGap="gappx">
-        <a [routerLink]="['home']" routerLinkActive="link-active" class="itemCategory" mat-button>{{'Inicio'|translate}}</a>
+        <a [routerLink]="['']" routerLinkActive="link-active" class="itemCategory" mat-button>{{'Inicio'|translate}}</a>
 
         <a [routerLink]="['/products/search']" routerLinkActive="link-active" [queryParams]="{CategoryId:category.id}"
           *ngFor="let category of categories" class="itemCategory" mat-button>{{utilsService.parserLanguage(category.name,_language)}}</a>

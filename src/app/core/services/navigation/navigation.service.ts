@@ -10,7 +10,7 @@ export class NavigationService {
       displayName: 'Home',
       iconName: ['aspect_ratio'],
       material: true,
-      route: '/home',
+      route: '',
       disabled: false,
     },
     {
@@ -277,7 +277,7 @@ export class NavigationService {
     },
   ];
 
-  constructor() { }
+  constructor() {}
 
   public getNavItems() {
     return this.navItems;
