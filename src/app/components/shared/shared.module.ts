@@ -2,7 +2,6 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { NgpImagePickerModule } from 'ngp-image-picker';
 import { NgpImageLazyLoadModule } from 'ngp-lazy-image';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { SidebarMenuService } from './sidebar/sidebar-menu.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -25,17 +24,11 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
-import { MenuComponent } from './menu/menu.component';
 import { OrderByPipe } from './pipes/order-by.pipe';
-import { ProductService } from './services/product.service';
-import { SidebarComponent } from './sidebar/sidebar.component';
-import { ShoppingWidgetsComponent } from './shopping-widgets/shopping-widgets.component';
 import { BannersFourComponent } from './banners-four/banners-four.component';
 import { BlogSectionComponent } from './blog-section/blog-section.component';
 import { CategoriesMenuComponent } from './categories-menu/categories-menu.component';
 import { CategoriesSectionComponent } from './categories-section/categories-section.component';
-import { FooterTwoComponent } from './footer-two/footer-two.component';
-import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { TranslateModule } from '@ngx-translate/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -45,16 +38,11 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { PreviousRouteService } from '../backend/services/previous-route/previous-route.service';
 @NgModule({
   declarations: [
-    MenuComponent,
-    SidebarComponent,
     OrderByPipe,
-    ShoppingWidgetsComponent,
     BannersFourComponent,
     BlogSectionComponent,
     CategoriesMenuComponent,
     CategoriesSectionComponent,
-    FooterTwoComponent,
-    EditProfileComponent,
     ConfirmationDialogFrontComponent,
   ],
   imports: [
@@ -113,22 +101,17 @@ import { PreviousRouteService } from '../backend/services/previous-route/previou
     MatDividerModule,
     MatCardModule,
     OrderByPipe,
-    MenuComponent,
-    SidebarComponent,
     FlexLayoutModule,
-    ShoppingWidgetsComponent,
     MatRippleModule,
     BannersFourComponent,
     BlogSectionComponent,
     CategoriesMenuComponent,
     CategoriesSectionComponent,
-    FooterTwoComponent,
-    EditProfileComponent,
     ConfirmationDialogFrontComponent,
     MatTooltipModule,
   ],
   entryComponents: [],
 
-  providers: [ProductService, SidebarMenuService, PreviousRouteService],
+  providers: [PreviousRouteService],
 })
 export class SharedModule {}

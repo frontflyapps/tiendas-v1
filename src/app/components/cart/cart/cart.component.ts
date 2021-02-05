@@ -85,7 +85,7 @@ export class CartComponent implements OnInit, OnDestroy {
     this.cartService.addToCart(product, quantity);
   }
   // Get Total
-  public getTotal(cart?): Observable<number> {
+  public getTotal(cart?): any {
     return this.cartService.getTotalAmount(cart);
   }
 

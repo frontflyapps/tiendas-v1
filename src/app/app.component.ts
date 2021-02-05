@@ -59,14 +59,14 @@ export class AppComponent {
 
   ngOnInit() {
     /** spinner starts on init */
-    try {
-      console.log(
-        '/*/*/*/*/*/*/*',
-        this.encryptDecryptService.decrypt('U2FsdGVkX1/D/8ch+37Gv1Me0kE3SIYNUxAtoG6hmz3TnHoGfrMOyhROXmnJ+txb'),
-      );
-    } catch (e) {
-      console.log('AppComponent -> ngOnInit -> e', e);
-    }
+    // try {
+    //   console.log(
+    //     '/*/*/*/*/*/*/*',
+    //     this.encryptDecryptService.decrypt('U2FsdGVkX1/D/8ch+37Gv1Me0kE3SIYNUxAtoG6hmz3TnHoGfrMOyhROXmnJ+txb'),
+    //   );
+    // } catch (e) {
+    //   console.log('AppComponent -> ngOnInit -> e', e);
+    // }
 
     this.spinner.show();
 

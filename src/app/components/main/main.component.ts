@@ -1,4 +1,3 @@
-import { PayService } from './../../core/services/pay/pay.service';
 import { ConfirmPaymentOkComponent } from './confirm-payment-ok/confirm-payment-ok.component';
 import { CookieService } from 'ngx-cookie-service';
 import { MatSidenav } from '@angular/material/sidenav';
@@ -8,8 +7,6 @@ import { CartItem } from '../../modals/cart-item';
 import { ProductService } from '../shared/services/product.service';
 import { CartService } from '../shared/services/cart.service';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
-import { SidebarMenuService } from '../shared/sidebar/sidebar-menu.service';
-import { SidenavMenu } from '../shared/sidebar/sidebar-menu.model';
 import { TranslateService } from '@ngx-translate/core';
 import { NavigationService } from './../../core/services/navigation/navigation.service';
 import { LoggedInUserService } from './../../core/services/loggedInUser/logged-in-user.service';
@@ -19,7 +16,6 @@ import { IUser } from './../../core/classes/user.class';
 import { AuthenticationService } from './../../core/services/authentication/authentication.service';
 import { ShowSnackbarService } from './../../core/services/show-snackbar/show-snackbar.service';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
-import { EditProfileComponent } from '../shared/edit-profile/edit-profile.component';
 import { CurrencyService } from './../../core/services/currency/currency.service';
 import { environment } from './../../../environments/environment';
 import { FormControl } from '@angular/forms';
@@ -29,6 +25,8 @@ import { MyOrdersService } from '../my-orders/service/my-orders.service';
 import { ShowToastrService } from 'src/app/core/services/show-toastr/show-toastr.service';
 import { CategoriesService } from '../backend/services/categories/catagories.service';
 import { UtilsService } from 'src/app/core/services/utils/utils.service';
+import { SidebarMenuService } from './sidebar/sidebar-menu.service';
+import { EditProfileComponent } from './edit-profile/edit-profile.component';
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -61,7 +59,7 @@ export class MainComponent implements OnInit, OnDestroy {
   public url: any;
   tokenReferal = null;
 
-  navItems: SidenavMenu[] = [];
+  navItems: any[] = [];
   loggedInUser: IUser;
   @ViewChild('start', { static: true })
   public sidenav: MatSidenav;

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { SidenavMenu } from '../../../components/shared/sidebar/sidebar-menu.model';
 
 @Injectable({
   providedIn: 'root',

@@ -1,14 +1,13 @@
 import { Component, OnInit, Input, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
-import { Product } from './../../../modals/product.model';
-import { CartService } from '../services/cart.service';
-import { Observable, Subject } from 'rxjs';
-import { CartItem, Cart } from './../../../modals/cart-item';
-import { ProductService } from '../services/product.service';
 import { LoggedInUserService } from './../../../core/services/loggedInUser/logged-in-user.service';
 import { CurrencyService } from './../../../core/services/currency/currency.service';
 import { environment } from './../../../../environments/environment';
 import { takeUntil } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { Cart, CartItem } from 'src/app/modals/cart-item';
+import { CartService } from '../../shared/services/cart.service';
+import { ProductService } from '../../shared/services/product.service';
 
 @Component({
   selector: 'app-shopping-widgets',

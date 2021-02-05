@@ -179,14 +179,14 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       });
   }
 
-  public getTotalWithShippingIncluded(): number | Observable<number> {
+  public getTotalWithShippingIncluded(): any {
     let total = this.getTotalAmout() as Number;
     let ShippingId = this.form.get('ShippingId').value;
     let shipping = this.shippingData?.find((i) => i.id == ShippingId);
     return total + (shipping?.totalPrice || 0.0);
   }
 
-  public getTotalAmout(): number | Observable<number> {
+  public getTotalAmout(): any {
     return this.buyProducts.reduce((prev, curr: CartItem) => {
       return prev + this.getTotalPricePerItem(curr);
     }, 0);
