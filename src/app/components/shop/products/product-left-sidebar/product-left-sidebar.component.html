@@ -4,7 +4,10 @@
     <div class="my-2" fxHide.xs>
       <mat-chip-list>
         <mat-icon *ngIf="this.showChips().length" class="mx-2">search</mat-icon>
-        <mat-chip *ngFor="let chip of this.showChips()">{{chip.name['es']}}</mat-chip>
+        <mat-chip [removable]="true" (removed)="onRemoveCategory(chip)" *ngFor="let chip of this.showChips()">
+          {{chip.name['es']}}
+          <mat-icon matChipRemove *ngIf="true">cancel</mat-icon>
+        </mat-chip>
       </mat-chip-list>
     </div>
     <div fxHide fxShow.lt-md fxLayout="row" fxLayoutAlign="space-between start" style="margin-bottom: 5px">

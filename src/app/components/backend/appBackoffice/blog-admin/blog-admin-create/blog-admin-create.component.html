@@ -73,8 +73,9 @@
           </div>
           <mat-form-field class="text-field" appearance="outline">
             <mat-label>{{'Resumen' | translate}}</mat-label>
-            <textarea required maxlength="150" [formControl]="this.form.controls['sumarize']" #message placeholder="{{'Resumen' | translate}}" matInput
-              cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2" cdkAutosizeMaxRows="4"></textarea>
+            <textarea required maxlength="150" [formControl]="this.form.controls['sumarize']" #message
+              placeholder="{{'Resumen' | translate}}" matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2"
+              cdkAutosizeMaxRows="4"></textarea>
             <mat-icon matSuffix>edit</mat-icon>
             <mat-hint align="end">{{message.value.length}} / 150</mat-hint>
             <mat-error *ngIf="this.form.controls['sumarize'].invalid">
@@ -83,7 +84,7 @@
           </mat-form-field>
 
           <div fxLayout="row" fxLayoutAlign="start center">
-            <span class="mat-title">{{'Escribe una publicación' | translate}</span>
+            <span class="mat-title">{{'Escribe una publicación' | translate}}</span>
           </div>
           <!-- <mat-form-field appearance="outline">
               <mat-label>{{'Publicación'}}</mat-label>
@@ -104,7 +105,7 @@
 
 
           <div fxLayout="row" fxLayoutAlign="start center">
-            <span class="mat-title mt-3">{{'Añade algunas etiquetas' | translate}</span>
+            <span class="mat-title mt-3">{{'Añade algunas etiquetas' | translate}}</span>
           </div>
 
           <app-list-tags-blog [language]="language" [blogId]="null" [tags]="[]" ($changeTags)="onChangeTags($event)">
@@ -133,7 +134,7 @@
           </div>
 
           <mat-form-field class="text-field" appearance="outline">
-            <mat-label>{{'Hipérvinculo' | translate}
+            <mat-label>{{'Hipérvinculo' | translate}}
             </mat-label>
             <input type="text" [formControl]="form.controls['link']" matInput placeholder="{{'Link'}}">
             <mat-icon class="greyIcon" matSuffix>link</mat-icon>

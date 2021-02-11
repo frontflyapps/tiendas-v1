@@ -34,8 +34,7 @@
       overflow-x: auto;
 
       .mat-row {
-        min-height: 100px;
-        min-height: 100px;
+        min-height: 70px;
         border-bottom: 1px solid $grey2;
 
         .product-name {
@@ -63,16 +62,16 @@
         }
 
         .price {
-          font-size: 21px;
+          font-size: 17px;
           font-weight: 500;
 
           p {
-            font-size: 21px;
+            font-size: 17px;
           }
         }
 
         .total {
-          font-size: 21px;
+          font-size: 20px;
           font-weight: 500;
           color: $theme-main-red;
         }
@@ -86,7 +85,7 @@
         font-size: 14px;
 
         img {
-          height: 80px;
+          height: 60px;
         }
       }
     }
@@ -104,7 +103,7 @@
 
   ////////////////////////////////////////////////////////////////
   .imageProduct {
-    height: 100px;
+    height: 160px;
     width: auto;
     object-fit: cover;
     object-position: center;

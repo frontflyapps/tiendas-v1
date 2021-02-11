@@ -30,7 +30,7 @@
         </div>
 
         <div fxLayout="row" fxLayoutAlign="start center">
-          <span class="mat-title">{{'Selecciona la imagen de tu publicación' | translate}</span>
+          <span class="mat-title">{{'Selecciona la imagen de tu publicación' | translate}}</span>
         </div>
         <div class="image-box">
           <div fxLayout="row" fxLayoutAlign="start center" class="ImageLayout">
@@ -65,7 +65,7 @@
             <span class="mat-title">{{'Seleccione el título de su publicación' | translate}}</span>
           </div>
           <mat-form-field class="text-field" appearance="outline">
-            <mat-label>{{'Título' | translate}</mat-label>
+            <mat-label>{{'Título' | translate}}</mat-label>
             <input [formControl]="this.form.controls['title']" matInput type="text" placeholder="{{'Título' | translate}}" required>
             <mat-error *ngIf="this.form.controls['title'].invalid">
               {{'Título is invalid' | translate}}
@@ -73,7 +73,7 @@
           </mat-form-field>
 
           <div fxLayout="row" fxLayoutAlign="start center">
-            <span class="mat-title">{{'Escribe una pequeña descripción' | translate}</span>
+            <span class="mat-title">{{'Escribe una pequeña descripción' | translate}}</span>
           </div>
           <mat-form-field class="text-field" appearance="outline">
             <mat-label>{{'Resumen' | translate}}</mat-label>
@@ -81,7 +81,7 @@
               cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2" cdkAutosizeMaxRows="4"></textarea>
             <mat-icon matSuffix>edit</mat-icon>
             <mat-hint align="end">{{message.value.length}} / 150</mat-hint>
-            <mat-error *ngIf="this.form.controls['sumarize'].invalid">
+            <mat-error *ngIf=" this.form.controls['sumarize'].invalid">
               {{'Resumen is invalid' | translate}
             </mat-error>
           </mat-form-field>
@@ -93,12 +93,12 @@
               <mat-label>{{'Publicación'}}</mat-label>
               <textarea required [formControl]="this.form.controls['text']" #message placeholder="{{'Post'}}" matInput cdkTextareaAutosize
                 #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4" cdkAutosizeMaxRows="8"></textarea>
-              <mat-icon matSuffix>edit</mat-icon>
-              <mat-hint align="end">{{message.value.length}} / 1024</mat-hint>
-              <mat-error *ngIf="this.form.controls['text'].invalid">
-                {{'Text is invalid'}}
-              </mat-error>
-            </mat-form-field> -->
+            <mat-icon matSuffix>edit</mat-icon>
+            <mat-hint align="end">{{message.value.length}} / 1024</mat-hint>
+            <mat-error *ngIf="this.form.controls['text'].invalid">
+              {{'Text is invalid'}}
+            </mat-error>
+          </mat-form-field> -->
 
 
           <div class="text-field">
@@ -134,25 +134,24 @@
 
           <div fxLayout="row" class="mt-2" fxLayoutAlign="start start" fxLayoutGap="gappx">
             <span class="mat-body-2" style="text-transform: uppercase;">{{'Ingrese un enlace para referir' | translate}}
-              <mat-icon
-                matTooltip="{{'Es un enlace al que le gustaría referirse en caso de un anuncio u otra página para visitar, es opcional' | translate}"
+              <mat-icon matTooltip="{{'Es un enlace al que le gustaría referirse en caso de un anuncio u otra página para visitar, es opcional' | translate}"
                 class="iconHelp">help</mat-icon></span>
           </div>
 
           <mat-form-field class="text-field" appearance="outline">
             <mat-label>{{'Hipérvinculo' | translate}}
             </mat-label>
-            <input type="text" [formControl]="form.controls['link']" matInput placeholder="{{'Link'}}">
-            <mat-icon class="greyIcon" matSuffix>link</mat-icon>
-            <mat-error *ngIf="form.controls['link'].hasError('pattern')">
-              {{'Url' | translate}} <strong>{{'is not valid' | translate}}</strong>
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="gappx">
-          <button mat-flat-button class="px-4" color="primary" [disabled]="this.form.invalid || !imageArticle"
-            (click)="onEditPublication()">{{'EDITAR' | translate}}</button>
-        </div>
+            <input type=" text" [formControl]="form.controls['link']" matInput placeholder="{{'Link'}}">
+                <mat-icon class="greyIcon" matSuffix>link</mat-icon>
+                <mat-error *ngIf="form.controls['link'].hasError('pattern')">
+                  {{'Url' | translate}} <strong>{{'is not valid' | translate}}</strong>
+                </mat-error>
+                </mat-form-field>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="gappx">
+            <button mat-flat-button class="px-4" color="primary" [disabled]="this.form.invalid || !imageArticle"
+              (click)="onEditPublication()">{{'EDITAR' | translate}}</button>
+          </div>
       </form>
     </div>
   </div>

@@ -1,3 +1,10 @@
+import { MatButtonModule } from '@angular/material/button';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -11,14 +18,13 @@ import { BlogAdminCreateComponent } from './blog-admin-create/blog-admin-create.
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ListTagsBlogComponent } from './list-tags-blog/list-tags-blog.component';
-import { SharedModule } from 'src/app/components/shared/shared.module';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    SharedModule,
     ReactiveFormsModule,
     BlogAdminRoutingModule,
     MatTooltipModule,
@@ -27,6 +33,14 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     MatPaginatorModule,
     MatCardModule,
     TranslateModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatDialogModule,
+    MatChipsModule,
+    MatSelectModule,
+    MatInputModule,
+    FlexLayoutModule,
+    MatButtonModule,
   ],
   declarations: [BlogAdminCreateComponent, BlogAdminEditComponent, BlogAdminListComponent, ListTagsBlogComponent],
 })

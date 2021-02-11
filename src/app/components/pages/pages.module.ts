@@ -1,3 +1,8 @@
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatChipsModule } from '@angular/material/chips';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -5,7 +10,6 @@ import { ContactComponent } from './contact/contact.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
 import { CompareComponent } from './compare/compare.component';
 import { PagesRoutingModule } from './pages-routing.module';
-import { SharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BlogModule } from '../blog/blog.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -24,7 +28,6 @@ import { NgpMaterialRatingModule } from './../shared/ngp-material-rating/ngp-mat
     FormsModule,
     ReactiveFormsModule,
     PagesRoutingModule,
-    SharedModule,
     BlogModule,
     FlexLayoutModule,
     TranslateModule,
@@ -33,6 +36,11 @@ import { NgpMaterialRatingModule } from './../shared/ngp-material-rating/ngp-mat
     MatTooltipModule,
     MatAutocompleteModule,
     NgpMaterialRatingModule,
+    MatChipsModule,
+    MatListModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatDialogModule,
   ],
   declarations: [ContactComponent, WishlistComponent, CompareComponent],
 })

@@ -1,3 +1,5 @@
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDialogModule } from '@angular/material/dialog';
 import { CancelOrderComponent } from './cancel-order/cancel-order.component';
 import { NgpImageLazyLoadModule } from 'ngp-lazy-image';
 import { MatCardModule } from '@angular/material/card';
@@ -22,7 +24,6 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MyOrdersRoutingModule } from './my-orders-routing.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
-import { SharedModule } from '../shared/shared.module';
 import { NgpMaterialRatingModule } from 'ngp-material-rating';
 
 ///////////////////////////////////////////////////////////////////
@@ -45,10 +46,11 @@ import { NgpMaterialRatingModule } from 'ngp-material-rating';
     MatRippleModule,
     MatTabsModule,
     TranslateModule,
-    SharedModule,
     MatCardModule,
     NgpMaterialRatingModule,
     NgpImageLazyLoadModule,
+    MatDialogModule,
+    MatFormFieldModule,
   ],
   declarations: [MyOrdersComponent, CancelOrderComponent],
   entryComponents: [CancelOrderComponent],

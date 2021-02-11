@@ -25,7 +25,6 @@ import { CommonModule } from '@angular/common';
 import { MainRoutingModule } from './main-routing.module';
 import { MainComponent } from './main.component';
 import { ShopModule } from '../shop/shop.module';
-// import { SharedModule } from '../shared/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatListModule } from '@angular/material/list';
@@ -48,7 +47,6 @@ import { PreviousRouteService } from '../backend/services/previous-route/previou
     CommonModule,
     MainRoutingModule,
     ShopModule,
-    // SharedModule,
     TranslateModule,
     FormsModule,
     ReactiveFormsModule,
