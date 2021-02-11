@@ -1,3 +1,5 @@
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatCardModule } from '@angular/material/card';
 import { NgpImageLazyLoadModule } from 'ngp-lazy-image';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
@@ -10,6 +12,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { BlogDetailsComponent } from './blog-details/blog-details.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   imports: [
@@ -21,6 +24,8 @@ import { BlogDetailsComponent } from './blog-details/blog-details.component';
     MatTooltipModule,
     MatProgressSpinnerModule,
     NgpImageLazyLoadModule,
+    MatCardModule,
+    FlexLayoutModule,
   ],
   declarations: [BlogColumnComponent, BlogDetailsComponent],
 })

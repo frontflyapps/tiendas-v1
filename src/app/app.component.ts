@@ -3,9 +3,7 @@ import { LoggedInUserService } from './core/services/loggedInUser/logged-in-user
 import { Component } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { TranslateService } from '@ngx-translate/core';
-import { NavigationService } from './core/services/navigation/navigation.service';
-import { Router, NavigationEnd, NavigationError, NavigationCancel, ActivatedRoute } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { CssOptions } from 'guachos-cu-down-list';
 import { Subject } from 'rxjs';
@@ -58,23 +56,6 @@ export class AppComponent {
   }
 
   ngOnInit() {
-    /** spinner starts on init */
-    // try {
-    //   console.log(
-    //     '/*/*/*/*/*/*/*',
-    //     this.encryptDecryptService.decrypt('U2FsdGVkX1/D/8ch+37Gv1Me0kE3SIYNUxAtoG6hmz3TnHoGfrMOyhROXmnJ+txb'),
-    //   );
-    // } catch (e) {
-    //   console.log('AppComponent -> ngOnInit -> e', e);
-    // }
-
-    this.spinner.show();
-
-    setTimeout(() => {
-      /** spinner ends after 5 seconds */
-      this.spinner.hide();
-    }, 1000);
-
     ////////////////////LOGICA PARA ESCUCHAR LOS EVENTOS DE SUBIDA //////////////////////////
     console.log('Entre aqui en el init de app');
     this.uploadFileStartSubject = this.uploadFilesService.$uploadFileStart;
