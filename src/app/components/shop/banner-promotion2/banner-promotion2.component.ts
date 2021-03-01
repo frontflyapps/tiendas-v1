@@ -1,6 +1,5 @@
 import { environment } from './../../../../environments/environment';
 import { Component, OnInit, Input } from '@angular/core';
-import { SettingService } from '../../backend/services/settings/settings.service';
 
 @Component({
   selector: 'app-banner-promotion2',

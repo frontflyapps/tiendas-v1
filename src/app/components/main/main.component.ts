@@ -23,10 +23,10 @@ import { SocketIoService } from '../../core/services/socket-io/socket-io.service
 import { NotificationsService } from './notification/notifications.service';
 import { MyOrdersService } from '../my-orders/service/my-orders.service';
 import { ShowToastrService } from 'src/app/core/services/show-toastr/show-toastr.service';
-import { CategoriesService } from '../backend/services/categories/catagories.service';
 import { UtilsService } from 'src/app/core/services/utils/utils.service';
 import { SidebarMenuService } from './sidebar/sidebar-menu.service';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { CategoriesService } from '../../core/services/categories/catagories.service';
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -208,17 +208,7 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   onGotoBackend() {
-    let linkNav: any = document.getElementById('linkNavBack');
-    if (this.loggedInUserService.hasRolUser('Admin', 'Owner')) {
-      linkNav.href = '/backend/product';
-      linkNav.click();
-      // return this.router.navigate(['/backend/product']);
-    }
-    if (this.loggedInUserService.hasRolUser('Messenger')) {
-      linkNav.href = '/backend/transaction';
-      linkNav.click();
-      // return this.router.navigate(['/backend/transaction']);
-    }
+    document.location.href = environment.adminService;
   }
 
   onLogout(): void {
@@ -228,9 +218,9 @@ export class MainComponent implements OnInit, OnDestroy {
       .subscribe(
         () => {
           this.loggedInUserService.setLoggedInUser(null);
+          this.loggedInUserService.removeCookies();
           localStorage.clear();
           this.loggedInUserService.$loggedInUserUpdated.next(null);
-          this.cookieService.delete('account', '/', '.cubaeduca.com');
           const message = this.translate.instant('User successfully unlogged');
           this.showSnackbBar.showSucces(message, 5000);
           this.router.navigate(['']);
@@ -238,13 +228,13 @@ export class MainComponent implements OnInit, OnDestroy {
         },
         (err) => {
           const message = this.translate.instant('User sing out unsuccessfully');
-          this.cookieService.delete('account', '/', '.cubaeduca.com');
           this.showSnackbBar.showError(message, 8000);
+          /*this.loggedInUserService.removeCookies();
           this.loggedInUserService.setLoggedInUser(null);
           this.socketIoService.disconnect();
           localStorage.clear();
           this.loggedInUserService.$loggedInUserUpdated.next(null);
-          this.router.navigate(['']);
+          this.router.navigate(['']);*/
         },
       );
   }
@@ -289,7 +279,7 @@ export class MainComponent implements OnInit, OnDestroy {
       .listen('business-accepted')
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((data) => {
-        let token = this.loggedInUserService.getTokenOfUser();
+        let token = this.loggedInUserService.getTokenCookie();
         this.authService.getProfile(token).subscribe((user) => {
           console.log('AppComponent -> initSystem -> user', user);
           const userData = { profile: user.data, Authorization: token };

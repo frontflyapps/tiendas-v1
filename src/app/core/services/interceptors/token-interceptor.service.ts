@@ -10,7 +10,7 @@ export class TokenInterceptorService implements HttpInterceptor {
   language: any = null;
 
   constructor(private loggedInUserService: LoggedInUserService) {
-    this.token = loggedInUserService.getTokenOfUser();
+    this.token = loggedInUserService.getTokenCookie();
     this.currency = JSON.parse(localStorage.getItem('currency'))
       ? JSON.parse(localStorage.getItem('currency')).name
       : null;
@@ -20,7 +20,7 @@ export class TokenInterceptorService implements HttpInterceptor {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    this.token = this.loggedInUserService.getTokenOfUser();
+    this.token = this.loggedInUserService.getTokenCookie();
     this.currency = JSON.parse(localStorage.getItem('currency'))
       ? JSON.parse(localStorage.getItem('currency')).name
       : null;

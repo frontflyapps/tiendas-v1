@@ -636,7 +636,7 @@
   "version": "versión",
   "Blog": "Blog",
   "Cart": "Carro",
-  "My Orders": "Mis ordenes",
+  "My Orders": "Mis órdenes",
   "Verificar en el carrito": "Verificar en el carrito",
   "Artículos": "Artículos",
   "Please add product": "Por favor agregue producto",
@@ -1091,5 +1091,8 @@
   "Derechos de autor": "Derechos de autor",
   "pending": "pendiente",
   "enabled": "habilitado",
-  "disabled": "deshabilitado"
+  "disabled": "deshabilitado",
+  "Wrong user": "Usuario incorrecto.",
+  "Validate account": "Validar cuenta",
+  "Activate account": "Activar cuenta"
 }

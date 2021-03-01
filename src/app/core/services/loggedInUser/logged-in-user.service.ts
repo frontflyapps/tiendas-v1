@@ -4,6 +4,8 @@ import { Injectable } from '@angular/core';
 import { IUser } from '../../classes/user.class';
 import { Subject } from 'rxjs';
 import { NavigationService } from '../navigation/navigation.service';
+import { EncryptDecryptService } from '../encrypt-decrypt.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root',
@@ -19,19 +21,23 @@ export class LoggedInUserService {
     { name: 'English', image: 'assets/images/flags/en.svg', lang: 'en' },
   ];
 
-  constructor(private navigationService: NavigationService, private httpClient: HttpClient) {
+  constructor(
+    private cookieService: CookieService,
+    private navigationService: NavigationService,
+    private encryptDecryptService: EncryptDecryptService,
+  ) {
     this.listNavItems = [...this.navigationService.getNavItems()];
 
     (window as any).global = window;
     // @ts-ignore
     window.Buffer = window.Buffer || require('buffer').Buffer;
-    this.loggedInUser = this._getDataFromStorage('user');
+    this.loggedInUser = this.getLoggedInUser();
   }
 
   public setNewProfile(profile) {
-    let dataValue = this._getDataFromStorage('user') ? this._getDataFromStorage('user') : {};
-    dataValue.profile = Object.assign(dataValue.profile, profile);
-    this._setDataToStorage('user', JSON.stringify(dataValue));
+    let dataValue = this.getLoggedInUser() ? this.getLoggedInUser() : {};
+    dataValue = Object.assign(dataValue, profile);
+    this.updateUserProfile(dataValue);
     this.loggedInUser = dataValue;
     this.$loggedInUserUpdated.next(this.loggedInUser);
   }
@@ -41,13 +47,12 @@ export class LoggedInUserService {
   }
 
   public getLoggedInUser(): any {
-    let data = this._getDataFromStorage('user');
-    data = data ? data.profile : null;
-    return data;
-  }
-  public getTokenOfUser(): any {
-    let data = this._getDataFromStorage('user');
-    data = data ? data.Authorization : null;
+    let user = localStorage.getItem('user');
+    if (!user) {
+      return null;
+    }
+    user = this.encryptDecryptService.decrypt(user);
+    const data = JSON.parse(user);
     return data;
   }
 
@@ -55,18 +60,24 @@ export class LoggedInUserService {
     this.loggedInUser = user;
   }
 
+  public getTokenCookie(): string {
+    return this.encryptDecryptService.decrypt(this.cookieService.get('account'));
+  }
+
+  public saveAccountCookie(token) {
+    const hashedPass = this.encryptDecryptService.encrypt(token);
+    this.cookieService.set('account', hashedPass, null, '/', environment.mainDomain);
+  }
+
   public updateUserProfile(user) {
-    let dataString: string;
-    let dataUser = this._getDataFromStorage('user');
-    const tempdata = dataUser ? dataUser : {};
-    if (user) {
-      this.loggedInUser = Object.assign(tempdata, user);
-    } else {
-      this.loggedInUser = null;
-    }
-    dataString = JSON.stringify(this.loggedInUser);
-    this._setDataToStorage('user', dataString);
-    this.$loggedInUserUpdated.next(this.loggedInUser);
+    let dataString = JSON.stringify(user);
+    dataString = this.encryptDecryptService.encrypt(dataString);
+    localStorage.setItem('user', dataString);
+    this.$loggedInUserUpdated.next(dataString);
+  }
+
+  removeCookies() {
+    this.cookieService.delete('account', '/', environment.mainDomain);
   }
 
   public hasRolUser(...args: any[]) {
@@ -82,11 +93,13 @@ export class LoggedInUserService {
       return false;
     }
     let flag = false;
-    for (let role of user?.roles) {
-      let findIndex = roleTypes.findIndex((i) => i == role.type);
-      if (findIndex > -1) {
-        flag = true;
-        return flag;
+    if (user?.roles) {
+      for (let role of user?.roles) {
+        let findIndex = roleTypes.findIndex((i) => i == role.type);
+        if (findIndex > -1) {
+          flag = true;
+          return flag;
+        }
       }
     }
     return flag;
@@ -98,12 +111,14 @@ export class LoggedInUserService {
     if (!user) {
       return false;
     }
-    user.roles.map((item) => {
-      if (item.type === 'Admin') {
-        flag = true;
-        return true;
-      }
-    });
+    if (user?.roles) {
+      user.roles.map((item) => {
+        if (item.type === 'Admin') {
+          flag = true;
+          return true;
+        }
+      });
+    }
     return flag;
   }
   public isOwnerUser() {
@@ -113,12 +128,14 @@ export class LoggedInUserService {
       flag = true;
       return false;
     }
-    user.roles.map((item) => {
-      if (item.type === 'Owner') {
-        flag = true;
-        return true;
-      }
-    });
+    if (user?.roles) {
+      user.roles.map((item) => {
+        if (item.type === 'Owner') {
+          flag = true;
+          return true;
+        }
+      });
+    }
     return flag;
   }
 
@@ -135,12 +152,14 @@ export class LoggedInUserService {
       flag = true;
       return false;
     }
-    user.roles.map((item) => {
-      if (item.type === 'Client') {
-        flag = true;
-        return true;
-      }
-    });
+    if (user?.roles) {
+      user.roles.map((item) => {
+        if (item.type === 'Client') {
+          flag = true;
+          return true;
+        }
+      });
+    }
     return flag;
   }
 
@@ -150,12 +169,14 @@ export class LoggedInUserService {
     if (!user) {
       return false;
     }
-    user.roles.map((item) => {
-      if (item.type === 'Messenger') {
-        flag = true;
-        return true;
-      }
-    });
+    if (user?.roles) {
+      user.roles.map((item) => {
+        if (item.type === 'Messenger') {
+          flag = true;
+          return true;
+        }
+      });
+    }
     return flag;
   }
 
@@ -195,12 +216,3 @@ export class LoggedInUserService {
     localStorage.setItem(key, base64data);
   }
 }
-
-// res.status(httpStatus).json({
-//   errors: [
-//     {
-//       field: 'example ',
-//       message: 'example messaje',
-//     },
-//   ],
-// });

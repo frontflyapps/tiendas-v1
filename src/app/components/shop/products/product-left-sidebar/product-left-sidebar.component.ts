@@ -9,9 +9,9 @@ import { takeUntil } from 'rxjs/operators';
 import { UtilsService } from './../../../../core/services/utils/utils.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { CategoriesService } from 'src/app/components/backend/services/categories/catagories.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DialogFiltersMComponent } from '../dialog-filters-m/dialog-filters-m.component';
+import { CategoriesService } from 'src/app/core/services/categories/catagories.service';
 
 @Component({
   selector: 'app-product-left-sidebar',

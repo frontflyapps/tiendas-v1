@@ -5,10 +5,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { CurrencyService } from '../../../../core/services/currency/currency.service';
 import { Subject } from 'rxjs';
 import { ProductService } from '../../../shared/services/product.service';
-import { CategoriesService } from '../../../backend/services/categories/catagories.service';
 import { LoggedInUserService } from '../../../../core/services/loggedInUser/logged-in-user.service';
 import { takeUntil } from 'rxjs/operators';
 import { MatPaginator } from '@angular/material/paginator';
+import { CategoriesService } from 'src/app/core/services/categories/catagories.service';
 export interface DialogData {
   animal: string;
   name: string;

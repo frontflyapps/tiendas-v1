@@ -1,6 +1,5 @@
 import { ShowToastrService } from './../../../../core/services/show-toastr/show-toastr.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { BiconService } from './../../../backend/services/bicon/bicon.service';
 import { CartService } from './../../../shared/services/cart.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Product } from './../../../../modals/product.model';
@@ -17,6 +16,7 @@ import { takeUntil } from 'rxjs/operators';
 import { DomSanitizer } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
 import { Cart } from 'src/app/modals/cart-item';
+import { BiconService } from 'src/app/core/services/bicon/bicon.service';
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',

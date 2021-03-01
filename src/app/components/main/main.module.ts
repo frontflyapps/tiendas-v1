@@ -30,7 +30,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatListModule } from '@angular/material/list';
 import { MatInputModule } from '@angular/material/input';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
-import { PreviousRouteService } from '../backend/services/previous-route/previous-route.service';
+import { PreviousRouteService } from '../../core/services/previous-route/previous-route.service';
 
 @NgModule({
   declarations: [

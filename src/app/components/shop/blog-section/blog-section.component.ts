@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { IPagination } from './../../../core/classes/pagination.class';
-import { BlogService } from '../../backend/services/blog/blog.service';
 import { UtilsService } from './../../../core/services/utils/utils.service';
 import { environment } from './../../../../environments/environment';
 import { Subject } from 'rxjs';
 import { LoggedInUserService } from './../../../core/services/loggedInUser/logged-in-user.service';
 import { takeUntil } from 'rxjs/operators';
+import { BlogService } from '../../../core/services/blog/blog.service';
 
 @Component({
   selector: 'app-blog-section',

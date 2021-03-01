@@ -79,21 +79,31 @@ export class AppComponent {
   ////////////////////////////
 
   initSystem() {
-    if (!this.localDatabaseUsers) {
-      const isCookieaAccount = this.cookieService.check('account');
-      console.log('AppComponent -> initSystem -> token', isCookieaAccount);
-      const userLogged = this.loggedInUserService.getLoggedInUser();
-      if (isCookieaAccount && !userLogged) {
+    const isCookieAccount = this.cookieService.check('account');
+    console.log('AppComponent -> initSystem -> token', isCookieAccount);
+    const userLogged = this.loggedInUserService.getLoggedInUser();
+    if (isCookieAccount) {
+      if (!userLogged) {
         console.log('***** TOMANDO LA COOKIE DEL DOMINIO Y OBTENIENDO USER *********');
         const token = this.encryptDecryptService.decrypt(this.cookieService.get('account'));
         console.log('AppComponent -> initSystem -> token', token);
-        this.authService.getProfile(token).subscribe((user) => {
-          console.log('AppComponent -> initSystem -> user', user);
-          const userData = { profile: user.data, Authorization: token };
-          this.loggedInUserService.updateUserProfile(userData);
-          this.cookieService.delete('account', '/', '.cubaeduca.com');
-        });
+        this.authService.getProfile(token).subscribe(
+          (user) => {
+            console.log('AppComponent -> initSystem -> user', user);
+            this.loggedInUserService.updateUserProfile(user.data);
+          },
+          (error) => {
+            this.loggedInUserService.setLoggedInUser(null);
+            this.loggedInUserService.removeCookies();
+            localStorage.clear();
+            this.loggedInUserService.$loggedInUserUpdated.next(null);
+          },
+        );
       }
+    } else {
+      this.loggedInUserService.setLoggedInUser(null);
+      localStorage.clear();
+      this.loggedInUserService.$loggedInUserUpdated.next(null);
     }
   }
 }

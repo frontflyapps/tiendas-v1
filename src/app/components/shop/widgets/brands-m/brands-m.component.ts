@@ -1,16 +1,16 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { CategoriesService } from '../../../backend/services/categories/catagories.service';
 import { UtilsService } from '../../../../core/services/utils/utils.service';
 import { LoggedInUserService } from '../../../../core/services/loggedInUser/logged-in-user.service';
 import { SelectionModel } from '@angular/cdk/collections';
 import { environment } from '../../../../../environments/environment';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { CategoriesService } from 'src/app/core/services/categories/catagories.service';
 
 @Component({
   selector: 'app-brands-m',
   templateUrl: './brands-m.component.html',
-  styleUrls: ['./brands-m.component.scss']
+  styleUrls: ['./brands-m.component.scss'],
 })
 export class BrandsMComponent implements OnInit, OnDestroy {
   imageUrl = environment.imageUrl;

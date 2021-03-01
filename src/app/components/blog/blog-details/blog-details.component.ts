@@ -1,12 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BlogService } from '../../backend/services/blog/blog.service';
 import { environment } from 'src/environments/environment';
 import { UtilsService } from 'src/app/core/services/utils/utils.service';
 import { LoggedInUserService } from 'src/app/core/services/loggedInUser/logged-in-user.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DomSanitizer } from '@angular/platform-browser';
+import { BlogService } from '../../../core/services/blog/blog.service';
 
 @Component({
   selector: 'app-blog-details',

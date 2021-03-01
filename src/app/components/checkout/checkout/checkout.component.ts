@@ -1,4 +1,3 @@
-import { TaxesShippingService } from './../../backend/services/taxes-shipping/taxes-shipping.service';
 import { DialogNoCartSelectedComponent } from './../no-cart-selected/no-cart-selected.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -14,13 +13,14 @@ import { takeUntil } from 'rxjs/operators';
 import { CurrencyService } from './../../../core/services/currency/currency.service';
 import { IPagination } from './../../../core/classes/pagination.class';
 import { UtilsService } from './../../../core/services/utils/utils.service';
-import { RegionsService } from '../../backend/services/regions/regions.service';
 import { ProductService } from '../../shared/services/product.service';
 import { CartService } from '../../shared/services/cart.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { SocketIoService } from 'src/app/core/services/socket-io/socket-io.service';
 import { DialogEnzonaConfirmToPayComponent } from '../dialog-enzona-confirm-to-pay/dialog-enzona-confirm-to-pay.component';
 import { ConfirmationDialogFrontComponent } from '../../shared/confirmation-dialog-front/confirmation-dialog-front.component';
+import { RegionsService } from '../../../core/services/regions/regions.service';
+import { TaxesShippingService } from '../../../core/services/taxes-shipping/taxes-shipping.service';
 
 @Component({
   selector: 'app-checkout',

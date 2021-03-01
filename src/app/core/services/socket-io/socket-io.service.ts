@@ -16,13 +16,13 @@ export class SocketIoService {
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
 
     if (this.loggedInUser) {
-      this._initSocket(this.loggedInUserService.getTokenOfUser());
+      this._initSocket(this.loggedInUserService.getTokenCookie());
     }
 
     this.loggedInUserService.$loggedInUserUpdated.subscribe(() => {
       this.loggedInUser = this.loggedInUserService.getLoggedInUser();
       console.log('El socket se connecta');
-      this._initSocket(this.loggedInUserService.getTokenOfUser());
+      this._initSocket(this.loggedInUserService.getTokenCookie());
     });
   }
 

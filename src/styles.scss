@@ -1,24 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
 
 /* You can add global styles to this file, and also import other style files */
-@import "../node_modules/swiper/css/swiper.min.css";
+@import '../node_modules/swiper/css/swiper.min.css';
 // @import "../node_modules/@angular/material/prebuilt-themes/indigo-pink.css";
-@import "./assets/scss/helpers/helpers";
-@import "./assets/scss/mixins/breakpoints";
+@import './assets/scss/helpers/helpers';
+@import './assets/scss/mixins/breakpoints';
 // Color 1 scss
-@import "./assets/scss/color1";
-@import "~ngx-toastr/toastr";
+@import './assets/scss/color1';
+@import '~ngx-toastr/toastr';
 @import './assets/scss/css/ckeditor-style.css';
 
 // ---------------Material Themin -----------------///
-@import "~@angular/material/theming";
+@import '~@angular/material/theming';
 @include mat-core();
-$custom-typography: mat-typography-config($font-family: "Poppins"
+$custom-typography: mat-typography-config(
+  $font-family: 'Poppins',
 );
 // Override the typography in the core CSS.
 @include mat-core($custom-typography);
 
-$my-primary-color: (50: #e9eff9,
+$my-primary-color: (
+  50: #e9eff9,
   100: #ccd7e4,
   200: #afbccd,
   300: #90a1b6,
@@ -27,8 +29,9 @@ $my-primary-color: (50: #e9eff9,
   600: #556b82,
   700: #45576c,
   800: #364556,
-  900: #24303E,
-  contrast: (50: $black-87-opacity,
+  900: #24303e,
+  contrast: (
+    50: $black-87-opacity,
     100: $black-87-opacity,
     200: $black-87-opacity,
     300: $black-87-opacity,
@@ -45,17 +48,19 @@ $my-primary-color: (50: #e9eff9,
   ),
 );
 
-$my-accent-color: (50: #fef3e4,
+$my-accent-color: (
+  50: #fef3e4,
   100: #fde1bc,
   200: #fdce91,
   300: #fcba69,
   400: #fbab50,
   500: #fb9d3d,
-  600:#f6923a,
+  600: #f6923a,
   700: #ef8336,
   800: #e87532,
   900: #de5d2b,
-  contrast: (50: $black-87-opacity,
+  contrast: (
+    50: $black-87-opacity,
     100: $black-87-opacity,
     200: $black-87-opacity,
     300: $black-87-opacity,
@@ -216,7 +221,7 @@ $red-600: mat-color(mat-palette($mat-red), 600);
 }
 
 .bg-light {
-  background-color: #f5f5f5 !important
+  background-color: #f5f5f5 !important;
 }
 
 .uppercase {
@@ -249,7 +254,6 @@ blockquote {
     margin-inline-start: 8px !important;
     margin-inline-end: 8px !important;
   }
-
 }
 
 .loader {
@@ -259,7 +263,7 @@ blockquote {
   -webkit-animation: 2s ease-in-out infinite progress;
   animation: 2s ease-in-out infinite progress;
   background: 0 0/200px 100% no-repeat #eff1f6;
-  background-image: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, .6), rgba(255, 255, 255, 0));
+  background-image: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0));
   border-radius: 4px;
   width: 100%;
   height: 20px;
@@ -269,21 +273,21 @@ blockquote {
 
 @-webkit-keyframes progress {
   0% {
-    background-position: -200px 0
+    background-position: -200px 0;
   }
 
   100% {
-    background-position: calc(200px + 100%) 0
+    background-position: calc(200px + 100%) 0;
   }
 }
 
 @keyframes progress {
   0% {
-    background-position: -200px 0
+    background-position: -200px 0;
   }
 
   100% {
-    background-position: calc(200px + 100%) 0
+    background-position: calc(200px + 100%) 0;
   }
 }
 
@@ -358,7 +362,7 @@ blockquote {
 
 .link-nav-a {
   text-decoration: none;
-  color: rgba(0, 0, 0, .9) !important;
+  color: rgba(0, 0, 0, 0.9) !important;
 
   &:hover {
     text-decoration: underline;
@@ -383,20 +387,18 @@ h4 {
   width: 100% !important;
   box-sizing: border-box !important;
 
-
-  @media (max-width:1024px) {
+  @media (max-width: 1024px) {
     height: 265px;
   }
 
-  @media (max-width:799px) {
+  @media (max-width: 799px) {
     height: 150px;
     padding: 0px !important;
   }
 
-  @media (max-width:500px) {
+  @media (max-width: 500px) {
     height: 150px;
   }
-
 }
 
 .mat-tab-body-content {
@@ -436,5 +438,8 @@ h4 {
   background-color: #fafafa;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
+}
 
+.mat-form-field {
+  font-size: 12.5px !important;
 }

@@ -6,10 +6,10 @@ import { environment } from './../../../../environments/environment';
 import { Subject } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { LoggedInUserService } from './../../../core/services/loggedInUser/logged-in-user.service';
-import { BlogService } from '../../backend/services/blog/blog.service';
 import { takeUntil } from 'rxjs/operators';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ActivatedRoute } from '@angular/router';
+import { BlogService } from '../../../core/services/blog/blog.service';
 
 @Component({
   selector: 'app-blog-column',

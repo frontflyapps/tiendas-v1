@@ -1,4 +1,3 @@
-import { CategoriesService } from './../../../backend/services/categories/catagories.service';
 import { Component, OnInit, Output, EventEmitter, OnDestroy, Input } from '@angular/core';
 import { UtilsService } from './../../../../core/services/utils/utils.service';
 import { LoggedInUserService } from './../../../../core/services/loggedInUser/logged-in-user.service';
@@ -6,6 +5,7 @@ import { takeUntil } from 'rxjs/operators';
 import { environment } from './../../../../../environments/environment';
 import { Subject } from 'rxjs';
 import { SelectionModel } from '@angular/cdk/collections';
+import { CategoriesService } from 'src/app/core/services/categories/catagories.service';
 
 @Component({
   selector: 'app-brands',

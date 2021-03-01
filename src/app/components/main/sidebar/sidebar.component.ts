@@ -6,7 +6,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 // import { NgProgress } from 'ngx-progressbar';
 import { SidebarMenuService } from './sidebar-menu.service';
-import { PreviousRouteService } from '../../backend/services/previous-route/previous-route.service';
+import { PreviousRouteService } from '../../../core/services/previous-route/previous-route.service';
 
 @Component({
   selector: 'app-sidebar',

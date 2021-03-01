@@ -1,16 +1,16 @@
 import { Component, EventEmitter, Input, OnInit, Output, OnDestroy } from '@angular/core';
-import { CategoriesService } from '../../../backend/services/categories/catagories.service';
 import { UtilsService } from '../../../../core/services/utils/utils.service';
 import { LoggedInUserService } from '../../../../core/services/loggedInUser/logged-in-user.service';
 import { SelectionModel } from '@angular/cdk/collections';
 import { environment } from '../../../../../environments/environment';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { CategoriesService } from 'src/app/core/services/categories/catagories.service';
 
 @Component({
   selector: 'app-categories-m',
   templateUrl: './categories-m.component.html',
-  styleUrls: ['./categories-m.component.scss']
+  styleUrls: ['./categories-m.component.scss'],
 })
 export class CategoriesMComponent implements OnInit, OnDestroy {
   imageUrl = environment.imageUrl;
@@ -104,5 +104,4 @@ export class CategoriesMComponent implements OnInit, OnDestroy {
     const arrayCategoryIds = [...this.selection.selected];
     this.categoryChanged.emit(arrayCategoryIds);
   }
-
 }

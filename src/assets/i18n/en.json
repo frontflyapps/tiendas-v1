@@ -1091,5 +1091,8 @@
   "Derechos de autor": "Copy Rigth",
   "pending": "pending",
   "enabled": "enabled",
-  "disabled": "disabled"
+  "disabled": "disabled",
+  "Wrong user": "Wrong user",
+  "Validate account": "Validate account",
+  "Activate account": "Activate account"
 }

@@ -31,6 +31,7 @@ export class MyAccountComponent implements OnInit {
   formPass: FormGroup;
   fromPassRegister: FormGroup;
   pinForm: FormGroup;
+  activateForm: FormGroup;
   registrationForm: FormGroup;
   insertEmailPassForm: FormGroup;
   changeToNewPassForm: FormGroup;
@@ -38,6 +39,7 @@ export class MyAccountComponent implements OnInit {
   showLoginForm = true;
   showRegistrationForm = false;
   showPinForm = false;
+  showActivateForm = false;
   showResetPassForm = false;
   showNewPassForm = false;
   queryParams = null;
@@ -81,6 +83,7 @@ export class MyAccountComponent implements OnInit {
     this.createValidationForm();
     this.createChangePassForm();
     this.createNewPassForm();
+    this.createActivateForm();
   }
 
   showPass() {
@@ -168,6 +171,13 @@ export class MyAccountComponent implements OnInit {
     });
   }
 
+  createActivateForm() {
+    this.activateForm = this.fb.group({
+      email: [null, [Validators.required, Validators.email]],
+      pin: [null, [Validators.required]],
+    });
+  }
+
   createNewPassForm() {
     this.formPass = this.fb.group(
       {
@@ -187,16 +197,24 @@ export class MyAccountComponent implements OnInit {
     this.inLoading = true;
     this.spinner.show();
     this.authService.login(username, password).subscribe(
-      (data: any) => {
-        this.loggedInUserService.updateUserProfile(data.data);
-        this.toastr.showInfo(
-          this.translate.instant('You have successfully logged into our system'),
-          this.translate.instant('User login'),
-          10000,
-        );
-        this.inLoading = false;
-        this.router.navigate([this.routeToNavigate]);
-        this.spinner.hide();
+      (value: any) => {
+        const data = value.data;
+        if (data) {
+          this.loggedInUserService.saveAccountCookie(data.Authorization);
+          this.loggedInUserService.updateUserProfile(data.profile);
+
+          this.toastr.showInfo(
+            this.translate.instant('You have successfully logged into our system'),
+            this.translate.instant('User login'),
+            10000,
+          );
+          this.inLoading = false;
+          this.router.navigate([this.routeToNavigate]);
+          this.spinner.hide();
+        } else {
+          this.toastr.showError(this.translate.instant('Wrong user'));
+          this.inLoading = false;
+        }
       },
       (error) => {
         this.inLoading = false;
@@ -242,6 +260,16 @@ export class MyAccountComponent implements OnInit {
     this.showPinForm = false;
     this.showResetPassForm = false;
     this.showNewPassForm = false;
+    this.showActivateForm = false;
+  }
+
+  onShowActivate() {
+    this.showRegistrationForm = false;
+    this.showLoginForm = false;
+    this.showPinForm = false;
+    this.showResetPassForm = false;
+    this.showNewPassForm = false;
+    this.showActivateForm = true;
   }
 
   onChangePass() {
@@ -250,6 +278,7 @@ export class MyAccountComponent implements OnInit {
     this.showPinForm = false;
     this.showResetPassForm = true;
     this.showNewPassForm = false;
+    this.showActivateForm = false;
   }
 
   onSetValidationPin() {
@@ -257,6 +286,7 @@ export class MyAccountComponent implements OnInit {
     this.showRegistrationForm = false;
     this.showLoginForm = false;
     this.showResetPassForm = false;
+    this.showActivateForm = false;
   }
 
   onSignUp() {
@@ -302,6 +332,11 @@ export class MyAccountComponent implements OnInit {
     return false;
   }
 
+  onValidateAccount() {
+    const data = this.activateForm.value;
+    return this.validatePing(data);
+  }
+
   onCheckPin(email?) {
     const data = this.pinForm.value;
     if (email) {
@@ -309,7 +344,10 @@ export class MyAccountComponent implements OnInit {
     } else {
       data.email = this.registrationForm.value.email;
     }
+    return this.validatePing(data);
+  }
 
+  private validatePing(data) {
     this.inLoading = true;
     this.spinner.show();
     this.authService.validatePing(data).subscribe(
@@ -318,9 +356,11 @@ export class MyAccountComponent implements OnInit {
         this.showRegistrationForm = false;
         this.showPinForm = false;
         this.showResetPassForm = false;
+        this.showActivateForm = false;
         this.showLoginForm = true;
         this.spinner.hide();
-        this.loggedInUserService.updateUserProfile(result.data);
+        this.loggedInUserService.saveAccountCookie(result.data.Authorization);
+        this.loggedInUserService.updateUserProfile(result.data.profile);
         this.toastr.showInfo(
           this.translate.instant('You have successfully logged into our system'),
           this.translate.instant('User login'),
@@ -347,24 +387,35 @@ export class MyAccountComponent implements OnInit {
       this.showPinForm = false;
       this.showNewPassForm = false;
       this.showResetPassForm = false;
+      this.showActivateForm = false;
     } else if (this.showPinForm) {
       this.showLoginForm = false;
       this.showRegistrationForm = true;
       this.showPinForm = false;
       this.showResetPassForm = false;
       this.showNewPassForm = false;
+      this.showActivateForm = false;
     } else if (this.showResetPassForm) {
       this.showLoginForm = true;
       this.showRegistrationForm = false;
       this.showPinForm = false;
       this.showResetPassForm = false;
       this.showNewPassForm = false;
+      this.showActivateForm = false;
     } else if (this.showNewPassForm) {
       this.showLoginForm = true;
       this.showRegistrationForm = false;
       this.showPinForm = false;
       this.showResetPassForm = false;
       this.showNewPassForm = false;
+      this.showActivateForm = false;
+    } else if (this.showActivateForm) {
+      this.showLoginForm = true;
+      this.showRegistrationForm = false;
+      this.showPinForm = false;
+      this.showResetPassForm = false;
+      this.showNewPassForm = false;
+      this.showActivateForm = false;
     }
   }
 

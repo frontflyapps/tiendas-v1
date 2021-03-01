@@ -1,4 +1,4 @@
-import { PreviousRouteService } from './../../backend/services/previous-route/previous-route.service';
+import { PreviousRouteService } from '../../../core/services/previous-route/previous-route.service';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { environment } from './../../../../environments/environment';

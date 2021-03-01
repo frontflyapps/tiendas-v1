@@ -4,10 +4,10 @@ import { LoggedInUserService } from 'src/app/core/services/loggedInUser/logged-i
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { ImagePickerConf } from 'ngp-image-picker';
-import { RegionsService } from '../../backend/services/regions/regions.service';
-import { BussinessService } from '../../backend/services/business/business.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
+import { RegionsService } from '../../../core/services/regions/regions.service';
+import { BussinessService } from '../../../core/services/business/business.service';
 
 @Component({
   selector: 'app-become-a-seller',

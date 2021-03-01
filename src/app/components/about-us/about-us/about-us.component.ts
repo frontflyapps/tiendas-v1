@@ -4,9 +4,9 @@ import { UtilsService } from './../../../core/services/utils/utils.service';
 import { TranslateService } from '@ngx-translate/core';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ContactUsService } from '../../backend/services/contact-us/contact-us.service';
+import { ContactUsService } from '../../../core/services/contact-us/contact-us.service';
 
 @Component({
   selector: 'app-about-us',

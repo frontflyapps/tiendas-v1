@@ -1,7 +1,6 @@
 import { BecomeASellerGuard } from './components/become-a-seller/become-a-seller.guard';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { BackendGuard } from './components/backend/backend.guard';
 
 const appRoutes: Routes = [
   {
@@ -14,12 +13,6 @@ const appRoutes: Routes = [
       import('./components/become-a-seller/become-a-seller.module').then((m) => m.BecomeASellerModule),
     canActivate: [BecomeASellerGuard],
     canLoad: [BecomeASellerGuard],
-  },
-  {
-    path: 'backend',
-    loadChildren: () => import('./components/backend/backend.module').then((m) => m.BackendModule),
-    canActivate: [BackendGuard],
-    canLoad: [BackendGuard],
   },
   {
     path: 'error',
@@ -35,10 +28,10 @@ const appRoutes: Routes = [
   declarations: [],
   imports: [
     RouterModule.forRoot(appRoutes, {
-    onSameUrlNavigation: 'reload',
-    scrollPositionRestoration: 'enabled',
-    relativeLinkResolution: 'legacy'
-}),
+      onSameUrlNavigation: 'reload',
+      scrollPositionRestoration: 'enabled',
+      relativeLinkResolution: 'legacy',
+    }),
   ],
   exports: [RouterModule],
 })
