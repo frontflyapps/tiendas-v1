@@ -1,4 +1,4 @@
-@import "../../../../assets/scss/theme/variables";
+@import '../../../../assets/scss/theme/variables';
 
 .router-link-active {
   text-decoration: underline !important;
@@ -11,12 +11,12 @@
 
 .footer-one {
   min-height: 80px;
-  background-color: $theme-main;
+  background-color: $theme-main-400;
 }
 
 .page-title {
   font-weight: 500 !important;
-  color: #FFF;
+  color: #fff;
   font-size: 17px !important;
 }
 

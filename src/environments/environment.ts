@@ -13,7 +13,7 @@ export const environment = {
   version: '1.2.0',
   url: 'http://localhost:4400',
   urlAboutUs: 'http://localhost:4400',
-  address: 'Sin Cola SA / Quinta Avenida,18204, Playa, La Habana.',
+  address: 'Mercedes / Quinta Avenida,18204, Playa, La Habana.',
   localDatabaseUsers: true,
   uploadDigitalProduct: false,
   uploadServicesProduct: false,

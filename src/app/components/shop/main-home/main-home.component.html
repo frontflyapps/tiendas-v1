@@ -2,8 +2,7 @@
 <div class="main-slider container" *ngIf="showStatic">
   <div class="swiper-container h-100">
     <div class="swiper-wrapper h-100">
-      <div class="swiper-slide h-100 loader">
-      </div>
+      <div class="swiper-slide h-100 loader"></div>
     </div>
   </div>
 </div>
@@ -12,22 +11,31 @@
   <div fxHide.xs class="info-bar-four-wrapper">
     <div class="container">
       <div fxLayout="row wrap" class="info-bar-four" fxLayoutAlign="center center">
-        <div *ngFor="let item of allBicons;let i=index" class="card-wrap" fxFlex="100" fxFlex.gt-md="25" fxFlex.gt-xs="50">
-          <mat-card class="light-block " [ngClass]="{'no-bd': i===allBicons.length-1 }" fxLayout="row" fxLayoutAlign="start center">
+        <div
+          *ngFor="let item of allBicons; let i = index"
+          class="card-wrap"
+          fxFlex="100"
+          fxFlex.gt-md="25"
+          fxFlex.gt-xs="50"
+        >
+          <mat-card
+            class="light-block"
+            [ngClass]="{ 'no-bd': i === allBicons.length - 1 }"
+            fxLayout="row"
+            fxLayoutAlign="start center"
+          >
             <div fxFlex="20">
-              <mat-icon class="mat-icon-xlg  m-0">{{item.icon}}</mat-icon>
+              <mat-icon class="mat-icon-xlg m-0">{{ item.icon }}</mat-icon>
             </div>
             <div class="content" fxFlex="80">
-              <p class="uppercase">{{utilsService.parserLanguage(item.title,language)}}</p>
-              <span class="text-muted m-0 mt-2">{{utilsService.parserLanguage(item.subTitle,language)}}</span>
+              <p class="uppercase">{{ utilsService.parserLanguage(item.title, language) }}</p>
+              <span class="text-muted m-0 mt-2">{{ utilsService.parserLanguage(item.subTitle, language) }}</span>
             </div>
           </mat-card>
         </div>
-
       </div>
     </div>
   </div>
-
 
   <!-- <div *ngIf="banners.length" class="banners-four">
     <div class="container">
@@ -35,23 +43,19 @@
     </div>
   </div> -->
   <ng-container *ngIf="countProducts == 0">
-
-    <h3 class="mat-title py-4" style="text-align: center;">
-      No hay ningun producto disponible
-    </h3>
-
+    <h3 class="mat-title py-4" style="text-align: center">No hay ningun producto disponible</h3>
   </ng-container>
 
   <!-- ---------------------- Popular Items --------------------------- -->
-  <section *ngIf="popularProducts.length ">
+  <section *ngIf="popularProducts.length">
     <div class="container">
       <div class="products sec-padding">
         <div class="products-four">
-          <h3>{{'Ofertas populares'|translate}}</h3>
+          <h3>{{ 'Ofertas populares' | translate }}</h3>
           <app-product-carousel *ngIf="!loadingPopular" [products]="popularProducts" [btnColor]="'accent'">
           </app-product-carousel>
           <div *ngIf="loadingPopular" class="my-3">
-            <app-skeleton-loading-cards *ngIf="loadingPopular" [setConfiguration]="{'xs':1,'sm':2,'md':3,'lg':4}">
+            <app-skeleton-loading-cards *ngIf="loadingPopular" [setConfiguration]="{ xs: 1, sm: 2, md: 3, lg: 4 }">
             </app-skeleton-loading-cards>
           </div>
         </div>
@@ -63,7 +67,7 @@
     <div class="products sec-padding">
       <div class="products-four">
         <div class="my-3">
-          <app-skeleton-loading-cards *ngIf="loadingPopular" [setConfiguration]="{'xs':1,'sm':2,'md':3,'lg':4}">
+          <app-skeleton-loading-cards *ngIf="loadingPopular" [setConfiguration]="{ xs: 1, sm: 2, md: 3, lg: 4 }">
           </app-skeleton-loading-cards>
         </div>
       </div>
@@ -84,14 +88,13 @@
     <div class="container">
       <div class="products sec-padding">
         <div class="products-four">
-          <h3>{{'Productos destacados'|translate}}</h3>
+          <h3>{{ 'Productos destacados' | translate }}</h3>
           <app-product-carousel *ngIf="!loadingFeatured" [products]="featuredProducts" [btnColor]="'accent'">
           </app-product-carousel>
           <div *ngIf="loadingFeatured" class="my-3">
-            <app-skeleton-loading-cards *ngIf="loadingFeatured" [setConfiguration]="{'xs':1,'sm':2,'md':3,'lg':4}">
+            <app-skeleton-loading-cards *ngIf="loadingFeatured" [setConfiguration]="{ xs: 1, sm: 2, md: 3, lg: 4 }">
             </app-skeleton-loading-cards>
           </div>
-
         </div>
       </div>
     </div>
@@ -102,19 +105,17 @@
     <div class="container">
       <div class="products sec-padding pt-0">
         <div class="products-four">
-          <h3>{{'Productos más vendidos'|translate}}</h3>
+          <h3>{{ 'Productos más vendidos' | translate }}</h3>
           <app-product-carousel *ngIf="!loadingBestSellers" [products]="bestSellersProducts" [btnColor]="'accent'">
           </app-product-carousel>
           <div *ngIf="loadingBestSellers" class="my-3">
-            <app-skeleton-loading-cards *ngIf="loadingBestSellers" [setConfiguration]="{'xs':1,'sm':2,'md':3,'lg':4}">
+            <app-skeleton-loading-cards *ngIf="loadingBestSellers" [setConfiguration]="{ xs: 1, sm: 2, md: 3, lg: 4 }">
             </app-skeleton-loading-cards>
           </div>
-
         </div>
       </div>
     </div>
   </section>
-
 
   <!-- ---------------------- Big promo2 --------------------------- -->
   <section>
@@ -124,7 +125,6 @@
   </section>
 
   <!-- ------------------------------------------------------------ -->
-
 
   <!-- ---------------------- Product Vertical --------------------------- -->
   <section *ngIf="featuredProducts.length && this.allProducts.length">
@@ -141,8 +141,8 @@
       <div class="container">
         <div class="products sec-padding bg">
           <div class="products-four">
-            <h3 class="uppercase">{{'Latest From Our Blog'|translate}}</h3>
-            <section style="padding-top: 26px;">
+            <h3 class="uppercase">{{ 'Latest From Our Blog' | translate }}</h3>
+            <section style="padding-top: 26px">
               <app-blog-section></app-blog-section>
             </section>
           </div>
@@ -150,5 +150,4 @@
       </div>
     </div>
   </section>
-
 </div>
