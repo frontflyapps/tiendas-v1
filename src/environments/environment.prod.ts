@@ -11,6 +11,6 @@ export const environment = {
   localDatabaseUsers: true,
   uploadDigitalProduct: false,
   uploadServicesProduct: false,
-  adminService: 'http://curricular1.cinesoft.cu:4300/',
-  mainDomain: '.cinesoft.cu',
+  adminService: 'http://admin.sinkoola.com/',
+  mainDomain: '.sinkoola.com',
 };
