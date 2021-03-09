@@ -1,30 +1,41 @@
-<ng-container *ngIf="products.length > 2 || (isHandset && products.length > 1 )">
+<ng-container *ngIf="products.length > 2 || (isHandset && products.length > 1)">
   <div class="product-item swiper-container" [swiper]="config">
     <div class="swiper-wrapper h-100">
       <div *ngFor="let product of products" class="swiper-slide">
         <mat-card class="cardProduct" fxLayout="column">
           <div class="product-img">
             <a class="product-link" [routerLink]="['/product', product.id]">
-              <img class="imageProduct" ngp-lazy ngp-threshold="0.1" *ngIf="product.Image && product.Image.length "
-                onerror="this.onerror=null;this.src='assets/images/noImage.jpg';" [src]="imageUrl + product.Image[0].image"
-                [alt]="(product.name[language]?product.name[language]:product.name['es'])">
-              <img class="imageProduct" ngp-lazy ngp-threshold="0.1" *ngIf="!(product.Image && product.Image.length)"
-                src="../../../../assets/images/noImage.jpg" alt="No Image">
+              <img
+                class="imageProduct"
+                ngp-lazy
+                ngp-threshold="0.1"
+                *ngIf="product.Images && product.Images.length"
+                onerror="this.onerror=null;this.src='assets/images/noImage.jpg';"
+                [src]="imageUrl + product.Images[0].image"
+                [alt]="product.name[language] ? product.name[language] : product.name['es']"
+              />
+              <img
+                class="imageProduct"
+                ngp-lazy
+                ngp-threshold="0.1"
+                *ngIf="!(product.Images && product.Images.length)"
+                src="../../../../assets/images/noImage.jpg"
+                alt="No Image"
+              />
             </a>
           </div>
           <div class="product-info-wrapper py-2 px-3">
             <a class="product-link" [routerLink]="['/product', product.id]">
-              <span class="mat-caption" style="font-size: .8rem !important;">
-                {{utilsService.parserLanguage(product.Category.name,language)}}
+              <span class="mat-caption" style="font-size: 0.8rem !important">
+                {{ utilsService.parserLanguage(product.Category.name, language) }}
               </span>
 
               <div class="moduleTitle line-clampTitle">
-                <h4 class="mat-body-2">{{utilsService.parserLanguage(product.name,language)}}</h4>
+                <h4 class="mat-body-2">{{ utilsService.parserLanguage(product.name, language) }}</h4>
               </div>
 
               <div class="mt-2">
-                <ngp-rating-material [value]="product.rating" [config]="{'readOnly':true}">
-                </ngp-rating-material>
+                <ngp-rating-material [value]="product.rating" [config]="{ readOnly: true }"> </ngp-rating-material>
               </div>
               <!-- <p class="module line-clamp mt-1 mb-2">
                 {{utilsService.parserLanguage(product.shortDescription,language)}}</p> -->
@@ -32,24 +43,31 @@
 
             <div class="price">
               <ng-container *ngIf="product.offerValue">
-                <p class="deletePrice  m-0"><del>{{currencyService.getPriceLabel(product)}}</del></p>
-                <p class="mat-body-2  m-0" matTooltip="{{'Existe una oferta asociada a este producto'|translate}}">
-                  {{currencyService.getOfferLabel(product)}}
+                <p class="deletePrice m-0">
+                  <del>{{ currencyService.getPriceLabel(product) }}</del>
+                </p>
+                <p class="mat-body-2 m-0" matTooltip="{{ 'Existe una oferta asociada a este producto' | translate }}">
+                  {{ currencyService.getOfferLabel(product) }}
                 </p>
               </ng-container>
               <ng-container *ngIf="!product.offerValue">
-                <p class="mat-body-2  m-0">
-                  {{currencyService.getPriceLabel(product)}}
+                <p class="mat-body-2 m-0">
+                  {{ currencyService.getPriceLabel(product) }}
                 </p>
-                <p class="mat-body-2  m-0" style="font-size: 15px;">
-                  {{'Desde '|translate}}
-                  {{product.minSale}}
-                  {{' unidad'|translate}}
+                <p class="mat-body-2 m-0" style="font-size: 15px">
+                  {{ 'Desde ' | translate }}
+                  {{ product.minSale }}
+                  {{ ' unidad' | translate }}
                 </p>
               </ng-container>
             </div>
-            <button matTooltip="{{'Añadir al carrito'|translate}}" class="btnAddCart" mat-mini-fab (click)="addToCart(product)"
-              style="z-index: 10;">
+            <button
+              matTooltip="{{ 'Añadir al carrito' | translate }}"
+              class="btnAddCart"
+              mat-mini-fab
+              (click)="addToCart(product)"
+              style="z-index: 10"
+            >
               <mat-icon>shopping_cart</mat-icon>
             </button>
 
@@ -64,11 +82,9 @@
                 <mat-icon>compare_arrows</mat-icon>
               </a>
             </div>
-
-
           </div>
           <div *ngIf="product.type != 'physical'" class="productType">
-            {{product.type|translate}}
+            {{ product.type | translate }}
           </div>
         </mat-card>
       </div>
@@ -82,7 +98,6 @@
   </div>
 </ng-container>
 
-
 <ng-container *ngIf="products.length == 2 && !isHandset">
   <div fxLayout="column" class="product-item swiper-container" fxLayoutAlign="start stretch" fxLayoutGap="gappx">
     <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="gappx">
@@ -90,25 +105,38 @@
         <mat-card class="cardProduct2" fxLayout="column">
           <div class="product-img">
             <a class="product-link" [routerLink]="['/product', product.id]">
-              <img class="imageProduct" ngp-lazy ngp-threshold="0.1" *ngIf="product.Image && product.Image.length "
-                onerror="this.onerror=null;this.src='assets/images/noImage.jpg';" [src]="imageUrl + product.Image[0].image" alt="">
+              <img
+                class="imageProduct"
+                ngp-lazy
+                ngp-threshold="0.1"
+                *ngIf="product.Images && product.Images.length"
+                onerror="this.onerror=null;this.src='assets/images/noImage.jpg';"
+                [src]="imageUrl + product.Images[0].image"
+                alt=""
+              />
 
-              <img class="imageProduct" ngp-lazy ngp-threshold="0.1" *ngIf="!(product.Image && product.Image.length)"
-                src="../../../../assets/images/noImage.jpg" alt="">
+              <img
+                class="imageProduct"
+                ngp-lazy
+                ngp-threshold="0.1"
+                *ngIf="!(product.Images && product.Images.length)"
+                src="../../../../assets/images/noImage.jpg"
+                alt=""
+              />
             </a>
           </div>
           <div class="product-info-wrapper py-2 px-3">
             <a class="product-link" [routerLink]="['/product', product.id]">
-              <span class="mat-caption" style="font-size: .8rem !important;">
-                {{utilsService.parserLanguage(product.Category.name,language)}}
+              <span class="mat-caption" style="font-size: 0.8rem !important">
+                {{ utilsService.parserLanguage(product.Category.name, language) }}
               </span>
 
               <div class="moduleTitle line-clampTitle">
-                <h4 class="mat-body-2">{{utilsService.parserLanguage(product.name,language)}}</h4>
+                <h4 class="mat-body-2">{{ utilsService.parserLanguage(product.name, language) }}</h4>
               </div>
 
               <div class="mt-2">
-                <ngp-rating-material [value]="product.rating" [config]="{'readOnly':true}"></ngp-rating-material>
+                <ngp-rating-material [value]="product.rating" [config]="{ readOnly: true }"></ngp-rating-material>
               </div>
               <!-- <p class="module line-clamp mt-1 mb-2">
                 {{utilsService.parserLanguage(product.shortDescription,language)}}</p> -->
@@ -116,24 +144,31 @@
 
             <div class="price">
               <ng-container *ngIf="product.offerValue">
-                <p class="deletePrice  m-0"><del>{{currencyService.getPriceLabel(product)}}</del></p>
-                <p class="mat-body-2  m-0" matTooltip="{{'Existe una oferta asociada a este producto'|translate}}">
-                  {{currencyService.getOfferLabel(product)}}
+                <p class="deletePrice m-0">
+                  <del>{{ currencyService.getPriceLabel(product) }}</del>
+                </p>
+                <p class="mat-body-2 m-0" matTooltip="{{ 'Existe una oferta asociada a este producto' | translate }}">
+                  {{ currencyService.getOfferLabel(product) }}
                 </p>
               </ng-container>
               <ng-container *ngIf="!product.offerValue">
-                <p class="mat-body-2  m-0">
-                  {{currencyService.getPriceLabel(product)}}
+                <p class="mat-body-2 m-0">
+                  {{ currencyService.getPriceLabel(product) }}
                 </p>
-                <p class="mat-body-2  m-0" style="font-size: 15px;">
-                  {{'Desde '|translate}}
-                  {{product.minSale}}
-                  {{' unidad'|translate}}
+                <p class="mat-body-2 m-0" style="font-size: 15px">
+                  {{ 'Desde ' | translate }}
+                  {{ product.minSale }}
+                  {{ ' unidad' | translate }}
                 </p>
               </ng-container>
             </div>
-            <button matTooltip="{{'Añadir al carrito'|translate}}" class="btnAddCart" mat-mini-fab (click)="addToCart(product)"
-              style="z-index: 10;">
+            <button
+              matTooltip="{{ 'Añadir al carrito' | translate }}"
+              class="btnAddCart"
+              mat-mini-fab
+              (click)="addToCart(product)"
+              style="z-index: 10"
+            >
               <mat-icon>shopping_cart</mat-icon>
             </button>
 
@@ -148,19 +183,14 @@
                 <mat-icon>compare_arrows</mat-icon>
               </a>
             </div>
-
-
           </div>
           <div *ngIf="product.type != 'physical'" class="productType">
-            {{product.type|translate}}
+            {{ product.type | translate }}
           </div>
         </mat-card>
       </div>
-
     </div>
-
   </div>
-
 </ng-container>
 
 <ng-container *ngIf="products.length == 1">
@@ -169,25 +199,38 @@
       <mat-card *ngFor="let product of products" class="cardProduct3" fxLayout="column">
         <div class="product-img">
           <a class="product-link" [routerLink]="['/product', product.id]">
-            <img class="imageProduct" ngp-lazy ngp-threshold="0.1" *ngIf="product.Image && product.Image.length "
-              onerror="this.onerror=null;this.src='assets/images/noImage.jpg';" [src]="imageUrl + product.Image[0].image" alt="">
+            <img
+              class="imageProduct"
+              ngp-lazy
+              ngp-threshold="0.1"
+              *ngIf="product.Images && product.Images.length"
+              onerror="this.onerror=null;this.src='assets/images/noImage.jpg';"
+              [src]="imageUrl + product.Images[0].image"
+              alt=""
+            />
 
-            <img class="imageProduct" ngp-lazy ngp-threshold="0.1" *ngIf="!(product.Image && product.Image.length)"
-              src="../../../../assets/images/noImage.jpg" alt="">
+            <img
+              class="imageProduct"
+              ngp-lazy
+              ngp-threshold="0.1"
+              *ngIf="!(product.Images && product.Images.length)"
+              src="../../../../assets/images/noImage.jpg"
+              alt=""
+            />
           </a>
         </div>
         <div class="product-info-wrapper py-2 px-3">
           <a class="product-link" [routerLink]="['/product', product.id]">
-            <span class="mat-caption" style="font-size: .8rem !important;">
-              {{utilsService.parserLanguage(product.Category.name,language)}}
+            <span class="mat-caption" style="font-size: 0.8rem !important">
+              {{ utilsService.parserLanguage(product.Category.name, language) }}
             </span>
 
             <div class="moduleTitle line-clampTitle">
-              <h4 class="mat-body-2">{{utilsService.parserLanguage(product.name,language)}}</h4>
+              <h4 class="mat-body-2">{{ utilsService.parserLanguage(product.name, language) }}</h4>
             </div>
 
             <div class="mt-2">
-              <ngp-rating-material [value]="product.rating" [config]="{'readOnly':true}"></ngp-rating-material>
+              <ngp-rating-material [value]="product.rating" [config]="{ readOnly: true }"></ngp-rating-material>
             </div>
             <!-- <p class="module line-clamp mt-1 mb-2">
               {{utilsService.parserLanguage(product.shortDescription,language)}}</p> -->
@@ -195,24 +238,31 @@
 
           <div class="price">
             <ng-container *ngIf="product.offerValue">
-              <p class="deletePrice m-0"><del>{{currencyService.getPriceLabel(product)}}</del></p>
-              <p class="mat-body-2 m-0" matTooltip="{{'Existe una oferta asociada a este producto'|translate}}">
-                {{currencyService.getOfferLabel(product)}}
+              <p class="deletePrice m-0">
+                <del>{{ currencyService.getPriceLabel(product) }}</del>
+              </p>
+              <p class="mat-body-2 m-0" matTooltip="{{ 'Existe una oferta asociada a este producto' | translate }}">
+                {{ currencyService.getOfferLabel(product) }}
               </p>
             </ng-container>
             <ng-container *ngIf="!product.offerValue">
               <p class="mat-body-2 m-0">
-                {{currencyService.getPriceLabel(product)}}
+                {{ currencyService.getPriceLabel(product) }}
               </p>
-              <p class="mat-body-2 m-0" style="font-size: 15px;">
-                {{'Desde '|translate}}
-                {{product.minSale}}
-                {{' unidad'|translate}}
+              <p class="mat-body-2 m-0" style="font-size: 15px">
+                {{ 'Desde ' | translate }}
+                {{ product.minSale }}
+                {{ ' unidad' | translate }}
               </p>
             </ng-container>
           </div>
-          <button matTooltip="{{'Añadir al carrito'|translate}}" class="btnAddCart" mat-mini-fab (click)="addToCart(product)"
-            style="z-index: 10;">
+          <button
+            matTooltip="{{ 'Añadir al carrito' | translate }}"
+            class="btnAddCart"
+            mat-mini-fab
+            (click)="addToCart(product)"
+            style="z-index: 10"
+          >
             <mat-icon>shopping_cart</mat-icon>
           </button>
 
@@ -227,17 +277,11 @@
               <mat-icon>compare_arrows</mat-icon>
             </a>
           </div>
-
-
         </div>
         <div *ngIf="product.type != 'physical'" class="productType">
-          {{product.type|translate}}
+          {{ product.type | translate }}
         </div>
       </mat-card>
-
-
     </div>
-
   </div>
-
 </ng-container>

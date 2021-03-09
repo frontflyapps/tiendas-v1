@@ -31,6 +31,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatInputModule } from '@angular/material/input';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { PreviousRouteService } from '../../core/services/previous-route/previous-route.service';
+import { PipesModule } from 'src/app/core/pipes/pipes.module';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { PreviousRouteService } from '../../core/services/previous-route/previou
     MatMenuModule,
     FooterTwoModule,
     MatFormFieldModule,
+    PipesModule,
     MatInputModule,
     MatDatepickerModule,
     MatNativeDateModule,

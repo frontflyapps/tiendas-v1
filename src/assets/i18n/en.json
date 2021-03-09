@@ -1094,5 +1094,8 @@
   "disabled": "disabled",
   "Wrong user": "Wrong user",
   "Validate account": "Validate account",
-  "Activate account": "Activate account"
+  "Activate account": "Activate account",
+  "Identity card": "Identity card",
+  "Shipping required": "Shipping required",
+  "*These products cannot be shipped specify a location": "*These products cannot be shipped specify a location"
 }

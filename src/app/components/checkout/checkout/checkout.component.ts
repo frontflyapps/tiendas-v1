@@ -21,6 +21,7 @@ import { DialogEnzonaConfirmToPayComponent } from '../dialog-enzona-confirm-to-p
 import { ConfirmationDialogFrontComponent } from '../../shared/confirmation-dialog-front/confirmation-dialog-front.component';
 import { RegionsService } from '../../../core/services/regions/regions.service';
 import { TaxesShippingService } from '../../../core/services/taxes-shipping/taxes-shipping.service';
+import { CoinEnum } from '../../../core/classes/coin.enum';
 
 @Component({
   selector: 'app-checkout',
@@ -81,6 +82,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   finalPrice = 1080;
   shippingData: any[] = [];
   canBeDelivery = true;
+  currencyCard: string;
+  showShipping: boolean = true;
 
   public compareById(val1, val2) {
     return val1 && val2 && val1 == val2;
@@ -141,8 +144,22 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     }
 
     this.form.valueChanges.subscribe((data) => {
-      this.onRecalculateShipping();
-      // console.log(this.form);
+      this.showShipping = data.isShipping;
+      if (this.showShipping) {
+        this.onRecalculateShipping();
+      } else {
+        this.shippingData = [];
+        this.canBeDelivery = false;
+      }
+    });
+
+    this.form.controls['isShipping'].valueChanges.subscribe((value) => {
+      if (value) {
+        this.form.controls['ShippingId'].setValidators(Validators.required);
+      } else {
+        this.form.controls['ShippingId'].setValidators(null);
+      }
+      this.form.controls['ShippingId'].updateValueAndValidity();
     });
   }
 
@@ -169,6 +186,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         console.log('CheckoutComponent -> getCartData -> data', data);
         this.cart = data.Cart;
         this.buyProducts = data.CartItems || [];
+        this.currencyCard =
+          this.buyProducts && this.buyProducts.length > 0 ? this.buyProducts[0].Product.market : CoinEnum.CUP;
         this.onRecalculateShipping();
         setTimeout(() => {
           this.loadingCart = false;
@@ -225,15 +244,13 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       ProvinceId: [this._getProvince(this.loggedInUser, this.selectedDataPay), [Validators.required]],
       MunicipalityId: [this._getMunicipality(this.loggedInUser, this.selectedDataPay), [Validators.required]],
       isForCuban: [this.selectedDataPay ? this.selectedDataPay.isForCuban : true, [Validators.required]],
-      zipCode: [
-        this.selectedDataPay && this.selectedDataPay.zipCode ? this.selectedDataPay.zipCode : null,
-        Validators.required,
-      ],
+      dni: [this.selectedDataPay && this.selectedDataPay.dni ? this.selectedDataPay.dni : null, Validators.required],
       email: [this._getEmail(this.loggedInUser, this.selectedDataPay), [Validators.required, Validators.email]],
       phone: [this._getPhone(this.loggedInUser, this.selectedDataPay), []],
       info: [this.selectedDataPay && this.selectedDataPay.info ? this.selectedDataPay.info : null, []],
       paymentType: [this.selectedDataPay ? this.selectedDataPay.paymentType : 'transfermovil', [Validators.required]],
       ShippingId: [null, [Validators.required]],
+      isShipping: [true, []],
     });
     this.onlyCubanPeople = this.form.get('isForCuban').value;
     if (this.onlyCubanPeople) {
@@ -254,6 +271,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     // console.log('CheckoutComponent -> onSelectProvince -> this.allMunicipalities', this.allMunicipalities);
     this.municipalities = this.allMunicipalities.filter((item) => item.ProvinceId == provinceId);
     this.form.get('MunicipalityId').setValue(null);
+    this.form.get('ShippingId').setValue(null);
   }
 
   onRecalculateShipping() {

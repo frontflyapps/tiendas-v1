@@ -2,13 +2,14 @@ import { CartItem, Cart } from './../../../modals/cart-item';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from './../../../../environments/environment';
 import { Injectable, OnDestroy } from '@angular/core';
-import { Product } from './../../../modals/product.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { takeUntil } from 'rxjs/operators';
 import { Observable, Subscriber, Subject } from 'rxjs';
 import { LoggedInUserService } from './../../../core/services/loggedInUser/logged-in-user.service';
 import { UtilsService } from './../../../core/services/utils/utils.service';
 import { TranslateService } from '@ngx-translate/core';
+import { ShowSnackbarService } from '../../../core/services/show-snackbar/show-snackbar.service';
+import { ShowToastrService } from 'src/app/core/services/show-toastr/show-toastr.service';
 
 @Injectable({
   providedIn: 'root',
@@ -30,6 +31,8 @@ export class CartService implements OnDestroy {
     private httpClient: HttpClient,
     private utilsService: UtilsService,
     private translate: TranslateService,
+    private showToastr: ShowToastrService,
+    private showSnackbar: ShowSnackbarService,
   ) {
     // Get product from Localstorage
     this.carts = this.loggedInUserService._getDataFromStorage('cartItem') || [];
@@ -131,7 +134,15 @@ export class CartService implements OnDestroy {
       } else {
         this.carts = this.loggedInUserService._getDataFromStorage('cartItem') || [];
         let cart = this._getSimpleCart(product.BusinessId);
-        cart = cart ? cart : this._newSimpleCart(product.BusinessId, product.Business);
+        cart = cart ? cart : this._newSimpleCart(product, product.Business);
+        if (!this.isSameMarket(cart, product)) {
+          this.showToastr.showError(
+            'Usted solo puede tener en su carrito elementos con la misma moneda a pagar',
+            'Error',
+            5000,
+          );
+          return;
+        }
 
         const shoppingCartItems = cart.CartItems;
         const index = shoppingCartItems.findIndex((item) => item.ProductId == product.id);
@@ -146,7 +157,12 @@ export class CartService implements OnDestroy {
             cart.totalPrice = Math.max(0, cart.totalPrice);
           }
         } else {
-          shoppingCartItems.push({ ProductId: product.id, Product: product, quantity: quantity });
+          shoppingCartItems.push({
+            ProductId: product.id,
+            Product: product,
+            quantity: quantity,
+            StockId: product?.Stock?.id,
+          });
         }
         cart.CartItems = [...shoppingCartItems];
         cart.totalPrice = this._calcTotalPrice(cart);
@@ -168,7 +184,7 @@ export class CartService implements OnDestroy {
         // if (this._isInCart(product) && quantity != -1) {
         //   quantity = 1;
         // }
-        return this.postCart({ ProductId: product.id, quantity: quantity })
+        return this.postCart({ ProductId: product.id, quantity: quantity, StockId: product?.Stock?.id })
           .then((data) => {
             // console.log('CartService -> addToCart -> cart', data);
             this.carts = data.data;
@@ -190,7 +206,15 @@ export class CartService implements OnDestroy {
       } else {
         this.carts = this.loggedInUserService._getDataFromStorage('cartItem') || [];
         let cart = this._getSimpleCart(product.BusinessId);
-        cart = cart ? cart : this._newSimpleCart(product.BusinessId, product.Business);
+        cart = cart ? cart : this._newSimpleCart(product, product.Business);
+        if (!this.isSameMarket(cart, product)) {
+          this.showToastr.showError(
+            'Usted solo puede tener en su carrito elementos con la misma moneda a pagar',
+            'Error',
+            5000,
+          );
+          return;
+        }
 
         const shoppingCartItems = cart.CartItems;
         const index = shoppingCartItems.findIndex((item) => item.ProductId == product.id);
@@ -207,7 +231,12 @@ export class CartService implements OnDestroy {
             cart.totalPrice = Math.max(0, cart.totalPrice);
           }
         } else {
-          shoppingCartItems.push({ ProductId: product.id, Product: product, quantity: quantity });
+          shoppingCartItems.push({
+            ProductId: product.id,
+            Product: product,
+            quantity: quantity,
+            StockId: product?.Stock?.id,
+          });
         }
         cart.CartItems = [...shoppingCartItems];
         cart.totalPrice = this._calcTotalPrice(cart);
@@ -235,12 +264,20 @@ export class CartService implements OnDestroy {
     return simpleCart;
   }
 
-  _newSimpleCart(BusinessId, Business?): Cart {
+  /**
+   *
+   * @param data
+   * {Business, Product, Stock}
+   * @returns
+   */
+
+  _newSimpleCart(Product?, Business?, Stock?): Cart {
     return {
       CartItems: [],
       totalPrice: 0.0,
-      BusinessId: BusinessId,
+      BusinessId: Product.BusinessId,
       Business: Business,
+      market: Product.market,
     };
   }
 
@@ -284,7 +321,7 @@ export class CartService implements OnDestroy {
         return;
       }
       if (this.loggedInUser) {
-        this.postCart({ ProductId: product.id, quantity: quantity })
+        return this.postCart({ ProductId: product.id, quantity: quantity, StockId: product?.Stock?.id })
           .then((data) => {
             this.carts = data.data;
             message =
@@ -300,7 +337,16 @@ export class CartService implements OnDestroy {
       } else {
         this.carts = this.loggedInUserService._getDataFromStorage('cartItem') || [];
         let cart = this._getSimpleCart(product.BusinessId);
-        cart = cart ? cart : this._newSimpleCart(product.BusinessId, product.Business);
+        cart = cart ? cart : this._newSimpleCart(product, product.Business);
+        if (!this.isSameMarket(cart, product)) {
+          this.showToastr.showError(
+            'Usted solo puede tener en su carrito elementos con la misma moneda a pagar',
+            'Error',
+            5000,
+          );
+          return;
+        }
+
         const shoppingCartItems = cart.CartItems;
         const index = shoppingCartItems.findIndex((item) => item.ProductId == product.id);
         if (index > -1) {
@@ -315,7 +361,12 @@ export class CartService implements OnDestroy {
             cart.totalPrice = Math.max(0, cart.totalPrice);
           }
         } else {
-          shoppingCartItems.push({ ProductId: product.id, Product: product, quantity: quantity });
+          shoppingCartItems.push({
+            ProductId: product.id,
+            Product: product,
+            quantity: quantity,
+            StockId: product?.Stock?.id,
+          });
         }
         cart.CartItems = [...shoppingCartItems];
         cart.totalPrice = this._calcTotalPrice(cart);
@@ -336,7 +387,7 @@ export class CartService implements OnDestroy {
         if (this._isInCart(product) && quantity != -1) {
           quantity = 1;
         }
-        this.postCart({ ProductId: product.id, quantity: quantity })
+        return this.postCart({ ProductId: product.id, quantity: quantity, StockId: product?.Stock?.id })
           .then((data) => {
             this.carts = data.data;
             message =
@@ -356,8 +407,16 @@ export class CartService implements OnDestroy {
       } else {
         this.carts = this.loggedInUserService._getDataFromStorage('cartItem') || [];
         let cart = this._getSimpleCart(product.BusinessId);
-        cart = cart ? cart : this._newSimpleCart(product.BusinessId, product.Business);
+        cart = cart ? cart : this._newSimpleCart(product, product.Business);
         // console.log('CartService -> addToCartQuickly -> cart', cart);
+        if (!this.isSameMarket(cart, product)) {
+          this.showToastr.showError(
+            'Usted solo puede tener en su carrito elementos con la misma moneda a pagar',
+            'Error',
+            5000,
+          );
+          return;
+        }
         const shoppingCartItems = cart.CartItems;
         const index = shoppingCartItems.findIndex((item) => item.ProductId == product.id);
         if (index > -1) {
@@ -372,7 +431,12 @@ export class CartService implements OnDestroy {
             cart.totalPrice = Math.max(0, cart.totalPrice);
           }
         } else {
-          shoppingCartItems.push({ ProductId: product.id, Product: product, quantity: quantity });
+          shoppingCartItems.push({
+            ProductId: product.id,
+            Product: product,
+            quantity: quantity,
+            StockId: product?.Stock?.id,
+          });
         }
         cart.CartItems = [...shoppingCartItems];
         cart.totalPrice = this._calcTotalPrice(cart);
@@ -389,6 +453,13 @@ export class CartService implements OnDestroy {
         this.$cartItemsUpdated.next(this.carts);
       }
     }
+  }
+
+  private isSameMarket(cart, product) {
+    if (cart.market === product.market) {
+      return true;
+    }
+    return false;
   }
 
   //CheckCart
@@ -418,7 +489,8 @@ export class CartService implements OnDestroy {
   // Calculate Product stock Counts
   public calculateStockCounts(product: CartItem, quantity): CartItem | Boolean {
     const qty = product.quantity + quantity;
-    const stock = product.Product.stock;
+    const stock = product.Product?.Stock?.quantity || 0;
+    console.log(product);
     if (stock < qty) {
       // this.toastrService.error('You can not add more items than available. In stock '+ stock +' items.');
       this.snackBar.open('You can not choose more items than available. In stock ' + stock + ' items. ', '×', {
@@ -432,47 +504,57 @@ export class CartService implements OnDestroy {
   }
   // Calculate Product stock Counts
   public isCanStock(product: any, quantity): CartItem | Boolean {
-    this.carts = this.loggedInUserService._getDataFromStorage('cartItem') || [];
-    let cart = this._getSimpleCart(product.BusinessId);
-    cart = cart ? cart : this._newSimpleCart(product.BusinessId, product.Business);
+    try {
+      if (this.loggedInUser) {
+        //validacion no se ha desde el front sino desde el api
+        return true;
+      }
+      this.carts = this.loggedInUserService._getDataFromStorage('cartItem') || [];
+      let cart = this._getSimpleCart(product.BusinessId);
+      cart = cart ? cart : this._newSimpleCart(product, product.Business);
 
-    const shoppingCart = cart.CartItems;
-    const searchResult = shoppingCart.find((item) => item.ProductId == product.id);
-    let qty;
-    if (searchResult == undefined) {
-      qty = quantity;
-    } else {
-      qty = searchResult.quantity + quantity;
-    }
-    const stock = product.Physical.stock;
-    const limit = product.maxSale;
-    if (stock < qty) {
-      const message =
-        this.translate.instant('You can not choose more items than available. In stock ') +
-        stock +
-        this.translate.instant(' items.');
-      this.snackBar.open(message, '×', {
-        panelClass: 'error',
-        verticalPosition: 'top',
-        duration: 5000,
-      });
+      const shoppingCart = cart.CartItems;
+      const searchResult = shoppingCart.find((item) => item.ProductId == product.id);
+      let qty;
+      if (searchResult == undefined) {
+        qty = quantity;
+      } else {
+        qty = searchResult.quantity + quantity;
+      }
+      const stock = product.Stock.quantity;
+      const limit = product.maxSale;
+      if (stock < qty) {
+        const message =
+          this.translate.instant('You can not choose more items than available. In stock ') +
+          stock +
+          this.translate.instant(' items.');
+        this.snackBar.open(message, '×', {
+          panelClass: 'error',
+          verticalPosition: 'top',
+          duration: 5000,
+        });
+        return false;
+      }
+
+      if (limit < qty) {
+        const message =
+          this.translate.instant('You can not choose more items than its max limit. Max limit is ') +
+          limit +
+          ' ' +
+          this.translate.instant(' items.');
+        // this.toastrService.error('You can not add more items than available. In stock '+ stock +' items.');
+        this.snackBar.open(message, '×', {
+          panelClass: 'error',
+          verticalPosition: 'top',
+          duration: 5000,
+        });
+        return false;
+      }
+      return true;
+    } catch (error) {
+      this.showSnackbar.showError(this.translate.instant('Error', error.message), 8000);
       return false;
     }
-    if (limit < qty) {
-      const message =
-        this.translate.instant('You can not choose more items than its max limit. Max limit is ') +
-        limit +
-        ' ' +
-        this.translate.instant(' items.');
-      // this.toastrService.error('You can not add more items than available. In stock '+ stock +' items.');
-      this.snackBar.open(message, '×', {
-        panelClass: 'error',
-        verticalPosition: 'top',
-        duration: 5000,
-      });
-      return false;
-    }
-    return true;
   }
 
   // Removed in cart
@@ -482,7 +564,7 @@ export class CartService implements OnDestroy {
     }
     this.carts = this.loggedInUserService._getDataFromStorage('cartItem') || [];
     let cart = this._getSimpleCart(item?.Product?.BusinessId);
-    cart = cart ? cart : this._newSimpleCart(item?.Product?.BusinessId, item?.Product?.Business);
+    cart = cart ? cart : this._newSimpleCart(item?.Product, item?.Product?.Business);
     if (item.id) {
       try {
         const data = await this.deleteCartItem(item);

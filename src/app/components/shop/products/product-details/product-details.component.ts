@@ -39,16 +39,11 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   loadingReviews = false;
   allReviews = [];
   showZoom = false;
-
   public image: any;
   public zoomImage: any;
   public counter: number = 1;
   index: number;
-  apiUrlRepositoy = environment.apiUrlRepositoy;
   localDatabaseUsers = environment.localDatabaseUsers;
-  uploadDigitalProduct = environment.uploadDigitalProduct;
-  type = undefined;
-
   loadingFeatured = false;
   loadingRelated = false;
   queryFeatured: IPagination = {
@@ -63,18 +58,6 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     offset: 0,
     total: 0,
     order: '-createdAt',
-  };
-
-  typesProducts = {
-    physical: {
-      name: { es: 'Físico', en: 'Physical' },
-    },
-    digital: {
-      name: { es: 'Digital', en: 'Digital' },
-    },
-    service: {
-      name: { es: 'Servicio', en: 'Service' },
-    },
   };
 
   allBicons: any[] = [];
@@ -119,15 +102,10 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     this.route.params.subscribe((params) => {
       const id = +params['id'];
       this.productsService.productIdDetails = id;
-      // console.log(
-      //   'ProductDetailsComponent ->   this.productsService.productIdDetails',
-      //   this.productsService.productIdDetails,
-      // );
       this.isLoading = true;
       this.productsService.getProductById(id).subscribe(
         (data) => {
           this.product = data.data;
-          this.type = this.product.type;
           this.initStateView();
           this.isLoading = false;
         },
@@ -148,8 +126,8 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     this.queryReviews.page = 1;
     this.counter = this.product.minSale;
     this.getReviews();
-    if (this.product.Image) {
-      this.arrayImages = this.product.Image.map((item) => {
+    if (this.product.Images) {
+      this.arrayImages = this.product.Images.map((item) => {
         return { image: this.imageUrl + item.image, selected: false };
       });
       this.arrayImages[0].selected = true;
@@ -157,7 +135,6 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     }
     this.getRelatedProducts();
     this.getFeaturedProducts();
-    this.procesDataDemoAndReference();
   }
 
   ngOnInit() {
@@ -324,27 +301,5 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
 
   onGoToCheckouNav() {
     this.buyNow(this.product, 1);
-  }
-
-  procesDataDemoAndReference() {
-    if (this.product && this.product.type == 'digital' && this.uploadDigitalProduct && !this.localDatabaseUsers) {
-      this.previewUrl =
-        this.product.Digital && this.product.Digital.previewUrl ? this.product.Digital.previewUrl : undefined;
-      this.referenceUrl =
-        this.product.Digital && this.product.Digital.referenceUrl ? this.product.Digital.referenceUrl : undefined;
-
-      if (this.product.Digital.formatTypePreviewUrl == 'video' && this.previewUrl) {
-        this.videoUrl = this.previewUrl;
-      }
-      if (this.previewUrl) {
-        this.getMetaDataFromUrl(this.previewUrl).then((data: any) => {
-          this.thumbnailUrl = data.data.thumbnail || undefined;
-        });
-      }
-    }
-  }
-
-  getMetaDataFromUrl(url) {
-    return this.httpCient.get(this.apiUrlRepositoy + 'file-meta?url=' + url).toPromise();
   }
 }

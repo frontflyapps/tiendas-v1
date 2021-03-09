@@ -1,123 +1,158 @@
 <div class="container-order-list">
   <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="gappx">
-
     <!-- <section id="searchFilter" ngClass.gt-md="px-4">
 
     </section> -->
 
     <div fxLayout="column" class="py-4" ngClass.lt-md="py-0" fxLayoutAlign="start stretch" fxLayoutGap="gappx">
-
       <mat-drawer-container class="MatDrawer">
-
         <mat-drawer #drawer class="DrawerContent" fixedInViewport="true" [mode]="'side'" [opened]="!isHandset">
-
           <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="gappx">
-
             <mat-tab-group mat-align-tabs="center">
-              <mat-tab label="{{'ORDERS'|translate}}">
-
-                <div class="my-2 " fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="gappx">
+              <mat-tab label="{{ 'ORDERS' | translate }}">
+                <div class="my-2" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="gappx">
                   <form class="mobile-search" fxLayout="row" fxLayoutAlign="start center">
-                    <input fxFlex [formControl]="formSearch" type="search" placeholder="{{'Type to search...'|translate}}">
+                    <input
+                      fxFlex
+                      [formControl]="formSearch"
+                      type="search"
+                      placeholder="{{ 'Type to search...' | translate }}"
+                    />
                     <button (click)="onFilter()" type="submit">
-                      <mat-icon>
-                        search
-                      </mat-icon>
+                      <mat-icon> search </mat-icon>
                     </button>
                   </form>
                 </div>
 
                 <mat-list *ngIf="allOrders.length && !loadingSearch">
-                  <mat-list-item *ngFor="let item of allOrders" class="listItem" (click)="onSelectOrder(item)"
-                    [ngClass]="{'selectedListItem': (selectedOrder && item.id === selectedOrder.id) }" matRipple>
+                  <mat-list-item
+                    *ngFor="let item of allOrders"
+                    class="listItem"
+                    (click)="onSelectOrder(item)"
+                    [ngClass]="{ selectedListItem: selectedOrder && item.id === selectedOrder.id }"
+                    matRipple
+                  >
+                    <mat-icon class="color-grey-800"> shopping_cart </mat-icon>
 
-                    <mat-icon class="color-grey-800">
-                      shopping_cart
-                    </mat-icon>
-
-                    <div fxLayout="row wrap" class="w-100 py-2" fxLayoutAlign="space-between center" fxLayoutGap="gappx">
-
-                      <div fxLayout="column" class="pl-3" fxFlex="60" fxFlex.lt-sm="100" fxLayoutAlign="start start" fxLayoutGap="gappx">
-
+                    <div
+                      fxLayout="row wrap"
+                      class="w-100 py-2"
+                      fxLayoutAlign="space-between center"
+                      fxLayoutGap="gappx"
+                    >
+                      <div
+                        fxLayout="column"
+                        class="pl-3"
+                        fxFlex="60"
+                        fxFlex.lt-sm="100"
+                        fxLayoutAlign="start start"
+                        fxLayoutGap="gappx"
+                      >
                         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="gappx">
-                          <span class="mat-title mb-0" style="font-size: 17px;">
-                            {{item.PaymentItems.length + 'x'}}
-                            {{' types of product'|translate}}
+                          <span class="mat-title mb-0" style="font-size: 17px">
+                            {{ item.PaymentItems.length + 'x' }}
+                            {{ ' types of product' | translate }}
                           </span>
                         </div>
 
                         <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="gappx">
-                          <span class="mat-body-1 color-grey-700 ">
-                            <span class="mat-body-1"
-                              [style.color]="this.status[item.status].primary">{{this.utilsService.parserLanguage(this.status[item.status].status,this.language)}}</span>
+                          <span class="mat-body-1 color-grey-700">
+                            <span class="mat-body-1" [style.color]="this.status[item.status].primary">{{
+                              this.utilsService.parserLanguage(this.status[item.status].status, this.language)
+                            }}</span>
                           </span>
                         </div>
 
-                        <p class="mat-body-1 color-grey-700 " style="font-size: 14px;">
-                          {{item.address}}
+                        <p class="mat-body-1 color-grey-700" style="font-size: 14px">
+                          {{ item.address }}
                         </p>
 
-                        <p *ngIf="item.CountryId != 59" class="mat-body-1 color-grey-700 " style="font-size: 14px;">
-                          {{item.city + ', '+item.regionProvinceState + ', ' + utilsService.parserLanguage(item.Country.name,language)}}
+                        <p *ngIf="item.CountryId != 59" class="mat-body-1 color-grey-700" style="font-size: 14px">
+                          {{
+                            item.city +
+                              ', ' +
+                              item.regionProvinceState +
+                              ', ' +
+                              utilsService.parserLanguage(item.Country.name, language)
+                          }}
                         </p>
 
-                        <p *ngIf="item.CountryId == 59" class="mat-body-1 color-grey-700 " style="font-size: 14px;">
-                          {{item.Municipality?.name + ', '+item.Province?.name + ', ' + utilsService.parserLanguage(item.Country.name,language)}}
+                        <p *ngIf="item.CountryId == 59" class="mat-body-1 color-grey-700" style="font-size: 14px">
+                          {{
+                            item.Municipality?.name +
+                              ', ' +
+                              item.Province?.name +
+                              ', ' +
+                              utilsService.parserLanguage(item.Country.name, language)
+                          }}
                         </p>
 
                         <p class="mt-2" ngClass.gt-sm="mat-body-2" ngClass.lt-md="mat-caption">
-                          {{'Order: '|translate}}
+                          {{ 'Order: ' | translate }}
 
-                          {{item.order||'9523594C'}}
-
+                          {{ item.order || '9523594C' }}
                         </p>
-
                       </div>
-                      <div ngClass.lt-sm="ml-3" fxLayout="column" fxFlex="40" fxFlex.lt-sm="100" fxLayoutAlign="center center"
-                        fxLayoutAlign.lt-sm="start start" fxLayoutGap="gappx">
+                      <div
+                        ngClass.lt-sm="ml-3"
+                        fxLayout="column"
+                        fxFlex="40"
+                        fxFlex.lt-sm="100"
+                        fxLayoutAlign="center center"
+                        fxLayoutAlign.lt-sm="start start"
+                        fxLayoutGap="gappx"
+                      >
                         <span class="total">
-                          {{item.amount |currency:item.currency }}
+                          {{ item.amount | currency: item.currency }}
                         </span>
-                        <span class="mat-body-1 color-grey-700 " style="font-size: 19px;">
-                          <span>{{item.createdAt|date:'short'}}</span>
+                        <span class="mat-body-1 color-grey-700" style="font-size: 19px">
+                          <span>{{ item.createdAt | date: 'short' }}</span>
                         </span>
                       </div>
-                      <mat-icon style="position: absolute;right: 16px; top:45%" class="grey-800">
+                      <mat-icon style="position: absolute; right: 16px; top: 45%" class="grey-800">
                         keyboard_arrow_right
                       </mat-icon>
-
                     </div>
                   </mat-list-item>
                 </mat-list>
                 <!-- /*CARGANDO LA LISTA*/ -->
                 <mat-list *ngIf="loadingSearch">
-                  <mat-list-item *ngFor="let item of [1,2,3,4,5,6,7,8]" class="loader" style="height: 64px !important;" matRipple>
+                  <mat-list-item
+                    *ngFor="let item of [1, 2, 3, 4, 5, 6, 7, 8]"
+                    class="loader"
+                    style="height: 64px !important"
+                    matRipple
+                  >
                   </mat-list-item>
                 </mat-list>
                 <!-- ////////////////////////////////////// -->
 
                 <div class="col-sm-12 empty-cart-cls text-center mt-4" *ngIf="!allOrders.length && !loadingSearch">
-                  <img src="assets/images/backet-01.png" class="img-fluid mb-4">
-                  <h3 class="mb-5"><strong>{{"YOUR ORDERS LIST IS EMPTY"|translate}}.</strong></h3>
+                  <img src="assets/images/backet-01.png" class="img-fluid mb-4" />
+                  <h3 class="mb-5">
+                    <strong>{{ 'YOUR ORDERS LIST IS EMPTY' | translate }}.</strong>
+                  </h3>
                 </div>
 
-                <div class="py-3" *ngIf="this.query.offset < this.query.total" fxLayout="row" fxLayoutAlign="center center"
-                  fxLayoutGap="gappx">
+                <div
+                  class="py-3"
+                  *ngIf="this.query.offset < this.query.total"
+                  fxLayout="row"
+                  fxLayoutAlign="center center"
+                  fxLayoutGap="gappx"
+                >
                   <button (click)="onLoadMore()" class="rounded-18" mat-button color="accent">
-                    {{'Load More'|translate}}
+                    {{ 'Load More' | translate }}
                   </button>
                 </div>
               </mat-tab>
             </mat-tab-group>
-
-
           </div>
           <!-- <button id="addBtn" mat-fab color="accent" (click)="onAddEval()">
             <mat-icon>
               add
             </mat-icon>
           </button> -->
-
         </mat-drawer>
 
         <mat-drawer-content class="MainDrawerContent">
@@ -126,184 +161,296 @@
           </button>
 
           <mat-tab-group mat-align-tabs="center">
-            <mat-tab label="{{'PRODUCTS'|translate}}">
+            <mat-tab label="{{ 'PRODUCTS' | translate }}">
               <div *ngIf="this.selectedOrder && !loadingSelectedItem" class="DetailsProduct">
                 <!-- /////////////////////////// -->
-                <p style="text-align:right" class="my-2">
+                <p style="text-align: right" class="my-2">
                   <span [class]="this.status[this.selectedOrder.status].class">
-                    {{this.utilsService.parserLanguage(this.status[this.selectedOrder.status].status,this.language)}}</span>
+                    {{
+                      this.utilsService.parserLanguage(this.status[this.selectedOrder.status].status, this.language)
+                    }}</span
+                  >
                 </p>
                 <!-- /////////////////////////// -->
-                <div *ngFor="let paymentItem of selectedOrder.PaymentItems" fxLayout="column" fxLayoutAlign="start stretch"
-                  style="border-bottom: 1.5px solid #eeeeee; box-sizing: border-box; padding: 8px 0px;">
+                <div
+                  *ngFor="let paymentItem of selectedOrder.PaymentItems"
+                  fxLayout="column"
+                  fxLayoutAlign="start stretch"
+                  style="border-bottom: 1.5px solid #eeeeee; box-sizing: border-box; padding: 8px 0px"
+                >
                   <div fxLayout="row wrap" class="mt-3" fxLayoutAlign="space-around start">
                     <div fxLayoutAlign="center center" fxFlex="100" fxFlex.gt-md="50">
-
-
-                      <img class="imageProduct" ngp-lazy ngp-threshold="0.1"
-                        *ngIf="!(paymentItem.Product.Image && paymentItem.Product.Image.length)" src="../../../../assets/images/noImage.jpg"
-                        alt="" />
+                      <img
+                        class="imageProduct"
+                        ngp-lazy
+                        ngp-threshold="0.1"
+                        *ngIf="!(paymentItem.Product.Images && paymentItem.Product.Images.length)"
+                        src="../../../../assets/images/noImage.jpg"
+                        alt=""
+                      />
                       <a class="product-link" [routerLink]="['/product', paymentItem?.Product?.id]">
-                        <img class="imageProduct" ngp-lazy ngp-threshold="0.1"
-                          *ngIf="(paymentItem.Product.Image && paymentItem.Product.Image.length)"
-                          [src]="this.urlImage + this.paymentItem.Product.Image[0].image" alt="" />
+                        <img
+                          class="imageProduct"
+                          ngp-lazy
+                          ngp-threshold="0.1"
+                          *ngIf="paymentItem.Product.Images && paymentItem.Product.Images.length"
+                          [src]="this.urlImage + this.paymentItem.Product.Images[0].image"
+                          alt=""
+                        />
                       </a>
-
                     </div>
 
                     <div fxFlex="100" fxFlex.gt-md="50">
                       <h2 class="mat-title mb-0">
-                        {{utilsService.parserLanguage(paymentItem.Product.name,language)}}
+                        {{ utilsService.parserLanguage(paymentItem.Product.name, language) }}
                       </h2>
                       <div class="my-2">
-                        <ngp-material-rating [value]="paymentItem.Product.rating" [config]="{readOnly:true}"></ngp-material-rating>
+                        <ngp-material-rating
+                          [value]="paymentItem.Product.rating"
+                          [config]="{ readOnly: true }"
+                        ></ngp-material-rating>
                       </div>
                       <h3 class="price">
-                        {{paymentItem.price | currency:selectedOrder.currency}}
-                        <span class="color-grey-600" style="width: 28px; font-size: 17px; margin-top: -5px;">{{'x' + paymentItem.quantity}}
+                        {{ paymentItem.price | currency: selectedOrder.currency }}
+                        <span class="color-grey-600" style="width: 28px; font-size: 17px; margin-top: -5px"
+                          >{{ 'x' + paymentItem.quantity }}
                         </span>
                       </h3>
                       <p class="description mb-2">
-                        {{utilsService.parserLanguage(paymentItem.Product.shortDescription,language)}}
+                        {{ utilsService.parserLanguage(paymentItem.Product.shortDescription, language) }}
                       </p>
 
                       <!-- *ngIf="this.selectedOrder.status == 'confirmed' || this.selectedOrder.status == 'delivered' " -->
-                      <ng-container *ngIf="this.selectedOrder.status == 'confirmed' || this.selectedOrder.status == 'delivered' ">
-                        <a mat-button *ngIf="paymentItem.Product.type=='digital' && paymentItem.Product.Digital.referenceUrl"
-                          (click)="onDownloadDigitalProduct(paymentItem.Product.Digital.referenceUrl)" style="width: 140px !important;"
-                          fxLayout="row" fxLayoutAlign="start center">
-                          <mat-icon class="mr-2">
-                            system_update_alt
-                          </mat-icon>
-                          {{'Descargar' | translate}}
+                      <ng-container
+                        *ngIf="this.selectedOrder.status == 'confirmed' || this.selectedOrder.status == 'delivered'"
+                      >
+                        <a
+                          mat-button
+                          *ngIf="paymentItem.Product.type == 'digital' && paymentItem.Product.Digital.referenceUrl"
+                          (click)="onDownloadDigitalProduct(paymentItem.Product.Digital.referenceUrl)"
+                          style="width: 140px !important"
+                          fxLayout="row"
+                          fxLayoutAlign="start center"
+                        >
+                          <mat-icon class="mr-2"> system_update_alt </mat-icon>
+                          {{ 'Descargar' | translate }}
                         </a>
                       </ng-container>
-
                     </div>
                   </div>
-
                 </div>
               </div>
               <div *ngIf="loadingSelectedItem" class="container DetailsProduct">
                 <!-- /*CARGANDO LA LISTA*/ -->
                 <mat-list *ngIf="loadingSelectedItem">
-                  <mat-list-item *ngFor="let item of [1,2,3,4,5,6,7,8,9,10,11]" class="loader" style="height: 80px !important;" matRipple>
+                  <mat-list-item
+                    *ngFor="let item of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]"
+                    class="loader"
+                    style="height: 80px !important"
+                    matRipple
+                  >
                   </mat-list-item>
                 </mat-list>
                 <!-- ////////////////////////////////////// -->
               </div>
-
             </mat-tab>
 
-
-
-            <mat-tab label="{{'BILLING DETAILS'|translate}}">
-
-              <div *ngIf="this.selectedOrder" fxLayout="column" class="container-bulling w-100" fxLayoutAlign="start stretch"
-                fxLayoutGap="gappx">
-
+            <mat-tab label="{{ 'BILLING DETAILS' | translate }}">
+              <div
+                *ngIf="this.selectedOrder"
+                fxLayout="column"
+                class="container-bulling w-100"
+                fxLayoutAlign="start stretch"
+                fxLayoutGap="gappx"
+              >
                 <div fxLayout="row wrap " fxLayoutAlign="space-between center" fxLayoutGap="gappx">
-                  <div fxFlex="33" fxFlex.lt-sm="50" fxFlex.xs="100" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="gappx">
-                    <span class="mb-0 mt-1 main-primary-700 mat-body-2">{{'Id de pago' | translate}}</span>
-                    <span class="mb-0 mt-1 main-primary-700 mat-body-2">{{selectedOrder.order}}</span>
+                  <div
+                    fxFlex="33"
+                    fxFlex.lt-sm="50"
+                    fxFlex.xs="100"
+                    fxLayout="column"
+                    fxLayoutAlign="start start"
+                    fxLayoutGap="gappx"
+                  >
+                    <span class="mb-0 mt-1 main-primary-700 mat-body-2">{{ 'Id de pago' | translate }}</span>
+                    <span class="mb-0 mt-1 main-primary-700 mat-body-2">{{ selectedOrder.order }}</span>
                   </div>
 
-                  <div fxFlex="33" fxFlex.lt-sm="50" fxFlex.xs="100" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="gappx">
-                    <span class="mb-0 mt-1 main-primary-700 mat-body-2">{{'fecha de creación' | translate}}</span>
-                    <span class="mb-0 mt-1 main-primary-700 mat-body-2">{{selectedOrder.createdAt|date:'short'}}</span>
+                  <div
+                    fxFlex="33"
+                    fxFlex.lt-sm="50"
+                    fxFlex.xs="100"
+                    fxLayout="column"
+                    fxLayoutAlign="start start"
+                    fxLayoutGap="gappx"
+                  >
+                    <span class="mb-0 mt-1 main-primary-700 mat-body-2">{{ 'fecha de creación' | translate }}</span>
+                    <span class="mb-0 mt-1 main-primary-700 mat-body-2">{{
+                      selectedOrder.createdAt | date: 'short'
+                    }}</span>
                   </div>
 
-                  <div fxFlex="33" fxFlex.lt-sm="50" fxFlex.xs="100" *ngIf="selectedOrder.cancelledAt" fxLayout="column"
-                    fxLayoutAlign="start start" fxLayoutGap="gappx">
-                    <span class="mb-0 mt-1 main-primary-700 mat-body-2">{{'fecha de cancelación' | translate}}</span>
-                    <span class="mb-0 mt-1 main-primary-700 mat-body-2">{{selectedOrder.cancelledAt|date:'short'}}</span>
+                  <div
+                    fxFlex="33"
+                    fxFlex.lt-sm="50"
+                    fxFlex.xs="100"
+                    *ngIf="selectedOrder.cancelledAt"
+                    fxLayout="column"
+                    fxLayoutAlign="start start"
+                    fxLayoutGap="gappx"
+                  >
+                    <span class="mb-0 mt-1 main-primary-700 mat-body-2">{{ 'fecha de cancelación' | translate }}</span>
+                    <span class="mb-0 mt-1 main-primary-700 mat-body-2">{{
+                      selectedOrder.cancelledAt | date: 'short'
+                    }}</span>
                   </div>
-
-
                 </div>
 
                 <mat-divider class="my-2"></mat-divider>
 
-
                 <div fxLayout="row wrap" class="mt-1" fxLayoutAlign="start center" fxLayoutGap="gappx">
-                  <div fxLayout="column" ngClass.gt-xs="py-3" ngClass.lt-sm="py-2 border-bottom" fxFlex="33" fxFlex.lt-sm="50"
-                    fxFlex.xs="100" fxLayoutAlign="start start" fxLayoutGap="gappx">
+                  <div
+                    fxLayout="column"
+                    ngClass.gt-xs="py-3"
+                    ngClass.lt-sm="py-2 border-bottom"
+                    fxFlex="33"
+                    fxFlex.lt-sm="50"
+                    fxFlex.xs="100"
+                    fxLayoutAlign="start start"
+                    fxLayoutGap="gappx"
+                  >
                     <span class="mat-caption color-grey-800">
-                      {{'Country'|translate}}
+                      {{ 'Country' | translate }}
                     </span>
                     <span>
-                      {{ utilsService.parserLanguage(selectedOrder.Country.name,language)}}
+                      {{ utilsService.parserLanguage(selectedOrder.Country.name, language) }}
                     </span>
                   </div>
 
                   <ng-container *ngIf="selectedOrder.CountryId != 59">
-                    <div fxLayout="column" ngClass.gt-xs="py-3" ngClass.lt-sm="py-2 border-bottom" fxFlex="33" fxFlex.lt-sm="50"
-                      fxFlex.xs="100" fxLayoutAlign="start start" fxLayoutGap="gappx">
+                    <div
+                      fxLayout="column"
+                      ngClass.gt-xs="py-3"
+                      ngClass.lt-sm="py-2 border-bottom"
+                      fxFlex="33"
+                      fxFlex.lt-sm="50"
+                      fxFlex.xs="100"
+                      fxLayoutAlign="start start"
+                      fxLayoutGap="gappx"
+                    >
                       <span class="mat-caption color-grey-800">
-                        {{'City'|translate}}
+                        {{ 'City' | translate }}
                       </span>
                       <span>
-                        {{this.selectedOrder.city}}
+                        {{ this.selectedOrder.city }}
                       </span>
                     </div>
 
-                    <div fxLayout="column" ngClass.gt-xs="py-3" ngClass.lt-sm="py-2 border-bottom" fxFlex="33" fxFlex.lt-sm="50"
-                      fxFlex.xs="100" fxLayoutAlign="start start" fxLayoutGap="gappx">
+                    <div
+                      fxLayout="column"
+                      ngClass.gt-xs="py-3"
+                      ngClass.lt-sm="py-2 border-bottom"
+                      fxFlex="33"
+                      fxFlex.lt-sm="50"
+                      fxFlex.xs="100"
+                      fxLayoutAlign="start start"
+                      fxLayoutGap="gappx"
+                    >
                       <span class="mat-caption color-grey-800">
-                        {{'Region / Province / State'|translate}}
+                        {{ 'Region / Province / State' | translate }}
                       </span>
                       <span>
-                        {{this.selectedOrder.regionProvinceState}}
+                        {{ this.selectedOrder.regionProvinceState }}
                       </span>
                     </div>
                   </ng-container>
                   <ng-container *ngIf="selectedOrder.CountryId == 59">
-                    <div fxLayout="column" ngClass.gt-xs="py-3" ngClass.lt-sm="py-2 border-bottom" fxFlex="33" fxFlex.lt-sm="50"
-                      fxFlex.xs="100" fxLayoutAlign="start start" fxLayoutGap="gappx">
+                    <div
+                      fxLayout="column"
+                      ngClass.gt-xs="py-3"
+                      ngClass.lt-sm="py-2 border-bottom"
+                      fxFlex="33"
+                      fxFlex.lt-sm="50"
+                      fxFlex.xs="100"
+                      fxLayoutAlign="start start"
+                      fxLayoutGap="gappx"
+                    >
                       <span class="mat-caption color-grey-800">
-                        {{'Municipio'|translate}}
+                        {{ 'Municipio' | translate }}
                       </span>
                       <span>
-                        {{this.selectedOrder.Municipality?.name}}
+                        {{ this.selectedOrder.Municipality?.name }}
                       </span>
                     </div>
 
-                    <div fxLayout="column" ngClass.gt-xs="py-3" ngClass.lt-sm="py-2 border-bottom" fxFlex="33" fxFlex.lt-sm="50"
-                      fxFlex.xs="100" fxLayoutAlign="start start" fxLayoutGap="gappx">
+                    <div
+                      fxLayout="column"
+                      ngClass.gt-xs="py-3"
+                      ngClass.lt-sm="py-2 border-bottom"
+                      fxFlex="33"
+                      fxFlex.lt-sm="50"
+                      fxFlex.xs="100"
+                      fxLayoutAlign="start start"
+                      fxLayoutGap="gappx"
+                    >
                       <span class="mat-caption color-grey-800">
-                        {{'Provincia'|translate}}
+                        {{ 'Provincia' | translate }}
                       </span>
                       <span>
-                        {{this.selectedOrder.Province?.name}}
+                        {{ this.selectedOrder.Province?.name }}
                       </span>
                     </div>
                   </ng-container>
 
-                  <div fxLayout="column" ngClass.gt-xs="py-3" ngClass.lt-sm="py-2 border-bottom" fxFlex="33" fxFlex.lt-sm="50"
-                    fxFlex.xs="100" fxLayoutAlign="start start" fxLayoutGap="gappx">
+                  <div
+                    fxLayout="column"
+                    ngClass.gt-xs="py-3"
+                    ngClass.lt-sm="py-2 border-bottom"
+                    fxFlex="33"
+                    fxFlex.lt-sm="50"
+                    fxFlex.xs="100"
+                    fxLayoutAlign="start start"
+                    fxLayoutGap="gappx"
+                  >
                     <span class="mat-caption color-grey-800">
-                      {{'Dirección'|translate}}
+                      {{ 'Dirección' | translate }}
                     </span>
                     <span>
-                      {{this.selectedOrder.address}}
+                      {{ this.selectedOrder.address }}
                     </span>
                   </div>
-                  <div fxLayout="column" ngClass.gt-xs="py-3" ngClass.lt-sm="py-2 border-bottom" fxFlex="33" fxFlex.lt-sm="50"
-                    fxFlex.xs="100" fxLayoutAlign="start start" fxLayoutGap="gappx">
+                  <div
+                    fxLayout="column"
+                    ngClass.gt-xs="py-3"
+                    ngClass.lt-sm="py-2 border-bottom"
+                    fxFlex="33"
+                    fxFlex.lt-sm="50"
+                    fxFlex.xs="100"
+                    fxLayoutAlign="start start"
+                    fxLayoutGap="gappx"
+                  >
                     <span class="mat-caption color-grey-800">
-                      {{'Teléfono'|translate}}
+                      {{ 'Teléfono' | translate }}
                     </span>
                     <span>
-                      {{this.selectedOrder.phone}}
+                      {{ this.selectedOrder.phone }}
                     </span>
                   </div>
-                  <div fxLayout="column" ngClass.gt-xs="py-3" ngClass.lt-sm="py-2 border-bottom" fxFlex="33" fxFlex.lt-sm="50"
-                    fxFlex.xs="100" fxLayoutAlign="start start" fxLayoutGap="gappx">
+                  <div
+                    fxLayout="column"
+                    ngClass.gt-xs="py-3"
+                    ngClass.lt-sm="py-2 border-bottom"
+                    fxFlex="33"
+                    fxFlex.lt-sm="50"
+                    fxFlex.xs="100"
+                    fxLayoutAlign="start start"
+                    fxLayoutGap="gappx"
+                  >
                     <span class="mat-caption color-grey-800">
-                      {{'Client'|translate}}
+                      {{ 'Client' | translate }}
                     </span>
                     <span>
-                      {{this.selectedOrder.name + ' ' + (this.selectedOrder.lastname||'')}}
+                      {{ this.selectedOrder.name + ' ' + (this.selectedOrder.lastname || '') }}
                     </span>
                   </div>
                 </div>
@@ -311,109 +458,166 @@
                 <mat-divider fxHide.lt-sm></mat-divider>
 
                 <div fxLayout="row wrap" class="mt-1" fxLayoutAlign="start center" fxLayoutGap="gappx">
-
-                  <div fxLayout="column" ngClass.gt-xs="py-3" ngClass.lt-sm="py-2 border-bottom" fxFlex="33" fxFlex.lt-sm="50"
-                    fxFlex.xs="100" fxLayoutAlign="start start" fxLayoutGap="gappx">
+                  <div
+                    fxLayout="column"
+                    ngClass.gt-xs="py-3"
+                    ngClass.lt-sm="py-2 border-bottom"
+                    fxFlex="33"
+                    fxFlex.lt-sm="50"
+                    fxFlex.xs="100"
+                    fxLayoutAlign="start start"
+                    fxLayoutGap="gappx"
+                  >
                     <span class="mat-caption color-grey-800">
-                      {{'No. of order'|translate}}
+                      {{ 'No. of order' | translate }}
                     </span>
                     <span>
-                      {{this.selectedOrder.order}}
+                      {{ this.selectedOrder.order }}
                     </span>
                   </div>
 
-                  <div fxLayout="column" ngClass.gt-xs="py-3" ngClass.lt-sm="py-2 border-bottom" fxFlex="33" fxFlex.lt-sm="50"
-                    fxFlex.xs="100" fxLayoutAlign="start start" fxLayoutGap="gappx">
+                  <div
+                    fxLayout="column"
+                    ngClass.gt-xs="py-3"
+                    ngClass.lt-sm="py-2 border-bottom"
+                    fxFlex="33"
+                    fxFlex.lt-sm="50"
+                    fxFlex.xs="100"
+                    fxLayoutAlign="start start"
+                    fxLayoutGap="gappx"
+                  >
                     <ng-container *ngIf="this.selectedOrder.status == 'cancelled'">
                       <span class="mat-caption color-grey-800">
-                        {{'Devolución'|translate}}
+                        {{ 'Devolución' | translate }}
                       </span>
                       <span>
-                        {{this.selectedOrder.cancelRefund |currency:this.selectedOrder.currency}}
+                        {{ this.selectedOrder.cancelRefund | currency: this.selectedOrder.currency }}
                       </span>
                     </ng-container>
-                    <ng-container *ngIf="this.selectedOrder.status != 'cancelled' ">
+                    <ng-container *ngIf="this.selectedOrder.status != 'cancelled'">
                       <span class="mat-caption color-grey-800">
-                        {{'Amount'|translate}}
+                        {{ 'Amount' | translate }}
                       </span>
                       <span>
-                        {{this.selectedOrder.amount |currency:this.selectedOrder.currency}}
+                        {{ this.selectedOrder.amount | currency: this.selectedOrder.currency }}
                       </span>
                     </ng-container>
                   </div>
 
-                  <div fxLayout="column" ngClass.gt-xs="py-3" ngClass.lt-sm="py-2 border-bottom" fxFlex="33" fxFlex.lt-sm="50"
-                    fxFlex.xs="100" fxLayoutAlign="start start" fxLayoutGap="gappx">
+                  <div
+                    fxLayout="column"
+                    ngClass.gt-xs="py-3"
+                    ngClass.lt-sm="py-2 border-bottom"
+                    fxFlex="33"
+                    fxFlex.lt-sm="50"
+                    fxFlex.xs="100"
+                    fxLayoutAlign="start start"
+                    fxLayoutGap="gappx"
+                  >
                     <span class="mat-caption color-grey-800">
-                      {{'Status'|translate}}
+                      {{ 'Status' | translate }}
                     </span>
                     <span [class]="this.status[this.selectedOrder.status].class">
-                      {{this.utilsService.parserLanguage(this.status[this.selectedOrder.status].status,this.language)}}
+                      {{
+                        this.utilsService.parserLanguage(this.status[this.selectedOrder.status].status, this.language)
+                      }}
                     </span>
                   </div>
-
                 </div>
 
                 <mat-divider fxHide.lt-sm></mat-divider>
 
                 <div fxLayout="row wrap" class="mt-1" fxLayoutAlign="start center" fxLayoutGap="gappx">
-                  <div fxLayout="column" ngClass.gt-xs="py-3" ngClass.lt-sm="py-2 border-bottom" fxFlex="33" fxFlex.lt-sm="50"
-                    fxFlex.xs="100" fxLayoutAlign="start start" fxLayoutGap="gappx">
+                  <div
+                    fxLayout="column"
+                    ngClass.gt-xs="py-3"
+                    ngClass.lt-sm="py-2 border-bottom"
+                    fxFlex="33"
+                    fxFlex.lt-sm="50"
+                    fxFlex.xs="100"
+                    fxLayoutAlign="start start"
+                    fxLayoutGap="gappx"
+                  >
                     <span class="mat-caption color-grey-800">
-                      {{'TPV'|translate}}
+                      {{ 'TPV' | translate }}
                     </span>
                     <span>
-                      {{this.selectedOrder.paymentType}}
+                      {{ this.selectedOrder.paymentType }}
                     </span>
                   </div>
 
-                  <div fxLayout="column" ngClass.gt-xs="py-3" ngClass.lt-sm="py-2 border-bottom" fxFlex="33" fxFlex.lt-sm="50"
-                    fxFlex.xs="100" fxLayoutAlign="start start" fxLayoutGap="gappx">
+                  <div
+                    fxLayout="column"
+                    ngClass.gt-xs="py-3"
+                    ngClass.lt-sm="py-2 border-bottom"
+                    fxFlex="33"
+                    fxFlex.lt-sm="50"
+                    fxFlex.xs="100"
+                    fxLayoutAlign="start start"
+                    fxLayoutGap="gappx"
+                  >
                     <span class="mat-caption color-grey-800">
-                      {{'Email'|translate}}
+                      {{ 'Email' | translate }}
                     </span>
                     <span>
-                      {{this.selectedOrder.email}}
+                      {{ this.selectedOrder.email }}
                     </span>
                   </div>
-
                 </div>
 
                 <mat-divider fxHide.lt-sm></mat-divider>
 
-                <ng-container *ngIf=" this.selectedOrder.status=='cancelled'">
-                  <p class="mat-title my-2" ngClass.xs="mat-body-2">{{'Comentario acerca de la cancelación' |translate}}</p>
+                <ng-container *ngIf="this.selectedOrder.status == 'cancelled'">
+                  <p class="mat-title my-2" ngClass.xs="mat-body-2">
+                    {{ 'Comentario acerca de la cancelación' | translate }}
+                  </p>
                   <blockquote class="cancelNote">
-                    <p>{{selectedOrder.cancelNote}}</p>
+                    <p>{{ selectedOrder.cancelNote }}</p>
                   </blockquote>
                 </ng-container>
 
                 <div class="mt-3" fxLayout="row wrap" fxLayoutAlign="end center" fxLayoutGap="gappx">
-                  <button matTooltip="{{'Cancelar la reservación'|translate}}"
-                    *ngIf="this.selectedOrder.status=='confirmed' || this.selectedOrder.status=='on-delivery'" fxFlex=" 30"
-                    fxFlex.lt-md="50" fxFlex.xs="100" (click)="onCancelarOrder(this.selectedOrder)" class=" mx-2" mat-stroked-button
-                    color="warn">
+                  <button
+                    matTooltip="{{ 'Cancelar la reservación' | translate }}"
+                    *ngIf="this.selectedOrder.status == 'confirmed' || this.selectedOrder.status == 'on-delivery'"
+                    fxFlex=" 30"
+                    fxFlex.lt-md="50"
+                    fxFlex.xs="100"
+                    (click)="onCancelarOrder(this.selectedOrder)"
+                    class="mx-2"
+                    mat-stroked-button
+                    color="warn"
+                  >
                     <mat-icon>cancel</mat-icon>
-                    {{'CANCELAR'|translate}}
+                    {{ 'CANCELAR' | translate }}
                   </button>
 
-                  <button matTooltip="{{'Obtener el vouvher de pago'|translate}}"
-                    *ngIf="this.selectedOrder.status == 'confirmed'  || this.selectedOrder.status == 'delivered' " fxFlex="30"
-                    fxFlex.lt-md="50" fxFlex.xs="100" (click)="onGetVoucher(this.selectedOrder)" class=" mx-2" mat-stroked-button
-                    color="primary">
+                  <button
+                    matTooltip="{{ 'Obtener el vouvher de pago' | translate }}"
+                    *ngIf="this.selectedOrder.status == 'confirmed' || this.selectedOrder.status == 'delivered'"
+                    fxFlex="30"
+                    fxFlex.lt-md="50"
+                    fxFlex.xs="100"
+                    (click)="onGetVoucher(this.selectedOrder)"
+                    class="mx-2"
+                    mat-stroked-button
+                    color="primary"
+                  >
                     <mat-icon>cloud_download</mat-icon>
-                    {{'VOUCHER'|translate}}
+                    {{ 'VOUCHER' | translate }}
                   </button>
 
-                  <div fxLayout="row" class="p-2" style="border: 1px solid #4caf50;border-radius: 4px;" fxLayoutAlign="start center"
-                    *ngIf="this.selectedOrder.status == 'delivered'">
-
-                    <mat-icon style="color: #4caf50;">check</mat-icon> <span
-                      style="color: #4caf50;font-weight: 500;">{{'ORDER DELIVERED'|translate}}</span>
+                  <div
+                    fxLayout="row"
+                    class="p-2"
+                    style="border: 1px solid #4caf50; border-radius: 4px"
+                    fxLayoutAlign="start center"
+                    *ngIf="this.selectedOrder.status == 'delivered'"
+                  >
+                    <mat-icon style="color: #4caf50">check</mat-icon>
+                    <span style="color: #4caf50; font-weight: 500">{{ 'ORDER DELIVERED' | translate }}</span>
                   </div>
-
                 </div>
-
               </div>
 
               <!-- -----QUITAR ESTE BOTON CUANDO EL VOUCHER ESTE OK---------- -->
@@ -423,27 +627,14 @@
                 {{'VOUCHER'|translate}}
               </button> -->
               <!-- ------------------------------------------------------------ -->
-
-
             </mat-tab>
-
           </mat-tab-group>
-
-
         </mat-drawer-content>
-
       </mat-drawer-container>
-
     </div>
 
     <!-- <section id="searchFilter" ngClass.gt-md="px-4">
 
     </section> -->
-
-
-
-
   </div>
-
-
 </div>

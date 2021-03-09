@@ -28,6 +28,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
 import { ConfirmationDialogFrontModule } from 'src/app/components/shared/confirmation-dialog-front/confirmation-dialog-front.module';
 import { TaxesShippingService } from '../../core/services/taxes-shipping/taxes-shipping.service';
+import { PipesModule } from 'src/app/core/pipes/pipes.module';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 @NgModule({
   imports: [
     CommonModule,
@@ -39,7 +41,9 @@ import { TaxesShippingService } from '../../core/services/taxes-shipping/taxes-s
     MatInputModule,
     TranslateModule,
     MatIconModule,
+    MatCheckboxModule,
     MatButtonModule,
+    PipesModule,
     MatAutocompleteModule,
     MatRadioModule,
     MatToolbarModule,

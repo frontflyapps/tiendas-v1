@@ -17,6 +17,7 @@ import { ProductService } from '../../shared/services/product.service';
 export class ShoppingWidgetsComponent implements OnInit, OnDestroy {
   products: any[];
   indexProduct: number;
+  cartLocalStorage: any;
   public sidenavMenuItems: Array<any>;
 
   shoppingCarts: Cart[] = [];

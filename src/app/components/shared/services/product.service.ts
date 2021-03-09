@@ -132,11 +132,11 @@ export class ProductService {
       if (params.brandIds && params.brandIds.length) {
         if (params.brandIds.length > 1) {
           params.brandIds.map((item) => {
-            httpParams = httpParams.append('filter[$and][Physical][BrandId][$in]', item);
+            httpParams = httpParams.append('filter[$and][BrandId][$in]', item);
           });
         } else {
-          httpParams = httpParams.append('filter[$and][Physical][BrandId][$in]', params.brandIds[0]);
-          httpParams = httpParams.append('filter[$and][Physical][BrandId][$in]', params.brandIds[0]);
+          httpParams = httpParams.append('filter[$and][BrandId][$in]', params.brandIds[0]);
+          httpParams = httpParams.append('filter[$and][BrandId][$in]', params.brandIds[0]);
         }
       }
       if (params.categoryIds && params.categoryIds.length) {
