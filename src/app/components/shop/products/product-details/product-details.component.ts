@@ -99,11 +99,12 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
 
-    this.route.params.subscribe((params) => {
-      const id = +params['id'];
-      this.productsService.productIdDetails = id;
+    this.route.queryParams.subscribe((query) => {
+      const productId = +query.productId;
+      const stockId = +query.stockId;
+      this.productsService.productIdDetails = productId;
       this.isLoading = true;
-      this.productsService.getProductById(id).subscribe(
+      this.productsService.getProductById(productId, stockId).subscribe(
         (data) => {
           this.product = data.data;
           this.initStateView();

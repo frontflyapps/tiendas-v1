@@ -10,7 +10,7 @@ import { environment } from './../../../../environments/environment';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
 import { UtilsService } from './../../../core/services/utils/utils.service';
-import { CartService } from '../../shared/services/cart.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { MyOrdersService } from '../service/my-orders.service';
 import { LoggedInUserService } from './../../../core/services/loggedInUser/logged-in-user.service';
@@ -97,9 +97,9 @@ export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
       class: 'onDeliveryLabel',
     },
   };
-
+  initialLimit = 20;
   query: IPagination = {
-    limit: 20,
+    limit: this.initialLimit,
     offset: 0,
     order: '-createdAt',
     total: 0,
@@ -126,6 +126,7 @@ export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
     public currencyService: CurrencyService,
     private breakpointObserver: BreakpointObserver,
     private httpClient: HttpClient,
+    private activateRoute: ActivatedRoute,
     private showToastr: ShowToastrService,
   ) {
     this._unsubscribeAll = new Subject<any>();
@@ -136,6 +137,11 @@ export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
       .subscribe((data) => {
         this.isHandset = data.matches;
       });
+    this.activateRoute.queryParams.subscribe((data) => {
+      if (data?.orderId) {
+        this.onSelectOrder(data?.orderId);
+      }
+    });
   }
 
   @HostListener('window:resize', ['$event'])
@@ -278,7 +284,7 @@ export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.query = {
-          limit: 20,
+          limit: this.initialLimit,
           offset: 0,
           order: '-createdAt',
           total: 0,
@@ -294,6 +300,7 @@ export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
             document.location.reload();
           }, 250);
         }
+        this.ordersService.$orderItemsUpdated.next();
         this.onSelectOrder(order);
         this.onSearch();
       }
@@ -302,15 +309,6 @@ export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onGetVoucher(order) {
     const urlDownload = environment.apiUrl + 'payment/' + order.id + '/voucher';
-    // this.httpClient
-    //   .get(urlDownload)
-    //   .toPromise()
-    //   .then((data: any) => {
-    //     if (data.OK == true) {
-    //       this.pdfGenService.genReservationVoucher(order);
-    //     }
-    //   })
-    //   .catch((e) => {});
 
     const httpOptions = {
       responseType: 'blob' as 'json',

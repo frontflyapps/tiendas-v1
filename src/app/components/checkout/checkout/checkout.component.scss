@@ -1,4 +1,4 @@
-@import "../../../../assets/scss/theme/variables";
+@import '../../../../assets/scss/theme/variables';
 
 /***************************************
 *  Checkout page styles
@@ -24,20 +24,25 @@ li {
     }
   }
 
-
   .mainOrder-wrapper {
+    position: relative;
     .main-order {
-      border: 1px solid $grey8;
-      border-radius: 4px;
+      //border: 1px solid $grey8;
+      //border-radius: 4px;
+      box-shadow: 1px 2px 7px rgba(0, 0, 0, 0.12);
+      position: sticky;
+      border-radius: 8px;
+      padding: 30px;
 
       &:hover {
-        border: 1.25px solid rgba(0, 0, 0, 0.75);
-        transition: border .5s ease;
+        box-shadow: 1px 2px 20px rgba(0, 0, 0, 0.18);
+        //border: 1.25px solid rgba(0, 0, 0, 0.75);
+        transition: box-shadow;
       }
 
       padding: 30px;
 
-      @media (max-width:500px) {
+      @media (max-width: 500px) {
         padding: 12px;
       }
 
@@ -75,9 +80,6 @@ li {
               border-radius: 50%;
               margin-right: 16px;
             }
-
-
-
           }
 
           li {
@@ -89,10 +91,9 @@ li {
               float: right;
               font-size: 20px;
 
-              @media (max-width:500px) {
+              @media (max-width: 500px) {
                 font-size: 15px;
               }
-
             }
           }
         }
@@ -122,7 +123,6 @@ li {
                 color: $grey;
               }
             }
-
           }
         }
 
@@ -218,9 +218,7 @@ li {
     background-color: #eeeeee;
     cursor: none !important;
   }
-
 }
-
 
 .mat-radio-label-content {
   color: $grey5;
@@ -235,6 +233,13 @@ li {
   -webkit-box-orient: vertical;
 }
 
+.line-clamp {
+  display: -webkit-box !important;
+  -webkit-line-clamp: 1 !important;
+  -webkit-box-orient: horizontal !important;
+  line-height: 1.4rem;
+  height: 1.4rem;
+}
 
 .popup {
   width: 100vw;
@@ -242,7 +247,7 @@ li {
   position: fixed;
   top: 0;
   left: 0;
-  background-color: rgba(0, 0, 0, .89);
+  background-color: rgba(0, 0, 0, 0.89);
   z-index: 99999;
   padding: 24px;
   color: white;
@@ -290,7 +295,7 @@ li {
   vertical-align: bottom;
   -webkit-animation: ellipsis steps(4, end) 2000ms infinite;
   animation: ellipsis steps(4, end) 2000ms infinite;
-  content: "\2026";
+  content: '\2026';
   /* ascii code for the ellipsis character */
   width: 0px;
 }

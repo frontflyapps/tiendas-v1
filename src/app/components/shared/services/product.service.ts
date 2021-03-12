@@ -168,8 +168,15 @@ export class ProductService {
     return this.httpClient.get<any>(this.urlProduct + '-count');
   }
 
-  public getProductById(id): Observable<any> {
+  /*public getProductById(id): Observable<any> {
     return this.httpClient.get<any>(this.urlProductId.replace(':id', id));
+  }*/
+
+  public getProductById(id, StockId): Observable<any> {
+    const data = {
+      StockId: StockId,
+    };
+    return this.httpClient.post<any>(`${this.urlProduct}/${id}/profile`, data);
   }
 
   /////////////////RUTAS DE ADMINISTRADOR///////////////////////

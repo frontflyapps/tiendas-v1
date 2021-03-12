@@ -17,6 +17,7 @@ import { ShowToastrService } from 'src/app/core/services/show-toastr/show-toastr
 export class CartService implements OnDestroy {
   // Array
   public $cartItemsUpdated: Subject<any> = new Subject();
+  public $paymentUpdate: Subject<any> = new Subject();
   public observer: Subscriber<{}>;
   url = environment.apiUrl + 'cart';
   urlCheckoutData = environment.apiUrl + 'checkout';

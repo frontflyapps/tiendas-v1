@@ -43,9 +43,12 @@
               />
             </div>
             <div class="mat-cell">
-              <a [routerLink]="['/product', item.Product.id]" class="link-nav-a">{{
-                item.Product.name[language] ? item.Product.name[language] : item.Product.name['es']
-              }}</a>
+              <a
+                [routerLink]="['/product']"
+                [queryParams]="{ productId: item?.Product?.id, stockId: item?.Product?.Stock?.id }"
+                class="link-nav-a line-clamp"
+                >{{ item.Product.name[language] ? item.Product.name[language] : item.Product.name['es'] }}</a
+              >
             </div>
             <div class="mat-cell">
               <a class="product-name">{{ utilsServ.parserLanguage(item.Product.Category.name, language) }}</a>

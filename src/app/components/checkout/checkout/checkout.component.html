@@ -138,7 +138,7 @@
                     type="text"
                     placeholder="{{ 'Nombre del Municipio' | translate }}"
                     [formControl]="form.controls['MunicipalityId']"
-                    (selectionChange)="form.controls['ShippingId'].setValue(null)"
+                    (selectionChange)="form.controls['ShippingBusinessId'].setValue(null)"
                   >
                     <mat-option *ngFor="let municipio of municipalities" [value]="municipio.id">
                       {{ municipio.name }}
@@ -320,8 +320,8 @@
                     />
 
                     <p class="name">
-                      <a [href]="'/product/' + item.id"
-                        ><strong class="color-grey-800">{{
+                      <a [href]="'/product?productId=' + item.ProductId + '&stockId=' + item.StockId"
+                        ><strong class="color-grey-800 line-clamp">{{
                           item.Product.name[language] ? item.Product.name[language] : item.Product.name['es']
                         }}</strong></a
                       >
@@ -331,7 +331,7 @@
 
                   <div fxFlex fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="gappx">
                     <span>
-                      {{ getTotalPricePerItem(item) | currencyMarket: currencyCard }}
+                      {{ getTotalPricePerItem(item) | currencyMarket: marketCard }}
                     </span>
                     <button
                       (click)="removeItem(item)"
@@ -352,7 +352,7 @@
             <ul *ngIf="!loadingCart && showShipping" class="total-amount">
               <li>
                 {{ 'Subtotal' | translate }}:
-                <span class="amount px-2">{{ getTotalAmout() | currencyMarket: currencyCard }}</span>
+                <span class="amount px-2">{{ getTotalAmout() | currencyMarket: marketCard }}</span>
               </li>
             </ul>
 
@@ -381,26 +381,53 @@
                   >
                     {{ 'Seleccione una tarifa de envío*' | translate }}:
                   </p>
+                  <p
+                    *ngIf="!showShipping"
+                    style="color: #f44336; font-size: 16px; font-weight: 500; margin-bottom: 12px !important"
+                  >
+                    {{ 'Payment will be made at the Business office' | translate }}:
+                  </p>
                 </div>
 
-                <mat-checkbox
-                  ngClass.xs="mb-2"
-                  fxFlexOrder.xs="1"
-                  style="margin-bottom: 12px"
-                  [formControl]="form.get('isShipping')"
-                >
-                  <span class="mat-body-2">{{ 'Shipping required' | translate }}</span>
-                </mat-checkbox>
+                <div fxLayout fxLayoutAlign="start center">
+                  <mat-icon
+                    *ngIf="form.controls['ShippingBusinessId'] && form.controls['ShippingBusinessId'].value"
+                    (click)="detailsShipping()"
+                    matTooltip="{{ 'Shipping Rates Details' | translate }}"
+                    class="mr-3"
+                    style="margin-bottom: 12px; font-size: 25px; cursor: pointer"
+                    >visibility</mat-icon
+                  >
+                  <mat-checkbox
+                    ngClass.xs="mb-2"
+                    fxFlexOrder.xs="1"
+                    style="margin-bottom: 12px"
+                    [formControl]="form.get('shippingRequired')"
+                  >
+                    <span class="mat-body-2">{{ 'Shipping required' | translate }}</span>
+                  </mat-checkbox>
+                </div>
               </div>
 
-              <div class="w-100" *ngIf="showShipping" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="gappx">
-                <mat-radio-group [formControl]="form.get('ShippingId')" class="w-100">
+              <div
+                class="w-100"
+                style="position: relative"
+                *ngIf="showShipping"
+                fxLayout="column"
+                fxLayoutAlign="start start"
+                fxLayoutGap="gappx"
+              >
+                <div *ngIf="inLoading" class="loading-shade" style="height: 100%">
+                  <mat-spinner [diameter]="40" *ngIf="inLoading"></mat-spinner>
+                </div>
+                <mat-radio-group [formControl]="form.get('ShippingBusinessId')" class="w-100">
                   <mat-radio-button
                     matTooltip="{{ shipping?.Business?.name }}"
                     style="height: 50px"
                     class="w-100"
                     *ngFor="let shipping of shippingData"
-                    [value]="shipping.id"
+                    f
+                    [value]="shipping.BusinessId"
                   >
                     <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="gappx">
                       <div fxLayoutAlign="start center">
@@ -416,7 +443,7 @@
                       </div>
 
                       <span fxFlex="35" class="taxAmount" style="font-size: 20px"
-                        >{{ shipping.totalPrice || 0 | currencyMarket: currencyCard }}
+                        >{{ shipping.totalPrice || 0 | currencyMarket: marketCard }}
                       </span>
                     </div>
                   </mat-radio-button>
@@ -490,7 +517,7 @@
             <ul class="total">
               <li>
                 {{ 'Total' | translate }}
-                <span class="count px-2">{{ getTotalWithShippingIncluded() | currencyMarket: currencyCard }}</span>
+                <span class="count px-2">{{ getTotalWithShippingIncluded() | currencyMarket: marketCard }}</span>
               </li>
             </ul>
             <p class="my-2">
@@ -498,7 +525,11 @@
             </p>
             <div class="paymentFinal">
               <mat-radio-group [formControl]="form.get('paymentType')">
-                <mat-radio-button *ngIf="this.onlyCubanPeople" [value]="payments[0].id" class="w-100">
+                <mat-radio-button
+                  *ngIf="this.onlyCubanPeople && cart?.market === 'national'"
+                  [value]="payments[0].id"
+                  class="w-100"
+                >
                   <div fxLayout="row" fxLayoutAlign="start center" class="w-100">
                     <span fxFlex="30" fxFlex.lt-md="50" class="mat-body-2 uppercase mr-3" style="font-size: 17px">{{
                       payments[0].name
@@ -509,7 +540,11 @@
                     />
                   </div>
                 </mat-radio-button>
-                <mat-radio-button *ngIf="this.onlyCubanPeople" [value]="payments[1].id" class="w-100">
+                <mat-radio-button
+                  *ngIf="this.onlyCubanPeople && cart?.market === 'national'"
+                  [value]="payments[1].id"
+                  class="w-100"
+                >
                   <div fxLayout="row" fxLayoutAlign="start center" class="w-100">
                     <span fxFlex="30" fxFlex.lt-md="50" class="mat-body-2 uppercase mr-3" style="font-size: 17px">{{
                       payments[1].name
@@ -520,7 +555,11 @@
                     />
                   </div>
                 </mat-radio-button>
-                <mat-radio-button *ngIf="!this.onlyCubanPeople" [value]="payments[2].id" class="w-100">
+                <mat-radio-button
+                  *ngIf="!this.onlyCubanPeople && cart?.market === 'international'"
+                  [value]="payments[2].id"
+                  class="w-100"
+                >
                   <div fxLayout="row" fxLayoutAlign="start center" class="w-100">
                     <span fxFlex="30" fxFlex.lt-md="50" class="mat-body-2 uppercase mr-3" style="font-size: 17px">{{
                       payments[2].name
@@ -560,7 +599,7 @@
   </div>
 </div>
 
-<div *ngIf="showTransfermovilImage" class="popup">
+<!--<div *ngIf="showTransfermovilImage" class="popup">
   <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="gappx">
     <button mat-icon-button (click)="onCancelarTranfermovilPayment()">
       <mat-icon matTooltip="{{ 'Cancelar la confirmación de pago con transfermóvil' | translate }}" class="mat-18"
@@ -597,8 +636,8 @@
     <img class="mt-4" [src]="this.qrTransfermovilImage" />
     <div style="max-width: 20rem" fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="gappx">
       <span class="mat-title mt-3">
-        {{ 'Total' | translate }}: &nbsp;{{ finalPrice | currencyMarket: currencyCard }}
+        {{ 'Total' | translate }}: &nbsp;{{ finalPrice | currencyMarket: marketCard }}
       </span>
     </div>
   </div>
-</div>
+</div>-->

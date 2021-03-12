@@ -34,9 +34,15 @@
             <tr>
               <th class="product-name">{{ 'Product Name' | translate }}</th>
               <td style="max-width: 400px" class="grid-link__title" *ngFor="let product of products">
-                <a [routerLink]="['/product', product.id]" class="link-nav-a">{{
-                  product.name[language] ? product.name[language] : product.name['es']
-                }}</a>
+                <a
+                  [routerLink]="['/product']"
+                  [queryParams]="{
+                    productId: product?.id,
+                    stockId: product?.Stock?.id
+                  }"
+                  class="link-nav-a"
+                  >{{ product.name[language] ? product.name[language] : product.name['es'] }}</a
+                >
               </td>
             </tr>
             <!-- Product Price -->

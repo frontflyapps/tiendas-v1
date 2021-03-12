@@ -48,15 +48,7 @@ export class ShoppingWidgetsComponent implements OnInit, OnDestroy {
 
     this.loggedInUserService.$loggedInUserUpdated.pipe(takeUntil(this._unsubscribeAll)).subscribe(() => {
       this.loggedInUser = this.loggedInUserService.getLoggedInUser();
-      if (this.loggedInUser) {
-        this.cartService.getCart().then((data) => {
-          this.shoppingCarts = data.data;
-          this.shoppingCartItems = this.cartService.getShoppingCars();
-        });
-      } else {
-        this.shoppingCarts = [];
-        this.shoppingCartItems = this.cartService.getShoppingCars();
-      }
+      this.fillShoppingCart();
     });
 
     if (this.loggedInUser) {
@@ -73,6 +65,22 @@ export class ShoppingWidgetsComponent implements OnInit, OnDestroy {
       this.shoppingCarts = data;
       this.shoppingCartItems = this.cartService.getShoppingCars();
     });
+
+    this.cartService.$paymentUpdate.pipe(takeUntil(this._unsubscribeAll)).subscribe(() => {
+      this.fillShoppingCart();
+    });
+  }
+
+  private fillShoppingCart() {
+    if (this.loggedInUser) {
+      this.cartService.getCart().then((data) => {
+        this.shoppingCarts = data.data;
+        this.shoppingCartItems = this.cartService.getShoppingCars();
+      });
+    } else {
+      this.shoppingCarts = [];
+      this.shoppingCartItems = this.cartService.getShoppingCars();
+    }
   }
 
   ngOnDestroy() {

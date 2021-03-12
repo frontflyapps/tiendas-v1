@@ -4,7 +4,14 @@
       <div *ngFor="let product of products" class="swiper-slide">
         <mat-card class="cardProduct" fxLayout="column">
           <div class="product-img">
-            <a class="product-link" [routerLink]="['/product', product.id]">
+            <a
+              class="product-link"
+              [routerLink]="['/product']"
+              [queryParams]="{
+                productId: product?.id,
+                stockId: product?.Stock?.id
+              }"
+            >
               <img
                 class="imageProduct"
                 ngp-lazy
@@ -25,7 +32,14 @@
             </a>
           </div>
           <div class="product-info-wrapper py-2 px-3">
-            <a class="product-link" [routerLink]="['/product', product.id]">
+            <a
+              class="product-link"
+              [routerLink]="['/product']"
+              [queryParams]="{
+                productId: product?.id,
+                stockId: product?.Stock?.id
+              }"
+            >
               <span class="mat-caption" style="font-size: 0.8rem !important">
                 {{ utilsService.parserLanguage(product.Category.name, language) }}
               </span>
@@ -75,9 +89,9 @@
               <!-- <a (click)="addToWishlist(product)">
                     <mat-icon class="mat-icon-lg mat-icon material-icons mr-10">favorite_border</mat-icon>
                   </a> -->
-              <a (click)="openProductDialog(product)">
+              <!--<a (click)="openProductDialog(product)">
                 <mat-icon>info</mat-icon>
-              </a>
+              </a>-->
               <a (click)="addToCompare(product)">
                 <mat-icon>compare_arrows</mat-icon>
               </a>
@@ -104,7 +118,14 @@
       <div *ngFor="let product of products" class="pr-3">
         <mat-card class="cardProduct2" fxLayout="column">
           <div class="product-img">
-            <a class="product-link" [routerLink]="['/product', product.id]">
+            <a
+              class="product-link"
+              [routerLink]="['/product']"
+              [queryParams]="{
+                productId: product?.id,
+                stockId: product?.Stock?.id
+              }"
+            >
               <img
                 class="imageProduct"
                 ngp-lazy
@@ -126,7 +147,14 @@
             </a>
           </div>
           <div class="product-info-wrapper py-2 px-3">
-            <a class="product-link" [routerLink]="['/product', product.id]">
+            <a
+              class="product-link"
+              [routerLink]="['/product']"
+              [queryParams]="{
+                productId: product?.id,
+                stockId: product?.Stock?.id
+              }"
+            >
               <span class="mat-caption" style="font-size: 0.8rem !important">
                 {{ utilsService.parserLanguage(product.Category.name, language) }}
               </span>
@@ -176,9 +204,9 @@
               <!-- <a (click)="addToWishlist(product)">
                     <mat-icon class="mat-icon-lg mat-icon material-icons mr-10">favorite_border</mat-icon>
                   </a> -->
-              <a (click)="openProductDialog(product)">
+              <!--<a (click)="openProductDialog(product)">
                 <mat-icon>info</mat-icon>
-              </a>
+              </a>-->
               <a (click)="addToCompare(product)">
                 <mat-icon>compare_arrows</mat-icon>
               </a>
@@ -198,7 +226,14 @@
     <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="gappx">
       <mat-card *ngFor="let product of products" class="cardProduct3" fxLayout="column">
         <div class="product-img">
-          <a class="product-link" [routerLink]="['/product', product.id]">
+          <a
+            class="product-link"
+            [routerLink]="['/product']"
+            [queryParams]="{
+              productId: product?.id,
+              stockId: product?.Stock?.id
+            }"
+          >
             <img
               class="imageProduct"
               ngp-lazy
@@ -220,7 +255,14 @@
           </a>
         </div>
         <div class="product-info-wrapper py-2 px-3">
-          <a class="product-link" [routerLink]="['/product', product.id]">
+          <a
+            class="product-link"
+            [routerLink]="['/product']"
+            [queryParams]="{
+              productId: product?.id,
+              stockId: product?.Stock?.id
+            }"
+          >
             <span class="mat-caption" style="font-size: 0.8rem !important">
               {{ utilsService.parserLanguage(product.Category.name, language) }}
             </span>
@@ -270,9 +312,9 @@
             <!-- <a (click)="addToWishlist(product)">
                   <mat-icon class="mat-icon-lg mat-icon material-icons mr-10">favorite_border</mat-icon>
                 </a> -->
-            <a (click)="openProductDialog(product)">
+            <!--<a (click)="openProductDialog(product)">
               <mat-icon>info</mat-icon>
-            </a>
+            </a>-->
             <a (click)="addToCompare(product)">
               <mat-icon>compare_arrows</mat-icon>
             </a>

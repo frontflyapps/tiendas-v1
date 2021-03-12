@@ -251,6 +251,7 @@ export class MainComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((data) => {
         this.showPaymentSuccess(data.Payment.id);
+        this.cartService.$paymentUpdate.next();
       });
 
     this.socketIoService
@@ -258,6 +259,8 @@ export class MainComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((data) => {
         this.showPaymentCancellSuccess(data.Payment.id);
+        this.cartService.$paymentUpdate.next();
+        this.orderService.$orderItemsUpdated.next();
       });
 
     this.socketIoService

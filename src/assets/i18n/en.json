@@ -1097,5 +1097,9 @@
   "Activate account": "Activate account",
   "Identity card": "Identity card",
   "Shipping required": "Shipping required",
-  "*These products cannot be shipped specify a location": "*These products cannot be shipped specify a location"
+  "*These products cannot be shipped specify a location": "*These products cannot be shipped specify a location",
+  "Payment will be made at the Business office": "The product will be delivered to the business office",
+  "Shipping Rates Details": "Shipping Rates Details",
+  "Proveedor": "Provider",
+  "Shipping provider": "Shipping provider"
 }

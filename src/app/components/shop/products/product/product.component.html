@@ -11,7 +11,16 @@
     <mat-spinner [diameter]="40" *ngIf="inLoading"></mat-spinner>
   </div>
   <div fxFlex.lt-md="35" fxLayoutAlign="center center" class="image-layout">
-    <a class="product-link" fxFlex="row" fxLayoutAlign="center center" [routerLink]="['/product', product.id]">
+    <a
+      class="product-link"
+      fxFlex="row"
+      fxLayoutAlign="center center"
+      [routerLink]="['/product']"
+      [queryParams]="{
+        productId: product?.id,
+        stockId: product?.Stock?.id
+      }"
+    >
       <img
         class="image"
         ngp-lazy
@@ -38,9 +47,15 @@
     </span>
 
     <div class="title">
-      <a class="link-nav-a" [routerLink]="['/product', product.id]">{{
-        product.name[language] ? product.name[language] : product.name['es']
-      }}</a>
+      <a
+        class="link-nav-a"
+        [routerLink]="['/product']"
+        [queryParams]="{
+          productId: product?.id,
+          stockId: product?.Stock?.id
+        }"
+        >{{ product.name[language] ? product.name[language] : product.name['es'] }}</a
+      >
     </div>
 
     <div class="mt-2">

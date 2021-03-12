@@ -19,13 +19,19 @@
   border-radius: 8px 8px 0px 0px;
   justify-content: center;
   align-items: center;
-  height: 200px !important;
-  min-width: 200px !important;
+  height: 180px !important;
+  //min-width: 10px !important;
   max-width: 100% !important;
-  width: 100% !important;
+  width: auto !important;
   object-fit: cover !important;
   object-position: center !important;
   //margin: 4px auto !important;
+}
+
+.product-img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .swiper-slide {

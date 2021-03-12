@@ -11,9 +11,9 @@
       >
         <mat-icon>local_grocery_store</mat-icon>
       </div>
-      <div class="top-cart" fxLayout="row" fxLayoutAlign="end end">
+      <!--<div class="top-cart" fxLayout="row" fxLayoutAlign="end end">
         <span>{{ getTotal(shoppingCarts[0]) | currencyMarket: shoppingCarts[0]?.market }}</span>
-      </div>
+      </div>-->
     </div>
   </button>
   <mat-menu class="spCard-main" #menu="matMenu">
@@ -47,7 +47,11 @@
               />
             </div>
             <div class="desc">
-              <a [routerLink]="['/product', item.Product.id]" class="link-nav-a">
+              <a
+                [routerLink]="['/product']"
+                [queryParams]="{ productId: item?.Product?.id, stockId: item?.Product?.Stock?.id }"
+                class="link-nav-a"
+              >
                 <p class="name">
                   {{ item.Product.name[language] ? item.Product.name[language] : item.Product.name['es'] }}
                 </p>

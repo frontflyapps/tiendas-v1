@@ -122,7 +122,7 @@ export class ProductCarouselComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   public openProductDialog(product) {
-    this.productService.getProductById(product.id).subscribe((data) => {
+    this.productService.getProductById(product.id, product?.Stock?.id).subscribe((data) => {
       const dialogRef = this.dialog.open(ProductDialogComponent, {
         data: data.data,
         panelClass: 'product-dialog',

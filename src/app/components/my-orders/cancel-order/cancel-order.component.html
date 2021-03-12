@@ -1,34 +1,54 @@
 <mat-dialog-content>
-  <h2>{{'Cancelar Pago'| translate}}</h2>
+  <h2>{{ 'Cancelar Pago' | translate }}</h2>
 
   <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="gappx">
     <blockquote>
-      <p>{{cancellationText}}</p>
+      <p>{{ cancellationText }}</p>
     </blockquote>
 
     <ng-container *ngIf="order.status == 'confirmed'">
       <p class="mat-body-2 uppercase py-2">
-        {{'Comentario respecto a la cancelación' | translate}}
+        {{ 'Comentario respecto a la cancelación' | translate }}
       </p>
       <mat-form-field class="example-full-width" appearance="outline" fxFlex="100">
-        <mat-label>{{'Comentario' | translate}}</mat-label>
-        <textarea matInput type="text" [(ngModel)]="this.cancelNote" placeholder="{{'Comentario'|translate}}" required autocomplete="false"
-          rows="4"></textarea>
+        <mat-label>{{ 'Comentario' | translate }}</mat-label>
+        <textarea
+          matInput
+          type="text"
+          class="w-100"
+          [(ngModel)]="this.cancelNote"
+          placeholder="{{ 'Comentario' | translate }}"
+          required
+          autocomplete="false"
+          rows="4"
+        ></textarea>
       </mat-form-field>
     </ng-container>
-
   </div>
   <mat-spinner *ngIf="this.loadData" class="spinerLoad" diameter="80" color="primary"></mat-spinner>
 </mat-dialog-content>
 
 <mat-dialog-actions>
   <div fxLayout="row" fxLayoutAlign="end center" fxFlex="100">
-    <button color="primary" class="mr-2" mat-stroked-button mat-dialog-close>{{'CERRAR'|translate}}</button>
-    <button *ngIf="order.status == 'confirmed'" color="warn" mat-stroked-button class="mr-2" [disabled]="this.loadData"
-      (click)="onCancelar()">{{'CANCELAR ORDEN'|translate}}
+    <button color="primary" class="mr-2" mat-stroked-button mat-dialog-close>{{ 'CERRAR' | translate }}</button>
+    <button
+      *ngIf="order.status == 'confirmed'"
+      color="warn"
+      mat-stroked-button
+      class="mr-2"
+      [disabled]="this.loadData"
+      (click)="onCancelar()"
+    >
+      {{ 'CANCELAR ORDEN' | translate }}
     </button>
-    <button *ngIf="order.status != 'confirmed'" color="primary" mat-flat-button class="mr-2"
-      (click)="this.dialogRef.close(false)">{{'ACEPTAR'|translate}}
+    <button
+      *ngIf="order.status != 'confirmed'"
+      color="primary"
+      mat-flat-button
+      class="mr-2"
+      (click)="this.dialogRef.close(false)"
+    >
+      {{ 'ACEPTAR' | translate }}
     </button>
   </div>
 </mat-dialog-actions>

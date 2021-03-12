@@ -30,6 +30,9 @@ import { ConfirmationDialogFrontModule } from 'src/app/components/shared/confirm
 import { TaxesShippingService } from '../../core/services/taxes-shipping/taxes-shipping.service';
 import { PipesModule } from 'src/app/core/pipes/pipes.module';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { DetailsShippingComponent } from './details-shipping/details-shipping.component';
+import { MatTableModule } from '@angular/material/table';
+import { DialogTranfermovilQrComponent } from './dialog-tranfermovil-qr/dialog-tranfermovil-qr.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -43,6 +46,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatIconModule,
     MatCheckboxModule,
     MatButtonModule,
+    MatTableModule,
     PipesModule,
     MatAutocompleteModule,
     MatRadioModule,
@@ -63,7 +67,10 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     ProcessingPaymentErrorComponent,
     DialogEnzonaConfirmToPayComponent,
     DialogNoCartSelectedComponent,
+    DetailsShippingComponent,
+    DialogTranfermovilQrComponent,
   ],
+  entryComponents: [DetailsShippingComponent, DialogTranfermovilQrComponent],
   providers: [TaxesShippingService],
 })
 export class CheckoutModule {}

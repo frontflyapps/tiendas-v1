@@ -8,7 +8,13 @@
         <ul class="product-list">
           <li class="list-product" *ngFor="let product of featuredProducts" fxLayout="row">
             <div class="media-image">
-              <a [routerLink]="['/product', product.id]">
+              <a
+                [routerLink]="['/product']"
+                [queryParams]="{
+                  productId: product?.id,
+                  stockId: product?.Stock?.id
+                }"
+              >
                 <img
                   class="small"
                   ngp-lazy
@@ -30,7 +36,13 @@
               </a>
             </div>
             <div class="media-body">
-              <a [routerLink]="['/product', product.id]">
+              <a
+                [routerLink]="['/product']"
+                [queryParams]="{
+                  productId: product?.id,
+                  stockId: product?.Stock?.id
+                }"
+              >
                 <span class="module line-clamp">{{
                   product.name[language] ? product.name[language] : product.name['es']
                 }}</span>
@@ -52,7 +64,13 @@
         <ul class="product-list">
           <li class="list-product" *ngFor="let product of popularProducts" fxLayout="row">
             <div class="media-image">
-              <a [routerLink]="['/product', product.id]">
+              <a
+                [routerLink]="['/product']"
+                [queryParams]="{
+                  productId: product?.id,
+                  stockId: product?.Stock?.id
+                }"
+              >
                 <img
                   class="small"
                   ngp-lazy
@@ -74,7 +92,13 @@
               </a>
             </div>
             <div class="media-body">
-              <a [routerLink]="['/product', product.id]">
+              <a
+                [routerLink]="['/product']"
+                [queryParams]="{
+                  productId: product?.id,
+                  stockId: product?.Stock?.id
+                }"
+              >
                 <span class="module line-clamp">{{
                   product.name[language] ? product.name[language] : product.name['es']
                 }}</span>
@@ -96,7 +120,13 @@
         <ul class="product-list">
           <li class="list-product" *ngFor="let product of allProducts" fxLayout="row">
             <div class="media-image">
-              <a [routerLink]="['/product', product.id]">
+              <a
+                [routerLink]="['/product']"
+                [queryParams]="{
+                  productId: product?.id,
+                  stockId: product?.Stock?.id
+                }"
+              >
                 <img
                   class="small"
                   ngp-lazy
@@ -118,7 +148,13 @@
               </a>
             </div>
             <div class="media-body">
-              <a [routerLink]="['/product', product.id]">
+              <a
+                [routerLink]="['/product']"
+                [queryParams]="{
+                  productId: product?.id,
+                  stockId: product?.Stock?.id
+                }"
+              >
                 <span class="module line-clamp">{{
                   product.name[language] ? product.name[language] : product.name['es']
                 }}</span>

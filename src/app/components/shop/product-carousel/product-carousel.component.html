@@ -7,7 +7,11 @@
             <mat-spinner [diameter]="40" *ngIf="inLoading"></mat-spinner>
           </div>
           <div class="product-img">
-            <a class="product-link" [routerLink]="['/product', product.id]">
+            <a
+              class="product-link"
+              [routerLink]="['/product']"
+              [queryParams]="{ productId: product.id, stockId: product?.Stock?.id }"
+            >
               <img
                 class="imageProduct"
                 ngp-lazy
@@ -28,7 +32,11 @@
             </a>
           </div>
           <div class="product-info-wrapper py-2 px-3">
-            <a class="product-link" [routerLink]="['/product', product.id]">
+            <a
+              class="product-link"
+              [routerLink]="['/product']"
+              [queryParams]="{ productId: product.id, stockId: product?.Stock?.id }"
+            >
               <span class="mat-caption" style="font-size: 0.8rem !important">
                 {{ utilsService.parserLanguage(product.Category.name, language) }}
               </span>
@@ -75,12 +83,9 @@
             </button>
 
             <div class="icons" fxLayout="column">
-              <!-- <a (click)="addToWishlist(product)">
-                    <mat-icon class="mat-icon-lg mat-icon material-icons mr-10">favorite_border</mat-icon>
-                  </a> -->
-              <a (click)="openProductDialog(product)">
+              <!--<a (click)="openProductDialog(product)">
                 <mat-icon>info</mat-icon>
-              </a>
+              </a>-->
               <a (click)="addToCompare(product)">
                 <mat-icon>compare_arrows</mat-icon>
               </a>
@@ -110,7 +115,11 @@
             <mat-spinner [diameter]="40" *ngIf="inLoading"></mat-spinner>
           </div>
           <div class="product-img">
-            <a class="product-link" [routerLink]="['/product', product.id]">
+            <a
+              class="product-link"
+              [routerLink]="['/product']"
+              [queryParams]="{ productId: product.id, stockId: product?.Stock?.id }"
+            >
               <img
                 class="imageProduct"
                 ngp-lazy
@@ -133,7 +142,11 @@
             </a>
           </div>
           <div class="product-info-wrapper py-2 px-3 pb-3">
-            <a class="product-link" [routerLink]="['/product', product.id]">
+            <a
+              class="product-link"
+              [routerLink]="['/product']"
+              [queryParams]="{ productId: product.id, stockId: product?.Stock?.id }"
+            >
               <span class="mat-caption" style="font-size: 0.8rem !important">
                 {{ utilsService.parserLanguage(product.Category.name, language) }}
               </span>
@@ -183,9 +196,9 @@
               <!-- <a (click)="addToWishlist(product)">
                     <mat-icon class="mat-icon-lg mat-icon material-icons mr-10">favorite_border</mat-icon>
                   </a> -->
-              <a (click)="openProductDialog(product)">
+              <!--<a (click)="openProductDialog(product)">
                 <mat-icon>info</mat-icon>
-              </a>
+              </a>-->
               <a (click)="addToCompare(product)">
                 <mat-icon>compare_arrows</mat-icon>
               </a>

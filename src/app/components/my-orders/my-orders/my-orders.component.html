@@ -161,7 +161,7 @@
           </button>
 
           <mat-tab-group mat-align-tabs="center">
-            <mat-tab label="{{ 'PRODUCTS' | translate }}">
+            <mat-tab label="{{ 'PRODUCTS' | translate | uppercase }}">
               <div *ngIf="this.selectedOrder && !loadingSelectedItem" class="DetailsProduct">
                 <!-- /////////////////////////// -->
                 <p style="text-align: right" class="my-2">
@@ -188,7 +188,14 @@
                         src="../../../../assets/images/noImage.jpg"
                         alt=""
                       />
-                      <a class="product-link" [routerLink]="['/product', paymentItem?.Product?.id]">
+                      <a
+                        class="product-link"
+                        [routerLink]="['/product']"
+                        [queryParams]="{
+                          productId: paymentItem?.ProductId,
+                          stockId: paymentItem?.StockId
+                        }"
+                      >
                         <img
                           class="imageProduct"
                           ngp-lazy
@@ -566,7 +573,6 @@
                 </div>
 
                 <mat-divider fxHide.lt-sm></mat-divider>
-
                 <ng-container *ngIf="this.selectedOrder.status == 'cancelled'">
                   <p class="mat-title my-2" ngClass.xs="mat-body-2">
                     {{ 'Comentario acerca de la cancelación' | translate }}
@@ -627,6 +633,174 @@
                 {{'VOUCHER'|translate}}
               </button> -->
               <!-- ------------------------------------------------------------ -->
+            </mat-tab>
+            <mat-tab label="{{ 'Detalles del proveedor' | translate | uppercase }}">
+              <div
+                *ngIf="this.selectedOrder"
+                fxLayout="column"
+                class="container-bulling w-100"
+                fxLayoutAlign="start stretch"
+                fxLayoutGap="gappx"
+              >
+                <span ngClass.xs="mb-1" class="mat-subheading-1 color-grey-800" style="font-weight: 600">{{
+                  'Proveedor' | translate | uppercase
+                }}</span>
+                <div fxLayout="row wrap " fxLayoutAlign="space-between center" fxLayoutGap="gappx">
+                  <div
+                    fxFlex="33"
+                    fxFlex.lt-sm="50"
+                    ngClass.lt-sm="py-2 border-bottom"
+                    fxFlex.xs="100"
+                    fxLayout="column"
+                    fxLayoutAlign="start start"
+                    fxLayoutGap="gappx"
+                  >
+                    <span class="mat-caption color-grey-800">
+                      {{ 'Negocio' | translate }}
+                    </span>
+                    <div fxLayout="row" fxLayoutAlign="start center">
+                      <img
+                        *ngIf="this.selectedOrder?.Business?.logo"
+                        style="height: 32px; width: 32px; border-radius: 50%; object-fit: cover"
+                        [src]="urlImage + this.selectedOrder?.Business?.logo"
+                      />
+
+                      <img
+                        *ngIf="!this.selectedOrder?.Business?.logo"
+                        style="height: 32px; width: 32px; border-radius: 50%; object-fit: cover"
+                        src="../../../../assets/images/noImage.jpg"
+                      />
+
+                      <span class="mat-body-2 ml-2 uppercase">{{ this.selectedOrder?.Business?.name }}</span>
+                    </div>
+                  </div>
+
+                  <div
+                    fxFlex="33"
+                    fxFlex.lt-sm="50"
+                    ngClass.lt-sm="py-2 border-bottom"
+                    fxFlex.xs="100"
+                    fxLayout="column"
+                    fxLayoutAlign="start start"
+                    fxLayoutGap="gappx"
+                  >
+                    <span class="mat-caption color-grey-800">{{ 'Correo electrónico' | translate }}</span>
+                    <span>{{ this.selectedOrder?.Business?.email }}</span>
+                  </div>
+                </div>
+
+                <div fxLayout="row wrap " fxLayoutAlign="space-between center" fxLayoutGap="gappx">
+                  <div
+                    fxFlex="33"
+                    fxFlex.lt-sm="50"
+                    fxFlex.xs="100"
+                    ngClass.gt-xs="py-3"
+                    ngClass.lt-sm="py-2 border-bottom"
+                    fxLayout="column"
+                    fxLayoutAlign="start start"
+                    fxLayoutGap="gappx"
+                  >
+                    <span class="mat-caption color-grey-800">{{ 'Dirección' | translate }}</span>
+                    <span>{{ this.selectedOrder?.Business?.addresss }}</span>
+                  </div>
+                  <div
+                    fxFlex="33"
+                    fxFlex.lt-sm="50"
+                    ngClass.gt-xs="py-3"
+                    ngClass.lt-sm="py-2 border-bottom"
+                    fxFlex.xs="100"
+                    fxLayout="column"
+                    fxLayoutAlign="start start"
+                    fxLayoutGap="gappx"
+                  >
+                    <span class="mat-caption color-grey-800">{{ 'phone' | translate }}</span>
+                    <span>{{ this.selectedOrder?.Business?.phone }}</span>
+                  </div>
+                </div>
+                <mat-divider fxHide.lt-sm></mat-divider>
+                <div
+                  *ngIf="this.selectedOrder?.shippingRequired"
+                  fxLayout="column"
+                  class="w-100"
+                  fxLayoutAlign="start stretch"
+                >
+                  <span ngClass.xs="mb-1" class="mat-subheading-1 color-grey-800 mt-3" style="font-weight: 600">{{
+                    'Shipping provider' | translate | uppercase
+                  }}</span>
+                  <div fxLayout="row wrap " fxLayoutAlign="space-between center" fxLayoutGap="gappx">
+                    <div
+                      fxFlex="33"
+                      fxFlex.lt-sm="50"
+                      ngClass.lt-sm="py-2 border-bottom"
+                      fxFlex.xs="100"
+                      fxLayout="column"
+                      fxLayoutAlign="start start"
+                      fxLayoutGap="gappx"
+                    >
+                      <span class="mat-caption color-grey-800">
+                        {{ 'Negocio' | translate }}
+                      </span>
+                      <div fxLayout="row" fxLayoutAlign="start center">
+                        <img
+                          *ngIf="this.selectedOrder?.ShippingBusiness?.logo"
+                          style="height: 32px; width: 32px; border-radius: 50%; object-fit: cover"
+                          [src]="urlImage + this.selectedOrder?.ShippingBusiness?.logo"
+                        />
+
+                        <img
+                          *ngIf="!this.selectedOrder?.ShippingBusiness?.logo"
+                          style="height: 32px; width: 32px; border-radius: 50%; object-fit: cover"
+                          src="../../../../assets/images/noImage.jpg"
+                        />
+
+                        <span class="mat-body-2 ml-2 uppercase">{{ this.selectedOrder?.ShippingBusiness?.name }}</span>
+                      </div>
+                    </div>
+
+                    <div
+                      fxFlex="33"
+                      fxFlex.lt-sm="50"
+                      ngClass.lt-sm="py-2 border-bottom"
+                      fxFlex.xs="100"
+                      fxLayout="column"
+                      fxLayoutAlign="start start"
+                      fxLayoutGap="gappx"
+                    >
+                      <span class="mat-caption color-grey-800">{{ 'Correo electrónico' | translate }}</span>
+                      <span>{{ this.selectedOrder?.ShippingBusiness?.email }}</span>
+                    </div>
+                  </div>
+
+                  <div fxLayout="row wrap " fxLayoutAlign="space-between center" fxLayoutGap="gappx">
+                    <div
+                      fxFlex="33"
+                      fxFlex.lt-sm="50"
+                      fxFlex.xs="100"
+                      ngClass.gt-xs="py-3"
+                      ngClass.lt-sm="py-2 border-bottom"
+                      fxLayout="column"
+                      fxLayoutAlign="start start"
+                      fxLayoutGap="gappx"
+                    >
+                      <span class="mat-caption color-grey-800">{{ 'Dirección' | translate }}</span>
+                      <span>{{ this.selectedOrder?.ShippingBusiness?.addresss }}</span>
+                    </div>
+                    <div
+                      fxFlex="33"
+                      fxFlex.lt-sm="50"
+                      ngClass.gt-xs="py-3"
+                      ngClass.lt-sm="py-2 border-bottom"
+                      fxFlex.xs="100"
+                      fxLayout="column"
+                      fxLayoutAlign="start start"
+                      fxLayoutGap="gappx"
+                    >
+                      <span class="mat-caption color-grey-800">{{ 'phone' | translate }}</span>
+                      <span>{{ this.selectedOrder?.ShippingBusiness?.phone }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </mat-tab>
           </mat-tab-group>
         </mat-drawer-content>

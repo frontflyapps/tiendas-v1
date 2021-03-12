@@ -8,11 +8,11 @@ export const environment = {
   imageUrl: 'http://192.168.1.14:8998/v1/',
   defaultLanguage: 'es',
   version: '1.2.0',
-  url: 'http://localhost:4400',
-  urlAboutUs: 'http://localhost:4400',
+  url: 'http://tienda.sinkoola.com:4200',
+  urlAboutUs: 'http://tienda.sinkoola.com:4200/',
   address: 'Sin Cola SA / Quinta Avenida,18204, Playa, La Habana.',
   localDatabaseUsers: true,
-  adminService: 'http://tienda.sinkoola.com:4300/',
+  adminService: 'http://admintienda.sinkoola.com:4300/',
   mainDomain: '.sinkoola.com',
 };
 

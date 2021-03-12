@@ -25,6 +25,7 @@ import { MyOrdersRoutingModule } from './my-orders-routing.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgpMaterialRatingModule } from 'ngp-material-rating';
+import { MatInputModule } from '@angular/material/input';
 
 ///////////////////////////////////////////////////////////////////
 
@@ -42,6 +43,7 @@ import { NgpMaterialRatingModule } from 'ngp-material-rating';
     MatTooltipModule,
     MatListModule,
     MatDividerModule,
+    MatInputModule,
     MatSidenavModule,
     MatRippleModule,
     MatTabsModule,

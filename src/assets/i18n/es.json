@@ -1097,5 +1097,9 @@
   "Activate account": "Activar cuenta",
   "Identity card": "Carnet de identidad",
   "Shipping required": "Envío requerido",
-  "*These products cannot be shipped specify a location": "*Estos productos no pueden ser enviados especifique una localización"
+  "*These products cannot be shipped specify a location": "*Estos productos no pueden ser enviados especifique una localización",
+  "Payment will be made at the Business office": "La entrega del producto se realizará en la oficina del negocio",
+  "Shipping Rates Details": "Detalles de las Tarifas de envío",
+  "Proveedor": "Proveedor",
+  "Shipping provider": "Proveedor del envío"
 }
