@@ -1,7 +1,6 @@
 import { DialogNoCartSelectedComponent } from './../no-cart-selected/no-cart-selected.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ShowToastrService } from 'src/app/core/services/show-toastr/show-toastr.service';
 import { PayService } from './../../../core/services/pay/pay.service';
 import { FormBuilder, FormGroup, Validators, AbstractControl, ValidatorFn, FormControl } from '@angular/forms';
 import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
@@ -26,6 +25,8 @@ import { TaxesShippingService } from '../../../core/services/taxes-shipping/taxe
 import { CoinEnum } from '../../../core/classes/coin.enum';
 import { MarketEnum } from '../../../core/classes/market.enum';
 import { MyOrdersService } from '../../my-orders/service/my-orders.service';
+import { ShowToastrService } from '../../../core/services/show-toastr/show-toastr.service';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-checkout',
@@ -43,7 +44,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   filteredCities: any[] = [];
   loadingPayment = false;
   launchTM = undefined;
-
+  dataSource: MatTableDataSource<any>;
+  displayedColumns: string[] = ['product', 'quantity', 'price'];
   amount: number;
   payments: any[] = [
     { id: 'transfermovil', name: 'Transfermovil', logo: 'assets/images/transfermovil_logo.png' },
@@ -239,6 +241,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         console.log('CheckoutComponent -> getCartData -> data', data);
         this.cart = data.Cart;
         this.buyProducts = data.CartItems || [];
+        this.dataSource = new MatTableDataSource(this.buyProducts);
         this.marketCard =
           this.buyProducts && this.buyProducts.length > 0 ? this.buyProducts[0].Product.market : MarketEnum.NATIONAL;
         if (this.buyProducts && this.buyProducts.length > 0) {
@@ -665,8 +668,18 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       .listen('payment-confirmed')
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((data) => {
+        console.log('payment-confirmed');
         this.orderSevice.$orderItemsUpdated.next();
         this.getCartData();
+      });
+
+    this.socketIoService
+      .listen('payment-error')
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((data) => {
+        console.log('payment-error');
+        this.loadingPayment = false;
+        this.showToastr.showError(data.message, 'Error', 5000);
       });
   }
 }

@@ -274,7 +274,7 @@ export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
     let dialogRef: MatDialogRef<CancelOrderComponent, any>;
 
     dialogRef = this.dialog.open(CancelOrderComponent, {
-      width: '550px',
+      width: '650px',
       maxWidth: '100vw',
       data: {
         order: JSON.parse(JSON.stringify(order)),

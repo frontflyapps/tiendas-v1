@@ -1101,5 +1101,9 @@
   "Payment will be made at the Business office": "The product will be delivered to the business office",
   "Shipping Rates Details": "Shipping Rates Details",
   "Proveedor": "Provider",
-  "Shipping provider": "Shipping provider"
+  "Shipping provider": "Shipping provider",
+  "Cancellation policies": "Cancellation policies",
+  "Penalty for cancellation policies": "Penalty for cancellation policies",
+  "Accept our cancellation policies": "Accept our cancellation policies",
+  "Full refund": "Full refund"
 }

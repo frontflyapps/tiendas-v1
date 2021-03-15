@@ -1,54 +1,111 @@
-<mat-dialog-content>
-  <h2>{{ 'Cancelar Pago' | translate }}</h2>
+<form [formGroup]="form">
+  <mat-dialog-content>
+    <h2>{{ 'Cancelar Pago' | translate }}</h2>
 
-  <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="gappx">
-    <blockquote>
-      <p>{{ cancellationText }}</p>
-    </blockquote>
+    <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="gappx">
+      <blockquote>
+        <p>{{ cancellationText }}</p>
+      </blockquote>
 
-    <ng-container *ngIf="order.status == 'confirmed'">
-      <p class="mat-body-2 uppercase py-2">
-        {{ 'Comentario respecto a la cancelación' | translate }}
-      </p>
-      <mat-form-field class="example-full-width" appearance="outline" fxFlex="100">
-        <mat-label>{{ 'Comentario' | translate }}</mat-label>
-        <textarea
-          matInput
-          type="text"
-          class="w-100"
-          [(ngModel)]="this.cancelNote"
-          placeholder="{{ 'Comentario' | translate }}"
-          required
-          autocomplete="false"
-          rows="4"
-        ></textarea>
-      </mat-form-field>
-    </ng-container>
-  </div>
-  <mat-spinner *ngIf="this.loadData" class="spinerLoad" diameter="80" color="primary"></mat-spinner>
-</mat-dialog-content>
+      <span class="my-2" style="font-weight: 600"
+        >{{ 'Penalty for cancellation policies' | translate | uppercase }}:
+        <span *ngIf="ruleApply" class="color-cancellation"> {{ ruleApply?.value }} {{ '%' }}</span></span
+      >
 
-<mat-dialog-actions>
-  <div fxLayout="row" fxLayoutAlign="end center" fxFlex="100">
-    <button color="primary" class="mr-2" mat-stroked-button mat-dialog-close>{{ 'CERRAR' | translate }}</button>
-    <button
-      *ngIf="order.status == 'confirmed'"
-      color="warn"
-      mat-stroked-button
-      class="mr-2"
-      [disabled]="this.loadData"
-      (click)="onCancelar()"
-    >
-      {{ 'CANCELAR ORDEN' | translate }}
-    </button>
-    <button
-      *ngIf="order.status != 'confirmed'"
-      color="primary"
-      mat-flat-button
-      class="mr-2"
-      (click)="this.dialogRef.close(false)"
-    >
-      {{ 'ACEPTAR' | translate }}
-    </button>
-  </div>
-</mat-dialog-actions>
+      <span style="font-weight: 600"
+        >{{ 'Full refund' | translate | uppercase }}:
+        <span *ngIf="refund" class="color-cancellation"> {{ refund | currency: this.order.currency }}</span></span
+      >
+
+      <ng-container *ngIf="order.status == 'confirmed'">
+        <p class="mat-body-2 uppercase py-2">
+          {{ 'Comentario respecto a la cancelación' | translate }}
+        </p>
+        <mat-form-field class="example-full-width" appearance="outline" fxFlex="100">
+          <mat-label>{{ 'Comentario' | translate }}</mat-label>
+          <textarea
+            matInput
+            type="text"
+            class="w-100"
+            [formControl]="form.controls['cancelNote']"
+            placeholder="{{ 'Comentario' | translate }}"
+            required
+            autocomplete="false"
+            rows="4"
+          ></textarea>
+        </mat-form-field>
+      </ng-container>
+
+      <ng-container>
+        <p class="mat-body-2 uppercase mb-1">
+          {{ 'Cancellation policies' | translate }}
+        </p>
+        <mat-card class="mat-elevation-z0">
+          <div class="responsive_table">
+            <table mat-table [dataSource]="dataSource">
+              <ng-container matColumnDef="minHour">
+                <th style="width: 10%" mat-header-cell *matHeaderCellDef>
+                  <span class="mat-caption">{{ 'Desde' | translate }}</span>
+                </th>
+                <td mat-cell *matCellDef="let element">
+                  <span class="mat-body-2">{{ element?.minHour }} {{ 'h' }}</span>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="maxHour">
+                <th style="width: 10%" mat-header-cell *matHeaderCellDef>
+                  <span class="mat-caption">{{ 'Hasta' | translate }}</span>
+                </th>
+                <td mat-cell *matCellDef="let element">
+                  <span class="mat-body-2">{{ element?.maxHour }} {{ 'h' }}</span>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="value">
+                <th style="width: 10%" mat-header-cell *matHeaderCellDef>
+                  <span class="mat-caption">{{ 'Valor' | translate }}</span>
+                </th>
+                <td mat-cell *matCellDef="let element">
+                  <span class="mat-body-2">{{ element?.value }} {{ '%' }}</span>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+              <tr mat-row class="rowData" *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+          </div>
+        </mat-card>
+
+        <mat-checkbox *ngIf="ruleApply" [formControl]="form.controls['rule']">
+          <span class="mat-body-2">{{ 'Accept our cancellation policies' | translate | uppercase }}</span>
+        </mat-checkbox>
+      </ng-container>
+    </div>
+    <mat-spinner *ngIf="this.loadData" class="spinerLoad" diameter="80" color="primary"></mat-spinner>
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <div fxLayout="row" fxLayoutAlign="end center" fxFlex="100">
+      <button color="primary" class="mr-2" mat-stroked-button mat-dialog-close>{{ 'CERRAR' | translate }}</button>
+      <button
+        *ngIf="order.status == 'confirmed'"
+        color="warn"
+        mat-stroked-button
+        class="mr-2"
+        [disabled]="isCancelRule || form.invalid"
+        (click)="onCancelar()"
+      >
+        {{ 'CANCELAR ORDEN' | translate }}
+      </button>
+      <button
+        *ngIf="order.status != 'confirmed'"
+        color="primary"
+        mat-flat-button
+        class="mr-2"
+        (click)="this.dialogRef.close(false)"
+      >
+        {{ 'ACEPTAR' | translate }}
+      </button>
+    </div>
+  </mat-dialog-actions>
+</form>

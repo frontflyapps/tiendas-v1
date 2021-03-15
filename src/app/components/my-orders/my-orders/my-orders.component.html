@@ -493,15 +493,7 @@
                     fxLayoutAlign="start start"
                     fxLayoutGap="gappx"
                   >
-                    <ng-container *ngIf="this.selectedOrder.status == 'cancelled'">
-                      <span class="mat-caption color-grey-800">
-                        {{ 'Devolución' | translate }}
-                      </span>
-                      <span>
-                        {{ this.selectedOrder.cancelRefund | currency: this.selectedOrder.currency }}
-                      </span>
-                    </ng-container>
-                    <ng-container *ngIf="this.selectedOrder.status != 'cancelled'">
+                    <ng-container>
                       <span class="mat-caption color-grey-800">
                         {{ 'Amount' | translate }}
                       </span>
@@ -521,14 +513,58 @@
                     fxLayoutAlign="start start"
                     fxLayoutGap="gappx"
                   >
-                    <span class="mat-caption color-grey-800">
-                      {{ 'Status' | translate }}
-                    </span>
-                    <span [class]="this.status[this.selectedOrder.status].class">
-                      {{
-                        this.utilsService.parserLanguage(this.status[this.selectedOrder.status].status, this.language)
-                      }}
-                    </span>
+                    <ng-container>
+                      <span class="mat-caption color-grey-800">
+                        {{ 'Status' | translate }}
+                      </span>
+                      <span [class]="this.status[this.selectedOrder.status].class">
+                        {{
+                          this.utilsService.parserLanguage(this.status[this.selectedOrder.status].status, this.language)
+                        }}
+                      </span>
+                    </ng-container>
+                  </div>
+
+                  <div
+                    fxLayout="column"
+                    ngClass.gt-xs="py-3"
+                    ngClass.lt-sm="py-2 border-bottom"
+                    fxFlex="33"
+                    fxFlex.lt-sm="50"
+                    fxFlex.xs="100"
+                    fxLayoutAlign="start start"
+                    fxLayoutGap="gappx"
+                  >
+                    <ng-container
+                      *ngIf="this.selectedOrder?.shippingDetails && this.selectedOrder?.shippingDetails?.totalPrice"
+                    >
+                      <span class="mat-caption color-grey-800">
+                        {{ 'Precio de envio' | translate }}
+                      </span>
+                      <span>
+                        {{ this.selectedOrder?.shippingDetails?.totalPrice }}
+                      </span>
+                    </ng-container>
+                  </div>
+
+                  <div
+                    fxLayout="column"
+                    ngClass.gt-xs="py-3"
+                    ngClass.lt-sm="py-2 border-bottom"
+                    fxFlex="33"
+                    fxFlex.lt-sm="50"
+                    fxFlex.xs="100"
+                    fxLayoutAlign="start start"
+                    fxLayoutGap="gappx"
+                  >
+                    <ng-container *ngIf="this.selectedOrder.status == 'cancelled'">
+                      <span class="mat-caption color-grey-800">
+                        {{ 'Devolución' | translate }}
+                      </span>
+                      <span>
+                        {{ this.selectedOrder.cancelRefund | currency: this.selectedOrder.currency }}
+                      </span>
+                    </ng-container>
                   </div>
                 </div>
 

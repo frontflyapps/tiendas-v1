@@ -64,7 +64,16 @@ li {
             line-height: 1.2em;
           }
         }
-
+        .responsive_table {
+          img {
+            height: 32px;
+            width: 32px;
+            object-fit: cover;
+            object-position: center;
+            border-radius: 50%;
+            margin-right: 16px;
+          }
+        }
         ul.price-list {
           position: relative;
           border-bottom: 1px solid $grey6;
@@ -105,6 +114,10 @@ li {
         margin-bottom: 30px;
         padding-bottom: 20px;
 
+        @media (max-width: 800px) {
+          padding-left: 0px;
+        }
+
         .shipping {
           width: 36%;
           float: right;
@@ -143,6 +156,9 @@ li {
             font-weight: 400;
             width: 35%;
             float: right;
+            @media (max-width: 800px) {
+              width: auto;
+            }
           }
         }
       }
@@ -171,6 +187,9 @@ li {
         border-bottom: 1px solid $grey6;
         margin-bottom: 30px;
         padding-bottom: 20px;
+        @media (max-width: 800px) {
+          padding-left: 0px;
+        }
 
         li {
           position: relative;
@@ -190,6 +209,9 @@ li {
             font-weight: 400;
             width: 35%;
             float: right;
+            @media (max-width: 800px) {
+              width: auto;
+            }
           }
         }
       }
@@ -229,16 +251,8 @@ li {
   overflow: hidden;
   width: 100%;
   display: -webkit-box;
-  -webkit-line-clamp: 6;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
-}
-
-.line-clamp {
-  display: -webkit-box !important;
-  -webkit-line-clamp: 1 !important;
-  -webkit-box-orient: horizontal !important;
-  line-height: 1.4rem;
-  height: 1.4rem;
 }
 
 .popup {

@@ -13,28 +13,36 @@
       <div class="responsive_table">
         <table mat-table [dataSource]="dataSource">
           <ng-container matColumnDef="product">
-            <th style="width: 10%" mat-header-cell *matHeaderCellDef>
+            <th class="text-center" style="width: 10%" mat-header-cell *matHeaderCellDef>
               <span class="mat-subheading-1">{{ 'Product' | translate }}</span>
             </th>
-            <td mat-cell *matCellDef="let element">
-              <span *ngIf="element?.Product" class="mat-body-2">{{
-                utilsService.parserLanguage(element?.Product?.name, language)
-              }}</span>
+            <td class="pb-2" mat-cell *matCellDef="let element">
+              <div fxLayout="row" fxLayoutAlign="center center">
+                <span *ngIf="element?.Product" class="mat-body-2 line-clamp">{{
+                  utilsService.parserLanguage(element?.Product?.name, language)
+                }}</span>
+              </div>
             </td>
-            <td mat-footer-cell *matFooterCellDef>
-              <span class="footer">{{ 'Total' }}</span>
+            <td class="text-center" mat-footer-cell *matFooterCellDef>
+              <div fxLayout="row" fxLayoutAlign="center center">
+                <span class="footer">{{ 'Total' }}</span>
+              </div>
             </td>
           </ng-container>
 
           <ng-container matColumnDef="price">
-            <th style="width: 10%" mat-header-cell *matHeaderCellDef>
+            <th class="text-center" style="width: 10%" mat-header-cell *matHeaderCellDef>
               <span class="mat-subheading-1">{{ 'Price' | translate }}</span>
             </th>
             <td mat-cell *matCellDef="let element">
-              <span *ngIf="element?.price" class="mat-body-2">{{ element?.price | currencyMarket: marketCard }}</span>
+              <div fxLayout="row" fxLayoutAlign="center center">
+                <span *ngIf="element?.price" class="mat-body-2">{{ element?.price | currencyMarket: marketCard }}</span>
+              </div>
             </td>
             <td mat-footer-cell *matFooterCellDef>
-              <span class="footer">{{ getTotalCost() | currencyMarket: marketCard }}</span>
+              <div fxLayout="row" fxLayoutAlign="center center">
+                <span class="footer">{{ getTotalCost() | currencyMarket: marketCard }}</span>
+              </div>
             </td>
           </ng-container>
 

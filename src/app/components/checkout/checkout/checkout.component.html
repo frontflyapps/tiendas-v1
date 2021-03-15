@@ -304,7 +304,62 @@
                 {{ 'Product' | translate }} <span class="tl-amount"> {{ 'Total' | translate }}</span>
               </div>
             </div>
-            <ul class="price-list" *ngIf="buyProducts.length">
+            <div *ngIf="buyProducts.length" class="responsive_table">
+              <table mat-table [dataSource]="dataSource">
+                <ng-container matColumnDef="product">
+                  <th class="text-center" style="width: 10%" mat-header-cell *matHeaderCellDef>
+                    <span class="mat-subheading-1">{{ 'Name' | translate }}</span>
+                  </th>
+                  <td class="py-2" mat-cell *matCellDef="let element">
+                    <div fxLayout="row" fxLayoutAlign="start center">
+                      <img
+                        *ngIf="element.Product.Images && element.Product.Images.length"
+                        [src]="imageUrl + element.Product.Images[0].image"
+                      />
+                      <img
+                        *ngIf="!(element.Product.Images && element.Product.Images.length)"
+                        src="../../../../assets/images/noImage.jpg"
+                      />
+                      <p class="name">
+                        <a [href]="'/product?productId=' + element.ProductId + '&stockId=' + element.StockId"
+                          ><strong class="color-grey-800">{{
+                            element.Product.name[language] ? element.Product.name[language] : element.Product.name['es']
+                          }}</strong></a
+                        >
+                      </p>
+                    </div>
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="quantity">
+                  <th style="width: 10%" class="text-center" mat-header-cell *matHeaderCellDef>
+                    <span class="mat-subheading-1">{{ 'Quantity' | translate }}</span>
+                  </th>
+                  <td mat-cell *matCellDef="let element">
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                      <strong style="font-size: 17px">x {{ element.quantity }}</strong>
+                    </div>
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="price">
+                  <th class="text-center" style="width: 10%" mat-header-cell *matHeaderCellDef>
+                    <span class="mat-subheading-1">{{ 'Price' | translate }}</span>
+                  </th>
+                  <td mat-cell *matCellDef="let element">
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                      <strong style="font-size: 16px">
+                        {{ getTotalPricePerItem(element) | currencyMarket: marketCard }}
+                      </strong>
+                    </div>
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-row class="rowData" *matRowDef="let row; columns: displayedColumns"></tr>
+              </table>
+            </div>
+            <!--<ul class="price-list" *ngIf="buyProducts.length">
               <li *ngFor="let item of buyProducts">
                 <div fxLayout="row" fxLayoutAlign="start center" class="py-2" fxLayoutGap="gappx">
                   <div fxFlex="63" class="product" fxLayout="row" fxLayoutAlign="start center">
@@ -321,7 +376,7 @@
 
                     <p class="name">
                       <a [href]="'/product?productId=' + item.ProductId + '&stockId=' + item.StockId"
-                        ><strong class="color-grey-800 line-clamp">{{
+                        ><strong class="color-grey-800">{{
                           item.Product.name[language] ? item.Product.name[language] : item.Product.name['es']
                         }}</strong></a
                       >
@@ -345,7 +400,7 @@
                   </div>
                 </div>
               </li>
-            </ul>
+            </ul>-->
             <ul class="quantity" *ngIf="buyProducts.length <= 0">
               <li class="empty-checkout">{{ 'There are no products in cart' | translate }}</li>
             </ul>

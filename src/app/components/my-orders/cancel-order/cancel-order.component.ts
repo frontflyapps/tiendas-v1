@@ -1,10 +1,12 @@
 import { UtilsService } from './../../../core/services/utils/utils.service';
-import { environment } from './../../../../environments/environment';
 import { ShowToastrService } from './../../../core/services/show-toastr/show-toastr.service';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PayService } from 'src/app/core/services/pay/pay.service';
+import { MatTableDataSource } from '@angular/material/table';
+import * as moment from 'moment';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-cancel-order',
@@ -13,6 +15,7 @@ import { PayService } from 'src/app/core/services/pay/pay.service';
 })
 export class CancelOrderComponent implements OnInit {
   order: any;
+  form: FormGroup;
   cancellationText =
     'Usted desea cancelar un pago en nuestra plataforma, la devolucion será de acorde a nuestros términos y condiciones';
   cancellationType = 'REQUESTED_BY_CLIENT';
@@ -22,16 +25,24 @@ export class CancelOrderComponent implements OnInit {
     { id: 'CONDITION_BREACH', name: 'Incidente de viaje' },
   ];
   loadData = false;
-  cancelNote = 'Solicitud el cliente';
+  isCancelRule = false;
+  cancellationRule: any[] = [];
+  dataSource: MatTableDataSource<any>;
+  displayedColumns: string[] = ['minHour', 'maxHour', 'value'];
+  ruleApply: any;
+  refund: any;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private spinner: NgxSpinnerService,
     private showToastr: ShowToastrService,
     private payService: PayService,
+    private fb: FormBuilder,
     public utilsFront: UtilsService,
     public dialogRef: MatDialogRef<CancelOrderComponent>,
   ) {
     this.order = data.order;
+    this.cancellationRule = this.order?.cancellationRule;
+    console.log(this.cancellationRule);
     if (this.order.status == 'on-delivery') {
       this.cancellationText = `Este pago está en proceso de envío, por lo que para continuar con su cancelación,
          y correspondiente devolución póngase en contacto con los administradores de la plataforma,
@@ -39,12 +50,44 @@ export class CancelOrderComponent implements OnInit {
     }
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.isCancelRule = true;
+    this.form = this.fb.group({
+      rule: [false, [Validators.required]],
+      cancelNote: ['Solicitud del cliente', Validators.required],
+    });
+    this.form.controls['rule'].valueChanges.subscribe((value) => {
+      this.isCancelRule = true;
+      if (value) {
+        this.isCancelRule = false;
+      }
+    });
+    this.dataSource = new MatTableDataSource(this.cancellationRule);
+    this.getHourPaymentRules();
+    if (this.ruleApply) {
+      this.refund = (this.order?.amount * this.ruleApply.value) / 100;
+      if (this.refund === 0) {
+        this.refund = this.order.amount;
+      }
+    }
+  }
+
+  private getHourPaymentRules() {
+    let createdPaymentDate = moment(this.order.createdAt).utc(true);
+    let todayDate = moment().utc(true);
+    let diffHours = todayDate.diff(createdPaymentDate, 'hour');
+    this.ruleApply = this.cancellationRule.find((canX) => {
+      if (canX.minHour <= diffHours && canX.maxHour >= diffHours) {
+        return canX;
+      }
+    });
+  }
 
   onCancelar() {
     // console.log('CancelOrderComponent -> onCancelar -> this.order.payemntType', this.order.payemntType);
     this.spinner.show();
-    let body = { id: this.order.id, cancelNote: this.cancelNote };
+    const cancelNote = this.form?.value?.cancelNote;
+    let body = { id: this.order.id, cancelNote: cancelNote };
     if (this.order.paymentType == 'transfermovil') {
       this.payService.cancelPaymentTranfermovil(body).subscribe(
         (val) => {
