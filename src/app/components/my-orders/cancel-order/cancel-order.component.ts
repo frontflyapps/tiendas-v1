@@ -65,10 +65,9 @@ export class CancelOrderComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.cancellationRule);
     this.getHourPaymentRules();
     if (this.ruleApply) {
-      this.refund = (this.order?.amount * this.ruleApply.value) / 100;
-      if (this.refund === 0) {
-        this.refund = this.order.amount;
-      }
+      this.refund = this.order?.amount;
+      let discount = (this.refund * this.ruleApply.value) / 100;
+      this.refund -= discount;
     }
   }
 

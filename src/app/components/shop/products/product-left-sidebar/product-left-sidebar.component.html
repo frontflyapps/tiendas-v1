@@ -1,5 +1,50 @@
 <div class="left-sidebar-wrapper sec-padding" ngClass.lt-sm="pt-3">
   <div class="container-search">
+    <div class="header">
+      <div></div>
+      <div fxLayoutAlign="start center" fxLayoutGap="1rem">
+        <div fxHide fxShow.lt-md fxLayout="row" fxLayoutAlign="space-between start" style="margin-bottom: 5px">
+          <button
+            style="border-radius: 25px; border: 1.5px solid rgba(0, 0, 0, 0.12)"
+            mat-button
+            (click)="openDialog()"
+          >
+            <mat-icon>search</mat-icon>
+            {{ 'Filtros' | translate }}
+          </button>
+        </div>
+        <span class="bold">{{ 'Ordenar' | translate }}</span>
+        <div
+          (click)="onSetOrder(this.queryProduct?.order == 'id' ? '-id' : 'id')"
+          class="chip-order"
+          [ngClass]="{ selected: this.queryProduct?.order == 'id' || this.queryProduct?.order == '-id' }"
+        >
+          {{ 'Creación' | translate }}
+          <mat-icon *ngIf="this.queryProduct?.order == 'id'">north</mat-icon>
+          <mat-icon *ngIf="this.queryProduct?.order == '-id'">south</mat-icon>
+        </div>
+        <div
+          (click)="onSetOrder(this.queryProduct?.order == 'name' ? '-name' : 'name')"
+          class="chip-order"
+          [ngClass]="{ selected: this.queryProduct?.order == 'name' || this.queryProduct?.order == '-name' }"
+        >
+          {{ 'Nombre' | translate }}
+          <mat-icon *ngIf="this.queryProduct?.order == 'name'">north</mat-icon>
+          <mat-icon *ngIf="this.queryProduct?.order == '-name'">south</mat-icon>
+        </div>
+        <div
+          (click)="onSetOrder(this.queryProduct?.order == 'fromPrice' ? '-fromPrice' : 'fromPrice')"
+          class="chip-order"
+          [ngClass]="{ selected: this.queryProduct?.order == 'fromPrice' || this.queryProduct?.order == '-fromPrice' }"
+        >
+          {{ 'Precio' | translate }}
+          <mat-icon *ngIf="this.queryProduct?.order == 'fromPrice'">north</mat-icon>
+          <mat-icon *ngIf="this.queryProduct?.order == '-fromPrice'">south</mat-icon>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-search">
     <div class="my-2" fxHide.xs>
       <mat-chip-list>
         <mat-icon *ngIf="this.showChips().length" class="mx-2">search</mat-icon>
@@ -9,23 +54,10 @@
         </mat-chip>
       </mat-chip-list>
     </div>
-    <div fxHide fxShow.lt-md fxLayout="row" fxLayoutAlign="space-between start" style="margin-bottom: 5px">
-      <button style="border-radius: 10px; border: 1.5px solid rgba(0, 0, 0, 0.12)" mat-button (click)="openDialog()">
-        <mat-icon>search</mat-icon>
-        {{ 'Filtros' | translate }}
-      </button>
-      <select fxHide fxShow.lt-md class="select-search" (change)="onChangeSorting($event.target.value)">
-        <option value="name">{{ 'Alphabetically, A-Z' | translate }}</option>
-        <option value="-name">{{ 'Alphabetically, Z-A' | translate }}</option>
-        <option value="price">{{ 'Price, low to high' | translate }}</option>
-        <option value="-price">{{ 'Price, high to low' | translate }}</option>
-        <option value="rating">{{ 'Rating, low to high' | translate }}</option>
-        <option value="-rating">{{ 'Rating, high to low' | translate }}</option>
-      </select>
-    </div>
+
     <div id="topLeftSidebar" class="sidebar-wrapper" fxLayout="row wrap" fxLayoutAlign="center start">
       <div fxFlex="25" fxFlex.lt-md="100" class="filter-sidenav" perfectScrollbar fxHide.lt-md>
-        <div class="toggles-wrapper border-right" fxLayout="column" fxLayout.lt-md="column">
+        <div class="toggles-wrapper border-right" fxLayout="column" style="border-radius: 15px" fxLayout.lt-md="column">
           <div class="toggles" fxFlex.lt-md="100">
             <mat-accordion [multi]="true">
               <mat-expansion-panel
@@ -106,7 +138,7 @@
           </div>
         </div>  -->
 
-        <div fxHide.lt-md fxLayoutAlign.lt-md="end start">
+        <!-- <div fxHide.lt-md fxLayoutAlign.lt-md="end start">
           <select class="select-search mx-2" (change)="onChangeSorting($event.target.value)">
             <option value="name">{{ 'Alphabetically, A-Z' | translate }}</option>
             <option value="-name">{{ 'Alphabetically, Z-A' | translate }}</option>
@@ -115,7 +147,7 @@
             <option value="rating">{{ 'Rating, low to high' | translate }}</option>
             <option value="-rating">{{ 'Rating, high to low' | translate }}</option>
           </select>
-        </div>
+        </div> -->
 
         <div *ngIf="!loading" fxLayout="row wrap" fxLayoutAlign="start start" class="w-100">
           <app-product fxFlex.lt-md="100" *ngFor="let products of allProducts" [product]="products"></app-product>

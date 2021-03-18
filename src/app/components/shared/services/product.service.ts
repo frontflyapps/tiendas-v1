@@ -104,63 +104,8 @@ export class ProductService {
     // return this.products();
   }
 
-  public searchProduct(query?: IPagination, params?: any): Observable<any> {
-    let httpParams = new HttpParams();
-    if (query) {
-      httpParams = httpParams.append('limit', query.limit.toString());
-      httpParams = httpParams.append('offset', query.offset.toString());
-
-      if (query.filter && query.filter.properties) {
-        query.filter.properties.forEach((item) => {
-          httpParams = httpParams.append(item, '%' + query.filter.filterText + '%');
-        });
-      }
-
-      if (query.order) {
-        httpParams = httpParams.append('order', query.order);
-      }
-    } else {
-      httpParams = httpParams.set('limit', '0');
-      httpParams = httpParams.set('offset', '0');
-    }
-    if (params) {
-      if (params.filterText) {
-        httpParams = httpParams.append('filter[$or][name][$like]', '%' + params.filterText + '%');
-        httpParams = httpParams.append('filter[$or][tags][$like]', '%' + params.filterText + '%');
-        httpParams = httpParams.append('filter[$or][description][$like]', '%' + params.filterText + '%');
-      }
-      if (params.brandIds && params.brandIds.length) {
-        if (params.brandIds.length > 1) {
-          params.brandIds.map((item) => {
-            httpParams = httpParams.append('filter[$and][BrandId][$in]', item);
-          });
-        } else {
-          httpParams = httpParams.append('filter[$and][BrandId][$in]', params.brandIds[0]);
-          httpParams = httpParams.append('filter[$and][BrandId][$in]', params.brandIds[0]);
-        }
-      }
-      if (params.categoryIds && params.categoryIds.length) {
-        if (params.categoryIds.length > 1) {
-          params.categoryIds.map((item) => {
-            httpParams = httpParams.append('CategoryIds', item);
-          });
-        } else {
-          httpParams = httpParams.append('CategoryIds', params.categoryIds[0]);
-          httpParams = httpParams.append('CategoryIds', params.categoryIds[0]);
-        }
-      }
-      if (params.minPrice && params.maxPrice) {
-        httpParams = httpParams.set('filter[$and][price][$gte]', params.minPrice);
-        httpParams = httpParams.set('filter[$and][price][$lte]', params.maxPrice);
-      }
-      if (params.type) {
-        httpParams = httpParams.set('filter[$and][type]', params.type);
-      }
-      if (params.rating) {
-        httpParams = httpParams.set('filter[$and][rating][$gte]', params.rating);
-      }
-    }
-    return this.httpClient.get<any>(environment.apiUrl + 'search', { params: httpParams });
+  public searchProduct(data?: any): Observable<any> {
+    return this.httpClient.post<any>(environment.apiUrl + 'search', data);
     // return this.products();
   }
 
