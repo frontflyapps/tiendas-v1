@@ -52,8 +52,8 @@ export class HttpErrorInterceptorService implements HttpInterceptor {
       if (this.router.url.includes('my-account')) {
       } else {
         localStorage.removeItem('user');
-        this.cookieService.delete('account', '/', '.cubaeduca.com');
         this.loggedInUserService.setLoggedInUser(null);
+        this.loggedInUserService.removeCookies();
         this.loggedInUserService.$loggedInUserUpdated.next(null);
         this.utilsService.errorHandle(err);
         this.router.navigate(['my-account']);

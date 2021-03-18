@@ -39,7 +39,7 @@ export class ProductCarouselComponent implements OnInit, AfterViewInit, OnDestro
   @Input() btnColor: any = 'primary';
   @Input() grid = { 480: 1, 740: 2, 960: 2, 1024: 3, 1280: 4 };
   @Input() showBig = false;
-  isLoading = false;
+  inLoading = false;
   typesProducts = [
     { id: 'physical', name: { es: 'Físico', en: 'Physical' } },
     { id: 'digital', name: { es: 'Digital', en: 'Digital' } },
@@ -122,7 +122,7 @@ export class ProductCarouselComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   public openProductDialog(product) {
-    this.productService.getProductById(product.id).subscribe((data) => {
+    this.productService.getProductById(product.id, product?.Stock?.id).subscribe((data) => {
       const dialogRef = this.dialog.open(ProductDialogComponent, {
         data: data.data,
         panelClass: 'product-dialog',
@@ -137,6 +137,7 @@ export class ProductCarouselComponent implements OnInit, AfterViewInit, OnDestro
 
   // Add to cart
   public addToCart(product: any, quantity: number = 1) {
+    this.inLoading = true;
     if (product.minSale > 1) {
       const dialogRef = this.dialog.open(ConfirmationDialogFrontComponent, {
         width: '10cm',
@@ -147,11 +148,25 @@ export class ProductCarouselComponent implements OnInit, AfterViewInit, OnDestro
       });
       dialogRef.afterClosed().subscribe((result) => {
         if (result) {
-          this.cartService.addToCartQuickly(product, product.minSale);
+          this.cartService
+            .addToCartQuickly(product, product.minSale)
+            .then((data) => {
+              this.inLoading = false;
+            })
+            .catch((error) => {
+              this.inLoading = false;
+            });
         }
       });
     } else {
-      this.cartService.addToCartQuickly(product, product.minSale);
+      this.cartService
+        .addToCartQuickly(product, product.minSale)
+        .then((data) => {
+          this.inLoading = false;
+        })
+        .catch((error) => {
+          this.inLoading = false;
+        });
     }
   }
 

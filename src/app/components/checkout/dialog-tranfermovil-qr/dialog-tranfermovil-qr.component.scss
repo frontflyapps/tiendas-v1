@@ -1,0 +1,24 @@
+.app-dialog-tranfermovil-qr {
+  .mat-dialog-container {
+    color: black;
+    background-color: #fafafa !important;
+  }
+  p {
+    color: black;
+  }
+  img {
+    max-height: 85%;
+    max-width: 90%;
+    object-fit: cover;
+    object-position: center;
+
+    @media screen and (max-width: 800px) {
+      max-height: unset;
+      max-width: unset;
+      height: 150px;
+    }
+  }
+  mat-icon {
+    color: black;
+  }
+}

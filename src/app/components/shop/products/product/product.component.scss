@@ -11,7 +11,7 @@
     border-top-left-radius: 16px;
     border-bottom-left-radius: 16px;
     border-top-right-radius: 0px;
-    height: 160px;
+    height: 175px;
   }
 }
 
@@ -74,16 +74,20 @@
   margin-bottom: 0px;
   width: auto;
   margin: auto;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
   height: 180px;
   object-fit: cover;
   object-position: center;
   max-width: 100%;
 
   @media (max-width: 800px) {
-    height: 100px !important;
     width: auto;
-    margin: auto;
-    max-width: 90%;
+    max-width: 95%;
+    border-top-left-radius: 16px;
+    border-bottom-left-radius: 16px;
+    border-top-right-radius: 0px;
+    height: 175px !important;
   }
 }
 

@@ -6,7 +6,7 @@ import { CurrencyPipe } from '@angular/common';
 })
 export class CurrencyService {
   public currencies: any[] = [
-    { name: 'CUC', code: 'CUC' },
+    { name: 'CUP', code: 'CUP' },
     { name: 'USD', code: 'USD' },
   ];
 

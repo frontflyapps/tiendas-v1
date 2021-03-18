@@ -280,7 +280,7 @@
   "Marcar todos": "Comprobar todo",
   "estado": "estado",
   "*Tarifas por productos": "*Tarifas por productos",
-  "Precio de envio": "Precio de envio",
+  "Precio de envio": "Precio de envío",
   "Lista de tarifas de envío": "Lista de tarifas de envío",
   "Tarifas de envío": "Tarifas de envío",
   "Taxes list": "Lista de impuestos",
@@ -1094,5 +1094,16 @@
   "disabled": "deshabilitado",
   "Wrong user": "Usuario incorrecto.",
   "Validate account": "Validar cuenta",
-  "Activate account": "Activar cuenta"
+  "Activate account": "Activar cuenta",
+  "Identity card": "Carnet de identidad",
+  "Shipping required": "Envío requerido",
+  "*These products cannot be shipped specify a location": "*Estos productos no pueden ser enviados especifique una localización",
+  "Payment will be made at the Business office": "La entrega del producto se realizará en la oficina del negocio",
+  "Shipping Rates Details": "Detalles de las Tarifas de envío",
+  "Proveedor": "Proveedor",
+  "Shipping provider": "Proveedor del envío",
+  "Cancellation policies": "Políticas de cancelación",
+  "Penalty for cancellation policies": "Penalización por las políticas de cancelación",
+  "Accept our cancellation policies": "Acepta nuestras politicas de cancelacion",
+  "Full refund": "Devolución total"
 }

@@ -1,6 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
 
 /* You can add global styles to this file, and also import other style files */
+body {
+  @media only screen and (min-width: 756px) and (max-width: 1600px) {
+    zoom: 85%;
+    -webkit-zoom: 85%;
+  }
+}
 @import '../node_modules/swiper/css/swiper.min.css';
 // @import "../node_modules/@angular/material/prebuilt-themes/indigo-pink.css";
 @import './assets/scss/helpers/helpers';

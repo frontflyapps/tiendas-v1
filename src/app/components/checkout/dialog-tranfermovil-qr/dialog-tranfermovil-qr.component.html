@@ -1,0 +1,43 @@
+<mat-dialog-content style="position: relative">
+  <div fxLayout="column" fxLayoutAlign="start center" fxLayoutAlign.lt-md="start start" fxLayoutGap="gappx">
+    <p ngClass.gt-sm="mat-body-2" ngClass.lt-md="mat-body-2">
+      {{ 'Confirmación de pago usando transfermóvil.' | translate }}
+    </p>
+    <ul>
+      <div fxHide.lt-md>
+        <li>
+          {{ 'Abra la aplicación de transfermóvil en su teléfono.' | translate }}
+        </li>
+        <li>
+          {{ 'Seleccione su banco y autentíquese.' | translate }}
+        </li>
+        <li>
+          {{ 'Entre en la opción de "Operaciones" y pulse la opción de pago en línea.' | translate }}
+        </li>
+        <li>
+          {{ 'Precione el botón de lectura de qr y realize su pago.' | translate }}
+        </li>
+      </div>
+      <a color="primary" [href]="domSanitizer.bypassSecurityTrustUrl(this.launchTM)" class="mt-2" mat-flat-button>
+        {{ 'Abrir la app de tranfermovil' | translate }}</a
+      >
+    </ul>
+  </div>
+  <div fxFlexFill fxLayout="column" fxLayoutAlign="start center">
+    <img class="mt-4" [src]="this.imgQR" />
+    <div style="max-width: 20rem" fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="gappx">
+      <span class="mat-title mt-3"> {{ 'Total' | translate }}: &nbsp;{{ finalPrice | currencyMarket: currency }} </span>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button
+    (click)="onCancelarTranfermovilPayment()"
+    mat-button
+    mat-dialog-close
+    color="warn"
+    matTooltip="{{ 'Cancelar la confirmación de pago con transfermóvil' | translate }}"
+  >
+    {{ 'Cancelar' | translate | uppercase }}
+  </button>
+</mat-dialog-actions>

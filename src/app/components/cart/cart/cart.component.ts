@@ -18,7 +18,7 @@ import { Router } from '@angular/router';
 export class CartComponent implements OnInit, OnDestroy {
   public shoppingCartItems: CartItem[] = [];
   public carts: Cart[] = [];
-
+  inLoading: boolean = false;
   language: any;
   _unsubscribeAll: Subject<any>;
   imageUrl = environment.imageUrl;
@@ -72,17 +72,40 @@ export class CartComponent implements OnInit, OnDestroy {
 
   // Remove cart items
   public removeItem(item: CartItem) {
-    this.cartService.removeFromCart(item);
+    this.inLoading = true;
+    this.cartService
+      .removeFromCart(item)
+      .then((data) => {
+        this.inLoading = false;
+      })
+      .catch((error) => {
+        this.inLoading = false;
+      });
   }
 
   // Increase Product Quantity
   public increment(product: any, quantity: number = 1) {
-    this.cartService.addToCart(product, quantity);
+    this.inLoading = true;
+    this.cartService
+      .addToCart(product, quantity)
+      .then((data) => {
+        this.inLoading = false;
+      })
+      .catch((error) => {
+        this.inLoading = false;
+      });
   }
 
   // Decrease Product Quantity
   public decrement(product: any, quantity: number = -1) {
-    this.cartService.addToCart(product, quantity);
+    this.cartService
+      .addToCart(product, quantity)
+      .then((data) => {
+        this.inLoading = false;
+      })
+      .catch((error) => {
+        this.inLoading = false;
+      });
   }
   // Get Total
   public getTotal(cart?): any {

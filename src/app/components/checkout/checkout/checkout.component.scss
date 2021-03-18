@@ -1,4 +1,4 @@
-@import "../../../../assets/scss/theme/variables";
+@import '../../../../assets/scss/theme/variables';
 
 /***************************************
 *  Checkout page styles
@@ -24,20 +24,25 @@ li {
     }
   }
 
-
   .mainOrder-wrapper {
+    position: relative;
     .main-order {
-      border: 1px solid $grey8;
-      border-radius: 4px;
+      //border: 1px solid $grey8;
+      //border-radius: 4px;
+      box-shadow: 1px 2px 7px rgba(0, 0, 0, 0.12);
+      position: sticky;
+      border-radius: 8px;
+      padding: 30px;
 
       &:hover {
-        border: 1.25px solid rgba(0, 0, 0, 0.75);
-        transition: border .5s ease;
+        box-shadow: 1px 2px 20px rgba(0, 0, 0, 0.18);
+        //border: 1.25px solid rgba(0, 0, 0, 0.75);
+        transition: box-shadow;
       }
 
       padding: 30px;
 
-      @media (max-width:500px) {
+      @media (max-width: 500px) {
         padding: 12px;
       }
 
@@ -59,7 +64,16 @@ li {
             line-height: 1.2em;
           }
         }
-
+        .responsive_table {
+          img {
+            height: 32px;
+            width: 32px;
+            object-fit: cover;
+            object-position: center;
+            border-radius: 50%;
+            margin-right: 16px;
+          }
+        }
         ul.price-list {
           position: relative;
           border-bottom: 1px solid $grey6;
@@ -75,9 +89,6 @@ li {
               border-radius: 50%;
               margin-right: 16px;
             }
-
-
-
           }
 
           li {
@@ -89,10 +100,9 @@ li {
               float: right;
               font-size: 20px;
 
-              @media (max-width:500px) {
+              @media (max-width: 500px) {
                 font-size: 15px;
               }
-
             }
           }
         }
@@ -103,6 +113,10 @@ li {
         border-bottom: 1px solid $grey6;
         margin-bottom: 30px;
         padding-bottom: 20px;
+
+        @media (max-width: 800px) {
+          padding-left: 0px;
+        }
 
         .shipping {
           width: 36%;
@@ -122,7 +136,6 @@ li {
                 color: $grey;
               }
             }
-
           }
         }
 
@@ -143,6 +156,9 @@ li {
             font-weight: 400;
             width: 35%;
             float: right;
+            @media (max-width: 800px) {
+              width: auto;
+            }
           }
         }
       }
@@ -171,6 +187,9 @@ li {
         border-bottom: 1px solid $grey6;
         margin-bottom: 30px;
         padding-bottom: 20px;
+        @media (max-width: 800px) {
+          padding-left: 0px;
+        }
 
         li {
           position: relative;
@@ -190,6 +209,9 @@ li {
             font-weight: 400;
             width: 35%;
             float: right;
+            @media (max-width: 800px) {
+              width: auto;
+            }
           }
         }
       }
@@ -218,9 +240,7 @@ li {
     background-color: #eeeeee;
     cursor: none !important;
   }
-
 }
-
 
 .mat-radio-label-content {
   color: $grey5;
@@ -231,10 +251,9 @@ li {
   overflow: hidden;
   width: 100%;
   display: -webkit-box;
-  -webkit-line-clamp: 6;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
 }
-
 
 .popup {
   width: 100vw;
@@ -242,7 +261,7 @@ li {
   position: fixed;
   top: 0;
   left: 0;
-  background-color: rgba(0, 0, 0, .89);
+  background-color: rgba(0, 0, 0, 0.89);
   z-index: 99999;
   padding: 24px;
   color: white;
@@ -290,7 +309,7 @@ li {
   vertical-align: bottom;
   -webkit-animation: ellipsis steps(4, end) 2000ms infinite;
   animation: ellipsis steps(4, end) 2000ms infinite;
-  content: "\2026";
+  content: '\2026';
   /* ascii code for the ellipsis character */
   width: 0px;
 }

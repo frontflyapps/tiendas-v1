@@ -6,19 +6,14 @@ export const environment = {
   production: false,
   apiUrl: 'http://localhost:8998/v1/',
   imageUrl: 'http://localhost:8998/v1/',
-  //apiUrl: 'https://api.sinkoola.com/v1/',
-  //imageUrl: 'https://api.sinkoola.com/v1/',
-  apiUrlRepositoy: 'http://192.168.1.14:8998/v1/',
   defaultLanguage: 'es',
   version: '1.2.0',
   url: 'http://localhost:4400',
   urlAboutUs: 'http://localhost:4400',
   address: 'Mercedes / Quinta Avenida,18204, Playa, La Habana.',
   localDatabaseUsers: true,
-  uploadDigitalProduct: false,
-  uploadServicesProduct: false,
-  adminService: 'http://curricular1.cinesoft.cu:4300/',
-  mainDomain: '.cinesoft.cu',
+  adminService: 'http://admintienda.sinkoola.com:4300/',
+  mainDomain: '.sinkoola.com',
 };
 
 /*

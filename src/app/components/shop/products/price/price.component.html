@@ -1,18 +1,28 @@
 <div class="price-slider">
-
-  <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="filter-price text-muted">
-    <div fxLayout="column" fxLayoutAlign="start start" fxFlex="45">
-      <p>{{"Desde:"|translate}}</p>
-      <input [formControl]="priceForm.get('priceFrom')" (change)="priceFilter()" [min]="0" class="priceInput" type="number"
-        [ngClass]="{'errorInput':priceForm.get('priceFrom').invalid }" />
-    </div>
-    <div fxLayout="column" fxLayoutAlign="start start" fxFlex="45">
-      <p>{{"Hasta:"|translate}}</p>
-      <input [formControl]="priceForm.get('priceTo')" [min]="priceForm.get('priceFrom')" (change)="priceFilter()" [max]="100000"
-        class="priceInput" type="number" [ngClass]="{'errorInput':priceForm.get('priceTo').invalid }" />
-    </div>
-
-
-
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <mat-form-field style="width: 100px; margin-right: 8px" appearance="outline">
+      <mat-label style="text-transform: capitalize"> {{ 'min' | translate }}</mat-label>
+      <input
+        type="number"
+        [min]="0"
+        (change)="priceFilter()"
+        matInput
+        [formControl]="priceForm.get('priceFrom')"
+        [ngClass]="{ errorInput: priceForm.get('priceFrom').invalid }"
+      />
+    </mat-form-field>
+    :
+    <mat-form-field style="width: 100px; margin-right: 8px" appearance="outline">
+      <mat-label style="text-transform: capitalize"> {{ 'max' | translate }}</mat-label>
+      <input
+        type="number"
+        [min]="priceForm.get('priceFrom')"
+        (change)="priceFilter()"
+        [max]="100000"
+        matInput
+        [formControl]="priceForm.get('priceTo')"
+        [ngClass]="{ errorInput: priceForm.get('priceTo').invalid }"
+      />
+    </mat-form-field>
   </div>
 </div>

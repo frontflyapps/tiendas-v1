@@ -14,6 +14,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDividerModule } from '@angular/material/divider';
+import { PipesModule } from 'src/app/core/pipes/pipes.module';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [CartComponent],
@@ -24,10 +26,12 @@ import { MatDividerModule } from '@angular/material/divider';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
+    MatProgressSpinnerModule,
     TranslateModule,
     MatIconModule,
     MatButtonModule,
     FlexLayoutModule,
+    PipesModule,
     MatCardModule,
     MatToolbarModule,
     MatTooltipModule,

@@ -7,6 +7,7 @@ import { IUser } from '../../../core/classes/user.class';
 import { Component, Inject, HostListener, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-confirm-payment-ok',
@@ -90,6 +91,7 @@ export class ConfirmPaymentOkComponent implements OnInit {
     private showToastr: ShowToastrService,
     private translateService: TranslateService,
     private router: Router,
+    private httpClient: HttpClient,
   ) {
     this.urlImage = utilsService.getUrlImages();
     this.dialogRef.disableClose = true;
@@ -129,7 +131,23 @@ export class ConfirmPaymentOkComponent implements OnInit {
 
   ngOnDestroy(): void {}
 
-  onGetVoucher(payment): void {}
+  onGetVoucher(payment): void {
+    const urlDownload = environment.apiUrl + 'payment/' + payment.id + '/voucher';
+
+    const httpOptions = {
+      responseType: 'blob' as 'json',
+    };
+    this.httpClient
+      .get(urlDownload, httpOptions)
+      .toPromise()
+      .then((data) => {
+        const downloadURL = window.URL.createObjectURL(data);
+        const link = document.createElement('a');
+        link.href = downloadURL;
+        link.download = `Voucher-${payment.order}.pdf`;
+        link.click();
+      });
+  }
 
   onAccept(payment): void {
     this.router.navigate(['/my-orders'], { queryParams: { orderId: payment.id } });

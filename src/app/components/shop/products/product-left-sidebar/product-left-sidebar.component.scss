@@ -1,8 +1,56 @@
+@import '../../../../../assets/scss/theme/variables';
+
 .no-border {
   border: none !important;
-
 }
 
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 54px;
+  border-radius: 24px;
+  background-color: #fafafa;
+  margin-bottom: 8px;
+  overflow-x: auto;
+  padding: 0px 16px;
+  box-sizing: border-box;
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+.header::-webkit-scrollbar {
+  display: none;
+}
+
+.chip-order {
+  height: 25px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  font-size: 13px;
+  padding: 4px 16px;
+  cursor: pointer;
+
+  mat-icon {
+    font-size: 16px;
+    height: 16px;
+    width: 16px;
+    line-height: 16px;
+    font-weight: 600px;
+  }
+}
+
+.chip-order.selected {
+  background-color: $theme-main-accent;
+  color: white;
+}
 
 .border-right {
   border-right: 2px solid #eeeeee !important;
@@ -23,10 +71,9 @@
   box-sizing: border-box;
   margin: 0px auto;
 
-  @media (max-width:480px) {
+  @media (max-width: 480px) {
     padding: 0 8px;
   }
-
 }
 
 ::ng-deep .mat-expansion-panel-body {
@@ -38,7 +85,7 @@
   max-height: 150px;
   width: 100%;
 
-  @media (max-width:480px) {
+  @media (max-width: 480px) {
     max-height: 120px;
   }
 }
@@ -49,10 +96,9 @@
   box-shadow: 2px 2px 6px 0px rgba(0, 0, 0, 0.1), 0 1px 1px 0 rgba(0, 0, 0, 0), 0 1px 3px 0 rgba(0, 0, 0, 0.12) !important;
   margin: 16px 0px;
 
-  @media (max-width:480px) {
+  @media (max-width: 480px) {
     max-height: 120px;
   }
-
 }
 
 .select-search {

@@ -1,0 +1,56 @@
+<div class="dialog-content-wrapper">
+  <mat-toolbar class="mb-2" matDialogTitle color="primary" id="toolbarHeader">
+    <mat-toolbar-row fxLayoutAlign="space-between center">
+      <span class="mat-title mb-0">{{ 'Shipping Rates Details' | translate }}</span>
+      <button mat-icon-button (click)="dialogRef.close()" aria-label="Close dialog">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <div mat-dialog-content class="my-dialog-content">
+    <mat-card class="mat-elevation-z0">
+      <div class="responsive_table">
+        <table mat-table [dataSource]="dataSource">
+          <ng-container matColumnDef="product">
+            <th class="text-center" style="width: 10%" mat-header-cell *matHeaderCellDef>
+              <span class="mat-subheading-1">{{ 'Product' | translate }}</span>
+            </th>
+            <td class="pb-2" mat-cell *matCellDef="let element">
+              <div fxLayout="row" fxLayoutAlign="center center">
+                <span *ngIf="element?.Product" class="mat-body-2 line-clamp">{{
+                  utilsService.parserLanguage(element?.Product?.name, language)
+                }}</span>
+              </div>
+            </td>
+            <td class="text-center" mat-footer-cell *matFooterCellDef>
+              <div fxLayout="row" fxLayoutAlign="center center">
+                <span class="footer">{{ 'Total' }}</span>
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="price">
+            <th class="text-center" style="width: 10%" mat-header-cell *matHeaderCellDef>
+              <span class="mat-subheading-1">{{ 'Price' | translate }}</span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <div fxLayout="row" fxLayoutAlign="center center">
+                <span *ngIf="element?.price" class="mat-body-2">{{ element?.price | currencyMarket: marketCard }}</span>
+              </div>
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+              <div fxLayout="row" fxLayoutAlign="center center">
+                <span class="footer">{{ getTotalCost() | currencyMarket: marketCard }}</span>
+              </div>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+          <tr mat-row class="rowData" *matRowDef="let row; columns: displayedColumns"></tr>
+          <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+        </table>
+      </div>
+    </mat-card>
+  </div>
+</div>

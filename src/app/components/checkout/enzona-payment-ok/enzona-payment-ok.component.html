@@ -2,19 +2,18 @@
   <mat-spinner *ngIf="this.loadingSearch" diameter="60" color="primary"></mat-spinner>
 </div>
 
-<div class="container">
-  <section class="py-4" style="background-color: #fafafa;">
+<div class="container" style="min-height: 500px">
+  <section class="py-4" style="background-color: #fafafa">
     <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="gappx">
-
-      <span class="py-3" style="text-align: center;color: #616161; font-size: 30px;">
-        <mat-icon style="text-align: center;color: #616161; font-size: 30px;height: 30px;width: 30px;">attach_money
+      <span class="py-3" style="text-align: center; color: #616161; font-size: 30px">
+        <mat-icon style="text-align: center; color: #616161; font-size: 30px; height: 30px; width: 30px"
+          >attach_money
         </mat-icon>
-        {{'MAKE A PAYMENT'|translate}}
+        {{ 'MAKE A PAYMENT' | translate }}
       </span>
     </div>
 
-    <div style="height: 2px;background-color: #eeeeee;">
-    </div>
+    <div style="height: 2px; background-color: #eeeeee"></div>
 
     <!-- <div *ngIf="!showError && !ifSuccess" class="py-4" fxLayout="column" fxLayoutAlign="center center">
       <div class="header-title">
@@ -117,45 +116,41 @@
 
     <div *ngIf="ifSuccess" class="py-4" fxLayout="column" fxLayoutAlign="center center">
       <div fxLayout="column" fxLayoutAlign="start center">
+        <img style="max-height: 80px" src="assets/images/logo-accent.png" class="mb-3" />
 
-        <img style="max-height: 80px;" src="assets/images/logo-accent.png" class="mb-3">
+        <h3 style="color: #666768; font-size: 24px; font-weight: 500">{{ '¡Enhorabuena!' | translate }}</h3>
+        <h1 style="color: #09ca5f; font-size: 20px; text-align: center" class="mb-3">
+          <span style="color: #666768; font-size: 20px">{{ 'Pago' | translate }}</span> &nbsp;{{
+            'Completado' | translate
+          }}
+        </h1>
 
-        <h3 style="color: #666768;font-size: 24px; font-weight: 500;">{{'¡Enhorabuena!'|translate}}</h3>
-        <h1 style="color: #09CA5F;font-size: 20px;text-align: center;" class="mb-3"><span
-            style="color: #666768;font-size: 20px;">{{"Pago"|translate}}</span>
-          &nbsp;{{'Completado'|translate}}</h1>
-
-        <img src="assets/images/pago_aceptado.png" class="mb-3 mt-2" style="max-width: 260px;">
+        <img src="assets/images/pago_aceptado.png" class="mb-3 mt-2" style="max-width: 260px" />
 
         <a [routerLink]="['/my-orders']" mat-raised-button color="primary" class="mb-3 mt-3 px-4 py-2">
           <mat-icon class="mr-2">arrow_back</mat-icon>
           {{ 'VOLVER' | translate }}
         </a>
-
       </div>
     </div>
 
-
     <div *ngIf="showError" class="py-4" fxLayout="column" fxLayoutAlign="center center">
       <div fxLayout="column" fxLayoutAlign="start center">
+        <img style="max-height: 80px" src="assets/images/logo-accent.png" class="mb-3" />
 
-        <img style="max-height: 80px;" src="assets/images/logo-accent.png" class="mb-3">
+        <h3 style="color: #666768; font-size: 24px; font-weight: 500">{{ 'Ups!' | translate }}</h3>
+        <h1 style="color: #b5252a; font-size: 20px; text-align: center" class="mb-3">
+          <span style="color: #666768; font-size: 20px">{{ 'Confirmación de pago' | translate }}</span> &nbsp;{{
+            'Fallida' | translate
+          }}
+        </h1>
 
-        <h3 style="color: #666768; font-size: 24px; font-weight: 500;">{{'Ups!'|translate}}</h3>
-        <h1 style="color: #B5252A; font-size: 20px; text-align: center;" class="mb-3"><span
-            style="color: #666768;font-size: 20px;">{{"Confirmación de pago"|translate}}</span>
-          &nbsp;{{'Fallida'|translate}}</h1>
-
-        <img src="assets/images/pago_fallido.png" class="mb-4 mt-4" style="max-width: 260px;">
+        <img src="assets/images/pago_fallido.png" class="mb-4 mt-4" style="max-width: 260px" />
 
         <a [routerLink]="['/checkout']" mat-raised-button color="primary" class="mb-3 mt-3 px-4 py-2">
           <mat-icon class="mr-2">arrow_back</mat-icon>{{ 'Aceptar' | translate | uppercase }}
         </a>
-
       </div>
     </div>
-
   </section>
-
-
 </div>

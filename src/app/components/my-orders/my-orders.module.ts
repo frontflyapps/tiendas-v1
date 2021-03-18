@@ -7,6 +7,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MyOrdersComponent } from './my-orders/my-orders.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 // ----------------------------------------------
 
@@ -25,6 +26,8 @@ import { MyOrdersRoutingModule } from './my-orders-routing.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgpMaterialRatingModule } from 'ngp-material-rating';
+import { MatInputModule } from '@angular/material/input';
+import { MatTableModule } from '@angular/material/table';
 
 ///////////////////////////////////////////////////////////////////
 
@@ -42,11 +45,14 @@ import { NgpMaterialRatingModule } from 'ngp-material-rating';
     MatTooltipModule,
     MatListModule,
     MatDividerModule,
+    MatInputModule,
     MatSidenavModule,
     MatRippleModule,
     MatTabsModule,
     TranslateModule,
     MatCardModule,
+    MatTableModule,
+    MatCheckboxModule,
     NgpMaterialRatingModule,
     NgpImageLazyLoadModule,
     MatDialogModule,

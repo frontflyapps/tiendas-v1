@@ -1,10 +1,9 @@
 import { DialogNoCartSelectedComponent } from './../no-cart-selected/no-cart-selected.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ShowToastrService } from 'src/app/core/services/show-toastr/show-toastr.service';
 import { PayService } from './../../../core/services/pay/pay.service';
 import { FormBuilder, FormGroup, Validators, AbstractControl, ValidatorFn, FormControl } from '@angular/forms';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 import { CartItem, Cart } from './../../../modals/cart-item';
 import { environment } from './../../../../environments/environment';
@@ -19,8 +18,15 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { SocketIoService } from 'src/app/core/services/socket-io/socket-io.service';
 import { DialogEnzonaConfirmToPayComponent } from '../dialog-enzona-confirm-to-pay/dialog-enzona-confirm-to-pay.component';
 import { ConfirmationDialogFrontComponent } from '../../shared/confirmation-dialog-front/confirmation-dialog-front.component';
+import { DetailsShippingComponent } from '../details-shipping/details-shipping.component';
+import { DialogTranfermovilQrComponent } from '../dialog-tranfermovil-qr/dialog-tranfermovil-qr.component';
 import { RegionsService } from '../../../core/services/regions/regions.service';
 import { TaxesShippingService } from '../../../core/services/taxes-shipping/taxes-shipping.service';
+import { CoinEnum } from '../../../core/classes/coin.enum';
+import { MarketEnum } from '../../../core/classes/market.enum';
+import { MyOrdersService } from '../../my-orders/service/my-orders.service';
+import { ShowToastrService } from '../../../core/services/show-toastr/show-toastr.service';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-checkout',
@@ -33,12 +39,13 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   public cart: Cart;
   public cartId = undefined;
   public cartItemIds: any[] = undefined;
-
+  inLoading = false;
   selectedCities: any[] = [];
   filteredCities: any[] = [];
   loadingPayment = false;
   launchTM = undefined;
-
+  dataSource: MatTableDataSource<any>;
+  displayedColumns: string[] = ['product', 'quantity', 'price'];
   amount: number;
   payments: any[] = [
     { id: 'transfermovil', name: 'Transfermovil', logo: 'assets/images/transfermovil_logo.png' },
@@ -76,11 +83,13 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   allMunicipalities: any[] = [];
   municipalities: any[] = [];
   qrTransfermovilImage = undefined;
-  showTransfermovilImage = undefined;
   onlyCubanPeople = true;
   finalPrice = 1080;
   shippingData: any[] = [];
   canBeDelivery = true;
+  marketCard: string;
+  showShipping: boolean = true;
+  private applyStyle: boolean;
 
   public compareById(val1, val2) {
     return val1 && val2 && val1 == val2;
@@ -101,6 +110,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     public domSanitizer: DomSanitizer,
     public loggedInUserService: LoggedInUserService,
     private showToastr: ShowToastrService,
+    private orderSevice: MyOrdersService,
     private dialog: MatDialog,
     private socketIoService: SocketIoService,
     private activateRoute: ActivatedRoute,
@@ -120,7 +130,17 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     });
   }
 
+  @HostListener('window:resize', ['$event'])
+  onResize(event): void {
+    this.applyResolution();
+  }
+
+  private applyResolution() {
+    const innerWidth = window.innerWidth;
+    this.applyStyle = innerWidth <= 600;
+  }
   ngOnInit() {
+    this.applyResolution();
     this.loggedInUserService.$languageChanged.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {
       this.language = data.lang;
     });
@@ -140,10 +160,50 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       this._listenToSocketIO();
     }
 
-    this.form.valueChanges.subscribe((data) => {
-      this.onRecalculateShipping();
-      // console.log(this.form);
+    this.form.controls['ProvinceId'].valueChanges.subscribe((data) => {
+      this.calculateShippingRequired();
     });
+
+    this.form.controls['MunicipalityId'].valueChanges.subscribe((data) => {
+      this.calculateShippingRequired();
+      console.log(this.form);
+    });
+
+    this.form.controls['shippingRequired'].valueChanges.subscribe((value) => {
+      this.showShipping = value;
+      if (value) {
+        this.form.controls['ShippingBusinessId'].setValidators(Validators.required);
+        this.onRecalculateShipping();
+      } else {
+        this.form.controls['ShippingBusinessId'].setValidators(null);
+        this.shippingData = [];
+        this.canBeDelivery = false;
+      }
+      this.form.controls['ShippingBusinessId'].updateValueAndValidity();
+    });
+
+    this.form.controls['ShippingBusinessId'].valueChanges.subscribe((value) => {
+      this.getTotalWithShippingIncluded();
+    });
+    this.validateShippingRequired();
+  }
+
+  private validateShippingRequired() {
+    if (this.showShipping) {
+      this.form.controls['ShippingBusinessId'].setValidators(Validators.required);
+    } else {
+      this.form.controls['ShippingBusinessId'].setValidators(null);
+    }
+    this.form.controls['ShippingBusinessId'].updateValueAndValidity();
+  }
+
+  private calculateShippingRequired() {
+    if (this.showShipping) {
+      this.onRecalculateShipping();
+    } else {
+      this.shippingData = [];
+      this.canBeDelivery = false;
+    }
   }
 
   processToCart() {
@@ -161,6 +221,18 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     }
   }
 
+  detailsShipping() {
+    this.dialog.open(DetailsShippingComponent, {
+      panelClass: 'app-details-shipping',
+      maxWidth: '100vw',
+      maxHeight: '100vh',
+      data: {
+        element: this.shippingData,
+        market: this.marketCard,
+      },
+    });
+  }
+
   public getCartData() {
     this.loadingCart = true;
     this.cartService
@@ -169,7 +241,15 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         console.log('CheckoutComponent -> getCartData -> data', data);
         this.cart = data.Cart;
         this.buyProducts = data.CartItems || [];
-        this.onRecalculateShipping();
+        this.dataSource = new MatTableDataSource(this.buyProducts);
+        this.marketCard =
+          this.buyProducts && this.buyProducts.length > 0 ? this.buyProducts[0].Product.market : MarketEnum.NATIONAL;
+        if (this.buyProducts && this.buyProducts.length > 0) {
+          this.onRecalculateShipping();
+        } else {
+          this.shippingData = [];
+          this.canBeDelivery = false;
+        }
         setTimeout(() => {
           this.loadingCart = false;
         }, 250);
@@ -181,9 +261,13 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   public getTotalWithShippingIncluded(): any {
     let total = this.getTotalAmout() as Number;
-    let ShippingId = this.form.get('ShippingId').value;
-    let shipping = this.shippingData?.find((i) => i.id == ShippingId);
-    return total + (shipping?.totalPrice || 0.0);
+    let ShippingBusinessId = this.form.get('ShippingBusinessId').value;
+    if (ShippingBusinessId) {
+      let ShippingByBusiness = this.shippingData?.find((i) => i.BusinessId == ShippingBusinessId);
+      return total + (ShippingByBusiness?.totalPrice || 0.0);
+    } else {
+      return total;
+    }
   }
 
   public getTotalAmout(): any {
@@ -225,15 +309,13 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       ProvinceId: [this._getProvince(this.loggedInUser, this.selectedDataPay), [Validators.required]],
       MunicipalityId: [this._getMunicipality(this.loggedInUser, this.selectedDataPay), [Validators.required]],
       isForCuban: [this.selectedDataPay ? this.selectedDataPay.isForCuban : true, [Validators.required]],
-      zipCode: [
-        this.selectedDataPay && this.selectedDataPay.zipCode ? this.selectedDataPay.zipCode : null,
-        Validators.required,
-      ],
+      dni: [this.selectedDataPay && this.selectedDataPay.dni ? this.selectedDataPay.dni : null, Validators.required],
       email: [this._getEmail(this.loggedInUser, this.selectedDataPay), [Validators.required, Validators.email]],
       phone: [this._getPhone(this.loggedInUser, this.selectedDataPay), []],
       info: [this.selectedDataPay && this.selectedDataPay.info ? this.selectedDataPay.info : null, []],
       paymentType: [this.selectedDataPay ? this.selectedDataPay.paymentType : 'transfermovil', [Validators.required]],
-      ShippingId: [null, [Validators.required]],
+      ShippingBusinessId: [null, []],
+      shippingRequired: [true, []],
     });
     this.onlyCubanPeople = this.form.get('isForCuban').value;
     if (this.onlyCubanPeople) {
@@ -254,6 +336,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     // console.log('CheckoutComponent -> onSelectProvince -> this.allMunicipalities', this.allMunicipalities);
     this.municipalities = this.allMunicipalities.filter((item) => item.ProvinceId == provinceId);
     this.form.get('MunicipalityId').setValue(null);
+    this.form.get('ShippingBusinessId').setValue(null);
   }
 
   onRecalculateShipping() {
@@ -262,12 +345,20 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       MunicipalityId: this.form?.get('MunicipalityId').value,
       ProvinceId: this.form?.get('ProvinceId').value,
       ProductIds: this.buyProducts?.map((i) => i.ProductId),
+      CartId: +this.cartId,
     };
     if (data.CountryId && data.MunicipalityId && data.ProvinceId) {
-      this.shppingService.getShippinginCheckout(data).subscribe((data) => {
-        this.shippingData = data.shippings;
-        this.canBeDelivery = data.canBeDelivery;
-      });
+      this.inLoading = true;
+      this.shppingService.getShippinginCheckout(data).subscribe(
+        (data) => {
+          this.shippingData = data.shippings;
+          this.canBeDelivery = data.canBeDelivery;
+          this.inLoading = false;
+        },
+        (error) => {
+          this.inLoading = false;
+        },
+      );
     }
   }
 
@@ -366,11 +457,15 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   onPayOrder() {
     this.loadingPayment = true;
     const data = { ...this.form.value };
+    if (!data.shippingRequired) {
+      delete data.ShippingBusinessId;
+    }
+    data.currency = this.marketCard === MarketEnum.INTERNATIONAL ? CoinEnum.USD : CoinEnum.CUP;
     data.description = data.description || `Pago realizado por el cliente ${data.name} ${data.lastName}`;
     data.urlClient = environment.url;
     this.loggedInUserService._setDataToStorage('payData', JSON.stringify(this.form.value));
     data.CartItemIds = this.buyProducts.map((item) => item.id);
-    data.CartId = this.cart.id;
+    data.CartId = +this.cart.id;
     if (data.paymentType == 'transfermovil') {
       return this.processTransfermovil(data);
     }
@@ -389,21 +484,29 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       (data: any) => {
         console.log('Entre aqui');
         if (data && data.data) {
-          this.finalPrice = this.getTotalAmout() as number;
-          this.qrTransfermovilImage = data.data.qr;
-          this.showTransfermovilImage = true;
-          this.launchTM =
-            'transfermovil://tm_compra_en_linea/action?id_transaccion=' +
-            data.data.qrJson.id_transaccion +
-            '&importe=' +
-            data.data.qrJson.importe +
-            '&moneda=' +
-            data.data.qrJson.moneda +
-            '&numero_proveedor=' +
-            data.data.qrJson.numero_proveedor +
-            ' ';
+          //this.finalPrice = this.getTotalAmout() as number;
+          const price = this.getTotalWithShippingIncluded();
+          const currency = this.marketCard === MarketEnum.INTERNATIONAL ? CoinEnum.USD : CoinEnum.CUP;
+          let dialogRef: MatDialogRef<DialogTranfermovilQrComponent, any>;
+
+          dialogRef = this.dialog.open(DialogTranfermovilQrComponent, {
+            width: '50rem',
+            panelClass: 'app-dialog-tranfermovil-qr',
+            maxWidth: '100vw',
+            height: '85vh',
+            maxHeight: '100vh',
+            disableClose: true,
+            data: {
+              paymentData: data.data,
+              finalPrice: price,
+              currency: currency,
+            },
+          });
+
+          dialogRef.afterClosed().subscribe((result) => {
+            console.log('Salio Ok!! de Transfermovil');
+          });
         } else {
-          this.showTransfermovilImage = false;
           this.loadingPayment = false;
           this.showToastr.showError('Error en la respuesta, fallo en la obtencion del qr');
         }
@@ -554,7 +657,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(async (result) => {
       if (result) {
         this.qrTransfermovilImage = undefined;
-        this.showTransfermovilImage = null;
         this.loadingPayment = false;
         window.location.reload();
       }
@@ -566,8 +668,18 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       .listen('payment-confirmed')
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((data) => {
-        this.showTransfermovilImage = false;
+        console.log('payment-confirmed');
+        this.orderSevice.$orderItemsUpdated.next();
         this.getCartData();
+      });
+
+    this.socketIoService
+      .listen('payment-error')
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((data) => {
+        console.log('payment-error');
+        this.loadingPayment = false;
+        this.showToastr.showError(data.message, 'Error', 5000);
       });
   }
 }

@@ -86,6 +86,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
       this.queryProduct.offset = data && data.offset ? data.offset : 0;
       this.queryProduct.total = data && data.total ? data.total : 0;
       this.queryProduct.page = data && data.page ? data.page : 0;
+      this.queryProduct.order = data && data.order ? data.order : 'id';
       this.productId = this.productService.productIdDetails ? this.productService.productIdDetails : null;
       if (data.CategoryId) {
         this.paramsSearch.categoryIds = [data.CategoryId];
@@ -153,7 +154,43 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
   }
 
   search() {
-    this.productService.searchProduct({ ...this.queryProduct }, { ...this.paramsSearch }).subscribe(
+    let brandIds: number[] = null;
+    let categoryIds: number[] = null;
+
+    if (this.paramsSearch.categoryIds) {
+      if (Array.isArray(this.paramsSearch.categoryIds)) {
+        if (this.paramsSearch.categoryIds.length > 0) {
+          categoryIds = this.paramsSearch.categoryIds.map((i) => Number(i));
+        }
+      } else {
+        categoryIds = [this.paramsSearch.categoryIds];
+      }
+    }
+
+    if (this.paramsSearch.brandIds) {
+      if (Array.isArray(this.paramsSearch.brandIds)) {
+        if (this.paramsSearch.brandIds.length > 0) {
+          brandIds = this.paramsSearch.brandIds.map((i) => Number(i));
+        }
+      } else {
+        brandIds = [this.paramsSearch.brandIds];
+      }
+    }
+
+    const body: any = {
+      limit: this.queryProduct?.limit ? +this.queryProduct?.limit : 0,
+      offset: this.queryProduct?.offset ? +this.queryProduct?.offset : 0,
+      page: this.queryProduct?.page ? +this.queryProduct?.page : 0,
+      total: this.queryProduct?.total ? +this.queryProduct?.total : 0,
+      order: this.queryProduct?.order ? this.queryProduct?.order : null,
+      BrandIds: brandIds,
+      CategoryIds: categoryIds,
+      maxPrice: this.paramsSearch?.maxPrice ? +this.paramsSearch?.maxPrice : 0,
+      minPrice: this.paramsSearch?.minPrice ? +this.paramsSearch?.minPrice : 0,
+      rating: this.paramsSearch?.rating ? +this.paramsSearch?.rating : null,
+      text: this.paramsSearch?.filterText ? this.paramsSearch?.filterText : null,
+    };
+    this.productService.searchProduct(body).subscribe(
       (data) => {
         this.allProducts = data.data;
         // this.queryProduct.offset += data.meta.pagination.count;
@@ -207,10 +244,10 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
   }
 
   // sorting type ASC / DESC / A-Z / Z-A etc.
-  public onChangeSorting(val) {
-    this.sortByOrder = val;
-    this.queryProduct.order = val;
+
+  onSetOrder(order) {
     console.log('Entre en el cambio de sorting');
+    this.queryProduct.order = order;
     this.searchProducts();
   }
 

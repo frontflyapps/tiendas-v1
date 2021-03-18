@@ -5,6 +5,8 @@ import { NavigationService } from './../../../core/services/navigation/navigatio
 import { LoggedInUserService } from './../../../core/services/loggedInUser/logged-in-user.service';
 import { Subject } from 'rxjs';
 import { CartService } from '../../shared/services/cart.service';
+import { IPagination } from 'src/app/core/classes/pagination.class';
+import { MyOrdersService } from '../../my-orders/service/my-orders.service';
 
 @Component({
   selector: 'app-menu',
@@ -17,7 +19,14 @@ export class MenuComponent implements OnInit, OnDestroy {
   _unsubscribeAll: Subject<any>;
   shoppingCartItems: any[] = [];
   language;
+  ordersPayment: any[] = [];
   categories: any[] = [];
+  query: IPagination = {
+    limit: 20,
+    offset: 0,
+    order: '-createdAt',
+    total: 0,
+  };
 
   @Input() set _categories(value) {
     this.categories = [...value];
@@ -28,6 +37,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     private cartService: CartService,
     private loggedInUserService: LoggedInUserService,
     public utilsSer: UtilsService,
+    private ordersService: MyOrdersService,
   ) {
     this.navItems = navigationService.getNavItems();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
@@ -36,10 +46,16 @@ export class MenuComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    if (this.loggedInUser) {
+      this.getOrdersPayment();
+    }
     this.loggedInUserService.$loggedInUserUpdated.pipe(takeUntil(this._unsubscribeAll)).subscribe(() => {
       this.loggedInUser = this.loggedInUserService.getLoggedInUser();
       if (!this.loggedInUser) {
         this.shoppingCartItems = [];
+        this.ordersPayment = [];
+      } else {
+        this.getOrdersPayment();
       }
     });
 
@@ -47,6 +63,12 @@ export class MenuComponent implements OnInit, OnDestroy {
 
     this.cartService.$cartItemsUpdated.pipe(takeUntil(this._unsubscribeAll)).subscribe(() => {
       this.shoppingCartItems = this.cartService.getShoppingCars();
+    });
+
+    this.ordersService.$orderItemsUpdated.pipe(takeUntil(this._unsubscribeAll)).subscribe(() => {
+      if (this.loggedInUser) {
+        this.getOrdersPayment();
+      }
     });
 
     this.loggedInUserService.$languageChanged.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {
@@ -63,6 +85,18 @@ export class MenuComponent implements OnInit, OnDestroy {
         }
       }
     });
+  }
+
+  private getOrdersPayment() {
+    const params = {
+      status: 'confirmed',
+    };
+    this.ordersService
+      .getAllPayment(this.query, params)
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((value) => {
+        this.ordersPayment = value.data;
+      });
   }
 
   ngOnDestroy() {

@@ -85,6 +85,7 @@ export class MainComponent implements OnInit, OnDestroy {
     private authService: AuthenticationService,
     private socketIoService: SocketIoService,
     private categoryService: CategoriesService,
+    private orderSevice: MyOrdersService,
     private orderService: MyOrdersService,
     public utilsService: UtilsService,
   ) {
@@ -251,6 +252,9 @@ export class MainComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((data) => {
         this.showPaymentSuccess(data.Payment.id);
+        console.log('payment-confirmed');
+        this.orderSevice.$orderItemsUpdated.next();
+        this.cartService.$paymentUpdate.next();
       });
 
     this.socketIoService
@@ -258,6 +262,9 @@ export class MainComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((data) => {
         this.showPaymentCancellSuccess(data.Payment.id);
+        console.log('payment-cancelled');
+        this.cartService.$paymentUpdate.next();
+        this.orderService.$orderItemsUpdated.next();
       });
 
     this.socketIoService

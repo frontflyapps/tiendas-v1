@@ -87,6 +87,7 @@ import { MatInputModule } from '@angular/material/input';
     MatCheckboxModule,
     MatPaginatorModule,
     MatDialogModule,
+    PipesModule,
     NgpMaterialRatingModule,
     PipesModule,
     MatListModule,

@@ -16,7 +16,10 @@
         </a>
       </div>
     </div>
-    <section *ngIf="carts.length" fxHide.lt-md>
+    <section style="position: relative" *ngIf="carts.length" fxHide.lt-md>
+      <div *ngIf="inLoading" class="loading-shade">
+        <mat-spinner *ngIf="inLoading"></mat-spinner>
+      </div>
       <mat-card *ngFor="let cart of carts" class="p-0 mb-4" style="border-radius: 8px">
         <div class="mat-table cart-table">
           <div class="mat-header-row">
@@ -31,18 +34,21 @@
           <div *ngFor="let item of cart?.CartItems" class="mat-row">
             <div class="mat-cell">
               <img
-                *ngIf="item.Product.Image && item.Product.Image.length"
-                [src]="imageUrl + item.Product.Image[0].image"
+                *ngIf="item.Product.Images && item.Product.Images.length"
+                [src]="imageUrl + item.Product.Images[0].image"
               />
               <img
-                *ngIf="!(item.Product.Image && item.Product.Image.length)"
+                *ngIf="!(item.Product.Images && item.Product.Images.length)"
                 src="../../../../assets/images/noImage.jpg"
               />
             </div>
             <div class="mat-cell">
-              <a [routerLink]="['/product', item.Product.id]" class="link-nav-a">{{
-                item.Product.name[language] ? item.Product.name[language] : item.Product.name['es']
-              }}</a>
+              <a
+                [routerLink]="['/product']"
+                [queryParams]="{ productId: item?.Product?.id, stockId: item?.Product?.Stock?.id }"
+                class="link-nav-a line-clamp"
+                >{{ item.Product.name[language] ? item.Product.name[language] : item.Product.name['es'] }}</a
+              >
             </div>
             <div class="mat-cell">
               <a class="product-name">{{ utilsServ.parserLanguage(item.Product.Category.name, language) }}</a>
@@ -50,15 +56,15 @@
             <div class="mat-cell price">
               <ng-container *ngIf="item.Product.offerValue">
                 <p class="deletePrice m-0">
-                  <del>{{ currencyService.getPriceLabel(item.Product) }}</del>
+                  <del>{{ item.Product | parsePriceProduct }}</del>
                 </p>
                 <p class="mat-body-2 m-0" matTooltip="{{ 'Existe una oferta asociada a este producto' | translate }}">
-                  {{ currencyService.getOfferLabel(item.Product) }}
+                  {{ item.Product | parsePriceProduct: 'offert' }}
                 </p>
               </ng-container>
               <ng-container *ngIf="!item.Product.offerValue">
                 <p class="mat-body-2 m-0">
-                  {{ currencyService.getPriceLabel(item.Product) }}
+                  {{ item.Product | parsePriceProduct }}
                 </p>
                 <p class="mat-body-2 m-0" style="font-size: 15px">
                   {{ 'Desde ' | translate }}
@@ -116,7 +122,7 @@
               </div>
             </div>
             <div class="mat-cell total">
-              {{ getTotalPricePerItem(item) | currency: currencyService.getCurrency().code }}
+              {{ getTotalPricePerItem(item) | currencyMarket: item.Product.market }}
             </div>
             <div class="mat-cell text-center">
               <div class="p-1">
@@ -156,8 +162,7 @@
             <div class="mat-cell text-right">
               <div fxLayout="column" fxLayoutAlign="center end" class="grand-total px-2">
                 <span class="new-price"
-                  >{{ 'Total a pagar' | translate }}:
-                  {{ getTotal(cart) | currency: currencyService.getCurrency().code }}</span
+                  >{{ 'Total a pagar' | translate }}: {{ getTotal(cart) | currencyMarket: cart.market }}</span
                 >
               </div>
             </div>
@@ -188,16 +193,24 @@
 
           <span class="mat-body-2 ml-2 uppercase">{{ cart.Business?.name }}</span>
         </div>
-        <mat-card ngClass.sm="w-75 mx-auto" class="pt-0 my-2 px-0" *ngFor="let item of cart.CartItems">
+        <mat-card
+          style="position: relative"
+          ngClass.sm="w-75 mx-auto"
+          class="pt-0 my-2 px-0"
+          *ngFor="let item of cart.CartItems"
+        >
+          <div *ngIf="inLoading" class="loading-shade">
+            <mat-spinner [diameter]="40" *ngIf="inLoading"></mat-spinner>
+          </div>
           <p class="text-align-center py-2" style="background-color: #fafafa">
             <img
               class="imageProduct"
-              *ngIf="item.Product.Image && item.Product.Image.length"
-              [src]="imageUrl + item.Product.Image[0].image"
+              *ngIf="item.Product.Images && item.Product.Images.length"
+              [src]="imageUrl + item.Product.Images[0].image"
             />
             <img
               class="imageProduct"
-              *ngIf="!(item.Product.Image && item.Product.Image.length)"
+              *ngIf="!(item.Product.Images && item.Product.Images.length)"
               src="../../../../assets/images/noImage.jpg"
             />
           </p>
@@ -213,14 +226,14 @@
             <div class="mt-1">
               <ng-container *ngIf="item.Product.offerValue">
                 <p class="deletePrice mb-0" style="text-align: left">
-                  <del>{{ currencyService.getPriceLabel(item.Product) }}</del>
+                  <del>{{ item.Product | parsePriceProduct }}</del>
                 </p>
                 <p
                   class="mat-body-2 mb-0"
                   style="text-align: left"
                   matTooltip="{{ 'Existe una oferta asociada a este producto' | translate }}"
                 >
-                  {{ currencyService.getOfferLabel(item.Product) }}
+                  {{ item.Product | parsePriceProduct: 'offert' }}
                 </p>
                 <p>
                   {{ 'Desde ' | translate }}
@@ -230,7 +243,7 @@
               </ng-container>
               <ng-container *ngIf="!item.Product.offerValue">
                 <p class="mat-body-2" style="text-align: left">
-                  {{ currencyService.getPriceLabel(item.Product) }}
+                  {{ item.Product | parsePriceProduct }}
                 </p>
                 <p class="mat-body-2" style="font-size: 14px">
                   {{ 'Desde ' | translate }}
@@ -263,7 +276,7 @@
             </div>
 
             <div id="totalPrice">
-              <span> {{ getTotalPricePerItem(item) | currency: currencyService.getCurrency().code }}</span>
+              <span> {{ getTotalPricePerItem(item) | currencyMarket: item.Product.market }}</span>
             </div>
           </mat-card-content>
           <mat-card-actions class="px-3">
@@ -283,7 +296,7 @@
 
         <mat-toolbar class="mt-2" *ngIf="cart.CartItems.length">
           <mat-toolbar-row fxLayoutAlign="space-between center">
-            <span class="total">Total: {{ getTotal(cart) | currency: currencyService.getCurrency().code }}</span>
+            <span class="total">Total: {{ getTotal(cart) | currencyMarket: cart.market }}</span>
             <div class="mat-cell text-center">
               <a mat-raised-button color="primary" (click)="goToCheckout(cart)">
                 <span style="color: #fff">{{ 'Pagar' | translate }}</span>
