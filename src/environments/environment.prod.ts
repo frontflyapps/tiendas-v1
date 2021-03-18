@@ -8,6 +8,6 @@ export const environment = {
   urlAboutUs: 'https://wwww.sinkoola.com',
   address: 'SinKoola SA / Quinta Avenida,18204, Playa, La Habana.',
   localDatabaseUsers: true,
-  adminService: 'http://tienda.sinkoola.com:4300/',
+  adminService: 'https://admin.sinkoola.com/',
   mainDomain: '.sinkoola.com',
 };
