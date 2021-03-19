@@ -1,28 +1,14 @@
 <div class="price-slider">
   <div fxLayout="row" fxLayoutAlign="space-between center">
-    <mat-form-field style="width: 100px; margin-right: 8px" appearance="outline">
+    <mat-form-field style="width: 120px; margin-right: 8px" appearance="outline">
       <mat-label style="text-transform: capitalize"> {{ 'min' | translate }}</mat-label>
-      <input
-        type="number"
-        [min]="0"
-        (change)="priceFilter()"
-        matInput
-        [formControl]="priceForm.get('priceFrom')"
-        [ngClass]="{ errorInput: priceForm.get('priceFrom').invalid }"
-      />
+      <input type="number" [min]="0" (change)="priceFilter()" matInput [formControl]="priceForm.get('priceFrom')" />
     </mat-form-field>
     :
-    <mat-form-field style="width: 100px; margin-right: 8px" appearance="outline">
+    <mat-form-field style="width: 120px; margin-right: 8px" appearance="outline">
       <mat-label style="text-transform: capitalize"> {{ 'max' | translate }}</mat-label>
-      <input
-        type="number"
-        [min]="priceForm.get('priceFrom')"
-        (change)="priceFilter()"
-        [max]="100000"
-        matInput
-        [formControl]="priceForm.get('priceTo')"
-        [ngClass]="{ errorInput: priceForm.get('priceTo').invalid }"
-      />
+      <input type="number" [min]="priceForm.get('priceFrom')" (change)="priceFilter()" [max]="100000000" matInput
+        [formControl]="priceForm.get('priceTo')" />
     </mat-form-field>
   </div>
 </div>

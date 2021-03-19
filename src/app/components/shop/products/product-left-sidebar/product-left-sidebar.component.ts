@@ -44,7 +44,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
     brandIds: [],
     rating: 0,
     minPrice: 1,
-    maxPrice: 20000,
+    maxPrice: null,
   };
 
   loading = false;
@@ -81,7 +81,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
       this.paramsSearch.categoryIds = data && data.categoryIds ? data.categoryIds : this.paramsSearch.categoryIds;
       this.paramsSearch.brandIds = data && data.brandIds ? data.brandIds : [];
       this.paramsSearch.minPrice = data && data.minPrice ? data.minPrice : 0;
-      this.paramsSearch.maxPrice = data && data.maxPrice ? data.maxPrice : 2000;
+      this.paramsSearch.maxPrice = data && data.maxPrice ? data.maxPrice : null;
       this.queryProduct.limit = data && data.limit ? data.limit : this.initLimit;
       this.queryProduct.offset = data && data.offset ? data.offset : 0;
       this.queryProduct.total = data && data.total ? data.total : 0;
@@ -91,7 +91,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
       if (data.CategoryId) {
         this.paramsSearch.categoryIds = [data.CategoryId];
         this.paramsSearch.minPrice = 0;
-        this.paramsSearch.maxPrice = 10000;
+        this.paramsSearch.maxPrice = null;
         this.resetPrices = !this.resetPrices;
         this.queryProduct.limit = this.initLimit;
         this.queryProduct.offset = 0;
@@ -101,7 +101,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
       if (this.paramsSearch.filterText != data.filterText) {
         this.paramsSearch.filterText = data.filterText;
         this.paramsSearch.minPrice = 0;
-        this.paramsSearch.maxPrice = 10000;
+        this.paramsSearch.maxPrice = null;
         this.resetPrices = !this.resetPrices;
         this.queryProduct.limit = this.initLimit;
         this.queryProduct.offset = 0;
