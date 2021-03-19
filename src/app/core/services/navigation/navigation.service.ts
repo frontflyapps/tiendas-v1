@@ -47,13 +47,13 @@ export class NavigationService {
     //   divider: true,
     //   disabled: false,
     // },
-    {
+    /*{
       displayName: 'Blog',
       iconName: ['publish'],
       material: true,
       route: '/blog',
       disabled: false,
-    },
+    },*/
     // {
     //   displayName: 'About Us',
     //   iconName: ['group'],

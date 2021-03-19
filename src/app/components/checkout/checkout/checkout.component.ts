@@ -45,7 +45,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   loadingPayment = false;
   launchTM = undefined;
   dataSource: MatTableDataSource<any>;
-  displayedColumns: string[] = ['product', 'quantity', 'price'];
+  displayedColumns: string[] = ['product', 'quantity', 'price', 'action'];
   amount: number;
   payments: any[] = [
     { id: 'transfermovil', name: 'Transfermovil', logo: 'assets/images/transfermovil_logo.png' },
