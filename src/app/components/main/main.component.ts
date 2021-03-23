@@ -251,8 +251,9 @@ export class MainComponent implements OnInit, OnDestroy {
       .listen('payment-confirmed')
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((data) => {
-        this.showPaymentSuccess(data.Payment.id);
-        console.log('payment-confirmed');
+        if (data?.tpv !== 'enzona') {
+          this.showPaymentSuccess(data.Payment.id);
+        }
         this.orderSevice.$orderItemsUpdated.next();
         this.cartService.$paymentUpdate.next();
       });
