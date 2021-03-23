@@ -14,6 +14,7 @@ export const environment = {
   localDatabaseUsers: true,
   adminService: 'http://admintienda.sinkoola.com:4300/',
   mainDomain: '.sinkoola.com',
+  tokenBusiness: '',
 };
 
 /*

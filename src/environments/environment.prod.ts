@@ -10,4 +10,5 @@ export const environment = {
   localDatabaseUsers: true,
   adminService: 'http://adminmercedes.cubanearme.com/',
   mainDomain: '.cubanearme.com',
+  tokenBusiness: '',
 };
