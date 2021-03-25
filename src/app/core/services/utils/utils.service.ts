@@ -60,11 +60,17 @@ export class UtilsService {
         );
     let msg = alternative;
     if (error.errors && error.errors.length) {
-      msg = error.errors.map((item) => (item.field || '') + ' ' + (item.title || item.message + ' '));
+      msg = error.errors.map(
+        (item) => (item.field ? item.field + ' : ' : '') + ' ' + (item.title || item.message + ' '),
+      );
     } else if (error.error.errors) {
-      msg = error.error.errors.map((item) => (item.field || '') + ' ' + (item.title || item.message + ' '));
+      msg = error.error.errors.map(
+        (item) => (item.field ? item.field + ' : ' : '') + ' ' + (item.title || item.message + ' '),
+      );
     } else if (error.error && error.error.length) {
-      msg = error.error.map((item) => (item.field || '') + ' ' + (item.title || item.message + ' '));
+      msg = error.error.map(
+        (item) => (item.field ? item.field + ' : ' : '') + ' ' + (item.title || item.message + ' '),
+      );
     } else {
       msg = error.error.message;
     }
@@ -86,11 +92,17 @@ export class UtilsService {
         );
     let msg = alternative;
     if (error.errors && error.errors.length) {
-      msg = error.errors.map((item) => (item.field || '') + ' ' + (item.title || item.message + ' '));
+      msg = error.errors.map(
+        (item) => (item.field ? item.field + ' : ' : '') + ' ' + (item.title || item.message + ' '),
+      );
     } else if (error.error.errors) {
-      msg = error.error.errors.map((item) => (item.field || '') + ' ' + (item.title || item.message + ' '));
+      msg = error.error.errors.map(
+        (item) => (item.field ? item.field + ' : ' : '') + ' ' + (item.title || item.message + ' '),
+      );
     } else if (error.error && error.error.length) {
-      msg = error.error.map((item) => (item.field || '') + ' ' + (item.title || item.message + ' '));
+      msg = error.error.map(
+        (item) => (item.field ? item.field + ' : ' : '') + ' ' + (item.title || item.message + ' '),
+      );
     } else {
       msg = error.error.message;
     }
