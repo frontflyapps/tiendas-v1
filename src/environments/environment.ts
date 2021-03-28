@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://192.168.1.14:8998/v1/',
-  imageUrl: 'http://192.168.1.14:8998/v1/',
+  apiUrl: 'http://localhost:8998/v1/',
+  imageUrl: 'http://localhost:8998/v1/',
   //apiUrl: 'https://api.sinkoola.com/v1/',
   //imageUrl: 'https://api.sinkoola.com/v1/',
   defaultLanguage: 'es',

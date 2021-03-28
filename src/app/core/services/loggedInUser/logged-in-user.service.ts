@@ -61,12 +61,13 @@ export class LoggedInUserService {
   }
 
   public getTokenCookie(): string {
-    return this.encryptDecryptService.decrypt(this.cookieService.get('account'));
+    return this.encryptDecryptService.decrypt(this.cookieService.get('account')) || localStorage.getItem('token');
   }
 
   public saveAccountCookie(token) {
     const hashedPass = this.encryptDecryptService.encrypt(token);
     this.cookieService.set('account', hashedPass, null, '/', environment.mainDomain);
+    localStorage.setItem('token', token);
   }
 
   public updateUserProfile(user) {
