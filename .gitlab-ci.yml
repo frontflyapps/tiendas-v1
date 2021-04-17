@@ -4,20 +4,19 @@ cache:
   paths:
     - node_modules
 
-deploy_Sinkoola:
+deploy_multiagency:
   only:
-    - master
+    - tienda-online-b2b-cuentapropistas
   when: always
   script:
     - npm install
     - npm run build --prod
-    - curl "https://aliyuncli.alicdn.com/aliyun-cli-linux-latest-amd64.tgz" -o "aliyun-cli-linux-latest-amd64.tgz"
-    - tar xzvf aliyun-cli-linux-latest-amd64.tgz
-    - cp aliyun /usr/local/bin
-    - aliyun configure set --profile DeployProfile --mode AK --region us-east-1 --access-key-id LTAI4G6GVkW5YmjsuA1tBrZb --access-key-secret 4s1ZkbfQjNVKNcZ6S65BBbhriRhIaB
-    - curl "http://gosspublic.alicdn.com/ossutil/1.6.18/ossutil64" -o "ossutil64"
-    - chmod 755 ossutil64
-    - cp ossutil64 /usr/local/bin
-    - ./ossutil64 config -e oss-us-east-1.aliyuncs.com -i LTAI4G6GVkW5YmjsuA1tBrZb -k 4s1ZkbfQjNVKNcZ6S65BBbhriRhIaB -L EN -c ~/ossutil64config
-    - ./ossutil64 cp -r dist/tienda-angular-b2b oss://sinkoola/ -u --meta=Cache-Control:max-age=1200 -c ~/ossutil64config
-    - aliyun cdn RefreshObjectCaches --ObjectType Directory --ObjectPath https://www.sinkoola.com/
+    - curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
+    - unzip awscli-bundle.zip
+    - ./awscli-bundle/install -b ~/bin/aws
+    - export PATH=~/bin:$PATH
+    - export AWS_ACCESS_KEY_ID=AKIA5KQSOEMEWVT2T327
+    - export AWS_SECRET_ACCESS_KEY=cJJ+bkej/mJNZXF5CymIVr8CA2mjI7ixfeApjkMj
+    - export AWS_DEFAULT_REGION=us-east-1
+    - aws s3 sync --acl public-read --metadata-directive REPLACE --cache-control max-age=1200,public dist/tienda-angular-b2b s3://www.cuentapropias.com --delete
+    - aws cloudfront create-invalidation --distribution-id E3GYG8YNF9YQMF --paths "/*"

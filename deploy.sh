@@ -1,3 +1,2 @@
-aliyun oss rm -r -f oss://sinkoola/
-aliyun oss cp dist/tienda-angular-b2b oss://sinkoola/ -r -u --meta=Cache-Control:max-age=2592000
-aliyun cdn RefreshObjectCaches --ObjectType Directory --ObjectPath https://www.sinkoola.com/
+aws s3 sync --acl public-read --metadata-directive REPLACE --cache-control max-age=1200,public dist/tienda-angular-b2b s3://www.cuentapropias.com --delete
+aws cloudfront create-invalidation --distribution-id E3GYG8YNF9YQMF --paths "/*"
