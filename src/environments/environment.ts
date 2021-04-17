@@ -4,18 +4,18 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:8998/v1/',
-  imageUrl: 'http://localhost:8998/v1/',
+  apiUrl: 'https://api.sinkoola.com/v1/',
+  imageUrl: 'https://api.sinkoola.com/v1/',
   //apiUrl: 'https://api.sinkoola.com/v1/',
   //imageUrl: 'https://api.sinkoola.com/v1/',
   defaultLanguage: 'es',
   version: '1.2.0',
   url: 'http://tienda.sinkoola.com:4200',
   urlAboutUs: 'http://tienda.sinkoola.com:4200/',
-  address: 'Sin Cola SA / Quinta Avenida,18204, Playa, La Habana.',
+  address: 'Cuentapropistas SA / Quinta Avenida,18204, Playa, La Habana.',
   localDatabaseUsers: true,
   adminService: 'http://admintienda.sinkoola.com:4300/',
-  mainDomain: '.sinkoola.com',
+  mainDomain: '.Cuentapropistas.com',
   tokenBusiness: '',
 };
 

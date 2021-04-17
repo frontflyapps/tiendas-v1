@@ -6,9 +6,9 @@ export const environment = {
   version: '1.2.0',
   url: 'https://wwww.sinkoola.com',
   urlAboutUs: 'https://wwww.sinkoola.com',
-  address: 'SinKoola SA / Quinta Avenida,18204, Playa, La Habana.',
+  address: 'Cuentapropistas SA / Quinta Avenida,18204, Playa, La Habana.',
   localDatabaseUsers: true,
   adminService: 'https://admin.sinkoola.com/',
-  mainDomain: '.sinkoola.com',
+  mainDomain: '.Cuentapropistas.com',
   tokenBusiness: '',
 };

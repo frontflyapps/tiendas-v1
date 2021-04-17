@@ -1,10 +1,9 @@
-@import "../../../../assets/scss/theme/variables";
-@import "../../../../assets/scss/mixins/breakpoints";
+@import '../../../../assets/scss/theme/variables';
+@import '../../../../assets/scss/mixins/breakpoints';
 
 $topbar: $theme-main;
 
 app-my-account {
-
   .mat-form-field-wrapper {
     padding-bottom: 16px;
   }
@@ -15,11 +14,10 @@ app-my-account {
   }
 
   .container {
-    @include media-breakpoint("xs") {
+    @include media-breakpoint('xs') {
       padding-left: 0px !important;
       padding-right: 0px !important;
     }
-
   }
 
   #loadingSpinnerData {
@@ -36,12 +34,10 @@ app-my-account {
     @include media-breakpoint('lt-md') {
       padding: 16px 16px !important;
     }
-
-
   }
 
   .login-logo {
-    height: 60px;
+    height: 90px;
     // width: 100px;
     // object-fit: cover;
     // border-radius: 50%;
@@ -73,7 +69,7 @@ app-my-account {
     min-height: 120px;
     border-radius: 8px;
     border: 1px solid #323232;
-    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
+    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
   }
 
   @media only screen and (max-width: 480px) {
@@ -116,7 +112,6 @@ app-my-account {
     width: 100%;
     max-width: 30rem !important;
 
-
     #CardBodyLoggin {
       width: 96%;
       margin-top: 16px;
@@ -131,7 +126,6 @@ app-my-account {
 
     .RegisterBtn {
       width: 310px !important;
-
     }
   }
 }
