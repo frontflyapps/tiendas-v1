@@ -28,11 +28,13 @@ import { MyOrdersService } from '../../my-orders/service/my-orders.service';
 import { ShowToastrService } from '../../../core/services/show-toastr/show-toastr.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { DialogBidaiondoConfirmToPayComponent } from '../dialog-bidaiondo-confirm-to-pay/dialog-bidaiondo-confirm-to-pay.component';
-
+import { ConfigurationService } from '../../../core/services/configuration/configuration.service';
+import { CurrencyCheckoutPipe } from 'src/app/core/pipes/currency-checkout.pipe';
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.scss'],
+  providers: [CurrencyCheckoutPipe],
 })
 export class CheckoutComponent implements OnInit, OnDestroy {
   public cartItems: Observable<CartItem[]> = of([]);
@@ -45,6 +47,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   filteredCities: any[] = [];
   loadingPayment = false;
   launchTM = undefined;
+  currencies = ['USD', 'EUR'];
   dataSource: MatTableDataSource<any>;
   displayedColumns: string[] = ['product', 'quantity', 'price', 'action'];
   amount: number;
@@ -92,7 +95,16 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   canBeDelivery = true;
   marketCard: string;
   showShipping: boolean = true;
+  rate: any;
+  currencyInternational = environment.currencyInternational;
   private applyStyle: boolean;
+  query: IPagination = {
+    limit: 1000,
+    total: 0,
+    offset: 0,
+    order: '-updatedAt',
+    page: 1,
+  };
   public compareById(val1, val2) {
     return val1 && val2 && val1 == val2;
   }
@@ -117,6 +129,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     private socketIoService: SocketIoService,
     private activateRoute: ActivatedRoute,
     private shppingService: TaxesShippingService,
+    private configurationService: ConfigurationService,
+    private currencyCheckoutPipe: CurrencyCheckoutPipe,
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
@@ -142,6 +156,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.applyStyle = innerWidth <= 600;
   }
   ngOnInit() {
+    this.rate = 1;
     this.applyResolution();
     this.loggedInUserService.$languageChanged.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {
       this.language = data.lang;
@@ -162,13 +177,31 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       this._listenToSocketIO();
     }
 
+    this.form.controls['currency'].valueChanges.subscribe((data) => {
+      //this.calculateShippingRequired();
+      if (this.currencyInternational === data) {
+        this.rate = 1;
+      } else {
+        const params = {
+          currencyDestination: this.currencyInternational,
+          currencyTarget: data,
+        };
+        this.configurationService.getCurrencys(this.query, params).subscribe((response) => {
+          if (response.data) {
+            this.rate = response.data[0].rate;
+          } else {
+            this.rate = 1;
+          }
+        });
+      }
+    });
+
     this.form.controls['ProvinceId'].valueChanges.subscribe((data) => {
       this.calculateShippingRequired();
     });
 
     this.form.controls['MunicipalityId'].valueChanges.subscribe((data) => {
       this.calculateShippingRequired();
-      console.log(this.form);
     });
 
     this.form.controls['shippingRequired'].valueChanges.subscribe((value) => {
@@ -240,7 +273,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.cartService
       .getCartData({ cartId: this.cartId, cartItemIds: this.cartItemIds })
       .then((data) => {
-        console.log('CheckoutComponent -> getCartData -> data', data);
         this.cart = data.Cart;
         this.buyProducts = data.CartItems || [];
         this.dataSource = new MatTableDataSource(this.buyProducts);
@@ -253,10 +285,14 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           this.canBeDelivery = false;
         }
 
-        if (this.cart.market === MarketEnum.NATIONAL) {
-          this.form.get('paymentType').setValue('transfermovil');
-        } else {
-          this.form.get('paymentType').setValue('visa');
+        if (!this.form.get('currency').value) {
+          if (this.cart.market === MarketEnum.NATIONAL) {
+            this.form.get('paymentType').setValue('transfermovil');
+            this.form.get('currency').setValue('CUP');
+          } else {
+            this.form.get('paymentType').setValue('visa');
+            this.form.get('currency').setValue('USD');
+          }
         }
         setTimeout(() => {
           this.loadingCart = false;
@@ -265,6 +301,16 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       .catch(() => {
         this.loadingCart = false;
       });
+  }
+
+  public getTotalWithShippingIncludedCurrency(): any {
+    let total = this.getTotalWithShippingIncluded();
+    const result = this.currencyCheckoutPipe.transform({
+      currency: this.form.get('currency').value,
+      value: total,
+      rate: this.rate,
+    });
+    return result;
   }
 
   public getTotalWithShippingIncluded(): any {
@@ -278,10 +324,22 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     }
   }
 
+  public getTotalAmountCurrency(): any {
+    const subTotal = this.getTotalAmout();
+    const result = this.currencyCheckoutPipe.transform({
+      currency: this.form.get('currency').value,
+      value: subTotal,
+      rate: this.rate,
+    });
+    return result;
+  }
+
   public getTotalAmout(): any {
-    return this.buyProducts.reduce((prev, curr: CartItem) => {
+    const value = this.buyProducts.reduce((prev, curr: CartItem) => {
       return prev + this.getTotalPricePerItem(curr);
     }, 0);
+
+    return value;
   }
 
   onSubmit(): void {}
@@ -323,6 +381,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       info: [this.selectedDataPay && this.selectedDataPay.info ? this.selectedDataPay.info : null, []],
       paymentType: [this.selectedDataPay ? this.selectedDataPay.paymentType : 'transfermovil', [Validators.required]],
       ShippingBusinessId: [null, []],
+      currency: [null, [Validators.required]],
       shippingRequired: [true, []],
     });
     this.onlyCubanPeople = this.form.get('isForCuban').value;
@@ -441,6 +500,16 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     });
   }
 
+  getTotalPricePerItemCurrency(item: CartItem) {
+    const value = this.getTotalPricePerItem(item);
+    const result = this.currencyCheckoutPipe.transform({
+      currency: this.form.get('currency').value,
+      value: value,
+      rate: this.rate,
+    });
+    return result;
+  }
+
   public getTotalPricePerItem(item: CartItem) {
     let price = this.cartService.getPriceofProduct(item.Product, item.quantity);
     return price * item.quantity;
@@ -468,7 +537,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     if (!data.shippingRequired) {
       delete data.ShippingBusinessId;
     }
-    data.currency = this.marketCard === MarketEnum.INTERNATIONAL ? CoinEnum.USD : CoinEnum.CUP;
+    //data.currency = this.marketCard === MarketEnum.INTERNATIONAL ? CoinEnum.USD : CoinEnum.CUP;
     data.description = data.description || `Pago realizado por el cliente ${data.name} ${data.lastName}`;
     data.urlClient = environment.url;
     this.loggedInUserService._setDataToStorage('payData', JSON.stringify(this.form.value));
@@ -490,7 +559,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   processTransfermovil(bodyData) {
     this.payService.makePaymentTransfermovil(bodyData).subscribe(
       (data: any) => {
-        console.log('Entre aqui');
         if (data && data.data) {
           //this.finalPrice = this.getTotalAmout() as number;
           const price = this.getTotalWithShippingIncluded();
@@ -553,7 +621,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   processBidaiondo(bodyData) {
     this.payService.makePaymentBidaiondo(bodyData).subscribe(
       (data: any) => {
-        console.log(data);
         let dialogRef: MatDialogRef<DialogBidaiondoConfirmToPayComponent, any>;
 
         dialogRef = this.dialog.open(DialogBidaiondoConfirmToPayComponent, {
@@ -565,7 +632,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         });
 
         dialogRef.afterClosed().subscribe((result) => {
-          window.location.reload();
+          if (result) {
+            window.location.reload();
+          }
           this.loadingPayment = false;
         });
       },
