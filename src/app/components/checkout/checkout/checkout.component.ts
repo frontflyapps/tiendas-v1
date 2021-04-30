@@ -183,8 +183,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         this.rate = 1;
       } else {
         const params = {
-          currencyDestination: this.currencyInternational,
-          currencyTarget: data,
+          currencyDestination: data,
+          currencyTarget: this.currencyInternational,
         };
         this.configurationService.getCurrencys(this.query, params).subscribe((response) => {
           if (response.data) {
