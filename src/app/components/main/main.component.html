@@ -292,9 +292,14 @@
         fxLayoutAlign.sm="center center"
         fxLayoutGap="gappx"
       >
-        <a [routerLink]="['']" routerLinkActive="link-active" class="itemCategory" mat-button>{{
-          'Inicio' | translate
-        }}</a>
+        <a
+          [routerLink]="['']"
+          [routerLinkActiveOptions]="{ exact: true }"
+          routerLinkActive="link-active"
+          class="itemCategory"
+          mat-button
+          >{{ 'Inicio' | translate }}</a
+        >
 
         <a
           [routerLink]="['/products/search']"

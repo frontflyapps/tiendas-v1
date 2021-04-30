@@ -1107,5 +1107,12 @@
   "Accept our cancellation policies": "Accept our cancellation policies",
   "Full refund": "Full refund",
   "Currency": "Currency",
-  "Select the currency": "Select the currency you want to make your payment in the system."
+  "Select the currency": "Select the currency you want to make your payment in the system.",
+  "min": "Min",
+  "max": "Max",
+  "Items per page:": "Items per page:",
+  "Next page": "Next page",
+  "Previous page": "Previous page",
+  "First page": "First page",
+  "Last page": "Last page"
 }

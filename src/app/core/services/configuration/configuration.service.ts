@@ -38,6 +38,9 @@ export class ConfigurationService {
       if (params.currencyTarget) {
         httpParams = httpParams.set('filter[$and][currencyTarget]', params.currencyTarget);
       }
+      if (params.BusinessId) {
+        httpParams = httpParams.set('filter[$and][BusinessId]', params.BusinessId);
+      }
     }
     return this.httpClient.get<any>(this.url, { params: httpParams });
   }
