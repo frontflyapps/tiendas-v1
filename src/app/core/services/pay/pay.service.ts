@@ -2,6 +2,7 @@ import { environment } from './../../../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { timeout } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -9,6 +10,7 @@ import { Observable } from 'rxjs';
 export class PayService {
   urlPaymentTransfermovil = environment.apiUrl + 'payment/transfermovil';
   urlPaymentEnzona = environment.apiUrl + 'payment/enzona';
+  urlPaymentBidaiondo = environment.apiUrl + 'payment/bidaiondo';
   ///////////////////////////////////////////////////////////////////////////
   urlPaySucces = environment.apiUrl + 'pay-success';
   urlPayCancelled = environment.apiUrl + 'pay-cancelled';
@@ -20,6 +22,10 @@ export class PayService {
 
   makePaymentEnzona(data): Observable<any> {
     return this.httpClient.post<any>(this.urlPaymentEnzona, data);
+  }
+
+  makePaymentBidaiondo(data): Observable<any> {
+    return this.httpClient.post<any>(this.urlPaymentBidaiondo, data).pipe(timeout(120000));
   }
 
   setCompleteTranferPayment(data): Observable<any> {
