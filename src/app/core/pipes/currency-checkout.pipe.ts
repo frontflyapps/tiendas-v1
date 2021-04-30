@@ -9,7 +9,7 @@ export class CurrencyCheckoutPipe implements PipeTransform {
 
   transform(data: any): number {
     if (data.currency === 'EUR') {
-      return data.value / data.rate;
+      return data.value * data.rate;
     } else {
       return data.value;
     }
