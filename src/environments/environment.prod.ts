@@ -3,6 +3,7 @@ export const environment = {
   apiUrl: 'https://apimercedes.cubanearme.com/v1/',
   imageUrl: 'https://apimercedes.cubanearme.com/v1/',
   defaultLanguage: 'es',
+  currencyInternational: 'USD',
   version: '1.2.0',
   url: 'https://mercedes.cubanearme.com',
   urlAboutUs: 'https://mercedes.cubanearme.com',

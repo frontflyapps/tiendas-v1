@@ -7,6 +7,7 @@ export const environment = {
   apiUrl: 'http://localhost:8998/v1/',
   imageUrl: 'http://localhost:8998/v1/',
   defaultLanguage: 'es',
+  currencyInternational: 'USD',
   version: '1.2.0',
   url: 'http://localhost:4400',
   urlAboutUs: 'http://localhost:4400',

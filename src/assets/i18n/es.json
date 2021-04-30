@@ -1105,5 +1105,7 @@
   "Cancellation policies": "Políticas de cancelación",
   "Penalty for cancellation policies": "Penalización por las políticas de cancelación",
   "Accept our cancellation policies": "Acepta nuestras politicas de cancelacion",
-  "Full refund": "Devolución total"
+  "Full refund": "Devolución total",
+  "Currency": "Moneda",
+  "Select the currency": "Seleccione la moneda que desea para realizar su pago en el sistema."
 }
