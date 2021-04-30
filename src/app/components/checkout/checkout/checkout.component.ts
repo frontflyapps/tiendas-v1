@@ -27,6 +27,7 @@ import { MarketEnum } from '../../../core/classes/market.enum';
 import { MyOrdersService } from '../../my-orders/service/my-orders.service';
 import { ShowToastrService } from '../../../core/services/show-toastr/show-toastr.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { DialogBidaiondoConfirmToPayComponent } from '../dialog-bidaiondo-confirm-to-pay/dialog-bidaiondo-confirm-to-pay.component';
 
 @Component({
   selector: 'app-checkout',
@@ -50,7 +51,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   payments: any[] = [
     { id: 'transfermovil', name: 'Transfermovil', logo: 'assets/images/transfermovil_logo.png' },
     { id: 'enzona', name: 'Enzona', logo: 'assets/images/enzona.jpeg' },
-    { id: 'baiondo', name: 'Baiondo', logo: 'assets/images/noImage.jpg' },
+    { id: 'visa', name: 'Visa', logo: 'assets/images/visa_logo.png' },
+    { id: 'express', name: 'American Express', logo: 'assets/images/american_express_logo.png' },
+    { id: 'masterCard', name: 'MasterCard', logo: 'assets/images/mastercard_logo.png' },
   ];
 
   nationalitiy: any[] = [
@@ -90,7 +93,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   marketCard: string;
   showShipping: boolean = true;
   private applyStyle: boolean;
-
   public compareById(val1, val2) {
     return val1 && val2 && val1 == val2;
   }
@@ -250,6 +252,12 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           this.shippingData = [];
           this.canBeDelivery = false;
         }
+
+        if (this.cart.market === MarketEnum.NATIONAL) {
+          this.form.get('paymentType').setValue('transfermovil');
+        } else {
+          this.form.get('paymentType').setValue('visa');
+        }
         setTimeout(() => {
           this.loadingCart = false;
         }, 250);
@@ -381,7 +389,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     } else {
       /*Para extrangeros la cosa*/
       this.onlyCubanPeople = false;
-      this.form.get('paymentType').setValue('baiondo');
+      this.form.get('paymentType').setValue('visa');
       this.form.get('phone').setValidators([]);
       this.form.get('phone').updateValueAndValidity();
     }
@@ -472,9 +480,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     if (data.paymentType == 'enzona') {
       return this.processEnzona(data);
     }
-    if (data.paymentType == 'baiondo') {
-      this.loadingPayment = false;
-      return;
+    if (data.paymentType == 'visa' || data.paymentType == 'express' || data.paymentType == 'masterCard') {
+      data.paymentType = 'bidaiondo';
+      return this.processBidaiondo(data);
     }
   }
 
@@ -521,13 +529,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     const link: any = document.getElementById('pasarelaLink');
     this.payService.makePaymentEnzona(bodyData).subscribe(
       (data: any) => {
-        // link.href = data.data.linkConfirm;
-        // link.click();
-        // document.location.href = data.data.linkConfirm;
-        // setTimeout(() => {
-        //   this.loadingPayment = false;
-        // }, 10000);
-
         let dialogRef: MatDialogRef<DialogEnzonaConfirmToPayComponent, any>;
 
         dialogRef = this.dialog.open(DialogEnzonaConfirmToPayComponent, {
@@ -535,6 +536,31 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           maxWidth: '100vw',
           data: {
             link: data.data.linkConfirm,
+          },
+        });
+
+        dialogRef.afterClosed().subscribe((result) => {
+          window.location.reload();
+          this.loadingPayment = false;
+        });
+      },
+      (error) => {
+        this.loadingPayment = false;
+      },
+    );
+  }
+
+  processBidaiondo(bodyData) {
+    this.payService.makePaymentBidaiondo(bodyData).subscribe(
+      (data: any) => {
+        console.log(data);
+        let dialogRef: MatDialogRef<DialogBidaiondoConfirmToPayComponent, any>;
+
+        dialogRef = this.dialog.open(DialogBidaiondoConfirmToPayComponent, {
+          width: '15cm',
+          maxWidth: '100vw',
+          data: {
+            form: data.data.form,
           },
         });
 

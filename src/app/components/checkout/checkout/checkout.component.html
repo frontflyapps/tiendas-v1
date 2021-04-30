@@ -626,7 +626,7 @@
                   </div>
                 </mat-radio-button>
                 <mat-radio-button
-                  *ngIf="!this.onlyCubanPeople && cart?.market === 'international'"
+                  *ngIf="this.onlyCubanPeople && cart?.market === 'international'"
                   [value]="payments[2].id"
                   class="w-100"
                 >
@@ -634,10 +634,31 @@
                     <span fxFlex="30" fxFlex.lt-md="50" class="mat-body-2 uppercase mr-3" style="font-size: 17px">{{
                       payments[2].name
                     }}</span>
-                    <img
-                      [src]="payments[2].logo"
-                      style="height: 45px; width: 45px; border-radius: 50%; object-fit: cover"
-                    />
+                    <img [src]="payments[2].logo" style="width: 100px; object-fit: cover" />
+                  </div>
+                </mat-radio-button>
+                <mat-radio-button
+                  *ngIf="this.onlyCubanPeople && cart?.market === 'international'"
+                  [value]="payments[3].id"
+                  class="w-100"
+                >
+                  <div fxLayout="row" fxLayoutAlign="start center" class="w-100">
+                    <span fxFlex="30" fxFlex.lt-md="50" class="mat-body-2 uppercase mr-3" style="font-size: 17px">{{
+                      payments[3].name
+                    }}</span>
+                    <img [src]="payments[3].logo" style="width: 100px; object-fit: cover" />
+                  </div>
+                </mat-radio-button>
+                <mat-radio-button
+                  *ngIf="this.onlyCubanPeople && cart?.market === 'international'"
+                  [value]="payments[4].id"
+                  class="w-100"
+                >
+                  <div fxLayout="row" fxLayoutAlign="start center" class="w-100">
+                    <span fxFlex="30" fxFlex.lt-md="50" class="mat-body-2 uppercase mr-3" style="font-size: 17px">{{
+                      payments[4].name
+                    }}</span>
+                    <img [src]="payments[4].logo" style="width: 100px; object-fit: cover" />
                   </div>
                 </mat-radio-button>
               </mat-radio-group>

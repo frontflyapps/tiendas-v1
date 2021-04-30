@@ -2,6 +2,7 @@ import { DialogNoCartSelectedComponent } from './no-cart-selected/no-cart-select
 import { MatDialogModule } from '@angular/material/dialog';
 import { DialogEnzonaConfirmToPayComponent } from './dialog-enzona-confirm-to-pay/dialog-enzona-confirm-to-pay.component';
 import { EnzonaPaymentOkComponent } from './enzona-payment-ok/enzona-payment-ok.component';
+import { DialogBidaiondoConfirmToPayComponent } from './dialog-bidaiondo-confirm-to-pay/dialog-bidaiondo-confirm-to-pay.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -69,8 +70,9 @@ import { DialogTranfermovilQrComponent } from './dialog-tranfermovil-qr/dialog-t
     DialogNoCartSelectedComponent,
     DetailsShippingComponent,
     DialogTranfermovilQrComponent,
+    DialogBidaiondoConfirmToPayComponent,
   ],
-  entryComponents: [DetailsShippingComponent, DialogTranfermovilQrComponent],
+  entryComponents: [DetailsShippingComponent, DialogTranfermovilQrComponent, DialogBidaiondoConfirmToPayComponent],
   providers: [TaxesShippingService],
 })
 export class CheckoutModule {}
