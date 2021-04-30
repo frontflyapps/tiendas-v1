@@ -156,6 +156,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.applyStyle = innerWidth <= 600;
   }
   ngOnInit() {
+    this.loggedInUser = this.loggedInUserService.getLoggedInUser();
     this.rate = 1;
     this.applyResolution();
     this.loggedInUserService.$languageChanged.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {
@@ -182,10 +183,16 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       if (this.currencyInternational === data) {
         this.rate = 1;
       } else {
-        const params = {
+        let params: any = {
           currencyDestination: data,
           currencyTarget: this.currencyInternational,
         };
+        if (this.cart.BusinessId) {
+          params = {
+            ...params,
+            BusinessId: this.cart.BusinessId,
+          };
+        }
         this.configurationService.getCurrencys(this.query, params).subscribe((response) => {
           if (response.data) {
             this.rate = response.data[0].rate;
