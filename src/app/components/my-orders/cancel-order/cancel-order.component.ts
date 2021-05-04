@@ -1,12 +1,13 @@
 import { UtilsService } from './../../../core/services/utils/utils.service';
 import { ShowToastrService } from './../../../core/services/show-toastr/show-toastr.service';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PayService } from 'src/app/core/services/pay/pay.service';
 import { MatTableDataSource } from '@angular/material/table';
 import * as moment from 'moment';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DialogBidaiondoCancelToPayComponent } from '../dialog-bidaiondo-cancel-to-pay/dialog-bidaiondo-cancel-to-pay.component';
 
 @Component({
   selector: 'app-cancel-order',
@@ -38,11 +39,11 @@ export class CancelOrderComponent implements OnInit {
     private payService: PayService,
     private fb: FormBuilder,
     public utilsFront: UtilsService,
+    private dialog: MatDialog,
     public dialogRef: MatDialogRef<CancelOrderComponent>,
   ) {
     this.order = data.order;
     this.cancellationRule = this.order?.cancellationRule;
-    console.log(this.cancellationRule);
     if (this.order.status == 'on-delivery') {
       this.cancellationText = `Este pago está en proceso de envío, por lo que para continuar con su cancelación,
          y correspondiente devolución póngase en contacto con los administradores de la plataforma,
@@ -87,6 +88,7 @@ export class CancelOrderComponent implements OnInit {
     this.spinner.show();
     const cancelNote = this.form?.value?.cancelNote;
     let body = { id: this.order.id, cancelNote: cancelNote };
+
     if (this.order.paymentType == 'transfermovil') {
       this.payService.cancelPaymentTranfermovil(body).subscribe(
         (val) => {
@@ -128,12 +130,37 @@ export class CancelOrderComponent implements OnInit {
           }
         },
       );
-    } else {
-      this.loadData = false;
-      this.spinner.hide();
-      this.showToastr.showInfo('No podemos cancelar un pedido en una TPV inválida, contacte a sus administradores');
-      this.dialogRef.close(true);
-      return;
+    } else if (this.order.paymentType == 'bidaiondo') {
+      this.payService.cancelPaymentBidaiondo(body).subscribe(
+        (data) => {
+          this.loadData = false;
+          this.spinner.hide();
+          let dialogRef: MatDialogRef<DialogBidaiondoCancelToPayComponent, any>;
+          dialogRef = this.dialog.open(DialogBidaiondoCancelToPayComponent, {
+            width: '15cm',
+            maxWidth: '100vw',
+            data: {
+              form: data.data.form,
+            },
+          });
+
+          dialogRef.afterClosed().subscribe((result) => {
+            if (result) {
+              this.dialogRef.close(true);
+              window.location.reload();
+            } else {
+              this.dialogRef.close(true);
+            }
+          });
+        },
+        (error: any) => {
+          this.loadData = false;
+          this.spinner.hide();
+          if (error.status == 403 || error.status == 401) {
+            this.dialogRef.close(true);
+          }
+        },
+      );
     }
   }
 }

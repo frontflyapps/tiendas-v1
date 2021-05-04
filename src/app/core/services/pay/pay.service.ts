@@ -32,6 +32,10 @@ export class PayService {
     return this.httpClient.post<any>(this.urlPaymentEnzona + '-continue', data);
   }
 
+  cancelPaymentBidaiondo(data): Observable<any> {
+    return this.httpClient.post<any>(this.urlPaymentBidaiondo + `/${data.id}/cancel`, data);
+  }
+
   cancelPaymentTranfermovil(data): Observable<any> {
     return this.httpClient.post<any>(this.urlPaymentTransfermovil + `/${data.id}/cancel`, data);
   }
