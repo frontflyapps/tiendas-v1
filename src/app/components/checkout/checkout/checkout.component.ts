@@ -94,7 +94,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   shippingData: any[] = [];
   canBeDelivery = true;
   marketCard: string;
-  showShipping: boolean = true;
+  showShipping: boolean = false;
   rate: any;
   currencyInternational = environment.currencyInternational;
   private applyStyle: boolean;
@@ -389,7 +389,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       paymentType: [this.selectedDataPay ? this.selectedDataPay.paymentType : 'transfermovil', [Validators.required]],
       ShippingBusinessId: [null, []],
       currency: [null, [Validators.required]],
-      shippingRequired: [true, []],
+      shippingRequired: [false, []],
     });
     this.onlyCubanPeople = this.form.get('isForCuban').value;
     if (this.onlyCubanPeople) {
