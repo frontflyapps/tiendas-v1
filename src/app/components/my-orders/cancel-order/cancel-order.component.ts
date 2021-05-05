@@ -135,23 +135,8 @@ export class CancelOrderComponent implements OnInit {
         (data) => {
           this.loadData = false;
           this.spinner.hide();
-          let dialogRef: MatDialogRef<DialogBidaiondoCancelToPayComponent, any>;
-          dialogRef = this.dialog.open(DialogBidaiondoCancelToPayComponent, {
-            width: '15cm',
-            maxWidth: '100vw',
-            data: {
-              form: data.data.form,
-            },
-          });
-
-          dialogRef.afterClosed().subscribe((result) => {
-            if (result) {
-              this.dialogRef.close(true);
-              window.location.reload();
-            } else {
-              this.dialogRef.close(true);
-            }
-          });
+          this.showToastr.showInfo(data.data);
+          this.dialogRef.close(true);
         },
         (error: any) => {
           this.loadData = false;
