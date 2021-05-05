@@ -609,6 +609,16 @@
                 </div>
 
                 <mat-divider fxHide.lt-sm></mat-divider>
+
+                <ng-container *ngIf="this.selectedOrder.status == 'error'">
+                  <p class="mat-title my-2" style="color: #e53935" ngClass.xs="mat-body-2">
+                    {{ 'Error en el pago' | translate }}
+                  </p>
+                  <blockquote class="cancelNote">
+                    <p>{{ selectedOrder?.error }}</p>
+                  </blockquote>
+                </ng-container>
+
                 <ng-container *ngIf="this.selectedOrder.status == 'cancelled'">
                   <p class="mat-title my-2" ngClass.xs="mat-body-2">
                     {{ 'Comentario acerca de la cancelación' | translate }}
