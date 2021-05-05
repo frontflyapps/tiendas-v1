@@ -315,7 +315,7 @@ export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
           setTimeout(() => {
             this.selectedOrder = undefined;
             this.sidenav.toggle();
-            document.location.reload();
+            // document.location.reload();
           }, 250);
         }
         this.ordersService.$orderItemsUpdated.next();
