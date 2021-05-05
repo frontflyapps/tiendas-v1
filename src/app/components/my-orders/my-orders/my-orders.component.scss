@@ -1,12 +1,20 @@
-@import "../../../../assets/scss/mixins/breakpoints";
-@import "../../../../assets/scss/theme/variables";
+@import '../../../../assets/scss/mixins/breakpoints';
+@import '../../../../assets/scss/theme/variables';
 
 app-my-orders {
-
   .cancelledLabel {
     color: white;
     font-weight: 500;
     background-color: #f44336;
+    border-radius: 4px;
+    z-index: 999;
+    padding: 4px 16px;
+  }
+
+  .errorLabel {
+    color: white;
+    font-weight: 900;
+    background-color: #e53935;
     border-radius: 4px;
     z-index: 999;
     padding: 4px 16px;
@@ -64,7 +72,7 @@ app-my-orders {
     margin: 0 auto;
     box-sizing: border-box;
 
-    @media(max-width: 599px) {
+    @media (max-width: 599px) {
       padding: 0px 0px;
     }
   }
@@ -112,7 +120,6 @@ app-my-orders {
     background-color: white !important;
     padding: 16px 16px;
   }
-
 
   .MatDrawer {
     width: 100% !important;
@@ -184,13 +191,10 @@ app-my-orders {
     }
   }
 
-
-
-
   .listItem {
     background-color: #fafafa !important;
     height: auto !important;
-    border-bottom: 1.0px solid rgba(0, 0, 0, 0.12);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
     cursor: pointer;
     position: relative;
   }
@@ -210,7 +214,7 @@ app-my-orders {
     bottom: 40px;
     z-index: 999;
 
-    @media(max-width:800px) {
+    @media (max-width: 800px) {
       bottom: 24%;
       right: 16px;
     }
@@ -258,15 +262,15 @@ app-my-orders {
       margin: 0;
       position: relative;
       background: #bdbdbd;
-      background: rgba(0, 0, 0, .0);
+      background: rgba(0, 0, 0, 0);
 
       input {
         border-style: none;
         border-width: 1px;
         border-radius: 27px;
         border: 1px solid #eeeeee;
-        -webkit-transition: box-shadow .3s ease-out;
-        transition: box-shadow .3s ease-out;
+        -webkit-transition: box-shadow 0.3s ease-out;
+        transition: box-shadow 0.3s ease-out;
         height: 45px;
         width: 100%;
         max-width: 100%;
@@ -339,7 +343,7 @@ app-my-orders {
       -webkit-line-clamp: 5 !important;
       -webkit-box-orient: vertical !important;
       line-height: 1.6rem;
-      height: 8.0rem;
+      height: 8rem;
     }
 
     .title-section {
@@ -350,17 +354,17 @@ app-my-orders {
       padding-bottom: 16px;
 
       &::before {
-        content: "";
+        content: '';
         left: 0%;
         position: absolute;
         width: 43%;
         height: 0.0975rem;
         bottom: 0.34375rem;
-        background-color: rgba(0, 0, 0, .08);
+        background-color: rgba(0, 0, 0, 0.08);
       }
 
       &::after {
-        content: "";
+        content: '';
         left: 0%;
         position: absolute;
         width: 2.5rem;
@@ -371,7 +375,6 @@ app-my-orders {
     }
 
     .details {
-
       table,
       th,
       td {
@@ -388,10 +391,7 @@ app-my-orders {
         text-align: left;
         color: #616161;
       }
-
     }
-
-
   }
 
   .container-bulling {
@@ -413,9 +413,8 @@ app-my-orders {
     }
 
     .border-bottom {
-      border-bottom: 1px solid rgba(0, 0, 0, 0.12) !important
+      border-bottom: 1px solid rgba(0, 0, 0, 0.12) !important;
     }
-
   }
 
   .cancelNote {
@@ -466,5 +465,4 @@ app-my-orders {
       }
     }
   }
-
 }

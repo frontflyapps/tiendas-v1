@@ -69,6 +69,15 @@ export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
       weight: 400,
       class: 'cancelledLabel',
     },
+    error: {
+      status: {
+        es: 'error en el pago',
+        en: 'error en el pago',
+      },
+      primary: '#e53935',
+      weight: 600,
+      class: 'errorLabel',
+    },
     'processing-cancel': {
       status: {
         es: 'canc. en progreso',
@@ -113,7 +122,16 @@ export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
   loadingSelectedItem = false;
 
   param: any = {
-    status: ['requested', 'confirmed', 'on-delivery', 'delivered', 'processing-cancel', 'cancelled', 'expired'],
+    status: [
+      'requested',
+      'confirmed',
+      'on-delivery',
+      'delivered',
+      'processing-cancel',
+      'cancelled',
+      'expired',
+      'error',
+    ],
   };
 
   constructor(
