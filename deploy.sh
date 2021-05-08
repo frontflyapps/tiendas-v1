@@ -1,2 +1,2 @@
-aws s3 sync --acl public-read --metadata-directive REPLACE --cache-control max-age=1200,public dist/tienda-angular-b2b s3://mercedes.cubanearme.com --delete
-aws cloudfront create-invalidation --distribution-id ENX88DMG7FYQ7 --paths "/*"
+aws s3 sync --acl public-read --metadata-directive REPLACE --cache-control max-age=1200,public dist/tienda-angular-b2b s3://www.mcvcommercial.com --delete
+aws cloudfront create-invalidation --distribution-id E1TQXGCF2PUJJ2 --paths "/*"
