@@ -98,6 +98,30 @@
               </mat-select>
             </mat-form-field> -->
 
+            <ng-container
+              *ngIf="
+                form.controls['paymentType'].value === 'visa' ||
+                form.controls['paymentType'].value === 'express' ||
+                form.controls['paymentType'].value === 'masterCard'
+              "
+            >
+              <p class="mat-body-2 my-2" style="text-transform: uppercase">
+                {{ 'Select the currency' | translate }}
+              </p>
+              <div fxLayout="row wrap">
+                <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline">
+                  <mat-label>{{ 'Currency' | translate }}</mat-label>
+                  <mat-select [formControl]="form.controls['currency']" placeholder="{{ 'Currency' | translate }}">
+                    <mat-option *ngFor="let currency of currencies" [value]="currency">
+                      <span class="mat-body-2">
+                        {{ currency }}
+                      </span>
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </ng-container>
+
             <p class="mat-body-2 my-2" style="text-transform: uppercase">
               {{ 'Datos del destinatario' | translate }}
               <mat-icon
@@ -349,7 +373,7 @@
                   <td mat-cell *matCellDef="let element">
                     <div fxLayout="row" fxLayoutAlign="center center">
                       <strong style="font-size: 16px">
-                        {{ getTotalPricePerItem(element) | currencyMarket: marketCard }}
+                        {{ getTotalPricePerItemCurrency(element) | currencyMarket: form.controls['currency'].value }}
                       </strong>
                     </div>
                   </td>
@@ -421,7 +445,9 @@
             <ul *ngIf="!loadingCart && showShipping" class="total-amount">
               <li>
                 {{ 'Subtotal' | translate }}:
-                <span class="amount px-2">{{ getTotalAmout() | currencyMarket: marketCard }}</span>
+                <span class="amount px-2">{{
+                  getTotalAmountCurrency() | currencyMarket: form.controls['currency'].value
+                }}</span>
               </li>
             </ul>
 
@@ -587,7 +613,9 @@
             <ul class="total">
               <li>
                 {{ 'Total' | translate }}
-                <span class="count px-2">{{ getTotalWithShippingIncluded() | currencyMarket: marketCard }}</span>
+                <span class="count px-2">{{
+                  getTotalWithShippingIncludedCurrency() | currencyMarket: form.controls['currency'].value
+                }}</span>
               </li>
             </ul>
             <p class="my-2">
@@ -626,7 +654,7 @@
                   </div>
                 </mat-radio-button>
                 <mat-radio-button
-                  *ngIf="!this.onlyCubanPeople && cart?.market === 'international'"
+                  *ngIf="this.onlyCubanPeople && cart?.market === 'international'"
                   [value]="payments[2].id"
                   class="w-100"
                 >
@@ -634,10 +662,31 @@
                     <span fxFlex="30" fxFlex.lt-md="50" class="mat-body-2 uppercase mr-3" style="font-size: 17px">{{
                       payments[2].name
                     }}</span>
-                    <img
-                      [src]="payments[2].logo"
-                      style="height: 45px; width: 45px; border-radius: 50%; object-fit: cover"
-                    />
+                    <img [src]="payments[2].logo" style="width: 100px; object-fit: cover" />
+                  </div>
+                </mat-radio-button>
+                <mat-radio-button
+                  *ngIf="this.onlyCubanPeople && cart?.market === 'international'"
+                  [value]="payments[3].id"
+                  class="w-100"
+                >
+                  <div fxLayout="row" fxLayoutAlign="start center" class="w-100">
+                    <span fxFlex="30" fxFlex.lt-md="50" class="mat-body-2 uppercase mr-3" style="font-size: 17px">{{
+                      payments[3].name
+                    }}</span>
+                    <img [src]="payments[3].logo" style="width: 100px; object-fit: cover" />
+                  </div>
+                </mat-radio-button>
+                <mat-radio-button
+                  *ngIf="this.onlyCubanPeople && cart?.market === 'international'"
+                  [value]="payments[4].id"
+                  class="w-100"
+                >
+                  <div fxLayout="row" fxLayoutAlign="start center" class="w-100">
+                    <span fxFlex="30" fxFlex.lt-md="50" class="mat-body-2 uppercase mr-3" style="font-size: 17px">{{
+                      payments[4].name
+                    }}</span>
+                    <img [src]="payments[4].logo" style="width: 100px; object-fit: cover" />
                   </div>
                 </mat-radio-button>
               </mat-radio-group>

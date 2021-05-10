@@ -15,6 +15,10 @@ export class CurrencyMarket implements PipeTransform {
     currency = CoinEnum.CUP;
     if (market == MarketEnum.INTERNATIONAL) {
       currency = CoinEnum.USD;
+    } else if (market == CoinEnum.EUR) {
+      currency = CoinEnum.EUR;
+    } else if (market == CoinEnum.USD) {
+      currency = CoinEnum.USD;
     }
     const data = this.currencyPipe.transform(price, currency);
     return data;

@@ -28,6 +28,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { NgpMaterialRatingModule } from 'ngp-material-rating';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
+import { DialogBidaiondoCancelToPayComponent } from './dialog-bidaiondo-cancel-to-pay/dialog-bidaiondo-cancel-to-pay.component';
 
 ///////////////////////////////////////////////////////////////////
 
@@ -58,8 +59,8 @@ import { MatTableModule } from '@angular/material/table';
     MatDialogModule,
     MatFormFieldModule,
   ],
-  declarations: [MyOrdersComponent, CancelOrderComponent],
-  entryComponents: [CancelOrderComponent],
+  declarations: [MyOrdersComponent, CancelOrderComponent, DialogBidaiondoCancelToPayComponent],
+  entryComponents: [CancelOrderComponent, DialogBidaiondoCancelToPayComponent],
   providers: [],
 })
 export class MyOrdersModule {}

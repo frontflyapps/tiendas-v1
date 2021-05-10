@@ -3,6 +3,7 @@ export const environment = {
   apiUrl: 'https://api.cuentapropias.com/v1/',
   imageUrl: 'https://api.cuentapropias.com/v1/',
   defaultLanguage: 'es',
+  currencyInternational: 'USD',
   version: '1.2.0',
   url: 'https://wwww.cuentapropias.com',
   urlAboutUs: 'https://wwww.cuentapropias.com',
