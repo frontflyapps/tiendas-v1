@@ -4,7 +4,7 @@ cache:
   paths:
     - node_modules
 
-deploy_multiagency:
+deploy_tcp:
   only:
     - tienda-online-b2b-cuentapropistas
   when: always
