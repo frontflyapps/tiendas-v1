@@ -20,6 +20,9 @@
         object-position: center;
         width: 100% !important;
         height: auto !important;
+        @include media-breakpoint('gt-sm') {
+          height: 75vh !important;
+        }
       }
 
       .about-us-intro {
