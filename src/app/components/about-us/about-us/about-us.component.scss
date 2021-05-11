@@ -1,10 +1,15 @@
-@import "../../../../assets/scss/theme/variables";
-@import "../../../../assets/scss/mixins/breakpoints";
+@import '../../../../assets/scss/theme/variables';
+@import '../../../../assets/scss/mixins/breakpoints';
 
 /***************************************
 *  About us page styles
 ****************************************/
 .about-us-wrapper {
+  p,
+  li {
+    text-align: justify;
+    font-size: 16px;
+  }
   .about-section {
     .left-info-panel {
       overflow: hidden;
@@ -21,7 +26,7 @@
         h2 {
           margin-bottom: 20px;
 
-          @include media-breakpoint("lt-md") {
+          @include media-breakpoint('lt-md') {
             font-size: 22px !important;
           }
         }
@@ -46,7 +51,6 @@
         }
       }
     }
-
   }
 
   .our-values {
@@ -81,7 +85,6 @@
         }
       }
     }
-
   }
 
   .title-wrapper {
@@ -91,7 +94,7 @@
     h2 {
       margin-bottom: 10px;
 
-      @include media-breakpoint("lt-md") {
+      @include media-breakpoint('lt-md') {
         font-size: 22px !important;
       }
     }
@@ -108,16 +111,15 @@
         padding-right: 15px;
 
         .single-team-member {
-          transition: .3s;
+          transition: 0.3s;
 
           .img-box {
             position: relative;
 
             img {
               width: 100%;
-              -webkit-transition: opacity .4s ease;
-              transition: opacity .4s ease;
-
+              -webkit-transition: opacity 0.4s ease;
+              transition: opacity 0.4s ease;
             }
 
             .overlay {
@@ -144,8 +146,8 @@
                     margin-right: -12px;
                     -webkit-transform: translate3d(0, 35px, 0);
                     transform: translate3d(0, 35px, 0);
-                    -webkit-transition: -webkit-transform .4s ease, visibility .4s ease, opacity .4s ease;
-                    transition: transform .4s ease, visibility .4s ease, opacity .4s ease;
+                    -webkit-transition: -webkit-transform 0.4s ease, visibility 0.4s ease, opacity 0.4s ease;
+                    transition: transform 0.4s ease, visibility 0.4s ease, opacity 0.4s ease;
                     visibility: hidden;
 
                     li {
@@ -169,14 +171,14 @@
             text-align: center;
             padding-top: 20px;
             padding-bottom: 20px;
-            -webkit-transition: .4s ease;
-            transition: .4s ease;
+            -webkit-transition: 0.4s ease;
+            transition: 0.4s ease;
           }
 
           &:hover {
             .img-box {
               img {
-                opacity: .875;
+                opacity: 0.875;
               }
 
               // .overlay {
@@ -195,7 +197,7 @@
 
             .text-box {
               background: $grey4;
-              transition: background .5s ease;
+              transition: background 0.5s ease;
 
               h4 {
                 color: $white;
@@ -206,15 +208,8 @@
               }
             }
           }
-
-
-
         }
-
-
-
       }
     }
   }
-
 }
