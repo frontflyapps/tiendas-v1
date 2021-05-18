@@ -39,9 +39,10 @@ export class CurrencyService {
   }
 
   public getPriceLabel(product) {
-    const currencyCode = this.getCurrency();
-    const minPrice = this.currencyPipe.transform(product.limitMinPrice, currencyCode.code);
-    const maxPrice = this.currencyPipe.transform(product.limitMaxPrice, currencyCode.code);
+    //const currencyCode = this.getCurrency();
+    const currencyCode = product.market === 'international' ? 'USD' : 'CUP';
+    const minPrice = this.currencyPipe.transform(product.limitMinPrice, currencyCode);
+    const maxPrice = this.currencyPipe.transform(product.limitMaxPrice, currencyCode);
     if (product.limitMinPrice == product.limitMaxPrice) {
       return minPrice;
     } else {
@@ -50,9 +51,10 @@ export class CurrencyService {
   }
 
   public getOfferLabel(product) {
-    const currencyCode = this.getCurrency();
-    const minPrice = this.currencyPipe.transform(product.limitMinOffersPrice, currencyCode.code);
-    const maxPrice = this.currencyPipe.transform(product.limitMaxOffersPrice, currencyCode.code);
+    //const currencyCode = this.getCurrency();
+    const currencyCode = product.market === 'international' ? 'USD' : 'CUP';
+    const minPrice = this.currencyPipe.transform(product.limitMinOffersPrice, currencyCode);
+    const maxPrice = this.currencyPipe.transform(product.limitMaxOffersPrice, currencyCode);
     if (product.limitMinOffersPrice == product.limitMaxOffersPrice) {
       return minPrice;
     } else {
