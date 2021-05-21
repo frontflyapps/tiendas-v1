@@ -397,8 +397,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         .get('phone')
         .setValidators([
           Validators.required,
-          Validators.minLength(10),
-          Validators.maxLength(10),
+          // Validators.minLength(10),
+          // Validators.maxLength(10),
           Validators.pattern(/^\d+$/),
         ]);
     }
@@ -446,8 +446,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         .get('phone')
         .setValidators([
           Validators.required,
-          Validators.minLength(10),
-          Validators.maxLength(10),
+          // Validators.minLength(10),
+          // Validators.maxLength(10),
           Validators.pattern(/^\d+$/),
         ]);
       this.form.get('phone').updateValueAndValidity();
