@@ -18,6 +18,15 @@ app-notification-item {
     padding: 4px 16px;
   }
 
+  .errorLabel {
+    color: white;
+    font-weight: 900;
+    background-color: #e53935;
+    border-radius: 4px;
+    z-index: 999;
+    padding: 4px 16px;
+  }
+
   .payedLabel {
     color: white;
     font-weight: 500;
@@ -63,8 +72,6 @@ app-notification-item {
     padding: 4px 16px;
   }
 
-
-
   .iconFecha {
     font-size: 16px;
     padding-top: 3px;
@@ -86,17 +93,16 @@ app-notification-item {
     display: inline-block;
     fill: currentColor;
     height: 24px;
-    color: #5C616F;
+    color: #5c616f;
     width: 24px;
     font-size: 24px;
     padding-top: 6px;
     margin-left: -9px;
-
   }
 
   .CircleIcon {
     border: 1px solid;
-    border-color: #5C616F;
+    border-color: #5c616f;
     border-radius: 50%;
     margin-top: 3px;
     width: 40px;
@@ -132,7 +138,6 @@ app-notification-item {
     padding-right: 2px;
     width: 24px;
     height: 24px;
-
   }
 
   .NotificationRead {
@@ -142,8 +147,7 @@ app-notification-item {
   }
 
   .NotificationRead:hover {
-    background-color: #ECECEE;
-
+    background-color: #ececee;
   }
 
   .NotificationnoRead {
@@ -155,7 +159,7 @@ app-notification-item {
   }
 
   .NotificationnoRead:hover {
-    background-color: #ECECEE;
+    background-color: #ececee;
   }
 
   .LayoutTable {
@@ -164,5 +168,4 @@ app-notification-item {
     max-height: 200px !important;
     overflow: auto !important;
   }
-
 }

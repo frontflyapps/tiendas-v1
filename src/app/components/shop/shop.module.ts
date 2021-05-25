@@ -22,6 +22,7 @@ import { ShopRoutingModule } from './shop-routing.module';
 import { SwiperModule } from 'ngx-swiper-wrapper';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { MatPaginatorI18nService } from '../../core/classes/PaginatorI18n.class';
 // Import the library
 import { ProductCarouselTwoComponent } from './product-carousel-two/product-carousel-two.component';
 import { ProductCarouselComponent } from './product-carousel/product-carousel.component';
@@ -36,7 +37,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SkeletonLoadingCardsModule } from '../shared/skeleton-loading-cards/skeleton-loading-cards.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
 import { NgpMaterialRatingModule } from '../shared/ngp-material-rating/ngp-material-rating.module';
 import { NgpImageLazyLoadModule } from 'ngp-lazy-image';
 import { BannerPromotionComponent } from './banner-promotion/banner-promotion.component';
@@ -99,6 +100,12 @@ import { MatInputModule } from '@angular/material/input';
     MatTabsModule,
     MatCardModule,
     MatButtonModule,
+  ],
+  providers: [
+    {
+      provide: MatPaginatorIntl,
+      useClass: MatPaginatorI18nService,
+    },
   ],
 })
 export class ShopModule {}

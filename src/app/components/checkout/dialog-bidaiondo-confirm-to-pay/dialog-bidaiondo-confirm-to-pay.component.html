@@ -1,0 +1,28 @@
+<mat-dialog-content>
+  <blockquote>
+    <p>
+      {{
+        'Usted dejará nuestro sistema y navegará hacia la pasarela de pago, marque CONFIRMAR para proseguir con su pago online'
+          | translate
+      }}
+    </p>
+  </blockquote>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close class="mr-3">{{ 'Cancelar' | translate }}</button>
+  <form ngNoForm method="post" target="_self" action="https://www.administracomercios.com/index.php">
+    <div id="inputsHiddenBid"></div>
+    <button
+      id="bid-btn-submit"
+      type="submit"
+      value="Enviar"
+      aria-label="Confirm"
+      mat-flat-button
+      color="primary"
+      mat-dialog-close
+    >
+      {{ 'CONFIRMAR' | translate }}
+    </button>
+  </form>
+</mat-dialog-actions>

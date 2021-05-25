@@ -3,6 +3,7 @@ export const environment = {
   apiUrl: 'https://api.sinkoola.com/v1/',
   imageUrl: 'https://api.sinkoola.com/v1/',
   defaultLanguage: 'es',
+  currencyInternational: 'USD',
   version: '1.2.0',
   url: 'https://wwww.sinkoola.com',
   urlAboutUs: 'https://wwww.sinkoola.com',

@@ -58,6 +58,15 @@ export class NotificationItemComponent implements OnInit, OnChanges, OnDestroy {
       weight: 400,
       class: 'cancelledLabel',
     },
+    error: {
+      status: {
+        es: 'error en el pago',
+        en: 'error en el pago',
+      },
+      primary: '#e53935',
+      weight: 600,
+      class: 'errorLabel',
+    },
     'processing-cancel': {
       status: {
         es: 'canc. en progreso',

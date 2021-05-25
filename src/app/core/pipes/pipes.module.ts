@@ -6,11 +6,28 @@ import { SafeHtmlPipe } from './safe-html.pipe';
 import { SafeResourseUrlPipe } from './safe-resource-url.pipe';
 import { ParsePriceProduct } from './parse-price-product.pipe';
 import { CurrencyMarket } from './currency-market.pipe';
+import { CurrencyCheckoutPipe } from './currency-checkout.pipe';
 
 @NgModule({
-  declarations: [ParseLangPipe, SafeHtmlPipe, SafeResourseUrlPipe, DummyPipe, ParsePriceProduct, CurrencyMarket],
+  declarations: [
+    ParseLangPipe,
+    SafeHtmlPipe,
+    SafeResourseUrlPipe,
+    DummyPipe,
+    ParsePriceProduct,
+    CurrencyMarket,
+    CurrencyCheckoutPipe,
+  ],
   imports: [CommonModule],
-  exports: [ParseLangPipe, SafeHtmlPipe, SafeResourseUrlPipe, DummyPipe, ParsePriceProduct, CurrencyMarket],
+  exports: [
+    ParseLangPipe,
+    SafeHtmlPipe,
+    SafeResourseUrlPipe,
+    DummyPipe,
+    ParsePriceProduct,
+    CurrencyMarket,
+    CurrencyCheckoutPipe,
+  ],
   providers: [DummyPipe],
 })
 export class PipesModule {}
