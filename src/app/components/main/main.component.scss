@@ -51,10 +51,6 @@ app-main {
   .Logo-img {
     height: 30px;
     width: auto;
-    // width: 115px;
-    object-fit: cover;
-    object-position: center;
-    border-radius: 4px;
     cursor: pointer;
 
     &:focus {
