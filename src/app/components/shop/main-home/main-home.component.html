@@ -42,6 +42,32 @@
 
   </ng-container>
 
+  <!-- ---------------------- Featured Items --------------------------- -->
+  <section *ngIf="featuredProducts.length">
+    <div class="container">
+      <div class="products sec-padding">
+        <div class="products-four">
+          <h3>{{'Productos destacados'|translate}}</h3>
+          <app-product-carousel *ngIf="!loadingFeatured" [products]="featuredProducts" [btnColor]="'accent'">
+          </app-product-carousel>
+          <div *ngIf="loadingFeatured" class="my-3">
+            <app-skeleton-loading-cards *ngIf="loadingFeatured" [setConfiguration]="{'xs':1,'sm':2,'md':3,'lg':4}">
+            </app-skeleton-loading-cards>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ---------------------- Big promo1 --------------------------- -->
+  <section>
+    <div class="main-banner">
+      <app-banner-promotion [_imageBigPromo]="bigBanner1?.valor?.image"></app-banner-promotion>
+    </div>
+  </section>
+  <!-- ------------------------------------------------------------ -->
   <!-- ---------------------- Popular Items --------------------------- -->
   <section *ngIf="popularProducts.length ">
     <div class="container">
@@ -71,31 +97,7 @@
   </div>
   <!-- -------------------------------------------------------------------------------->
 
-  <!-- ---------------------- Big promo1 --------------------------- -->
-  <section>
-    <div class="main-banner">
-      <app-banner-promotion [_imageBigPromo]="bigBanner1?.valor?.image"></app-banner-promotion>
-    </div>
-  </section>
-  <!-- ------------------------------------------------------------ -->
 
-  <!-- ---------------------- Featured Items --------------------------- -->
-  <section *ngIf="featuredProducts.length">
-    <div class="container">
-      <div class="products sec-padding">
-        <div class="products-four">
-          <h3>{{'Productos destacados'|translate}}</h3>
-          <app-product-carousel *ngIf="!loadingFeatured" [products]="featuredProducts" [btnColor]="'accent'">
-          </app-product-carousel>
-          <div *ngIf="loadingFeatured" class="my-3">
-            <app-skeleton-loading-cards *ngIf="loadingFeatured" [setConfiguration]="{'xs':1,'sm':2,'md':3,'lg':4}">
-            </app-skeleton-loading-cards>
-          </div>
-
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- ---------------------- Bets Seller Items --------------------------- -->
   <section *ngIf="bestSellersProducts.length">
