@@ -151,7 +151,7 @@ export class MyAccountComponent implements OnInit {
       name: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
       lastname: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
       username: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
-      phone: [null, []],
+      phone: [null, [Validators.pattern(/^(\+|[0-9])([0-9]*)$/), Validators.minLength(6)]],
       address: [null, []],
       email: [null, [Validators.required, Validators.email]],
       // recaptcha: ['', Validators.required],
