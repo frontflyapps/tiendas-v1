@@ -4,6 +4,8 @@
 *  FAQ page styles
 ****************************************/
 .faq {
+  padding: 16px 0px;
+
   .questions {
     padding-right: 15px;
 
@@ -51,5 +53,18 @@
     form {
       margin: 30px 0;
     }
+  }
+
+}
+
+:host::ng-deep {
+  .mat-expansion-panel-header {
+    height: auto;
+    padding: 8px 24px;
+    min-height: 48px;
+  }
+
+  .mat-expansion-panel {
+    border-radius: 4px !important;
   }
 }
