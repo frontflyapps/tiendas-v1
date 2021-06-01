@@ -5,6 +5,27 @@
   max-width: 1280px;
 }
 
+.main-slider {
+  height: 265px;
+  max-width: 1300px !important;
+  width: 100% !important;
+  margin: 0px auto;
+  box-sizing: border-box !important;
+
+  @media (max-width: 1024px) {
+    height: 265px;
+  }
+
+  @media (max-width: 799px) {
+    height: 150px;
+    padding: 0px !important;
+  }
+
+  @media (max-width: 500px) {
+    height: 150px;
+  }
+}
+
 .myBtn {
   padding: 5px 24px;
   width: 180px !important;
