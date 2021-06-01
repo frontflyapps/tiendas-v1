@@ -150,9 +150,9 @@ export class MainComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((compareItems) => (this.compareItems = compareItems));
 
-    if (localStorage.getItem('searchText')) {
-      this.searchForm = new FormControl(JSON.parse(localStorage.getItem('searchText')), []);
-    }
+    // if (localStorage.getItem('searchText')) {
+    //   this.searchForm = new FormControl(JSON.parse(localStorage.getItem('searchText')), []);
+    // }
     /////////////////////////////////////////////////////////////////////////////////////
     if (this.loggedInUser) {
       this._listenToSocketIO();
