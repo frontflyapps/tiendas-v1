@@ -15,6 +15,7 @@ app-main {
   }
 
   .link-active {
+
     // background-color: $theme-main !important;
     span {
       text-decoration: underline;
@@ -48,13 +49,10 @@ app-main {
   }
 
   .Logo-img {
-    height: 50px;
+    height: 20px;
     width: auto;
-    // width: 115px;
-    object-fit: cover;
-    object-position: center;
-    border-radius: 4px;
     cursor: pointer;
+
     &:focus {
       outline: none;
     }
