@@ -7,6 +7,7 @@ body {
     -webkit-zoom: 85%;
   }
 }
+
 @import '../node_modules/swiper/css/swiper.min.css';
 // @import "../node_modules/@angular/material/prebuilt-themes/indigo-pink.css";
 @import './assets/scss/helpers/helpers';
@@ -19,14 +20,12 @@ body {
 // ---------------Material Themin -----------------///
 @import '~@angular/material/theming';
 @include mat-core();
-$custom-typography: mat-typography-config(
-  $font-family: 'Poppins',
+$custom-typography: mat-typography-config($font-family: 'Poppins',
 );
 // Override the typography in the core CSS.
 @include mat-core($custom-typography);
 
-$my-primary-color: (
-  50: #e9eff9,
+$my-primary-color: (50: #e9eff9,
   100: #ccd7e4,
   200: #afbccd,
   300: #90a1b6,
@@ -36,8 +35,7 @@ $my-primary-color: (
   700: #45576c,
   800: #364556,
   900: #24303e,
-  contrast: (
-    50: $black-87-opacity,
+  contrast: (50: $black-87-opacity,
     100: $black-87-opacity,
     200: $black-87-opacity,
     300: $black-87-opacity,
@@ -54,8 +52,7 @@ $my-primary-color: (
   ),
 );
 
-$my-accent-color: (
-  50: #fef3e4,
+$my-accent-color: (50: #fef3e4,
   100: #fde1bc,
   200: #fdce91,
   300: #fcba69,
@@ -65,8 +62,7 @@ $my-accent-color: (
   700: #ef8336,
   800: #e87532,
   900: #de5d2b,
-  contrast: (
-    50: $black-87-opacity,
+  contrast: (50: $black-87-opacity,
     100: $black-87-opacity,
     200: $black-87-opacity,
     300: $black-87-opacity,
@@ -386,25 +382,6 @@ h3,
 h2,
 h4 {
   margin-bottom: 0px !important;
-}
-
-.main-slider {
-  height: 265px;
-  width: 100% !important;
-  box-sizing: border-box !important;
-
-  @media (max-width: 1024px) {
-    height: 265px;
-  }
-
-  @media (max-width: 799px) {
-    height: 150px;
-    padding: 0px !important;
-  }
-
-  @media (max-width: 500px) {
-    height: 150px;
-  }
 }
 
 .mat-tab-body-content {
