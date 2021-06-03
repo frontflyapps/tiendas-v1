@@ -426,3 +426,19 @@ h4 {
 .mat-form-field {
   font-size: 12.5px !important;
 }
+
+.ck-content {
+  .media {
+    display: flex;
+    justify-content: center;
+
+    iframe {
+      width: 100%;
+      max-width: 700px;
+      height: 400px;
+      -o-object-fit: cover;
+      object-fit: cover;
+      border: unset;
+    }
+  }
+}
