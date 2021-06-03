@@ -1,5 +1,5 @@
 <app-main-carousel *ngIf="!showStatic" [slides]="slides"></app-main-carousel>
-<div class="main-slider container" *ngIf="showStatic">
+<div class="container" style="height: 300px;" *ngIf="showStatic" ngStyle.lt-md="height: 175px;">
   <div class="swiper-container h-100">
     <div class="swiper-wrapper h-100">
       <div class="swiper-slide h-100 loader">

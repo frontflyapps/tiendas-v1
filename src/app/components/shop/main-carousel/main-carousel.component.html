@@ -4,23 +4,17 @@
       <div *ngFor="let slide of _slides" class="swiper-slide">
 
         <div fxHide.lt-md [attr.data-background]="slide.image" class="slide-item swiper-lazy">
-          <div class="container-carrusel sl-wrap">
+          <div class="container-carrusel">
             <div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
-
-            <div fxLayout="column" fxLayoutAlign="center left" class="content">
-              <div>
-                <p *ngIf="slide.colorTitle" class="title" [ngStyle]="{'color': slide.colorTitle}">
-                  {{slide.title|parseLang:language}}
-                </p>
-                <p *ngIf="!slide.colorTitle" class="title">
-                  {{slide.title|parseLang:language}}
-                </p>
-                <p class="subtitle">
-                  {{slide.subTitle|parseLang:language}}
-                </p>
-              </div>
-              <a *ngIf="slide.link" [href]="slide.link" target="_blank" class="myBtn" ngClass.gt-sm="uppercase" mat-raised-button
-                color="primary">{{"See more"|translate}}
+            <div *ngIf="slide.title && slide?.title?.es" class="box">
+              <p class="title">
+                {{slide.title|parseLang:language}}
+              </p>
+              <p class="subtitle">
+                {{slide.subTitle|parseLang:language}}
+              </p>
+              <a *ngIf="slide.link" [href]="slide.link" target="_blank" class="myBtn" ngClass.gt-sm="uppercase"
+                mat-raised-button>{{"See more"|translate}}
               </a>
             </div>
           </div>
@@ -29,20 +23,15 @@
           <div class="container-carrusel sl-wrap">
             <div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
 
-            <div fxLayout="column" fxLayoutAlign="center left" class="content">
-              <div>
-                <p *ngIf="slide.colorTitle" class="title" [ngStyle]="{'color': slide.colorTitle}">
-                  {{utilsService.parserLanguage(slide.title,language)}}
-                </p>
-                <p *ngIf="!slide.colorTitle" class="title">
-                  {{utilsService.parserLanguage(slide.title,language)}}
-                </p>
-                <p class="subtitle">
-                  {{utilsService.parserLanguage(slide.subTitle,language)}}
-                </p>
-              </div>
-              <a *ngIf="slide.link" [href]="slide.link" target="_blank" class="myBtn" ngClass.gt-sm="uppercase" mat-raised-button
-                color="primary">{{"See more"|translate}}
+            <div *ngIf="slide.title && slide?.title?.es" class="box">
+              <p class="title">
+                {{slide.title|parseLang:language}}
+              </p>
+              <p class="subtitle">
+                {{slide.subTitle|parseLang:language}}
+              </p>
+              <a *ngIf="slide.link" [href]="slide.link" target="_blank" class="myBtn" ngClass.gt-sm="uppercase"
+                mat-raised-button>{{"See more"|translate}}
               </a>
             </div>
 
