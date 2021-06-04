@@ -54,19 +54,27 @@ export class NavigationService {
       route: '/blog',
       disabled: false,
     },*/
-    // {
-    //   displayName: 'About Us',
-    //   iconName: ['group'],
-    //   route: '/about',
-    //   material: true,
-    //   disabled: false,
-    // },
+    {
+      displayName: 'About Us',
+      iconName: ['group'],
+      route: '/about',
+      material: true,
+      disabled: false,
+    },
     {
       displayName: 'Ayuda',
       iconName: ['help'],
       route: '/faq',
       material: true,
       divider: true,
+      disabled: false,
+    },
+    {
+      displayName: 'Contact us',
+      iconName: ['contact_page'],
+      route: '/contact-us',
+      material: true,
+      divider: false,
       disabled: false,
     },
     // {

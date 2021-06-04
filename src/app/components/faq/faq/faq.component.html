@@ -13,7 +13,7 @@
                   {{ item.title | parseLang: lang }}
                 </mat-panel-title>
               </mat-expansion-panel-header>
-              <div class="p-3 ck-content" [innerHtml]="item.text | parseLang: lang | safeHtml"></div>
+              <div class="ck-content" [innerHtml]="item.text | parseLang: lang | safeHtml"></div>
             </mat-expansion-panel>
           </mat-accordion>
         </div>

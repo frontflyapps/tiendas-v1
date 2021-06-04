@@ -1,5 +1,6 @@
 <div class="container my-4">
-  <img style="max-width: 100%; max-height: 500px;" [src]="imageUrl + this.aboutUs?.image" />
+  <img class="main-image" *ngIf="this.aboutUs?.image" [src]="imageUrl + this.aboutUs?.image" />
+  <br>
   <div class="ck-content" [innerHTML]="this.aboutUs?.text | parseLang:language | safeHtml">
 
   </div>
