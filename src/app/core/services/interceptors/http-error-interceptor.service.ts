@@ -40,7 +40,7 @@ export class HttpErrorInterceptorService implements HttpInterceptor {
           this.processingBackendError(error);
         }
         // console.log('ErrorInterceptorService -> errorMessage', errorMessage);
-        return throwError(errorMessage);
+        return throwError(error);
       }),
     );
   }

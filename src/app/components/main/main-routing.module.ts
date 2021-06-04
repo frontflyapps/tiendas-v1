@@ -59,6 +59,10 @@ const routes: Routes = [
         loadChildren: () =>
           import('../../components/terms-conditions/terms-conditions.module').then((m) => m.TermsConditionsModule),
       },
+      {
+        path: 'contact-us',
+        loadChildren: () => import('../../components/contact-us/contact-us.module').then((m) => m.ContactUsModule),
+      },
     ],
   },
 ];
