@@ -19,10 +19,11 @@
           </div>
         </div>
         <div fxHide fxShow.lt-md [attr.data-background]="slide.imageXs" class="slide-item swiper-lazy">
-          <div class="container-carrusel sl-wrap">
-            <div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
+          <a [href]="slide.link">
+            <div class="container-carrusel sl-wrap">
+              <div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
 
-            <div *ngIf="slide.title && slide?.title?.es" class="box">
+              <!-- <div *ngIf="slide.title && slide?.title?.es" class="box">
               <p class="title">
                 {{slide.title|parseLang:language}}
               </p>
@@ -32,8 +33,10 @@
               <a *ngIf="slide.link" [href]="slide.link" target="_blank" class="myBtn" ngClass.gt-sm="uppercase"
                 mat-raised-button>{{"See more"|translate}}
               </a>
+            </div> -->
             </div>
-          </div>
+          </a>
+
         </div>
       </div>
     </div>
