@@ -1,3 +1,4 @@
+import { MetaService } from 'src/app/core/services/meta.service';
 import { ShowToastrService } from './../../../../core/services/show-toastr/show-toastr.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { CartService } from './../../../shared/services/cart.service';
@@ -94,6 +95,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     public _sanitizer: DomSanitizer,
     private fb: FormBuilder,
     private httpCient: HttpClient,
+    private metaService: MetaService,
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
@@ -136,6 +138,15 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     }
     this.getRelatedProducts();
     this.getFeaturedProducts();
+    //////////////////////META///////////////////
+    this.metaService.setMeta(
+      this.product.name[this.language],
+      this.product.shortDescription[this.language],
+      this.mainImage?.image,
+      environment.meta?.mainPage?.keywords,
+    );
+
+    ////////////////////////////////////////////
   }
 
   ngOnInit() {
