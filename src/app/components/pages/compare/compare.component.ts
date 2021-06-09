@@ -1,3 +1,4 @@
+import { MetaService } from 'src/app/core/services/meta.service';
 import { UtilsService } from './../../../core/services/utils/utils.service';
 import { Component, OnInit } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
@@ -28,9 +29,16 @@ export class CompareComponent implements OnInit {
     public currencyService: CurrencyService,
     public utilsService: UtilsService,
     public loggedInUserService: LoggedInUserService,
+    private metaService: MetaService,
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
+    this.metaService.setMeta(
+      'Lista de Comparación',
+      environment.meta?.mainPage?.description,
+      environment.meta?.mainPage?.shareImg,
+      environment.meta?.mainPage?.keywords,
+    );
   }
 
   ngOnInit() {

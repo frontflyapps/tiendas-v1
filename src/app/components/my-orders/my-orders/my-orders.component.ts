@@ -1,3 +1,4 @@
+import { MetaService } from 'src/app/core/services/meta.service';
 import { ShowToastrService } from './../../../core/services/show-toastr/show-toastr.service';
 import { IPagination } from './../../../core/classes/pagination.class';
 import { Component, OnInit, OnDestroy, ViewEncapsulation, HostListener, ViewChild, AfterViewInit } from '@angular/core';
@@ -146,6 +147,7 @@ export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
     private httpClient: HttpClient,
     private activateRoute: ActivatedRoute,
     private showToastr: ShowToastrService,
+    private metaService: MetaService,
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
@@ -160,6 +162,12 @@ export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
         this.onSelectOrder(data?.orderId);
       }
     });
+    this.metaService.setMeta(
+      environment.meta?.mainPage?.title,
+      environment.meta?.mainPage?.description,
+      environment.meta?.mainPage?.shareImg,
+      environment.meta?.mainPage?.keywords,
+    );
   }
 
   @HostListener('window:resize', ['$event'])

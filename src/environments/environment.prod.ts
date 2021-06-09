@@ -12,4 +12,13 @@ export const environment = {
   adminService: 'https://admin.sinkoola.com/',
   mainDomain: '.sinkoola.com',
   tokenBusiness: '',
+  meta: {
+    mainPage: {
+      title: 'Tienda Online',
+      description: 'Tienda online desarrollada con el framework Angular permite la modelación de negocios B2C and C2C',
+      keywords: 'HTML, CSS, JavaScript, Angular, Tienda Online B2B, Sin Cola, comercio online En Cuba',
+      shareImg: 'https://www.sinkoola.com/assets/images/share-img.png',
+      url: 'https://www.sinkoola.com/',
+    },
+  },
 };

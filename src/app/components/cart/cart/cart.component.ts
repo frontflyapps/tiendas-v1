@@ -1,3 +1,4 @@
+import { MetaService } from 'src/app/core/services/meta.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 import { CartItem, Cart } from './../../../modals/cart-item';
@@ -31,10 +32,17 @@ export class CartComponent implements OnInit, OnDestroy {
     public loggedInUserService: LoggedInUserService,
     public utilsServ: UtilsService,
     private router: Router,
+    private metaService: MetaService,
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
+    this.metaService.setMeta(
+      'Carrito de compras',
+      environment.meta?.mainPage?.description,
+      environment.meta?.mainPage?.shareImg,
+      environment.meta?.mainPage?.keywords,
+    );
   }
 
   ngOnInit() {

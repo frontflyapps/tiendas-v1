@@ -27,6 +27,7 @@ import { UtilsService } from 'src/app/core/services/utils/utils.service';
 import { SidebarMenuService } from './sidebar/sidebar-menu.service';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { CategoriesService } from '../../core/services/categories/catagories.service';
+
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
