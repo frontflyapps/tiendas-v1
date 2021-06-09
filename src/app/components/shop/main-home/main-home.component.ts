@@ -8,6 +8,7 @@ import { LoggedInUserService } from './../../../core/services/loggedInUser/logge
 import { UtilsService } from './../../../core/services/utils/utils.service';
 import { takeUntil, take, map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
+import { MetaService } from 'src/app/core/services/meta.service';
 
 @Component({
   selector: 'app-main-home',
@@ -106,10 +107,17 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     public utilsService: UtilsService,
     private loggedInUserService: LoggedInUserService,
     private httpClient: HttpClient,
+    private metaService: MetaService,
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
+    this.metaService.setMeta(
+      environment.meta?.mainPage?.title,
+      environment.meta?.mainPage?.description,
+      environment.meta?.mainPage?.shareImg,
+      environment.meta?.mainPage?.keywords,
+    );
   }
 
   ngOnInit() {

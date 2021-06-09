@@ -1,3 +1,4 @@
+import { MetaService } from './../../../core/services/meta.service';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -22,8 +23,15 @@ export class ContactUsComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private showToastr: ShowToastrService,
     private http: HttpClient,
+    private metaService: MetaService,
   ) {
     this.loggedUser = this.loggedUserServ.getLoggedInUser();
+    this.metaService.setMeta(
+      'Contáctenos',
+      environment.meta?.mainPage?.description,
+      environment.meta?.mainPage?.shareImg,
+      environment.meta?.mainPage?.keywords,
+    );
   }
 
   ngOnInit(): void {

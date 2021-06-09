@@ -18,6 +18,15 @@ export const environment = {
   adminService: 'http://admintienda.sinkoola.com:4300/',
   mainDomain: '.sinkoola.com',
   tokenBusiness: '',
+  meta: {
+    mainPage: {
+      title: 'MCV Comercial S.A.',
+      description: 'Tienda online desarrollada con el framework Angular permite la modelación de negocios B2C and C2C',
+      keywords: 'HTML, CSS, JavaScript, Angular, Tienda Online B2B, Sin Cola, comercio online En Cuba',
+      shareImg: 'https://www.mcvcommercial.com/assets/images/share-img.png',
+      url: 'https://www.mcvcommercial.com/',
+    },
+  },
 };
 
 /*

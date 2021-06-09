@@ -1,3 +1,4 @@
+import { MetaService } from './../../../../core/services/meta.service';
 import { IPagination } from './../../../../core/classes/pagination.class';
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { ProductService } from '../../../shared/services/product.service';
@@ -12,6 +13,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DialogFiltersMComponent } from '../dialog-filters-m/dialog-filters-m.component';
 import { CategoriesService } from 'src/app/core/services/categories/catagories.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-product-left-sidebar',
@@ -67,6 +69,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
     private breakpointObserver: BreakpointObserver,
     private route: ActivatedRoute,
     private dialog: MatDialog,
+    private metaService: MetaService,
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
@@ -115,6 +118,13 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
       this.allProducts = [];
       this.search();
     });
+
+    this.metaService.setMeta(
+      environment.meta?.mainPage?.title,
+      environment.meta?.mainPage?.description,
+      environment.meta?.mainPage?.shareImg,
+      environment.meta?.mainPage?.keywords,
+    );
   }
 
   ngOnInit() {

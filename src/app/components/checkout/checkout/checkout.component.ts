@@ -1,3 +1,4 @@
+import { MetaService } from 'src/app/core/services/meta.service';
 import { DialogNoCartSelectedComponent } from './../no-cart-selected/no-cart-selected.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -131,6 +132,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     private shppingService: TaxesShippingService,
     private configurationService: ConfigurationService,
     private currencyCheckoutPipe: CurrencyCheckoutPipe,
+    private metaService: MetaService,
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
@@ -144,6 +146,13 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       this.processToCart();
       this.buildForm();
     });
+
+    this.metaService.setMeta(
+      environment.meta?.mainPage?.title,
+      environment.meta?.mainPage?.description,
+      environment.meta?.mainPage?.shareImg,
+      environment.meta?.mainPage?.keywords,
+    );
   }
 
   @HostListener('window:resize', ['$event'])

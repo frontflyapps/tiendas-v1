@@ -1,3 +1,4 @@
+import { MetaService } from './../../../core/services/meta.service';
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
@@ -12,7 +13,14 @@ export class FaqComponent implements OnInit {
   url = environment.apiUrl + 'faq?filter[$and][status]=enabled&order=id';
   allFaqs: any[] = [];
   lang = 'es';
-  constructor(private http: HttpClient, private translate: TranslateService) {}
+  constructor(private http: HttpClient, private translate: TranslateService, private metaService: MetaService) {
+    this.metaService.setMeta(
+      environment.meta?.mainPage?.title,
+      environment.meta?.mainPage?.description,
+      environment.meta?.mainPage?.shareImg,
+      environment.meta?.mainPage?.keywords,
+    );
+  }
 
   ngOnInit() {
     this.lang = this.translate.currentLang;

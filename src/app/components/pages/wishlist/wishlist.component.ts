@@ -1,8 +1,10 @@
+import { MetaService } from './../../../core/services/meta.service';
 import { Component, OnInit } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 import { Product } from './../../../modals/product.model';
 import { CartService } from '../../shared/services/cart.service';
 import { WishlistService } from '../../shared/services/wishlist.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-wishlist',
@@ -13,11 +15,21 @@ export class WishlistComponent implements OnInit {
   public product: Observable<Product[]> = of([]);
   wishlistItems: Product[] = [];
 
-  constructor(private cartService: CartService, private wishlistService: WishlistService) {
+  constructor(
+    private cartService: CartService,
+    private wishlistService: WishlistService,
+    private metaService: MetaService,
+  ) {
     this.product = this.wishlistService.getProducts();
     this.product.subscribe((products) => {
       this.wishlistItems = products;
     });
+    this.metaService.setMeta(
+      'Lista de Deseos',
+      environment.meta?.mainPage?.description,
+      environment.meta?.mainPage?.shareImg,
+      environment.meta?.mainPage?.keywords,
+    );
   }
 
   ngOnInit() {}

@@ -1,3 +1,4 @@
+import { MetaService } from './../../../core/services/meta.service';
 import { environment } from 'src/environments/environment';
 import { LoggedInUserService } from './../../../core/services/loggedInUser/logged-in-user.service';
 import { takeUntil } from 'rxjs/operators';
@@ -25,9 +26,16 @@ export class AboutUsComponent implements OnInit, OnDestroy {
     private contactUsService: ContactUsService,
     private translate: TranslateService,
     private loggedInUserService: LoggedInUserService,
+    private metaService: MetaService,
   ) {
     this._unsubscribeAll = new Subject();
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
+    this.metaService.setMeta(
+      'Quienes somos?',
+      environment.meta?.mainPage?.description,
+      environment.meta?.mainPage?.shareImg,
+      environment.meta?.mainPage?.keywords,
+    );
   }
 
   ngOnInit() {
@@ -37,6 +45,9 @@ export class AboutUsComponent implements OnInit, OnDestroy {
     this.language = this.translate.getDefaultLang();
     this.contactUsService.getAboutUs().subscribe((data) => {
       this.aboutUs = data;
+      if (this.aboutUs.image) {
+        this.metaService.setMeta(null, null, this.imageUrl + this.aboutUs.image, null);
+      }
     });
   }
 
