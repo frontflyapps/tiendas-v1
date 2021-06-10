@@ -630,6 +630,21 @@
 
                 <div class="mt-3" fxLayout="row wrap" fxLayoutAlign="end center" fxLayoutGap="gappx">
                   <button
+                    matTooltip="{{ 'Editar' | translate }}"
+                    *ngIf="this.selectedOrder.status == 'confirmed'"
+                    fxFlex=" 30"
+                    fxFlex.lt-md="50"
+                    fxFlex.xs="100"
+                    (click)="onEditOrder(this.selectedOrder)"
+                    class="mx-2"
+                    mat-stroked-button
+                    color="primary"
+                  >
+                    <mat-icon>edit</mat-icon>
+                    {{ 'EDIT' | translate }}
+                  </button>
+
+                  <button
                     matTooltip="{{ 'Cancelar la reservación' | translate }}"
                     *ngIf="this.selectedOrder.status == 'confirmed' || this.selectedOrder.status == 'on-delivery'"
                     fxFlex=" 30"
