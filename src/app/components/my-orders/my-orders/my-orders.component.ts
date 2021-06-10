@@ -18,6 +18,7 @@ import { LoggedInUserService } from './../../../core/services/loggedInUser/logge
 import { CurrencyService } from './../../../core/services/currency/currency.service';
 import { HttpClient } from '@angular/common/http';
 import { CancelOrderComponent } from '../cancel-order/cancel-order.component';
+import { EditOrderComponent } from '../edit-order/edit-order.component';
 @Component({
   selector: 'app-my-orders',
   templateUrl: './my-orders.component.html',
@@ -293,6 +294,23 @@ export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
         item.address + ', ' + item.regionProvinceState + ', ' + item.city + ', ' + item.Country.name[this.language];
       delete item.PaymentTransactions;
       return item;
+    });
+  }
+
+  onEditOrder(order)  {
+    let dialogRef: MatDialogRef<EditOrderComponent, any>;
+
+    dialogRef = this.dialog.open(EditOrderComponent, {
+      maxWidth: '100vw',
+      maxHeight: '100vh',
+      data: {
+        order: JSON.parse(JSON.stringify(order)),
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      this.onSelectOrder(order);
+      window.location.reload();
     });
   }
 
