@@ -1,0 +1,16 @@
+<h3>{{"Compartir en:"}}</h3>
+<mat-divider class="my-2"></mat-divider>
+<div (click)="openLink($event)" fxLayout="row wrap" class="my-3" fxLayoutAlign="start start" fxLayoutGap="gappx">
+  <share-button button="facebook" [title]="this.product?.name?.es"
+    [description]="this.product?.name?.es+': \n'+this.product?.shortDescription?.es">
+  </share-button>
+  <share-button button="whatsapp" [title]="this.product?.name?.es"
+    [description]="this.product?.name?.es+': \n'+this.product?.shortDescription?.es">
+  </share-button>
+  <share-button button="telegram" [title]="this.product?.name?.es"
+    [description]="this.product?.name?.es+': \n'+this.product?.shortDescription?.es">
+  </share-button>
+  <share-button button="email" [title]="this.product?.name?.es"
+    [description]="this.product?.name?.es+': \n'+this.product?.shortDescription?.es">
+  </share-button>
+</div>

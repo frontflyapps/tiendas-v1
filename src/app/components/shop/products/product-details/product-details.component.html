@@ -10,6 +10,10 @@
             <button matTooltip="{{ 'Zoom for a image' | translate }}" id="zoomBtn" mat-icon-button (click)="openZoomViewer()">
               <mat-icon>fullscreen</mat-icon>
             </button>
+            <button fxHide fxShow.lt-md matTooltip="{{ 'Compartir en redes sociales' | translate }}" id="shareBtn" mat-icon-button
+              (click)="onShareProduct()">
+              <mat-icon>share</mat-icon>
+            </button>
             <div fxLayoutAlign="center center">
               <ng-container *ngIf="product.Images && product.Images.length">
                 <ng-container *ngFor="let image of arrayImages; let i = index">
@@ -268,6 +272,21 @@
         </a>
 
         <mat-divider class="my-2"></mat-divider>
+        <section fxHide.lt-md *ngIf="!isLoading">
+          <share-button button="facebook" [title]="this.product?.name?.es"
+            [description]="this.product?.name?.es+': \n'+this.product?.shortDescription?.es">
+          </share-button>
+          <share-button button="whatsapp" [title]="this.product?.name?.es"
+            [description]="this.product?.name?.es+': \n'+this.product?.shortDescription?.es">
+          </share-button>
+          <share-button button="telegram" [title]="this.product?.name?.es"
+            [description]="this.product?.name?.es+': \n'+this.product?.shortDescription?.es">
+          </share-button>
+          <share-button button="email" [title]="this.product?.name?.es"
+            [description]="this.product?.name?.es+': \n'+this.product?.shortDescription?.es" [image]="this.mainImage?.image">
+          </share-button>
+        </section>
+        <mat-divider fxHide.lt-md class="my-2"></mat-divider>
       </div>
       <div style="width: 100%">
         <h4 class="mat-body-2 uppercase">{{ 'Detalles del proveedor' | translate }}</h4>

@@ -18,13 +18,15 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
 import { Cart } from 'src/app/modals/cart-item';
 import { BiconService } from 'src/app/core/services/bicon/bicon.service';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { SocialMediaComponent } from './social-media/social-media.component';
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.scss'],
 })
 export class ProductDetailsComponent implements OnInit, OnDestroy {
-  isLoading = false;
+  isLoading = true;
   product: any = {};
   products: any[] = [];
   relatedProduct: any[] = [];
@@ -96,6 +98,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private httpCient: HttpClient,
     private metaService: MetaService,
+    private _bottomSheet: MatBottomSheet,
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
@@ -313,5 +316,13 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
 
   onGoToCheckouNav() {
     this.buyNow(this.product, 1);
+  }
+
+  onShareProduct() {
+    this._bottomSheet.open(SocialMediaComponent, {
+      data: {
+        product: this.product,
+      },
+    });
   }
 }
