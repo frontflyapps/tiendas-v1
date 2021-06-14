@@ -88,6 +88,12 @@
   left: 16px;
 }
 
+#shareBtn {
+  position: absolute;
+  right: 16px;
+  z-index: 999;
+}
+
 .InnerHtmlContent {
   padding: 16px;
 

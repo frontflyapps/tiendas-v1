@@ -48,6 +48,11 @@ import { CategoriesMComponent } from './widgets/categories-m/categories-m.compon
 import { BrandsMComponent } from './widgets/brands-m/brands-m.component';
 import { BlogSectionComponent } from './blog-section/blog-section.component';
 import { MatInputModule } from '@angular/material/input';
+import { ShareIconsModule } from 'ngx-sharebuttons/icons';
+import { ShareButtonModule } from 'ngx-sharebuttons/button';
+import { SocialMediaComponent } from './products/product-details/social-media/social-media.component';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+
 @NgModule({
   declarations: [
     MainCarouselComponent,
@@ -71,6 +76,7 @@ import { MatInputModule } from '@angular/material/input';
     BrandsMComponent,
     BlogSectionComponent,
     BannersFourComponent,
+    SocialMediaComponent,
   ],
   imports: [
     CommonModule,
@@ -100,6 +106,9 @@ import { MatInputModule } from '@angular/material/input';
     MatTabsModule,
     MatCardModule,
     MatButtonModule,
+    ShareButtonModule,
+    ShareIconsModule,
+    MatBottomSheetModule,
   ],
   providers: [
     {
