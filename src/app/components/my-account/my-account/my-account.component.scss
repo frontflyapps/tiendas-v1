@@ -1,7 +1,7 @@
 @import '../../../../assets/scss/theme/variables';
 @import '../../../../assets/scss/mixins/breakpoints';
 
-$topbar: $theme-main;
+$topbar: $theme-main-dark;
 
 app-my-account {
   .mat-form-field-wrapper {
@@ -105,7 +105,7 @@ app-my-account {
 
   #CardLogin {
     padding: 0px !important;
-    background-color: $theme-main;
+    background-color: $theme-main-dark;
     padding-top: 8px;
     padding-bottom: 16px;
     border-radius: 8px;

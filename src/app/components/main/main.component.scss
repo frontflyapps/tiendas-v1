@@ -48,7 +48,7 @@ app-main {
   }
 
   #topBarSidebar {
-    background-color: $theme-main !important;
+    background-color: $theme-main-dark !important;
     color: #fff !important;
   }
 
@@ -131,7 +131,7 @@ app-main {
         right: -15px;
         top: 0;
         padding: 0 16px;
-        color: $theme-main;
+        color: $theme-main-dark;
         -webkit-transition: all 250ms ease-in-out;
         -moz-transition: all 250ms ease-in-out;
         -ms-transition: all 250ms ease-in-out;
@@ -162,7 +162,7 @@ app-main {
   }
 
   .home-header-2 {
-    background: $theme-main !important;
+    background: $theme-main-dark !important;
     color: #fff;
     z-index: 9000 !important;
     position: relative !important;
