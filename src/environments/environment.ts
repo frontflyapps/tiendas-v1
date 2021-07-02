@@ -13,10 +13,10 @@ export const environment = {
   version: '1.2.0',
   url: 'http://tienda.sinkoola.com:4200',
   urlAboutUs: 'http://tienda.sinkoola.com:4200/',
-  address: 'Cuentapropistas SA / Quinta Avenida,18204, Playa, La Habana.',
+  address: 'BazarFamilia SA / Quinta Avenida,18204, Playa, La Habana.',
   localDatabaseUsers: true,
   adminService: 'http://admintienda.sinkoola.com:4300/',
-  mainDomain: '.Cuentapropistas.com',
+  mainDomain: '.BazarFamilia.com',
   tokenBusiness: '',
 };
 
