@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://api.sinkoola.com/v1/',
-  imageUrl: 'https://api.sinkoola.com/v1/',
+  apiUrl: 'https://api.mibulevar.com/v1/',
+  imageUrl: 'https://api.mibulevar.com/v1/',
   //apiUrl: 'https://api.sinkoola.com/v1/',
   //imageUrl: 'https://api.sinkoola.com/v1/',
   defaultLanguage: 'es',

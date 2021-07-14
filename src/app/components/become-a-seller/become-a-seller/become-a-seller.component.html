@@ -3,7 +3,7 @@
     <a href="#" mat-icon-button class="example-icon">
       <mat-icon>arrow_back</mat-icon>
     </a>
-    <img src="assets/images/logo.png" style="height: 50px" />
+    <img src="../../../../assets/images/logo-navbar.png" style="height: 50px" />
     <span class="example-spacer"></span>
   </mat-toolbar-row>
 </mat-toolbar>
@@ -52,12 +52,16 @@
 
                 <mat-form-field class="form-field-width" appearance="outline">
                   <input
+                    (blur)="formatPhoneNumber($event)"
                     type="tel"
                     [formControl]="basicForm.controls['telephone']"
                     matInput
                     placeholder="ej: 72053519"
                   />
                   <mat-icon class="greyIcon" matSuffix>phone</mat-icon>
+                  <mat-error *ngIf="basicForm.controls['telephone'].hasError('isInvalidPhone')">
+                    {{ 'Telefono' | translate }} <strong>{{ 'es us o cu' | translate }}</strong>
+                  </mat-error>
                 </mat-form-field>
               </div>
               <div fxFlex="49" fxFlex.lt-md="100" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="gappx">
@@ -74,12 +78,16 @@
 
                 <mat-form-field class="form-field-width" appearance="outline">
                   <input
+                    (blur)="formatCellNumber($event)"
                     type="tel"
                     [formControl]="basicForm.controls['cellphone']"
                     matInput
                     placeholder="ej: 5353621645"
                   />
                   <mat-icon class="greyIcon" matSuffix>smartphone</mat-icon>
+                  <mat-error *ngIf="basicForm.controls['cellphone'].hasError('isInvalidPhone')">
+                    {{ 'Telefono' | translate }} <strong>{{ 'es us o cu' | translate }}</strong>
+                  </mat-error>
                 </mat-form-field>
               </div>
             </div>
@@ -289,7 +297,7 @@
             </mat-error>
           </mat-form-field>
 
-          <p class="mat-body-2 uppercase mb-1">
+          <!-- <p class="mat-body-2 uppercase mb-1">
             {{ 'Número de tarjeta banco' | translate }}
           </p>
 
@@ -305,7 +313,7 @@
               {{ 'Tarjeta' | translate }}
               <strong>{{ 'está inválido (debe contener solo números y un tamaño de 16 )' | translate }}</strong>
             </mat-error>
-          </mat-form-field>
+          </mat-form-field> -->
 
           <div>
             <button mat-button matStepperPrevious class="uppercase">{{ 'Anterior' | translate }}</button>

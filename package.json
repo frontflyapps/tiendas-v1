@@ -42,6 +42,7 @@
     "guachos-cu-down-list": "^1.0.26",
     "guachos-cu-form-load-file": "^1.0.20",
     "jspdf": "^2.0.0",
+    "libphonenumber-js": "^1.9.22",
     "moment": "^2.27.0",
     "ng2-pdf-viewer": "^6.3.2",
     "ngp-image-picker": "^1.2.6",
