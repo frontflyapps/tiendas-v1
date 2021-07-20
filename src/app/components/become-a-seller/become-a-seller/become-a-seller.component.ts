@@ -88,7 +88,7 @@ export class BecomeASellerComponent implements OnInit {
       lastName: [this.loggedInUser?.lastName, [Validators.required]],
       birthday: [null, [Validators.required]],
       ci: [null, [Validators.required, Validators.minLength(11), Validators.maxLength(11)]],
-      card: [null, [Validators.required, Validators.minLength(16), Validators.maxLength(16)]],
+      //card: [null, [Validators.required, Validators.minLength(16), Validators.maxLength(16)]],
     });
   }
 
@@ -120,9 +120,9 @@ export class BecomeASellerComponent implements OnInit {
       business: { ...this.basicForm.value, ...this.locationForm.value },
       owner: { ...this.sellerForm.value },
     };
-    data.business.card = data.owner.card;
+    //data.business.card = data.owner.card;
     data.business.logo = this.imageBusiness;
-    delete data.owner.card;
+    //delete data.owner.card;
     // console.log(JSON.stringify(data));
     this.businessService.createBussines(data).subscribe(
       () => {
