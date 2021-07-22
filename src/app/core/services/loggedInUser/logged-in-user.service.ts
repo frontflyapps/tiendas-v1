@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { environment } from './../../../../environments/environment';
+import { environment } from '../../../../environments/environment';
 import { Injectable } from '@angular/core';
 import { IUser } from '../../classes/user.class';
 import { Subject } from 'rxjs';
@@ -52,7 +52,8 @@ export class LoggedInUserService {
       return null;
     }
     user = this.encryptDecryptService.decrypt(user);
-    const data = JSON.parse(user);
+    // const data = JSON.parse(user);
+    const data = user;
     return data;
   }
 
@@ -122,6 +123,7 @@ export class LoggedInUserService {
     }
     return flag;
   }
+
   public isOwnerUser() {
     let flag = false;
     const user = this.getLoggedInUser();
