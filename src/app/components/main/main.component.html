@@ -69,8 +69,12 @@
         </button>
       </mat-menu>
 
-      <a *ngIf="loggedInUser && (loggedInUserService.isAdminOrOwnerUser() || loggedInUserService.isMessengerUser())" mat-list-item
-        class="link-nav-a" (click)="onGotoBackend()">
+      <a
+        *ngIf="loggedInUser && (loggedInUserService.isAdminOrOwnerUser() || loggedInUserService.isMessengerUser())"
+        mat-list-item
+        class="link-nav-a"
+        (click)="onGotoBackend()"
+      >
         {{ 'Ir a la administración' | translate }}
       </a>
 
@@ -81,7 +85,14 @@
   </mat-sidenav>
 
   <!-- Notifications -->
-  <mat-sidenav class="DrawerNotificationPanel" [opened]="false" mode="over" #notificationBar position="end" fixedInViewport>
+  <mat-sidenav
+    class="DrawerNotificationPanel"
+    [opened]="false"
+    mode="over"
+    #notificationBar
+    position="end"
+    fixedInViewport
+  >
     <mat-list>
       <mat-list-item>
         <mat-icon> notifications </mat-icon>
@@ -114,10 +125,23 @@
         </form>
       </div>
 
-      <div class="userWidgets" ngClass.xs="w-100" fxLayout="row" fxLayoutAlign="end center" fxLayoutAlign.xs="start center">
-        <a matTooltip="Comparar productos" class="px-3" fxLayoutAlign="start center" [routerLink]="['/pages/compare']"
-          routerLinkActive="router-link-active">
-          <mat-icon *ngIf="compareItems.length" [matBadge]="compareItems.length" matBadgeColor="accent">compare_arrows</mat-icon>
+      <div
+        class="userWidgets"
+        ngClass.xs="w-100"
+        fxLayout="row"
+        fxLayoutAlign="end center"
+        fxLayoutAlign.xs="start center"
+      >
+        <a
+          matTooltip="Comparar productos"
+          class="px-3"
+          fxLayoutAlign="start center"
+          [routerLink]="['/pages/compare']"
+          routerLinkActive="router-link-active"
+        >
+          <mat-icon *ngIf="compareItems.length" [matBadge]="compareItems.length" matBadgeColor="accent"
+            >compare_arrows</mat-icon
+          >
           <mat-icon *ngIf="!compareItems.length">compare_arrows</mat-icon>
           <span fxShow="false" fxHide>{{ 'Comparar productos' | translate }}</span>
         </a>
@@ -151,17 +175,36 @@
 
         <a *ngIf="loggedInUser" class="px-3" fxLayoutAlign="start center" style="color: white">
           <button mat-icon-button (click)="notificationBar.toggle()">
-            <mat-icon [matBadge]="notificationsService.getUnreadNotifications()" matBadgeColor="warn">notifications</mat-icon>
+            <mat-icon [matBadge]="notificationsService.getUnreadNotifications()" matBadgeColor="warn"
+              >notifications</mat-icon
+            >
           </button>
         </a>
 
-        <a class="px-3" fxLayoutAlign="start center" fxShow="true" *ngIf="!loggedInUser" [routerLink]="['/my-account']"
-          routerLinkActive="router-link-active">
+        <a
+          class="px-3"
+          fxLayoutAlign="start center"
+          fxShow="true"
+          *ngIf="!loggedInUser"
+          [routerLink]="['/my-account']"
+          routerLinkActive="router-link-active"
+        >
           <mat-icon>person</mat-icon><span fxHide.xs>{{ 'Account' | translate }}</span>
         </a>
-        <a fxLayoutAlign="start center" mat-icon-button fxShow *ngIf="loggedInUser" [matMenuTriggerFor]="userMenu"
-          #userMenuTrigger="matMenuTrigger" class="px-0 pl-2">
-          <img *ngIf="!this.loggedInUser.avatar" src="../../../assets/images/avatars/profile2.png" class="profileImage" />
+        <a
+          fxLayoutAlign="start center"
+          mat-icon-button
+          fxShow
+          *ngIf="loggedInUser"
+          [matMenuTriggerFor]="userMenu"
+          #userMenuTrigger="matMenuTrigger"
+          class="px-0 pl-2"
+        >
+          <img
+            *ngIf="!this.loggedInUser.avatar"
+            src="../../../assets/images/avatars/profile2.png"
+            class="profileImage"
+          />
           <img *ngIf="this.loggedInUser.avatar" [src]="urlImage + loggedInUser.avatar" class="profileImage" />
         </a>
 
@@ -173,8 +216,11 @@
             <mat-icon>build</mat-icon>
             <span class="mat-body-1">{{ 'Profile' | translate }}</span>
           </button>
-          <button *ngIf="loggedInUser && (loggedInUserService.isAdminOrOwnerUser() || loggedInUserService.isMessengerUser())" mat-menu-item
-            (click)="onGotoBackend()">
+          <button
+            *ngIf="loggedInUser && (loggedInUserService.isAdminOrOwnerUser() || loggedInUserService.isMessengerUser())"
+            mat-menu-item
+            (click)="onGotoBackend()"
+          >
             <mat-icon>edit</mat-icon>
             <a id="linkNavBack" style="display: none"></a>
             <span class="mat-body-1">{{ 'Administración' | translate }}</span>
@@ -205,18 +251,26 @@
           <button mat-icon-button (click)="start.toggle()">
             <mat-icon>menu</mat-icon>
           </button>
-          <img style="height: 10px;width:auto" routerLink="/" src="../../../assets/images/logo.png" />
+          <img style="height: 35px; width: auto" routerLink="/" src="../../../assets/images/logo.png" />
         </div>
 
         <div class="userWidgets m-0 p-0" fxLayoutAlign="start center">
-          <a class="px-3" fxLayoutAlign="start center" fxShow="true" *ngIf="!loggedInUser" [routerLink]="['/my-account']"
-            routerLinkActive="router-link-active">
+          <a
+            class="px-3"
+            fxLayoutAlign="start center"
+            fxShow="true"
+            *ngIf="!loggedInUser"
+            [routerLink]="['/my-account']"
+            routerLinkActive="router-link-active"
+          >
             <mat-icon>person</mat-icon><span fxHide.xs>{{ 'Account' | translate }}</span>
           </a>
           <app-shopping-widgets></app-shopping-widgets>
           <a *ngIf="loggedInUser" fxLayoutAlign="start center" style="color: white">
             <button mat-icon-button (click)="notificationBar.toggle()">
-              <mat-icon [matBadge]="notificationsService.getUnreadNotifications()" matBadgeColor="warn">notifications</mat-icon>
+              <mat-icon [matBadge]="notificationsService.getUnreadNotifications()" matBadgeColor="warn"
+                >notifications</mat-icon
+              >
             </button>
           </a>
         </div>
@@ -231,13 +285,31 @@
         </form>
       </div>
 
-      <div class="showCategories" fxLayout="row" fxLayoutAlign.xs="start center" fxLayoutAlign.sm="center center" fxLayoutGap="gappx">
-        <a [routerLink]="['']" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="link-active" class="itemCategory"
-          mat-button>{{ 'Inicio' | translate }}</a>
+      <div
+        class="showCategories"
+        fxLayout="row"
+        fxLayoutAlign.xs="start center"
+        fxLayoutAlign.sm="center center"
+        fxLayoutGap="gappx"
+      >
+        <a
+          [routerLink]="['']"
+          [routerLinkActiveOptions]="{ exact: true }"
+          routerLinkActive="link-active"
+          class="itemCategory"
+          mat-button
+          >{{ 'Inicio' | translate }}</a
+        >
 
-        <a [routerLink]="['/products/search']" routerLinkActive="link-active" [queryParams]="{ CategoryId: category.id }"
-          *ngFor="let category of categories" class="itemCategory"
-          mat-button>{{ utilsService.parserLanguage(category.name, _language) }}</a>
+        <a
+          [routerLink]="['/products/search']"
+          routerLinkActive="link-active"
+          [queryParams]="{ CategoryId: category.id }"
+          *ngFor="let category of categories"
+          class="itemCategory"
+          mat-button
+          >{{ utilsService.parserLanguage(category.name, _language) }}</a
+        >
       </div>
     </div>
   </div>

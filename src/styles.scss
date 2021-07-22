@@ -18,16 +18,17 @@ body {
 @import './assets/scss/css/ckeditor-style.css';
 @import '~ngx-sharebuttons/themes/default/default-theme';
 
-
 // ---------------Material Themin -----------------///
 @import '~@angular/material/theming';
 @include mat-core();
-$custom-typography: mat-typography-config($font-family: 'Poppins',
+$custom-typography: mat-typography-config(
+  $font-family: 'Poppins',
 );
 // Override the typography in the core CSS.
 @include mat-core($custom-typography);
 
-$my-primary-color: (50: #e9eff9,
+$my-primary-color: (
+  50: #e9eff9,
   100: #ccd7e4,
   200: #afbccd,
   300: #90a1b6,
@@ -36,8 +37,9 @@ $my-primary-color: (50: #e9eff9,
   600: #556b82,
   700: #424242,
   800: #364556,
-  900: #212121,
-  contrast: (50: $black-87-opacity,
+  900: #2196f3,
+  contrast: (
+    50: $black-87-opacity,
     100: $black-87-opacity,
     200: $black-87-opacity,
     300: $black-87-opacity,
@@ -54,7 +56,8 @@ $my-primary-color: (50: #e9eff9,
   ),
 );
 
-$my-accent-color: (50: #fef3e4,
+$my-accent-color: (
+  50: #fef3e4,
   100: #fde1bc,
   200: #fdce91,
   300: #cfcfcf,
@@ -64,7 +67,8 @@ $my-accent-color: (50: #fef3e4,
   700: #ef8336,
   800: #e87532,
   900: #de5d2b,
-  contrast: (50: $black-87-opacity,
+  contrast: (
+    50: $black-87-opacity,
     100: $black-87-opacity,
     200: $black-87-opacity,
     300: $black-87-opacity,
@@ -443,7 +447,7 @@ h4 {
       border: unset;
     }
 
-    @media(max-width:599px) {
+    @media (max-width: 599px) {
       iframe {
         max-width: 372px;
         height: 210px;
