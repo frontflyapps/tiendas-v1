@@ -1,2 +1,3 @@
-aws s3 sync --acl public-read --metadata-directive REPLACE --cache-control max-age=1200,public dist/tienda-angular-b2b s3://www.mcvcommercial.com --delete
-aws cloudfront create-invalidation --distribution-id E1TQXGCF2PUJJ2 --paths "/*"
+aliyun oss rm -r -f oss://tienda-marinasmarlin 
+aliyun oss cp dist/tienda-angular-b2b oss://tienda-marinasmarlin/ -r -u --meta=Cache-Control:max-age=600
+aliyun cdn RefreshObjectCaches --ObjectType Directory --ObjectPath https://tienda.marinasmarlin.com/
