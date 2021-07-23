@@ -375,7 +375,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   buildForm() {
-    // console.log('CheckoutComponent -> buildForm -> this.loggedInUser', this.loggedInUser);
     this.selectedDataPay = this.loggedInUserService._getDataFromStorage('payData');
     this.form = this.fb.group({
       name: [this.selectedDataPay ? this.selectedDataPay.name : this.loggedInUser?.name, [Validators.required]],
@@ -415,8 +414,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   onSelectProvince(provinceId) {
-    // console.log('CheckoutComponent -> onSelectProvince -> provinceId', provinceId);
-    // console.log('CheckoutComponent -> onSelectProvince -> this.allMunicipalities', this.allMunicipalities);
     this.municipalities = this.allMunicipalities.filter((item) => item.ProvinceId == provinceId);
     this.form.get('MunicipalityId').setValue(null);
     this.form.get('ShippingBusinessId').setValue(null);

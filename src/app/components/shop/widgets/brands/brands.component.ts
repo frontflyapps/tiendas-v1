@@ -68,7 +68,6 @@ export class BrandsComponent implements OnInit, OnDestroy {
           this.selection.deselect(item.id);
         });
     }
-    console.log('estoy aqui, ', this.selection.selected);
     this.brandChanged.emit(this.selection.selected);
   }
 }

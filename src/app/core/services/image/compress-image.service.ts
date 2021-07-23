@@ -4,21 +4,18 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class CompressImageService {
-  constructor() {}
+  constructor() {
+  }
 
   resizedataURL(datas, maxWidth, maxHeight, quality?): Promise<any> {
-    return new Promise(async function (resolve, reject) {
+    return new Promise(async function(resolve, reject) {
       var img = document.createElement('img');
       img.src = datas;
       quality = quality ? quality : 0.7;
 
-      img.onload = function () {
+      img.onload = function() {
         var canvas = document.createElement('canvas');
         var ctx = canvas.getContext('2d');
-
-        console.log(img.height);
-        console.log(img.width);
-        // console.log('CompressImageService -> img.onload -> img.sizes', img);
 
         let ratio = 1;
         if (img.width > maxWidth) {

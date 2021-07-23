@@ -6,7 +6,6 @@ var dataEn = require('./en.json');
 const translate = require('google-translate-open-api');
 
 async function translateLang(lang = 'en') {
-    console.log(`**************Traduciendo hacia ${lang} ***********`);
     var dataLangJSON = DataLang(lang);
     let total = Object.keys(dataLangJSON).length;
     errors = [];

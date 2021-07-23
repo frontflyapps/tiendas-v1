@@ -126,8 +126,6 @@ export class MyAccountComponent implements OnInit {
           8000,
         );
       }
-      // console.log(this.pinForm.value);
-      // console.log(this.registrationForm.value);
     }
   }
 
@@ -468,15 +466,20 @@ export class MyAccountComponent implements OnInit {
         },
       );
   }
+
   //////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////
-  handleReset() {}
+  handleReset() {
+  }
 
-  handleExpire() {}
+  handleExpire() {
+  }
 
-  handleSuccess(event) {}
+  handleSuccess(event) {
+  }
 
-  handleLoad() {}
+  handleLoad() {
+  }
 
   /////////////////////////////////////////////////////////
 }

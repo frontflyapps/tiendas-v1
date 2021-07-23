@@ -86,7 +86,6 @@ export class LoggedInUserService {
     let roleTypes = [...args];
     for (let type of roleTypes) {
       if (type.constructor != String) {
-        console.log(`Al llamar la función de check de roles, los argumentos deben ser strings`);
         return false;
       }
     }
@@ -144,7 +143,6 @@ export class LoggedInUserService {
 
   public isAdminOrOwnerUser() {
     const flag = this.isAdminUser() || this.isOwnerUser();
-    // console.log('LoggedInUserService -> isAdminOrOwnerUser -> flag', flag);
     return flag;
   }
 

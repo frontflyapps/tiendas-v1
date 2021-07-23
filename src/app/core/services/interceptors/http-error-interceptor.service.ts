@@ -39,13 +39,12 @@ export class HttpErrorInterceptorService implements HttpInterceptor {
           errorMessage = error.error;
           this.processingBackendError(error);
         }
-        // console.log('ErrorInterceptorService -> errorMessage', errorMessage);
         return throwError(error);
       }),
     );
   }
 
-  ///////////////////////Procesing Error////////////////////////////////
+  // /////////////////////Procesing Error////////////////////////////////
   processingBackendError(err) {
     if (err.status == 401) {
       this.utilsService.errorHandle(err);
@@ -70,7 +69,6 @@ export class HttpErrorInterceptorService implements HttpInterceptor {
     } else if (err.status == 400 || err.status == 500) {
       this.utilsService.errorHandle(err);
     } else if (err.status == 0) {
-      console.log('**********************************************');
       // this.router.navigate(['/error/conexion-perdida']);
       this.showSnackbar.showError(
         this.translate.instant(

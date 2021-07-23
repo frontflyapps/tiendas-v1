@@ -114,7 +114,6 @@ export class UtilsService {
   }
 
   parserLanguage(item, language) {
-    // console.log(item, 'asdljhaskdgaskdgsj');
     if (item[language] && item[language].length) {
       return item[language];
     } else if (item['en'] && item['en'].length) {

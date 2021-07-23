@@ -147,7 +147,6 @@ export class MainHomeComponent implements OnInit, OnDestroy {
         this.countProducts = data.data.countProducts;
         this.servicesProducts = data.data.ourServices;
         this.bigBanner1 = data.data.bigBanner1;
-        // console.log('MainHomeComponent -> ngOnInit ->  this.bigBanner1 ', this.bigBanner1);
         this.bigBanner2 = data.data.bigBanner2;
         this.loadingServices = false;
       })

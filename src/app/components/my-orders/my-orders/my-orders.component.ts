@@ -19,6 +19,7 @@ import { CurrencyService } from './../../../core/services/currency/currency.serv
 import { HttpClient } from '@angular/common/http';
 import { CancelOrderComponent } from '../cancel-order/cancel-order.component';
 import { EditOrderComponent } from '../edit-order/edit-order.component';
+
 @Component({
   selector: 'app-my-orders',
   templateUrl: './my-orders.component.html',
@@ -239,7 +240,6 @@ export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
     this.ordersService.getAllPayment(this.query, this.param).subscribe(
       (data) => {
         this.allOrders = [...data.data];
-        console.log('MyOrdersComponent -> onSearch -> this.allOrders', this.allOrders);
         this.query.offset += data.meta.pagination.count;
         this.query.total = data.meta.pagination.total;
         this.loadingSearch = false;
@@ -270,7 +270,6 @@ export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
     this.ordersService.getPayment(item).subscribe(
       (data) => {
         this.selectedOrder = data.data;
-        // console.log('MyOrdersComponent -> onSelectOrder -> this.selectedOrder', this.selectedOrder);
         this.showOrderDetails = true;
         this.loadingSelectedItem = false;
         if (this.isHandset) {
@@ -297,7 +296,7 @@ export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  onEditOrder(order)  {
+  onEditOrder(order) {
     let dialogRef: MatDialogRef<EditOrderComponent, any>;
 
     dialogRef = this.dialog.open(EditOrderComponent, {
@@ -305,7 +304,7 @@ export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
       maxHeight: '100vh',
       data: {
         order: JSON.parse(JSON.stringify(order)),
-      }
+      },
     });
 
     dialogRef.afterClosed().subscribe((result) => {

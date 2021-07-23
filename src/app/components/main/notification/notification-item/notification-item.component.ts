@@ -121,7 +121,8 @@ export class NotificationItemComponent implements OnInit, OnChanges, OnDestroy {
     private translate: TranslateService,
     public utilsService: UtilsService,
     private router: Router,
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.language = this.loggedInUserServ.getLanguage().lang;
@@ -130,9 +131,7 @@ export class NotificationItemComponent implements OnInit, OnChanges, OnDestroy {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.notificacion) {
       this.notificacion = JSON.parse(JSON.stringify(changes.notificacion.currentValue));
-      // console.log('TCL: NotificationItemComponent -> this.notificacion', this.notificacion);
       this.order = this.notificacion.data;
-      // console.log('NotificationItemComponent -> ngOnChanges -> this.order', this.order);
     }
   }
 
@@ -141,7 +140,6 @@ export class NotificationItemComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   onClickNotification(): void {
-    console.log('NotificationItemComponent -> onClickNotification -> this.notificacion.type', this.notificacion.type);
     if (this.notificacion.type.split('-')[0] == 'payment') {
       this.markAsReadNotification.next(this.notificacion);
       this.closeModal.next({});
@@ -174,12 +172,12 @@ export class NotificationItemComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  GetNavigationRouter(): void {}
+  GetNavigationRouter(): void {
+  }
 
-  //////////// Evento asociado al Mouse//////
+  // ////////// Evento asociado al Mouse//////
   onMouseEnter(): void {
     this.showBtnClear = true;
-    console.log('Aqui');
   }
 
   onMouseLeave(): void {
@@ -189,6 +187,7 @@ export class NotificationItemComponent implements OnInit, OnChanges, OnDestroy {
   onShowDetails() {
     this.expandedElement = {};
   }
+
   onHideDetails() {
     this.expandedElement = null;
   }

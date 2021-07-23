@@ -51,7 +51,6 @@ export class RegionsService {
     }
     if (params) {
     }
-    console.log(httpParams);
     return this.httpClient.get<any>(this.url, { params: httpParams });
   }
 

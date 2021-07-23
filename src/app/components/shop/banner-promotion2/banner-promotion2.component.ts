@@ -13,13 +13,13 @@ export class BannerPromotion2Component implements OnInit {
   contactUs;
 
   @Input() set _imageBigPromo(value) {
-    // console.log('BannerPromotionComponent -> @Input -> value', value);
     if (value) {
       this.imageBigPromo = value;
     }
   }
 
-  constructor() {}
+  constructor() {
+  }
 
   ngOnInit() {
     this.contactUs = environment.urlAboutUs;

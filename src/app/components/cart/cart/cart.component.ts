@@ -68,7 +68,6 @@ export class CartComponent implements OnInit, OnDestroy {
     });
 
     this.cartService.$cartItemsUpdated.pipe(takeUntil(this._unsubscribeAll)).subscribe((_carts) => {
-      console.log('CartComponent -> ngOnInit -> _carts', _carts);
       this.carts = [..._carts];
     });
   }

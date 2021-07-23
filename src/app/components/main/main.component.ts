@@ -92,7 +92,6 @@ export class MainComponent implements OnInit, OnDestroy {
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
-    // console.log('MainComponent ->  this.loggedInUser', this.loggedInUser);
     this.navItems = this.navigationService.getNavItems();
 
     this.cartService.$cartItemsUpdated.pipe(takeUntil(this._unsubscribeAll)).subscribe((cart) => {
@@ -104,7 +103,6 @@ export class MainComponent implements OnInit, OnDestroy {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.url = event.url;
-        // console.log('TCL: MainComponent -> constructor -> this.url', this.url);
         this.sidenav.close();
       }
     });
@@ -290,7 +288,6 @@ export class MainComponent implements OnInit, OnDestroy {
       .subscribe((data) => {
         let token = this.loggedInUserService.getTokenCookie();
         this.authService.getProfile(token).subscribe((user) => {
-          console.log('AppComponent -> initSystem -> user', user);
           const userData = { profile: user.data, Authorization: token };
           this.loggedInUserService.updateUserProfile(userData);
         });
@@ -299,7 +296,6 @@ export class MainComponent implements OnInit, OnDestroy {
 
   showPaymentSuccess(id) {
     this.orderService.getPayment(id).subscribe((data) => {
-      console.log('MainComponent -> showPaymentSuccess -> data', data);
       const dialogRef = this.dialog.open(ConfirmPaymentOkComponent, {
         panelClass: 'app-reservation-payment-ok',
         maxWidth: '100vw',
@@ -316,7 +312,6 @@ export class MainComponent implements OnInit, OnDestroy {
   }
   showPaymentCancellSuccess(id) {
     this.orderService.getPayment(id).subscribe((data) => {
-      console.log('MainComponent -> showPaymentSuccess -> data', data);
       const dialogRef = this.dialog.open(ConfirmPaymentOkComponent, {
         panelClass: 'app-reservation-payment-ok',
         maxWidth: '100vw',

@@ -23,7 +23,6 @@ export class DialogEnzonaConfirmToPayComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) {
     this.link = data.link;
-    console.log('DialogEnzonaConfirmToPayComponent -> this.link', this.link);
     this.dialogRef.disableClose = true;
   }
 

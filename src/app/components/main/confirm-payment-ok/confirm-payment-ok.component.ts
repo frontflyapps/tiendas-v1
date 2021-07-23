@@ -97,20 +97,14 @@ export class ConfirmPaymentOkComponent implements OnInit {
     this.dialogRef.disableClose = true;
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
     this.selectedPayment = data.selectedPayment;
-    console.log('ConfirmPaymentOkComponent ->  this.selectedPayment', this.selectedPayment);
     this.action = data.action;
-    console.log('ConfirmPaymentOkComponent ->  this.action', this.action);
     this.language = this.loggedInUserService.getLanguage().lang;
   }
 
   @HostListener('window:resize', ['$event'])
   onResize(event): void {
     this.innerWidth = window.innerWidth;
-    if (this.innerWidth > 600) {
-      this.applyStyle = false;
-    } else {
-      this.applyStyle = true;
-    }
+    this.applyStyle = this.innerWidth <= 600;
   }
 
   ngOnInit(): void {

@@ -35,7 +35,6 @@ export class ContactUsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.loggedUser);
     this.form = this.fb.group({
       name: [this.loggedUser?.name, [Validators.required]],
       phone: [this.loggedUser?.phone, [Validators.pattern(/^(\+|[0-9])([0-9]{5,})([0-9])$/)]],
@@ -46,7 +45,6 @@ export class ContactUsComponent implements OnInit {
   }
   onSend() {
     let value = this.form.value;
-    // console.log('🚀 ~ file: contact-us.component.ts ~ line 41 ~ ContactUsComponent ~ onSend ~ value', value);
     this.spinner.show();
     this._createContactMail(value).subscribe(
       () => {
@@ -56,7 +54,6 @@ export class ContactUsComponent implements OnInit {
         this.spinner.hide();
       },
       (error) => {
-        // console.log('🚀 ~ file: contact-us.component.ts ~ line 51 ~ ContactUsComponent ~ onSend ~ error', error);
         if (error.status == 401) {
           this.showToastr.showInfo('Usted debe estar logeado para realizar esta acción', 'Éxitos', 6000);
         }

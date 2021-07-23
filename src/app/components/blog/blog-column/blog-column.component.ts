@@ -74,7 +74,6 @@ export class BlogColumnComponent implements OnInit, OnDestroy {
             this.tags = this.tags.concat(this.tags, item.tags);
           }
         });
-        // console.log(this.tags);
         this.prepareTags();
       },
       (error) => {
@@ -146,7 +145,6 @@ export class BlogColumnComponent implements OnInit, OnDestroy {
   navigateToSpecificCard() {
     setTimeout(() => {
       if (this.queryId && this.queryId.id) {
-        console.log('TCL: this.queryId', this.queryId);
         const datax = document.getElementById(`element${this.queryId.id}`);
         datax.scrollIntoView({ behavior: 'smooth' });
         setTimeout(() => {
