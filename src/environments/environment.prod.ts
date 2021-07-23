@@ -4,7 +4,7 @@ export const environment = {
   imageUrl: 'https://api.mcvcommercial.com/v1/',
   defaultLanguage: 'es',
   currencyInternational: 'USD',
-  version: '1.2.0',
+  version: '1.0.2',
   url: 'https://www.mcvcommercial.com',
   urlAboutUs: 'https://www.mcvcommercial.com',
   address: 'Marinas Marlin.',

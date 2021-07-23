@@ -10,7 +10,7 @@ export const environment = {
   imageUrl: 'https://api.mcvcommercial.com/v1/',
   defaultLanguage: 'es',
   currencyInternational: 'USD',
-  version: '1.2.0',
+  version: '1.0.2',
   url: 'http://localhost:4400',
   urlAboutUs: 'http://localhost:4400',
   address: 'Marinas Marlin',
