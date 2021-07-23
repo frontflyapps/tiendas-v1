@@ -10,6 +10,7 @@ deploy_adminexperiencias2:
   when: always
   script:
     - npm install
+    - npm install typescript@4.1.3 -s
     - npm run build --prod
     - curl "https://aliyuncli.alicdn.com/aliyun-cli-linux-latest-amd64.tgz" -o "aliyun-cli-linux-latest-amd64.tgz"
     - tar xzvf aliyun-cli-linux-latest-amd64.tgz
