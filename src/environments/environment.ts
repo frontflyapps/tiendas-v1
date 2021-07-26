@@ -16,7 +16,7 @@ export const environment = {
   address: 'Marinas Marlin',
   localDatabaseUsers: true,
   adminService: 'http://admintienda.sinkoola.com:4300/',
-  mainDomain: '.sinkoola.com',
+  mainDomain: '.marinasmarlin.com',
   tokenBusiness: '',
   meta: {
     mainPage: {
