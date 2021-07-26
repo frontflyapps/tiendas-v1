@@ -4,7 +4,7 @@ app-main {
   .profileImage {
     height: 40px;
     width: 40px;
-    border: 1px solid #eee;
+    border: 1px solid #6d3112;
     border-radius: 50%;
   }
 
@@ -15,7 +15,6 @@ app-main {
   }
 
   .link-active {
-
     // background-color: $theme-main !important;
     span {
       text-decoration: underline;
@@ -27,7 +26,7 @@ app-main {
     padding: 0px !important;
     position: fixed;
     margin-left: 0px;
-    color: #fff;
+    color: #6d3112;
   }
 
   .DrawerNotificationPanel {
@@ -35,7 +34,7 @@ app-main {
     padding: 0px !important;
     position: fixed;
     margin-left: 0px;
-    background-color: #fff;
+    background-color: #6d3112;
     max-width: 100% !important;
   }
 
@@ -45,11 +44,11 @@ app-main {
 
   #topBarSidebar {
     background-color: $theme-main !important;
-    color: #fff !important;
+    color: #6d3112 !important;
   }
 
   .Logo-img {
-    height: 20px;
+    height: 40px;
     width: auto;
     cursor: pointer;
 
@@ -61,7 +60,7 @@ app-main {
   /*  header styles */
   .home-header {
     background: $theme-main-dark !important;
-    color: #fff;
+    color: #6d3112;
     z-index: 9000 !important;
     position: relative !important;
     padding: 0px 16px;
@@ -147,7 +146,7 @@ app-main {
 
     .userWidgets {
       a {
-        color: #fff;
+        color: #6d3112;
       }
 
       padding: 8px 0px;
@@ -157,7 +156,7 @@ app-main {
 
   .home-header-2 {
     background: $theme-main !important;
-    color: #fff;
+    color: #6d3112;
     z-index: 9000 !important;
     position: relative !important;
     padding: 0px 16px;
@@ -165,7 +164,7 @@ app-main {
 
     .userWidgets {
       a {
-        color: #fff;
+        color: #6d3112;
       }
 
       padding: 8px 0px;

@@ -14,7 +14,7 @@ export const environment = {
   tokenBusiness: '',
   meta: {
     mainPage: {
-      title: 'MCV Comercial S.A.',
+      title: 'Tiendas Caracol S.A.',
       description: 'Tienda online desarrollada con el framework Angular permite la modelación de negocios B2C and C2C',
       keywords: 'HTML, CSS, JavaScript, Angular, Tienda Online B2B, Sin Cola, comercio online En Cuba',
       shareImg: 'https://www.mcvcommercial.com/assets/images/share-img.png',
