@@ -55,8 +55,8 @@ body {
 }
 
 body {
-  padding: 0px !important;
-  margin: 0px !important;
+  padding: 0 !important;
+  margin: 0 !important;
   font-family: 'Poppins', Helvetica, sans-serif !important;
   position: relative;
   font-size: 1rem;
@@ -125,7 +125,7 @@ h6 {
 }
 
 .mat-card:not([class*='mat-elevation-z']) {
-  box-shadow: 2px 2px 6px 0px rgba(0, 0, 0, 0.1), 0 1px 1px 0 rgba(0, 0, 0, 0), 0 1px 3px 0 rgba(0, 0, 0, 0.12) !important;
+  box-shadow: 2px 2px 6px 0 rgba(0, 0, 0, 0.1), 0 1px 1px 0 rgba(0, 0, 0, 0), 0 1px 3px 0 rgba(0, 0, 0, 0.12) !important;
 }
 
 // .overlay {
@@ -194,7 +194,7 @@ a {
     color: #f44336 !important;
     max-height: 36px;
     min-width: 36px;
-    padding: 3px 0px !important;
+    padding: 3px 0 !important;
     width: 45px;
     background-color: #323232 !important;
     opacity: 0.9 !important;
@@ -431,7 +431,6 @@ a {
       z-index: 9;
       /* padding-left: 294px; */
       vertical-align: middle;
-      position: relative;
 
       /* top: 58%; */
       button {
@@ -700,7 +699,7 @@ span {
   }
 
   .product-wraper {
-    padding: 20px 0px 20px 20px;
+    padding: 20px 0 20px 20px;
 
     .product-box {
       width: 100%;
@@ -718,7 +717,7 @@ span {
     padding: 26px 5px 5px 5px;
 
     .mat-card:not([class*='mat-elevation-z']) {
-      box-shadow: 2px 2px 6px 0px rgba(0, 0, 0, 0.1), 0 1px 1px 0 rgba(0, 0, 0, 0), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+      box-shadow: 2px 2px 6px 0 rgba(0, 0, 0, 0.1), 0 1px 1px 0 rgba(0, 0, 0, 0), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
       padding: 0;
 
       .product-img {
@@ -1077,7 +1076,7 @@ span {
       font-size: 14px;
       font-weight: 700;
       margin-top: 20px;
-      padding: 0px 10px;
+      padding: 0 10px;
       text-align: center;
       text-transform: uppercase;
       transition: all 0.4s ease 0s;
@@ -1197,7 +1196,6 @@ span {
         z-index: 9;
         /* padding-left: 294px; */
         vertical-align: middle;
-        position: relative;
         /* top: 58%; */
         transform: none;
       }
@@ -1296,7 +1294,7 @@ span {
         border-style: none;
         border-width: 1px;
         border-radius: 3px;
-        border: 1px solid $grey2;
+        //border: 1px solid $grey2;
         -webkit-transition: box-shadow 0.3s ease-out;
         transition: box-shadow 0.3s ease-out;
         height: 40px;
@@ -1322,7 +1320,7 @@ span {
         color: $white;
         -webkit-transition: all 250ms ease-in-out;
         -moz-transition: all 250ms ease-in-out;
-        -ms-transition: all 250ms ease-in-out;
+        //-ms-transition: all 250ms ease-in-out;
         -o-transition: all 250ms ease-in-out;
         transition: all 250ms ease-in-out;
         text-transform: uppercase;
@@ -1353,7 +1351,7 @@ span {
       .info-text {
         p {
           font-size: 12px;
-          line-height: 0px;
+          line-height: 0;
           margin-bottom: 7px;
         }
 
@@ -1412,7 +1410,7 @@ span {
 
     .mat-card {
       height: 100px;
-      box-shadow: none;
+      //box-shadow: none;
       border-right: 1px solid $grey6;
       box-shadow: none !important;
 
@@ -1519,7 +1517,7 @@ span {
           z-index: 9;
           /* padding-left: 294px; */
           vertical-align: middle;
-          position: relative;
+          //position: relative;
           /* top: 58%; */
         }
       }
@@ -1582,7 +1580,7 @@ span {
                 font-size: 13px;
                 font-weight: 500;
                 margin-top: 14px;
-                padding: 0px 10px;
+                padding: 0 10px;
                 text-align: center;
                 text-transform: uppercase;
                 transition: all 0.4s ease 0s;
@@ -1715,7 +1713,7 @@ span {
         font-size: 36px;
         font-weight: 600;
         display: block;
-        letter-spacing: 0.5;
+        letter-spacing: 0.5px;
       }
 
       .sale-widget2 {
@@ -1723,7 +1721,7 @@ span {
         font-size: 18px;
         font-weight: 600;
         display: block;
-        letter-spacing: 0.5;
+        letter-spacing: 0.5px;
       }
 
       .discount {
@@ -1732,7 +1730,7 @@ span {
         font-size: 77px;
         font-weight: 600;
         position: relative;
-        letter-spacing: 0.5;
+        letter-spacing: 0.5px;
       }
 
       .percent {
@@ -1797,7 +1795,7 @@ span {
             font-size: 14px;
             font-weight: 700;
             margin-top: 10px;
-            padding: 0px 10px;
+            padding: 0 10px;
             text-align: center;
             text-transform: uppercase;
             transition: all 0.4s ease 0s;
@@ -1816,7 +1814,7 @@ span {
     padding-left: 15px;
 
     .info-bar {
-      margin-top: 0px;
+      margin-top: 0;
       border: 1px solid $grey6;
 
       .card-wrap {
@@ -1925,7 +1923,7 @@ span {
             font-size: 13px;
             font-weight: 500;
             margin-top: 14px;
-            padding: 0px 10px;
+            padding: 0 10px;
             text-align: center;
             text-transform: uppercase;
             transition: all 0.4s ease 0s;
@@ -1972,8 +1970,8 @@ span {
 
 .mat-menu-content {
   width: 245px;
-  padding-top: 0px;
-  padding-bottom: 0px;
+  padding-top: 0;
+  padding-bottom: 0;
   // padding: 0 13px !important;
   border-top: 4px solid $theme-main !important;
 
@@ -2007,7 +2005,7 @@ span {
   width: 240px;
   padding: 8px 14px;
   position: fixed;
-  margin-left: 0px;
+  margin-left: 0;
 }
 
 .toggle-header {
@@ -2034,8 +2032,8 @@ span {
 *  Products left sidebar page styles
 ****************************************/
 
-.left-sidebar-wrapper
-  mat-sidenav.filter-sidenav.mat-drawer.mat-sidenav.ng-tns-c15-4.ng-trigger.ng-trigger-transform.ng-tns-c13-3.ng-star-inserted.mat-drawer-over {
+.left-sidebar-wrapper,
+mat-sidenav.filter-sidenav.mat-drawer.mat-sidenav.ng-tns-c15-4.ng-trigger.ng-trigger-transform.ng-tns-c13-3.ng-star-inserted.mat-drawer-over {
   padding-right: 10px;
 }
 
@@ -2121,7 +2119,7 @@ span {
     padding: 8px 25px;
     background: $gray-lighter;
     margin-bottom: 20px;
-    box-shadow: 2px 2px 6px 0px rgba(0, 0, 0, 0.1), 0 1px 1px 0 rgba(0, 0, 0, 0), 0 1px 3px 0 rgba(0, 0, 0, 0.12) !important;
+    box-shadow: 2px 2px 6px 0 rgba(0, 0, 0, 0.1), 0 1px 1px 0 rgba(0, 0, 0, 0), 0 1px 3px 0 rgba(0, 0, 0, 0.12) !important;
   }
 
   .all-products {
@@ -2129,7 +2127,7 @@ span {
     background: $white;
 
     .col {
-      padding: 9px 0 9px 0px;
+      padding: 9px 0 9px 0;
 
       .product-item {
         position: relative;
@@ -2138,7 +2136,7 @@ span {
         transition: 0.4s;
 
         .mat-card:not([class*='mat-elevation-z']) {
-          box-shadow: 2px 2px 6px 0px rgba(0, 0, 0, 0.1), 0 1px 1px 0 rgba(0, 0, 0, 0), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+          box-shadow: 2px 2px 6px 0 rgba(0, 0, 0, 0.1), 0 1px 1px 0 rgba(0, 0, 0, 0), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
           padding: 0;
 
           .product-img {
@@ -2308,14 +2306,14 @@ span {
       width: 100%;
       margin: 0;
       position: relative;
-      background: #444;
-      background: rgba(0, 0, 0, 0.2);
+      //background: #444;
+      //background: rgba(0, 0, 0, 0.2);
 
       input {
         border-style: none;
         border-width: 1px;
         border-radius: 3px;
-        border: 2px solid $theme-main;
+        //border: 2px solid $theme-main;
         transition: box-shadow 0.3s ease-out;
         height: 40px;
         width: 100%;
@@ -2370,7 +2368,7 @@ span {
 
         p {
           font-size: 12px;
-          line-height: 0px;
+          line-height: 0;
           margin-bottom: 7px;
         }
 
@@ -2452,7 +2450,7 @@ span {
 *  Home-4 info bar styles
 ****************************************/
 .info-bar-four-wrapper {
-  margin-top: 0px;
+  margin-top: 0;
   border: none;
   background: #fff;
   // border-bottom: 1px solid #e5e5e5;
@@ -2464,8 +2462,8 @@ span {
       .mat-card {
         height: 70px;
         box-sizing: border-box;
-        box-shadow: none;
-        border-radius: 0px;
+        //box-shadow: none;
+        border-radius: 0;
         padding: 8px 16px;
         border-right: 1px solid $theme-main-300;
         box-shadow: none !important;
@@ -2571,8 +2569,8 @@ span {
 
 .mat-menu-content {
   width: 245px;
-  padding-top: 0px;
-  padding-bottom: 0px;
+  padding-top: 0;
+  padding-bottom: 0;
   // padding: 0 13px !important;
   border-top: 4px solid $theme-main !important;
 
@@ -2847,7 +2845,7 @@ span {
       font-size: 14px;
       font-weight: 700;
       margin-top: 20px;
-      padding: 0px 10px;
+      padding: 0 10px;
       text-align: center;
       text-transform: uppercase;
       transition: all 0.4s ease 0s;
@@ -3138,7 +3136,7 @@ span {
   .reviews {
     .stars {
       color: $theme-main;
-      margin: 0px 0 5px 0;
+      margin: 0 0 5px 0;
 
       span {
         color: $grey3;
@@ -3264,7 +3262,7 @@ span {
 @media screen and (max-width: 599px) {
   .contact-page {
     .left-info-panel {
-      padding-right: 0px;
+      padding-right: 0;
       width: 100%;
     }
   }
