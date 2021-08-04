@@ -1,23 +1,23 @@
 import { ConfirmPaymentOkComponent } from './confirm-payment-ok/confirm-payment-ok.component';
 import { CookieService } from 'ngx-cookie-service';
 import { MatSidenav } from '@angular/material/sidenav';
-import { Component, OnInit, ElementRef, ViewChild, OnDestroy, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { Product } from '../../modals/product.model';
 import { CartItem } from '../../modals/cart-item';
 import { ProductService } from '../shared/services/product.service';
 import { CartService } from '../shared/services/cart.service';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { NavigationService } from './../../core/services/navigation/navigation.service';
-import { LoggedInUserService } from './../../core/services/loggedInUser/logged-in-user.service';
+import { NavigationService } from '../../core/services/navigation/navigation.service';
+import { LoggedInUserService } from '../../core/services/loggedInUser/logged-in-user.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject, of, Observable } from 'rxjs';
-import { IUser } from './../../core/classes/user.class';
-import { AuthenticationService } from './../../core/services/authentication/authentication.service';
-import { ShowSnackbarService } from './../../core/services/show-snackbar/show-snackbar.service';
+import { IUser } from '../../core/classes/user.class';
+import { AuthenticationService } from '../../core/services/authentication/authentication.service';
+import { ShowSnackbarService } from '../../core/services/show-snackbar/show-snackbar.service';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
-import { CurrencyService } from './../../core/services/currency/currency.service';
-import { environment } from './../../../environments/environment';
+import { CurrencyService } from '../../core/services/currency/currency.service';
+import { environment } from '../../../environments/environment';
 import { FormControl } from '@angular/forms';
 import { SocketIoService } from '../../core/services/socket-io/socket-io.service';
 import { NotificationsService } from './notification/notifications.service';
@@ -106,7 +106,6 @@ export class MainComponent implements OnInit, OnDestroy {
         this.sidenav.close();
       }
     });
-
     this.searchForm = new FormControl(null, []);
   }
 
@@ -185,6 +184,7 @@ export class MainComponent implements OnInit, OnDestroy {
     this.currency = currency;
     this.currencyService.setCurrency(currency);
   }
+
   public changeLang(flag) {
     this.translate.use(flag.lang);
     localStorage.setItem('language', JSON.stringify(flag));
@@ -238,6 +238,7 @@ export class MainComponent implements OnInit, OnDestroy {
         },
       );
   }
+
   onChangePass() {
     this.router.navigate(['/my-account/change-pass']);
     // this.showPaymentSuccess(26);
@@ -310,6 +311,7 @@ export class MainComponent implements OnInit, OnDestroy {
       });
     });
   }
+
   showPaymentCancellSuccess(id) {
     this.orderService.getPayment(id).subscribe((data) => {
       const dialogRef = this.dialog.open(ConfirmPaymentOkComponent, {

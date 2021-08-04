@@ -170,7 +170,7 @@
         font-weight: 400;
         margin: 10px 0;
 
-        @media(max-width:599px) {
+        @media(max-width: 599px) {
           font-size: 20px;
         }
       }
@@ -253,7 +253,7 @@
     .full-desc {
       padding: 20px;
 
-      @media (max-width:760px) {
+      @media (max-width: 760px) {
         padding: 8px;
       }
 
@@ -307,7 +307,6 @@
     }
 
 
-
     .title {
       margin-bottom: 15px;
       position: relative;
@@ -347,7 +346,7 @@
       font-size: 36px;
       font-weight: 600;
       display: block;
-      letter-spacing: .5;
+      letter-spacing: 0.5px;
     }
 
     .sale-widget2 {
@@ -355,7 +354,7 @@
       font-size: 18px;
       font-weight: 600;
       display: block;
-      letter-spacing: .5;
+      letter-spacing: 0.5px;
     }
 
     .discount {
@@ -364,7 +363,7 @@
       font-size: 77px;
       font-weight: 600;
       position: relative;
-      letter-spacing: .5;
+      letter-spacing: 0.5px;
     }
 
     .percent {
@@ -419,11 +418,11 @@
 .video {
   width: 600px;
 
-  @media (max-width:800px) {
+  @media (max-width: 800px) {
     width: 400px;
   }
 
-  @media (max-width:500px) {
+  @media (max-width: 500px) {
     height: auto;
     width: 100%;
   }
@@ -434,28 +433,26 @@
   width: 600px;
   height: 352px;
 
-  @media (max-width:800px) {
+  @media (max-width: 800px) {
     width: 400px;
     height: 235px;
   }
 
-  @media (max-width:500px) {
+  @media (max-width: 500px) {
     height: auto;
     width: 100%;
     min-height: 180px;
   }
-
 }
-
 
 .pdfRender {
   width: 450px;
 
-  @media (max-width:800px) {
+  @media (max-width: 800px) {
     width: 360px;
   }
 
-  @media (max-width:500px) {
+  @media (max-width: 500px) {
     height: auto;
     width: 100%;
   }
@@ -492,11 +489,10 @@
   .editBtn {
     position: absolute;
     right: 16px;
-    bottom: calc(100%-40px);
+    bottom: calc(100% - 40px);
     opacity: 0;
     color: #616161;
   }
-
 }
 
 .list-compare-link {
@@ -538,7 +534,7 @@
     object-position: center;
   }
 
-  @media (max-width:800px) {
+  @media (max-width: 800px) {
     background-color: rgba(0, 0, 0, .95);
     padding: 16px;
 
