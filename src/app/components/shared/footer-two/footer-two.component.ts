@@ -1,15 +1,15 @@
-import { CurrencyService } from './../../../core/services/currency/currency.service';
+import { CurrencyService } from '../../../core/services/currency/currency.service';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { FormControl, Validators, Form, FormGroup, FormBuilder } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { LoggedInUserService } from './../../../core/services/loggedInUser/logged-in-user.service';
+import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-in-user.service';
 import { Subject } from 'rxjs';
-import { ShowSnackbarService } from './../../../core/services/show-snackbar/show-snackbar.service';
+import { ShowSnackbarService } from '../../../core/services/show-snackbar/show-snackbar.service';
 import { TranslateService } from '@ngx-translate/core';
-import { UtilsService } from './../../../core/services/utils/utils.service';
-import { environment } from './../../../../environments/environment';
+import { UtilsService } from '../../../core/services/utils/utils.service';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-footer-two',
@@ -21,7 +21,7 @@ export class FooterTwoComponent implements OnInit, OnDestroy {
   _unsubscribeAll: Subject<any> = new Subject();
   form: FormGroup;
   subscribeState = false;
-  version = '';
+  version = environment.versions.app;
   urlAboutUs = environment.urlAboutUs;
   flag: any;
   flags = [
@@ -50,7 +50,6 @@ export class FooterTwoComponent implements OnInit, OnDestroy {
     // const tempStorage = JSON.parse(localStorage.getItem('subscribeState'));
     this.subscribeState = this.loggedInUser ? this.loggedInUser.isSubscribed : false;
     localStorage.setItem('subscribeState', JSON.stringify(this.subscribeState));
-    this.version = environment.version;
     this.address = environment.address;
 
     this.form = this.fb.group({
@@ -146,6 +145,7 @@ export class FooterTwoComponent implements OnInit, OnDestroy {
     this.currency = currency;
     this.currencyService.setCurrency(currency);
   }
+
   public changeLang(flag) {
     this.translate.use(flag.lang);
     localStorage.setItem('language', JSON.stringify(flag));
