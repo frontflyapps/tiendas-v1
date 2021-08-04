@@ -1,14 +1,12 @@
 <div class="commerce-buttons" fxLayout="row" fxLayoutAlign="start center">
   <button mat-button class="flex-row-button mat-button" fxLayoutAlign="space-between center" [matMenuTriggerFor]="menu">
     <div class="mat-button-wrapper" fxLayout="row" fxLayoutAlign="space-between center">
-      <div
-        class="iconCart"
-        [matBadge]="shoppingCartItems.length"
-        matBadgeColor="accent"
-        fxLayout="row"
-        fxLayout="start center"
-        matTooltip="Carrito de compras"
-      >
+      <div class="iconCart"
+           [matBadge]="shoppingCartItems.length"
+           matBadgeColor="primary"
+           fxLayout="row"
+           fxLayoutAlign="start center"
+           matTooltip="Carrito de compras">
         <mat-icon>local_grocery_store</mat-icon>
       </div>
       <!--<div class="top-cart" fxLayout="row" fxLayoutAlign="end end">

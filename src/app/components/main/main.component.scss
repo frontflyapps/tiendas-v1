@@ -126,7 +126,7 @@ app-main {
         right: -15px;
         top: 0;
         padding: 0 16px;
-        color: $theme-main;
+        color: $white;
         -webkit-transition: all 250ms ease-in-out;
         -moz-transition: all 250ms ease-in-out;
         -ms-transition: all 250ms ease-in-out;
@@ -156,7 +156,7 @@ app-main {
 
   .home-header-2 {
     background: $theme-main !important;
-    color: #6d3112;
+    color: $white;
     z-index: 9000 !important;
     position: relative !important;
     padding: 0px 16px;
