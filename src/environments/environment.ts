@@ -9,8 +9,8 @@ export const environment = {
   // apiUrl: 'http://localhost:8998/v1/',
   // imageUrl: 'http://localhost:8998/v1/',
 
-  apiUrl: 'https://apitienda.marinasmarlin.com/v1/',
-  imageUrl: 'https://apitienda.marinasmarlin.com/v1/',
+  apiUrl: 'https://api.mcvcommercial.com/v1/',
+  imageUrl: 'https://api.mcvcommercial.com/v1/',
 
   defaultLanguage: 'es',
   currencyInternational: 'USD',
@@ -18,7 +18,7 @@ export const environment = {
   url: 'http://localhost:4400',
   urlAboutUs: 'http://localhost:4400',
 
-  address: 'Marinas Marlin',
+  address: 'Tiendas Marinas Marlin',
   localDatabaseUsers: true,
 
   adminService: 'http://admintienda.sinkoola.com:4300/',
@@ -28,7 +28,7 @@ export const environment = {
 
   meta: {
     mainPage: {
-      title: 'Marinas Marlin',
+      title: 'Tiendas Marinas Marlin',
       description: 'Tienda online desarrollada con el framework Angular permite la modelación de negocios B2C and C2C',
       keywords: 'HTML, CSS, JavaScript, Angular, Tienda Online B2B, comercio online En Cuba',
       shareImg: 'https://tienda.marinasmarlin.com/assets/images/share-img.png',
