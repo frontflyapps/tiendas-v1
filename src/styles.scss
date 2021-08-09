@@ -212,13 +212,21 @@ $red-600: mat-color(mat-palette($mat-red), 600);
   height: 300px;
   max-width: 100%;
   overflow: visible !important;
+  box-shadow: 0 0 8px #e5e5e5;
 
   .ngxImageZoomFullContainer {
     left: 110% !important;
+    top: -10px !important;
     width: 480px !important;
-    height: 480px !important;
+    height: 490px !important;
     background-color: white;
     z-index: 10;
+    box-shadow: 0 0 8px #969696;
+    display: none;
+
+    img {
+      display: none;
+    }
   }
 
   .ngxImageZoomThumbnail {

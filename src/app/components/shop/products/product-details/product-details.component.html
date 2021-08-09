@@ -28,7 +28,7 @@
                     *ngIf="image.selected"
                     (click)="openZoomViewer()"
                     [zoomMode]="'hover'"
-                    [magnification]="4"
+                    [magnification]="2"
                     [thumbImage]="image.image"
                     [fullImage]="image.image">
                   </lib-ngx-image-zoom>
@@ -51,8 +51,7 @@
           </mat-card>
         </div>
 
-        <div *ngIf="!isLoading" fxFlex="100" fxFlex.gt-md="50" fxFlex.md="90" ngClass.gt-sm="px-3 m-0" ngClass.sm="mt-2"
-             ngClass.xs="mt-2">
+        <div *ngIf="!isLoading" fxFlex="100" fxFlex.gt-md="50" fxFlex.md="90" ngClass.gt-sm="px-3 m-0">
           <div class="product-right">
             <div class="product-details">
               <h2 class="nameProduct">{{ product.name[language] ? product.name[language] : product.name['es'] }}</h2>
