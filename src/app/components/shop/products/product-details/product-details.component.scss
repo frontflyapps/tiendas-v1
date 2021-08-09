@@ -13,7 +13,9 @@
 
   @media (min-width: 320px) and (max-width: 480px) {
     width: 300px !important;
-    height: 300px !important;
+    //height: 300px !important;
+    display: flex;
+    flex-direction: column;
   }
 
   .ImageProduct {
