@@ -207,9 +207,9 @@ $red-600: mat-color(mat-palette($mat-red), 600);
 
 /* Zoom Style */
 .ngxImageZoomContainer {
-  min-width: 300px;
+  min-width: 450px;
   width: auto;
-  height: 300px;
+  height: 450px;
   max-width: 100%;
   overflow: visible !important;
   box-shadow: 0 0 8px #e5e5e5;
