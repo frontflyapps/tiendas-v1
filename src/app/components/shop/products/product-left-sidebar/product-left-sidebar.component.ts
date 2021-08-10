@@ -28,8 +28,8 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
   public viewCol = 100;
 
   public allProducts: any[] = [];
-  initLimit = 10;
-  pageSizeOptions: number[] = [this.initLimit, 20, 50];
+  initLimit = 21;
+  pageSizeOptions: number[] = [this.initLimit, 42, 100];
   resetPrices = false;
 
   queryProduct: IPagination = {
