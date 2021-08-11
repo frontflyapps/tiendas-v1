@@ -40,7 +40,7 @@
     <div class="container">
       <div class="products sec-padding">
         <div class="products-four">
-          <h3>{{'Productos destacados'|translate}}</h3>
+          <h3 style="color: #2196f3">{{'Productos destacados'|translate}}</h3>
           <app-product-carousel *ngIf="!loadingFeatured" [products]="featuredProducts" [btnColor]="'accent'">
           </app-product-carousel>
           <div *ngIf="loadingFeatured" class="my-3">
@@ -66,7 +66,7 @@
     <div class="container">
       <div class="products sec-padding">
         <div class="products-four">
-          <h3>{{ 'Ofertas populares' | translate }}</h3>
+          <h3 style="color: #2196f3">{{ 'Ofertas populares' | translate }}</h3>
           <app-product-carousel *ngIf="!loadingPopular" [products]="popularProducts" [btnColor]="'accent'">
           </app-product-carousel>
           <div *ngIf="loadingPopular" class="my-3">
