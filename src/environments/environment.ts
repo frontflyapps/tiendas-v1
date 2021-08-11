@@ -9,8 +9,8 @@ export const environment = {
   // apiUrl: 'http://localhost:8998/v1/',
   // imageUrl: 'http://localhost:8998/v1/',
 
-  apiUrl: 'https://api.mcvcommercial.com/v1/',
-  imageUrl: 'https://api.mcvcommercial.com/v1/',
+  apiUrl: 'https://apitienda.marinasmarlin.com/v1/',
+  imageUrl: 'https://apitienda.marinasmarlin.com/v1/',
 
   defaultLanguage: 'es',
   currencyInternational: 'USD',
