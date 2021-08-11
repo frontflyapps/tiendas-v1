@@ -1,23 +1,31 @@
 // This file can be replaced during build by using the `fileReplacements` array.
-// `ng build --prod` replaces `environment.ts` with `environment.prod.ts`..
+// `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
+const packageJson = require('../../package.json');
 
 export const environment = {
   production: false,
+
   // apiUrl: 'http://localhost:8998/v1/',
   // imageUrl: 'http://localhost:8998/v1/',
+
   apiUrl: 'https://apitienda.marinasmarlin.com/v1/',
   imageUrl: 'https://apitienda.marinasmarlin.com/v1/',
+
   defaultLanguage: 'es',
   currencyInternational: 'USD',
-  version: '1.0.2',
+
   url: 'http://localhost:4400',
   urlAboutUs: 'http://localhost:4400',
+
   address: 'Marinas Marlin',
   localDatabaseUsers: true,
+
   adminService: 'http://admintienda.sinkoola.com:4300/',
   mainDomain: '.marinasmarlin.com',
+
   tokenBusiness: '',
+
   meta: {
     mainPage: {
       title: 'Marinas Marlin',
@@ -26,6 +34,17 @@ export const environment = {
       shareImg: 'https://tienda.marinasmarlin.com/assets/images/share-img.png',
       url: 'https://tienda.marinasmarlin.com/',
     },
+  },
+
+  versions: {
+    app: packageJson.version,
+    angular: packageJson.dependencies['@angular/core'],
+    material: packageJson.dependencies['@angular/material'],
+    rxjs: packageJson.dependencies.rxjs,
+    ngxtranslate: packageJson.dependencies['@ngx-translate/core'],
+    angularCli: packageJson.devDependencies['@angular/cli'],
+    typescript: packageJson.devDependencies['typescript'],
+    tslint: packageJson.devDependencies['tslint'],
   },
 };
 
