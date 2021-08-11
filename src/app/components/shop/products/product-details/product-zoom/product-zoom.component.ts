@@ -1,7 +1,6 @@
 import { Component, OnInit, Inject, ViewEncapsulation, ViewChild } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ProductService } from '../../../../shared/services/product.service';
-import { Product } from './../../../../../modals/product.model';
 
 @Component({
   selector: 'app-product-zoom',
@@ -19,8 +18,7 @@ export class ProductZoomComponent implements OnInit {
     private productsService: ProductService,
     public dialogRef: MatDialogRef<ProductZoomComponent>,
     @Inject(MAT_DIALOG_DATA) public image: any,
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     this.zoomImage.nativeElement.style.maxWidth = this.maxWidth + '%';

@@ -17,8 +17,19 @@
             <div fxLayoutAlign="center center">
               <ng-container *ngIf="product.Images && product.Images.length">
                 <ng-container *ngFor="let image of arrayImages; let i = index">
-                  <img *ngIf="image.selected" onerror="this.onerror=null;this.src='assets/images/noImage.jpg';" ngp-lazy ngp-threshold="0.1"
-                    [src]="image.image" (click)="openZoomViewer()" class="ImageProduct" />
+                  <!--                  <img *ngIf="image.selected"-->
+                  <!--                       onerror="this.onerror=null;this.src='assets/images/noImage.jpg';" ngp-lazy-->
+                  <!--                       ngp-threshold="0.1"-->
+                  <!--                       [src]="image.image" (click)="openZoomViewer()" class="ImageProduct" />-->
+
+                  <lib-ngx-image-zoom
+                    *ngIf="image.selected"
+                    (click)="openZoomViewer()"
+                    [zoomMode]="'hover'"
+                    [magnification]="4"
+                    [thumbImage]="image.image"
+                    [fullImage]="image.image">
+                  </lib-ngx-image-zoom>
                 </ng-container>
               </ng-container>
 
@@ -36,7 +47,8 @@
           </mat-card>
         </div>
 
-        <div *ngIf="!isLoading" fxFlex="100" fxFlex.gt-md="50" fxFlex.md="90" ngClass.gt-sm="px-3 m-0" ngClass.sm="mt-2" ngClass.xs="mt-2">
+        <div *ngIf="!isLoading" fxFlex="100" fxFlex.gt-md="50" fxFlex.md="90" ngClass.gt-sm="px-3 m-0" ngClass.sm="mt-2"
+             ngClass.xs="mt-2">
           <div class="product-right">
             <div class="product-details">
               <h2 class="nameProduct">{{ product.name[language] ? product.name[language] : product.name['es'] }}</h2>
