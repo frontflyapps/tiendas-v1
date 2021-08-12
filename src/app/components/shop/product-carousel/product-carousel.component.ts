@@ -79,7 +79,6 @@ export class ProductCarouselComponent implements OnInit, AfterViewInit, OnDestro
       .subscribe((data) => {
         this.isHandset = data.matches;
       });
-    // console.log(this.products);
   }
 
   ngOnDestroy() {

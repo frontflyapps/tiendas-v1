@@ -123,7 +123,6 @@ export class BecomeASellerComponent implements OnInit {
     //data.business.card = data.owner.card;
     data.business.logo = this.imageBusiness;
     //delete data.owner.card;
-    // console.log(JSON.stringify(data));
     this.businessService.createBussines(data).subscribe(
       () => {
         this.showToastr.showSucces(

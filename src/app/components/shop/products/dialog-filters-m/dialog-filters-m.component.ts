@@ -74,7 +74,6 @@ export class DialogFiltersMComponent implements OnInit, OnDestroy {
     });
 
     this.route.queryParams.pipe(takeUntil(this._unsubscribeAll)).subscribe((data) => {
-      // console.log('Subscricion de navegacion -> data', data);
       this.loading = true;
       this.paramsSearch.categoryIds = data && data.categoryIds ? data.categoryIds : this.paramsSearch.categoryIds;
       this.paramsSearch.brandIds = data && data.brandIds ? data.brandIds : [];
@@ -120,7 +119,6 @@ export class DialogFiltersMComponent implements OnInit, OnDestroy {
     });
     this.categoryService.getAllCategories().subscribe((data) => {
       this.allCategories = data.data;
-      // console.log('todas las categorias', data.data);
     });
   }
 
@@ -130,7 +128,6 @@ export class DialogFiltersMComponent implements OnInit, OnDestroy {
   }
   // Update price filter
   updatePriceFilters(price: any) {
-    // console.log(price);
     this.paramsSearch.minPrice = price.priceFrom;
     this.paramsSearch.maxPrice = price.priceTo;
     this.queryProduct.limit = this.initLimit;
@@ -140,7 +137,6 @@ export class DialogFiltersMComponent implements OnInit, OnDestroy {
   }
   // Update Brands filter
   onBrandsChanged(brandIds) {
-    console.log(brandIds);
     this.paramsSearch.brandIds = brandIds;
     this.queryProduct.limit = this.initLimit;
     this.queryProduct.offset = 0;
@@ -155,7 +151,6 @@ export class DialogFiltersMComponent implements OnInit, OnDestroy {
     this.queryProduct.offset = 0;
     this.queryProduct.total = 0;
     this.allProducts = [];
-    console.log('Entre en el cambio de Categories');
   }
   save() {
     this.dialogRef.close({
