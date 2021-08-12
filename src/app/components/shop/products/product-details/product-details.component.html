@@ -25,10 +25,11 @@
                   <!--                       [src]="image.image" (click)="openZoomViewer()" class="ImageProduct" />-->
 
                   <lib-ngx-image-zoom
+                    class="lib-ngx-image-zoom"
                     *ngIf="image.selected"
                     (click)="openZoomViewer()"
                     [zoomMode]="'hover'"
-                    [magnification]="2"
+                    [magnification]="1.2"
                     [thumbImage]="image.image"
                     [fullImage]="image.image">
                   </lib-ngx-image-zoom>
