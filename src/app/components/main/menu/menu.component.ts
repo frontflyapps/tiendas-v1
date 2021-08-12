@@ -1,8 +1,8 @@
 import { UtilsService } from 'src/app/core/services/utils/utils.service';
 import { takeUntil } from 'rxjs/operators';
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { NavigationService } from './../../../core/services/navigation/navigation.service';
-import { LoggedInUserService } from './../../../core/services/loggedInUser/logged-in-user.service';
+import { NavigationService } from '../../../core/services/navigation/navigation.service';
+import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-in-user.service';
 import { Subject } from 'rxjs';
 import { CartService } from '../../shared/services/cart.service';
 import { IPagination } from 'src/app/core/classes/pagination.class';
@@ -78,7 +78,7 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   openMegaMenu() {
     let pane = document.getElementsByClassName('cdk-overlay-pane');
-    [].forEach.call(pane, function (el) {
+    [].forEach.call(pane, function(el) {
       if (el.children.length > 0) {
         if (el.children[0].classList.contains('mega-menu')) {
           el.classList.add('mega-menu-pane');
