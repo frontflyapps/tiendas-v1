@@ -12,7 +12,7 @@ export const environment = {
   url: 'https://www.tiendascaracol.com',
   urlAboutUs: 'https://www.tiendascaracol.com',
 
-  address: 'Mercedes SA / Quinta Avenida,18204, Playa, La Habana.',
+  address: 'Tiendas Caracol',
   localDatabaseUsers: true,
 
   adminService: 'https://admin.tiendascaracol.com/',

@@ -117,7 +117,7 @@
       <div fxFlex class="search-form" fxLayout="row" fxLayoutAlign="start center">
         <form class="search-form" fxLayout="row" fxLayoutAlign="start center">
           <div class="form-wrap">
-            <input [formControl]="searchForm" type="text" placeholder="{{ 'Buscar en Tiendas Caracol' | translate }}" />
+            <input [formControl]="searchForm" type="text" placeholder="{{ 'Buscar en la Tienda' | translate }}" />
             <button (click)="onSearch()" class="btn-search" type="submit">
               <mat-icon>search</mat-icon>
             </button>
@@ -290,31 +290,23 @@
         </form>
       </div>
 
-      <div
-        class="showCategories"
-        fxLayout="row"
-        fxLayoutAlign.xs="start center"
-        fxLayoutAlign.sm="center center"
-        fxLayoutGap="gappx"
-      >
-        <a
-          [routerLink]="['']"
-          [routerLinkActiveOptions]="{ exact: true }"
-          routerLinkActive="link-active"
-          class="itemCategory"
-          mat-button
-        >{{ 'Inicio' | translate }}</a
-        >
+      <div class="showCategories"
+           fxLayout="row"
+           fxLayoutAlign.xs="start center"
+           fxLayoutAlign.sm="center center"
+           fxLayoutGap="gappx">
 
-        <a
-          [routerLink]="['/products/search']"
-          routerLinkActive="link-active"
-          [queryParams]="{ CategoryId: category.id }"
-          *ngFor="let category of categories"
-          class="itemCategory"
-          mat-button
-        >{{ utilsService.parserLanguage(category.name, _language) }}</a
-        >
+        <a [routerLink]="['']" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="link-active"
+           class="itemCategory" mat-button>{{ 'Inicio' | translate }}</a>
+
+        <a [routerLink]="['/products/search']" routerLinkActive="router-link-active" class="itemCategory" mat-button>
+          {{ 'Products' | translate }}</a>
+
+        <a [routerLink]="['/products/search']" routerLinkActive="link-active"
+           [queryParams]="{ CategoryId: category.id }" *ngFor="let category of categories"
+           class="itemCategory" mat-button>
+          {{ utilsService.parserLanguage(category.name, _language) }}</a>
+
       </div>
     </div>
   </div>

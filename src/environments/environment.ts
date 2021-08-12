@@ -18,11 +18,11 @@ export const environment = {
   url: 'http://localhost:4400',
   urlAboutUs: 'http://localhost:4400',
 
-  address: 'Mercedes / Quinta Avenida,18204, Playa, La Habana.',
+  address: 'Tiendas Caracol',
   localDatabaseUsers: true,
 
-  adminService: 'http://admintienda.sinkoola.com:4300/',
-  mainDomain: '.sinkoola.com',
+  adminService: 'http://admintienda.tiendascaracol.com/',
+  mainDomain: '.tiendascaracol.com',
 
   tokenBusiness: '',
 
