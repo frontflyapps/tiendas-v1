@@ -3,7 +3,7 @@
   <mat-sidenav class="DrawerMobileView" [opened]="false" mode="over" #start>
     <mat-list>
       <mat-list-item>
-        <mat-icon> person </mat-icon>
+        <mat-icon> person</mat-icon>
         &nbsp;
         <span class="mat-body-2" style="font-size: 19px"> Hola, </span>
         &nbsp;
@@ -95,7 +95,7 @@
   >
     <mat-list>
       <mat-list-item>
-        <mat-icon> notifications </mat-icon>
+        <mat-icon> notifications</mat-icon>
         &nbsp;
         <span class="mat-body-2" style="font-size: 19px">
           {{ 'Notificaciones' | translate }}
@@ -117,9 +117,9 @@
       <div fxFlex class="search-form" fxLayout="row" fxLayoutAlign="start center">
         <form class="search-form" fxLayout="row" fxLayoutAlign="start center">
           <div class="form-wrap">
-            <input [formControl]="searchForm" type="text" placeholder="{{ 'Buscar en Tiendas Caracol' | translate }}" />
+            <input [formControl]="searchForm" type="text" placeholder="{{ 'Buscar en la Tienda' | translate }}" />
             <button (click)="onSearch()" class="btn-search" type="submit">
-              <mat-icon> search </mat-icon>
+              <mat-icon> search</mat-icon>
             </button>
           </div>
         </form>
@@ -140,7 +140,8 @@
           routerLinkActive="router-link-active"
         >
           <mat-icon *ngIf="compareItems.length" [matBadge]="compareItems.length" matBadgeColor="accent"
-            >compare_arrows</mat-icon
+          >compare_arrows
+          </mat-icon
           >
           <mat-icon *ngIf="!compareItems.length">compare_arrows</mat-icon>
           <span fxShow="false" fxHide>{{ 'Comparar productos' | translate }}</span>
@@ -176,7 +177,8 @@
         <a *ngIf="loggedInUser" class="px-3" fxLayoutAlign="start center" style="color: white">
           <button mat-icon-button (click)="notificationBar.toggle()">
             <mat-icon [matBadge]="notificationsService.getUnreadNotifications()" matBadgeColor="warn"
-              >notifications</mat-icon
+            >notifications
+            </mat-icon
             >
           </button>
         </a>
@@ -189,7 +191,8 @@
           [routerLink]="['/my-account']"
           routerLinkActive="router-link-active"
         >
-          <mat-icon>person</mat-icon><span fxHide.xs>{{ 'Account' | translate }}</span>
+          <mat-icon>person</mat-icon>
+          <span fxHide.xs>{{ 'Account' | translate }}</span>
         </a>
         <a
           fxLayoutAlign="start center"
@@ -263,13 +266,15 @@
             [routerLink]="['/my-account']"
             routerLinkActive="router-link-active"
           >
-            <mat-icon>person</mat-icon><span fxHide.xs>{{ 'Account' | translate }}</span>
+            <mat-icon>person</mat-icon>
+            <span fxHide.xs>{{ 'Account' | translate }}</span>
           </a>
           <app-shopping-widgets></app-shopping-widgets>
           <a *ngIf="loggedInUser" fxLayoutAlign="start center" style="color: white">
             <button mat-icon-button (click)="notificationBar.toggle()">
               <mat-icon [matBadge]="notificationsService.getUnreadNotifications()" matBadgeColor="warn"
-                >notifications</mat-icon
+              >notifications
+              </mat-icon
               >
             </button>
           </a>
@@ -280,7 +285,7 @@
         <form class="mobile-search" fxLayout="row" fxLayoutAlign="start center">
           <input fxFlex [formControl]="searchForm" type="search" placeholder="{{ 'Type to search...' | translate }}" />
           <button (click)="onSearch()" type="submit">
-            <mat-icon> search </mat-icon>
+            <mat-icon> search</mat-icon>
           </button>
         </form>
       </div>
@@ -298,7 +303,7 @@
           routerLinkActive="link-active"
           class="itemCategory"
           mat-button
-          >{{ 'Inicio' | translate }}</a
+        >{{ 'Inicio' | translate }}</a
         >
 
         <a
@@ -308,7 +313,7 @@
           *ngFor="let category of categories"
           class="itemCategory"
           mat-button
-          >{{ utilsService.parserLanguage(category.name, _language) }}</a
+        >{{ utilsService.parserLanguage(category.name, _language) }}</a
         >
       </div>
     </div>
