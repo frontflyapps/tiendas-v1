@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-footer',
@@ -10,6 +11,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class FooterComponent implements OnInit {
   language: string;
   currency: string;
+  public version = environment.versions.app;
 
   flag: any;
   flags = [
