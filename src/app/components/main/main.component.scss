@@ -1,6 +1,14 @@
 @import '../../../assets/scss/theme/variables';
 
-app-main {
+.logo-img-main {
+  max-height: 34px;
+  width: auto;
+  height: auto;
+  max-width: 170px;
+}
+
+app-main,
+.app-main {
   .profileImage {
     height: 40px;
     width: 40px;
