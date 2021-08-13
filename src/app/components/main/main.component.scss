@@ -1,5 +1,12 @@
 @import '../../../assets/scss/theme/variables';
 
+.logo-img-main {
+  max-height: 34px;
+  width: auto;
+  height: auto;
+  max-width: 170px;
+}
+
 app-main,
 .app-main {
   .profileImage {
@@ -157,7 +164,7 @@ app-main,
 
   .home-header-2 {
     background: $theme-main !important;
-    color: #fff;
+    color: $white;
     z-index: 9000 !important;
     position: relative !important;
     padding: 0px 16px;
