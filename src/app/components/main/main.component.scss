@@ -1,6 +1,7 @@
 @import '../../../assets/scss/theme/variables';
 
-app-main {
+app-main,
+.app-main {
   .profileImage {
     height: 40px;
     width: 40px;
@@ -126,14 +127,14 @@ app-main {
         right: -15px;
         top: 0;
         padding: 0 16px;
-        color: $theme-main;
+        color: $white;
         -webkit-transition: all 250ms ease-in-out;
         -moz-transition: all 250ms ease-in-out;
         -ms-transition: all 250ms ease-in-out;
         -o-transition: all 250ms ease-in-out;
         transition: all 250ms ease-in-out;
         text-transform: uppercase;
-        background-color: $white;
+        background-color: $theme-main-accent-300;
         border-radius: 0 8px 8px 0;
         -webkit-border-radius: 0 8px 8px 0;
         font-weight: 500;
@@ -198,7 +199,7 @@ app-main {
       padding: 12px 14px;
       border: none;
       background-color: $theme-main-accent-300;
-      color: $theme-main-dark;
+      color: $white;
       font-weight: 500;
 
       &:focus {
