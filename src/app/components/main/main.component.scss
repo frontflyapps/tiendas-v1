@@ -1,5 +1,9 @@
 @import '../../../assets/scss/theme/variables';
 
+.router-link-active {
+  background-color: $menu-hover !important;
+}
+
 .logo-img-main {
   max-height: 34px;
   width: auto;

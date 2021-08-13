@@ -1,12 +1,11 @@
 @import '../../../../assets/scss/theme/variables';
 
 .router-link-active {
-  background-color: #00e5ff !important;
+  background-color: $menu-hover !important;
 }
 
 .menu-container1 {
   background-color: $theme-main-400 !important;
-  background: $theme-main-400 !important;
 }
 
 #toolbar-menu {
