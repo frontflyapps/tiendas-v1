@@ -1,0 +1,88 @@
+<footer class="pt-3">
+  <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutAlign.xs="start center">
+    <!--<a
+      class="item-selector mx-3 my-2"
+      fxLayoutAlign="start center"
+      mat-button
+      [matMenuTriggerFor]="currencyMenu"
+      #currencyMenuTrigger="matMenuTrigger"
+    >
+      <span>{{ currency.name }}</span>
+      <mat-icon>arrow_drop_down</mat-icon>
+    </a>
+    <mat-menu #currencyMenu="matMenu" [overlapTrigger]="false" xPosition="before" class="app-dropdown">
+      <span>
+        <button mat-menu-item *ngFor="let cur of currencies" (click)="changeCurrency(cur)">
+          <span style="color: black">{{ cur.name }}</span>
+        </button>
+      </span>
+    </mat-menu>-->
+    <a
+      class="item-selector mx-3 my-2"
+      fxLayoutAlign="start center"
+      mat-button
+      [matMenuTriggerFor]="langMenu"
+      #langMenuTrigger="matMenuTrigger"
+    >
+      <img [src]="flag?.image" width="18" />
+      <mat-icon>arrow_drop_down</mat-icon>
+      <span>{{ flag?.name }}</span>
+    </a>
+    <mat-menu #langMenu="matMenu" [overlapTrigger]="false" xPosition="before" class="app-dropdown">
+        <span>
+          <button mat-menu-item *ngFor="let flag of flags" (click)="changeLang(flag)">
+            <img [src]="flag.image" width="18" /> {{ flag.name }}
+          </button>
+        </span>
+    </mat-menu>
+    <a
+      [routerLink]="['term-conditions']"
+      routerLinkActive=" router-link-active"
+      class="item-selector mx-3 my-2"
+      fxLayoutAlign="start center"
+      mat-button
+    >
+      <span>{{ 'Términos y condiciones' | translate }}</span>
+    </a>
+    <a
+      [routerLink]="['privacy-policy']"
+      routerLinkActive=" router-link-active"
+      class="item-selector mx-3 my-2"
+      fxLayoutAlign="start center"
+      mat-button
+    >
+      <span>{{ 'Políticas de privacidad' | translate }}</span>
+    </a>
+  </div>
+
+  <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="1rem">
+    <img class="mt-4" src="../../../../assets/logos/marlin/logoWhite.svg" alt="footer logo" ngClass.lt-sm="img-footer">
+    <ul class="network-icons" fxLayout="row">
+      <li>
+        <a href="" target="_blank">
+          <img src="../../../../assets/images/icons/marlin/facebook.svg" alt="facebook link">
+        </a>
+      </li>
+      <li>
+        <a href="" target="_blank">
+          <img src="../../../../assets/images/icons/marlin/twitter.svg" alt="twitter link"></a>
+      </li>
+      <li>
+        <a href="" target="_blank">
+          <img src="../../../../assets/images/icons/marlin/LinkedIn.svg" alt="linkedIn link">
+        </a>
+      </li>
+      <li>
+        <a href="" target="_blank">
+          <img src="../../../../assets/images/icons/marlin/Instagram.svg" alt="instagram link">
+        </a>
+      </li>
+      <li>
+        <a href="" target="_blank">
+          <img src="../../../../assets/images/icons/marlin/Skype.svg" alt="twitter link">
+        </a>
+      </li>
+    </ul>
+    <p class="mb-3">Copyright©  {{ year }}. Todos los derechos reservados</p>
+  </div>
+</footer>

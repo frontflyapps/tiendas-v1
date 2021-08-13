@@ -325,5 +325,6 @@
 
   <router-outlet></router-outlet>
 
-  <app-footer-two *ngIf="!url.includes('my-account')"></app-footer-two>
+<!--  <app-footer-two *ngIf="!url.includes('my-account')"></app-footer-two>-->
+  <app-footer *ngIf="!url.includes('my-account')"></app-footer>
 </mat-sidenav-container>

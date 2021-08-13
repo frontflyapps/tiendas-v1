@@ -1,0 +1,78 @@
+@import "../../../../assets/scss/helpers/helpers";
+@import '../../../../assets/scss/theme/variables';
+
+.router-link-active {
+  text-decoration: underline !important;
+}
+
+.section-2 {
+  min-height: 80px;
+  background-color: #111111 !important;
+}
+
+.footer-one {
+  min-height: 80px;
+  background-color: $theme-main-400;
+}
+
+.page-title {
+  font-weight: 500 !important;
+  color: #fff;
+  font-size: 17px !important;
+}
+
+.footerItems {
+  margin-right: 24px;
+}
+
+.item-selector {
+  min-width: 120px;
+  color: #fff;
+  border: 1px solid #fff;
+  border-radius: 16px;
+}
+
+span {
+  color: #fff;
+}
+
+footer {
+  div {
+    .img-footer {
+      width: 150px;
+    }
+  }
+
+  min-height: 230px;
+  background-color: $footer-color;
+
+  .network-icons {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+
+    li {
+      padding-left: 3px;
+      padding-right: 3px;
+    }
+
+    a {
+      text-decoration: none;
+
+      img {
+        width: 32px;
+      }
+    }
+  }
+
+  p {
+    padding-bottom: 10px;
+    font-size: 20px;
+    color: white;
+
+    @media (max-width: 599px) {
+      font-size: 14px;
+    }
+  }
+}
