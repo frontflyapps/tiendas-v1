@@ -214,6 +214,10 @@ $red-600: mat-color(mat-palette($mat-red), 600);
   overflow: visible !important;
   box-shadow: 0 0 8px #e5e5e5;
 
+  @media (max-width: 500px) {
+    height: 360px;
+  }
+
   .ngxImageZoomFullContainer {
     left: 110% !important;
     top: -10px !important;
