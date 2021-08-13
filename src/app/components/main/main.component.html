@@ -109,7 +109,7 @@
   <!-- Todos exepto vista movil -->
   <div fxHide.lt-md class="home-header" [class.py-2]="!loggedInUser">
     <div class="container-header" fxLayout="row wrap" fxLayoutAlign="space-between center">
-      <img fxShow fxHide.lt-md class="Logo-img" routerLink="/" src="../../../assets/images/logo.png" />
+      <img fxShow fxHide.lt-md class="Logo-img" routerLink="/" src="assets/images/logo-wout-gen-white.png" />
       <button fxHide fxShow.lt-md mat-icon-button (click)="start.toggle()">
         <mat-icon>menu</mat-icon>
       </button>
@@ -254,7 +254,7 @@
           <button mat-icon-button (click)="start.toggle()">
             <mat-icon>menu</mat-icon>
           </button>
-          <img class="logo-img-main" routerLink="/" src="assets/images/logo.png" />
+          <img class="logo-img-main" routerLink="/" src="assets/images/logo-wout-gen-white.png" />
         </div>
 
         <div class="userWidgets m-0 p-0" fxLayoutAlign="start center">
@@ -316,6 +316,6 @@
 
   <router-outlet></router-outlet>
 
-<!--  <app-footer-two *ngIf="!url.includes('my-account')"></app-footer-two>-->
+  <!--  <app-footer-two *ngIf="!url.includes('my-account')"></app-footer-two>-->
   <app-footer *ngIf="!url.includes('my-account')"></app-footer>
 </mat-sidenav-container>
