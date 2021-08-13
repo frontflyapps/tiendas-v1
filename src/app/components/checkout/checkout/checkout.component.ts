@@ -1,18 +1,18 @@
 import { MetaService } from 'src/app/core/services/meta.service';
-import { DialogNoCartSelectedComponent } from './../no-cart-selected/no-cart-selected.component';
+import { DialogNoCartSelectedComponent } from '../no-cart-selected/no-cart-selected.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
-import { PayService } from './../../../core/services/pay/pay.service';
-import { FormBuilder, FormGroup, Validators, AbstractControl, ValidatorFn, FormControl } from '@angular/forms';
+import { PayService } from '../../../core/services/pay/pay.service';
+import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
-import { CartItem, Cart } from './../../../modals/cart-item';
-import { environment } from './../../../../environments/environment';
-import { LoggedInUserService } from './../../../core/services/loggedInUser/logged-in-user.service';
+import { CartItem, Cart } from '../../../modals/cart-item';
+import { environment } from '../../../../environments/environment';
+import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-in-user.service';
 import { takeUntil } from 'rxjs/operators';
-import { CurrencyService } from './../../../core/services/currency/currency.service';
-import { IPagination } from './../../../core/classes/pagination.class';
-import { UtilsService } from './../../../core/services/utils/utils.service';
+import { CurrencyService } from '../../../core/services/currency/currency.service';
+import { IPagination } from '../../../core/classes/pagination.class';
+import { UtilsService } from '../../../core/services/utils/utils.service';
 import { ProductService } from '../../shared/services/product.service';
 import { CartService } from '../../shared/services/cart.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -31,6 +31,25 @@ import { MatTableDataSource } from '@angular/material/table';
 import { DialogBidaiondoConfirmToPayComponent } from '../dialog-bidaiondo-confirm-to-pay/dialog-bidaiondo-confirm-to-pay.component';
 import { ConfigurationService } from '../../../core/services/configuration/configuration.service';
 import { CurrencyCheckoutPipe } from 'src/app/core/pipes/currency-checkout.pipe';
+
+export const amexData = {
+  express: 1, // American Express
+  visa: 2, // Visa
+  masterCard: 3, // Master Card
+  // Variable amex       Tarjeta o método de pago
+  // 1                   American Express
+  // 2                   Visa
+  // 3                   Mastercard
+  // 4                   Dinners Club Internacional
+  // 5                   JCB
+  // 9                   Mastercard Maestro
+  // 10                  Visa Electrón
+  // 11                  Tarjeta Virtual
+  // 12                  Bizum
+  // 13                  Iupay
+  // 14                  Discover Global
+};
+
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
@@ -106,6 +125,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     order: '-updatedAt',
     page: 1,
   };
+  private paymentType: any;
+
   public compareById(val1, val2) {
     return val1 && val2 && val1 == val2;
   }
@@ -164,6 +185,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     const innerWidth = window.innerWidth;
     this.applyStyle = innerWidth <= 600;
   }
+
   ngOnInit() {
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
     this.rate = 1;
@@ -266,7 +288,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         data: {},
       });
 
-      dialogRef.afterClosed().subscribe((result) => {});
+      dialogRef.afterClosed().subscribe((result) => {
+      });
     } else {
       this.getCartData();
     }
@@ -358,7 +381,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     return value;
   }
 
-  onSubmit(): void {}
+  onSubmit(): void {
+  }
 
   ngOnDestroy() {
     this._unsubscribeAll.next(true);
@@ -488,7 +512,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.regionService.getAllCountries(this.queryCountries).subscribe(
       (data) => {
         this.allCountries = data.data.filter((item) => item.name.es != undefined);
-        this.allCountries = this.allCountries.sort(function (a, b) {
+        this.allCountries = this.allCountries.sort(function(a, b) {
           if (a.name['es'] > b.name['es']) {
             return 1;
           } else if (a.name['es'] < b.name['es']) {
@@ -530,7 +554,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   filterCities(val) {
     val = val.trim().toLowerCase();
-    return this.selectedCities.filter(function (item) {
+    return this.selectedCities.filter(function(item) {
       let nameCity = item.name.trim().toLowerCase();
       return nameCity.includes(val);
     });
@@ -547,6 +571,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   onPayOrder() {
     this.loadingPayment = true;
     const data = { ...this.form.value };
+    this.paymentType = JSON.parse(JSON.stringify(data.paymentType));
     if (!data.shippingRequired) {
       delete data.ShippingBusinessId;
     }
@@ -632,6 +657,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   processBidaiondo(bodyData) {
+    bodyData.amex = amexData[this.paymentType];
     this.payService.makePaymentBidaiondo(bodyData).subscribe(
       (data: any) => {
         let dialogRef: MatDialogRef<DialogBidaiondoConfirmToPayComponent, any>;

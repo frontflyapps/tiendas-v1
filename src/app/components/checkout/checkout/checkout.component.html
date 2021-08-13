@@ -36,7 +36,7 @@
                 style="cursor: pointer"
                 matTooltip="{{ 'Name and surname of the client as well as a confirmation email' | translate }}"
                 class="iconHelp"
-                >help
+              >help
               </mat-icon>
             </p>
 
@@ -128,7 +128,7 @@
                 style="cursor: pointer"
                 matTooltip="{{ 'Street address and more information about the shipping address' | translate }}"
                 class="iconHelp"
-                >help
+              >help
               </mat-icon>
             </p>
 
@@ -185,7 +185,7 @@
                     'Country, city, region and more information about the shipping location' | translate
                   }}"
                   class="iconHelp"
-                  >help
+                >help
                 </mat-icon>
               </p>
 
@@ -346,8 +346,8 @@
                       />
                       <p class="name">
                         <a [href]="'/product?productId=' + element.ProductId + '&stockId=' + element.StockId"
-                          ><strong class="color-grey-800">{{
-                            element.Product.name[language] ? element.Product.name[language] : element.Product.name['es']
+                        ><strong class="color-grey-800">{{
+                          element.Product.name[language] ? element.Product.name[language] : element.Product.name['es']
                           }}</strong></a
                         >
                       </p>
@@ -388,7 +388,7 @@
                       color="warn"
                       matTooltip="{{ 'Eliminar producto del carrito' | translate }}"
                     >
-                      <mat-icon>clear </mat-icon>
+                      <mat-icon>clear</mat-icon>
                     </button>
                   </td>
                 </ng-container>
@@ -447,7 +447,7 @@
                 {{ 'Subtotal' | translate }}:
                 <span class="amount px-2">{{
                   getTotalAmountCurrency() | currencyMarket: form.controls['currency'].value
-                }}</span>
+                  }}</span>
               </li>
             </ul>
 
@@ -477,11 +477,9 @@
                   >
                     {{ 'Seleccione una tarifa de envío*' | translate }}:
                   </p>
-                  <p
-                    *ngIf="!showShipping"
-                    style="color: #f44336; font-size: 16px; font-weight: 500; margin-bottom: 12px !important"
-                  >
-                    {{ 'Payment will be made at the Business office' | translate }}:
+                  <p *ngIf="!showShipping" class="mb-3 mt-4"
+                     style="color: #f44336; font-size: 16px; font-weight: 500; margin-bottom: 12px !important">
+                    {{ 'Payment will be made at the Business office' | translate }}
                   </p>
                 </div>
 
@@ -492,16 +490,17 @@
                     matTooltip="{{ 'Shipping Rates Details' | translate }}"
                     class="mr-3"
                     style="margin-bottom: 12px; font-size: 25px; cursor: pointer"
-                    >visibility</mat-icon
+                  >visibility
+                  </mat-icon
                   >
-                  <mat-checkbox
-                    ngClass.xs="mb-2"
-                    fxFlexOrder.xs="1"
-                    style="margin-bottom: 12px"
-                    [formControl]="form.get('shippingRequired')"
-                  >
-                    <span class="mat-body-2">{{ 'Shipping required' | translate }}</span>
-                  </mat-checkbox>
+                  <!--                  <mat-checkbox-->
+                  <!--                    ngClass.xs="mb-2"-->
+                  <!--                    fxFlexOrder.xs="1"-->
+                  <!--                    style="margin-bottom: 12px"-->
+                  <!--                    [formControl]="form.get('shippingRequired')"-->
+                  <!--                  >-->
+                  <!--                    <span class="mat-body-2">{{ 'Shipping required' | translate }}</span>-->
+                  <!--                  </mat-checkbox>-->
                 </div>
               </div>
 
@@ -539,7 +538,7 @@
                       </div>
 
                       <span fxFlex="35" class="taxAmount" style="font-size: 20px"
-                        >{{ shipping.totalPrice || 0 | currencyMarket: marketCard }}
+                      >{{ shipping.totalPrice || 0 | currencyMarket: marketCard }}
                       </span>
                     </div>
                   </mat-radio-button>
@@ -615,7 +614,7 @@
                 {{ 'Total' | translate }}
                 <span class="count px-2">{{
                   getTotalWithShippingIncludedCurrency() | currencyMarket: form.controls['currency'].value
-                }}</span>
+                  }}</span>
               </li>
             </ul>
             <p class="my-2">
@@ -631,7 +630,7 @@
                   <div fxLayout="row" fxLayoutAlign="start center" class="w-100">
                     <span fxFlex="30" fxFlex.lt-md="50" class="mat-body-2 uppercase mr-3" style="font-size: 17px">{{
                       payments[0].name
-                    }}</span>
+                      }}</span>
                     <img
                       [src]="payments[0].logo"
                       style="height: 45px; width: 45px; border-radius: 50%; object-fit: cover"
@@ -646,7 +645,7 @@
                   <div fxLayout="row" fxLayoutAlign="start center" class="w-100">
                     <span fxFlex="30" fxFlex.lt-md="50" class="mat-body-2 uppercase mr-3" style="font-size: 17px">{{
                       payments[1].name
-                    }}</span>
+                      }}</span>
                     <img
                       [src]="payments[1].logo"
                       style="height: 45px; width: 45px; border-radius: 50%; object-fit: cover"
@@ -661,7 +660,7 @@
                   <div fxLayout="row" fxLayoutAlign="start center" class="w-100">
                     <span fxFlex="30" fxFlex.lt-md="50" class="mat-body-2 uppercase mr-3" style="font-size: 17px">{{
                       payments[2].name
-                    }}</span>
+                      }}</span>
                     <img [src]="payments[2].logo" style="width: 100px; object-fit: cover" />
                   </div>
                 </mat-radio-button>
@@ -673,7 +672,7 @@
                   <div fxLayout="row" fxLayoutAlign="start center" class="w-100">
                     <span fxFlex="30" fxFlex.lt-md="50" class="mat-body-2 uppercase mr-3" style="font-size: 17px">{{
                       payments[3].name
-                    }}</span>
+                      }}</span>
                     <img [src]="payments[3].logo" style="width: 100px; object-fit: cover" />
                   </div>
                 </mat-radio-button>
@@ -685,7 +684,7 @@
                   <div fxLayout="row" fxLayoutAlign="start center" class="w-100">
                     <span fxFlex="30" fxFlex.lt-md="50" class="mat-body-2 uppercase mr-3" style="font-size: 17px">{{
                       payments[4].name
-                    }}</span>
+                      }}</span>
                     <img [src]="payments[4].logo" style="width: 100px; object-fit: cover" />
                   </div>
                 </mat-radio-button>
