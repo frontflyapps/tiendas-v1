@@ -9,8 +9,8 @@ export const environment = {
   // apiUrl: 'http://192.168.1.17:8998/v1/',
   // imageUrl: 'http://192.168.1.17:8998/v1/',
   //
-  apiUrl: 'https://api.tiendascaracol.com/v1/',
-  imageUrl: 'https://api.tiendascaracol.com/v1/',
+  apiUrl: 'https://apitienda.marinasmarlin.com/v1/',
+  imageUrl: 'https://apitienda.marinasmarlin.com/v1/',
 
   defaultLanguage: 'es',
   currencyInternational: 'USD',
@@ -21,7 +21,7 @@ export const environment = {
   address: 'Tiendas Marinas Marlin',
   localDatabaseUsers: true,
 
-  adminService: 'http://admintienda.sinkoola.com:4300/',
+  adminService: 'http://admintienda.marinasmarlin.com/',
   mainDomain: '.marinasmarlin.com',
 
   tokenBusiness: '',
