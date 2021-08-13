@@ -129,6 +129,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     this.getFrontData()
       .then((data: any) => {
         this.slides = data.data.carrusels.map((item) => {
+          console.log('item', item);
           item.image = this.imageUrl + item.image;
           item.imageXs = this.imageUrl + item.imageXs;
           return item;
