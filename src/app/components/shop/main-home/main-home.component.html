@@ -11,8 +11,10 @@
   <div fxHide.xs class="info-bar-four-wrapper">
     <div class="container">
       <div fxLayout="row wrap" class="info-bar-four" fxLayoutAlign="center center">
-        <div *ngFor="let item of allBicons; let i = index" class="card-wrap" fxFlex="100" fxFlex.gt-md="25" fxFlex.gt-xs="50">
-          <mat-card class="light-block" [ngClass]="{ 'no-bd': i === allBicons.length - 1 }" fxLayout="row" fxLayoutAlign="start center">
+        <div *ngFor="let item of allBicons; let i = index" class="card-wrap" fxFlex="100" fxFlex.gt-md="25"
+             fxFlex.gt-xs="50">
+          <mat-card class="light-block" [ngClass]="{ 'no-bd': i === allBicons.length - 1 }" fxLayout="row"
+                    fxLayoutAlign="start center">
             <div fxFlex="20">
               <mat-icon class="mat-icon-xlg m-0">{{ item.icon }}</mat-icon>
             </div>
@@ -53,11 +55,19 @@
     </div>
   </section>
 
-
   <!-- ---------------------- Big promo1 --------------------------- -->
   <section>
     <div class="main-banner">
-      <app-banner-promotion [_imageBigPromo]="bigBanner1?.valor?.image"></app-banner-promotion>
+      <ng-container *ngIf="applyStyle && bigBanner1?.valor?.imageXs; then bannerPromo1Xs; else bannerPromo1">
+      </ng-container>
+
+      <ng-template #bannerPromo1>
+        <app-banner-promotion [_imageBigPromo]="bigBanner1?.valor?.image"></app-banner-promotion>
+      </ng-template>
+
+      <ng-template #bannerPromo1Xs>
+        <app-banner-promotion [_imageBigPromo]="bigBanner1?.valor?.imageXs"></app-banner-promotion>
+      </ng-template>
     </div>
   </section>
   <!-- ------------------------------------------------------------ -->
@@ -91,7 +101,6 @@
   <!-- -------------------------------------------------------------------------------->
 
 
-
   <!-- ---------------------- Bets Seller Items --------------------------- -->
   <section *ngIf="bestSellersProducts.length">
     <div class="container">
@@ -112,7 +121,16 @@
   <!-- ---------------------- Big promo2 --------------------------- -->
   <section>
     <div class="main-banner">
-      <app-banner-promotion2 [_imageBigPromo]="bigBanner2?.valor?.image"></app-banner-promotion2>
+      <ng-container *ngIf="applyStyle && bigBanner2?.valor?.imageXs; then bannerPromo2Xs; else bannerPromo2">
+      </ng-container>
+
+      <ng-template #bannerPromo2>
+        <app-banner-promotion2 [_imageBigPromo]="bigBanner2?.valor?.image"></app-banner-promotion2>
+      </ng-template>
+
+      <ng-template #bannerPromo2Xs>
+        <app-banner-promotion2 [_imageBigPromo]="bigBanner2?.valor?.imageXs"></app-banner-promotion2>
+      </ng-template>
     </div>
   </section>
 

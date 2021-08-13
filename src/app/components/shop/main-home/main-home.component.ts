@@ -1,12 +1,10 @@
-import { environment } from './../../../../environments/environment';
-import { IPagination } from './../../../core/classes/pagination.class';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CartItem } from './../../../modals/cart-item';
-import { CartService } from '../../shared/services/cart.service';
+import { environment } from '../../../../environments/environment';
+import { IPagination } from '../../../core/classes/pagination.class';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { Subject } from 'rxjs';
-import { LoggedInUserService } from './../../../core/services/loggedInUser/logged-in-user.service';
-import { UtilsService } from './../../../core/services/utils/utils.service';
-import { takeUntil, take, map } from 'rxjs/operators';
+import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-in-user.service';
+import { UtilsService } from '../../../core/services/utils/utils.service';
+import { takeUntil } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { MetaService } from 'src/app/core/services/meta.service';
 
@@ -101,7 +99,19 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   bigBanner1 = null;
   bigBanner2 = null;
 
+  public applyStyle: boolean;
+
   /////////////////////////////////////////////////////////////////////////////////
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event): void {
+    this.applyResolution();
+  }
+
+  private applyResolution() {
+    const innerWidth = window.innerWidth;
+    this.applyStyle = innerWidth <= 600;
+  }
 
   constructor(
     public utilsService: UtilsService,
@@ -118,6 +128,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
       environment.meta?.mainPage?.shareImg,
       environment.meta?.mainPage?.keywords,
     );
+    this.applyResolution();
   }
 
   ngOnInit() {
@@ -129,7 +140,6 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     this.getFrontData()
       .then((data: any) => {
         this.slides = data.data.carrusels.map((item) => {
-          console.log('item', item);
           item.image = this.imageUrl + item.image;
           item.imageXs = this.imageUrl + item.imageXs;
           return item;

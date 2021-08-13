@@ -1,10 +1,10 @@
-import { LoggedInUserService } from './../../../core/services/loggedInUser/logged-in-user.service';
+import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-in-user.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { Component, OnInit, Input, AfterViewInit, OnDestroy } from '@angular/core';
 import { SwiperConfigInterface, SwiperPaginationInterface } from 'ngx-swiper-wrapper';
-import { UtilsService } from './../../../core/services/utils/utils.service';
+import { UtilsService } from '../../../core/services/utils/utils.service';
 
 @Component({
   selector: 'app-main-carousel',
