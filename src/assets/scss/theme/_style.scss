@@ -65,14 +65,16 @@ body {
 
 h1 {
   font-size: 60px;
-  color: $theme-main;
+  color: initial;
+  //color: $theme-main;
   font-weight: 700;
   // text-transform: uppercase;
 }
 
 h2 {
   font-size: 36px;
-  color: $theme-main;
+  color: initial;
+  //color: $theme-main;
   // text-transform: capitalize;
   font-weight: 700;
   line-height: 1;
@@ -82,7 +84,8 @@ h2 {
 h3 {
   font-size: 28px;
   text-align: left;
-  color: $theme-main;
+  color: initial;
+  //color: $theme-main;
   font-weight: 500;
 }
 
@@ -96,7 +99,8 @@ h4 {
 h5 {
   font-size: 16px;
   font-weight: 400;
-  color: $theme-main;
+  color: initial;
+  //color: $theme-main;
   line-height: 24px;
   letter-spacing: 0.05em;
 }
@@ -104,7 +108,8 @@ h5 {
 h6 {
   font-size: 14px;
   font-weight: 400;
-  color: $theme-main;
+  color: initial;
+  //color: $theme-main;
   line-height: 24px;
 }
 

@@ -15,14 +15,14 @@ export const environment = {
   defaultLanguage: 'es',
   currencyInternational: 'USD',
 
-  url: 'http://localhost:4400',
-  urlAboutUs: 'http://localhost:4400',
+  url: 'http://tienda.tiendalocal.com:4308',
+  urlAboutUs: 'http://tienda.tiendalocal.com:4308',
 
   address: 'Tiendas Marinas Marlin',
   localDatabaseUsers: true,
 
   adminService: 'http://admintienda.marinasmarlin.com/',
-  mainDomain: '.marinasmarlin.com',
+  mainDomain: '.tiendalocal.com',
 
   tokenBusiness: '',
 
@@ -30,7 +30,7 @@ export const environment = {
     mainPage: {
       title: 'Tiendas Marinas Marlin',
       description: 'Tienda online desarrollada con el framework Angular permite la modelación de negocios B2C and C2C',
-      keywords: 'HTML, CSS, JavaScript, Angular, Tienda Online B2B, comercio online En Cuba',
+      keywords: 'HTML, CSS, JavaScript, Angular, Tienda Online B2B, comercio online',
       shareImg: 'https://tienda.marinasmarlin.com/assets/images/share-img.png',
       url: 'https://tienda.marinasmarlin.com/',
     },

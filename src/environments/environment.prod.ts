@@ -24,7 +24,7 @@ export const environment = {
     mainPage: {
       title: 'Tiendas Marinas Marlin',
       description: 'Tienda online desarrollada con el framework Angular permite la modelación de negocios B2C and C2C',
-      keywords: 'HTML, CSS, JavaScript, Angular, Tienda Online B2B, Sin Cola, comercio online En Cuba',
+      keywords: 'HTML, CSS, JavaScript, Angular, Tienda Online B2B, Sin Cola, comercio online',
       shareImg: 'https://tienda.marinasmarlin.com/assets/images/share-img.png',
       url: 'https://tienda.marinasmarlin.com/',
     },
