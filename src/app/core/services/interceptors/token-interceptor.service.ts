@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpHeaders } from '@angular/common/http';
+import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { LoggedInUserService } from '../loggedInUser/logged-in-user.service';
 import { environment } from '../../../../environments/environment';
@@ -16,6 +16,7 @@ export class TokenInterceptorService implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     this.token = this.loggedInUserService.getTokenCookie();
+    console.log('INTT', this.token);
     const tokenBusiness: any = environment.tokenBusiness;
 
     if (tokenBusiness) {

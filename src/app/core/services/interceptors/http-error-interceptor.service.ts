@@ -1,4 +1,4 @@
-import { LoggedInUserService } from './../../../core/services/loggedInUser/logged-in-user.service';
+import { LoggedInUserService } from '../loggedInUser/logged-in-user.service';
 import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
@@ -7,18 +7,17 @@ import { UtilsService } from '../utils/utils.service';
 import { ShowSnackbarService } from '../show-snackbar/show-snackbar.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { CookieService } from 'ngx-cookie-service';
 
 @Injectable()
 export class HttpErrorInterceptorService implements HttpInterceptor {
   url = '';
+
   constructor(
     private utilsService: UtilsService,
     private showSnackbar: ShowSnackbarService,
     private loggedInUserService: LoggedInUserService,
     private translate: TranslateService,
     private router: Router,
-    private cookieService: CookieService,
   ) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -77,5 +76,6 @@ export class HttpErrorInterceptorService implements HttpInterceptor {
       );
     }
   }
+
   ///////////////////////////////////////////////////////
 }

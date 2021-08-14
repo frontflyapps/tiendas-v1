@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { Injectable } from '@angular/core';
 import { IUser } from '../../classes/user.class';
@@ -62,13 +61,19 @@ export class LoggedInUserService {
   }
 
   public getTokenCookie(): string {
-    return this.encryptDecryptService.decrypt(this.cookieService.get('account')) || localStorage.getItem('token');
+    if (this.cookieService.get('account')) {
+      return this.encryptDecryptService.decrypt(this.cookieService.get('account'));
+    }
+    if (localStorage.getItem('token')) {
+      return this.encryptDecryptService.decrypt(localStorage.getItem('token'));
+    }
+    return '';
   }
 
   public saveAccountCookie(token) {
     const hashedPass = this.encryptDecryptService.encrypt(token);
     this.cookieService.set('account', hashedPass, null, '/', environment.mainDomain);
-    localStorage.setItem('token', token);
+    localStorage.setItem('token', hashedPass);
   }
 
   public updateUserProfile(user) {
