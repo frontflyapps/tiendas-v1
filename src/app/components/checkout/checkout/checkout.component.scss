@@ -9,19 +9,34 @@
   padding: 0 15px;
 }
 
-.pay-method-name {
-  font-size: 17px;
-  white-space: normal;
-}
+#payment-method {
+  ::ng-deep .mat-radio-container {
+    display: none;
+  }
 
-.pay-method-icon {
-  height: auto;
-  width: auto;
-  -o-object-fit: cover;
-  object-fit: cover;
-  white-space: normal;
-  max-width: 64px;
-  max-height: 40px;
+  .pay-method-container {
+    padding: 8px 14px;
+    border-radius: 6px;
+  }
+
+  .pay-method-name {
+    font-size: 17px;
+    white-space: normal;
+  }
+
+  .pay-method-icon {
+    height: auto;
+    width: auto;
+    -o-object-fit: cover;
+    object-fit: cover;
+    white-space: normal;
+    max-width: 64px;
+    max-height: 40px;
+  }
+
+  .payment-active {
+    background-color: #f5f1f9;
+  }
 }
 
 li {

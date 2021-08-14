@@ -53,7 +53,6 @@
               <mat-form-field fxFlex="100" fxFlex.gt-md="48" fxFlex.md="48" appearance="outline">
                 <mat-label>{{ 'Lastname' | translate }}</mat-label>
                 <input
-                  required
                   matInput
                   placeholder="{{ 'Lastname' | translate }}"
                   required
@@ -620,21 +619,23 @@
             <p class="my-2">
               <strong>{{ 'Pasarelas para efectuar el pago' | translate }}</strong>
             </p>
-            <div class="paymentFinal">
-              <mat-radio-group [formControl]="form.get('paymentType')" fxLayout="row wrap" fxLayoutGap="10px grid">
+            <div class="paymentFinal" id="payment-method">
+              <mat-radio-group [formControl]="form.get('paymentType')" fxLayout.lt-sm="column" fxLayout="row wrap"
+                               fxLayoutGap="10px grid">
                 <ng-container *ngFor="let pay of payments">
                   <ng-container *ngIf="this.onlyCubanPeople
                                       && cart?.market === 'national'
                                       && pay?.market === 'national'">
-                    <mat-radio-button fxFlex="50%"
+                    <mat-radio-button fxFlex="50%" fxFlex.lt-sm="100%"
                                       [value]="pay.id"
                                       class="w-100">
                       {{this.onlyCubanPeople}} - {{cart?.market}}
-                      <div fxLayout="row" fxLayoutAlign="start center" class="w-100">
-                      <span class="mat-body-2 uppercase pr-3 pay-method-name">
-                        {{ pay.name }}
-                      </span>
-                        <img [src]="pay.logo" class="pay-method-icon" />
+                      <div fxLayout="row" fxLayoutAlign="start center" class="w-100 pay-method-container"
+                           [ngClass]="{'payment-active': form.get('paymentType').value === pay.id}">
+                        <img [src]="pay.logo" class="pay-method-icon pr-2" />
+                        <span class="mat-body-2 uppercase pay-method-name">
+                          {{ pay.name }}
+                        </span>
                       </div>
                     </mat-radio-button>
                   </ng-container>
@@ -642,15 +643,16 @@
                   <ng-container *ngIf="this.onlyCubanPeople
                                       && cart?.market === 'international'
                                       && pay?.market === 'international'">
-                    <mat-radio-button fxFlex="50%"
+                    <mat-radio-button fxFlex="50%" fxFlex.lt-sm="100%"
                                       *ngIf="this.onlyCubanPeople && cart?.market === 'international'"
                                       [value]="pay.id"
                                       class="w-100">
-                      <div fxLayoutAlign="start center" class="w-100">
-                                        <span class="mat-body-2 uppercase pr-3 pay-method-name">
-                                          {{ pay.name }}
-                                        </span>
-                        <img [src]="pay.logo" class="pay-method-icon" />
+                      <div fxLayoutAlign="start center" class="w-100 pay-method-container"
+                           [ngClass]="{'payment-active': form.get('paymentType').value === pay.id}">
+                        <img [src]="pay.logo" class="pay-method-icon pr-2" />
+                        <span class="mat-body-2 uppercase pay-method-name">
+                          {{ pay.name }}
+                        </span>
                       </div>
                     </mat-radio-button>
                   </ng-container>
