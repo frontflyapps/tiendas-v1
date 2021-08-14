@@ -3,7 +3,7 @@
   "version": "1.0.8",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --publicHost tienda.sinkoola.com --live-reload false --port 4308 --host 0.0.0.0 --disableHostCheck",
+    "start": "ng serve --publicHost tienda.tiendalocal.com --live-reload false --port 4308 --host 0.0.0.0 --disableHostCheck",
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",

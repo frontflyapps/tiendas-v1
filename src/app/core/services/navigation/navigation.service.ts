@@ -284,8 +284,6 @@ export class NavigationService {
     },
   ];
 
-  constructor() {}
-
   public getNavItems() {
     return this.navItems;
   }
