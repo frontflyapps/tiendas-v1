@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { CookieService } from 'ngx-cookie-service';
 
+export const ReLoggedTime = 14400; // Time in (ms)
 export interface IVersionSystem {
   version: string;
   timespan: number;
@@ -20,10 +21,23 @@ export class LocalStorageService {
     const v: IVersionSystem = JSON.parse(localStorage.getItem('_v'));
     console.log('v', v?.version || 'No version');
     console.log('v env', environment.versions.app);
-    if (!v || !v?.version || !v?.timespan || (v?.version !== environment.versions.app)) {
+    const evaluateVersion = v?.version !== environment.versions.app;
+    if (!v || !v?.version || !v?.timespan || evaluateVersion) {
+      this.diffTimeSpan(v);
       this.actionsToClearSystem();
       this.setVersionOnLocalStorage();
       return false;
+    }
+    this.diffTimeSpan(v);
+    this.setVersionOnLocalStorage();
+  }
+
+  diffTimeSpan(v) {
+    const timeNow = new Date().getTime();
+    const nowTimeSpan = timeNow - (v?.timespan || 0);
+    if (nowTimeSpan > ReLoggedTime) {
+      this.actionsToClearSystem();
+      this.setVersionOnLocalStorage();
     }
   }
 
