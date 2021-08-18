@@ -57,7 +57,7 @@
 
                         <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="gappx">
                           <span class="mat-body-1 color-grey-700">
-                            <span class="mat-body-1" [style.color]="this.status[item.status].primary">{{
+                            <span class="mat-body-1" [style.color]="this.status[item.status]?.primary">{{
                               this.utilsService.parserLanguage(this.status[item.status].status, this.language)
                             }}</span>
                           </span>

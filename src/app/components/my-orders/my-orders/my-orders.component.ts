@@ -81,6 +81,15 @@ export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
       weight: 600,
       class: 'errorLabel',
     },
+    expired: {
+      status: {
+        es: 'pago expirado',
+        en: 'expired',
+      },
+      primary: '#e53935',
+      weight: 600,
+      class: 'errorLabel',
+    },
     'processing-cancel': {
       status: {
         es: 'canc. en progreso',
