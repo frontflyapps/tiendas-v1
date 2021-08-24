@@ -20,12 +20,20 @@
     //overflow: hidden;
   }
 
-  @media (min-width: 320px) and (max-width: 500px) {
+  @media (min-width: 400px) and (max-width: 500px) {
     display: flex;
     flex-direction: column;
     width: 100% !important;
-    min-width: 330px !important;
+    min-width: 382px !important;
     padding: 8px;
+  }
+
+  @media (max-width: 399px) {
+    display: flex;
+    flex-direction: column;
+    width: 100% !important;
+    min-width: 320px !important;
+    padding: 0 !important;
   }
 
   .ImageProduct {
