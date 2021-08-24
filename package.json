@@ -1,6 +1,6 @@
 {
   "name": "tienda-angular-b2b",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --publicHost tienda.tiendalocal.com --live-reload false --port 4308 --host 0.0.0.0 --disableHostCheck",

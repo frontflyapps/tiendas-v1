@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { CookieService } from 'ngx-cookie-service';
 
-export const ReLoggedTime = 14400; // Time in (ms)
+export const ReLoggedTime = 14400; // Time in (ms), Time to reload data and clear localStorage
 export interface IVersionSystem {
   version: string;
   timespan: number;
