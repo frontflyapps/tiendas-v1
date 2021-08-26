@@ -14,6 +14,7 @@ export const environment = {
 
   defaultLanguage: 'es',
   currencyInternational: 'USD',
+  timeToResetSession: 14400000, // Time to reset the session
 
   url: 'http://tienda.tiendalocal.com:4308',
   urlAboutUs: 'http://tienda.tiendalocal.com:4308',
@@ -22,7 +23,7 @@ export const environment = {
   localDatabaseUsers: true,
 
   adminService: 'http://admintienda.marinasmarlin.com/',
-  mainDomain: '.tiendalocal.com',
+  mainDomain: 'tiendalocal.com',
 
   tokenBusiness: '',
 
