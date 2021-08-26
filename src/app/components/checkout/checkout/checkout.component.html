@@ -113,11 +113,14 @@
                 <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline">
                   <mat-label>{{ 'Currency' | translate }}</mat-label>
                   <mat-select [formControl]="form.controls['currency']" placeholder="{{ 'Currency' | translate }}">
-                    <mat-option *ngFor="let currency of currencies" [value]="currency">
+                    <ng-container *ngFor="let currency of currencies">
+                      <mat-option *ngIf="!((currency === 'EUR') && (form.get('paymentType').value === 'transfermovil'))"
+                                  [value]="currency">
                       <span class="mat-body-2">
                         {{ currency }}
                       </span>
-                    </mat-option>
+                      </mat-option>
+                    </ng-container>
                   </mat-select>
                 </mat-form-field>
               </div>
@@ -275,7 +278,7 @@
               </mat-form-field>
 
               <mat-form-field fxFlex="100" fxFlex.gt-md="48" fxFlex.md="48" appearance="outline">
-                <mat-label>{{ 'Phone' | translate }}</mat-label>
+                <mat-label>{{ 'Phone' | translate }} *</mat-label>
                 <input
                   matInput
                   placeholder="{{ 'Phone' | translate }}"

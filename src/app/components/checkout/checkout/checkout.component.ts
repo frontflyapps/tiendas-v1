@@ -83,6 +83,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   payments: any[] = [
     { id: 'transfermovil', name: 'Transfermovil', logo: 'assets/images/cards/transfermovil_logo.png', market: 'national' },
     { id: 'enzona', name: 'Enzona', logo: 'assets/images/cards/enzona.jpeg', market: 'national' },
+    { id: 'transfermovil', name: 'Transfermovil', logo: 'assets/images/cards/transfermovil_logo.png', market: 'international' },
     { id: 'visa', name: 'Visa', logo: 'assets/images/cards/visa_logo.png', market: 'international' },
     { id: 'express', name: 'American Express', logo: 'assets/images/cards/american_express_logo.png', market: 'international' },
     { id: 'masterCard', name: 'MasterCard', logo: 'assets/images/cards/mastercard_logo.png', market: 'international' },
@@ -245,6 +246,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         }
         this.configurationService.getCurrencys(this.query, params).subscribe((response) => {
           if (response.data) {
+            console.log('response', response);
             this.rate = response.data[0].rate;
           } else {
             this.rate = 1;
@@ -454,6 +456,15 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         ]);
     }
     this.updateValidatorsForChangeNationality(this.onlyCubanPeople);
+    this.subsToTransfermovilChange();
+  }
+
+  subsToTransfermovilChange() {
+    this.form.get('paymentType').valueChanges.subscribe((change) => {
+      if (change === 'transfermovil') {
+        this.form.get('currency').setValue('USD');
+      }
+    });
   }
 
   onSelectProvince(provinceId) {
