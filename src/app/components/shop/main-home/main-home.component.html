@@ -1,14 +1,19 @@
-<app-main-carousel *ngIf="!showStatic" [slides]="slides"></app-main-carousel>
-<div class="container" style="height: 300px;" *ngIf="showStatic" ngStyle.lt-md="height: 175px;">
-  <div class="swiper-container h-100">
-    <div class="swiper-wrapper h-100">
-      <div class="swiper-slide h-100 loader"></div>
-    </div>
-  </div>
+<app-main-carousel *ngIf="!showStatic && slides.length > 0" [slides]="slides"></app-main-carousel>
+<div class="container mt-3">
+  <app-skeleton-loading-cards *ngIf="showStatic"
+                              [setConfiguration]="{ xs: 1, sm: 1, md: 1, lg: 1 }">
+  </app-skeleton-loading-cards>
 </div>
+<!--<div class="container" style="height: 300px;" *ngIf="showStatic" ngStyle.lt-md="height: 175px;">-->
+<!--  <div class="swiper-container h-100">-->
+<!--    <div class="swiper-wrapper h-100">-->
+<!--      <div class="swiper-slide h-100 loader"></div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
 
 <div class="home-1-wrap">
-  <div fxHide.xs class="info-bar-four-wrapper">
+  <div *ngIf="allBicons.length > 0 && !loadingAllProduct" fxHide.xs class="info-bar-four-wrapper">
     <div class="container">
       <div fxLayout="row wrap" class="info-bar-four" fxLayoutAlign="center center">
         <div *ngFor="let item of allBicons; let i = index" class="card-wrap" fxFlex="100" fxFlex.gt-md="25"
@@ -33,12 +38,12 @@
       <app-banners-four [_banners]="banners"></app-banners-four>
     </div>
   </div> -->
-  <ng-container *ngIf="countProducts == 0">
+  <ng-container *ngIf="countProducts == 0 && !loadingAllProduct">
     <h3 class="mat-title py-4" style="text-align: center">{{ 'No hay ningún producto disponible' | translate }}</h3>
   </ng-container>
 
   <!-- ---------------------- Featured Items --------------------------- -->
-  <section *ngIf="featuredProducts.length">
+  <section *ngIf="featuredProducts.length > 0">
     <div class="container">
       <div class="products sec-padding">
         <div class="products-four">
@@ -55,7 +60,7 @@
   </section>
 
   <!-- ---------------------- Big promo1 --------------------------- -->
-  <section>
+  <section *ngIf="bigBanner1?.valor">
     <div class="main-banner">
       <ng-container *ngIf="applyStyle && bigBanner1?.valor?.imageXs; then bannerPromo1Xs; else bannerPromo1">
       </ng-container>
@@ -69,6 +74,7 @@
       </ng-template>
     </div>
   </section>
+
   <!-- ------------------------------------------------------------ -->
   <!-- ---------------------- Popular Items --------------------------- -->
   <section *ngIf="popularProducts.length">
@@ -118,7 +124,7 @@
   </section>
 
   <!-- ---------------------- Big promo2 --------------------------- -->
-  <section>
+  <section *ngIf="bigBanner2?.valor">
     <div class="main-banner">
       <ng-container *ngIf="applyStyle && bigBanner2?.valor?.imageXs; then bannerPromo2Xs; else bannerPromo2">
       </ng-container>
@@ -140,9 +146,9 @@
       <app-product-vertical></app-product-vertical>
     </div>
   </section>
+
   <!-- ------------------------------------------------------------ -->
   <!-- ---------------------- Big promo --------------------------- -->
-
   <section *ngIf="allArticles.length">
     <div class="featured-products-wrap">
       <div class="container">
