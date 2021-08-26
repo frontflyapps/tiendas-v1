@@ -10,6 +10,7 @@ import { Subject } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { EncryptDecryptService } from './core/services/encrypt-decrypt.service';
 import { AuthenticationService } from './core/services/authentication/authentication.service';
+import { LocalStorageService } from './core/services/localStorage/localStorage.service';
 
 @Component({
   selector: 'app-root',
@@ -18,10 +19,7 @@ import { AuthenticationService } from './core/services/authentication/authentica
 })
 export class AppComponent {
   title = 'ecommerce-sophia-new';
-  tokenReferal = undefined;
   uploadFileStartSubject: Subject<any>;
-  uploadFileEndSubject: Subject<any>;
-  //////////////////////////////////////////////////////////
   cssOptions: CssOptions = {
     color: 'primary',
     width: '40%',
@@ -38,7 +36,9 @@ export class AppComponent {
     private loggedInUserService: LoggedInUserService,
     private authService: AuthenticationService,
     private encryptDecryptService: EncryptDecryptService,
+    private localStorageService: LocalStorageService,
   ) {
+    this.localStorageService.setVersion();
     const defaultLanguage: any = { name: 'Español', image: 'assets/images/flags/es.svg', lang: 'es' };
     if ('language' in localStorage) {
       let language = JSON.parse(localStorage.getItem('language'));
