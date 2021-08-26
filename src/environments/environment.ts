@@ -14,9 +14,10 @@ export const environment = {
 
   defaultLanguage: 'es',
   currencyInternational: 'USD',
+  timeToResetSession: 14400000, // Time to reset the session
 
-  url: 'http://localhost:4400',
-  urlAboutUs: 'http://localhost:4400',
+  url: 'http://tienda.tiendalocal.com:4308',
+  urlAboutUs: 'http://tienda.tiendalocal.com:4308',
 
   address: 'Tiendas Caracol',
   localDatabaseUsers: true,

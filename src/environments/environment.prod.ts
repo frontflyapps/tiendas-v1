@@ -8,6 +8,7 @@ export const environment = {
 
   defaultLanguage: 'es',
   currencyInternational: 'USD',
+  timeToResetSession: 14400000, // Time to reset the session
 
   url: 'https://www.tiendascaracol.com',
   urlAboutUs: 'https://www.tiendascaracol.com',
