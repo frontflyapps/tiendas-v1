@@ -16,7 +16,6 @@ export class TokenInterceptorService implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     this.token = this.loggedInUserService.getTokenCookie();
-    console.log('INTT', this.token);
     const tokenBusiness: any = environment.tokenBusiness;
 
     if (tokenBusiness) {
