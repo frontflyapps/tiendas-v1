@@ -1,18 +1,18 @@
 import { MetaService } from 'src/app/core/services/meta.service';
-import { DialogNoCartSelectedComponent } from './../no-cart-selected/no-cart-selected.component';
+import { DialogNoCartSelectedComponent } from '../no-cart-selected/no-cart-selected.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
-import { PayService } from './../../../core/services/pay/pay.service';
-import { FormBuilder, FormGroup, Validators, AbstractControl, ValidatorFn, FormControl } from '@angular/forms';
+import { PayService } from '../../../core/services/pay/pay.service';
+import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
-import { CartItem, Cart } from './../../../modals/cart-item';
-import { environment } from './../../../../environments/environment';
-import { LoggedInUserService } from './../../../core/services/loggedInUser/logged-in-user.service';
+import { CartItem, Cart } from '../../../modals/cart-item';
+import { environment } from '../../../../environments/environment';
+import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-in-user.service';
 import { takeUntil } from 'rxjs/operators';
-import { CurrencyService } from './../../../core/services/currency/currency.service';
-import { IPagination } from './../../../core/classes/pagination.class';
-import { UtilsService } from './../../../core/services/utils/utils.service';
+import { CurrencyService } from '../../../core/services/currency/currency.service';
+import { IPagination } from '../../../core/classes/pagination.class';
+import { UtilsService } from '../../../core/services/utils/utils.service';
 import { ProductService } from '../../shared/services/product.service';
 import { CartService } from '../../shared/services/cart.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -31,6 +31,34 @@ import { MatTableDataSource } from '@angular/material/table';
 import { DialogBidaiondoConfirmToPayComponent } from '../dialog-bidaiondo-confirm-to-pay/dialog-bidaiondo-confirm-to-pay.component';
 import { ConfigurationService } from '../../../core/services/configuration/configuration.service';
 import { CurrencyCheckoutPipe } from 'src/app/core/pipes/currency-checkout.pipe';
+
+export const amexData = {
+  express: 1, // American Express
+  visa: 2, // Visa
+  masterCard: 3, // Master Card
+  'dinners-club-internacional': 4,
+  jcb: 5,
+  maestro: 9,
+  electron: 10,
+  'tarjeta-virtual': 11,
+  bizum: 12,
+  iupay: 13,
+  'discover-global': 14,
+
+  // Variable amex       Tarjeta o método de pago
+  // 1                   American Express
+  // 2                   Visa
+  // 3                   Mastercard
+  // 4                   Dinners Club Internacional
+  // 5                   JCB
+  // 9                   Mastercard Maestro
+  // 10                  Visa Electrón
+  // 11                  Tarjeta Virtual
+  // 12                  Bizum
+  // 13                  Iupay
+  // 14                  Discover Global
+};
+
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
@@ -53,18 +81,29 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['product', 'quantity', 'price', 'action'];
   amount: number;
   payments: any[] = [
-    { id: 'transfermovil', name: 'Transfermovil', logo: 'assets/images/transfermovil_logo.png' },
-    { id: 'enzona', name: 'Enzona', logo: 'assets/images/enzona.jpeg' },
-    { id: 'visa', name: 'Visa', logo: 'assets/images/visa_logo.png' },
-    { id: 'express', name: 'American Express', logo: 'assets/images/american_express_logo.png' },
-    { id: 'masterCard', name: 'MasterCard', logo: 'assets/images/mastercard_logo.png' },
+    { id: 'transfermovil', name: 'Transfermovil', logo: 'assets/images/cards/transfermovil_logo.png', market: 'national' },
+    { id: 'enzona', name: 'Enzona', logo: 'assets/images/cards/enzona.jpeg', market: 'national' },
+    { id: 'transfermovil', name: 'Transfermovil', logo: 'assets/images/cards/transfermovil_logo.png', market: 'international' },
+    { id: 'visa', name: 'Visa', logo: 'assets/images/cards/visa_logo.png', market: 'international' },
+    { id: 'express', name: 'American Express', logo: 'assets/images/cards/american_express_logo.png', market: 'international' },
+    { id: 'masterCard', name: 'MasterCard', logo: 'assets/images/cards/mastercard_logo.png', market: 'international' },
+    {
+      id: 'dinners-club-internacional',
+      name: 'Dinners Club Internacional',
+      logo: 'assets/images/cards/dinners.jpg',
+      market: 'international',
+    },
+    { id: 'jcb', name: 'JCB', logo: 'assets/images/cards/jcb.png', market: 'international' },
+    { id: 'maestro', name: 'Mastercard Maestro', logo: 'assets/images/cards/maestro.jpg', market: 'international' },
+    { id: 'electron', name: 'Visa Electrón', logo: 'assets/images/cards/electron.png', market: 'international' },
+    { id: 'tarjeta-virtual', name: 'Tarjeta Virtual', logo: 'assets/images/cards/virtual.png', market: 'international' },
+    { id: 'bizum', name: 'Bizum', logo: 'assets/images/cards/bizum.jpg', market: 'international' },
+    { id: 'iupay', name: 'Iupay', logo: 'assets/images/cards/iupay.png', market: 'international' },
+    { id: 'discover-global', name: 'Discover Global', logo: 'assets/images/cards/discover.png', market: 'international' },
   ];
 
   nationalitiy: any[] = [
-    {
-      id: true,
-      name: 'Sí',
-    },
+    { id: true, name: 'Sí' },
     { id: false, name: 'No' },
   ];
 
@@ -106,6 +145,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     order: '-updatedAt',
     page: 1,
   };
+  private paymentType: any;
+
   public compareById(val1, val2) {
     return val1 && val2 && val1 == val2;
   }
@@ -164,6 +205,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     const innerWidth = window.innerWidth;
     this.applyStyle = innerWidth <= 600;
   }
+
   ngOnInit() {
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
     this.rate = 1;
@@ -266,7 +308,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         data: {},
       });
 
-      dialogRef.afterClosed().subscribe((result) => {});
+      dialogRef.afterClosed().subscribe((result) => {
+      });
     } else {
       this.getCartData();
     }
@@ -358,7 +401,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     return value;
   }
 
-  onSubmit(): void {}
+  onSubmit(): void {
+  }
 
   ngOnDestroy() {
     this._unsubscribeAll.next(true);
@@ -375,7 +419,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   buildForm() {
-    // console.log('CheckoutComponent -> buildForm -> this.loggedInUser', this.loggedInUser);
     this.selectedDataPay = this.loggedInUserService._getDataFromStorage('payData');
     this.form = this.fb.group({
       name: [this.selectedDataPay ? this.selectedDataPay.name : this.loggedInUser?.name, [Validators.required]],
@@ -412,11 +455,18 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         ]);
     }
     this.updateValidatorsForChangeNationality(this.onlyCubanPeople);
+    this.subsToTransfermovilChange();
+  }
+
+  subsToTransfermovilChange() {
+    this.form.get('paymentType').valueChanges.subscribe((change) => {
+      if (change === 'transfermovil') {
+        this.form.get('currency').setValue('USD');
+      }
+    });
   }
 
   onSelectProvince(provinceId) {
-    // console.log('CheckoutComponent -> onSelectProvince -> provinceId', provinceId);
-    // console.log('CheckoutComponent -> onSelectProvince -> this.allMunicipalities', this.allMunicipalities);
     this.municipalities = this.allMunicipalities.filter((item) => item.ProvinceId == provinceId);
     this.form.get('MunicipalityId').setValue(null);
     this.form.get('ShippingBusinessId').setValue(null);
@@ -491,7 +541,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.regionService.getAllCountries(this.queryCountries).subscribe(
       (data) => {
         this.allCountries = data.data.filter((item) => item.name.es != undefined);
-        this.allCountries = this.allCountries.sort(function (a, b) {
+        this.allCountries = this.allCountries.sort(function(a, b) {
           if (a.name['es'] > b.name['es']) {
             return 1;
           } else if (a.name['es'] < b.name['es']) {
@@ -533,7 +583,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   filterCities(val) {
     val = val.trim().toLowerCase();
-    return this.selectedCities.filter(function (item) {
+    return this.selectedCities.filter(function(item) {
       let nameCity = item.name.trim().toLowerCase();
       return nameCity.includes(val);
     });
@@ -550,6 +600,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   onPayOrder() {
     this.loadingPayment = true;
     const data = { ...this.form.value };
+    this.paymentType = JSON.parse(JSON.stringify(data.paymentType));
     if (!data.shippingRequired) {
       delete data.ShippingBusinessId;
     }
@@ -584,9 +635,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           dialogRef = this.dialog.open(DialogTranfermovilQrComponent, {
             width: '50rem',
             panelClass: 'app-dialog-tranfermovil-qr',
-            maxWidth: '100vw',
-            height: '85vh',
-            maxHeight: '100vh',
+            maxWidth: '99vw',
+            maxHeight: '99vh',
             disableClose: true,
             data: {
               paymentData: data.data,
@@ -635,6 +685,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   processBidaiondo(bodyData) {
+    bodyData.amex = amexData[this.paymentType];
+    console.log('amex', bodyData.amex);
     this.payService.makePaymentBidaiondo(bodyData).subscribe(
       (data: any) => {
         let dialogRef: MatDialogRef<DialogBidaiondoConfirmToPayComponent, any>;
