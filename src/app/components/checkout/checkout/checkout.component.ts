@@ -636,9 +636,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           dialogRef = this.dialog.open(DialogTranfermovilQrComponent, {
             width: '50rem',
             panelClass: 'app-dialog-tranfermovil-qr',
-            maxWidth: '100vw',
-            height: '85vh',
-            maxHeight: '100vh',
+            maxWidth: '99vw',
+            maxHeight: '99vh',
             disableClose: true,
             data: {
               paymentData: data.data,
