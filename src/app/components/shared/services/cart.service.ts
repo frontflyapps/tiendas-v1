@@ -37,8 +37,6 @@ export class CartService implements OnDestroy {
   ) {
     // Get product from Localstorage
     this.carts = this.loggedInUserService._getDataFromStorage('cartItem') || [];
-    // console.log("TCL: CartService -> this.products", this.products);
-    /////////////////////////////////////////////////
 
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
@@ -95,7 +93,7 @@ export class CartService implements OnDestroy {
   }
 
   // Add to cart
-  public async addToCart(product: any, quantity: number) {
+  public async addToCart(product: any, quantity: number, goToPay?: boolean) {
     // if (this.loggedInUser && this.loggedInUserService.isMessengerUser()) {
     //   return alert(this.translate.instant('You can not make this action'));
     // }
@@ -113,9 +111,8 @@ export class CartService implements OnDestroy {
         return;
       }
       if (this.loggedInUser) {
-        return this.postCart({ ProductId: product.id, quantity: quantity })
+        return this.postCart({ ProductId: product.id, quantity: quantity, goToPay: (goToPay || false) })
           .then((data) => {
-            console.log('CartService -> addToCart -> cart', data);
             this.carts = data.data;
             message =
               this.translate.instant('The product ') +
@@ -185,9 +182,8 @@ export class CartService implements OnDestroy {
         // if (this._isInCart(product) && quantity != -1) {
         //   quantity = 1;
         // }
-        return this.postCart({ ProductId: product.id, quantity: quantity, StockId: product?.Stock?.id })
+        return this.postCart({ ProductId: product.id, quantity: quantity, StockId: product?.Stock?.id, goToPay: (goToPay || false) })
           .then((data) => {
-            // console.log('CartService -> addToCart -> cart', data);
             this.carts = data.data;
             message =
               this.translate.instant('The product ') +
@@ -241,7 +237,6 @@ export class CartService implements OnDestroy {
         }
         cart.CartItems = [...shoppingCartItems];
         cart.totalPrice = this._calcTotalPrice(cart);
-        console.log('CartService -> addToCart ->  this.cart.totalPrice', cart.totalPrice);
         message =
           this.translate.instant('The product ') +
           ' ' +
@@ -295,15 +290,13 @@ export class CartService implements OnDestroy {
   _removeSimpleCart(cart: Cart) {
     const index = this.carts.findIndex((item) => item.BusinessId == cart.BusinessId);
     if (index != -1) {
-      console.log('CartService -> _removeSimpleCart -> index', index);
       this.carts.splice(index, 1);
-      console.log('CartService -> _removeSimpleCart -> this.carts', this.carts);
     }
   }
+
   ////////////////////////////////////////////////////////////////////
 
   public async addToCartQuickly(product: any, quantity: number) {
-    // console.log(product);
     // if (this.loggedInUser && this.loggedInUserService.isMessengerUser()) {
     //   return alert(this.translate.instant('You can not make this action'));
     // }
@@ -409,7 +402,6 @@ export class CartService implements OnDestroy {
         this.carts = this.loggedInUserService._getDataFromStorage('cartItem') || [];
         let cart = this._getSimpleCart(product.BusinessId);
         cart = cart ? cart : this._newSimpleCart(product, product.Business);
-        // console.log('CartService -> addToCartQuickly -> cart', cart);
         if (!this.isSameMarket(cart, product)) {
           this.showToastr.showError(
             'Usted solo puede tener en su carrito elementos con la misma moneda a pagar',
@@ -491,7 +483,6 @@ export class CartService implements OnDestroy {
   public calculateStockCounts(product: CartItem, quantity): CartItem | Boolean {
     const qty = product.quantity + quantity;
     const stock = product.Product?.Stock?.quantity || 0;
-    console.log(product);
     if (stock < qty) {
       // this.toastrService.error('You can not add more items than available. In stock '+ stock +' items.');
       this.snackBar.open('You can not choose more items than available. In stock ' + stock + ' items. ', '×', {
@@ -503,6 +494,7 @@ export class CartService implements OnDestroy {
     }
     return true;
   }
+
   // Calculate Product stock Counts
   public isCanStock(product: any, quantity): CartItem | Boolean {
     try {
@@ -631,7 +623,6 @@ export class CartService implements OnDestroy {
   async registerData() {
     if (this.loggedInUser) {
       try {
-        console.log('entre Aqui en el cart************************************');
         const localStorageCarts: Cart[] = this.loggedInUserService._getDataFromStorage('cartItem') || [];
         for (let cart of localStorageCarts) {
           let itemsNotRegistered = [];
