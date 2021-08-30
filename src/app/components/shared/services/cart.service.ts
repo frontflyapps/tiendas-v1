@@ -93,7 +93,7 @@ export class CartService implements OnDestroy {
   }
 
   // Add to cart
-  public async addToCart(product: any, quantity: number) {
+  public async addToCart(product: any, quantity: number, goToPay?: boolean) {
     // if (this.loggedInUser && this.loggedInUserService.isMessengerUser()) {
     //   return alert(this.translate.instant('You can not make this action'));
     // }
@@ -111,7 +111,7 @@ export class CartService implements OnDestroy {
         return;
       }
       if (this.loggedInUser) {
-        return this.postCart({ ProductId: product.id, quantity: quantity })
+        return this.postCart({ ProductId: product.id, quantity: quantity, goToPay: (goToPay || false) })
           .then((data) => {
             this.carts = data.data;
             message =
@@ -182,7 +182,7 @@ export class CartService implements OnDestroy {
         // if (this._isInCart(product) && quantity != -1) {
         //   quantity = 1;
         // }
-        return this.postCart({ ProductId: product.id, quantity: quantity, StockId: product?.Stock?.id })
+        return this.postCart({ ProductId: product.id, quantity: quantity, StockId: product?.Stock?.id, goToPay: (goToPay || false) })
           .then((data) => {
             this.carts = data.data;
             message =
