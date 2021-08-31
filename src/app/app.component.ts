@@ -70,17 +70,22 @@ export class AppComponent {
     const isCookieAccount = this.cookieService.check('account');
     const userLogged = this.loggedInUserService.getLoggedInUser();
     if (isCookieAccount) {
-      const token = this.encryptDecryptService.decrypt(this.cookieService.get('account'));
-      this.authService.getProfile(token).subscribe(
-        (user) => {
-          this.loggedInUserService.updateUserProfile(user.data);
-        },
-        (error) => {
-          this.loggedInUserService.setLoggedInUser(null);
-          this.loggedInUserService.removeCookies();
-          this.loggedInUserService.$loggedInUserUpdated.next(null);
-        },
-      );
+      try {
+        const token = this.encryptDecryptService.decrypt(this.cookieService.get('account'));
+        this.authService.getProfile(token).subscribe(
+          (user) => {
+            this.loggedInUserService.updateUserProfile(user.data);
+          },
+          (error) => {
+            this.loggedInUserService.setLoggedInUser(null);
+            this.loggedInUserService.removeCookies();
+            this.loggedInUserService.$loggedInUserUpdated.next(null);
+          },
+        );
+      } catch (e) {
+        console.warn('Error decrypt value', e);
+        this.localStorageService.actionsToClearSystem();
+      }
     } else {
       this.loggedInUserService.setLoggedInUser(null);
       this.loggedInUserService.$loggedInUserUpdated.next(null);

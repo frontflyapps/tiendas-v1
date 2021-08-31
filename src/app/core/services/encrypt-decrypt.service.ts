@@ -5,7 +5,7 @@ import * as CryptoJS from 'crypto-js';
   providedIn: 'root',
 })
 export class EncryptDecryptService {
-  YEK_RCES = 'YourSecretKeyForEncryption&Decryption';
+  YEK_RCES = 'YourSecretKeyForMarlinEncryption&Decryption';
 
   encrypt(value: string): string {
     const encrypted = CryptoJS.AES.encrypt(value.toString(), this.YEK_RCES.trim());

@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 import { NavigationService } from '../navigation/navigation.service';
 import { EncryptDecryptService } from '../encrypt-decrypt.service';
 import { CookieService } from 'ngx-cookie-service';
+import { LocalStorageService } from '../localStorage/localStorage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -23,6 +24,7 @@ export class LoggedInUserService {
   constructor(
     private cookieService: CookieService,
     private navigationService: NavigationService,
+    private localStorageService: LocalStorageService,
     private encryptDecryptService: EncryptDecryptService,
   ) {
     this.listNavItems = [...this.navigationService.getNavItems()];
@@ -50,10 +52,14 @@ export class LoggedInUserService {
     if (!user) {
       return null;
     }
-    user = this.encryptDecryptService.decrypt(user);
-    // const data = JSON.parse(user);
-    const data = user;
-    return data;
+    try {
+      user = this.encryptDecryptService.decrypt(user);
+      return JSON.parse(user);
+    } catch (e) {
+      console.warn('Error decrypt value', e);
+      this.localStorageService.actionsToClearSystem();
+      return null;
+    }
   }
 
   public setLoggedInUser(user: any) {
@@ -61,26 +67,42 @@ export class LoggedInUserService {
   }
 
   public getTokenCookie(): string {
-    if (this.cookieService.get('account')) {
-      return this.encryptDecryptService.decrypt(this.cookieService.get('account'));
+    try {
+      if (this.cookieService.get('account')) {
+        return this.encryptDecryptService.decrypt(this.cookieService.get('account'));
+      }
+      if (localStorage.getItem('token')) {
+        return this.encryptDecryptService.decrypt(localStorage.getItem('token'));
+      }
+      return '';
+    } catch (e) {
+      console.warn('Error decrypt value', e);
+      this.localStorageService.actionsToClearSystem();
+      return null;
     }
-    if (localStorage.getItem('token')) {
-      return this.encryptDecryptService.decrypt(localStorage.getItem('token'));
-    }
-    return '';
   }
 
   public saveAccountCookie(token) {
-    const hashedPass = this.encryptDecryptService.encrypt(token);
-    this.cookieService.set('account', hashedPass, null, '/', environment.mainDomain);
-    localStorage.setItem('token', hashedPass);
+    try {
+      const hashedPass = this.encryptDecryptService.encrypt(token);
+      this.cookieService.set('account', hashedPass, null, '/', environment.mainDomain);
+      localStorage.setItem('token', hashedPass);
+    } catch (e) {
+      console.warn('Error decrypt value', e);
+      this.localStorageService.actionsToClearSystem();
+    }
   }
 
   public updateUserProfile(user) {
-    let dataString = JSON.stringify(user);
-    dataString = this.encryptDecryptService.encrypt(dataString);
-    localStorage.setItem('user', dataString);
-    this.$loggedInUserUpdated.next(dataString);
+    try {
+      let dataString = JSON.stringify(user);
+      dataString = this.encryptDecryptService.encrypt(dataString);
+      localStorage.setItem('user', dataString);
+      this.$loggedInUserUpdated.next(dataString);
+    } catch (e) {
+      console.warn('Error decrypt value', e);
+      this.localStorageService.actionsToClearSystem();
+    }
   }
 
   removeCookies() {
