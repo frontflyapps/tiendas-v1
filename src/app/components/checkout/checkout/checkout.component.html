@@ -283,13 +283,12 @@
                   matInput
                   placeholder="{{ 'Phone' | translate }}"
                   type="tel"
-                  [formControl]="this.form.controls['phone']"
-                />
+                  [formControl]="this.form.controls['phone']" />
                 <mat-error *ngIf="form.controls['phone'].hasError('required')">
                   {{ 'Phone' | translate }} <strong>{{ 'is required' | translate }}</strong>
                 </mat-error>
                 <mat-error *ngIf="form.controls['phone'].hasError('minlength')">
-                  {{ 'El teléfono debe tener 10 dígitos' | translate }}
+                  {{ 'El teléfono debe tener 10 dígitos' | translate }} ({{'Ex:'|translate}} 5350000000)
                 </mat-error>
                 <mat-error *ngIf="form.controls['phone'].hasError('maxlength')">
                   {{ 'El teléfono debe tener 10 dígitos' | translate }}

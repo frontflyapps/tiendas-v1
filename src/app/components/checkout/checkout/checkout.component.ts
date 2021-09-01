@@ -31,6 +31,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { DialogBidaiondoConfirmToPayComponent } from '../dialog-bidaiondo-confirm-to-pay/dialog-bidaiondo-confirm-to-pay.component';
 import { ConfigurationService } from '../../../core/services/configuration/configuration.service';
 import { CurrencyCheckoutPipe } from 'src/app/core/pipes/currency-checkout.pipe';
+import { BusinessService } from '../../../core/services/business/business.service';
 
 export const amexData = {
   express: 1, // American Express
@@ -174,6 +175,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     private configurationService: ConfigurationService,
     private currencyCheckoutPipe: CurrencyCheckoutPipe,
     private metaService: MetaService,
+    private businessService: BusinessService,
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
@@ -457,6 +459,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     }
     this.updateValidatorsForChangeNationality(this.onlyCubanPeople);
     this.subsToTransfermovilChange();
+
+    this.form.markAllAsTouched();
   }
 
   subsToTransfermovilChange() {
