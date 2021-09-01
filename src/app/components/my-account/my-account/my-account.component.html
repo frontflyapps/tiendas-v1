@@ -84,17 +84,23 @@
               }}</a>
             </div>
 
+            <div *ngIf="localDatabaseUsers" fxLayout="row" fxLayoutAlign="center center" class="my-1">
+              <a (click)="onShowRegistration()" class="uppercase mat-subheading-1 my-1 grey-700 span-link">{{
+                'Register' | translate
+                }}</a>
+            </div>
+
             <!-- <div *ngIf="!localDatabaseUsers" fxLayout="row" fxLayoutAlign="center center" class="mt-3">
               <a [href]="authUrl+'/authentication/register' + '?redirect=' + redirectServiceUrl" mat-flat-button color="accent"
                 class="w-70">
                 {{'Register'|translate}}</a>
             </div> -->
 
-            <div *ngIf="localDatabaseUsers" fxLayout="row" fxLayoutAlign="center center" class="mt-3">
-              <button (click)="onShowRegistration()" mat-flat-button color="accent" class="w-70">
-                {{ 'Register' | translate }}
-              </button>
-            </div>
+<!--            <div *ngIf="localDatabaseUsers" fxLayout="row" fxLayoutAlign="center center" class="mt-3">-->
+            <!--              <button (click)="onShowRegistration()" mat-flat-button color="accent" class="w-70">-->
+            <!--                {{ 'Register' | translate }}-->
+            <!--              </button>-->
+            <!--            </div>-->
           </form>
         </div>
 
