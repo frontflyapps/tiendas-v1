@@ -49,15 +49,15 @@ export class CartComponent implements OnInit, OnDestroy {
     this.loggedInUserService.$loggedInUserUpdated.pipe(takeUntil(this._unsubscribeAll)).subscribe((data) => {
       this.loggedInUser = this.loggedInUserService.getLoggedInUser();
       if (this.loggedInUser) {
-        this.cartService.getCart().then((data) => {
-          this.carts = data.data;
+        this.cartService.getCart().then((dataCart: any) => {
+          this.carts = dataCart.data;
         });
       }
     });
 
     if (this.loggedInUser) {
-      this.cartService.getCart().then((data) => {
-        this.carts = data.data;
+      this.cartService.getCart().then((dataCart: any) => {
+        this.carts = dataCart.data;
       });
     } else {
       this.carts = [...this.cartService.getCartNoLogged()];

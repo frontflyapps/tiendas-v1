@@ -10,6 +10,7 @@ export interface Cart {
     logo?: string;
     cellphone?: string;
     email?: string;
+    address?: string;
   };
 }
 

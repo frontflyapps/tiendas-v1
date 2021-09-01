@@ -157,7 +157,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    private cartService: CartService,
+    public cartService: CartService,
     public productService: ProductService,
     public currencyService: CurrencyService,
     private fb: FormBuilder,

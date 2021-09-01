@@ -54,10 +54,12 @@ export class ShoppingWidgetsComponent implements OnInit, OnDestroy {
     if (this.loggedInUser) {
       this.cartService.getCart().then((data) => {
         this.shoppingCarts = data.data;
+        this.cartService.globalCart = data.data;
         this.shoppingCartItems = this.cartService.getShoppingCars();
       });
     } else {
       this.shoppingCarts = this.cartService.getCartNoLogged();
+      this.cartService.globalCart = this.shoppingCarts;
       this.shoppingCartItems = this.cartService.getShoppingCars();
     }
 
@@ -75,10 +77,12 @@ export class ShoppingWidgetsComponent implements OnInit, OnDestroy {
     if (this.loggedInUser) {
       this.cartService.getCart().then((data) => {
         this.shoppingCarts = data.data;
+        this.cartService.globalCart = data.data;
         this.shoppingCartItems = this.cartService.getShoppingCars();
       });
     } else {
       this.shoppingCarts = [];
+      this.cartService.globalCart = this.shoppingCarts;
       this.shoppingCartItems = this.cartService.getShoppingCars();
     }
   }
