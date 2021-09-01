@@ -1,17 +1,14 @@
-import { Component, HostListener, Inject, OnInit, ViewEncapsulation } from '@angular/core';
-
+import { Component, HostListener, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
 import { Router, ActivatedRoute } from '@angular/router';
-import { ShowToastrService } from './../../../core/services/show-toastr/show-toastr.service';
-import { takeUntil } from 'rxjs/operators';
+import { ShowToastrService } from '../../../core/services/show-toastr/show-toastr.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { UtilsService } from './../../../core/services/utils/utils.service';
+import { UtilsService } from '../../../core/services/utils/utils.service';
 import { TranslateService } from '@ngx-translate/core';
-import { ShowSnackbarService } from './../../../core/services/show-snackbar/show-snackbar.service';
-import { environment } from './../../../../environments/environment';
-import { AuthenticationService } from './../../../core/services/authentication/authentication.service';
-import { LoggedInUserService } from './../../../core/services/loggedInUser/logged-in-user.service';
+import { ShowSnackbarService } from '../../../core/services/show-snackbar/show-snackbar.service';
+import { environment } from '../../../../environments/environment';
+import { AuthenticationService } from '../../../core/services/authentication/authentication.service';
+import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-in-user.service';
 
 @Component({
   selector: 'app-my-account',

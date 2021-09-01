@@ -61,7 +61,7 @@
             </mat-form-field>
 
             <div fxLayout="row" fxLayoutAlign="center center" class="mb-3">
-              <button mat-raised-button color="accent" class="mx-3 w-70" [disabled]="!loginForm.valid || inLoading" type="submit"
+              <button mat-raised-button color="primary" class="mx-3 w-70" [disabled]="!loginForm.valid || inLoading" type="submit"
                 (click)="login(loginForm.controls['username'].value, loginForm.controls['password'].value)">
                 <span class="uppercase">{{ 'Entrar' | translate }}</span>
               </button>
@@ -137,7 +137,7 @@
                 </mat-error>
               </mat-form-field>
 
-              <mat-form-field fxFlex="48" fxFlex.lt-md="100" required appearance="outline">
+              <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline">
                 <mat-label>{{ 'Email' | translate }}</mat-label>
                 <input matInput placeholder="{{ 'Email' | translate }}" required [formControl]="registrationForm.controls['email']" />
                 <mat-error *ngIf="registrationForm.controls['email'].hasError('required')">
@@ -145,7 +145,7 @@
                 </mat-error>
               </mat-form-field>
 
-              <mat-form-field fxFlex="48" fxFlex.lt-md="100" required appearance="outline">
+              <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline">
                 <mat-label>{{ 'Teléfono' | translate }}</mat-label>
                 <input matInput placeholder="{{ 'Teléfono' | translate }}" [formControl]="registrationForm.get('phone')" />
               </mat-form-field>
