@@ -1,21 +1,20 @@
 import { MetaService } from 'src/app/core/services/meta.service';
-import { ShowToastrService } from './../../../core/services/show-toastr/show-toastr.service';
-import { IPagination } from './../../../core/classes/pagination.class';
+import { ShowToastrService } from '../../../core/services/show-toastr/show-toastr.service';
+import { IPagination } from '../../../core/classes/pagination.class';
 import { Component, OnInit, OnDestroy, ViewEncapsulation, HostListener, ViewChild, AfterViewInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil, debounceTime } from 'rxjs/operators';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-
-import { environment } from './../../../../environments/environment';
+import { environment } from '../../../../environments/environment';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
-import { UtilsService } from './../../../core/services/utils/utils.service';
+import { UtilsService } from '../../../core/services/utils/utils.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { MyOrdersService } from '../service/my-orders.service';
-import { LoggedInUserService } from './../../../core/services/loggedInUser/logged-in-user.service';
-import { CurrencyService } from './../../../core/services/currency/currency.service';
+import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-in-user.service';
+import { CurrencyService } from '../../../core/services/currency/currency.service';
 import { HttpClient } from '@angular/common/http';
 import { CancelOrderComponent } from '../cancel-order/cancel-order.component';
 import { EditOrderComponent } from '../edit-order/edit-order.component';
