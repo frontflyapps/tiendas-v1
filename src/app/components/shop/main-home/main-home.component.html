@@ -111,7 +111,7 @@
     <div class="container">
       <div class="products sec-padding pt-0">
         <div class="products-four">
-          <h3>{{'Productos más vendidos' | translate }}</h3>
+          <h3 style="color: initial">{{'Productos más vendidos' | translate }}</h3>
           <app-product-carousel *ngIf="!loadingBestSellers" [products]="bestSellersProducts" [btnColor]="'accent'">
           </app-product-carousel>
           <div *ngIf="loadingBestSellers" class="my-3">
