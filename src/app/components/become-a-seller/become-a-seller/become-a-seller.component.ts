@@ -7,7 +7,7 @@ import { ImagePickerConf } from 'ngp-image-picker';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { RegionsService } from '../../../core/services/regions/regions.service';
-import { BussinessService } from '../../../core/services/business/business.service';
+import { BusinessService } from '../../../core/services/business/business.service';
 
 @Component({
   selector: 'app-become-a-seller',
@@ -48,7 +48,7 @@ export class BecomeASellerComponent implements OnInit {
     private fb: FormBuilder,
     private regionService: RegionsService,
     private loggedInUserService: LoggedInUserService,
-    private businessService: BussinessService,
+    private businessService: BusinessService,
     private spinner: NgxSpinnerService,
     private showToastr: ShowToastrService,
     private translate: TranslateService,
