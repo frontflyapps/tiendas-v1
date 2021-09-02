@@ -10,7 +10,7 @@
   justify-content: space-between;
   align-items: center;
   min-height: 54px;
-  border-radius: 24px;
+  border-radius: 4px;
   background-color: #fafafa;
   margin-bottom: 8px;
   overflow-x: auto;
@@ -43,12 +43,12 @@
     height: 16px;
     width: 16px;
     line-height: 16px;
-    font-weight: 600px;
+    font-weight: 600;
   }
 }
 
 .chip-order.selected {
-  background-color: $theme-main-accent;
+  background-color: $font-color;
   color: white;
 }
 

@@ -1,16 +1,14 @@
-<div
-  [id]="'ProductCardId' + product.id"
-  fxLayout="column"
-  fxLayoutAlign="start stretch"
-  fxLayout.lt-md="row"
-  fxLayoutAlign.lt-md="start start"
-  class="card-product"
-  style="position: relative"
->
+<div [id]="'ProductCardId' + product.id"
+     fxLayout="column"
+     fxLayoutAlign="start stretch"
+     fxLayout.lt-md="row"
+     fxLayoutAlign.lt-md="start start"
+     class="card-product"
+     style="position: relative">
   <div *ngIf="inLoading" class="loading-shade" style="height: 100%">
     <mat-spinner [diameter]="40" *ngIf="inLoading"></mat-spinner>
   </div>
-  <div fxFlex.lt-md="35" fxLayoutAlign="center center" class="image-layout">
+  <div fxFlex.lt-md="140px" fxLayoutAlign="center center" class="image-layout">
     <a
       class="product-link"
       fxFlex="row"
@@ -41,22 +39,22 @@
     </a>
   </div>
 
-  <div class="product-info-wrapper" ngClass.gt-sm="p-3" ngClass.lt-md="p-2 w-100">
+  <div fxLayout="column" class="product-info-wrapper" ngClass.gt-sm="p-3" ngClass.lt-md="p-2 w-100">
     <span class="category">
       {{ utilsService.parserLanguage(product.Category.name, language) }}
     </span>
 
-    <div class="title">
-      <a
-        class="link-nav-a"
-        [routerLink]="['/product']"
-        [queryParams]="{
+    <div class="title mt-1">
+      <a class="link-nav-a"
+         [routerLink]="['/product']"
+         [queryParams]="{
           productId: product?.id,
-          stockId: product?.Stock?.id
-        }"
-        >{{ product.name[language] ? product.name[language] : product.name['es'] }}</a
-      >
+          stockId: product?.Stock?.id}">
+        {{ product.name[language] ? product.name[language] : product.name['es'] }}
+      </a>
     </div>
+
+    <div style="flex: 1 1 100%"></div>
 
     <div class="mt-2">
       <ngp-rating-material [value]="product.rating" [config]="{ readOnly: true }"></ngp-rating-material>
@@ -64,7 +62,7 @@
     <!-- <p fxHide.xs class="module line-clamp mt-1 mb-2">
       {{(product.shortDescription[language])?product.shortDescription[language]:product.shortDescription['es']}}</p> -->
 
-    <div class="price mt-2" fxLayout="row" fxLayoutAlign="space-between start">
+    <div class="price mt-1" fxLayout="row" fxLayoutAlign="space-between start">
       <button
         matTooltip="{{ 'Añadir al carrito' | translate }}"
         class="btnAddCart"

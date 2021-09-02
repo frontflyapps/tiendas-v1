@@ -150,13 +150,14 @@
   position: absolute;
   bottom: 16px;
   right: 16px;
-  background-color: #e6e6e6;
-  color: #fff;
+  background-color: white;
+  color: grey;
+  border: 1px solid grey;
   box-shadow: none;
   transition: all 0.3s ease;
 
   mat-icon {
-    color: #fff;
+    color: grey;
   }
 }
 
