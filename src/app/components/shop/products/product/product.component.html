@@ -8,7 +8,7 @@
   <div *ngIf="inLoading" class="loading-shade" style="height: 100%">
     <mat-spinner [diameter]="40" *ngIf="inLoading"></mat-spinner>
   </div>
-  <div fxFlex.lt-md="140px" fxLayoutAlign="center center" class="image-layout">
+  <div fxFlex.lt-md="120px" fxLayoutAlign="center center" class="image-layout">
     <a
       class="product-link"
       fxFlex="row"
@@ -54,7 +54,7 @@
       </a>
     </div>
 
-    <div style="flex: 1 1 100%"></div>
+    <!-- <div style="flex: 1 1 100%"></div> -->
 
     <div class="mt-2">
       <ngp-rating-material [value]="product.rating" [config]="{ readOnly: true }"></ngp-rating-material>

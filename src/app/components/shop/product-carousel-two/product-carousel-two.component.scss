@@ -55,8 +55,8 @@
     position: relative;
     width: 100% !important;
     box-shadow: unset !important;
-    border: 1px solid rgba(0, 0, 0, 0.12);
-    border-radius: 8px !important;
+    border: 1px solid #e8e8e8;
+    border-radius: 4px !important;
 
     &:hover {
       transform: translateY(-10px);
@@ -79,8 +79,8 @@
   position: relative;
   width: 300px !important;
   box-shadow: unset !important;
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  border-radius: 8px !important;
+  border: 1px solid #e8e8e8;
+  border-radius: 4px !important;
 
   &:hover {
     transform: translateY(-10px);
@@ -101,8 +101,8 @@
   position: relative;
   width: 300px !important;
   box-shadow: unset !important;
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  border-radius: 8px !important;
+  border: 1px solid #e8e8e8;
+  border-radius: 4px !important;
 
   &:hover {
     transform: translateY(-10px);
