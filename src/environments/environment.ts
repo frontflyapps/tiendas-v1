@@ -6,15 +6,15 @@ const packageJson = require('../../package.json');
 export const environment = {
   production: false,
 
-  apiUrl: 'http://192.168.1.12:8998/v1/',
-  imageUrl: 'http://192.168.1.12:8998/v1/',
+  // apiUrl: 'http://192.168.1.12:8998/v1/',
+  // imageUrl: 'http://192.168.1.12:8998/v1/',
 
-  // apiUrl: 'https://apitienda.marinasmarlin.com/v1/',
-  // imageUrl: 'https://apitienda.marinasmarlin.com/v1/',
+  apiUrl: 'https://apitienda.marinasmarlin.com/v1/',
+  imageUrl: 'https://apitienda.marinasmarlin.com/v1/',
 
   defaultLanguage: 'es',
   currencyInternational: 'USD',
-  timeToResetSession: 14400000, // Time to reset the session
+  timeToResetSession: 14400000, // Time to reset the session (ms)
 
   url: 'http://tienda.tiendalocal.com:4308',
   urlAboutUs: 'http://tienda.tiendalocal.com:4308',
