@@ -137,17 +137,18 @@
                 </mat-form-field>
               </div>
 
-              <!--              <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline">-->
-              <!--                <mat-label>{{ 'Username' | translate }}</mat-label>-->
-              <!--                <input matInput placeholder="{{ 'Username' | translate }}" required-->
-              <!--                       [formControl]="registrationForm.controls['username']" />-->
-              <!--                <mat-error *ngIf="registrationForm.controls['username'].hasError('required')">-->
-              <!--                  {{ 'Username' | translate }} <strong>{{ 'is required' | translate }}</strong>-->
-              <!--                </mat-error>-->
-              <!--                <mat-error *ngIf="registrationForm.controls['username'].hasError('pattern')">-->
-              <!--                  {{ 'El nombre de usuario debe contener carateres alfanuméricos' | translate }}-->
-              <!--                </mat-error>-->
-              <!--              </mat-form-field>-->
+              <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline">
+                <mat-label>{{ 'Username' | translate }}</mat-label>
+                <input matInput placeholder="{{ 'Username' | translate }}" required
+                       (keypress)="utilsService.keyPressAlphaAndNumbers($event)"
+                       [formControl]="registrationForm.controls['username']" />
+                <mat-error *ngIf="registrationForm.controls['username'].hasError('required')">
+                  {{ 'Username' | translate }} <strong>{{ 'is required' | translate }}</strong>
+                </mat-error>
+                <mat-error *ngIf="registrationForm.controls['username'].hasError('pattern')">
+                  {{ 'Solo letra y números' | translate }}
+                </mat-error>
+              </mat-form-field>
 
               <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline">
                 <mat-label>{{ 'Email' | translate }}</mat-label>
