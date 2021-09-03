@@ -165,7 +165,7 @@ export class UtilsService {
 
   keyPressAlpha(event) {
     const inp = String.fromCharCode(event.keyCode);
-    if (/[a-zA-Z ]/.test(inp)) {
+    if (/[a-zA-Z]/.test(inp)) {
       return true;
     } else {
       event.preventDefault();
@@ -174,13 +174,33 @@ export class UtilsService {
   }
 
   keyPressNumbers(event) {
-    const charCode = (event.which) ? event.which : event.keyCode;
-    // Only Numbers 0-9
-    if ((charCode < 48 || charCode > 57)) {
+    const inp = String.fromCharCode(event.keyCode);
+    if (/[0-9]/.test(inp)) {
+      return true;
+    } else {
       event.preventDefault();
       return false;
-    } else {
-      return true;
     }
   }
+
+  keyPressAlphaAndNumbers(event) {
+    const inp = String.fromCharCode(event.keyCode);
+    if (/[a-zA-Z0-9]/.test(inp)) {
+      return true;
+    } else {
+      event.preventDefault();
+      return false;
+    }
+  }
+
+  // keyPressNumbers(event) {
+  //   const charCode = (event.which) ? event.which : event.keyCode;
+  //   // Only Numbers 0-9
+  //   if ((charCode < 48 || charCode > 57)) {
+  //     event.preventDefault();
+  //     return false;
+  //   } else {
+  //     return true;
+  //   }
+  // }
 }

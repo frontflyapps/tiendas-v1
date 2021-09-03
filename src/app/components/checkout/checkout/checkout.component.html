@@ -263,38 +263,54 @@
             </mat-form-field> -->
 
             <div fxLayout="row wrap" fxLayoutAlign="space-between center">
-              <mat-form-field fxFlex="100" fxFlex.gt-md="48" fxFlex.md="48" appearance="outline">
+              <mat-form-field id="CI" fxFlex="100" fxFlex.gt-md="48" fxFlex.md="48" appearance="outline">
                 <mat-label>{{ 'Identity card' | translate }}</mat-label>
                 <input
                   matInput
                   placeholder="{{ 'Identity card' | translate }}"
                   type="text"
+                  (keypress)="utilsService.keyPressAlphaAndNumbers($event)"
                   required
                   [formControl]="this.form.controls['dni']"
                 />
+                <mat-hint>{{'Asegúrece de escribir correctamente el CI'}}</mat-hint>
                 <mat-error *ngIf="form.controls['dni'].hasError('required')">
                   {{ 'Identity card' | translate }} <strong>{{ 'is required' | translate }}</strong>
                 </mat-error>
+                <mat-error *ngIf="form.controls['dni'].hasError('minlength')">
+                  {{ 'Longitud mínima' | translate }} <strong>{{CI_Length}} {{'caracteres'|translate}}</strong>
+                </mat-error>
+                <!--                <mat-error *ngIf="form.controls['dni'].hasError('maxlength')">-->
+                <!--                  {{ 'Longitud mínima' | translate }} <strong>{{ '11 caracteres' | translate }}</strong>-->
+                <!--                </mat-error>-->
               </mat-form-field>
 
-              <mat-form-field fxFlex="100" fxFlex.gt-md="48" fxFlex.md="48" appearance="outline">
+              <mat-form-field id="phone-checkout" fxFlex="100" fxFlex.gt-md="48" fxFlex.md="48" appearance="outline">
                 <mat-label>{{ 'Phone' | translate }} *</mat-label>
+                <span matPrefix class="mr-2">+ 53</span>
                 <input
                   matInput
                   placeholder="{{ 'Phone' | translate }}"
-                  type="tel"
+                  (keypress)="utilsService.keyPressNumbers($event)"
                   [formControl]="this.form.controls['phone']" />
+                <mat-hint
+                  *ngIf="!form.get('phone').value">
+                  {{'Escriba un teléfono móvil cubano, Ex: 51234567'|translate}}
+                </mat-hint>
+                <mat-hint *ngIf="form.get('phone').value
+                              && form.get('phone').valid">
+                  {{'Número válido'|translate}}
+                </mat-hint>
                 <mat-error *ngIf="form.controls['phone'].hasError('required')">
                   {{ 'Phone' | translate }} <strong>{{ 'is required' | translate }}</strong>
                 </mat-error>
-                <mat-error *ngIf="form.controls['phone'].hasError('minlength')">
-                  {{ 'El teléfono debe tener 10 dígitos' | translate }} ({{'Ex:'|translate}} 5350000000)
-                </mat-error>
-                <mat-error *ngIf="form.controls['phone'].hasError('maxlength')">
-                  {{ 'El teléfono debe tener 10 dígitos' | translate }}
+                <mat-error *ngIf="(form.controls['phone'].hasError('minlength')
+                                || form.controls['phone'].hasError('maxlength'))
+                                && !form.controls['phone'].hasError('pattern')">
+                  {{ 'Longitud del número' | translate }}&nbsp;<strong>{{ '8 caracteres, Ex: 51234567' | translate }}</strong>
                 </mat-error>
                 <mat-error *ngIf="form.controls['phone'].hasError('pattern')">
-                  {{ 'El teléfono debe tener solo dígitos' | translate }}
+                  {{ 'El número' | translate }}&nbsp;<strong>{{ 'debe empezar con 5, Ex: 51234567' | translate }}</strong>
                 </mat-error>
               </mat-form-field>
             </div>

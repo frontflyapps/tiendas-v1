@@ -32,6 +32,7 @@ import { DialogBidaiondoConfirmToPayComponent } from '../dialog-bidaiondo-confir
 import { ConfigurationService } from '../../../core/services/configuration/configuration.service';
 import { CurrencyCheckoutPipe } from 'src/app/core/pipes/currency-checkout.pipe';
 import { BusinessService } from '../../../core/services/business/business.service';
+import { CUBAN_PHONE_START_5 } from '../../../core/classes/regex.const';
 
 export const amexData = {
   express: 1, // American Express
@@ -67,6 +68,8 @@ export const amexData = {
   providers: [CurrencyCheckoutPipe],
 })
 export class CheckoutComponent implements OnInit, OnDestroy {
+  public CI_Length = 7;
+
   public cartItems: Observable<CartItem[]> = of([]);
   public buyProducts: CartItem[] = [];
   public cart: Cart;
@@ -437,7 +440,11 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       ProvinceId: [this._getProvince(this.loggedInUser, this.selectedDataPay), [Validators.required]],
       MunicipalityId: [this._getMunicipality(this.loggedInUser, this.selectedDataPay), [Validators.required]],
       isForCuban: [this.selectedDataPay ? this.selectedDataPay.isForCuban : true, [Validators.required]],
-      dni: [this.selectedDataPay && this.selectedDataPay.dni ? this.selectedDataPay.dni : null, Validators.required],
+      dni: [this.selectedDataPay && this.selectedDataPay.dni ? this.selectedDataPay.dni : null, [
+        Validators.required,
+        Validators.minLength(this.CI_Length),
+        // Validators.maxLength(11),
+      ]],
       email: [this._getEmail(this.loggedInUser, this.selectedDataPay), [Validators.required, Validators.email]],
       phone: [this._getPhone(this.loggedInUser, this.selectedDataPay), []],
       info: [this.selectedDataPay && this.selectedDataPay.info ? this.selectedDataPay.info : null, []],
@@ -452,9 +459,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         .get('phone')
         .setValidators([
           Validators.required,
-          Validators.minLength(10),
-          Validators.maxLength(10),
-          Validators.pattern(/^\d+$/),
+          Validators.pattern(CUBAN_PHONE_START_5),
+          Validators.minLength(8),
+          Validators.maxLength(8),
         ]);
     }
     this.updateValidatorsForChangeNationality(this.onlyCubanPeople);
@@ -510,9 +517,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         .get('phone')
         .setValidators([
           Validators.required,
-          Validators.minLength(10),
-          Validators.maxLength(10),
-          Validators.pattern(/^\d+$/),
+          Validators.pattern(CUBAN_PHONE_START_5),
+          Validators.minLength(8),
+          Validators.maxLength(8),
         ]);
       this.form.get('phone').updateValueAndValidity();
       this.form.get('paymentType').setValue('transfermovil');
@@ -605,6 +612,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   onPayOrder() {
     this.loadingPayment = true;
     const data = { ...this.form.value };
+    data.phone = '53' + data.phone;
+
     this.paymentType = JSON.parse(JSON.stringify(data.paymentType));
     if (!data.shippingRequired) {
       delete data.ShippingBusinessId;

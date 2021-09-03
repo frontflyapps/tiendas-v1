@@ -9,6 +9,26 @@
   padding: 0 15px;
 }
 
+#CI {
+  .mat-input-element {
+    text-transform: uppercase;
+  }
+
+  .mat-input-element::placeholder {
+    text-transform: none;
+  }
+}
+
+::ng-deep #phone-checkout.mat-form-field-appearance-outline {
+  .mat-form-field-prefix {
+    top: 0 !important;
+  }
+
+  .mat-input-element {
+    font: caption;
+  }
+}
+
 #payment-method {
   ::ng-deep .mat-radio-container {
     display: none;

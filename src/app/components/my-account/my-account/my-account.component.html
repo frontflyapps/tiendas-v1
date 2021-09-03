@@ -178,10 +178,10 @@
                 <mat-error *ngIf="(registrationForm.controls['phone'].hasError('minlength')
                                 || registrationForm.controls['phone'].hasError('maxlength'))
                                 && !registrationForm.controls['phone'].hasError('pattern')">
-                  {{ 'Longitud del número' | translate }}&nbsp;<strong>{{ '8 caracteres' | translate }}</strong>
+                  {{ 'Longitud del número' | translate }}&nbsp;<strong>{{ '8 caracteres, Ex: 51234567' | translate }}</strong>
                 </mat-error>
                 <mat-error *ngIf="registrationForm.controls['phone'].hasError('pattern')">
-                  {{ 'El número' | translate }}&nbsp;<strong>{{ 'debe empezar con 5' | translate }}</strong>
+                  {{ 'El número' | translate }}&nbsp;<strong>{{ 'debe empezar con 5, Ex: 51234567' | translate }}</strong>
                 </mat-error>
               </mat-form-field>
 
