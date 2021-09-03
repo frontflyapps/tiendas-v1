@@ -24,7 +24,6 @@ export class ProductComponent implements OnInit, OnDestroy {
   @Output() onOpenProductDialog: EventEmitter<any> = new EventEmitter();
   @Input() product: any;
   inLoading = false;
-  anguage: any;
   _unsubscribeAll: Subject<any>;
   loggedInUser: any = null;
   imageUrl = environment.imageUrl;
