@@ -4,19 +4,20 @@ import { environment } from '../../../../environments/environment';
 import { Injectable, OnDestroy } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { takeUntil } from 'rxjs/operators';
-import { Observable, Subscriber, Subject } from 'rxjs';
+import { Observable, Subscriber, Subject, BehaviorSubject } from 'rxjs';
 import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-in-user.service';
 import { UtilsService } from '../../../core/services/utils/utils.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ShowSnackbarService } from '../../../core/services/show-snackbar/show-snackbar.service';
 import { ShowToastrService } from 'src/app/core/services/show-toastr/show-toastr.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService implements OnDestroy {
   // Array
-  public $cartItemsUpdated: Subject<any> = new Subject();
+  public $cartItemsUpdated: BehaviorSubject<any> = new BehaviorSubject([]);
   public $paymentUpdate: Subject<any> = new Subject();
   public observer: Subscriber<{}>;
   url = environment.apiUrl + 'cart';
@@ -25,9 +26,11 @@ export class CartService implements OnDestroy {
   _unsubscribeAll: Subject<any>;
   language = null;
   carts: Cart[] = [];
-  public globalCart: Cart[];
+
+  // public globalCart: Cart[] = [];
 
   constructor(
+    private router: Router,
     public snackBar: MatSnackBar,
     private loggedInUserService: LoggedInUserService,
     private httpClient: HttpClient,
@@ -66,6 +69,12 @@ export class CartService implements OnDestroy {
   ngOnDestroy() {
     this._unsubscribeAll.next(true);
     this._unsubscribeAll.complete();
+  }
+
+  public goToCheckout(cart: Cart, cartITems?) {
+    let cartId = cart.id;
+    let cartIds = cartITems ? cartITems.map((i) => i.id) : cart.CartItems.map((i) => i.id);
+    this.router.navigate(['/checkout'], { queryParams: { cartId, cartIds } }).then();
   }
 
   public getShoppingCars(): CartItem[] {

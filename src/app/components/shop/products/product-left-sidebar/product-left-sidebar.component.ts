@@ -1,19 +1,20 @@
-import { MetaService } from './../../../../core/services/meta.service';
-import { IPagination } from './../../../../core/classes/pagination.class';
+import { MetaService } from '../../../../core/services/meta.service';
+import { IPagination } from '../../../../core/classes/pagination.class';
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { ProductService } from '../../../shared/services/product.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { CurrencyService } from './../../../../core/services/currency/currency.service';
-import { LoggedInUserService } from './../../../../core/services/loggedInUser/logged-in-user.service';
+import { CurrencyService } from '../../../../core/services/currency/currency.service';
+import { LoggedInUserService } from '../../../../core/services/loggedInUser/logged-in-user.service';
 import { takeUntil } from 'rxjs/operators';
-import { UtilsService } from './../../../../core/services/utils/utils.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DialogFiltersMComponent } from '../dialog-filters-m/dialog-filters-m.component';
 import { CategoriesService } from 'src/app/core/services/categories/catagories.service';
 import { environment } from 'src/environments/environment';
+import { CartService } from '../../../shared/services/cart.service';
+import { Cart } from '../../../../modals/cart-item';
 
 @Component({
   selector: 'app-product-left-sidebar',
@@ -26,6 +27,9 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
   public page: any;
   public viewType = 'grid';
   public viewCol = 100;
+
+  public itemsOnCart = 0;
+  public theCart: Cart;
 
   public allProducts: any[] = [];
   initLimit = 21;
@@ -67,6 +71,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
     private router: Router,
     public loggedInUserService: LoggedInUserService,
     private breakpointObserver: BreakpointObserver,
+    public cartService: CartService,
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private metaService: MetaService,
@@ -127,9 +132,13 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.loggedInUserService.$languageChanged.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {
-      this.language = data.lang;
-    });
+    this.subsCartChange();
+
+    this.loggedInUserService.$languageChanged
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((data: any) => {
+        this.language = data.lang;
+      });
 
     this.breakpointObserver
       .observe([Breakpoints.Medium, Breakpoints.Small, Breakpoints.XSmall])
@@ -138,14 +147,26 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
         this.isHandset = data.matches;
       });
 
-    this.categoryService.getAllCategories().subscribe((data) => {
-      this.allCategories = data.data;
-    });
+    this.categoryService.getAllCategories()
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((data) => {
+        this.allCategories = data.data;
+      });
+  }
+
+  subsCartChange() {
+    this.cartService.$cartItemsUpdated
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(carts => {
+        this.itemsOnCart = carts[0]?.CartItems?.length || 0;
+        this.theCart = carts[0];
+      });
   }
 
   ngOnDestroy() {
-    this._unsubscribeAll.next(true);
+    this._unsubscribeAll.next(null);
     this._unsubscribeAll.complete();
+    this._unsubscribeAll.unsubscribe();
   }
 
   //////////////////////////// BUSQUEDA ////////////////////////////////
@@ -158,7 +179,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
         ...this.paramsSearch,
         ...this.queryProduct,
       },
-    });
+    }).then();
   }
 
   search() {
@@ -211,6 +232,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
       },
     );
   }
+
   showChips() {
     let chips = [];
     for (let cat of this.allCategories) {
@@ -236,6 +258,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
     this.viewType = viewType;
     this.viewCol = viewCol;
   }
+
   // Animation Effect fadeIn
   public fadeIn() {
     this.animation = 'fadeIn';

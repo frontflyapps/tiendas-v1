@@ -498,14 +498,17 @@
                        style="color: #f44336; font-size: 16px; font-weight: 500; margin-bottom: 12px !important">
                     <p class="mb-2 font-weight-400">{{'Payment will be made at the Business office' | translate }}</p>
                     <span class="mb-1 font-weight-400">{{'Negocio' | translate}}:
-                      <span class="font-weight-600">{{cartService?.globalCart[0]?.Business?.name}}</span>
+                      <span
+                        class="font-weight-600">{{theBusiness?.name || ''}}</span>
                     </span>
                     <span class="mb-1 font-weight-400">{{'Dirección' | translate}}:
-                      <span class="font-weight-600">{{cartService?.globalCart[0]?.Business?.address}}</span>
+                      <span
+                        class="font-weight-600">{{theBusiness?.address || ''}}</span>
                     </span>
                     <span class="mb-1 font-weight-400">
                       {{'Email' | translate}}:
-                      <span class="font-weight-600">{{cartService?.globalCart[0]?.Business?.email}}</span>
+                      <span
+                        class="font-weight-600">{{theBusiness?.email || ''}}</span>
                     </span>
                     <span class="mb-1 font-weight-400">
                       {{'Recogida' | translate}}:

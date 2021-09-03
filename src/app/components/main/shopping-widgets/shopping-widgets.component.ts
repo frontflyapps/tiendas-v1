@@ -1,13 +1,14 @@
-import { Component, OnInit, Input, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
-import { LoggedInUserService } from './../../../core/services/loggedInUser/logged-in-user.service';
-import { CurrencyService } from './../../../core/services/currency/currency.service';
-import { environment } from './../../../../environments/environment';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-in-user.service';
+import { CurrencyService } from '../../../core/services/currency/currency.service';
+import { environment } from '../../../../environments/environment';
 import { takeUntil } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { Cart, CartItem } from 'src/app/modals/cart-item';
 import { CartService } from '../../shared/services/cart.service';
 import { ProductService } from '../../shared/services/product.service';
+import { GlobalFacadeService } from '../../../facades/services/global-facade.service';
 
 @Component({
   selector: 'app-shopping-widgets',
@@ -29,10 +30,11 @@ export class ShoppingWidgetsComponent implements OnInit, OnDestroy {
   loggedInUser: any;
 
   constructor(
-    private cartService: CartService,
+    public cartService: CartService,
     public productService: ProductService,
     public currencyService: CurrencyService,
     public loggedInUserService: LoggedInUserService,
+    private globalFacadeService: GlobalFacadeService,
     private router: Router,
   ) {
     this._unsubscribeAll = new Subject<any>();
@@ -54,12 +56,14 @@ export class ShoppingWidgetsComponent implements OnInit, OnDestroy {
     if (this.loggedInUser) {
       this.cartService.getCart().then((data) => {
         this.shoppingCarts = data.data;
-        this.cartService.globalCart = data.data;
+        this.globalFacadeService.updateCartState(data.data || []);
+        this.globalFacadeService.updateBusinessState(data.data[0]?.Business || {});
         this.shoppingCartItems = this.cartService.getShoppingCars();
       });
     } else {
       this.shoppingCarts = this.cartService.getCartNoLogged();
-      this.cartService.globalCart = this.shoppingCarts;
+      this.globalFacadeService.updateCartState(this.shoppingCarts || []);
+      this.globalFacadeService.updateBusinessState(this.shoppingCarts[0]?.Business || {});
       this.shoppingCartItems = this.cartService.getShoppingCars();
     }
 
@@ -77,12 +81,14 @@ export class ShoppingWidgetsComponent implements OnInit, OnDestroy {
     if (this.loggedInUser) {
       this.cartService.getCart().then((data) => {
         this.shoppingCarts = data.data;
-        this.cartService.globalCart = data.data;
+        this.globalFacadeService.updateCartState(data.data || []);
+        this.globalFacadeService.updateBusinessState(data.data[0]?.Business || {});
         this.shoppingCartItems = this.cartService.getShoppingCars();
       });
     } else {
       this.shoppingCarts = [];
-      this.cartService.globalCart = this.shoppingCarts;
+      this.globalFacadeService.updateCartState(this.shoppingCarts || []);
+      this.globalFacadeService.updateBusinessState(this.shoppingCarts[0]?.Business || {});
       this.shoppingCartItems = this.cartService.getShoppingCars();
     }
   }
@@ -93,7 +99,13 @@ export class ShoppingWidgetsComponent implements OnInit, OnDestroy {
   }
 
   public removeItem(item: any) {
-    this.cartService.removeFromCart(item);
+    this.cartService.removeFromCart(item).then(
+      responseData => {
+        console.log('responseData DELETE', responseData);
+        // this.globalFacadeService.updateCartState(responseData || []);
+        // this.globalFacadeService.updateBusinessState(responseData[0].Business || {});
+      },
+    );
   }
 
   public getTotal(cart): any {
@@ -107,11 +119,5 @@ export class ShoppingWidgetsComponent implements OnInit, OnDestroy {
   public getTotalPricePerItem(item: CartItem) {
     let price = this.cartService.getPriceofProduct(item.Product, item.quantity);
     return price * item.quantity;
-  }
-
-  public goToCheckout(cart: Cart, cartITems?) {
-    let cartId = cart.id;
-    let cartIds = cartITems ? cartITems.map((i) => i.id) : cart.CartItems.map((i) => i.id);
-    this.router.navigate(['/checkout'], { queryParams: { cartId, cartIds } });
   }
 }

@@ -5,13 +5,15 @@ export interface Cart {
   id?: number;
   BusinessId?: number;
   market?: string;
-  Business?: {
-    name?: string;
-    logo?: string;
-    cellphone?: string;
-    email?: string;
-    address?: string;
-  };
+  Business?: IBusiness;
+}
+
+export interface IBusiness {
+  name?: string;
+  logo?: string;
+  cellphone?: string;
+  email?: string;
+  address?: string;
 }
 
 export interface Stock {
