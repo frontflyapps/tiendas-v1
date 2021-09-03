@@ -9,6 +9,7 @@ import { ShowSnackbarService } from '../../../core/services/show-snackbar/show-s
 import { environment } from '../../../../environments/environment';
 import { AuthenticationService } from '../../../core/services/authentication/authentication.service';
 import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-in-user.service';
+import { CUBAN_PHONE_START_5, EMAIL_REGEX } from '../../../core/classes/regex.const';
 
 @Component({
   selector: 'app-my-account',
@@ -62,11 +63,11 @@ export class MyAccountComponent implements OnInit {
     private fb: FormBuilder,
     private translate: TranslateService,
     private spinner: NgxSpinnerService,
-    private utilsService: UtilsService,
     private router: Router,
     private route: ActivatedRoute,
     private showSnackbar: ShowSnackbarService,
     private loggedInUserService: LoggedInUserService,
+    public utilsService: UtilsService,
   ) {
     this.message = '';
     this.isRegisterToPay = localStorage.getItem('isRegisterToPay') ? true : false;
@@ -145,13 +146,22 @@ export class MyAccountComponent implements OnInit {
     this.registrationForm = this.fb.group({
       name: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
       lastname: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
-      username: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
-      phone: [null, [Validators.pattern(/^(\+|[0-9])([0-9]*)$/), Validators.minLength(6)]],
+      username: [null],
+      phone: [null, [
+        Validators.pattern(CUBAN_PHONE_START_5),
+        Validators.minLength(8),
+        Validators.maxLength(8),
+      ]],
       address: [null, []],
-      email: [null, [Validators.required, Validators.email]],
+      email: [null, [
+        Validators.required,
+        Validators.email,
+        Validators.pattern(EMAIL_REGEX),
+      ]],
       // recaptcha: ['', Validators.required],
       passwords: this.fromPassRegister,
     });
+    this.registrationForm.markAllAsTouched();
   }
 
   createValidationForm() {

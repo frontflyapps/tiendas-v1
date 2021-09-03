@@ -45,6 +45,16 @@ app-my-account {
     // object-position: center;
   }
 
+  #phone.mat-form-field-appearance-outline {
+    .mat-form-field-prefix {
+      top: 0 !important;
+    }
+
+    .mat-input-element {
+      font: caption;
+    }
+  }
+
   .span-link {
     cursor: pointer;
     padding: 5px 10px;
