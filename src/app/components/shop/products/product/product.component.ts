@@ -112,4 +112,10 @@ export class ProductComponent implements OnInit, OnDestroy {
       }
     });
   }
+
+  public onGoToProduct(product) {
+    this.router.navigate(['/product'],
+      { queryParams: { productId: product?.id, stockId: product?.Stock?.id } })
+      .then();
+  }
 }

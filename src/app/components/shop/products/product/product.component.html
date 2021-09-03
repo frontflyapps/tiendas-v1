@@ -39,7 +39,8 @@
     </a>
   </div>
 
-  <div fxLayout="column" class="product-info-wrapper" ngClass.gt-sm="p-3" ngClass.lt-md="p-2 w-100">
+  <div fxLayout="column" class="product-info-wrapper"
+       (click)="onGoToProduct(product)" ngClass.gt-sm="p-3" ngClass.lt-md="p-2 w-100">
     <span class="category">
       {{ utilsService.parserLanguage(product.Category.name, language) }}
     </span>
