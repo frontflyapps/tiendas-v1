@@ -9,7 +9,7 @@ import { ShowSnackbarService } from '../../../core/services/show-snackbar/show-s
 import { environment } from '../../../../environments/environment';
 import { AuthenticationService } from '../../../core/services/authentication/authentication.service';
 import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-in-user.service';
-import { CHARACTERS_AND_NUMBERS, CUBAN_PHONE_START_5, EMAIL_REGEX } from '../../../core/classes/regex.const';
+import { CUBAN_PHONE_START_5, EMAIL_REGEX, USERNAME } from '../../../core/classes/regex.const';
 
 @Component({
   selector: 'app-my-account',
@@ -148,7 +148,7 @@ export class MyAccountComponent implements OnInit {
       lastname: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
       username: [null, [
         Validators.required,
-        Validators.pattern(CHARACTERS_AND_NUMBERS),
+        Validators.pattern(USERNAME),
       ]],
       phone: [null, [
         Validators.pattern(CUBAN_PHONE_START_5),

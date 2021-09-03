@@ -140,7 +140,7 @@
               <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline">
                 <mat-label>{{ 'Username' | translate }}</mat-label>
                 <input matInput placeholder="{{ 'Username' | translate }}" required
-                       (keypress)="utilsService.keyPressAlphaAndNumbers($event)"
+                       (keypress)="utilsService.keyPressAlphaAndNumbersModUsername($event)"
                        [formControl]="registrationForm.controls['username']" />
                 <mat-error *ngIf="registrationForm.controls['username'].hasError('required')">
                   {{ 'Username' | translate }} <strong>{{ 'is required' | translate }}</strong>

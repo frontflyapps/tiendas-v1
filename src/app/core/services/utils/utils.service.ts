@@ -193,6 +193,16 @@ export class UtilsService {
     }
   }
 
+  keyPressAlphaAndNumbersModUsername(event) {
+    const inp = String.fromCharCode(event.keyCode);
+    if (/[a-zA-Z0-9@.]/.test(inp)) {
+      return true;
+    } else {
+      event.preventDefault();
+      return false;
+    }
+  }
+
   // keyPressNumbers(event) {
   //   const charCode = (event.which) ? event.which : event.keyCode;
   //   // Only Numbers 0-9
