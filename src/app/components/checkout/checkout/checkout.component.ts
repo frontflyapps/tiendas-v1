@@ -772,12 +772,19 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   _getPhone(user, storagePayData) {
     if (storagePayData) {
-      return storagePayData.phone;
+      return this.getOnly8DigitsPhone(storagePayData.phone);
     }
     if (user && user.phone) {
-      return user.phone;
+      return this.getOnly8DigitsPhone(user.phone);
     }
     return null;
+  }
+
+  getOnly8DigitsPhone(phone) {
+    if (phone.length === 10 && phone.startsWith('53')) {
+      phone = phone.slice(2);
+    }
+    return phone;
   }
 
   _getEmail(user, storagePayData) {
