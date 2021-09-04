@@ -68,7 +68,7 @@
         matTooltip="{{ 'Añadir al carrito' | translate }}"
         class="btnAddCart"
         mat-mini-fab
-        (click)="addToCart(product)"
+        (click)="$event.stopPropagation();addToCart(product)"
         style="z-index: 10"
       >
         <mat-icon>shopping_cart</mat-icon>

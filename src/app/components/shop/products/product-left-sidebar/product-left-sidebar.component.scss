@@ -13,6 +13,10 @@
   border-radius: 4px;
   text-align: center;
   font-weight: 500;
+
+  @media (max-width: 360px) {
+    width: 274px;
+  }
 }
 
 .no-border {
@@ -29,7 +33,7 @@
   background-color: #fafafa;
   margin-bottom: 8px;
   overflow-x: auto;
-  padding: 0px 16px;
+  padding: 0 16px;
   box-sizing: border-box;
   -ms-overflow-style: none;
   /* IE and Edge */
