@@ -1,11 +1,9 @@
-import { environment } from './../../../../environments/environment';
-import { IPagination } from './../../../core/classes/pagination.class';
+import { environment } from '../../../../environments/environment';
+import { IPagination } from '../../../core/classes/pagination.class';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CartItem } from './../../../modals/cart-item';
-import { CartService } from '../../shared/services/cart.service';
 import { Subject } from 'rxjs';
-import { LoggedInUserService } from './../../../core/services/loggedInUser/logged-in-user.service';
-import { UtilsService } from './../../../core/services/utils/utils.service';
+import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-in-user.service';
+import { UtilsService } from '../../../core/services/utils/utils.service';
 import { takeUntil, take, map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { MetaService } from 'src/app/core/services/meta.service';
