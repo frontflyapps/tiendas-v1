@@ -16,7 +16,6 @@ export class SafeHtmlPipe implements PipeTransform {
     /** Preparo las url de los videos de youtube con cada una de sus posibilidades */
     html = html.replace(/www.youtube.com\/watch\?v=/g, 'www.youtube.com/embed/');
     html = html.replace(/youtu.be\//g, 'www.youtube.com/embed/');
-    // console.log('🚀 ~ file: safe-html.pipe.ts ~ line 18 ~ SafeHtmlPipe ~ processForCKEditor ~ html', html);
     return html;
   }
 }

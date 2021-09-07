@@ -5,6 +5,11 @@ import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
 
 if (environment.production) {
+  if (window) {
+    window.console.log = () => {
+    };
+  }
+
   enableProdMode();
 }
 

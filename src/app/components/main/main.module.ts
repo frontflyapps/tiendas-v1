@@ -32,6 +32,7 @@ import { MatInputModule } from '@angular/material/input';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { PreviousRouteService } from '../../core/services/previous-route/previous-route.service';
 import { PipesModule } from 'src/app/core/pipes/pipes.module';
+import { FooterModule } from '../shared/footer/footer.module';
 
 @NgModule({
   declarations: [
@@ -69,6 +70,7 @@ import { PipesModule } from 'src/app/core/pipes/pipes.module';
     FlexLayoutModule,
     MatButtonModule,
     MatDialogModule,
+    FooterModule,
   ],
   providers: [SidebarMenuService, PreviousRouteService],
 })

@@ -39,4 +39,4 @@ export class MetaService {
 // <meta property="og:site_name" content="Tienda online">
 // <meta property="og:title" content="Tienda online">
 // <meta property="og:description" content="Tienda online, negocios B2C and C2C">
-// <meta property="og:image" content="https://www.sinkoola.com/assets/images/share-img.png">
+// <meta property="og:image" content="https://www.domain.com/assets/images/share-img.png">

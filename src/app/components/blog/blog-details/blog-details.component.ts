@@ -28,10 +28,8 @@ export class BlogDetailsComponent implements OnInit, OnDestroy {
     private loggedInUserService: LoggedInUserService,
   ) {
     this.route.params.subscribe((data) => {
-      // console.log('BlogDetailsComponent -> data', data);
       this.blogService.getBlog(data.id).subscribe((result) => {
         this.selectedArticle = result.data;
-        console.log('BlogDetailsComponent -> constructor ->  this.selectedArticle', this.selectedArticle);
         this.showData = true;
       });
     });

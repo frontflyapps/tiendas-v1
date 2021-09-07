@@ -1,10 +1,10 @@
 import { MetaService } from 'src/app/core/services/meta.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Observable, of, Subject } from 'rxjs';
-import { CartItem, Cart } from './../../../modals/cart-item';
-import { CurrencyService } from './../../../core/services/currency/currency.service';
-import { LoggedInUserService } from './../../../core/services/loggedInUser/logged-in-user.service';
-import { environment } from './../../../../environments/environment';
+import { Subject } from 'rxjs';
+import { CartItem, Cart } from '../../../modals/cart-item';
+import { CurrencyService } from '../../../core/services/currency/currency.service';
+import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-in-user.service';
+import { environment } from '../../../../environments/environment';
 import { takeUntil } from 'rxjs/operators';
 import { CartService } from '../../shared/services/cart.service';
 import { UtilsService } from 'src/app/core/services/utils/utils.service';
@@ -19,7 +19,7 @@ import { Router } from '@angular/router';
 export class CartComponent implements OnInit, OnDestroy {
   public shoppingCartItems: CartItem[] = [];
   public carts: Cart[] = [];
-  inLoading: boolean = false;
+  inLoading = false;
   language: any;
   _unsubscribeAll: Subject<any>;
   imageUrl = environment.imageUrl;
@@ -49,15 +49,15 @@ export class CartComponent implements OnInit, OnDestroy {
     this.loggedInUserService.$loggedInUserUpdated.pipe(takeUntil(this._unsubscribeAll)).subscribe((data) => {
       this.loggedInUser = this.loggedInUserService.getLoggedInUser();
       if (this.loggedInUser) {
-        this.cartService.getCart().then((data) => {
-          this.carts = data.data;
+        this.cartService.getCart().then((dataCart: any) => {
+          this.carts = dataCart.data;
         });
       }
     });
 
     if (this.loggedInUser) {
-      this.cartService.getCart().then((data) => {
-        this.carts = data.data;
+      this.cartService.getCart().then((dataCart: any) => {
+        this.carts = dataCart.data;
       });
     } else {
       this.carts = [...this.cartService.getCartNoLogged()];
@@ -68,7 +68,6 @@ export class CartComponent implements OnInit, OnDestroy {
     });
 
     this.cartService.$cartItemsUpdated.pipe(takeUntil(this._unsubscribeAll)).subscribe((_carts) => {
-      console.log('CartComponent -> ngOnInit -> _carts', _carts);
       this.carts = [..._carts];
     });
   }
@@ -115,6 +114,7 @@ export class CartComponent implements OnInit, OnDestroy {
         this.inLoading = false;
       });
   }
+
   // Get Total
   public getTotal(cart?): any {
     return this.cartService.getTotalAmount(cart);

@@ -1,29 +1,37 @@
+<div *ngIf="(this.cartService.$cartItemsUpdated | async)?.length > 0"
+     (click)="cartService.goToCheckout(theCart)"
+     class="sticky-proceed-pay">
+  {{'Proceder al pago'|translate}}&nbsp;({{itemsOnCart}}&nbsp;{{'productos'}})
+</div>
+
 <div class="left-sidebar-wrapper sec-padding" ngClass.lt-sm="pt-3">
   <div class="container-search">
     <div class="header">
       <div></div>
       <div fxLayoutAlign="start center" fxLayoutGap="1rem">
         <div fxHide fxShow.lt-md fxLayout="row" fxLayoutAlign="space-between start" style="margin-bottom: 5px">
-          <button style="border-radius: 25px; border: 1.5px solid rgba(0, 0, 0, 0.12)" mat-button (click)="openDialog()">
+          <button style="border-radius: 25px; border: 1.5px solid rgba(0, 0, 0, 0.12)" mat-button
+                  (click)="openDialog()">
             <mat-icon>search</mat-icon>
             {{ 'Filtros' | translate }}
           </button>
         </div>
         <span class="bold">{{ 'Ordenar' | translate }}</span>
         <div (click)="onSetOrder(this.queryProduct?.order == 'id' ? '-id' : 'id')" class="chip-order"
-          [ngClass]="{ selected: this.queryProduct?.order == 'id' || this.queryProduct?.order == '-id' }">
+             [ngClass]="{ selected: this.queryProduct?.order == 'id' || this.queryProduct?.order == '-id' }">
           {{ 'Creación' | translate }}
           <mat-icon *ngIf="this.queryProduct?.order == 'id'">north</mat-icon>
           <mat-icon *ngIf="this.queryProduct?.order == '-id'">south</mat-icon>
         </div>
         <div (click)="onSetOrder(this.queryProduct?.order == 'name' ? '-name' : 'name')" class="chip-order"
-          [ngClass]="{ selected: this.queryProduct?.order == 'name' || this.queryProduct?.order == '-name' }">
+             [ngClass]="{ selected: this.queryProduct?.order == 'name' || this.queryProduct?.order == '-name' }">
           {{ 'Nombre' | translate }}
           <mat-icon *ngIf="this.queryProduct?.order == 'name'">north</mat-icon>
           <mat-icon *ngIf="this.queryProduct?.order == '-name'">south</mat-icon>
         </div>
-        <div (click)="onSetOrder(this.queryProduct?.order == 'fromPrice' ? '-fromPrice' : 'fromPrice')" class="chip-order"
-          [ngClass]="{ selected: this.queryProduct?.order == 'fromPrice' || this.queryProduct?.order == '-fromPrice' }">
+        <div (click)="onSetOrder(this.queryProduct?.order == 'fromPrice' ? '-fromPrice' : 'fromPrice')"
+             class="chip-order"
+             [ngClass]="{ selected: this.queryProduct?.order == 'fromPrice' || this.queryProduct?.order == '-fromPrice' }">
           {{ 'Precio' | translate }}
           <mat-icon *ngIf="this.queryProduct?.order == 'fromPrice'">north</mat-icon>
           <mat-icon *ngIf="this.queryProduct?.order == '-fromPrice'">south</mat-icon>
@@ -47,13 +55,15 @@
         <div class="toggles-wrapper border-right" fxLayout="column" style="border-radius: 15px" fxLayout.lt-md="column">
           <div class="toggles" fxFlex.lt-md="100">
             <mat-accordion [multi]="true">
-              <mat-expansion-panel class="mat-elevation-z0 no-border bg-acordion" [expanded]="!isHandset || this.categoriesIds.length">
+              <mat-expansion-panel class="mat-elevation-z0 no-border bg-acordion"
+                                   [expanded]="!isHandset || this.categoriesIds.length">
                 <mat-expansion-panel-header>
                   <mat-panel-title>
                     <span>{{ 'Categories' | translate }}</span>
                   </mat-panel-title>
                 </mat-expansion-panel-header>
-                <app-categories [categoriesIds]="this.categoriesIds" (categoryChanged)="onCategoriesChanged($event)"></app-categories>
+                <app-categories [categoriesIds]="this.categoriesIds"
+                                (categoryChanged)="onCategoriesChanged($event)"></app-categories>
               </mat-expansion-panel>
 
               <mat-expansion-panel class="mat-elevation-z0 no-border bg-acordion" [expanded]="!isHandset">
@@ -138,81 +148,99 @@
         </div>
 
         <ng-container *ngIf="loading">
-          <div class="p-2 my-2 w-100" class="skeletonLoadingContainer" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="gappx">
-            <div class="loader h-100" style="padding: 16px; box-sizing: border-box" fxFlex="30" fxLayout="center center">
+          <div class="p-2 my-2 w-100" class="skeletonLoadingContainer" fxLayout="row" fxLayoutAlign="start start"
+               fxLayoutGap="gappx">
+            <div class="loader h-100" style="padding: 16px; box-sizing: border-box" fxFlex="30"
+                 fxLayout="center center">
               <div class="imageSkeleton"></div>
             </div>
             <div fxFlex="70" class="px-2">
               <div class="py-2 my-2 w-100 loader" style="border-radius: 4px" fxLayout="row" fxLayoutAlign="start center"
-                fxLayoutGap="gappx"></div>
+                   fxLayoutGap="gappx"></div>
               <div class="py-2 my-2 w-100 loader" style="border-radius: 4px" fxLayout="row" fxLayoutAlign="start center"
-                fxLayoutGap="gappx"></div>
-              <div class="py-2 my-2 w-25 loader" style="border-radius: 4px" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="gappx">
+                   fxLayoutGap="gappx"></div>
+              <div class="py-2 my-2 w-25 loader" style="border-radius: 4px" fxLayout="row" fxLayoutAlign="start center"
+                   fxLayoutGap="gappx">
               </div>
             </div>
           </div>
-          <div class="p-2 my-2 w-100" class="skeletonLoadingContainer" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="gappx">
-            <div class="loader h-100" style="padding: 16px; box-sizing: border-box" fxFlex="30" fxLayout="center center">
+          <div class="p-2 my-2 w-100" class="skeletonLoadingContainer" fxLayout="row" fxLayoutAlign="start start"
+               fxLayoutGap="gappx">
+            <div class="loader h-100" style="padding: 16px; box-sizing: border-box" fxFlex="30"
+                 fxLayout="center center">
               <div class="imageSkeleton"></div>
             </div>
             <div fxFlex="70" class="px-2">
               <div class="py-2 my-2 w-100 loader" style="border-radius: 4px" fxLayout="row" fxLayoutAlign="start center"
-                fxLayoutGap="gappx"></div>
+                   fxLayoutGap="gappx"></div>
               <div class="py-2 my-2 w-100 loader" style="border-radius: 4px" fxLayout="row" fxLayoutAlign="start center"
-                fxLayoutGap="gappx"></div>
-              <div class="py-2 my-2 w-25 loader" style="border-radius: 4px" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="gappx">
+                   fxLayoutGap="gappx"></div>
+              <div class="py-2 my-2 w-25 loader" style="border-radius: 4px" fxLayout="row" fxLayoutAlign="start center"
+                   fxLayoutGap="gappx">
               </div>
             </div>
           </div>
-          <div class="p-2 my-2 w-100" class="skeletonLoadingContainer" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="gappx">
-            <div class="loader h-100" style="padding: 16px; box-sizing: border-box" fxFlex="30" fxLayout="center center">
+          <div class="p-2 my-2 w-100" class="skeletonLoadingContainer" fxLayout="row" fxLayoutAlign="start start"
+               fxLayoutGap="gappx">
+            <div class="loader h-100" style="padding: 16px; box-sizing: border-box" fxFlex="30"
+                 fxLayout="center center">
               <div class="imageSkeleton"></div>
             </div>
             <div fxFlex="70" class="px-2">
               <div class="py-2 my-2 w-100 loader" style="border-radius: 4px" fxLayout="row" fxLayoutAlign="start center"
-                fxLayoutGap="gappx"></div>
+                   fxLayoutGap="gappx"></div>
               <div class="py-2 my-2 w-100 loader" style="border-radius: 4px" fxLayout="row" fxLayoutAlign="start center"
-                fxLayoutGap="gappx"></div>
-              <div class="py-2 my-2 w-25 loader" style="border-radius: 4px" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="gappx">
+                   fxLayoutGap="gappx"></div>
+              <div class="py-2 my-2 w-25 loader" style="border-radius: 4px" fxLayout="row" fxLayoutAlign="start center"
+                   fxLayoutGap="gappx">
               </div>
             </div>
           </div>
-          <div class="p-2 my-2 w-100" class="skeletonLoadingContainer" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="gappx">
-            <div class="loader h-100" style="padding: 16px; box-sizing: border-box" fxFlex="30" fxLayout="center center">
+          <div class="p-2 my-2 w-100" class="skeletonLoadingContainer" fxLayout="row" fxLayoutAlign="start start"
+               fxLayoutGap="gappx">
+            <div class="loader h-100" style="padding: 16px; box-sizing: border-box" fxFlex="30"
+                 fxLayout="center center">
               <div class="imageSkeleton"></div>
             </div>
             <div fxFlex="70" class="px-2">
               <div class="py-2 my-2 w-100 loader" style="border-radius: 4px" fxLayout="row" fxLayoutAlign="start center"
-                fxLayoutGap="gappx"></div>
+                   fxLayoutGap="gappx"></div>
               <div class="py-2 my-2 w-100 loader" style="border-radius: 4px" fxLayout="row" fxLayoutAlign="start center"
-                fxLayoutGap="gappx"></div>
-              <div class="py-2 my-2 w-25 loader" style="border-radius: 4px" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="gappx">
+                   fxLayoutGap="gappx"></div>
+              <div class="py-2 my-2 w-25 loader" style="border-radius: 4px" fxLayout="row" fxLayoutAlign="start center"
+                   fxLayoutGap="gappx">
               </div>
             </div>
           </div>
-          <div class="p-2 my-2 w-100" class="skeletonLoadingContainer" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="gappx">
-            <div class="loader h-100" style="padding: 16px; box-sizing: border-box" fxFlex="30" fxLayout="center center">
+          <div class="p-2 my-2 w-100" class="skeletonLoadingContainer" fxLayout="row" fxLayoutAlign="start start"
+               fxLayoutGap="gappx">
+            <div class="loader h-100" style="padding: 16px; box-sizing: border-box" fxFlex="30"
+                 fxLayout="center center">
               <div class="imageSkeleton"></div>
             </div>
             <div fxFlex="70" class="px-2">
               <div class="py-2 my-2 w-100 loader" style="border-radius: 4px" fxLayout="row" fxLayoutAlign="start center"
-                fxLayoutGap="gappx"></div>
+                   fxLayoutGap="gappx"></div>
               <div class="py-2 my-2 w-100 loader" style="border-radius: 4px" fxLayout="row" fxLayoutAlign="start center"
-                fxLayoutGap="gappx"></div>
-              <div class="py-2 my-2 w-25 loader" style="border-radius: 4px" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="gappx">
+                   fxLayoutGap="gappx"></div>
+              <div class="py-2 my-2 w-25 loader" style="border-radius: 4px" fxLayout="row" fxLayoutAlign="start center"
+                   fxLayoutGap="gappx">
               </div>
             </div>
           </div>
-          <div class="p-2 my-2 w-100" class="skeletonLoadingContainer" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="gappx">
-            <div class="loader h-100" style="padding: 16px; box-sizing: border-box" fxFlex="30" fxLayout="center center">
+          <div class="p-2 my-2 w-100" class="skeletonLoadingContainer" fxLayout="row" fxLayoutAlign="start start"
+               fxLayoutGap="gappx">
+            <div class="loader h-100" style="padding: 16px; box-sizing: border-box" fxFlex="30"
+                 fxLayout="center center">
               <div class="imageSkeleton"></div>
             </div>
             <div fxFlex="70" class="px-2">
               <div class="py-2 my-2 w-100 loader" style="border-radius: 4px" fxLayout="row" fxLayoutAlign="start center"
-                fxLayoutGap="gappx"></div>
+                   fxLayoutGap="gappx"></div>
               <div class="py-2 my-2 w-100 loader" style="border-radius: 4px" fxLayout="row" fxLayoutAlign="start center"
-                fxLayoutGap="gappx"></div>
-              <div class="py-2 my-2 w-25 loader" style="border-radius: 4px" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="gappx">
+                   fxLayoutGap="gappx"></div>
+              <div class="py-2 my-2 w-25 loader" style="border-radius: 4px" fxLayout="row" fxLayoutAlign="start center"
+                   fxLayoutGap="gappx">
               </div>
             </div>
           </div>
@@ -220,8 +248,9 @@
 
         <div fxLayout="row wrap">
           <div fxFlex="100">
-            <mat-paginator (page)="OnPaginatorChange($event)" [pageIndex]="queryProduct.page" [pageSize]="queryProduct.limit"
-              [length]="this.queryProduct.total" [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+            <mat-paginator (page)="OnPaginatorChange($event)" [pageIndex]="queryProduct.page"
+                           [pageSize]="queryProduct.limit"
+                           [length]="this.queryProduct.total" [pageSizeOptions]="pageSizeOptions"></mat-paginator>
           </div>
         </div>
       </div>

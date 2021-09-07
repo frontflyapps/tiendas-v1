@@ -32,8 +32,6 @@ export class ProductZoomComponent implements OnInit {
     if (this.maxWidth < 100) {
       this.maxWidth = this.maxWidth + this.count;
       this.zoomImage.nativeElement.style.maxWidth = this.maxWidth + '%';
-      console.log(this.count);
-      console.log(this.maxWidth);
     }
   }
 
@@ -41,8 +39,6 @@ export class ProductZoomComponent implements OnInit {
     if (this.maxWidth > 80) {
       this.maxWidth = this.maxWidth - this.count;
       this.zoomImage.nativeElement.style.maxWidth = this.maxWidth + '%';
-      console.log(this.count);
-      console.log(this.maxWidth);
     }
   }
 }

@@ -1,14 +1,11 @@
-import { CurrencyService } from 'src/app/core/services/currency/currency.service';
-import { IPagination } from '../../classes/pagination.class';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { Observable } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ShowToastrService } from './../show-toastr/show-toastr.service';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { ShowToastrService } from '../show-toastr/show-toastr.service';
+import { HttpClient } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
 import { ShowSnackbarService } from '../show-snackbar/show-snackbar.service';
-import { CurrencyPipe } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +20,8 @@ export class UtilsService {
     private translateService: TranslateService,
     private showSnackbar: ShowSnackbarService,
     private httpClient: HttpClient,
-  ) {}
+  ) {
+  }
 
   public getUrlImages(): string {
     return environment.apiUrl;
@@ -56,8 +54,8 @@ export class UtilsService {
         ? this.translateService.instant('Error ') + action + ' ' + nomenclator
         : this.translateService.instant('Error ') + action
       : this.translateService.instant(
-          `Server response failed, check your connection to the network, or contact the administrators`,
-        );
+        `Server response failed, check your connection to the network, or contact the administrators`,
+      );
     let msg = alternative;
     if (error.errors && error.errors.length) {
       msg = error.errors.map(
@@ -88,8 +86,8 @@ export class UtilsService {
         ? this.translateService.instant('Error ') + action + ' ' + nomenclator
         : this.translateService.instant('Error ') + action
       : this.translateService.instant(
-          `Server response failed, check your connection to the network, or contact the administrators`,
-        );
+        `Server response failed, check your connection to the network, or contact the administrators`,
+      );
     let msg = alternative;
     if (error.errors && error.errors.length) {
       msg = error.errors.map(
@@ -114,7 +112,6 @@ export class UtilsService {
   }
 
   parserLanguage(item, language) {
-    // console.log(item, 'asdljhaskdgaskdgsj');
     if (item[language] && item[language].length) {
       return item[language];
     } else if (item['en'] && item['en'].length) {
@@ -125,24 +122,95 @@ export class UtilsService {
   }
 
   public isObjectEquals(x, y): boolean {
-    if (x === y) return true;
+    if (x === y) {
+      return true;
+    }
 
-    if (!(x instanceof Object) || !(y instanceof Object)) return false;
+    if (!(x instanceof Object) || !(y instanceof Object)) {
+      return false;
+    }
 
-    if (x.constructor !== y.constructor) return false;
+    if (x.constructor !== y.constructor) {
+      return false;
+    }
 
     for (let p in x) {
-      if (!x.hasOwnProperty(p)) continue;
+      if (!x.hasOwnProperty(p)) {
+        continue;
+      }
 
-      if (!y.hasOwnProperty(p)) return false;
+      if (!y.hasOwnProperty(p)) {
+        return false;
+      }
 
-      if (x[p] === y[p]) continue;
+      if (x[p] === y[p]) {
+        continue;
+      }
 
-      if (typeof x[p] !== 'object') return false;
+      if (typeof x[p] !== 'object') {
+        return false;
+      }
 
-      if (!this.isObjectEquals(x[p], y[p])) return false;
+      if (!this.isObjectEquals(x[p], y[p])) {
+        return false;
+      }
     }
-    for (let p in y) if (y.hasOwnProperty(p) && !x.hasOwnProperty(p)) return false;
+    for (let p in y) {
+      if (y.hasOwnProperty(p) && !x.hasOwnProperty(p)) {
+        return false;
+      }
+    }
     return true;
   }
+
+  keyPressAlpha(event) {
+    const inp = String.fromCharCode(event.keyCode);
+    if (/[a-zA-Z]/.test(inp)) {
+      return true;
+    } else {
+      event.preventDefault();
+      return false;
+    }
+  }
+
+  keyPressNumbers(event) {
+    const inp = String.fromCharCode(event.keyCode);
+    if (/[0-9]/.test(inp)) {
+      return true;
+    } else {
+      event.preventDefault();
+      return false;
+    }
+  }
+
+  keyPressAlphaAndNumbers(event) {
+    const inp = String.fromCharCode(event.keyCode);
+    if (/[a-zA-Z0-9]/.test(inp)) {
+      return true;
+    } else {
+      event.preventDefault();
+      return false;
+    }
+  }
+
+  keyPressAlphaAndNumbersModUsername(event) {
+    const inp = String.fromCharCode(event.keyCode);
+    if (/[a-zA-Z0-9@.]/.test(inp)) {
+      return true;
+    } else {
+      event.preventDefault();
+      return false;
+    }
+  }
+
+  // keyPressNumbers(event) {
+  //   const charCode = (event.which) ? event.which : event.keyCode;
+  //   // Only Numbers 0-9
+  //   if ((charCode < 48 || charCode > 57)) {
+  //     event.preventDefault();
+  //     return false;
+  //   } else {
+  //     return true;
+  //   }
+  // }
 }

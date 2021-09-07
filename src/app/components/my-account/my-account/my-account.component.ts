@@ -1,17 +1,15 @@
-import { Component, HostListener, Inject, OnInit, ViewEncapsulation } from '@angular/core';
-
+import { Component, HostListener, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
 import { Router, ActivatedRoute } from '@angular/router';
-import { ShowToastrService } from './../../../core/services/show-toastr/show-toastr.service';
-import { takeUntil } from 'rxjs/operators';
+import { ShowToastrService } from '../../../core/services/show-toastr/show-toastr.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { UtilsService } from './../../../core/services/utils/utils.service';
+import { UtilsService } from '../../../core/services/utils/utils.service';
 import { TranslateService } from '@ngx-translate/core';
-import { ShowSnackbarService } from './../../../core/services/show-snackbar/show-snackbar.service';
-import { environment } from './../../../../environments/environment';
-import { AuthenticationService } from './../../../core/services/authentication/authentication.service';
-import { LoggedInUserService } from './../../../core/services/loggedInUser/logged-in-user.service';
+import { ShowSnackbarService } from '../../../core/services/show-snackbar/show-snackbar.service';
+import { environment } from '../../../../environments/environment';
+import { AuthenticationService } from '../../../core/services/authentication/authentication.service';
+import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-in-user.service';
+import { CUBAN_PHONE_START_5, EMAIL_REGEX, USERNAME } from '../../../core/classes/regex.const';
 
 @Component({
   selector: 'app-my-account',
@@ -65,11 +63,11 @@ export class MyAccountComponent implements OnInit {
     private fb: FormBuilder,
     private translate: TranslateService,
     private spinner: NgxSpinnerService,
-    private utilsService: UtilsService,
     private router: Router,
     private route: ActivatedRoute,
     private showSnackbar: ShowSnackbarService,
     private loggedInUserService: LoggedInUserService,
+    public utilsService: UtilsService,
   ) {
     this.message = '';
     this.isRegisterToPay = localStorage.getItem('isRegisterToPay') ? true : false;
@@ -126,8 +124,6 @@ export class MyAccountComponent implements OnInit {
           8000,
         );
       }
-      // console.log(this.pinForm.value);
-      // console.log(this.registrationForm.value);
     }
   }
 
@@ -150,13 +146,25 @@ export class MyAccountComponent implements OnInit {
     this.registrationForm = this.fb.group({
       name: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
       lastname: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
-      username: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
-      phone: [null, [Validators.pattern(/^(\+|[0-9])([0-9]*)$/), Validators.minLength(6)]],
+      username: [null, [
+        Validators.required,
+        Validators.pattern(USERNAME),
+      ]],
+      phone: [null, [
+        Validators.pattern(CUBAN_PHONE_START_5),
+        Validators.minLength(8),
+        Validators.maxLength(8),
+      ]],
       address: [null, []],
-      email: [null, [Validators.required, Validators.email]],
+      email: [null, [
+        Validators.required,
+        Validators.email,
+        Validators.pattern(EMAIL_REGEX),
+      ]],
       // recaptcha: ['', Validators.required],
       passwords: this.fromPassRegister,
     });
+    this.registrationForm.markAllAsTouched();
   }
 
   createValidationForm() {
@@ -468,15 +476,20 @@ export class MyAccountComponent implements OnInit {
         },
       );
   }
+
   //////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////
-  handleReset() {}
+  handleReset() {
+  }
 
-  handleExpire() {}
+  handleExpire() {
+  }
 
-  handleSuccess(event) {}
+  handleSuccess(event) {
+  }
 
-  handleLoad() {}
+  handleLoad() {
+  }
 
   /////////////////////////////////////////////////////////
 }

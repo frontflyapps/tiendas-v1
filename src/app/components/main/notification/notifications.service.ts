@@ -65,21 +65,20 @@ export class NotificationsService {
   public getCount() {
     return this.count;
   }
+
   public getTotal() {
     return this.Total;
   }
 
   public getInitialNotifications() {
-    console.log('Entre aqui.........');
-
     this._getNotifications(this.queryNotification, { status: 'not-read' }).subscribe((data) => {
       this.Notificaciones = data.data;
       this.count = data.meta.pagination.count;
       this.Total = data.meta.pagination.total;
       this.notificacionesNoLeidas = data.meta.pagination.total;
-      console.log('Jose pidiendo Notificaciones....', this.Notificaciones);
     });
   }
+
   ////// Funcion que se ejecuta cunado por socket hay algo nuevo ////
   public NuevasNotificaciones(): void {
     this.offset = 0;

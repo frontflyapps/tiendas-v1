@@ -21,7 +21,6 @@ export class SocketIoService {
 
     this.loggedInUserService.$loggedInUserUpdated.subscribe(() => {
       this.loggedInUser = this.loggedInUserService.getLoggedInUser();
-      console.log('El socket se connecta');
       this._initSocket(this.loggedInUserService.getTokenCookie());
     });
   }
@@ -41,7 +40,6 @@ export class SocketIoService {
 
   public disconnect() {
     if (this.socket) {
-      console.log('SOCKET DESCONECTADO CORRECTAMENTE');
       this.socket.disconnect();
     }
   }
@@ -52,7 +50,6 @@ export class SocketIoService {
         Authorization: token,
       },
     }).connect();
-    console.log('********SOCKET INICIALIZADO CORRECTAMENTE************', this.socket);
     const userId = this.loggedInUserService.getLoggedInUser()?.id;
     this.sendMessage('client-connected', { UserId: userId });
   }

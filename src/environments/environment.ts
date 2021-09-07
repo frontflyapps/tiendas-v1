@@ -6,11 +6,11 @@ const packageJson = require('../../package.json');
 export const environment = {
   production: false,
 
-  // apiUrl: 'http://192.168.1.17:8998/v1/',
-  // imageUrl: 'http://192.168.1.17:8998/v1/',
-  //
-  apiUrl: 'https://api.tiendascaracol.com/v1/',
-  imageUrl: 'https://api.tiendascaracol.com/v1/',
+  apiUrl: 'http://192.168.1.12:8998/v1/',
+  imageUrl: 'http://192.168.1.12:8998/v1/',
+
+  // apiUrl: 'https://api.tiendascaracol.com/v1/',
+  // imageUrl: 'https://api.tiendascaracol.com/v1/',
 
   defaultLanguage: 'es',
   currencyInternational: 'USD',
@@ -32,8 +32,8 @@ export const environment = {
       title: 'Tiendas Caracol S.A.',
       description: 'Tienda online desarrollada con el framework Angular permite la modelación de negocios B2C and C2C',
       keywords: 'HTML, CSS, JavaScript, Angular, Tienda Online B2B, Sin Cola, comercio online En Cuba',
-      shareImg: 'https://www.mcvcommercial.com/assets/images/share-img.png',
-      url: 'https://www.mcvcommercial.com/',
+      shareImg: 'https://www.tiendascaracol.com/assets/images/share-img.png',
+      url: 'https://www.tiendascaracol.com/',
     },
   },
 

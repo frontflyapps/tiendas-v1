@@ -1,8 +1,8 @@
 import { MetaService } from 'src/app/core/services/meta.service';
-import { UtilsService } from './../../../core/services/utils/utils.service';
+import { UtilsService } from '../../../core/services/utils/utils.service';
 import { Component, OnInit } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
-import { Product } from './../../../modals/product.model';
+import { Product } from '../../../modals/product.model';
 import { ProductService } from '../../shared/services/product.service';
 import { CartService } from '../../shared/services/cart.service';
 import { LoggedInUserService } from 'src/app/core/services/loggedInUser/logged-in-user.service';

@@ -1,7 +1,18 @@
 @import '../../../assets/scss/theme/variables';
 
+.router-link-active {
+  background-color: $menu-hover !important;
+}
+
+.main-logo-container {
+  @media (max-width: 600px) {
+    position: relative;
+    top: -3px;
+  }
+}
+
 .logo-img-main {
-  max-height: 34px;
+  max-height: 26px;
   width: auto;
   height: auto;
   max-width: 170px;
@@ -109,7 +120,7 @@ app-main,
           border-style: none;
           border-width: 1px;
           background-color: $white !important;
-          border-radius: 8px;
+          border-radius: 4px;
           border-color: $white-dark;
           -webkit-transition: box-shadow 0.3s ease-out;
           transition: box-shadow 0.3s ease-out;
@@ -142,8 +153,8 @@ app-main,
         transition: all 250ms ease-in-out;
         text-transform: uppercase;
         background-color: $theme-main-accent-300;
-        border-radius: 0 8px 8px 0;
-        -webkit-border-radius: 0 8px 8px 0;
+        border-radius: 4px;
+        -webkit-border-radius: 4px;
         font-weight: 500;
         text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
         -webkit-box-shadow: none;
@@ -154,7 +165,7 @@ app-main,
 
     .userWidgets {
       a {
-        color: #6d3112;
+        color: $theme-main;
       }
 
       padding: 8px 0px;
@@ -167,15 +178,15 @@ app-main,
     color: $white;
     z-index: 9000 !important;
     position: relative !important;
-    padding: 0px 16px;
+    padding: 0 16px;
     box-sizing: border-box !important;
 
     .userWidgets {
       a {
-        color: #6d3112;
+        color: $theme-main-dark;
       }
 
-      padding: 8px 0px;
+      padding: 8px 0;
       margin-left: auto !important;
     }
   }
@@ -183,6 +194,8 @@ app-main,
   .mobile-search {
     width: 100%;
     max-width: 700px;
+    border-radius: 4px;
+    background-color: white;
 
     input {
       height: 44px;
@@ -201,12 +214,11 @@ app-main,
     button {
       width: 50px;
       height: 44px;
-      border-top-right-radius: 8px;
-      border-bottom-right-radius: 8px;
+      border-radius: 4px;
       padding: 12px 14px;
       border: none;
-      background-color: $theme-main-accent-300;
-      color: $theme-main-dark;
+      background-color: $theme-main-accent-400;
+      color: black;
       font-weight: 500;
 
       &:focus {

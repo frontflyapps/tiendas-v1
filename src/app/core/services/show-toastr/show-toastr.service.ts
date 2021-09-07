@@ -22,7 +22,6 @@ export class ShowToastrService {
     timeout = timeout ? timeout : 5000;
     secundary = secundary ? secundary : '';
 
-    // console.log("Entre Aqui");
     return this.toastr.success(msj, secundary, {
       timeOut: timeout,
       progressBar: true,

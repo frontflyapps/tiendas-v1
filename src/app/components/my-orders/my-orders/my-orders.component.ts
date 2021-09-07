@@ -1,24 +1,24 @@
 import { MetaService } from 'src/app/core/services/meta.service';
-import { ShowToastrService } from './../../../core/services/show-toastr/show-toastr.service';
-import { IPagination } from './../../../core/classes/pagination.class';
+import { ShowToastrService } from '../../../core/services/show-toastr/show-toastr.service';
+import { IPagination } from '../../../core/classes/pagination.class';
 import { Component, OnInit, OnDestroy, ViewEncapsulation, HostListener, ViewChild, AfterViewInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil, debounceTime } from 'rxjs/operators';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-
-import { environment } from './../../../../environments/environment';
+import { environment } from '../../../../environments/environment';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
-import { UtilsService } from './../../../core/services/utils/utils.service';
+import { UtilsService } from '../../../core/services/utils/utils.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { MyOrdersService } from '../service/my-orders.service';
-import { LoggedInUserService } from './../../../core/services/loggedInUser/logged-in-user.service';
-import { CurrencyService } from './../../../core/services/currency/currency.service';
+import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-in-user.service';
+import { CurrencyService } from '../../../core/services/currency/currency.service';
 import { HttpClient } from '@angular/common/http';
 import { CancelOrderComponent } from '../cancel-order/cancel-order.component';
 import { EditOrderComponent } from '../edit-order/edit-order.component';
+
 @Component({
   selector: 'app-my-orders',
   templateUrl: './my-orders.component.html',
@@ -75,6 +75,15 @@ export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
       status: {
         es: 'error en el pago',
         en: 'error en el pago',
+      },
+      primary: '#e53935',
+      weight: 600,
+      class: 'errorLabel',
+    },
+    expired: {
+      status: {
+        es: 'pago expirado',
+        en: 'expired',
       },
       primary: '#e53935',
       weight: 600,
@@ -239,7 +248,6 @@ export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
     this.ordersService.getAllPayment(this.query, this.param).subscribe(
       (data) => {
         this.allOrders = [...data.data];
-        console.log('MyOrdersComponent -> onSearch -> this.allOrders', this.allOrders);
         this.query.offset += data.meta.pagination.count;
         this.query.total = data.meta.pagination.total;
         this.loadingSearch = false;
@@ -270,7 +278,6 @@ export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
     this.ordersService.getPayment(item).subscribe(
       (data) => {
         this.selectedOrder = data.data;
-        // console.log('MyOrdersComponent -> onSelectOrder -> this.selectedOrder', this.selectedOrder);
         this.showOrderDetails = true;
         this.loadingSelectedItem = false;
         if (this.isHandset) {
@@ -297,7 +304,7 @@ export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  onEditOrder(order)  {
+  onEditOrder(order) {
     let dialogRef: MatDialogRef<EditOrderComponent, any>;
 
     dialogRef = this.dialog.open(EditOrderComponent, {
@@ -305,7 +312,7 @@ export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
       maxHeight: '100vh',
       data: {
         order: JSON.parse(JSON.stringify(order)),
-      }
+      },
     });
 
     dialogRef.afterClosed().subscribe((result) => {

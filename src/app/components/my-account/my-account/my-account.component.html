@@ -161,21 +161,18 @@
 
               <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline">
                 <mat-label>{{ 'Username' | translate }}</mat-label>
-                <input
-                  matInput
-                  placeholder="{{ 'Username' | translate }}"
-                  required
-                  [formControl]="registrationForm.controls['username']"
-                />
+                <input matInput placeholder="{{ 'Username' | translate }}" required
+                       (keypress)="utilsService.keyPressAlphaAndNumbersModUsername($event)"
+                       [formControl]="registrationForm.controls['username']" />
                 <mat-error *ngIf="registrationForm.controls['username'].hasError('required')">
                   {{ 'Username' | translate }} <strong>{{ 'is required' | translate }}</strong>
                 </mat-error>
                 <mat-error *ngIf="registrationForm.controls['username'].hasError('pattern')">
-                  {{ 'El nombre de usuario debe contener carateres alfanuméricos' | translate }}
+                  {{ 'Solo letra y números' | translate }}
                 </mat-error>
               </mat-form-field>
 
-              <mat-form-field fxFlex="48" fxFlex.lt-md="100" required appearance="outline">
+              <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline">
                 <mat-label>{{ 'Email' | translate }}</mat-label>
                 <input
                   matInput
@@ -186,15 +183,33 @@
                 <mat-error *ngIf="registrationForm.controls['email'].hasError('required')">
                   {{ 'Email' | translate }} <strong>{{ 'is required' | translate }}</strong>
                 </mat-error>
+                <mat-error *ngIf="registrationForm.controls['email'].hasError('pattern')">
+                  {{ 'Email' | translate }} <strong>{{ 'incorrecto' | translate }}</strong>
+                </mat-error>
               </mat-form-field>
 
-              <mat-form-field fxFlex="48" fxFlex.lt-md="100" required appearance="outline">
-                <mat-label>{{ 'Teléfono' | translate }}</mat-label>
-                <input
-                  matInput
-                  placeholder="{{ 'Teléfono' | translate }}"
-                  [formControl]="registrationForm.get('phone')"
-                />
+              <mat-form-field id="phone" fxFlex="48" fxFlex.lt-md="100" appearance="outline">
+                <mat-label>{{ 'Teléfono (opcional)' | translate }}</mat-label>
+                <span matPrefix class="mr-2">+ 53</span>
+                <input matInput placeholder="{{ 'Teléfono cubano...' | translate }}"
+                       (keypress)="utilsService.keyPressNumbers($event)"
+                       [formControl]="registrationForm.get('phone')" />
+                <mat-hint
+                  *ngIf="!registrationForm.get('phone').value">
+                  {{'Escriba un teléfono móvil cubano, Ex: 51234567'|translate}}
+                </mat-hint>
+                <mat-hint *ngIf="registrationForm.get('phone').value
+                              && registrationForm.get('phone').valid">
+                  {{'Número válido'|translate}}
+                </mat-hint>
+                <mat-error *ngIf="(registrationForm.controls['phone'].hasError('minlength')
+                                || registrationForm.controls['phone'].hasError('maxlength'))
+                                && !registrationForm.controls['phone'].hasError('pattern')">
+                  {{ 'Longitud del número' | translate }}&nbsp;<strong>{{ '8 caracteres, Ex: 51234567' | translate }}</strong>
+                </mat-error>
+                <mat-error *ngIf="registrationForm.controls['phone'].hasError('pattern')">
+                  {{ 'El número' | translate }}&nbsp;<strong>{{ 'debe empezar con 5, Ex: 51234567' | translate }}</strong>
+                </mat-error>
               </mat-form-field>
 
               <div

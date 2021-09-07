@@ -1,19 +1,20 @@
-import { MetaService } from './../../../../core/services/meta.service';
-import { IPagination } from './../../../../core/classes/pagination.class';
+import { MetaService } from '../../../../core/services/meta.service';
+import { IPagination } from '../../../../core/classes/pagination.class';
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { ProductService } from '../../../shared/services/product.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { CurrencyService } from './../../../../core/services/currency/currency.service';
-import { LoggedInUserService } from './../../../../core/services/loggedInUser/logged-in-user.service';
+import { CurrencyService } from '../../../../core/services/currency/currency.service';
+import { LoggedInUserService } from '../../../../core/services/loggedInUser/logged-in-user.service';
 import { takeUntil } from 'rxjs/operators';
-import { UtilsService } from './../../../../core/services/utils/utils.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DialogFiltersMComponent } from '../dialog-filters-m/dialog-filters-m.component';
 import { CategoriesService } from 'src/app/core/services/categories/catagories.service';
 import { environment } from 'src/environments/environment';
+import { CartService } from '../../../shared/services/cart.service';
+import { Cart } from '../../../../modals/cart-item';
 
 @Component({
   selector: 'app-product-left-sidebar',
@@ -26,6 +27,9 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
   public page: any;
   public viewType = 'grid';
   public viewCol = 100;
+
+  public itemsOnCart = 0;
+  public theCart: Cart;
 
   public allProducts: any[] = [];
   initLimit = 21;
@@ -67,6 +71,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
     private router: Router,
     public loggedInUserService: LoggedInUserService,
     private breakpointObserver: BreakpointObserver,
+    public cartService: CartService,
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private metaService: MetaService,
@@ -79,7 +84,6 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
     });
 
     this.route.queryParams.pipe(takeUntil(this._unsubscribeAll)).subscribe((data) => {
-      // console.log('Subscricion de navegacion -> data', data);
       this.loading = true;
       this.paramsSearch.categoryIds = data && data.categoryIds ? data.categoryIds : this.paramsSearch.categoryIds;
       this.paramsSearch.brandIds = data && data.brandIds ? data.brandIds : [];
@@ -128,9 +132,13 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.loggedInUserService.$languageChanged.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {
-      this.language = data.lang;
-    });
+    this.subsCartChange();
+
+    this.loggedInUserService.$languageChanged
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((data: any) => {
+        this.language = data.lang;
+      });
 
     this.breakpointObserver
       .observe([Breakpoints.Medium, Breakpoints.Small, Breakpoints.XSmall])
@@ -139,28 +147,39 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
         this.isHandset = data.matches;
       });
 
-    this.categoryService.getAllCategories().subscribe((data) => {
-      this.allCategories = data.data;
-    });
+    this.categoryService.getAllCategories()
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((data) => {
+        this.allCategories = data.data;
+      });
+  }
+
+  subsCartChange() {
+    this.cartService.$cartItemsUpdated
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(carts => {
+        this.itemsOnCart = carts[0]?.CartItems?.length || 0;
+        this.theCart = carts[0];
+      });
   }
 
   ngOnDestroy() {
-    this._unsubscribeAll.next(true);
+    this._unsubscribeAll.next(null);
     this._unsubscribeAll.complete();
+    this._unsubscribeAll.unsubscribe();
   }
 
   //////////////////////////// BUSQUEDA ////////////////////////////////
 
   searchProducts() {
     this.loading = true;
-    // console.log('ProductLeftSidebarComponent -> searchProducts -> queryParams', this.queryProduct);
 
     this.router.navigate(['/products/search'], {
       queryParams: {
         ...this.paramsSearch,
         ...this.queryProduct,
       },
-    });
+    }).then();
   }
 
   search() {
@@ -213,6 +232,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
       },
     );
   }
+
   showChips() {
     let chips = [];
     for (let cat of this.allCategories) {
@@ -238,6 +258,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
     this.viewType = viewType;
     this.viewCol = viewCol;
   }
+
   // Animation Effect fadeIn
   public fadeIn() {
     this.animation = 'fadeIn';
@@ -256,15 +277,12 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
   // sorting type ASC / DESC / A-Z / Z-A etc.
 
   onSetOrder(order) {
-    console.log('Entre en el cambio de sorting');
     this.queryProduct.order = order;
     this.searchProducts();
   }
 
   OnPaginatorChange(event) {
-    console.log('Entre qui en el evento');
     if (event) {
-      console.log('ProductLeftSidebarComponent -> OnPaginatorChange -> event', event);
       this.queryProduct.limit = event.pageSize || this.initLimit;
       this.queryProduct.offset = event.pageIndex * event.pageSize;
       this.queryProduct.page = event.pageIndex;
@@ -280,7 +298,6 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
 
   // Update price filter
   updatePriceFilters(price: any) {
-    // console.log(price);
     this.paramsSearch.minPrice = price.priceFrom;
     this.paramsSearch.maxPrice = price.priceTo;
     this.queryProduct.limit = this.initLimit;
@@ -296,7 +313,6 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
     this.queryProduct.offset = 0;
     this.queryProduct.total = 0;
     this.allProducts = [];
-    console.log('Entre en el cambio de Rating');
     this.paginator.firstPage();
     setTimeout(() => {
       this.searchProducts();
@@ -310,7 +326,6 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
     this.queryProduct.offset = 0;
     this.queryProduct.total = 0;
     this.allProducts = [];
-    console.log('Entre en el cambio de Brands');
     this.paginator.firstPage();
     setTimeout(() => {
       this.searchProducts();
@@ -324,7 +339,6 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
     this.queryProduct.offset = 0;
     this.queryProduct.total = 0;
     this.allProducts = [];
-    console.log('Entre en el cambio de Categories');
     this.paginator.firstPage();
     setTimeout(() => {
       this.searchProducts();
@@ -333,7 +347,6 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
 
   //////////////////////////
   gotToProductId() {
-    // console.log('ProductLeftSidebarComponent -> gotToProductId -> this.productId', this.productId);
     if (this.productId) {
       setTimeout(() => {
         const element = document.getElementById(`ProductCardId${this.productId}`);

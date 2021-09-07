@@ -16,22 +16,26 @@
 
 .imageProduct {
   display: flex;
-  border-radius: 8px 8px 0px 0px;
+  border-radius: 4px 4px 0 0;
   justify-content: center;
   align-items: center;
   height: 300px !important;
-  //min-width: 10px !important;
   max-width: 100% !important;
   width: auto !important;
   object-fit: cover !important;
   object-position: center !important;
-  //margin: 4px auto !important;
 }
 
 .product-img {
+  height: 300px;
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
+  background-color: #fafafa;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom: 1px solid #e8e8e8;
 }
 
 .swiper-slide {
@@ -41,21 +45,12 @@
     position: relative;
     width: 100% !important;
     box-shadow: unset !important;
-    border: 1px solid rgba(0, 0, 0, 0.12);
-    border-radius: 8px !important;
+    border: 1px solid #e8e8e8;
+    border-radius: 4px !important;
 
     &:hover {
       transform: translateY(-10px);
       transition: all 0.5s ease;
-
-      .btnAddCart {
-        background-color: $theme-main;
-        transition: all 0.3s ease;
-
-        mat-icon {
-          color: #fff;
-        }
-      }
     }
   }
 }
@@ -63,22 +58,13 @@
 .cardProduct2 {
   position: relative;
   width: 300px !important;
-  box-shadow: 0px 0px 0px 0px !important;
+  box-shadow: 0 0 0 0 !important;
   border: 1px solid rgba(0, 0, 0, 0.12);
-  border-radius: 8px !important;
+  border-radius: 4px !important;
 
   &:hover {
     transform: translateY(-10px);
     transition: all 0.5s ease;
-
-    .btnAddCart {
-      background-color: $theme-main;
-      transition: all 0.3s ease;
-
-      mat-icon {
-        color: #fff;
-      }
-    }
   }
 }
 
@@ -150,13 +136,23 @@
   position: absolute;
   bottom: 16px;
   right: 16px;
-  background-color: #e6e6e6;
-  color: #fff;
+  background-color: white;
+  color: grey;
+  border: 1px solid grey;
   box-shadow: none;
   transition: all 0.3s ease;
 
   mat-icon {
-    color: #fff;
+    color: grey;
+  }
+
+  &:hover {
+    background-color: $theme-main;
+    transition: all 0.3s ease;
+
+    mat-icon {
+      color: #fff;
+    }
   }
 }
 

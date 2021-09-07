@@ -323,7 +323,7 @@
     padding-right: 30px;
 
     @include media-breakpoint('xs') {
-      padding-right: 0px !important;
+      padding-right: 0 !important;
     }
 
 

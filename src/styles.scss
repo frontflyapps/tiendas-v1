@@ -28,61 +28,69 @@ $custom-typography: mat-typography-config(
 @include mat-core($custom-typography);
 
 $my-primary-color: (
-  50: #e9eff9,
-  100: #ccd7e4,
-  200: #afbccd,
-  300: #90a1b6,
-  400: #798da5,
-  500: #637994,
-  600: #556b82,
-  700: #424242,
-  800: #364556,
-  900: #212121,
+  50 : #fffcf4,
+  100 : #ffffd9,
+  200 : #fff1d3,
+  300 : #ffebc1,
+  400 : #ffe7b4,
+  500 : #ffe3a7,
+  600 : #ffe09f,
+  700 : #cbb178,
+  800 : #ffd88c,
+  900 : #ffd07c,
+  A100 : #ffffff,
+  A200 : #ffffff,
+  A400 : #ffffff,
+  A700 : #ffffff,
   contrast: (
-    50: $black-87-opacity,
-    100: $black-87-opacity,
-    200: $black-87-opacity,
-    300: $black-87-opacity,
-    400: $black-87-opacity,
-    500: white,
-    600: white,
-    700: white,
-    800: $white-87-opacity,
-    900: $white-87-opacity,
-    A100: $black-87-opacity,
-    A200: white,
-    A400: white,
-    A700: white,
-  ),
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #000000,
+    400 : #000000,
+    500 : #000000,
+    600 : #000000,
+    700 : #000000,
+    800 : #000000,
+    900 : #000000,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #000000,
+    A700 : #000000,
+  )
 );
 
 $my-accent-color: (
-  50: #fef3e4,
-  100: #fde1bc,
-  200: #fdce91,
-  300: #cfcfcf,
-  400: #fbab50,
-  500: #6d3112,
-  600: #6d3112,
-  700: #ef8336,
-  800: #e87532,
-  900: #de5d2b,
+  50 : #eee7e5,
+  100 : #a2634f,
+  200 : #b89c93,
+  300 : #9b7467,
+  400 : #855647,
+  500 : #703826,
+  600 : #683222,
+  700 : #410f00,
+  800 : #532417,
+  900 : #41170d,
+  A100 : #ff8f7a,
+  A200 : #ff6547,
+  A400 : #ff3a14,
+  A700 : #fa2800,
   contrast: (
-    50: $black-87-opacity,
-    100: $black-87-opacity,
-    200: $black-87-opacity,
-    300: $black-87-opacity,
-    400: $black-87-opacity,
-    500: $black-87-opacity,
-    600: $black-87-opacity,
-    700: $black-87-opacity,
-    800: $white-87-opacity,
-    900: $white-87-opacity,
-    A100: $black-87-opacity,
-    A200: $black-87-opacity,
-    A400: $black-87-opacity,
-    A700: $black-87-opacity,
-  ),
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #ffffff,
+    400 : #ffffff,
+    500 : #ffffff,
+    600 : #ffffff,
+    700 : #ffffff,
+    800 : #ffffff,
+    900 : #ffffff,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #ffffff,
+    A700 : #ffffff,
+  )
 );
 
 $primary: mat-palette($my-primary-color, 900, 700, 600);
@@ -189,7 +197,7 @@ $red-600: mat-color(mat-palette($mat-red), 600);
 }
 
 .iconHelp {
-  font-size: 14px;
+  font-size: 18px;
   color: $grey4;
   width: 14px;
   height: 14px;
@@ -310,8 +318,8 @@ blockquote {
   box-sizing: border-box;
   overflow: hidden;
   position: relative;
-  //-webkit-animation: 2s ease-in-out infinite progress;
-  //animation: 2s ease-in-out infinite progress;
+  //-webkit-animation: 2s ease-in-out progress;
+  //animation: 2s ease-in-out progress;
   background: 0 0/200px 100% no-repeat #eff1f6;
   background-image: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0));
   border-radius: 4px;
@@ -412,7 +420,7 @@ blockquote {
 
 .link-nav-a {
   text-decoration: none;
-  color: rgba(0, 0, 0, 0.9) !important;
+  color: #404040 !important;
 
   &:hover {
     text-decoration: underline;
@@ -473,6 +481,7 @@ h4 {
 
 .mat-form-field {
   font-size: 12.5px !important;
+  line-height: 1.225;
 }
 
 .ck-content {
@@ -496,4 +505,29 @@ h4 {
       }
     }
   }
+}
+
+.font-weight-300 {
+  font-weight: 300;
+}
+
+.font-weight-400 {
+  font-weight: 400;
+}
+
+.font-weight-500 {
+  font-weight: 500;
+}
+
+.font-weight-600 {
+  font-weight: 600;
+}
+
+.font-weight-700 {
+  font-weight: 700;
+}
+
+.mat-mini-fab {
+  width: 46px !important;
+  height: 46px !important;
 }

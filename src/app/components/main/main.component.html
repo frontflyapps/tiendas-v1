@@ -12,7 +12,7 @@
         </span>
 
         <a *ngIf="!loggedInUser" href="/my-account" class="mat-body-2" style="font-size: 19px">
-          {{ 'Sign in' | translate }}
+          {{ 'Inicia Sesión' | translate }}
         </a>
       </mat-list-item>
     </mat-list>
@@ -115,14 +115,14 @@
       </button>
 
       <div fxFlex class="search-form" fxLayout="row" fxLayoutAlign="start center">
-        <form class="search-form" fxLayout="row" fxLayoutAlign="start center">
+        <div class="search-form" fxLayout="row" fxLayoutAlign="start center">
           <div class="form-wrap">
             <input [formControl]="searchForm" type="text" placeholder="{{ 'Buscar en la Tienda' | translate }}" />
             <button (click)="onSearch()" class="btn-search" type="submit">
               <mat-icon>search</mat-icon>
             </button>
           </div>
-        </form>
+        </div>
       </div>
 
       <div
@@ -233,10 +233,10 @@
             <mat-icon>settings</mat-icon>
             <span class="mat-body-1">{{ 'Cambie la contraseña' | translate }}</span>
           </button>
-          <a *ngIf="loggedInUser" mat-menu-item href="become-a-seller">
-            <mat-icon>shopping_basket</mat-icon>
-            <span class="mat-body-1">{{ 'Crea tu negocio' | translate }}</span>
-          </a>
+          <!--          <a *ngIf="loggedInUser" mat-menu-item href="become-a-seller">-->
+          <!--            <mat-icon>shopping_basket</mat-icon>-->
+          <!--            <span class="mat-body-1">{{ 'Crea tu negocio' | translate }}</span>-->
+          <!--          </a>-->
           <button mat-menu-item (click)="onLogout()">
             <mat-icon>exit_to_app</mat-icon>
             <span class="mat-body-1">{{ 'Logout' | translate }}</span>
@@ -250,11 +250,11 @@
   <div fxHide fxShow.lt-md class="home-header-2 p-2">
     <div fxLayout="column" fxLayoutAlign="start stretch">
       <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="gappx">
-        <div fxLayoutAlign="start center">
-          <button mat-icon-button (click)="start.toggle()">
+        <div fxLayoutAlign="start center" class="main-logo-container">
+          <button mat-icon-button (click)="start.toggle()" class="mr-2">
             <mat-icon>menu</mat-icon>
           </button>
-          <img class="logo-img-main" routerLink="/" src="assets/images/logo.png" />
+          <img class="logo-img-main" routerLink="/" src="assets/images/logoWhite.png" />
         </div>
 
         <div class="userWidgets m-0 p-0" fxLayoutAlign="start center">
@@ -282,12 +282,12 @@
       </div>
 
       <div fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="gappx">
-        <form class="mobile-search" fxLayout="row" fxLayoutAlign="start center">
+        <div class="mobile-search" fxLayout="row" fxLayoutAlign="start center">
           <input fxFlex [formControl]="searchForm" type="search" placeholder="{{ 'Type to search...' | translate }}" />
           <button (click)="onSearch()" type="submit">
             <mat-icon> search</mat-icon>
           </button>
-        </form>
+        </div>
       </div>
 
       <div class="showCategories"
@@ -317,5 +317,6 @@
 
   <router-outlet></router-outlet>
 
-  <app-footer-two *ngIf="!url.includes('my-account')"></app-footer-two>
+  <!--  <app-footer-two *ngIf="!url.includes('my-account')"></app-footer-two>-->
+  <app-footer *ngIf="!url.includes('my-account')"></app-footer>
 </mat-sidenav-container>

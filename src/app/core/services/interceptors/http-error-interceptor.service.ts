@@ -1,4 +1,4 @@
-import { LoggedInUserService } from './../../../core/services/loggedInUser/logged-in-user.service';
+import { LoggedInUserService } from '../loggedInUser/logged-in-user.service';
 import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
@@ -7,18 +7,17 @@ import { UtilsService } from '../utils/utils.service';
 import { ShowSnackbarService } from '../show-snackbar/show-snackbar.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { CookieService } from 'ngx-cookie-service';
 
 @Injectable()
 export class HttpErrorInterceptorService implements HttpInterceptor {
   url = '';
+
   constructor(
     private utilsService: UtilsService,
     private showSnackbar: ShowSnackbarService,
     private loggedInUserService: LoggedInUserService,
     private translate: TranslateService,
     private router: Router,
-    private cookieService: CookieService,
   ) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -39,13 +38,12 @@ export class HttpErrorInterceptorService implements HttpInterceptor {
           errorMessage = error.error;
           this.processingBackendError(error);
         }
-        // console.log('ErrorInterceptorService -> errorMessage', errorMessage);
         return throwError(error);
       }),
     );
   }
 
-  ///////////////////////Procesing Error////////////////////////////////
+  // /////////////////////Procesing Error////////////////////////////////
   processingBackendError(err) {
     if (err.status == 401) {
       this.utilsService.errorHandle(err);
@@ -70,7 +68,6 @@ export class HttpErrorInterceptorService implements HttpInterceptor {
     } else if (err.status == 400 || err.status == 500) {
       this.utilsService.errorHandle(err);
     } else if (err.status == 0) {
-      console.log('**********************************************');
       // this.router.navigate(['/error/conexion-perdida']);
       this.showSnackbar.showError(
         this.translate.instant(
@@ -79,5 +76,6 @@ export class HttpErrorInterceptorService implements HttpInterceptor {
       );
     }
   }
+
   ///////////////////////////////////////////////////////
 }
