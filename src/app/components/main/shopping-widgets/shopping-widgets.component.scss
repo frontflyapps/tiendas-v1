@@ -1,7 +1,11 @@
 @import '../../../../assets/scss/theme/variables';
 
 .iconCart {
-  color: $theme-main-dark !important;
+  color: $theme-main !important;
+
+  @media all and (max-width: 959px) {
+    color: $theme-main-dark !important;
+  }
 }
 
 .top-cart {
