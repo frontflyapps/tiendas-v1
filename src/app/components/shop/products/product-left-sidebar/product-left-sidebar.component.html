@@ -73,7 +73,8 @@
                   </mat-panel-title>
                 </mat-expansion-panel-header>
                 <div class="brands">
-                  <app-brands [brandsIds]="this.brandsIds" (brandChanged)="onBrandsChanged($event)"></app-brands>
+                  <app-brands [brandsIds]="this.brandsIds" [categoriesToSelectBrands]="categoriesIds"
+                              (brandChanged)="onBrandsChanged($event)"></app-brands>
                 </div>
               </mat-expansion-panel>
               <!-- <mat-expansion-panel class="mat-elevation-z0 no-border bg-acordion" [expanded]="!isHandset">

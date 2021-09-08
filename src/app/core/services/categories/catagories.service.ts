@@ -12,9 +12,11 @@ export class CategoriesService {
   urlId = environment.apiUrl + 'category/:categoryId';
   urlBrand = environment.apiUrl + 'brand';
   urlBrandId = environment.apiUrl + 'brand/:brandId';
+  urlBrandsByCategories = environment.apiUrl + 'brand-by-category';
   httpOptions = {};
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) {
+  }
 
   createCategory(body: any): Observable<any> {
     return this.httpClient.post<any>(this.url, body);
@@ -72,6 +74,7 @@ export class CategoriesService {
       return this.httpClient.get<any>(this.urlId.replace(':categoryId', data.id), this.httpOptions);
     }
   }
+
   ///////Brand///////
   createBrand(body: any): Observable<any> {
     return this.httpClient.post<any>(this.urlBrand, body);
@@ -108,6 +111,10 @@ export class CategoriesService {
     if (params) {
     }
     return this.httpClient.get<any>(this.urlBrand, { params: httpParams });
+  }
+
+  getBrandsByCategories(dataBody) {
+    return this.httpClient.post<any>(this.urlBrandsByCategories, { CategoryIds: dataBody });
   }
 
   getBrand(data) {

@@ -80,7 +80,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
 
     this.productService.getCountProduct().subscribe((data) => {
-      this.isOnlyTwoProducts = data.data.count > 2 ? false : true;
+      this.isOnlyTwoProducts = data.data.count <= 2;
     });
 
     this.route.queryParams.pipe(takeUntil(this._unsubscribeAll)).subscribe((data) => {
