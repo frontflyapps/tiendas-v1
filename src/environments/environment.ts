@@ -6,11 +6,11 @@ const packageJson = require('../../package.json');
 export const environment = {
   production: false,
 
-  apiUrl: 'http://192.168.1.12:8998/v1/',
-  imageUrl: 'http://192.168.1.12:8998/v1/',
-  //
-  // apiUrl: 'https://apitienda.marinasmarlin.com/v1/',
-  // imageUrl: 'https://apitienda.marinasmarlin.com/v1/',
+  // apiUrl: 'http://192.168.1.12:8998/v1/',
+  // imageUrl: 'http://192.168.1.12:8998/v1/',
+
+  apiUrl: 'https://apitienda.marinasmarlin.com/v1/',
+  imageUrl: 'https://apitienda.marinasmarlin.com/v1/',
 
   defaultLanguage: 'es',
   currencyInternational: 'USD',
