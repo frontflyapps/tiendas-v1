@@ -9,11 +9,11 @@ export const environment = {
   // apiUrl: 'http://192.168.1.12:8998/v1/',
   // imageUrl: 'http://192.168.1.12:8998/v1/',
 
-  apiUrl: 'http://192.168.43.231:8998/v1/',
-  imageUrl: 'http://192.168.43.231:8998/v1/',
-
-  // apiUrl: 'https://apitienda.marinasmarlin.com/v1/',
-  // imageUrl: 'https://apitienda.marinasmarlin.com/v1/',
+  // apiUrl: 'http://192.168.43.231:8998/v1/',
+  // imageUrl: 'http://192.168.43.231:8998/v1/',
+  //
+  apiUrl: 'https://apitienda.marinasmarlin.com/v1/',
+  imageUrl: 'https://apitienda.marinasmarlin.com/v1/',
 
   defaultLanguage: 'es',
   currencyInternational: 'USD',
