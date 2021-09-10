@@ -1,59 +1,11 @@
 <div class="vertical-products sec-padding">
   <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="start start" class="p-0">
     <div fxFlex="100" fxFlex.gt-xs="33.3" class="product-panel">
-      <div class="widget-column">
+      <div class="widget-column footer-product-card">
         <div class="title">
           <h4 class="widget-title">{{ 'Featured Products' | translate }}</h4>
         </div>
-        <ul class="product-list">
-          <li class="list-product" *ngFor="let product of featuredProducts" fxLayout="row">
-            <div class="media-image">
-              <a
-                [routerLink]="['/product']"
-                [queryParams]="{
-                  productId: product?.id,
-                  stockId: product?.Stock?.id
-                }"
-              >
-                <img
-                  class="small"
-                  ngp-lazy
-                  ngp-threshold="0.1"
-                  *ngIf="product.Images && product.Images.length"
-                  onerror="this.onerror=null;this.src='assets/images/noImage.jpg';"
-                  [src]="imageUrl + product.Images[0].image"
-                  [alt]="product.name[language] ? product.name[language] : product.name['es']"
-                />
-
-                <img
-                  class="small"
-                  ngp-lazy
-                  ngp-threshold="0.1"
-                  *ngIf="!(product.Images && product.Images.length)"
-                  src="../../../../assets/images/noImage.jpg"
-                  alt="No image"
-                />
-              </a>
-            </div>
-            <div class="media-body">
-              <a
-                [routerLink]="['/product']"
-                [queryParams]="{
-                  productId: product?.id,
-                  stockId: product?.Stock?.id
-                }"
-              >
-                <span class="module line-clamp">{{
-                  product.name[language] ? product.name[language] : product.name['es']
-                }}</span>
-              </a>
-              <div class="mt-2">
-                <ngp-rating-material [value]="product.rating" [config]="{ readOnly: true }"></ngp-rating-material>
-              </div>
-              <p class="price">{{ product.price | currency: currencyService.getCurrency().code }}</p>
-            </div>
-          </li>
-        </ul>
+        <app-footer-product-card [Products]="featuredProducts" [language]="language"></app-footer-product-card>
       </div>
     </div>
     <div fxFlex="100" fxFlex.gt-xs="33.3" class="product-panel">
@@ -61,55 +13,7 @@
         <div class="title">
           <h4 class="widget-title">{{ 'Top Selling Products' | translate }}</h4>
         </div>
-        <ul class="product-list">
-          <li class="list-product" *ngFor="let product of popularProducts" fxLayout="row">
-            <div class="media-image">
-              <a
-                [routerLink]="['/product']"
-                [queryParams]="{
-                  productId: product?.id,
-                  stockId: product?.Stock?.id
-                }"
-              >
-                <img
-                  class="small"
-                  ngp-lazy
-                  ngp-threshold="0.1"
-                  *ngIf="product.Images && product.Images.length"
-                  onerror="this.onerror=null;this.src='assets/images/noImage.jpg';"
-                  [src]="imageUrl + product.Images[0].image"
-                  [alt]="product.name[language] ? product.name[language] : product.name['es']"
-                />
-
-                <img
-                  class="small"
-                  ngp-lazy
-                  ngp-threshold="0.1"
-                  *ngIf="!(product.Images && product.Images.length)"
-                  src="../../../../assets/images/noImage.jpg"
-                  alt=""
-                />
-              </a>
-            </div>
-            <div class="media-body">
-              <a
-                [routerLink]="['/product']"
-                [queryParams]="{
-                  productId: product?.id,
-                  stockId: product?.Stock?.id
-                }"
-              >
-                <span class="module line-clamp">{{
-                  product.name[language] ? product.name[language] : product.name['es']
-                }}</span>
-              </a>
-              <div class="mt-2">
-                <ngp-rating-material [value]="product.rating" [config]="{ readOnly: true }"></ngp-rating-material>
-              </div>
-              <p class="price">{{ product.price | currency: currencyService.getCurrency().code }}</p>
-            </div>
-          </li>
-        </ul>
+        <app-footer-product-card [Products]="popularProducts" [language]="language"></app-footer-product-card>
       </div>
     </div>
     <div fxFlex="100" fxFlex.gt-xs="33.3" class="product-panel">
@@ -117,55 +21,7 @@
         <div class="title">
           <h4 class="widget-title">{{ 'Latest Products' | translate }}</h4>
         </div>
-        <ul class="product-list">
-          <li class="list-product" *ngFor="let product of allProducts" fxLayout="row">
-            <div class="media-image">
-              <a
-                [routerLink]="['/product']"
-                [queryParams]="{
-                  productId: product?.id,
-                  stockId: product?.Stock?.id
-                }"
-              >
-                <img
-                  class="small"
-                  ngp-lazy
-                  ngp-threshold="0.1"
-                  *ngIf="product.Images && product.Images.length"
-                  onerror="this.onerror=null;this.src='assets/images/noImage.jpg';"
-                  [src]="imageUrl + product.Images[0].image"
-                  [alt]="product.name[language] ? product.name[language] : product.name['es']"
-                />
-
-                <img
-                  class="small"
-                  ngp-lazy
-                  ngp-threshold="0.1"
-                  *ngIf="!(product.Images && product.Images.length)"
-                  src="../../../../assets/images/noImage.jpg"
-                  alt="No image"
-                />
-              </a>
-            </div>
-            <div class="media-body">
-              <a
-                [routerLink]="['/product']"
-                [queryParams]="{
-                  productId: product?.id,
-                  stockId: product?.Stock?.id
-                }"
-              >
-                <span class="module line-clamp">{{
-                  product.name[language] ? product.name[language] : product.name['es']
-                }}</span>
-              </a>
-              <div class="mt-2">
-                <ngp-rating-material [value]="product.rating" [config]="{ readOnly: true }"></ngp-rating-material>
-              </div>
-              <p class="price">{{ product.price | currency: currencyService.getCurrency().code }}</p>
-            </div>
-          </li>
-        </ul>
+        <app-footer-product-card [Products]="allProducts" [language]="language"></app-footer-product-card>
       </div>
     </div>
   </div>

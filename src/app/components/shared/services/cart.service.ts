@@ -11,6 +11,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { ShowSnackbarService } from '../../../core/services/show-snackbar/show-snackbar.service';
 import { ShowToastrService } from 'src/app/core/services/show-toastr/show-toastr.service';
 import { Router } from '@angular/router';
+import { ConfirmationDialogFrontComponent } from '../confirmation-dialog-front/confirmation-dialog-front.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Injectable({
   providedIn: 'root',
@@ -31,6 +33,7 @@ export class CartService implements OnDestroy {
 
   constructor(
     private router: Router,
+    private dialog: MatDialog,
     public snackBar: MatSnackBar,
     private loggedInUserService: LoggedInUserService,
     private httpClient: HttpClient,
@@ -263,7 +266,7 @@ export class CartService implements OnDestroy {
     }
   }
 
-  ////////////////FUNCIONES PARA MANEJAR EL ARREGLO DE CARRITOS//////////////////////
+  // //////////////FUNCIONES PARA MANEJAR EL ARREGLO DE CARRITOS//////////////////////
 
   _getSimpleCart(BusinessId) {
     const simpleCart = this.carts.find((item) => item.BusinessId == BusinessId);
@@ -274,9 +277,8 @@ export class CartService implements OnDestroy {
    *
    * @param data
    * {Business, Product, Stock}
-   * @returns
+   * @returns  A Cart interface Data
    */
-
   _newSimpleCart(Product?, Business?, Stock?): Cart {
     return {
       CartItems: [],
@@ -304,7 +306,7 @@ export class CartService implements OnDestroy {
     }
   }
 
-  ////////////////////////////////////////////////////////////////////
+  // //////////////////////////////////////////////////////////////////
 
   public async addToCartQuickly(product: any, quantity: number) {
     // if (this.loggedInUser && this.loggedInUserService.isMessengerUser()) {
@@ -423,7 +425,7 @@ export class CartService implements OnDestroy {
         const shoppingCartItems = cart.CartItems;
         const index = shoppingCartItems.findIndex((item) => item.ProductId == product.id);
         if (index > -1) {
-          //shoppingCartItems[index].quantity += quantity;
+          // shoppingCartItems[index].quantity += quantity;
           if (quantity != -1) {
             shoppingCartItems[index].quantity++;
           } else {
@@ -465,7 +467,7 @@ export class CartService implements OnDestroy {
     return false;
   }
 
-  //CheckCart
+  // CheckCart
 
   _isInCart(product): boolean {
     this.carts = this.loggedInUserService._getDataFromStorage('cartItem') || [];
@@ -509,7 +511,7 @@ export class CartService implements OnDestroy {
   public isCanStock(product: any, quantity): CartItem | Boolean {
     try {
       if (this.loggedInUser) {
-        //validacion no se ha desde el front sino desde el api
+        // validacion no se ha desde el front sino desde el api
         return true;
       }
       this.carts = this.loggedInUserService._getDataFromStorage('cartItem') || [];
@@ -683,5 +685,39 @@ export class CartService implements OnDestroy {
       httpParams = httpParams.set('CountryId', params.CountryId);
     }
     return this.httpClient.get(this.urlCheckoutData, { params: httpParams });
+  }
+
+  // ////////////////////// ADD TO CART PRODUCT //////////////////
+  // Add to cart
+  public addToCartOnCard(product: any, quantity: number = 1) {
+    // this.inLoading = true;
+    if (product.minSale > 1) {
+      const dialogRef = this.dialog.open(ConfirmationDialogFrontComponent, {
+        width: '10cm',
+        maxWidth: '100vw',
+        data: {
+          question: `Este producto posee un restricción de mínima cantidad de unidades para poder adquirirlo, desea añadirlo al carrito?`,
+        },
+      });
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result) {
+          this.addToCartQuickly(product, product.minSale)
+            .then((data) => {
+              // this.inLoading = false;
+            })
+            .catch((error) => {
+              // this.inLoading = false;
+            });
+        }
+      });
+    } else {
+      this.addToCartQuickly(product, product.minSale)
+        .then((data) => {
+          // this.inLoading = false;
+        })
+        .catch((error) => {
+          // this.inLoading = false;
+        });
+    }
   }
 }

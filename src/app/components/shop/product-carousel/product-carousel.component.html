@@ -46,7 +46,7 @@
               </div>
 
               <div class="mt-2">
-                <ngp-rating-material [value]="product.rating" [config]="{ readOnly: true }"> </ngp-rating-material>
+                <ngp-rating-material [value]="product.rating" [config]="{ readOnly: true }"></ngp-rating-material>
               </div>
               <!-- <p class="module line-clamp mt-1 mb-2">
                 {{utilsService.parserLanguage(product.shortDescription,language)}}</p> -->
@@ -76,9 +76,8 @@
               matTooltip="{{ 'Añadir al carrito' | translate }}"
               class="btnAddCart"
               mat-mini-fab
-              (click)="addToCart(product)"
-              style="z-index: 10"
-            >
+              (click)="cartService.addToCartOnCard(product)"
+              style="z-index: 10">
               <mat-icon>shopping_cart</mat-icon>
             </button>
 
@@ -156,7 +155,7 @@
               </div>
 
               <div class="mt-2">
-                <ngp-rating-material [value]="product.rating" [config]="{ readOnly: true }"> </ngp-rating-material>
+                <ngp-rating-material [value]="product.rating" [config]="{ readOnly: true }"></ngp-rating-material>
               </div>
               <!-- <p class="module line-clamp mt-1 mb-2">
                 {{utilsService.parserLanguage(product.shortDescription,language)}}</p> -->
@@ -186,7 +185,7 @@
               matTooltip="{{ 'Añadir al carrito' | translate }}"
               class="btnAddCart"
               mat-mini-fab
-              (click)="addToCart(product)"
+              (click)="cartService.addToCartOnCard(product)"
               style="z-index: 10"
             >
               <mat-icon>shopping_cart</mat-icon>

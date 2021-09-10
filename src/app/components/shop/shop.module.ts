@@ -53,6 +53,7 @@ import { ShareButtonModule } from 'ngx-sharebuttons/button';
 import { SocialMediaComponent } from './products/product-details/social-media/social-media.component';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { NgxImageZoomModule } from 'ngx-image-zoom';
+import { FooterProductCardModule } from '../shared/footer-product-card/footer-product-card.module';
 
 @NgModule({
   declarations: [
@@ -111,6 +112,7 @@ import { NgxImageZoomModule } from 'ngx-image-zoom';
     ShareIconsModule,
     MatBottomSheetModule,
     NgxImageZoomModule,
+    FooterProductCardModule,
   ],
   providers: [
     {
