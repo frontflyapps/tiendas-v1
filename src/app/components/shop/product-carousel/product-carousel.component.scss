@@ -52,14 +52,14 @@
       transform: translateY(-10px);
       transition: all 0.5s ease;
 
-      .btnAddCart {
-        background-color: $theme-main;
-        transition: all 0.3s ease;
-
-        mat-icon {
-          color: #fff;
-        }
-      }
+      //.btnAddCart {
+      //  background-color: $theme-main;
+      //  transition: all 0.3s ease;
+      //
+      //  mat-icon {
+      //    color: #fff;
+      //  }
+      //}
     }
   }
 }
@@ -75,14 +75,14 @@
     transform: translateY(-10px);
     transition: all 0.5s ease;
 
-    .btnAddCart {
-      background-color: $theme-main;
-      transition: all 0.3s ease;
-
-      mat-icon {
-        color: #fff;
-      }
-    }
+    //.btnAddCart {
+    //  background-color: $theme-main;
+    //  transition: all 0.3s ease;
+    //
+    //  mat-icon {
+    //    color: #fff;
+    //  }
+    //}
   }
 }
 
@@ -162,6 +162,15 @@
 
   mat-icon {
     color: grey;
+  }
+
+  &:hover {
+    background-color: $theme-main;
+    transition: all 0.3s ease;
+
+    mat-icon {
+      color: #fff;
+    }
   }
 }
 
