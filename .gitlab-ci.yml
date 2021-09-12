@@ -4,16 +4,21 @@ cache:
   paths:
     - node_modules
 
-deploy_tcp:
+deploy_CePortal:
   only:
     - tienda-online-b2b-mibulevar
   when: always
   script:
     - npm install
     - npm run build --prod
-    - curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
-    - unzip awscli-bundle.zip
-    - ./awscli-bundle/install -b ~/bin/aws
-    - export PATH=~/bin:$PATH
-    - aws s3 sync --acl public-read --metadata-directive REPLACE --cache-control max-age=1200,public dist/tienda-angular-b2b s3://www.mibulevar.com --delete
-    - aws cloudfront create-invalidation --distribution-id E2SDTK0QPMLF3V --paths "/*"
+    - curl "https://aliyuncli.alicdn.com/aliyun-cli-linux-latest-amd64.tgz" -o "aliyun-cli-linux-latest-amd64.tgz"
+    - tar xzvf aliyun-cli-linux-latest-amd64.tgz
+    - cp aliyun /usr/local/bin
+    - aliyun configure set --profile DeployProfile --mode AK --region $ALIYUN_DEFAULT_REGION --access-key-id $ALIYUN_ACCESS_KEY_ID --access-key-secret $ALIYUN_SECRET_ACCESS_KEY
+    - curl "http://gosspublic.alicdn.com/ossutil/1.6.18/ossutil64" -o "ossutil64"
+    - chmod 755 ossutil64
+    - cp ossutil64 /usr/local/bin
+    - ./ossutil64 config -e oss-us-east-1.aliyuncs.com -i $ALIYUN_ACCESS_KEY_ID -k $ALIYUN_SECRET_ACCESS_KEY -L EN -c ~/ossutil64config
+    - tar -czvf MIBULEVAR-PROD.tar.gz ./dist/tienda-angular-b2b/
+    - ./ossutil64 rm oss://mirrorcinesoft/MIBULEVAR/MIBULEVAR-PROD.tar.gz -c ~/ossutil64config
+    - ./ossutil64 cp -r MIBULEVAR-PROD.tar.gz oss://mirrorcinesoft/MIBULEVAR/MIBULEVAR-PROD.tar.gz -u -c ~/ossutil64config
