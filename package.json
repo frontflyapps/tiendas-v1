@@ -1,6 +1,6 @@
 {
   "name": "tienda-angular-b2b",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --publicHost tienda.sinkoola.com --live-reload false --port 4200 --host 0.0.0.0 --disableHostCheck",
