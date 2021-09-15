@@ -7,7 +7,7 @@ cache:
 deploy_CePortal:
   only:
     - tienda-online-b2b-mibulevar
-  when: always
+  when: manual
   script:
     - npm install
     - npm install typescript@4.1.3 -s
