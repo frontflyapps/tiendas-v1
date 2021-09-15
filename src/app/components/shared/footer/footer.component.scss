@@ -1,6 +1,11 @@
 @import "../../../../assets/scss/helpers/helpers";
 @import '../../../../assets/scss/theme/variables';
 
+.image-footer {
+  width: 100%;
+  max-width: 360px;
+}
+
 .icon-redes {
   color: white;
   border: 1px solid;
@@ -53,7 +58,7 @@ footer {
   }
 
   min-height: 230px;
-  background-color: $footer-color;
+  background-color: $theme-main-400 !important;
 
   .network-icons {
     list-style-type: none;

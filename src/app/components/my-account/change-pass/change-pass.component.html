@@ -6,7 +6,7 @@
       </div> -->
 
       <div fxLayout="column" fxLayoutAlign="center start" class="py-2 mt-2">
-        <img src="../../../../assets/images/logo.png" class="login-logo mx-auto" />
+        <img src="../../../../assets/images/logo-login.png" class="login-logo mx-auto" />
       </div>
 
       <div fxLayout="column" id="CardBodyLoggin" class="mat-elevation-z8" fxLayoutAlign="start stretch">
@@ -41,7 +41,8 @@
                   [formControl]="fromPass.controls['password']"
                 />
                 <mat-icon style="cursor: pointer" matSuffix class="grey-600" (click)="showPass()"
-                  >remove_red_eye</mat-icon
+                >remove_red_eye
+                </mat-icon
                 >
                 <mat-error *ngIf="fromPass.controls['password'].hasError('minlength')">
                   {{ 'New password' | translate }} <strong>{{ 'must be at least 6 characters' | translate }}</strong>
@@ -71,7 +72,8 @@
                   [formControl]="fromPass.controls['repeat']"
                 />
                 <mat-icon style="cursor: pointer" matSuffix class="grey-600" (click)="showPass()"
-                  >remove_red_eye</mat-icon
+                >remove_red_eye
+                </mat-icon
                 >
                 <mat-error *ngIf="fromPass.hasError('mismatch')">
                   {{ 'Password' | translate }} <strong>{{ 'most be equals' | translate }}</strong>
