@@ -1,7 +1,6 @@
 import { Component, OnInit, Inject, ViewEncapsulation, ViewChild } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ProductService } from '../../../../shared/services/product.service';
-import { Product } from './../../../../../modals/product.model';
 
 @Component({
   selector: 'app-product-zoom',
@@ -33,8 +32,6 @@ export class ProductZoomComponent implements OnInit {
     if (this.maxWidth < 100) {
       this.maxWidth = this.maxWidth + this.count;
       this.zoomImage.nativeElement.style.maxWidth = this.maxWidth + '%';
-      console.log(this.count);
-      console.log(this.maxWidth);
     }
   }
 
@@ -42,8 +39,6 @@ export class ProductZoomComponent implements OnInit {
     if (this.maxWidth > 80) {
       this.maxWidth = this.maxWidth - this.count;
       this.zoomImage.nativeElement.style.maxWidth = this.maxWidth + '%';
-      console.log(this.count);
-      console.log(this.maxWidth);
     }
   }
 }

@@ -1,13 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ProductService } from '../../../shared/services/product.service';
-import { Product } from './../../../../modals/product.model';
-import { CurrencyService } from './../../../../core/services/currency/currency.service';
+import { CurrencyService } from '../../../../core/services/currency/currency.service';
 import { Subject } from 'rxjs';
-import { IPagination } from './../../../../core/classes/pagination.class';
+import { IPagination } from '../../../../core/classes/pagination.class';
 import { takeUntil } from 'rxjs/operators';
-import { LoggedInUserService } from './../../../../core/services/loggedInUser/logged-in-user.service';
-import { UtilsService } from './../../../../core/services/utils/utils.service';
-import { environment } from './../../../../../environments/environment';
+import { LoggedInUserService } from '../../../../core/services/loggedInUser/logged-in-user.service';
+import { UtilsService } from '../../../../core/services/utils/utils.service';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-product-vertical',

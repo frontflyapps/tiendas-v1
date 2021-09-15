@@ -38,11 +38,22 @@ app-my-account {
 
   .login-logo {
     height: 100px;
+    height: 90px;
     // width: 100px;
     // object-fit: cover;
     // border-radius: 50%;
     // object-fit: cover;
     // object-position: center;
+  }
+
+  #phone.mat-form-field-appearance-outline {
+    .mat-form-field-prefix {
+      top: 0 !important;
+    }
+
+    .mat-input-element {
+      font: caption;
+    }
   }
 
   .span-link {

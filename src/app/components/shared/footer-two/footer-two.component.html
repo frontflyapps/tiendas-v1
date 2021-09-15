@@ -15,12 +15,22 @@
               </a>
             </li>
             <li>
-              <a [routerLink]="['/products/search']" routerLinkActive=" router-link-active" mat-button class="mat-button page-title">
+              <a
+                [routerLink]="['/products/search']"
+                routerLinkActive=" router-link-active"
+                mat-button
+                class="mat-button page-title"
+              >
                 <span class="page-title">{{ 'Productos' | translate }}</span>
               </a>
             </li>
             <li>
-              <a [routerLink]="['/cart']" routerLinkActive=" router-link-active" mat-button class="mat-button page-title">
+              <a
+                [routerLink]="['/cart']"
+                routerLinkActive=" router-link-active"
+                mat-button
+                class="mat-button page-title"
+              >
                 <span class="page-title">{{ 'Carrito' | translate }}</span>
               </a>
             </li>
@@ -53,6 +63,11 @@
             <li>
               <a [routerLink]="['/faq']" routerLinkActive="router-link-active" mat-button class="mat-button">
                 <span class="page-title">{{ 'Ayuda' | translate }}</span>
+              </a>
+            </li>
+            <li>
+              <a [routerLink]="['/contact-us']" routerLinkActive="router-link-active" mat-button class="mat-button">
+                <span class="page-title">{{ 'Contact us' | translate }}</span>
               </a>
             </li>
           </ul>
@@ -102,8 +117,13 @@
           </button>
         </span>
       </mat-menu>-->
-      <a class="item-selector mx-3 my-2" fxLayoutAlign="start center" mat-button [matMenuTriggerFor]="langMenu"
-        #langMenuTrigger="matMenuTrigger">
+      <a
+        class="item-selector mx-3 my-2"
+        fxLayoutAlign="start center"
+        mat-button
+        [matMenuTriggerFor]="langMenu"
+        #langMenuTrigger="matMenuTrigger"
+      >
         <img [src]="flag.image" width="18" />
         <mat-icon>arrow_drop_down</mat-icon>
         <span>{{ flag.name }}</span>
@@ -115,20 +135,32 @@
           </button>
         </span>
       </mat-menu>
-      <a [routerLink]="['term-conditions']" routerLinkActive=" router-link-active" class="item-selector mx-3 my-2"
-        fxLayoutAlign="start center" mat-button>
+      <a
+        [routerLink]="['term-conditions']"
+        routerLinkActive=" router-link-active"
+        class="item-selector mx-3 my-2"
+        fxLayoutAlign="start center"
+        mat-button
+      >
         <span>{{ 'Términos y condiciones' | translate }}</span>
       </a>
-      <a [routerLink]="['privacy-policy']" routerLinkActive=" router-link-active" class="item-selector mx-3 my-2"
-        fxLayoutAlign="start center" mat-button>
+      <a
+        [routerLink]="['privacy-policy']"
+        routerLinkActive=" router-link-active"
+        class="item-selector mx-3 my-2"
+        fxLayoutAlign="start center"
+        mat-button
+      >
         <span>{{ 'Políticas de privacidad' | translate }}</span>
       </a>
     </div>
 
     <div class="py-3" fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutAlign.xs="start start">
       <!--<span class="mat-body-1 footer-separator">{{ 'address' | translate }}</span> &nbsp;-->
-      <span class="mat-body-1 footer-separator">Copyright {{ year }} © / {{ 'Todos los derechos reservados' | translate }}.
-        <span class="mat-body-2 ml-2">{{ 'version' | translate }}</span></span>
+      <span class="mat-body-1 footer-separator">
+        Copyright {{ year }}
+        © / {{ 'Todos los derechos reservados' | translate }}.
+        <span class="mat-body-2 ml-2">{{ 'v' | translate }}</span>{{version}}</span>
     </div>
   </div>
 </footer>

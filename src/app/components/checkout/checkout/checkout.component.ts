@@ -1,17 +1,18 @@
-import { DialogNoCartSelectedComponent } from './../no-cart-selected/no-cart-selected.component';
+import { MetaService } from 'src/app/core/services/meta.service';
+import { DialogNoCartSelectedComponent } from '../no-cart-selected/no-cart-selected.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
-import { PayService } from './../../../core/services/pay/pay.service';
-import { FormBuilder, FormGroup, Validators, AbstractControl, ValidatorFn, FormControl } from '@angular/forms';
+import { PayService } from '../../../core/services/pay/pay.service';
+import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
-import { CartItem, Cart } from './../../../modals/cart-item';
-import { environment } from './../../../../environments/environment';
-import { LoggedInUserService } from './../../../core/services/loggedInUser/logged-in-user.service';
+import { CartItem, Cart, IBusiness } from '../../../modals/cart-item';
+import { environment } from '../../../../environments/environment';
+import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-in-user.service';
 import { takeUntil } from 'rxjs/operators';
-import { CurrencyService } from './../../../core/services/currency/currency.service';
-import { IPagination } from './../../../core/classes/pagination.class';
-import { UtilsService } from './../../../core/services/utils/utils.service';
+import { CurrencyService } from '../../../core/services/currency/currency.service';
+import { IPagination } from '../../../core/classes/pagination.class';
+import { UtilsService } from '../../../core/services/utils/utils.service';
 import { ProductService } from '../../shared/services/product.service';
 import { CartService } from '../../shared/services/cart.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -30,6 +31,36 @@ import { MatTableDataSource } from '@angular/material/table';
 import { DialogBidaiondoConfirmToPayComponent } from '../dialog-bidaiondo-confirm-to-pay/dialog-bidaiondo-confirm-to-pay.component';
 import { ConfigurationService } from '../../../core/services/configuration/configuration.service';
 import { CurrencyCheckoutPipe } from 'src/app/core/pipes/currency-checkout.pipe';
+import { BusinessService } from '../../../core/services/business/business.service';
+import { CUBAN_PHONE_START_5 } from '../../../core/classes/regex.const';
+
+export const amexData = {
+  express: 1, // American Express
+  visa: 2, // Visa
+  masterCard: 3, // Master Card
+  'dinners-club-internacional': 4,
+  jcb: 5,
+  maestro: 9,
+  electron: 10,
+  'tarjeta-virtual': 11,
+  bizum: 12,
+  iupay: 13,
+  'discover-global': 14,
+
+  // Variable amex       Tarjeta o método de pago
+  // 1                   American Express
+  // 2                   Visa
+  // 3                   Mastercard
+  // 4                   Dinners Club Internacional
+  // 5                   JCB
+  // 9                   Mastercard Maestro
+  // 10                  Visa Electrón
+  // 11                  Tarjeta Virtual
+  // 12                  Bizum
+  // 13                  Iupay
+  // 14                  Discover Global
+};
+
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
@@ -37,11 +68,15 @@ import { CurrencyCheckoutPipe } from 'src/app/core/pipes/currency-checkout.pipe'
   providers: [CurrencyCheckoutPipe],
 })
 export class CheckoutComponent implements OnInit, OnDestroy {
+  public CI_Length = 7;
+
   public cartItems: Observable<CartItem[]> = of([]);
   public buyProducts: CartItem[] = [];
   public cart: Cart;
   public cartId = undefined;
   public cartItemIds: any[] = undefined;
+  public theBusiness: IBusiness;
+
   inLoading = false;
   selectedCities: any[] = [];
   filteredCities: any[] = [];
@@ -57,13 +92,23 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     { id: 'visa', name: 'Visa', logo: 'assets/images/visa_logo.png' },
     { id: 'express', name: 'American Express', logo: 'assets/images/american_express_logo.png' },
     { id: 'masterCard', name: 'MasterCard', logo: 'assets/images/mastercard_logo.png' },
+    /* {
+      id: 'dinners-club-internacional',
+      name: 'Dinners Club Internacional',
+      logo: 'assets/images/cards/dinners.jpg',
+      market: 'international',
+    },
+    { id: 'jcb', name: 'JCB', logo: 'assets/images/cards/jcb.png', market: 'international' },
+    { id: 'maestro', name: 'Mastercard Maestro', logo: 'assets/images/cards/maestro.jpg', market: 'international' },
+    { id: 'electron', name: 'Visa Electrón', logo: 'assets/images/cards/electron.png', market: 'international' },
+    { id: 'tarjeta-virtual', name: 'Tarjeta Virtual', logo: 'assets/images/cards/virtual.png', market: 'international' },
+    { id: 'bizum', name: 'Bizum', logo: 'assets/images/cards/bizum.jpg', market: 'international' },
+    { id: 'iupay', name: 'Iupay', logo: 'assets/images/cards/iupay.png', market: 'international' },
+    { id: 'discover-global', name: 'Discover Global', logo: 'assets/images/cards/discover.png', market: 'international' }, */
   ];
 
   nationalitiy: any[] = [
-    {
-      id: true,
-      name: 'Sí',
-    },
+    { id: true, name: 'Sí' },
     { id: false, name: 'No' },
   ];
 
@@ -105,6 +150,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     order: '-updatedAt',
     page: 1,
   };
+  private paymentType: any;
+
   public compareById(val1, val2) {
     return val1 && val2 && val1 == val2;
   }
@@ -114,7 +161,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    private cartService: CartService,
+    public cartService: CartService,
     public productService: ProductService,
     public currencyService: CurrencyService,
     private fb: FormBuilder,
@@ -131,6 +178,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     private shppingService: TaxesShippingService,
     private configurationService: ConfigurationService,
     private currencyCheckoutPipe: CurrencyCheckoutPipe,
+    private metaService: MetaService,
+    private businessService: BusinessService,
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
@@ -144,6 +193,13 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       this.processToCart();
       this.buildForm();
     });
+
+    this.metaService.setMeta(
+      environment.meta?.mainPage?.title,
+      environment.meta?.mainPage?.description,
+      environment.meta?.mainPage?.shareImg,
+      environment.meta?.mainPage?.keywords,
+    );
   }
 
   @HostListener('window:resize', ['$event'])
@@ -155,6 +211,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     const innerWidth = window.innerWidth;
     this.applyStyle = innerWidth <= 600;
   }
+
   ngOnInit() {
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
     this.rate = 1;
@@ -169,8 +226,11 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       }
     });
     this.fetchData();
-    //////////////// Subscripciones para el update del carrito /////////////////
-    this.cartService.$cartItemsUpdated.pipe(takeUntil(this._unsubscribeAll)).subscribe((data) => {
+    // ////////////// Subscripciones para el update del carrito /////////////////
+    this.cartService.$cartItemsUpdated.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {
+      if (data.length > 0) {
+        this.theBusiness = data[0].Business;
+      }
       this.processToCart();
     });
 
@@ -257,7 +317,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         data: {},
       });
 
-      dialogRef.afterClosed().subscribe((result) => {});
+      dialogRef.afterClosed().subscribe((result) => {
+      });
     } else {
       this.getCartData();
     }
@@ -349,7 +410,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     return value;
   }
 
-  onSubmit(): void {}
+  onSubmit(): void {
+  }
 
   ngOnDestroy() {
     this._unsubscribeAll.next(true);
@@ -366,7 +428,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   buildForm() {
-    // console.log('CheckoutComponent -> buildForm -> this.loggedInUser', this.loggedInUser);
     this.selectedDataPay = this.loggedInUserService._getDataFromStorage('payData');
     this.form = this.fb.group({
       name: [this.selectedDataPay ? this.selectedDataPay.name : this.loggedInUser?.name, [Validators.required]],
@@ -382,7 +443,11 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       ProvinceId: [this._getProvince(this.loggedInUser, this.selectedDataPay), [Validators.required]],
       MunicipalityId: [this._getMunicipality(this.loggedInUser, this.selectedDataPay), [Validators.required]],
       isForCuban: [this.selectedDataPay ? this.selectedDataPay.isForCuban : true, [Validators.required]],
-      dni: [this.selectedDataPay && this.selectedDataPay.dni ? this.selectedDataPay.dni : null, Validators.required],
+      dni: [this.selectedDataPay && this.selectedDataPay.dni ? this.selectedDataPay.dni : null, [
+        Validators.required,
+        Validators.minLength(this.CI_Length),
+        // Validators.maxLength(11),
+      ]],
       email: [this._getEmail(this.loggedInUser, this.selectedDataPay), [Validators.required, Validators.email]],
       phone: [this._getPhone(this.loggedInUser, this.selectedDataPay), []],
       info: [this.selectedDataPay && this.selectedDataPay.info ? this.selectedDataPay.info : null, []],
@@ -397,17 +462,26 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         .get('phone')
         .setValidators([
           Validators.required,
-          Validators.minLength(10),
-          Validators.maxLength(10),
-          Validators.pattern(/^\d+$/),
+          Validators.pattern(CUBAN_PHONE_START_5),
+          Validators.minLength(8),
+          Validators.maxLength(8),
         ]);
     }
     this.updateValidatorsForChangeNationality(this.onlyCubanPeople);
+    this.subsToTransfermovilChange();
+
+    this.form.markAllAsTouched();
+  }
+
+  subsToTransfermovilChange() {
+    this.form.get('paymentType').valueChanges.subscribe((change) => {
+      if (change === 'transfermovil') {
+        this.form.get('currency').setValue('USD');
+      }
+    });
   }
 
   onSelectProvince(provinceId) {
-    // console.log('CheckoutComponent -> onSelectProvince -> provinceId', provinceId);
-    // console.log('CheckoutComponent -> onSelectProvince -> this.allMunicipalities', this.allMunicipalities);
     this.municipalities = this.allMunicipalities.filter((item) => item.ProvinceId == provinceId);
     this.form.get('MunicipalityId').setValue(null);
     this.form.get('ShippingBusinessId').setValue(null);
@@ -446,9 +520,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         .get('phone')
         .setValidators([
           Validators.required,
-          Validators.minLength(10),
-          Validators.maxLength(10),
-          Validators.pattern(/^\d+$/),
+          Validators.pattern(CUBAN_PHONE_START_5),
+          Validators.minLength(8),
+          Validators.maxLength(8),
         ]);
       this.form.get('phone').updateValueAndValidity();
       this.form.get('paymentType').setValue('transfermovil');
@@ -482,7 +556,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.regionService.getAllCountries(this.queryCountries).subscribe(
       (data) => {
         this.allCountries = data.data.filter((item) => item.name.es != undefined);
-        this.allCountries = this.allCountries.sort(function (a, b) {
+        this.allCountries = this.allCountries.sort(function(a, b) {
           if (a.name['es'] > b.name['es']) {
             return 1;
           } else if (a.name['es'] < b.name['es']) {
@@ -524,7 +598,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   filterCities(val) {
     val = val.trim().toLowerCase();
-    return this.selectedCities.filter(function (item) {
+    return this.selectedCities.filter(function(item) {
       let nameCity = item.name.trim().toLowerCase();
       return nameCity.includes(val);
     });
@@ -541,6 +615,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   onPayOrder() {
     this.loadingPayment = true;
     const data = { ...this.form.value };
+    data.phone = '53' + data.phone;
+
+    this.paymentType = JSON.parse(JSON.stringify(data.paymentType));
     if (!data.shippingRequired) {
       delete data.ShippingBusinessId;
     }
@@ -575,9 +652,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           dialogRef = this.dialog.open(DialogTranfermovilQrComponent, {
             width: '50rem',
             panelClass: 'app-dialog-tranfermovil-qr',
-            maxWidth: '100vw',
-            height: '85vh',
-            maxHeight: '100vh',
+            maxWidth: '99vw',
+            maxHeight: '99vh',
             disableClose: true,
             data: {
               paymentData: data.data,
@@ -626,6 +702,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   processBidaiondo(bodyData) {
+    bodyData.amex = amexData[this.paymentType];
+    console.log('amex', bodyData.amex);
     this.payService.makePaymentBidaiondo(bodyData).subscribe(
       (data: any) => {
         let dialogRef: MatDialogRef<DialogBidaiondoConfirmToPayComponent, any>;
@@ -697,12 +775,19 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   _getPhone(user, storagePayData) {
     if (storagePayData) {
-      return storagePayData.phone;
+      return this.getOnly8DigitsPhone(storagePayData.phone);
     }
     if (user && user.phone) {
-      return user.phone;
+      return this.getOnly8DigitsPhone(user.phone);
     }
     return null;
+  }
+
+  getOnly8DigitsPhone(phone) {
+    if (phone.length === 10 && phone.startsWith('53')) {
+      phone = phone.slice(2);
+    }
+    return phone;
   }
 
   _getEmail(user, storagePayData) {

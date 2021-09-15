@@ -47,7 +47,6 @@ export class PriceComponent implements OnInit {
   }
 
   priceFilter() {
-    // console.log('PriceComponent -> priceFilter -> this.priceForm', this.priceForm);
     if (this.priceForm.valid) {
       this.priceFilters.emit({
         ...this.priceForm.value,

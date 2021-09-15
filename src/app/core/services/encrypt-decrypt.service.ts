@@ -5,15 +5,15 @@ import * as CryptoJS from 'crypto-js';
   providedIn: 'root',
 })
 export class EncryptDecryptService {
-  secretKey = 'YourSecretKeyForEncryption&Descryption';
-
-  constructor() {}
+  YEK_RCES = 'YourSecretKeyForMarlinEncryption&Decryption';
 
   encrypt(value: string): string {
-    return CryptoJS.AES.encrypt(value, this.secretKey.trim()).toString();
+    const encrypted = CryptoJS.AES.encrypt(value.toString(), this.YEK_RCES.trim());
+    return encrypted.toString();
   }
 
   decrypt(textToDecrypt: string) {
-    return CryptoJS.AES.decrypt(textToDecrypt, this.secretKey.trim()).toString(CryptoJS.enc.Utf8);
+    const decrypted = CryptoJS.AES.decrypt(textToDecrypt, this.YEK_RCES.trim());
+    return decrypted.toString(CryptoJS.enc.Utf8);
   }
 }

@@ -7,73 +7,14 @@
         </h2>
         <div class="faq-wrap">
           <mat-accordion>
-            <mat-expansion-panel>
+            <mat-expansion-panel class="my-3" *ngFor="let item of allFaqs; let i = index">
               <mat-expansion-panel-header>
                 <mat-panel-title>
-                  <span>{{'Lorem ipsum dolor sit amet consectetur, adipisicing elit.'}}</span>
+                  {{ item.title | parseLang: lang }}
                 </mat-panel-title>
               </mat-expansion-panel-header>
-              <p>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsa expedita, tempore eligendi minus quibusdam corporis.
-                Debitis, tempore eaque, autem eos doloremque inventore repellendus quibusdam dolorum rerum, sapiente facilis nulla quo.
-              </p>
+              <div class="ck-content" [innerHtml]="item.text | parseLang: lang | safeHtml"></div>
             </mat-expansion-panel>
-            <mat-expansion-panel>
-              <mat-expansion-panel-header>
-                <mat-panel-title>
-                  <span>{{'Lorem ipsum dolor sit amet consectetur, adipisicing elit.'}}</span>
-                </mat-panel-title>
-              </mat-expansion-panel-header>
-              <p>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsa expedita, tempore eligendi minus quibusdam corporis.
-                Debitis, tempore eaque, autem eos doloremque inventore repellendus quibusdam dolorum rerum, sapiente facilis nulla quo.
-              </p>
-            </mat-expansion-panel>
-            <mat-expansion-panel>
-              <mat-expansion-panel-header>
-                <mat-panel-title>
-                  <span>{{'Lorem ipsum dolor sit amet consectetur, adipisicing elit.'}}</span>
-                </mat-panel-title>
-              </mat-expansion-panel-header>
-              <p>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsa expedita, tempore eligendi minus quibusdam corporis.
-                Debitis, tempore eaque, autem eos doloremque inventore repellendus quibusdam dolorum rerum, sapiente facilis nulla quo.
-              </p>
-            </mat-expansion-panel>
-            <mat-expansion-panel>
-              <mat-expansion-panel-header>
-                <mat-panel-title>
-                  <span>{{'Lorem ipsum dolor sit amet consectetur, adipisicing elit.'}}</span>
-                </mat-panel-title>
-              </mat-expansion-panel-header>
-              <p>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsa expedita, tempore eligendi minus quibusdam corporis.
-                Debitis, tempore eaque, autem eos doloremque inventore repellendus quibusdam dolorum rerum, sapiente facilis nulla quo.
-              </p>
-            </mat-expansion-panel>
-            <mat-expansion-panel>
-              <mat-expansion-panel-header>
-                <mat-panel-title>
-                  <span>{{'Lorem ipsum dolor sit amet consectetur, adipisicing elit.'}}</span>
-                </mat-panel-title>
-              </mat-expansion-panel-header>
-              <p>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsa expedita, tempore eligendi minus quibusdam corporis.
-                Debitis, tempore eaque, autem eos doloremque inventore repellendus quibusdam dolorum rerum, sapiente facilis nulla quo.
-              </p>
-            </mat-expansion-panel>
-            <mat-expansion-panel>
-              <mat-expansion-panel-header>
-                <mat-panel-title>
-                  <span>{{'Lorem ipsum dolor sit amet consectetur, adipisicing elit.'}}</span>
-                </mat-panel-title>
-              </mat-expansion-panel-header>
-              <p>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsa expedita, tempore eligendi minus quibusdam corporis.
-                Debitis, tempore eaque, autem eos doloremque inventore repellendus quibusdam dolorum rerum, sapiente facilis nulla quo.
-              </p>
-            </mat-expansion-panel>
-
           </mat-accordion>
         </div>
       </div>

@@ -22,6 +22,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatRippleModule } from '@angular/material/core';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatSelectModule } from '@angular/material/select'; 
 import { MyOrdersRoutingModule } from './my-orders-routing.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
@@ -29,6 +30,7 @@ import { NgpMaterialRatingModule } from 'ngp-material-rating';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { DialogBidaiondoCancelToPayComponent } from './dialog-bidaiondo-cancel-to-pay/dialog-bidaiondo-cancel-to-pay.component';
+import { EditOrderComponent } from './edit-order/edit-order.component';
 
 ///////////////////////////////////////////////////////////////////
 
@@ -50,6 +52,7 @@ import { DialogBidaiondoCancelToPayComponent } from './dialog-bidaiondo-cancel-t
     MatSidenavModule,
     MatRippleModule,
     MatTabsModule,
+    MatSelectModule,
     TranslateModule,
     MatCardModule,
     MatTableModule,
@@ -59,8 +62,8 @@ import { DialogBidaiondoCancelToPayComponent } from './dialog-bidaiondo-cancel-t
     MatDialogModule,
     MatFormFieldModule,
   ],
-  declarations: [MyOrdersComponent, CancelOrderComponent, DialogBidaiondoCancelToPayComponent],
-  entryComponents: [CancelOrderComponent, DialogBidaiondoCancelToPayComponent],
+  declarations: [MyOrdersComponent, CancelOrderComponent, DialogBidaiondoCancelToPayComponent, EditOrderComponent],
+  entryComponents: [CancelOrderComponent, DialogBidaiondoCancelToPayComponent, EditOrderComponent],
   providers: [],
 })
 export class MyOrdersModule {}

@@ -1,17 +1,15 @@
-@import"../../../../assets/scss/theme/variables";
+@import '../../../../assets/scss/theme/variables';
 
 .router-link-active {
-  background-color: $theme-main !important;
+  background-color: $menu-hover !important;
 }
 
 .menu-container1 {
   background-color: $theme-main-400 !important;
-  background: $theme-main-400 !important;
 }
 
 #toolbar-menu {
   height: 48px !important;
-
 }
 
 .showCategoriesMenu {
@@ -20,13 +18,12 @@
   // margin-top: 8px;
   overflow-x: auto;
 
-  @media (max-width:1024px) {
+  @media (max-width: 1024px) {
     -ms-overflow-style: none;
     /* IE and Edge */
     scrollbar-width: none;
     /* Firefox */
   }
-
 
   .itemCategory {
     min-width: unset !important;
@@ -35,13 +32,11 @@
   }
 }
 
-@media (max-width:1024px) {
+@media (max-width: 1024px) {
   .showCategoriesMenu::-webkit-scrollbar {
     display: none;
   }
 }
-
-
 
 #showCategoriesMenu::-webkit-scrollbar {
   width: 0px !important;
@@ -52,10 +47,8 @@
 
 #showCategoriesMenu::-webkit-scrollbar-thumb {
   background-color: unset !important;
-
 }
 
 #showCategoriesMenu::-webkit-scrollbar-thumb:hover {
   background-color: $theme-main-400 !important;
-
 }

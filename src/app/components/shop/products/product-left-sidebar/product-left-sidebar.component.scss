@@ -1,5 +1,25 @@
 @import '../../../../../assets/scss/theme/variables';
 
+.sticky-proceed-pay {
+  background-color: $theme-main;
+  color: white;
+  position: fixed;
+  bottom: 6px;
+  width: 300px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 14px;
+  z-index: 20;
+  border-radius: 4px;
+  text-align: center;
+  font-weight: 500;
+  cursor: pointer;
+
+  @media (max-width: 360px) {
+    width: 274px;
+  }
+}
+
 .no-border {
   border: none !important;
 }
@@ -10,11 +30,11 @@
   justify-content: space-between;
   align-items: center;
   min-height: 54px;
-  border-radius: 24px;
+  border-radius: 4px;
   background-color: #fafafa;
   margin-bottom: 8px;
   overflow-x: auto;
-  padding: 0px 16px;
+  padding: 0 16px;
   box-sizing: border-box;
   -ms-overflow-style: none;
   /* IE and Edge */
@@ -43,12 +63,12 @@
     height: 16px;
     width: 16px;
     line-height: 16px;
-    font-weight: 600px;
+    font-weight: 600;
   }
 }
 
 .chip-order.selected {
-  background-color: $theme-main-accent;
+  background-color: $font-color;
   color: white;
 }
 

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="67.28" height="67.28" viewBox="0 0 67.28 67.28">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: url(#radial-gradient);
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+    </style>
+    <radialGradient id="radial-gradient" cx="0.689" cy="0.136" r="0.925" gradientUnits="objectBoundingBox">
+      <stop offset="0.54" stop-color="#008bc7"/>
+      <stop offset="1" stop-color="#006daf"/>
+    </radialGradient>
+  </defs>
+  <g id="Artboard_246_copy_7" data-name="Artboard 246 copy 7" transform="translate(-28.56 -14.96)">
+    <circle id="Elipse_7091" data-name="Elipse 7091" class="cls-1" cx="33.64" cy="33.64" r="33.64" transform="translate(28.56 14.96)"/>
+    <g id="Capa_1">
+      <path id="Trazado_7975" data-name="Trazado 7975" class="cls-2" d="M60.59,60.75a1.56,1.56,0,0,1-1.43,1.66L39.52,62.3a1.7,1.7,0,0,1,0-3.35l19.64.12a1.55,1.55,0,0,1,1.43,1.68Z"/>
+      <path id="Trazado_7976" data-name="Trazado 7976" class="cls-2" d="M86.14,60.9a1.57,1.57,0,0,1-1.43,1.66L64,62.44a1.7,1.7,0,0,1,0-3.35l20.69.13a1.56,1.56,0,0,1,1.45,1.68Z"/>
+      <path id="Trazado_7977" data-name="Trazado 7977" class="cls-2" d="M85.57,42.66l-20.77,15a1.3,1.3,0,0,1-1.95-.54,1.85,1.85,0,0,1,.47-2.3l20.78-15a1.29,1.29,0,0,1,1.94.54,1.84,1.84,0,0,1-.47,2.3Z"/>
+      <path id="Trazado_7978" data-name="Trazado 7978" class="cls-2" d="M86.28,36.58a1.56,1.56,0,0,1-1.43,1.66l-20.69-.12a1.69,1.69,0,0,1,0-3.34l20.69.12a1.57,1.57,0,0,1,1.43,1.68Z"/>
+      <path id="Trazado_7979" data-name="Trazado 7979" class="cls-2" d="M57.84,48.57a1.56,1.56,0,0,1-1.43,1.66L39.6,50.14a1.7,1.7,0,0,1,0-3.35l16.81.1a1.56,1.56,0,0,1,1.43,1.68Z"/>
+      <path id="Trazado_7980" data-name="Trazado 7980" class="cls-2" d="M60.73,36.43a1.54,1.54,0,0,1-1.43,1.66L39.67,38a1.69,1.69,0,0,1,0-3.34l19.63.11a1.56,1.56,0,0,1,1.43,1.66Z"/>
+    </g>
+  </g>
+</svg>

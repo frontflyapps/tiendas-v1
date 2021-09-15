@@ -3,7 +3,7 @@
   <mat-sidenav class="DrawerMobileView" [opened]="false" mode="over" #start>
     <mat-list>
       <mat-list-item>
-        <mat-icon> person </mat-icon>
+        <mat-icon> person</mat-icon>
         &nbsp;
         <span class="mat-body-2" style="font-size: 19px"> Hola, </span>
         &nbsp;
@@ -12,7 +12,7 @@
         </span>
 
         <a *ngIf="!loggedInUser" href="/my-account" class="mat-body-2" style="font-size: 19px">
-          {{ 'Sign in' | translate }}
+          {{ 'Inicia Sesión' | translate }}
         </a>
       </mat-list-item>
     </mat-list>
@@ -84,7 +84,7 @@
   <mat-sidenav class="DrawerNotificationPanel" [opened]="false" mode="over" #notificationBar position="end" fixedInViewport>
     <mat-list>
       <mat-list-item>
-        <mat-icon> notifications </mat-icon>
+        <mat-icon> notifications</mat-icon>
         &nbsp;
         <span class="mat-body-2" style="font-size: 19px">
           {{ 'Notificaciones' | translate }}
@@ -104,14 +104,14 @@
       </button>
 
       <div fxFlex class="search-form" fxLayout="row" fxLayoutAlign="start center">
-        <form class="search-form" fxLayout="row" fxLayoutAlign="start center">
+        <div class="search-form" fxLayout="row" fxLayoutAlign="start center">
           <div class="form-wrap">
             <input [formControl]="searchForm" type="text" placeholder="{{ 'Buscar en MiBulevar' | translate }}" />
             <button (click)="onSearch()" class="btn-search" type="submit">
               <mat-icon> search </mat-icon>
             </button>
           </div>
-        </form>
+        </div>
       </div>
 
       <div class="userWidgets" ngClass.xs="w-100" fxLayout="row" fxLayoutAlign="end center" fxLayoutAlign.xs="start center">
@@ -223,12 +223,12 @@
       </div>
 
       <div fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="gappx">
-        <form class="mobile-search" fxLayout="row" fxLayoutAlign="start center">
+        <div class="mobile-search" fxLayout="row" fxLayoutAlign="start center">
           <input fxFlex [formControl]="searchForm" type="search" placeholder="{{ 'Type to search...' | translate }}" />
           <button (click)="onSearch()" type="submit">
             <mat-icon> search </mat-icon>
           </button>
-        </form>
+        </div>
       </div>
 
       <div class="showCategories" fxLayout="row" fxLayoutAlign.xs="start center" fxLayoutAlign.sm="center center" fxLayoutGap="gappx">
@@ -248,5 +248,6 @@
 
   <router-outlet></router-outlet>
 
-  <app-footer-two *ngIf="!url.includes('my-account')"></app-footer-two>
+  <!--  <app-footer-two *ngIf="!url.includes('my-account')"></app-footer-two>-->
+  <app-footer *ngIf="!url.includes('my-account')"></app-footer>
 </mat-sidenav-container>

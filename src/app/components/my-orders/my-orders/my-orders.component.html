@@ -19,7 +19,7 @@
                       placeholder="{{ 'Type to search...' | translate }}"
                     />
                     <button (click)="onFilter()" type="submit">
-                      <mat-icon> search </mat-icon>
+                      <mat-icon> search</mat-icon>
                     </button>
                   </form>
                 </div>
@@ -32,7 +32,7 @@
                     [ngClass]="{ selectedListItem: selectedOrder && item.id === selectedOrder.id }"
                     matRipple
                   >
-                    <mat-icon class="color-grey-800"> shopping_cart </mat-icon>
+                    <mat-icon class="color-grey-800"> shopping_cart</mat-icon>
 
                     <div
                       fxLayout="row wrap"
@@ -57,9 +57,9 @@
 
                         <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="gappx">
                           <span class="mat-body-1 color-grey-700">
-                            <span class="mat-body-1" [style.color]="this.status[item.status].primary">{{
+                            <span class="mat-body-1" [style.color]="this.status[item.status]?.primary">{{
                               this.utilsService.parserLanguage(this.status[item.status].status, this.language)
-                            }}</span>
+                              }}</span>
                           </span>
                         </div>
 
@@ -69,21 +69,21 @@
 
                         <p *ngIf="item.CountryId != 59" class="mat-body-1 color-grey-700" style="font-size: 14px">
                           {{
-                            item.city +
-                              ', ' +
-                              item.regionProvinceState +
-                              ', ' +
-                              utilsService.parserLanguage(item.Country.name, language)
+                          item.city +
+                          ', ' +
+                          item.regionProvinceState +
+                          ', ' +
+                          utilsService.parserLanguage(item.Country.name, language)
                           }}
                         </p>
 
                         <p *ngIf="item.CountryId == 59" class="mat-body-1 color-grey-700" style="font-size: 14px">
                           {{
-                            item.Municipality?.name +
-                              ', ' +
-                              item.Province?.name +
-                              ', ' +
-                              utilsService.parserLanguage(item.Country.name, language)
+                          item.Municipality?.name +
+                          ', ' +
+                          item.Province?.name +
+                          ', ' +
+                          utilsService.parserLanguage(item.Country.name, language)
                           }}
                         </p>
 
@@ -167,7 +167,7 @@
                 <p style="text-align: right" class="my-2">
                   <span [class]="this.status[this.selectedOrder.status].class">
                     {{
-                      this.utilsService.parserLanguage(this.status[this.selectedOrder.status].status, this.language)
+                    this.utilsService.parserLanguage(this.status[this.selectedOrder.status].status, this.language)
                     }}</span
                   >
                 </p>
@@ -202,7 +202,8 @@
                           ngp-threshold="0.1"
                           *ngIf="paymentItem.Product.Images && paymentItem.Product.Images.length"
                           [src]="this.urlImage + this.paymentItem.Product.Images[0].image"
-                          alt=""
+                          alt="Image product"
+                          onerror="this.onerror=null;this.src='assets/images/noImage.jpg';"
                         />
                       </a>
                     </div>
@@ -220,7 +221,7 @@
                       <h3 class="price">
                         {{ paymentItem.price | currency: selectedOrder.currency }}
                         <span class="color-grey-600" style="width: 28px; font-size: 17px; margin-top: -5px"
-                          >{{ 'x' + paymentItem.quantity }}
+                        >{{ 'x' + paymentItem.quantity }}
                         </span>
                       </h3>
                       <p class="description mb-2">
@@ -239,7 +240,7 @@
                           fxLayout="row"
                           fxLayoutAlign="start center"
                         >
-                          <mat-icon class="mr-2"> system_update_alt </mat-icon>
+                          <mat-icon class="mr-2"> system_update_alt</mat-icon>
                           {{ 'Descargar' | translate }}
                         </a>
                       </ng-container>
@@ -294,7 +295,7 @@
                     <span class="mb-0 mt-1 main-primary-700 mat-body-2">{{ 'fecha de creación' | translate }}</span>
                     <span class="mb-0 mt-1 main-primary-700 mat-body-2">{{
                       selectedOrder.createdAt | date: 'short'
-                    }}</span>
+                      }}</span>
                   </div>
 
                   <div
@@ -309,7 +310,7 @@
                     <span class="mb-0 mt-1 main-primary-700 mat-body-2">{{ 'fecha de cancelación' | translate }}</span>
                     <span class="mb-0 mt-1 main-primary-700 mat-body-2">{{
                       selectedOrder.cancelledAt | date: 'short'
-                    }}</span>
+                      }}</span>
                   </div>
                 </div>
 
@@ -519,7 +520,7 @@
                       </span>
                       <span [class]="this.status[this.selectedOrder.status].class">
                         {{
-                          this.utilsService.parserLanguage(this.status[this.selectedOrder.status].status, this.language)
+                        this.utilsService.parserLanguage(this.status[this.selectedOrder.status].status, this.language)
                         }}
                       </span>
                     </ng-container>
@@ -630,21 +631,6 @@
 
                 <div class="mt-3" fxLayout="row wrap" fxLayoutAlign="end center" fxLayoutGap="gappx">
                   <button
-                    matTooltip="{{ 'Cancelar la reservación' | translate }}"
-                    *ngIf="this.selectedOrder.status == 'confirmed' || this.selectedOrder.status == 'on-delivery'"
-                    fxFlex=" 30"
-                    fxFlex.lt-md="50"
-                    fxFlex.xs="100"
-                    (click)="onCancelarOrder(this.selectedOrder)"
-                    class="mx-2"
-                    mat-stroked-button
-                    color="warn"
-                  >
-                    <mat-icon>cancel</mat-icon>
-                    {{ 'CANCELAR' | translate }}
-                  </button>
-
-                  <button
                     matTooltip="{{ 'Obtener el vouvher de pago' | translate }}"
                     *ngIf="this.selectedOrder.status == 'confirmed' || this.selectedOrder.status == 'delivered'"
                     fxFlex="30"
@@ -652,11 +638,47 @@
                     fxFlex.xs="100"
                     (click)="onGetVoucher(this.selectedOrder)"
                     class="mx-2"
+                    ngClass.lt-md="mb-3"
+                    ngClass.xs="mb-3"
                     mat-stroked-button
                     color="primary"
                   >
                     <mat-icon>cloud_download</mat-icon>
                     {{ 'VOUCHER' | translate }}
+                  </button>
+
+                  <button
+                    matTooltip="{{ 'Editar' | translate }}"
+                    *ngIf="this.selectedOrder.status == 'confirmed'"
+                    fxFlex=" 30"
+                    fxFlex.lt-md="50"
+                    fxFlex.xs="100"
+                    (click)="onEditOrder(this.selectedOrder)"
+                    class="mx-2"
+                    ngClass.lt-md="mb-3"
+                    ngClass.xs="mb-3"
+                    mat-stroked-button
+                    color="primary"
+                  >
+                    <mat-icon>edit</mat-icon>
+                    {{ 'EDIT' | translate }}
+                  </button>
+
+                  <button
+                    matTooltip="{{ 'Cancelar la reservación' | translate }}"
+                    *ngIf="this.selectedOrder.status == 'confirmed' || this.selectedOrder.status == 'on-delivery'"
+                    fxFlex=" 30"
+                    fxFlex.lt-md="50"
+                    fxFlex.xs="100"
+                    (click)="onCancelarOrder(this.selectedOrder)"
+                    class="mx-2"
+                    ngClass.lt-md="mb-3"
+                    ngClass.xs="mb-3"
+                    mat-stroked-button
+                    color="warn"
+                  >
+                    <mat-icon>cancel</mat-icon>
+                    {{ 'CANCELAR' | translate }}
                   </button>
 
                   <div
@@ -690,7 +712,7 @@
               >
                 <span ngClass.xs="mb-1" class="mat-subheading-1 color-grey-800" style="font-weight: 600">{{
                   'Proveedor' | translate | uppercase
-                }}</span>
+                  }}</span>
                 <div fxLayout="row wrap " fxLayoutAlign="space-between center" fxLayoutGap="gappx">
                   <div
                     fxFlex="33"
@@ -709,6 +731,7 @@
                         *ngIf="this.selectedOrder?.Business?.logo"
                         style="height: 32px; width: 32px; border-radius: 50%; object-fit: cover"
                         [src]="urlImage + this.selectedOrder?.Business?.logo"
+                        onerror="this.onerror=null;this.src='assets/images/noImage.jpg';"
                       />
 
                       <img
@@ -772,7 +795,7 @@
                 >
                   <span ngClass.xs="mb-1" class="mat-subheading-1 color-grey-800 mt-3" style="font-weight: 600">{{
                     'Shipping provider' | translate | uppercase
-                  }}</span>
+                    }}</span>
                   <div fxLayout="row wrap " fxLayoutAlign="space-between center" fxLayoutGap="gappx">
                     <div
                       fxFlex="33"
@@ -791,6 +814,7 @@
                           *ngIf="this.selectedOrder?.ShippingBusiness?.logo"
                           style="height: 32px; width: 32px; border-radius: 50%; object-fit: cover"
                           [src]="urlImage + this.selectedOrder?.ShippingBusiness?.logo"
+                          onerror="this.onerror=null;this.src='assets/images/noImage.jpg';"
                         />
 
                         <img

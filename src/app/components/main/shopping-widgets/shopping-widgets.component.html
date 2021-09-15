@@ -1,14 +1,12 @@
 <div class="commerce-buttons" fxLayout="row" fxLayoutAlign="start center">
   <button mat-button class="flex-row-button mat-button" fxLayoutAlign="space-between center" [matMenuTriggerFor]="menu">
     <div class="mat-button-wrapper" fxLayout="row" fxLayoutAlign="space-between center">
-      <div
-        class="iconCart"
-        [matBadge]="shoppingCartItems.length"
-        matBadgeColor="accent"
-        fxLayout="row"
-        fxLayout="start center"
-        matTooltip="Carrito de compras"
-      >
+      <div class="iconCart"
+           [matBadge]="shoppingCartItems.length"
+           matBadgeColor="accent"
+           fxLayout="row"
+           fxLayoutAlign="start center"
+           matTooltip="Carrito de compras">
         <mat-icon>local_grocery_store</mat-icon>
       </div>
       <!--<div class="top-cart" fxLayout="row" fxLayoutAlign="end end">
@@ -66,7 +64,7 @@
           <mat-divider></mat-divider>
           <div class="total" fxLayout="row" fxLayoutAlign="space-between center">
             <p class="text-muted">
-              <a mat-flat-button color="primary" class="my-2" (click)="goToCheckout(cart)">{{ 'Pagar' | translate }}</a>
+              <a mat-flat-button color="primary" class="my-2" (click)="cartService.goToCheckout(cart)">{{ 'Pagar' | translate }}</a>
             </p>
             <span>{{ getTotal(cart) | currencyMarket: cart.market }}</span>
           </div>

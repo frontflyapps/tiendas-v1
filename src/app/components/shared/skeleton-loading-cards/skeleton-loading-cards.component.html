@@ -1,7 +1,43 @@
 <section>
-  <div fxHide fxShow.gt-md fxLayout="row" class="rowContainer" fxLayoutAlign="space-between center" fxLayoutGap="gappx">
+  <div fxHide fxShow.gt-md fxLayout="row" class="rowContainer" fxLayoutAlign="space-between center"
+       fxLayoutGap="10px grid">
 
-    <mat-card [fxFlex]="96/grid.lg" *ngFor="let item of arrayItems.lg" class="p-0" style="box-shadow: unset !important;
+    <mat-card fxFlex="100%" *ngFor="let item of arrayItems.lg" class="p-0" style="box-shadow: unset !important;
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      border-radius: 8px !important;">
+      <div class="template-image">
+        <ngx-skeleton-loader [theme]="{ width: '100%', height: '100%' }">
+        </ngx-skeleton-loader>
+      </div>
+
+      <mat-card-content class="p-3">
+        <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="gappx">
+          <ngx-skeleton-loader [theme]="{ width: '80px', height: '15px','border-radius':'0px' }">
+          </ngx-skeleton-loader>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="gappx">
+          <ngx-skeleton-loader [theme]="{ width: '200px', height: '20px','border-radius':'0px' }">
+          </ngx-skeleton-loader>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="gappx">
+          <ngx-skeleton-loader [theme]="{ width: '250px', height: '10px','border-radius':'0px' }">
+          </ngx-skeleton-loader>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="gappx">
+          <ngx-skeleton-loader [theme]="{ width: '250px', height: '10px','border-radius':'0px' }">
+          </ngx-skeleton-loader>
+        </div>
+        <div id="ImageDIvTemplate">
+          <ngx-skeleton-loader [theme]="{ width: '100%', height: '100%', 'border-radius':'50%','margin-bottom':'0px' }">
+          </ngx-skeleton-loader>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+
+  <div fxHide fxShow.md fxLayout="row" class="rowContainer" fxLayoutAlign="space-between center" fxLayoutGap="10px grid">
+    <mat-card fxFlex="100%" *ngFor="let item of arrayItems.md" class="p-0" style="box-shadow: unset !important;
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 8px !important;">
       <div class="template-image">
@@ -30,7 +66,6 @@
         <div id="ImageDIvTemplate">
           <ngx-skeleton-loader [theme]="{ width: '100%', height: '100%', 'border-radius':'50%','margin-bottom':'0px' }">
           </ngx-skeleton-loader>
-
         </div>
       </mat-card-content>
 
@@ -38,9 +73,9 @@
 
   </div>
 
-  <div fxHide fxShow.md fxLayout="row" class="rowContainer" fxLayoutAlign="space-between center" fxLayoutGap="gappx">
+  <div fxHide fxShow.sm fxLayout="row" class="rowContainer" fxLayoutAlign="space-between center" fxLayoutGap="10px grid">
 
-    <mat-card [fxFlex]="96/grid.md" *ngFor="let item of arrayItems.md" class="p-0" style="box-shadow: unset !important;
+    <mat-card fxFlex="100%" *ngFor="let item of arrayItems.sm" class="p-0" style="box-shadow: unset !important;
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 8px !important;">
       <div class="template-image">
@@ -69,7 +104,6 @@
         <div id="ImageDIvTemplate">
           <ngx-skeleton-loader [theme]="{ width: '100%', height: '100%', 'border-radius':'50%','margin-bottom':'0px' }">
           </ngx-skeleton-loader>
-
         </div>
       </mat-card-content>
 
@@ -77,10 +111,9 @@
     </mat-card>
 
   </div>
+  <div fxHide fxShow.xs fxLayout="row" class="rowContainer" fxLayoutAlign="space-between center" fxLayoutGap="10px grid">
 
-  <div fxHide fxShow.sm fxLayout="row" class="rowContainer" fxLayoutAlign="space-between center" fxLayoutGap="gappx">
-
-    <mat-card [fxFlex]="96/grid.sm" *ngFor="let item of arrayItems.sm" class="p-0" style="box-shadow: unset !important;
+    <mat-card fxFlex="100%" *ngFor="let item of arrayItems.xs" class="p-0" style="box-shadow: unset !important;
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 8px !important;">
       <div class="template-image">
@@ -109,52 +142,9 @@
         <div id="ImageDIvTemplate">
           <ngx-skeleton-loader [theme]="{ width: '100%', height: '100%', 'border-radius':'50%','margin-bottom':'0px' }">
           </ngx-skeleton-loader>
-
         </div>
       </mat-card-content>
-
-
     </mat-card>
 
   </div>
-  <div fxHide fxShow.xs fxLayout="row" class="rowContainer" fxLayoutAlign="space-between center" fxLayoutGap="gappx">
-
-    <mat-card [fxFlex]="96/grid.xs" *ngFor="let item of arrayItems.xs" class="p-0" style="box-shadow: unset !important;
-    border: 1px solid rgba(0, 0, 0, 0.12);
-    border-radius: 8px !important;">
-      <div class="template-image">
-        <ngx-skeleton-loader [theme]="{ width: '100%', height: '100%' }">
-        </ngx-skeleton-loader>
-      </div>
-
-      <mat-card-content class="p-3">
-        <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="gappx">
-          <ngx-skeleton-loader [theme]="{ width: '80px', height: '15px','border-radius':'0px' }">
-          </ngx-skeleton-loader>
-        </div>
-        <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="gappx">
-          <ngx-skeleton-loader [theme]="{ width: '200px', height: '20px','border-radius':'0px' }">
-          </ngx-skeleton-loader>
-        </div>
-
-        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="gappx">
-          <ngx-skeleton-loader [theme]="{ width: '250px', height: '10px','border-radius':'0px' }">
-          </ngx-skeleton-loader>
-        </div>
-        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="gappx">
-          <ngx-skeleton-loader [theme]="{ width: '250px', height: '10px','border-radius':'0px' }">
-          </ngx-skeleton-loader>
-        </div>
-        <div id="ImageDIvTemplate">
-          <ngx-skeleton-loader [theme]="{ width: '100%', height: '100%', 'border-radius':'50%','margin-bottom':'0px' }">
-          </ngx-skeleton-loader>
-
-        </div>
-      </mat-card-content>
-
-
-    </mat-card>
-
-  </div>
-
 </section>

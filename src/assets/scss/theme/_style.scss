@@ -45,13 +45,9 @@
 **************************************************************************/
 /***************************************/
 
-
-
-
 /***************************************
 * 1. General styles
 ****************************************/
-
 
 html,
 body {
@@ -59,8 +55,8 @@ body {
 }
 
 body {
-  padding: 0px !important;
-  margin: 0px !important;
+  padding: 0 !important;
+  margin: 0 !important;
   font-family: 'Poppins', Helvetica, sans-serif !important;
   position: relative;
   font-size: 1rem;
@@ -158,13 +154,11 @@ h6 {
   -webkit-overflow-scrolling: touch;
   display: block;
   overflow: hidden;
-
 }
 
 .mat-menu-panel {
   min-width: 100% !important;
   max-width: 100% !important;
-
 }
 
 .mat-mini-fab.mat-accent {
@@ -173,6 +167,7 @@ h6 {
 
 a {
   text-decoration: none;
+  color: $theme-main;
 }
 
 .text-center {
@@ -201,15 +196,14 @@ a {
     color: #f44336 !important;
     max-height: 36px;
     min-width: 36px;
-    padding: 3px 0px !important;
+    padding: 3px 0 !important;
     width: 45px;
     background-color: #323232 !important;
     opacity: 0.9 !important;
 
     &:hover {
       background-color: #292929 !important;
-      transition: background-color .5s ease !important;
-
+      transition: background-color 0.5s ease !important;
     }
   }
 }
@@ -233,7 +227,7 @@ a {
 }
 
 .mat-drawer-backdrop {
-  background-color: rgba(0, 0, 0, .6);
+  background-color: rgba(0, 0, 0, 0.6);
 }
 
 .mat-drawer-container {
@@ -264,7 +258,6 @@ a {
 
 .mat-input-element {
   caret-color: $theme-main !important;
-  ;
 }
 
 .container {
@@ -409,6 +402,10 @@ a {
 
 .sec-padding {
   padding: 48px 0;
+
+  @media (max-width: 959px) {
+    padding: 12px 0 48px;
+  }
 }
 
 .btn-project {
@@ -416,9 +413,6 @@ a {
   padding: 5px 32px !important;
   color: $theme-main-dark !important;
 }
-
-
-
 
 /***************************************
     ***************************************
@@ -443,7 +437,6 @@ a {
       z-index: 9;
       /* padding-left: 294px; */
       vertical-align: middle;
-      position: relative;
 
       /* top: 58%; */
       button {
@@ -482,18 +475,14 @@ a {
   .slide-item {
     height: 100%;
     background-size: cover;
-    background-position: center;
+    background-position: right;
+    background-repeat: no-repeat;
   }
-
 }
-
 
 .swiper-pagination-bullet-active {
   background: $theme-main !important;
 }
-
-
-
 
 /* .mask{
           opacity: 0.6;
@@ -508,8 +497,6 @@ a {
 .swiper-lazy-preloader {
   top: 18%;
 }
-
-
 
 .h-100 {
   height: 100%;
@@ -548,7 +535,6 @@ span {
   font-size: 14px;
 }
 
-
 .sidenav {
   width: 250px;
   padding: 8px 16px;
@@ -572,11 +558,9 @@ span {
 *  Header-1 styles
 ****************************************/
 
-
 /*  shopping widgets styles */
 .commerce-buttons {
   .flex-row-button {
-
     .mat-button-wrapper {
       .cart-count-wrapper {
         position: absolute;
@@ -591,10 +575,7 @@ span {
       }
     }
   }
-
-
 }
-
 
 .spCard-main {
   width: 100%;
@@ -631,7 +612,7 @@ span {
         a {
           cursor: pointer;
           color: $grey3;
-          transition: .3s;
+          transition: 0.3s;
           float: right;
 
           &:hover {
@@ -704,21 +685,13 @@ span {
   }
 }
 
-
-
-
 /***************************************
 *  Shopping widget styles
 ****************************************/
 
-
-
-
-
 .card-list-title2 {
   padding: 5px 0 15px 0;
 }
-
 
 /***************************************
 *  Home product section styles
@@ -732,12 +705,10 @@ span {
   }
 
   .product-wraper {
-    padding: 20px 0px 20px 20px;
+    padding: 20px 0 20px 20px;
 
     .product-box {
       width: 100%;
-
-
     }
   }
 
@@ -748,12 +719,11 @@ span {
   .product-item {
     position: unset;
     height: auto;
-    transition: .4s;
+    transition: 0.4s;
     padding: 26px 5px 5px 5px;
 
-    .mat-card:not([class*=mat-elevation-z]) {
-
-      box-shadow: 2px 2px 6px 0px rgba(0, 0, 0, .1), 0 1px 1px 0 rgba(0, 0, 0, .0), 0 1px 3px 0 rgba(0, 0, 0, .12);
+    .mat-card:not([class*='mat-elevation-z']) {
+      box-shadow: 2px 2px 6px 0 rgba(0, 0, 0, 0.1), 0 1px 1px 0 rgba(0, 0, 0, 0), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
       padding: 0;
 
       .product-img {
@@ -778,7 +748,7 @@ span {
           right: 16px;
           opacity: 0;
 
-          @media (max-width:1200px) {
+          @media (max-width: 1200px) {
             opacity: 1 !important;
           }
 
@@ -802,13 +772,11 @@ span {
               height: 30px;
             }
 
-
             &:hover {
               color: $theme-main;
             }
           }
         }
-
 
         .stars {
           color: $theme-main;
@@ -838,7 +806,6 @@ span {
         span {
           color: $grey5;
           font-size: 14px;
-
         }
 
         .price-wrap {
@@ -853,7 +820,7 @@ span {
           a {
             background: $theme-main;
             cursor: pointer;
-            transition: .3s;
+            transition: 0.3s;
             width: 38px;
             height: 38px;
             background: $white-dark;
@@ -866,10 +833,9 @@ span {
             }
 
             mat-icon {
-              transition: .3s;
+              transition: 0.3s;
               font-size: 18px;
             }
-
           }
         }
 
@@ -906,14 +872,10 @@ span {
   }
 }
 
-
-
 .mat-tab-group.mat-primary .mat-ink-bar,
 .mat-tab-nav-bar.mat-primary .mat-ink-bar {
   background-color: $theme-main !important;
 }
-
-
 
 /***************************************
 *  Home baners section styles
@@ -931,7 +893,7 @@ span {
   .baner {
     padding: 20px;
     height: 100%;
-    transition: .15s ease-in;
+    transition: 0.15s ease-in;
     text-align: left;
 
     h4 {
@@ -963,7 +925,7 @@ span {
     }
 
     p {
-      color: $theme-main-dark
+      color: $theme-main-dark;
     }
 
     a {
@@ -1010,7 +972,7 @@ span {
         font-weight: 500;
 
         &::before {
-          content: "";
+          content: '';
           left: 0;
           position: absolute;
           width: 100%;
@@ -1020,7 +982,7 @@ span {
         }
 
         &::after {
-          content: "";
+          content: '';
           left: 0;
           position: absolute;
           width: 2.5rem;
@@ -1043,7 +1005,6 @@ span {
         height: 80px !important;
         object-fit: cover !important;
         object-position: center !important;
-
       }
     }
 
@@ -1106,12 +1067,10 @@ span {
         margin-right: 5px;
 
         a {
-
           i {
             color: $theme-main-dark;
           }
         }
-
       }
     }
 
@@ -1123,7 +1082,7 @@ span {
       font-size: 14px;
       font-weight: 700;
       margin-top: 20px;
-      padding: 0px 10px;
+      padding: 0 10px;
       text-align: center;
       text-transform: uppercase;
       transition: all 0.4s ease 0s;
@@ -1149,7 +1108,6 @@ span {
       line-height: 32px;
       color: $font-color;
     }
-
 
     .newsletter-widget {
       position: relative;
@@ -1192,7 +1150,6 @@ span {
           a {
             line-height: 22px;
           }
-
         }
       }
     }
@@ -1211,8 +1168,6 @@ span {
     }
   }
 }
-
-
 
 /***************************************
     ***************************************
@@ -1247,12 +1202,10 @@ span {
         z-index: 9;
         /* padding-left: 294px; */
         vertical-align: middle;
-        position: relative;
         /* top: 58%; */
         transform: none;
       }
     }
-
   }
 
   .slider-categories {
@@ -1300,8 +1253,6 @@ span {
         }
       }
     }
-
-
   }
 
   .carousel-2-wrapper {
@@ -1318,13 +1269,9 @@ span {
   }
 }
 
-
-
-
 /***************************************
 *  Header-2 styles
 ****************************************/
-
 
 .home-header-2 {
   background: $white;
@@ -1347,15 +1294,15 @@ span {
       margin: 0;
       position: relative;
       background: $grey4;
-      background: rgba(0, 0, 0, .0);
+      background: rgba(0, 0, 0, 0);
 
       input {
         border-style: none;
         border-width: 1px;
         border-radius: 3px;
-        border: 1px solid $grey2;
-        -webkit-transition: box-shadow .3s ease-out;
-        transition: box-shadow .3s ease-out;
+        //border: 1px solid $grey2;
+        -webkit-transition: box-shadow 0.3s ease-out;
+        transition: box-shadow 0.3s ease-out;
         height: 40px;
         width: 100%;
         max-width: 100%;
@@ -1379,14 +1326,14 @@ span {
         color: $white;
         -webkit-transition: all 250ms ease-in-out;
         -moz-transition: all 250ms ease-in-out;
-        -ms-transition: all 250ms ease-in-out;
+        //-ms-transition: all 250ms ease-in-out;
         -o-transition: all 250ms ease-in-out;
         transition: all 250ms ease-in-out;
         text-transform: uppercase;
         background-color: $font-color;
         border-radius: 0 3px 3px 0;
         -webkit-border-radius: 0 3px 3px 0;
-        text-shadow: 0 -1px 0 rgba(0, 0, 0, .3);
+        text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
         -webkit-box-shadow: none;
         box-shadow: none;
         -webkit-appearance: none;
@@ -1410,14 +1357,13 @@ span {
       .info-text {
         p {
           font-size: 12px;
-          line-height: 0px;
+          line-height: 0;
           margin-bottom: 7px;
         }
 
         span {
           font-size: 20px;
           font-weight: 600;
-
         }
       }
     }
@@ -1458,8 +1404,6 @@ span {
   }
 }
 
-
-
 /***************************************
 *  Home-2 info bar styles
 ****************************************/
@@ -1472,7 +1416,7 @@ span {
 
     .mat-card {
       height: 100px;
-      box-shadow: none;
+      //box-shadow: none;
       border-right: 1px solid $grey6;
       box-shadow: none !important;
 
@@ -1543,8 +1487,6 @@ span {
   }
 }
 
-
-
 /***************************************
     ***************************************
     ***************************************
@@ -1564,7 +1506,6 @@ span {
   padding: 25px 0;
 
   .carousel-2-wrapper {
-
     //  max-width: 100% !important;
     .main-slider {
       height: 461px;
@@ -1582,7 +1523,7 @@ span {
           z-index: 9;
           /* padding-left: 294px; */
           vertical-align: middle;
-          position: relative;
+          //position: relative;
           /* top: 58%; */
         }
       }
@@ -1594,7 +1535,7 @@ span {
           display: inline-block;
           border-radius: 13px;
           background: $dark-font;
-          opacity: .6;
+          opacity: 0.6;
         }
       }
     }
@@ -1609,7 +1550,6 @@ span {
       padding-left: 15px;
 
       .carousel-banner {
-
         width: 100%;
         height: 223px;
         background: $baners-background;
@@ -1646,7 +1586,7 @@ span {
                 font-size: 13px;
                 font-weight: 500;
                 margin-top: 14px;
-                padding: 0px 10px;
+                padding: 0 10px;
                 text-align: center;
                 text-transform: uppercase;
                 transition: all 0.4s ease 0s;
@@ -1657,7 +1597,6 @@ span {
                 line-height: 40px;
               }
             }
-
           }
         }
       }
@@ -1725,7 +1664,7 @@ span {
 
         h4 {
           &::before {
-            content: "";
+            content: '';
             left: 0;
             position: absolute;
             width: 100%;
@@ -1735,7 +1674,7 @@ span {
           }
 
           &::after {
-            content: "";
+            content: '';
             left: 0;
             position: absolute;
             width: 2.5rem;
@@ -1767,7 +1706,6 @@ span {
           }
         }
       }
-
     }
 
     .sale-widget {
@@ -1781,7 +1719,7 @@ span {
         font-size: 36px;
         font-weight: 600;
         display: block;
-        letter-spacing: .5;
+        letter-spacing: 0.5px;
       }
 
       .sale-widget2 {
@@ -1789,7 +1727,7 @@ span {
         font-size: 18px;
         font-weight: 600;
         display: block;
-        letter-spacing: .5;
+        letter-spacing: 0.5px;
       }
 
       .discount {
@@ -1798,7 +1736,7 @@ span {
         font-size: 77px;
         font-weight: 600;
         position: relative;
-        letter-spacing: .5;
+        letter-spacing: 0.5px;
       }
 
       .percent {
@@ -1863,7 +1801,7 @@ span {
             font-size: 14px;
             font-weight: 700;
             margin-top: 10px;
-            padding: 0px 10px;
+            padding: 0 10px;
             text-align: center;
             text-transform: uppercase;
             transition: all 0.4s ease 0s;
@@ -1882,7 +1820,7 @@ span {
     padding-left: 15px;
 
     .info-bar {
-      margin-top: 0px;
+      margin-top: 0;
       border: 1px solid $grey6;
 
       .card-wrap {
@@ -1923,7 +1861,6 @@ span {
       }
     }
 
-
     .products {
       background: $white;
       position: relative;
@@ -1942,7 +1879,6 @@ span {
             height: 100%;
           }
         }
-
       }
 
       .mat-tab-labels {
@@ -1960,7 +1896,6 @@ span {
       position: absolute;
       top: 69px;
     }
-
 
     .home3-banner-wrap {
       width: 100%;
@@ -1984,7 +1919,6 @@ span {
             color: $theme-main;
             font-size: 38px;
             font-weight: 600;
-
           }
 
           a {
@@ -1995,7 +1929,7 @@ span {
             font-size: 13px;
             font-weight: 500;
             margin-top: 14px;
-            padding: 0px 10px;
+            padding: 0 10px;
             text-align: center;
             text-transform: uppercase;
             transition: all 0.4s ease 0s;
@@ -2017,13 +1951,7 @@ span {
       }
     }
   }
-
-
 }
-
-
-
-
 
 .menu-container1 {
   background: $theme-main-400 !important; // border-top: 1px solid #e5e5e5;
@@ -2040,9 +1968,7 @@ span {
       line-height: 46px;
     }
   }
-
 }
-
 
 /***************************************
 *  Menu-2 styles
@@ -2050,8 +1976,8 @@ span {
 
 .mat-menu-content {
   width: 245px;
-  padding-top: 0px;
-  padding-bottom: 0px;
+  padding-top: 0;
+  padding-bottom: 0;
   // padding: 0 13px !important;
   border-top: 4px solid $theme-main !important;
 
@@ -2063,7 +1989,6 @@ span {
 .top-navbar a {
   padding: 15px 26px;
 }
-
 
 .menu-container2 {
   background: $theme-main;
@@ -2078,17 +2003,15 @@ span {
   }
 }
 
-
 /***************************************
 *  Sidebar styles
 ****************************************/
-
 
 .mat-drawer {
   width: 240px;
   padding: 8px 14px;
   position: fixed;
-  margin-left: 0px;
+  margin-left: 0;
 }
 
 .toggle-header {
@@ -2111,14 +2034,14 @@ span {
   }
 }
 
-
 /***************************************
 *  Products left sidebar page styles
 ****************************************/
 
-
-.left-sidebar-wrapper mat-sidenav.filter-sidenav.mat-drawer.mat-sidenav.ng-tns-c15-4.ng-trigger.ng-trigger-transform.ng-tns-c13-3.ng-star-inserted.mat-drawer-over {
-  padding-right: 10px;
+.left-sidebar-wrapper,
+mat-sidenav.filter-sidenav.mat-drawer.mat-sidenav.ng-tns-c15-4.ng-trigger.ng-trigger-transform.ng-tns-c13-3.ng-star-inserted.mat-drawer-over {
+  padding-right: 0;
+  //padding-right: 10px;
 }
 
 .left-sidebar-wrapper {
@@ -2134,7 +2057,7 @@ span {
       text-transform: capitalize;
       font-weight: 500;
 
-      line-height: 1;
+      line-height: 1.3;
     }
   }
 
@@ -2143,7 +2066,6 @@ span {
     border: 0 !important;
 
     .brands {
-
       .title-header {
         margin-bottom: 15px;
         position: relative;
@@ -2151,7 +2073,7 @@ span {
 
         h4 {
           &::before {
-            content: "";
+            content: '';
             left: 0;
             position: absolute;
             width: 100%;
@@ -2161,7 +2083,7 @@ span {
           }
 
           &::after {
-            content: "";
+            content: '';
             left: 0;
             position: absolute;
             width: 2.5rem;
@@ -2193,7 +2115,6 @@ span {
           }
         }
       }
-
     }
 
     .popular-products {
@@ -2205,7 +2126,7 @@ span {
     padding: 8px 25px;
     background: $gray-lighter;
     margin-bottom: 20px;
-    box-shadow: 2px 2px 6px 0px rgba(0, 0, 0, 0.1), 0 1px 1px 0 rgba(0, 0, 0, 0), 0 1px 3px 0 rgba(0, 0, 0, 0.12) !important;
+    box-shadow: 2px 2px 6px 0 rgba(0, 0, 0, 0.1), 0 1px 1px 0 rgba(0, 0, 0, 0), 0 1px 3px 0 rgba(0, 0, 0, 0.12) !important;
   }
 
   .all-products {
@@ -2213,17 +2134,16 @@ span {
     background: $white;
 
     .col {
-      padding: 9px 0 9px 0px;
+      padding: 9px 0 9px 0;
 
       .product-item {
         position: relative;
         height: auto;
         padding: 0 10px;
-        transition: .4s;
+        transition: 0.4s;
 
-        .mat-card:not([class*=mat-elevation-z]) {
-
-          box-shadow: 2px 2px 6px 0px rgba(0, 0, 0, .1), 0 1px 1px 0 rgba(0, 0, 0, .0), 0 1px 3px 0 rgba(0, 0, 0, .12);
+        .mat-card:not([class*='mat-elevation-z']) {
+          box-shadow: 2px 2px 6px 0 rgba(0, 0, 0, 0.1), 0 1px 1px 0 rgba(0, 0, 0, 0), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
           padding: 0;
 
           .product-img {
@@ -2239,7 +2159,7 @@ span {
               right: 16px;
               opacity: 0;
 
-              @media (max-width:1200px) {
+              @media (max-width: 1200px) {
                 opacity: 1 !important;
               }
 
@@ -2263,13 +2183,11 @@ span {
                   height: 30px;
                 }
 
-
                 &:hover {
                   color: $theme-main;
                 }
               }
             }
-
 
             .stars {
               color: $theme-main;
@@ -2299,7 +2217,6 @@ span {
             span {
               color: $grey5;
               font-size: 14px;
-
             }
 
             .price-wrap {
@@ -2314,7 +2231,7 @@ span {
               a {
                 background: $theme-main;
                 cursor: pointer;
-                transition: .3s;
+                transition: 0.3s;
                 width: 38px;
                 height: 38px;
                 background: $white-dark;
@@ -2327,10 +2244,9 @@ span {
                 }
 
                 mat-icon {
-                  transition: .3s;
+                  transition: 0.3s;
                   font-size: 18px;
                 }
-
               }
             }
 
@@ -2356,9 +2272,7 @@ span {
             }
           }
         }
-
       }
-
     }
   }
 
@@ -2399,14 +2313,14 @@ span {
       width: 100%;
       margin: 0;
       position: relative;
-      background: #444;
-      background: rgba(0, 0, 0, 0.2);
+      //background: #444;
+      //background: rgba(0, 0, 0, 0.2);
 
       input {
         border-style: none;
         border-width: 1px;
         border-radius: 3px;
-        border: 2px solid $theme-main;
+        //border: 2px solid $theme-main;
         transition: box-shadow 0.3s ease-out;
         height: 40px;
         width: 100%;
@@ -2461,7 +2375,7 @@ span {
 
         p {
           font-size: 12px;
-          line-height: 0px;
+          line-height: 0;
           margin-bottom: 7px;
         }
 
@@ -2473,7 +2387,6 @@ span {
     }
 
     .main-menu-wrapper-3 {
-
       .top-navbar {
         background: #ffffff;
 
@@ -2503,11 +2416,8 @@ span {
           }
         }
       }
-
-
     }
   }
-
 }
 
 .menu-container4 {
@@ -2538,34 +2448,29 @@ span {
     .widget-text {
       a {
         color: $font-color;
-
       }
     }
   }
 }
 
-
-
-
 /***************************************
 *  Home-4 info bar styles
 ****************************************/
 .info-bar-four-wrapper {
-  margin-top: 0px;
+  margin-top: 0;
   border: none;
   background: #fff;
   // border-bottom: 1px solid #e5e5e5;
 
   .info-bar-four {
-
     .card-wrap {
       padding: 16px 0;
 
       .mat-card {
         height: 70px;
         box-sizing: border-box;
-        box-shadow: none;
-        border-radius: 0px;
+        //box-shadow: none;
+        border-radius: 0;
         padding: 8px 16px;
         border-right: 1px solid $theme-main-300;
         box-shadow: none !important;
@@ -2609,7 +2514,6 @@ span {
   .banners-container {
     .four {
       max-height: 250px;
-
     }
   }
 }
@@ -2651,11 +2555,9 @@ span {
   }
 }
 
-
 .featured-products-wrap {
   background: $background;
 }
-
 
 /***************************************
     ***************************************
@@ -2674,8 +2576,8 @@ span {
 
 .mat-menu-content {
   width: 245px;
-  padding-top: 0px;
-  padding-bottom: 0px;
+  padding-top: 0;
+  padding-bottom: 0;
   // padding: 0 13px !important;
   border-top: 4px solid $theme-main !important;
 
@@ -2688,9 +2590,7 @@ span {
   padding: 15px 26px;
 }
 
-
 .menu-container5 {
-
   // background: $theme-main;
   .container {
     background: $grey9;
@@ -2704,7 +2604,6 @@ span {
       line-height: 63px;
     }
   }
-
 }
 
 /***************************************
@@ -2717,18 +2616,18 @@ span {
 
       li {
         width: 14.285%;
-        transition: .3s;
+        transition: 0.3s;
 
         a {
           display: flex;
           flex-direction: column;
           line-height: 16px;
-          letter-spacing: -.13px;
+          letter-spacing: -0.13px;
           color: #fff;
           padding: 15px 16px 18px 16px;
           justify-content: center;
           text-align: center;
-          transition: .3s;
+          transition: 0.3s;
 
           i {
             margin-bottom: 5px;
@@ -2792,7 +2691,7 @@ span {
         font-weight: 500;
 
         &::before {
-          content: "";
+          content: '';
           left: 0;
           position: absolute;
           width: 100%;
@@ -2802,7 +2701,7 @@ span {
         }
 
         &::after {
-          content: "";
+          content: '';
           left: 0;
           position: absolute;
           width: 2.5rem;
@@ -2919,7 +2818,7 @@ span {
 *  Home footer-2 section styles
 ****************************************/
 .footer-two {
-  background: $theme-main-400;
+  background: $theme-main;
 
   .footer-widget {
     padding-right: 15px;
@@ -2942,7 +2841,6 @@ span {
             color: $theme-main;
           }
         }
-
       }
     }
 
@@ -2954,7 +2852,7 @@ span {
       font-size: 14px;
       font-weight: 700;
       margin-top: 20px;
-      padding: 0px 10px;
+      padding: 0 10px;
       text-align: center;
       text-transform: uppercase;
       transition: all 0.4s ease 0s;
@@ -2981,7 +2879,6 @@ span {
       line-height: 32px;
       color: #fff;
     }
-
 
     .newsletter-widget {
       position: relative;
@@ -3024,7 +2921,6 @@ span {
           a {
             line-height: 22px;
           }
-
         }
       }
     }
@@ -3043,13 +2939,6 @@ span {
     }
   }
 }
-
-
-
-
-
-
-
 
 /***************************************
 *  Popular product page styles
@@ -3075,12 +2964,12 @@ span {
 
       .info {
         h5 {
-          color: rgba(0, 0, 0, .87);
+          color: rgba(0, 0, 0, 0.87);
           text-decoration: none;
           font-size: 17px;
           font-weight: 600;
-          -webkit-transition: color .4s ease;
-          transition: color .4s ease;
+          -webkit-transition: color 0.4s ease;
+          transition: color 0.4s ease;
         }
 
         .price {
@@ -3097,7 +2986,7 @@ span {
 
     h4 {
       &::before {
-        content: "";
+        content: '';
         left: 0;
         position: absolute;
         width: 100%;
@@ -3107,7 +2996,7 @@ span {
       }
 
       &::after {
-        content: "";
+        content: '';
         left: 0;
         position: absolute;
         width: 2.5rem;
@@ -3117,12 +3006,7 @@ span {
       }
     }
   }
-
 }
-
-
-
-
 
 /***************************************
 *  Price slider styles
@@ -3172,7 +3056,6 @@ span {
           line-height: 24px;
           margin-top: 5px;
         }
-
       }
 
       h4 {
@@ -3232,14 +3115,11 @@ span {
   }
 }
 
-
-
 .product-pagination .ngx-pagination {
   margin-left: 0;
   margin-bottom: 1rem;
   text-align: center;
   padding: 10px 5px;
-
 }
 
 .product-pagination .ngx-pagination .current {
@@ -3256,16 +3136,14 @@ span {
   min-width: 20cm;
 }
 
-
 /***************************************
 *  Popular products styles
 ****************************************/
 .popular-products {
-
   .reviews {
     .stars {
       color: $theme-main;
-      margin: 0px 0 5px 0;
+      margin: 0 0 5px 0;
 
       span {
         color: $grey3;
@@ -3282,7 +3160,6 @@ span {
       }
     }
   }
-
 }
 
 .mega-menu-pane {
@@ -3297,8 +3174,6 @@ span {
     }
   }
 }
-
-
 
 /***************************************
 *  Brands page styles
@@ -3315,7 +3190,6 @@ span {
     background: $theme-main-red !important;
   }
 }
-
 
 /***************************************
 *  Categorie page styles
@@ -3346,7 +3220,7 @@ span {
       list-style-type: none;
       padding: 0;
 
-      >*:not(:last-child) {
+      > *:not(:last-child) {
         border-bottom: 1px solid $grey6;
         padding-bottom: 20px;
       }
@@ -3392,11 +3266,10 @@ span {
   }
 }
 
-
 @media screen and (max-width: 599px) {
   .contact-page {
     .left-info-panel {
-      padding-right: 0px;
+      padding-right: 0;
       width: 100%;
     }
   }
@@ -3406,7 +3279,6 @@ span {
   .divider {
     margin: 10px 0;
   }
-
 }
 
 :host {
@@ -3421,7 +3293,7 @@ span {
 
   &:hover,
   &:focus {
-    >.mat-list-item:not(.expanded) {
+    > .mat-list-item:not(.expanded) {
       background-color: mat-color($theme-main, 100) !important;
     }
   }

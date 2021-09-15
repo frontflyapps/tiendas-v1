@@ -10,6 +10,7 @@ import { Subject } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { EncryptDecryptService } from './core/services/encrypt-decrypt.service';
 import { AuthenticationService } from './core/services/authentication/authentication.service';
+import { LocalStorageService } from './core/services/localStorage/localStorage.service';
 
 @Component({
   selector: 'app-root',
@@ -18,10 +19,7 @@ import { AuthenticationService } from './core/services/authentication/authentica
 })
 export class AppComponent {
   title = 'ecommerce-sophia-new';
-  tokenReferal = undefined;
   uploadFileStartSubject: Subject<any>;
-  uploadFileEndSubject: Subject<any>;
-  //////////////////////////////////////////////////////////
   cssOptions: CssOptions = {
     color: 'primary',
     width: '40%',
@@ -38,7 +36,9 @@ export class AppComponent {
     private loggedInUserService: LoggedInUserService,
     private authService: AuthenticationService,
     private encryptDecryptService: EncryptDecryptService,
+    private localStorageService: LocalStorageService,
   ) {
+    this.localStorageService.setVersion();
     const defaultLanguage: any = { name: 'Español', image: 'assets/images/flags/es.svg', lang: 'es' };
     if ('language' in localStorage) {
       let language = JSON.parse(localStorage.getItem('language'));
@@ -52,45 +52,40 @@ export class AppComponent {
     this.initSystem();
   }
 
-  ngOnInit() {
-    ////////////////////LOGICA PARA ESCUCHAR LOS EVENTOS DE SUBIDA //////////////////////////
-    console.log('Entre aqui en el init de app');
-    /////////////////////////////////////////////////////////////////////////////////////////////
-  }
-  ////////////////////////////
   public onFinishFile(event) {
-    // console.log('********TERMINADO DE SUBIR EL ARCHIVO************************', event);
     this.showToastr.showInfo(`El archivo se ha subido al sistema exitósamente`);
   }
+
   public onProgress(event) {
-    // console.log('**************PROGRESO**************************', event);
-    //this.uploadFilesService.emitUploadProgress(event);
+    // this.uploadFilesService.emitUploadProgress(event);
   }
+
   public onCancelFile(event) {
-    // console.log('********CANCELADO EL ARCHIVO************************', event);
     this.showToastr.showInfo(`La subida del  archivo ha sido cancelada`);
   }
-  ////////////////////////////
+
+  // //////////////////////////
 
   initSystem() {
     const isCookieAccount = this.cookieService.check('account');
-    // console.log('AppComponent -> initSystem -> token', isCookieAccount);
     const userLogged = this.loggedInUserService.getLoggedInUser();
     if (isCookieAccount) {
-      // console.log('***** TOMANDO LA COOKIE DEL DOMINIO Y OBTENIENDO USER *********');
-      const token = this.encryptDecryptService.decrypt(this.cookieService.get('account'));
-      // console.log('AppComponent -> initSystem -> token', token);
-      this.authService.getProfile(token).subscribe(
-        (user) => {
-          // console.log('AppComponent -> initSystem -> user', user);
-          this.loggedInUserService.updateUserProfile(user.data);
-        },
-        (error) => {
-          this.loggedInUserService.setLoggedInUser(null);
-          this.loggedInUserService.removeCookies();
-          this.loggedInUserService.$loggedInUserUpdated.next(null);
-        },
-      );
+      try {
+        const token = this.encryptDecryptService.decrypt(this.cookieService.get('account'));
+        this.authService.getProfile(token).subscribe(
+          (user) => {
+            this.loggedInUserService.updateUserProfile(user.data);
+          },
+          (error) => {
+            this.loggedInUserService.setLoggedInUser(null);
+            this.loggedInUserService.removeCookies();
+            this.loggedInUserService.$loggedInUserUpdated.next(null);
+          },
+        );
+      } catch (e) {
+        console.warn('Error decrypt value', e);
+        this.localStorageService.actionsToClearSystem();
+      }
     } else {
       this.loggedInUserService.setLoggedInUser(null);
       this.loggedInUserService.$loggedInUserUpdated.next(null);

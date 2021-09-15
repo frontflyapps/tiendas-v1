@@ -7,12 +7,13 @@ import { environment } from '../../../../environments/environment';
 @Injectable({
   providedIn: 'root',
 })
-export class BussinessService {
+export class BusinessService {
   url = environment.apiUrl + 'business';
   urlId = environment.apiUrl + 'business/:businessId';
   httpOptions = {};
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) {
+  }
 
   createBussines(body: any): Observable<any> {
     return this.httpClient.post<any>(this.url, body);
@@ -61,7 +62,7 @@ export class BussinessService {
     return this.httpClient.get<any>(this.url, { params: httpParams });
   }
 
-  getBussines(data: any): Observable<any> {
+  getBusiness(data: any): Observable<any> {
     if (data.constructor === Object) {
       return this.httpClient.get<any>(this.urlId.replace(':businessId', data.id), this.httpOptions);
     } else {
@@ -69,7 +70,7 @@ export class BussinessService {
     }
   }
 
-  makeStatusBussines(data) {
+  makeStatusBusiness(data) {
     return this.httpClient.post<any>(this.url + `/${data.id}/status-change`, data);
   }
 }

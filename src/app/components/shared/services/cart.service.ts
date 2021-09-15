@@ -1,22 +1,25 @@
-import { CartItem, Cart } from './../../../modals/cart-item';
+import { CartItem, Cart } from '../../../modals/cart-item';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { environment } from './../../../../environments/environment';
+import { environment } from '../../../../environments/environment';
 import { Injectable, OnDestroy } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { takeUntil } from 'rxjs/operators';
-import { Observable, Subscriber, Subject } from 'rxjs';
-import { LoggedInUserService } from './../../../core/services/loggedInUser/logged-in-user.service';
-import { UtilsService } from './../../../core/services/utils/utils.service';
+import { Observable, Subscriber, Subject, BehaviorSubject } from 'rxjs';
+import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-in-user.service';
+import { UtilsService } from '../../../core/services/utils/utils.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ShowSnackbarService } from '../../../core/services/show-snackbar/show-snackbar.service';
 import { ShowToastrService } from 'src/app/core/services/show-toastr/show-toastr.service';
+import { Router } from '@angular/router';
+import { ConfirmationDialogFrontComponent } from '../confirmation-dialog-front/confirmation-dialog-front.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService implements OnDestroy {
   // Array
-  public $cartItemsUpdated: Subject<any> = new Subject();
+  public $cartItemsUpdated: BehaviorSubject<any> = new BehaviorSubject([]);
   public $paymentUpdate: Subject<any> = new Subject();
   public observer: Subscriber<{}>;
   url = environment.apiUrl + 'cart';
@@ -26,7 +29,11 @@ export class CartService implements OnDestroy {
   language = null;
   carts: Cart[] = [];
 
+  // public globalCart: Cart[] = [];
+
   constructor(
+    private router: Router,
+    private dialog: MatDialog,
     public snackBar: MatSnackBar,
     private loggedInUserService: LoggedInUserService,
     private httpClient: HttpClient,
@@ -37,8 +44,6 @@ export class CartService implements OnDestroy {
   ) {
     // Get product from Localstorage
     this.carts = this.loggedInUserService._getDataFromStorage('cartItem') || [];
-    // console.log("TCL: CartService -> this.products", this.products);
-    /////////////////////////////////////////////////
 
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
@@ -69,6 +74,12 @@ export class CartService implements OnDestroy {
     this._unsubscribeAll.complete();
   }
 
+  public goToCheckout(cart: Cart, cartITems?) {
+    let cartId = cart.id;
+    let cartIds = cartITems ? cartITems.map((i) => i.id) : cart.CartItems.map((i) => i.id);
+    this.router.navigate(['/checkout'], { queryParams: { cartId, cartIds } }).then();
+  }
+
   public getShoppingCars(): CartItem[] {
     this.carts = this.loggedInUserService._getDataFromStorage('cartItem') || [];
     if (this.carts) {
@@ -95,7 +106,7 @@ export class CartService implements OnDestroy {
   }
 
   // Add to cart
-  public async addToCart(product: any, quantity: number) {
+  public async addToCart(product: any, quantity: number, goToPay?: boolean) {
     // if (this.loggedInUser && this.loggedInUserService.isMessengerUser()) {
     //   return alert(this.translate.instant('You can not make this action'));
     // }
@@ -113,9 +124,8 @@ export class CartService implements OnDestroy {
         return;
       }
       if (this.loggedInUser) {
-        return this.postCart({ ProductId: product.id, quantity: quantity })
+        return this.postCart({ ProductId: product.id, quantity: quantity, goToPay: (goToPay || false) })
           .then((data) => {
-            console.log('CartService -> addToCart -> cart', data);
             this.carts = data.data;
             message =
               this.translate.instant('The product ') +
@@ -185,9 +195,8 @@ export class CartService implements OnDestroy {
         // if (this._isInCart(product) && quantity != -1) {
         //   quantity = 1;
         // }
-        return this.postCart({ ProductId: product.id, quantity: quantity, StockId: product?.Stock?.id })
+        return this.postCart({ ProductId: product.id, quantity: quantity, StockId: product?.Stock?.id, goToPay: (goToPay || false) })
           .then((data) => {
-            // console.log('CartService -> addToCart -> cart', data);
             this.carts = data.data;
             message =
               this.translate.instant('The product ') +
@@ -241,7 +250,6 @@ export class CartService implements OnDestroy {
         }
         cart.CartItems = [...shoppingCartItems];
         cart.totalPrice = this._calcTotalPrice(cart);
-        console.log('CartService -> addToCart ->  this.cart.totalPrice', cart.totalPrice);
         message =
           this.translate.instant('The product ') +
           ' ' +
@@ -258,7 +266,7 @@ export class CartService implements OnDestroy {
     }
   }
 
-  ////////////////FUNCIONES PARA MANEJAR EL ARREGLO DE CARRITOS//////////////////////
+  // //////////////FUNCIONES PARA MANEJAR EL ARREGLO DE CARRITOS//////////////////////
 
   _getSimpleCart(BusinessId) {
     const simpleCart = this.carts.find((item) => item.BusinessId == BusinessId);
@@ -269,9 +277,8 @@ export class CartService implements OnDestroy {
    *
    * @param data
    * {Business, Product, Stock}
-   * @returns
+   * @returns  A Cart interface Data
    */
-
   _newSimpleCart(Product?, Business?, Stock?): Cart {
     return {
       CartItems: [],
@@ -295,15 +302,13 @@ export class CartService implements OnDestroy {
   _removeSimpleCart(cart: Cart) {
     const index = this.carts.findIndex((item) => item.BusinessId == cart.BusinessId);
     if (index != -1) {
-      console.log('CartService -> _removeSimpleCart -> index', index);
       this.carts.splice(index, 1);
-      console.log('CartService -> _removeSimpleCart -> this.carts', this.carts);
     }
   }
-  ////////////////////////////////////////////////////////////////////
+
+  // //////////////////////////////////////////////////////////////////
 
   public async addToCartQuickly(product: any, quantity: number) {
-    // console.log(product);
     // if (this.loggedInUser && this.loggedInUserService.isMessengerUser()) {
     //   return alert(this.translate.instant('You can not make this action'));
     // }
@@ -409,7 +414,6 @@ export class CartService implements OnDestroy {
         this.carts = this.loggedInUserService._getDataFromStorage('cartItem') || [];
         let cart = this._getSimpleCart(product.BusinessId);
         cart = cart ? cart : this._newSimpleCart(product, product.Business);
-        // console.log('CartService -> addToCartQuickly -> cart', cart);
         if (!this.isSameMarket(cart, product)) {
           this.showToastr.showError(
             'Usted solo puede tener en su carrito elementos con la misma moneda a pagar',
@@ -421,7 +425,7 @@ export class CartService implements OnDestroy {
         const shoppingCartItems = cart.CartItems;
         const index = shoppingCartItems.findIndex((item) => item.ProductId == product.id);
         if (index > -1) {
-          //shoppingCartItems[index].quantity += quantity;
+          // shoppingCartItems[index].quantity += quantity;
           if (quantity != -1) {
             shoppingCartItems[index].quantity++;
           } else {
@@ -463,7 +467,7 @@ export class CartService implements OnDestroy {
     return false;
   }
 
-  //CheckCart
+  // CheckCart
 
   _isInCart(product): boolean {
     this.carts = this.loggedInUserService._getDataFromStorage('cartItem') || [];
@@ -491,7 +495,6 @@ export class CartService implements OnDestroy {
   public calculateStockCounts(product: CartItem, quantity): CartItem | Boolean {
     const qty = product.quantity + quantity;
     const stock = product.Product?.Stock?.quantity || 0;
-    console.log(product);
     if (stock < qty) {
       // this.toastrService.error('You can not add more items than available. In stock '+ stock +' items.');
       this.snackBar.open('You can not choose more items than available. In stock ' + stock + ' items. ', '×', {
@@ -503,11 +506,12 @@ export class CartService implements OnDestroy {
     }
     return true;
   }
+
   // Calculate Product stock Counts
   public isCanStock(product: any, quantity): CartItem | Boolean {
     try {
       if (this.loggedInUser) {
-        //validacion no se ha desde el front sino desde el api
+        // validacion no se ha desde el front sino desde el api
         return true;
       }
       this.carts = this.loggedInUserService._getDataFromStorage('cartItem') || [];
@@ -631,7 +635,6 @@ export class CartService implements OnDestroy {
   async registerData() {
     if (this.loggedInUser) {
       try {
-        console.log('entre Aqui en el cart************************************');
         const localStorageCarts: Cart[] = this.loggedInUserService._getDataFromStorage('cartItem') || [];
         for (let cart of localStorageCarts) {
           let itemsNotRegistered = [];
@@ -682,5 +685,39 @@ export class CartService implements OnDestroy {
       httpParams = httpParams.set('CountryId', params.CountryId);
     }
     return this.httpClient.get(this.urlCheckoutData, { params: httpParams });
+  }
+
+  // ////////////////////// ADD TO CART PRODUCT //////////////////
+  // Add to cart
+  public addToCartOnCard(product: any, quantity: number = 1) {
+    // this.inLoading = true;
+    if (product.minSale > 1) {
+      const dialogRef = this.dialog.open(ConfirmationDialogFrontComponent, {
+        width: '10cm',
+        maxWidth: '100vw',
+        data: {
+          question: `Este producto posee un restricción de mínima cantidad de unidades para poder adquirirlo, desea añadirlo al carrito?`,
+        },
+      });
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result) {
+          this.addToCartQuickly(product, product.minSale)
+            .then((data) => {
+              // this.inLoading = false;
+            })
+            .catch((error) => {
+              // this.inLoading = false;
+            });
+        }
+      });
+    } else {
+      this.addToCartQuickly(product, product.minSale)
+        .then((data) => {
+          // this.inLoading = false;
+        })
+        .catch((error) => {
+          // this.inLoading = false;
+        });
+    }
   }
 }

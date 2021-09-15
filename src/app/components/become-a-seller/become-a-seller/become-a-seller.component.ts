@@ -1,4 +1,4 @@
-import { ShowToastrService } from './../../../core/services/show-toastr/show-toastr.service';
+import { ShowToastrService } from '../../../core/services/show-toastr/show-toastr.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { LoggedInUserService } from 'src/app/core/services/loggedInUser/logged-in-user.service';
 import { Component, OnInit } from '@angular/core';
@@ -7,7 +7,7 @@ import { ImagePickerConf } from 'ngp-image-picker';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { RegionsService } from '../../../core/services/regions/regions.service';
-import { BussinessService } from '../../../core/services/business/business.service';
+import { BusinessService } from '../../../core/services/business/business.service';
 import { isPossiblePhoneNumber, isValidPhoneNumber, parsePhoneNumber } from 'libphonenumber-js';
 
 @Component({
@@ -74,7 +74,7 @@ export class BecomeASellerComponent implements OnInit {
     private fb: FormBuilder,
     private regionService: RegionsService,
     private loggedInUserService: LoggedInUserService,
-    private businessService: BussinessService,
+    private businessService: BusinessService,
     private spinner: NgxSpinnerService,
     private showToastr: ShowToastrService,
     private translate: TranslateService,

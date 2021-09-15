@@ -1,29 +1,33 @@
-import { ShowToastrService } from './../../../../core/services/show-toastr/show-toastr.service';
+import { MetaService } from 'src/app/core/services/meta.service';
+import { ShowToastrService } from '../../../../core/services/show-toastr/show-toastr.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { CartService } from './../../../shared/services/cart.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Product } from './../../../../modals/product.model';
+import { CartService } from '../../../shared/services/cart.service';
+import { Component, OnInit, OnDestroy, ViewChild, AfterContentInit } from '@angular/core';
+import { Product } from '../../../../modals/product.model';
 import { ProductService } from '../../../shared/services/product.service';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { UtilsService } from './../../../../core/services/utils/utils.service';
-import { IPagination } from './../../../../core/classes/pagination.class';
-import { environment } from './../../../../../environments/environment';
+import { UtilsService } from '../../../../core/services/utils/utils.service';
+import { IPagination } from '../../../../core/classes/pagination.class';
+import { environment } from '../../../../../environments/environment';
 import { Subject } from 'rxjs';
-import { LoggedInUserService } from './../../../../core/services/loggedInUser/logged-in-user.service';
-import { CurrencyService } from './../../../../core/services/currency/currency.service';
+import { LoggedInUserService } from '../../../../core/services/loggedInUser/logged-in-user.service';
+import { CurrencyService } from '../../../../core/services/currency/currency.service';
 import { takeUntil } from 'rxjs/operators';
 import { DomSanitizer } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
 import { Cart } from 'src/app/modals/cart-item';
 import { BiconService } from 'src/app/core/services/bicon/bicon.service';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { SocialMediaComponent } from './social-media/social-media.component';
+
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.scss'],
 })
 export class ProductDetailsComponent implements OnInit, OnDestroy {
-  isLoading = false;
+  isLoading = true;
   product: any = {};
   products: any[] = [];
   relatedProduct: any[] = [];
@@ -41,7 +45,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   showZoom = false;
   public image: any;
   public zoomImage: any;
-  public counter: number = 1;
+  public counter = 1;
   index: number;
   localDatabaseUsers = environment.localDatabaseUsers;
   loadingFeatured = false;
@@ -94,6 +98,8 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     public _sanitizer: DomSanitizer,
     private fb: FormBuilder,
     private httpCient: HttpClient,
+    private metaService: MetaService,
+    private _bottomSheet: MatBottomSheet,
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
@@ -136,6 +142,15 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     }
     this.getRelatedProducts();
     this.getFeaturedProducts();
+    // ////////////////////META///////////////////
+    this.metaService.setMeta(
+      this.product.name[this.language],
+      this.product.shortDescription[this.language],
+      this.mainImage?.image,
+      environment.meta?.mainPage?.keywords,
+    );
+
+    // //////////////////////////////////////////
   }
 
   ngOnInit() {
@@ -219,12 +234,12 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   public buyNow(product: Product, quantity) {
     if (quantity > 0) {
       try {
-        this.cartService.addToCart(product, parseInt(quantity, 10)).then((carts: Cart[]) => {
+        this.cartService.addToCart(product, parseInt(quantity, 10), true).then((carts: Cart[]) => {
           for (let cart of carts) {
             let dataFind = cart.CartItems.find((cartItemx) => cartItemx?.ProductId == product.id);
             if (dataFind != undefined) {
               let cartId = cart?.id;
-              this.router.navigate(['/checkout'], { queryParams: { cartId } });
+              this.router.navigate(['/checkout'], { queryParams: { cartId } }).then();
               return;
             }
           }
@@ -302,5 +317,13 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
 
   onGoToCheckouNav() {
     this.buyNow(this.product, 1);
+  }
+
+  onShareProduct() {
+    this._bottomSheet.open(SocialMediaComponent, {
+      data: {
+        product: this.product,
+      },
+    });
   }
 }

@@ -1,13 +1,12 @@
-import { environment } from './../../../../environments/environment';
-import { IPagination } from './../../../core/classes/pagination.class';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CartItem } from './../../../modals/cart-item';
-import { CartService } from '../../shared/services/cart.service';
+import { environment } from '../../../../environments/environment';
+import { IPagination } from '../../../core/classes/pagination.class';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { Subject } from 'rxjs';
-import { LoggedInUserService } from './../../../core/services/loggedInUser/logged-in-user.service';
-import { UtilsService } from './../../../core/services/utils/utils.service';
-import { takeUntil, take, map } from 'rxjs/operators';
+import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-in-user.service';
+import { UtilsService } from '../../../core/services/utils/utils.service';
+import { takeUntil } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
+import { MetaService } from 'src/app/core/services/meta.service';
 
 @Component({
   selector: 'app-main-home',
@@ -100,16 +99,36 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   bigBanner1 = null;
   bigBanner2 = null;
 
+  public applyStyle: boolean;
+
   /////////////////////////////////////////////////////////////////////////////////
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event): void {
+    this.applyResolution();
+  }
+
+  private applyResolution() {
+    const innerWidth = window.innerWidth;
+    this.applyStyle = innerWidth <= 600;
+  }
 
   constructor(
     public utilsService: UtilsService,
     private loggedInUserService: LoggedInUserService,
     private httpClient: HttpClient,
+    private metaService: MetaService,
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
+    this.metaService.setMeta(
+      environment.meta?.mainPage?.title,
+      environment.meta?.mainPage?.description,
+      environment.meta?.mainPage?.shareImg,
+      environment.meta?.mainPage?.keywords,
+    );
+    this.applyResolution();
   }
 
   ngOnInit() {
@@ -139,7 +158,6 @@ export class MainHomeComponent implements OnInit, OnDestroy {
         this.countProducts = data.data.countProducts;
         this.servicesProducts = data.data.ourServices;
         this.bigBanner1 = data.data.bigBanner1;
-        // console.log('MainHomeComponent -> ngOnInit ->  this.bigBanner1 ', this.bigBanner1);
         this.bigBanner2 = data.data.bigBanner2;
         this.loadingServices = false;
       })

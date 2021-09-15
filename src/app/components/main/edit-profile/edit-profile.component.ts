@@ -65,11 +65,7 @@ export class EditProfileComponent implements OnInit {
   @HostListener('window:resize', ['$event'])
   onResize(event): void {
     this.innerWidth = window.innerWidth;
-    if (this.innerWidth > 600) {
-      this.applyStyle = false;
-    } else {
-      this.applyStyle = true;
-    }
+    this.applyStyle = this.innerWidth <= 600;
   }
 
   ngOnInit(): void {
@@ -79,10 +75,10 @@ export class EditProfileComponent implements OnInit {
   createForm(): void {
     this.form = this.fb.group({
       name: [this.loggedInUser && this.loggedInUser.name ? this.loggedInUser.name : null, [Validators.required]],
-      username: [
-        this.loggedInUser && this.loggedInUser.username ? this.loggedInUser.username : null,
-        [Validators.required],
-      ],
+      // username: [
+      //   this.loggedInUser && this.loggedInUser.username ? this.loggedInUser.username : null,
+      //   [Validators.required],
+      // ],
       lastName: [
         this.loggedInUser && this.loggedInUser.lastName ? this.loggedInUser.lastName : null,
         [Validators.required],
@@ -141,7 +137,6 @@ export class EditProfileComponent implements OnInit {
     this.spinner.show();
     this.authService.editProfile(data).subscribe(
       (newProfile) => {
-        console.log('TCL: EditProfileComponent -> newProfile', newProfile);
         this.loggedInUserService.setNewProfile(newProfile.data);
         this.showSnackbar.showSucces(this.translate.instant('Profile updated successfully'));
         this.spinner.hide();

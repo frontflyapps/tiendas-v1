@@ -32,6 +32,7 @@ export class CancelOrderComponent implements OnInit {
   displayedColumns: string[] = ['minHour', 'maxHour', 'value'];
   ruleApply: any;
   refund: any;
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private spinner: NgxSpinnerService,
@@ -84,7 +85,6 @@ export class CancelOrderComponent implements OnInit {
   }
 
   onCancelar() {
-    // console.log('CancelOrderComponent -> onCancelar -> this.order.payemntType', this.order.payemntType);
     this.spinner.show();
     const cancelNote = this.form?.value?.cancelNote;
     let body = { id: this.order.id, cancelNote: cancelNote };
@@ -110,7 +110,6 @@ export class CancelOrderComponent implements OnInit {
         },
       );
     } else if (this.order.paymentType == 'enzona') {
-      console.log('Entre aqui');
       this.payService.cancelPaymentEnzona(body).subscribe(
         (val) => {
           this.loadData = false;

@@ -5,8 +5,6 @@ import { MatListModule } from '@angular/material/list';
 import { MatChipsModule } from '@angular/material/chips';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { ContactComponent } from './contact/contact.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
 import { CompareComponent } from './compare/compare.component';
 import { PagesRoutingModule } from './pages-routing.module';
@@ -20,7 +18,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { NgpMaterialRatingModule } from './../shared/ngp-material-rating/ngp-material-rating.module';
-///----------------------------------//////
 
 @NgModule({
   imports: [
@@ -42,6 +39,6 @@ import { NgpMaterialRatingModule } from './../shared/ngp-material-rating/ngp-mat
     MatFormFieldModule,
     MatDialogModule,
   ],
-  declarations: [ContactComponent, WishlistComponent, CompareComponent],
+  declarations: [WishlistComponent, CompareComponent],
 })
 export class PagesModule {}

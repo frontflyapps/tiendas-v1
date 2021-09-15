@@ -11,8 +11,9 @@
 
   <div mat-dialog-content class="my-dialog-content">
     <div class="imagePickerRow" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="gappx">
-      <ngp-image-picker [_imageSrc]="(loggedInUser.avatar)?urlImage + loggedInUser.avatar:null" [_config]="imagePickerConf"
-        ($imageChanged)="onImageChange($event)">
+      <ngp-image-picker [_imageSrc]="(loggedInUser.avatar)?urlImage + loggedInUser.avatar:null"
+                        [_config]="imagePickerConf"
+                        ($imageChanged)="onImageChange($event)">
       </ngp-image-picker>
     </div>
 
@@ -43,20 +44,29 @@
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
-          <mat-label>{{'Username'|translate}}</mat-label>
-          <input type="text" matInput [formControl]="form.controls['username']" placeholder="{{'Username'|translate}}">
-          <mat-error *ngIf="form.controls['username'].hasError('required')">
-            {{'username'|translate}} <strong>{{'is required'|translate}}</strong>
-          </mat-error>
-        </mat-form-field>
+        <!--        <mat-form-field appearance="outline">-->
+        <!--          <mat-label>{{'Username'|translate}}</mat-label>-->
+        <!--          <input type="text" matInput [formControl]="form.controls['username']" placeholder="{{'Username'|translate}}">-->
+        <!--          <mat-error *ngIf="form.controls['username'].hasError('required')">-->
+        <!--            {{'username'|translate}} <strong>{{'is required'|translate}}</strong>-->
+        <!--          </mat-error>-->
+        <!--        </mat-form-field>-->
 
         <mat-form-field appearance="outline">
-          <mat-label>{{'Email'|translate}}</mat-label>
+          <mat-label>{{'Email'|translate}} ({{'Username' | translate}})</mat-label>
           <input type="email" matInput [formControl]="form.controls['email']" placeholder="{{'Email'|translate}}">
           <mat-icon class="greyIcon" matSuffix>mail</mat-icon>
           <mat-error *ngIf="form.controls['email'].hasError('required')">
             {{'email'|translate}} <strong>{{'is required'|translate}}</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>{{'Phone'|translate}}</mat-label>
+          <input type="tel" matInput [formControl]="form.controls['phone']" placeholder="{{'Phone'|translate}}">
+          <mat-icon class="greyIcon" matSuffix>mail</mat-icon>
+          <mat-hint>{{'Formato de teléfono de 10 dígitos mínimo' | translate}}</mat-hint>
+          <mat-error *ngIf="form.controls['phone'].hasError('required')">
+            {{'phone'|translate}} <strong>{{'is required'|translate}}</strong>
           </mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline">
@@ -70,7 +80,8 @@
 
         <mat-form-field class="form-field-width" appearance="outline">
           <mat-label>{{'Feha de nacimiento'|translate}}</mat-label>
-          <input matInput [matDatepicker]="picker" placeholder="29/9/1995" [formControl]="form.controls['birthday']">
+          <input matInput [matDatepicker]="picker" placeholder="29/9/1995" [formControl]="form.controls['birthday']"
+                 [readonly]="true">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker startView="year" [startAt]="startDate"></mat-datepicker>
         </mat-form-field>
@@ -122,13 +133,12 @@
     </form>
 
 
-
-
   </div>
 
   <div mat-dialog-actions fxLayout="row" fxLayoutAlign="end start">
-    <button mat-flat-button (click)="onUpdateProfile()" [disabled]="this.form.invalid || (isChangePass && this.formPass.invalid )"
-      color="primary">{{'Save'|translate}}</button>
+    <button mat-flat-button (click)="onUpdateProfile()"
+            [disabled]="this.form.invalid || (isChangePass && this.formPass.invalid )"
+            color="primary">{{'Save'|translate}}</button>
 
   </div>
 

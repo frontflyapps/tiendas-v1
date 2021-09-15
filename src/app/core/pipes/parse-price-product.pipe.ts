@@ -11,7 +11,7 @@ export class ParsePriceProduct implements PipeTransform {
 
   transform(product: any, type?: any): string {
     let currency;
-    currency = CoinEnum.CUP;
+    currency = CoinEnum.USD;
     if (product.market == MarketEnum.INTERNATIONAL) {
       currency = CoinEnum.USD;
     }

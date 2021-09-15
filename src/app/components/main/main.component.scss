@@ -1,6 +1,25 @@
-@import "../../../assets/scss/theme/variables";
+@import '../../../assets/scss/theme/variables';
 
-app-main {
+.router-link-active {
+  background-color: $menu-hover !important;
+}
+
+.main-logo-container {
+  @media (max-width: 600px) {
+    position: relative;
+    top: -3px;
+  }
+}
+
+.logo-img-main {
+  max-height: 26px;
+  width: auto;
+  height: auto;
+  max-width: 170px;
+}
+
+app-main,
+.app-main {
   .profileImage {
     height: 40px;
     width: 40px;
@@ -15,13 +34,11 @@ app-main {
   }
 
   .link-active {
-
     // background-color: $theme-main !important;
     span {
       text-decoration: underline;
     }
   }
-
 
   .DrawerMobileView {
     width: 295px !important;
@@ -29,7 +46,6 @@ app-main {
     position: fixed;
     margin-left: 0px;
     color: #fff;
-
   }
 
   .DrawerNotificationPanel {
@@ -39,9 +55,7 @@ app-main {
     margin-left: 0px;
     background-color: #fff;
     max-width: 100% !important;
-
   }
-
 
   .sidebar-nav-items {
     padding: 14px 16px;
@@ -53,12 +67,13 @@ app-main {
   }
 
   .Logo-img {
-    height: 38px;
+    height: 40px;
     width: auto;
-    // width: 115px;
-    object-fit: cover;
-    object-position: center;
-    border-radius: 4px;
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+    }
   }
 
   /*  header styles */
@@ -70,10 +85,9 @@ app-main {
     padding: 0px 16px;
     box-sizing: border-box !important;
 
-    @media (max-width:1024px) {
+    @media (max-width: 1024px) {
       padding-top: 16px;
     }
-
 
     .container-header {
       max-width: 1600px;
@@ -87,7 +101,7 @@ app-main {
       /* margin-top: 6px; */
       padding: 0px 0;
 
-      @media (max-width:500px) {
+      @media (max-width: 500px) {
         min-width: 250px;
       }
 
@@ -99,17 +113,17 @@ app-main {
         margin: 0;
         position: relative;
         background: $grey4;
-        background: rgba(0, 0, 0, .2);
+        background: rgba(0, 0, 0, 0.2);
         border-radius: 16px;
 
         input {
           border-style: none;
           border-width: 1px;
           background-color: $white !important;
-          border-radius: 8px;
+          border-radius: 4px;
           border-color: $white-dark;
-          -webkit-transition: box-shadow .3s ease-out;
-          transition: box-shadow .3s ease-out;
+          -webkit-transition: box-shadow 0.3s ease-out;
+          transition: box-shadow 0.3s ease-out;
           height: 40px;
           width: 100%;
           max-width: 100%;
@@ -139,17 +153,15 @@ app-main {
         transition: all 250ms ease-in-out;
         text-transform: uppercase;
         background-color: $theme-main-accent-300;
-        border-radius: 0 8px 8px 0;
-        -webkit-border-radius: 0 8px 8px 0;
+        border-radius: 4px;
+        -webkit-border-radius: 4px;
         font-weight: 500;
-        text-shadow: 0 -1px 0 rgba(0, 0, 0, .3);
+        text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
         -webkit-box-shadow: none;
         box-shadow: none;
         -webkit-appearance: none;
       }
-
     }
-
 
     .userWidgets {
       a {
@@ -182,6 +194,8 @@ app-main {
   .mobile-search {
     width: 100%;
     max-width: 700px;
+    border-radius: 4px;
+    background-color: white;
 
     input {
       height: 44px;
@@ -200,8 +214,7 @@ app-main {
     button {
       width: 50px;
       height: 44px;
-      border-top-right-radius: 8px;
-      border-bottom-right-radius: 8px;
+      border-radius: 4px;
       padding: 12px 14px;
       border: none;
       background-color: $theme-main-accent-300;
@@ -226,15 +239,11 @@ app-main {
 
     .itemCategory {
       min-width: unset !important;
-      padding: 0px 8px !important;
+      padding: 0 8px !important;
     }
   }
 
   .showCategories::-webkit-scrollbar {
     display: none;
   }
-
-
-
-
 }

@@ -5,42 +5,32 @@
   <mat-list class="reviews">
     <mat-list-item class="content" *ngFor="let product of popularProducts">
       <div class="media">
-        <a
-          style="width: 100%; height: 100%"
-          [routerLink]="['/product']"
-          [queryParams]="{ productId: product.id, stockId: product?.Stock?.id }"
-        >
-          <img
-            class="img-fluid"
-            ngp-lazy
-            ngp-threshold="0.1"
-            *ngIf="product.Images && product.Images.length"
-            [src]="imageUrl + product.Images[0].image"
-            alt=""
-          />
-          <img
-            class="img-fluid"
-            ngp-lazy
-            ngp-threshold="0.1"
-            *ngIf="!(product.Images && product.Images.length)"
-            src="../../../../assets/images/noImage.jpg"
-            alt=""
-          />
+        <a style="width: 100%; height: 100%"
+           [routerLink]="['/product']"
+           [queryParams]="{ productId: product.id, stockId: product?.Stock?.id }">
+          <img class="img-fluid"
+               ngp-lazy
+               ngp-threshold="0.1"
+               *ngIf="product.Images && product.Images.length"
+               [src]="imageUrl + product.Images[0].image"
+               alt="" />
+          <img class="img-fluid"
+               ngp-lazy
+               ngp-threshold="0.1"
+               *ngIf="!(product.Images && product.Images.length)"
+               src="assets/images/noImage.jpg"
+               alt="" />
         </a>
       </div>
       <div class="info" style="text-align: left !important">
-        <a
-          class="title"
-          [routerLink]="['/product']"
-          [queryParams]="{ productId: product.id, stockId: product?.Stock?.id }"
-        >
+        <a class="title"
+           [routerLink]="['/product']"
+           [queryParams]="{ productId: product.id, stockId: product?.Stock?.id }">
           <h5 class="m-0">
-            <a
-              class="link-nav-a"
-              [routerLink]="['/product']"
-              [queryParams]="{ productId: product.id, stockId: product?.Stock?.id }"
-              >{{ product.name[language] ? product.name[language] : product.name['es'] }}</a
-            >
+            <a class="link-nav-a"
+               [routerLink]="['/product']"
+               [queryParams]="{ productId: product.id, stockId: product?.Stock?.id }"
+            >{{ product.name[language] ? product.name[language] : product.name['es'] }}</a>
           </h5>
         </a>
         <div class="mt-2">

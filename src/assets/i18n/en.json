@@ -551,7 +551,7 @@
   "fecha de cancelación": "Cancellation date",
   "Region / Province / State": "Region / Province / State",
   "Comentario acerca de la cancelación": "Comment about cancellation",
-  "VOUCHER": "VOUCHER",
+  "VOUCHER": "Voucher",
   "Obtener el vouvher de pago": "Get the payment vouvher",
   "Sign in": "Sign in",
   "Crea tu negocio": "Create your business",
@@ -559,7 +559,7 @@
   "Ir a la administración": "Go to administration",
   "Salir": "Leave",
   "Notificaciones": "Notifications",
-  "Buscar en MiBulevar": "Search without MiBulevar",
+  "Buscar en MiBulevar": "Search",
   "Comparar productos": "Compare Products",
   "Account": "Account",
   "Administración": "Administration",
@@ -1116,5 +1116,6 @@
   "First page": "First page",
   "Last page": "Last page",
   "Telefono": "Phone",
-  "es us o cu": "is not valid"
+  "es us o cu": "is not valid",
+  "No hay ningún producto disponible": "There is no product available"
 }

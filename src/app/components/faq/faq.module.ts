@@ -1,3 +1,4 @@
+import { PipesModule } from './../../core/pipes/pipes.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -8,15 +9,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
-  declarations: [
-    FaqComponent
-  ],
-  imports: [
-    CommonModule,
-    FaqRoutingModule,
-    FlexLayoutModule,
-    MatExpansionModule,
-    TranslateModule
-  ]
+  declarations: [FaqComponent],
+  imports: [CommonModule, FaqRoutingModule, FlexLayoutModule, MatExpansionModule, TranslateModule, PipesModule],
 })
-export class FaqModule { }
+export class FaqModule {}

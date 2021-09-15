@@ -3,6 +3,20 @@
 /***************************************
 *  Compare page styles
 ****************************************/
+
+:host {
+  .compare-arr {
+    .mat-icon {
+      height: 84px;
+      width: 84px;
+    }
+
+    .material-icons {
+      font-size: 84px;
+    }
+  }
+}
+
 .compare-component {
   .table-responsive {
     display: block;

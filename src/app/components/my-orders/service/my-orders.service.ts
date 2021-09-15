@@ -66,4 +66,10 @@ export class MyOrdersService {
       return this.httpClient.get<any>(this.urlPaymentId.replace(':id', data + ''), this.httpOptions);
     }
   }
+
+  editPayment(data){
+    return this.httpClient.patch<any>(this.urlPaymentId.replace(':id', data.id), data, this.httpOptions);
+  }
+
+  
 }

@@ -1,23 +1,23 @@
 import { ConfirmPaymentOkComponent } from './confirm-payment-ok/confirm-payment-ok.component';
 import { CookieService } from 'ngx-cookie-service';
 import { MatSidenav } from '@angular/material/sidenav';
-import { Component, OnInit, ElementRef, ViewChild, OnDestroy, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { Product } from '../../modals/product.model';
 import { CartItem } from '../../modals/cart-item';
 import { ProductService } from '../shared/services/product.service';
 import { CartService } from '../shared/services/cart.service';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { NavigationService } from './../../core/services/navigation/navigation.service';
-import { LoggedInUserService } from './../../core/services/loggedInUser/logged-in-user.service';
+import { NavigationService } from '../../core/services/navigation/navigation.service';
+import { LoggedInUserService } from '../../core/services/loggedInUser/logged-in-user.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject, of, Observable } from 'rxjs';
-import { IUser } from './../../core/classes/user.class';
-import { AuthenticationService } from './../../core/services/authentication/authentication.service';
-import { ShowSnackbarService } from './../../core/services/show-snackbar/show-snackbar.service';
+import { IUser } from '../../core/classes/user.class';
+import { AuthenticationService } from '../../core/services/authentication/authentication.service';
+import { ShowSnackbarService } from '../../core/services/show-snackbar/show-snackbar.service';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
-import { CurrencyService } from './../../core/services/currency/currency.service';
-import { environment } from './../../../environments/environment';
+import { CurrencyService } from '../../core/services/currency/currency.service';
+import { environment } from '../../../environments/environment';
 import { FormControl } from '@angular/forms';
 import { SocketIoService } from '../../core/services/socket-io/socket-io.service';
 import { NotificationsService } from './notification/notifications.service';
@@ -27,6 +27,7 @@ import { UtilsService } from 'src/app/core/services/utils/utils.service';
 import { SidebarMenuService } from './sidebar/sidebar-menu.service';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { CategoriesService } from '../../core/services/categories/catagories.service';
+
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -91,7 +92,6 @@ export class MainComponent implements OnInit, OnDestroy {
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
-    // console.log('MainComponent ->  this.loggedInUser', this.loggedInUser);
     this.navItems = this.navigationService.getNavItems();
 
     this.cartService.$cartItemsUpdated.pipe(takeUntil(this._unsubscribeAll)).subscribe((cart) => {
@@ -103,11 +103,9 @@ export class MainComponent implements OnInit, OnDestroy {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.url = event.url;
-        // console.log('TCL: MainComponent -> constructor -> this.url', this.url);
         this.sidenav.close();
       }
     });
-
     this.searchForm = new FormControl(null, []);
   }
 
@@ -150,9 +148,9 @@ export class MainComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((compareItems) => (this.compareItems = compareItems));
 
-    if (localStorage.getItem('searchText')) {
-      this.searchForm = new FormControl(JSON.parse(localStorage.getItem('searchText')), []);
-    }
+    // if (localStorage.getItem('searchText')) {
+    //   this.searchForm = new FormControl(JSON.parse(localStorage.getItem('searchText')), []);
+    // }
     /////////////////////////////////////////////////////////////////////////////////////
     if (this.loggedInUser) {
       this._listenToSocketIO();
@@ -186,6 +184,7 @@ export class MainComponent implements OnInit, OnDestroy {
     this.currency = currency;
     this.currencyService.setCurrency(currency);
   }
+
   public changeLang(flag) {
     this.translate.use(flag.lang);
     localStorage.setItem('language', JSON.stringify(flag));
@@ -239,6 +238,7 @@ export class MainComponent implements OnInit, OnDestroy {
         },
       );
   }
+
   onChangePass() {
     this.router.navigate(['/my-account/change-pass']);
     // this.showPaymentSuccess(26);
@@ -289,7 +289,6 @@ export class MainComponent implements OnInit, OnDestroy {
       .subscribe((data) => {
         let token = this.loggedInUserService.getTokenCookie();
         this.authService.getProfile(token).subscribe((user) => {
-          console.log('AppComponent -> initSystem -> user', user);
           const userData = { profile: user.data, Authorization: token };
           this.loggedInUserService.updateUserProfile(userData);
         });
@@ -298,7 +297,6 @@ export class MainComponent implements OnInit, OnDestroy {
 
   showPaymentSuccess(id) {
     this.orderService.getPayment(id).subscribe((data) => {
-      console.log('MainComponent -> showPaymentSuccess -> data', data);
       const dialogRef = this.dialog.open(ConfirmPaymentOkComponent, {
         panelClass: 'app-reservation-payment-ok',
         maxWidth: '100vw',
@@ -313,9 +311,9 @@ export class MainComponent implements OnInit, OnDestroy {
       });
     });
   }
+
   showPaymentCancellSuccess(id) {
     this.orderService.getPayment(id).subscribe((data) => {
-      console.log('MainComponent -> showPaymentSuccess -> data', data);
       const dialogRef = this.dialog.open(ConfirmPaymentOkComponent, {
         panelClass: 'app-reservation-payment-ok',
         maxWidth: '100vw',

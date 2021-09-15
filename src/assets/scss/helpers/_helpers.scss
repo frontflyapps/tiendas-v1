@@ -1,6 +1,8 @@
 $spaceamounts: (2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 36, 38, 40, 42, 48, 50, 52, 54, 58, 60); // Adjust this to include the pixel amounts you need.
 $sides: (top, bottom, left, right); // Leave this variable alone
 
+$footer-color: #424242;
+
 @each $space in $spaceamounts {
   @each $side in $sides {
     .m-#{str-slice($side, 0, 1)}-#{$space} {
@@ -86,63 +88,63 @@ $intervals:(4, 8, 16, 32, 48);
 }
 
 .m-0 {
-  margin: 0px !important;
+  margin: 0 !important;
 }
 
 .ml-0 {
-  margin-left: 0px !important;
+  margin-left: 0 !important;
 }
 
 .mr-0 {
-  margin-right: 0px !important;
+  margin-right: 0 !important;
 }
 
 .mt-0 {
-  margin-top: 0px !important;
+  margin-top: 0 !important;
 }
 
 .mb-0 {
-  margin-bottom: 0px !important;
+  margin-bottom: 0 !important;
 }
 
 .mx-0 {
-  margin-left: 0px !important;
-  margin-right: 0px !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
 }
 
 .my-0 {
-  margin-top: 0px !important;
-  margin-bottom: 0px !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
 }
 
 .p-0 {
-  padding: 0px !important;
+  padding: 0 !important;
 }
 
 .pl-0 {
-  padding-left: 0px !important;
+  padding-left: 0 !important;
 }
 
 .pr-0 {
-  padding-right: 0px !important;
+  padding-right: 0 !important;
 }
 
 .pt-0 {
-  padding-top: 0px !important;
+  padding-top: 0 !important;
 }
 
 .pb-0 {
-  padding-bottom: 0px !important;
+  padding-bottom: 0 !important;
 }
 
 .px-0 {
-  padding-left: 0px !important;
-  padding-right: 0px !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 
 .py-0 {
-  padding-top: 0px !important;
-  padding-bottom: 0px !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
 }
 
 
@@ -150,11 +152,11 @@ $intervalWith: (0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80
 
 @each $with in $intervalWith {
   .w-#{$with} {
-    width: #{$with}% !important;
+    width: #{$with}'%' !important;
   }
 
   .h-#{$with} {
-    height: #{$with}% !important;
+    height: #{$with}'%' !important;
   }
 
 }
