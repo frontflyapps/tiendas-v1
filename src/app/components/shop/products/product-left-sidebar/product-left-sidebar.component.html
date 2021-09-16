@@ -143,7 +143,7 @@
         <div *ngIf="!loading" fxLayout="row wrap" fxLayoutAlign="start start" class="w-100">
           <app-product fxFlex.lt-md="100" *ngFor="let products of allProducts" [product]="products"></app-product>
           <ng-container *ngIf="allProducts.length == 0">
-            <h3 class="py-4" style="text-align: center">No hay ningún producto disponible</h3>
+            <h3 class="py-4" style="text-align: center">{{'No hay ningún producto disponible' | translate}}</h3>
           </ng-container>
         </div>
 
@@ -246,13 +246,24 @@
           </div>
         </ng-container>
 
-        <div fxLayout="row wrap">
-          <div fxFlex="100">
-            <mat-paginator (page)="OnPaginatorChange($event)" [pageIndex]="queryProduct.page"
-                           [pageSize]="queryProduct.limit"
-                           [length]="this.queryProduct.total" [pageSizeOptions]="pageSizeOptions"></mat-paginator>
-          </div>
+        <div *ngIf="!loading && allProducts.length > 0"
+             fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="1rem"
+             class="mt-4 mb-4 see-more-btn">
+          <button mat-stroked-button *ngIf="queryProduct.page > 0"
+                  (click)="goToFirstPage($event)">{{'Ir al principio' | translate}}</button>
+          <button mat-flat-button color="primary"
+                  *ngIf="((numberOfSearch + 1) < amountInitialResults)
+                   || !(allProductsResponse.length < queryProduct.limit && (numberOfSearch + 1) == amountInitialResults)"
+                  (click)="seeMoreProductsBtn($event)">{{'Ver más productos' | translate}}</button>
         </div>
+
+        <!--        <div fxLayout="row wrap">-->
+        <!--          <div fxFlex="100">-->
+        <!--            <mat-paginator (page)="OnPaginatorChange($event)" [pageIndex]="queryProduct.page"-->
+        <!--                           [pageSize]="queryProduct.limit"-->
+        <!--                           [length]="queryProduct.total" [pageSizeOptions]="pageSizeOptions"></mat-paginator>-->
+        <!--          </div>-->
+        <!--        </div>-->
       </div>
       <div fxHide fxShow.lt-md class="popular-products mt-2 pl-3" fxFlex.lt-md="100">
         <app-popular-products></app-popular-products>
