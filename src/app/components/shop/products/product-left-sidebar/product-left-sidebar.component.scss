@@ -1,5 +1,13 @@
 @import '../../../../../assets/scss/theme/variables';
 
+:host {
+  .see-more-btn {
+    button {
+      padding: 10px 24px;
+    }
+  }
+}
+
 .sticky-proceed-pay {
   background-color: $theme-main;
   color: white;
