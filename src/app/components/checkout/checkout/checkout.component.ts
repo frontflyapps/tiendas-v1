@@ -719,7 +719,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   processBidaiondo(bodyData) {
     bodyData.amex = amexData[this.paymentType];
-    console.log('amex', bodyData.amex);
     this.payService.makePaymentBidaiondo(bodyData).subscribe(
       (data: any) => {
         let dialogRef: MatDialogRef<DialogBidaiondoConfirmToPayComponent, any>;

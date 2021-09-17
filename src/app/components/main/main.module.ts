@@ -33,10 +33,10 @@ import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { PreviousRouteService } from '../../core/services/previous-route/previous-route.service';
 import { PipesModule } from 'src/app/core/pipes/pipes.module';
 import { FooterModule } from '../shared/footer/footer.module';
-import { MyContactsComponent } from './my-contacts/my-contacts.component';
-import { MatSelectModule } from '@angular/material/select';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DialogSetLocationComponent } from './dialog-set-location/dialog-set-location.component';
+import { MatSelectModule } from '@angular/material/select';
+import { MyContactsComponent } from './my-contacts/my-contacts.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [

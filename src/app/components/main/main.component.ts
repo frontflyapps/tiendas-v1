@@ -99,7 +99,7 @@ export class MainComponent implements OnInit, OnDestroy {
     private orderSevice: MyOrdersService,
     private orderService: MyOrdersService,
     public utilsService: UtilsService,
-    private locationService: LocationService
+    private locationService: LocationService,
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
@@ -114,7 +114,7 @@ export class MainComponent implements OnInit, OnDestroy {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.url = event.url;
-        this.sidenav.close();
+        this.sidenav.close().then();
       }
     });
     this.searchForm = new FormControl(null, []);
@@ -129,7 +129,7 @@ export class MainComponent implements OnInit, OnDestroy {
     this.currencies = this.currencyService.getCurrencies();
     this.currency = this.currencyService.getCurrency();
 
-    /////// Subscribe to events //////////
+    // ///// Subscribe to events //////////
     this.loggedInUserService.$loggedInUserUpdated.pipe(takeUntil(this._unsubscribeAll)).subscribe((data) => {
       this.loggedInUser = this.loggedInUserService.getLoggedInUser();
 
@@ -156,7 +156,7 @@ export class MainComponent implements OnInit, OnDestroy {
         this._listenToSocketIO();
       }
     });
-    ////////////////////////////////////
+    // //////////////////////////////////
     this.compareItemsObservable = this.productService.getComapreProducts();
     this.compareItemsObservable
       .pipe(takeUntil(this._unsubscribeAll))
@@ -165,7 +165,7 @@ export class MainComponent implements OnInit, OnDestroy {
     // if (localStorage.getItem('searchText')) {
     //   this.searchForm = new FormControl(JSON.parse(localStorage.getItem('searchText')), []);
     // }
-    /////////////////////////////////////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////////////////////////////////////
     if (this.loggedInUser) {
       this._listenToSocketIO();
     }
@@ -291,7 +291,7 @@ export class MainComponent implements OnInit, OnDestroy {
           this.loggedInUserService.$loggedInUserUpdated.next(null);
           const message = this.translate.instant('User successfully unlogged');
           this.showSnackbBar.showSucces(message, 5000);
-          this.router.navigate(['']);
+          this.router.navigate(['']).then();
           this.socketIoService.disconnect();
         },
         (err) => {
@@ -308,12 +308,12 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   onChangePass() {
-    this.router.navigate(['/my-account/change-pass']);
+    this.router.navigate(['/my-account/change-pass']).then();
     // this.showPaymentSuccess(26);
     // this.showPaymentCancellSuccess(25);
   }
 
-  /////////////////////////////////////////////////////////
+  // ///////////////////////////////////////////////////////
   _listenToSocketIO() {
     this.socketIoService
       .listen('payment-confirmed')
@@ -347,7 +347,7 @@ export class MainComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((data) => {
         this.loggedInUserService.$loggedInUserUpdated.next(null);
-        this.router.navigate(['']);
+        this.router.navigate(['']).then();
       });
 
     this.socketIoService

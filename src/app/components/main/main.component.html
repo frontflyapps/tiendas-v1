@@ -157,8 +157,7 @@
           <!-- ======== -->
           <!-- SEARCHING -->
           <div fxFlex="grow" class="form-wrap">
-            <input [formControl]="searchForm" type="text" placeholder="{{ 'Buscar en la tienda...' | translate }}"
-                   (keyup.enter)="onSearch()"/>
+            <input [formControl]="searchForm" type="text" placeholder="{{ 'Buscar en la tienda...' | translate }}" />
             <button (click)="onSearch()" class="btn-search">
               <mat-icon>search</mat-icon>
             </button>
@@ -166,22 +165,15 @@
         </div>
       </div>
 
-      <div class="userWidgets"
-           ngClass.xs="w-100"
-           fxLayout="row"
-           fxLayoutAlign="end center"
+      <div class="userWidgets" ngClass.xs="w-100"
+           fxLayout="row" fxLayoutAlign="end center"
            fxLayoutAlign.xs="start center">
-
-        <a matTooltip="Comparar productos"
-           class="px-3"
-           fxLayoutAlign="start center"
-           [routerLink]="['/pages/compare']"
+        <a matTooltip="Comparar productos" class="px-3"
+           fxLayoutAlign="start center" [routerLink]="['/pages/compare']"
            routerLinkActive="router-link-active">
-
-          <mat-icon *ngIf="compareItems.length" [matBadge]="compareItems.length"
-                    matBadgeColor="accent">compare_arrows
+          <mat-icon *ngIf="compareItems.length" [matBadge]="compareItems.length" matBadgeColor="accent">
+            compare_arrows
           </mat-icon>
-
           <mat-icon *ngIf="!compareItems.length">compare_arrows</mat-icon>
           <span fxShow="false" fxHide>{{ 'Comparar productos' | translate }}</span>
         </a>
@@ -217,7 +209,8 @@
           <button mat-icon-button (click)="notificationBar.toggle()">
             <mat-icon [matBadge]="notificationsService.getUnreadNotifications()" matBadgeColor="warn"
             >notifications
-            </mat-icon>
+            </mat-icon
+            >
           </button>
         </a>
 
@@ -241,8 +234,9 @@
 
           <img *ngIf="!this.loggedInUser.avatar"
                src="assets/images/avatars/profile2.png"
-               class="profileImage" />
-          <img *ngIf="this.loggedInUser.avatar" [src]="urlImage + loggedInUser.avatar" class="profileImage" />
+               class="profileImage" alt="logo" />
+          <img *ngIf="this.loggedInUser.avatar" [src]="urlImage + loggedInUser.avatar" class="profileImage"
+               alt="logo" />
         </a>
 
         <mat-menu #userMenu="matMenu" [overlapTrigger]="false" xPosition="before" class="app-dropdown">
@@ -295,7 +289,7 @@
           <button mat-icon-button (click)="start.toggle()" class="mr-2">
             <mat-icon>menu</mat-icon>
           </button>
-          <img class="logo-img-main" routerLink="/" src="assets/images/logo-wout-gen-white.png" />
+          <img class="logo-img-main" routerLink="/" src="assets/images/logo-wout-gen-white.png" alt="logo"/>
         </div>
 
         <div class="userWidgets m-0 p-0" fxLayoutAlign="start center">

@@ -55,8 +55,6 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   loadingRelated = false;
   loadingMenu = false;
 
-  url = environment.apiUrl + 'landing-page';
-
   public allProductsOnMenu: any;
   public allProductsOnMenuToShow: Observable<any[]>;
 

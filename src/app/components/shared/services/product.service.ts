@@ -30,7 +30,7 @@ export class ProductDataService {
   providedIn: 'root',
 })
 export class ProductService {
-  ////////// Urls /////////
+  // //////// Urls /////////
   urlFrontProductsData = environment.apiUrl + 'front-data-product';
   urlProduct = environment.apiUrl + 'product';
   urlProductId = environment.apiUrl + 'product/:id';
@@ -45,7 +45,7 @@ export class ProductService {
   urlProductIdAdmin = environment.apiUrl + 'admin/product/:id';
   // ----------------------------
 
-  //////////////////////////
+  // ////////////////////////
   public currency = 'USD';
   public catalogMode = false;
 
