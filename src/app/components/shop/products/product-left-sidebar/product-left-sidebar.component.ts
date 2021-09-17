@@ -37,8 +37,8 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
   public allProducts: any[] = [];
   public allProductsResponse: any[] = [];
 
-  private initLimit = 12;
-  public amountInitialResults = 2;
+  private initLimit = 21;
+  public amountInitialResults = 3;
   public numberOfSearchBase = 0;
   public numberOfSearch = 0;
 
