@@ -163,4 +163,34 @@
       </div>
     </div>
   </section>
+
+  <!-- ------------------------------------------------------------ -->
+  <!-- ---------------------- APK Promo --------------------------- -->
+  <section id="apk-promo" style="width: 100%">
+    <div class="container">
+      <img *ngIf="!applyStyle" src="assets/images/mibulevar/apk-promo/desktop.jpg" alt="APK Promo"
+           class="img-apk-promo">
+      <img *ngIf="applyStyle" src="assets/images/mibulevar/apk-promo/movil.jpg" alt="APK Promo" class="img-apk-promo">
+      <div class="wrapper">
+        <div class="super-index mb-3">{{'Ahorra pasos' | translate}}</div>
+        <div class="big-text mb-4">
+          {{'Todas nuestras ofertas exclusivas a solo un' | translate}}
+          <span class="text-inner">click</span> {{'en la aplicación' | translate}}
+        </div>
+        <div
+          class="text-paragraph mb-4">{{'Descubre las increíbles de ofertas de más de 2 millones de clientes conectados a Transfer móvil.Descargue hoy para mantenerse conectado con las mejores opciones en cualquier momento y en cualquier lugar' | translate}}
+          .
+        </div>
+        <a href="https://www.apklis.cu/application/cu.etecsa.cubacel.tr.tm" target="_blank"
+           fxLayout="row" fxLayoutGap="10px"
+           class="btn-wrapper px-4 py-2">
+          <img src="assets/images/mibulevar/apk-promo/transfermovil.png" alt="Transfermovil">
+          <div fxLayout="column">
+            <div class="first-text">{{'Obtenla en' | translate}}</div>
+            <div class="second-text">Apklis.cu</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
 </div>
