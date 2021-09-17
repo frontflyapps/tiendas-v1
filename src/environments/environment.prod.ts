@@ -13,7 +13,7 @@ export const environment = {
   url: 'https://www.mibulevar.com',
   urlAboutUs: 'https://www.mibulevar.com',
 
-  address: 'MiBulevar SA',
+  address: 'MiBulevar | TransferMóvil',
   localDatabaseUsers: true,
 
   adminService: 'https://admin.mibulevar.com/',
@@ -23,7 +23,7 @@ export const environment = {
 
   meta: {
     mainPage: {
-      title: 'MiBulevar SA',
+      title: 'MiBulevar | TransferMóvil',
       description: 'Tienda online desarrollada con el framework Angular permite la modelación de negocios B2C and C2C',
       keywords: 'HTML, CSS, JavaScript, Angular, Tienda Online B2B, Sin Cola, comercio online',
       shareImg: 'https://www.mibulevar.com/assets/images/share-img.png',
