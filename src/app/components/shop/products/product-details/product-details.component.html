@@ -249,29 +249,65 @@
 
       <div *ngIf="relatedProduct.length" class="products pt-5">
         <div class="title">
-          <h4 class="widget-title">{{ 'RECOMENDED PRODUCTS' | translate }}</h4>
+          <h4 class="widget-title">{{ 'Menú del Lugar' | translate }}</h4>
+
+          <mat-form-field class="auto-complete-search" appearance="outline">
+            <mat-label>{{'Buscar en este local' | translate}}</mat-label>
+            <input type="text"
+                   placeholder="Qué desea...?"
+                   aria-label="Number"
+                   matInput
+                   [formControl]="searchProductControl">
+            <mat-icon matSuffix>search</mat-icon>
+            <!--            [matAutocomplete]="auto"-->
+            <!--            <mat-autocomplete #auto="matAutocomplete">-->
+            <!--              <mat-option *ngFor="let option of allProductsOnMenuToShow | async" [value]="option">-->
+            <!--                {{option}}-->
+            <!--              </mat-option>-->
+            <!--            </mat-autocomplete>-->
+          </mat-form-field>
         </div>
-        <app-product-carousel-two *ngIf="!loadingRelated" [products]="relatedProduct" [btnColor]="'accent'"
-                                  [grid]="{ '480': 1, '740': 2, '960': 2, '1024': 2, '1280': 3 }">
-        </app-product-carousel-two>
-        <div *ngIf="loadingRelated" class="my-3">
-          <app-skeleton-loading-cards *ngIf="loadingRelated" [setConfiguration]="{ xs: 1, sm: 2, md: 2, lg: 3 }">
+
+        <div *ngIf="!loadingMenu" fxLayout="row wrap" fxLayoutAlign="start start" class="w-100">
+          <app-product fxFlex.lt-md="100" *ngFor="let products of allProductsOnMenuToShow | async"
+                       [product]="products"></app-product>
+          <ng-container *ngIf="allProductsOnMenu?.length == 0">
+            <h3 class="py-4" style="text-align: center">{{'No hay ningún producto disponible' | translate}}</h3>
+          </ng-container>
+        </div>
+
+        <div *ngIf="loadingMenu" class="my-3">
+          <app-skeleton-loading-cards [setConfiguration]="{ xs: 1, sm: 2, md: 2, lg: 3 }">
           </app-skeleton-loading-cards>
         </div>
       </div>
 
-      <div *ngIf="featuredProducts.length" class="products pt-5 pb-0">
-        <div class="title">
-          <h4 class="widget-title">{{ 'FEATURED PRODUCTS' | translate }}</h4>
-        </div>
-        <app-product-carousel-two *ngIf="!loadingFeatured" [products]="featuredProducts" [btnColor]="'accent'"
-                                  [grid]="{ '480': 1, '740': 2, '960': 2, '1024': 2, '1280': 3 }">
-        </app-product-carousel-two>
-        <div *ngIf="loadingFeatured" class="my-3">
-          <app-skeleton-loading-cards *ngIf="loadingFeatured" [setConfiguration]="{ xs: 1, sm: 2, md: 2, lg: 3 }">
-          </app-skeleton-loading-cards>
-        </div>
-      </div>
+      <!--      <div *ngIf="relatedProduct.length" class="products pt-5">-->
+      <!--        <div class="title">-->
+      <!--          <h4 class="widget-title">{{ 'RECOMENDED PRODUCTS' | translate }}</h4>-->
+      <!--        </div>-->
+      <!--        <app-product-carousel-two *ngIf="!loadingRelated" [products]="relatedProduct" [btnColor]="'accent'"-->
+      <!--                                  [grid]="{ '480': 1, '740': 2, '960': 2, '1024': 2, '1280': 3 }">-->
+      <!--        </app-product-carousel-two>-->
+      <!--        <div *ngIf="loadingRelated" class="my-3">-->
+      <!--          <app-skeleton-loading-cards *ngIf="loadingRelated" [setConfiguration]="{ xs: 1, sm: 2, md: 2, lg: 3 }">-->
+      <!--          </app-skeleton-loading-cards>-->
+      <!--        </div>-->
+      <!--      </div>-->
+
+      <!--      <div *ngIf="featuredProducts.length" class="products pt-5 pb-0">-->
+      <!--        <div class="title">-->
+      <!--          <h4 class="widget-title">{{ 'FEATURED PRODUCTS' | translate }}</h4>-->
+      <!--        </div>-->
+      <!--        <app-product-carousel-two *ngIf="!loadingFeatured" [products]="featuredProducts" [btnColor]="'accent'"-->
+      <!--                                  [grid]="{ '480': 1, '740': 2, '960': 2, '1024': 2, '1280': 3 }">-->
+      <!--        </app-product-carousel-two>-->
+      <!--        <div *ngIf="loadingFeatured" class="my-3">-->
+      <!--          <app-skeleton-loading-cards *ngIf="loadingFeatured" [setConfiguration]="{ xs: 1, sm: 2, md: 2, lg: 3 }">-->
+      <!--          </app-skeleton-loading-cards>-->
+      <!--        </div>-->
+      <!--      </div>-->
+
     </div>
 
     <div fxLayout="row wrap" fxLayoutAlign="start start" fxFlex="100" fxFlex.gt-sm="23">

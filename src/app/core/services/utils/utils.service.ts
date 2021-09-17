@@ -132,12 +132,16 @@ export class UtilsService {
   }
 
   parserLanguage(item, language) {
-    if (item[language] && item[language].length) {
-      return item[language];
-    } else if (item['en'] && item['en'].length) {
-      return item['en'];
+    if (item && language) {
+      if (item[language] && item[language]?.length) {
+        return item[language];
+      } else if (item['en'] && item['en']?.length) {
+        return item['en'];
+      } else {
+        return item['es'];
+      }
     } else {
-      return item['es'];
+      return;
     }
   }
 

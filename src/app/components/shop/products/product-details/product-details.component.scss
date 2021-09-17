@@ -150,6 +150,7 @@
 
 .InnerHtmlContent {
   padding: 16px;
+
 }
 
 /***************************************
@@ -347,6 +348,50 @@
         .mat-form-field {
           width: 100%;
         }
+      }
+    }
+
+  }
+
+  .products {
+    padding-right: 30px;
+
+    @include media-breakpoint('xs') {
+      padding-right: 0 !important;
+    }
+
+
+    .title {
+      margin-bottom: 15px;
+      position: relative;
+      padding-bottom: 1.25rem;
+
+      &::before {
+        content: "";
+        left: 0;
+        position: absolute;
+        width: 100%;
+        height: 0.0625rem;
+        bottom: 0.34375rem;
+        background-color: #f6f6f6;
+      }
+
+      &::after {
+        content: "";
+        left: 0;
+        position: absolute;
+        width: 2.5rem;
+        height: 0.125rem;
+        background-color: #222222;
+        bottom: 0.3125rem;
+      }
+
+      .auto-complete-search {
+        position: absolute;
+        top: -15px;
+        right: 0;
+        width: 400px;
+        max-width: 100%;
       }
     }
   }

@@ -28,7 +28,7 @@ export class ProductComponent implements OnInit, OnDestroy {
   loggedInUser: any = null;
   imageUrl = environment.imageUrl;
   isHandset = false;
-  language = null;
+  language = 'es';
 
   constructor(
     private cartService: CartService,

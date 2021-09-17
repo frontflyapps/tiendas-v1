@@ -17,6 +17,7 @@ import { Cart } from '../../../../modals/cart-item';
 import { LANDING_PAGE, PRODUCT_COUNT } from '../../../../core/classes/global.const';
 import { environment } from '../../../../../environments/environment';
 import { LocalStorageService } from '../../../../core/services/localStorage/localStorage.service';
+import { LocationService } from 'src/app/core/services/location/location.service';
 
 @Component({
   selector: 'app-product-left-sidebar',
@@ -39,6 +40,9 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
 
   public allProducts: any[] = [];
   public allProductsResponse: any[] = [];
+
+  public province: any = null;
+  public municipality: any = null;
 
   private initLimit = 21;
   public amountInitialResults = 3;
@@ -88,13 +92,13 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private metaService: MetaService,
+    private locationService: LocationService,
   ) {
+    this.initSubsLocation();
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
 
     this.route.queryParams.pipe(takeUntil(this._unsubscribeAll)).subscribe((data) => {
-      console.log('params data', data);
-
       this.paramsSearch.categoryIds = data?.categoryIds ? data.categoryIds : this.paramsSearch.categoryIds;
       this.paramsSearch.brandIds = data?.brandIds ? data.brandIds : [];
       this.paramsSearch.minPrice = data?.minPrice ? data.minPrice : 0;
@@ -301,26 +305,30 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
       minPrice: this.paramsSearch?.minPrice ? +this.paramsSearch?.minPrice : 0,
       rating: this.paramsSearch?.rating ? +this.paramsSearch?.rating : null,
       text: this.paramsSearch?.filterText ? this.paramsSearch?.filterText : null,
+      ProvinceId: this.province?.id || null,
+      MunicipalityId: this.municipality?.id || null,
     };
-    this.productService.searchProduct(body).subscribe(
-      (data) => {
-        this.allProducts = [];
-        this.allProducts = data.data.slice(0, this.initLimit * (this.numberOfSearch + 1));
-        this.allProductsResponse = data.data;
+    this.productService.searchProduct(body)
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(
+        (data: any) => {
+          this.allProducts = [];
+          this.allProducts = data.data.slice(0, this.initLimit * (this.numberOfSearch + 1));
+          this.allProductsResponse = data.data;
 
-        setTimeout(() => {
-          document.body.scrollTop = 0; // Safari
-          document.documentElement.scrollTop = 0; // Other
-        }, 0);
+          setTimeout(() => {
+            document.body.scrollTop = 0; // Safari
+            document.documentElement.scrollTop = 0; // Other
+          }, 0);
 
-        this.queryProduct.total = data.meta.pagination.total;
-        this.loading = false;
-        this.gotToProductId();
-      },
-      () => {
-        this.loading = false;
-      },
-    );
+          this.queryProduct.total = data.meta.pagination.total;
+          this.loading = false;
+          this.gotToProductId();
+        },
+        () => {
+          this.loading = false;
+        },
+      );
   }
 
   showChips() {
@@ -501,5 +509,19 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
         this.searchProducts();
       }
     });
+  }
+
+  // ============= LOCATION ==================================
+  initSubsLocation() {
+    this.locationService
+      .location$
+      .subscribe((newLocation) => {
+        this.setLocationData(newLocation);
+      });
+  }
+
+  setLocationData(locationOnLocalStorage) {
+    this.municipality = locationOnLocalStorage.municipality;
+    this.province = locationOnLocalStorage.province;
   }
 }

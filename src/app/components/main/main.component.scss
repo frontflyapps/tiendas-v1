@@ -1,7 +1,43 @@
 @import '../../../assets/scss/theme/variables';
 
+#nav-location {
+  border: 2px solid white;
+  padding: 2px 4px;
+  cursor: pointer;
+  min-width: 146px;
+  width: auto;
+  position: static;
+  height: 48px;
+  overflow: hidden;
+
+  &:hover {
+    border: 2px solid #d1acac;
+  }
+
+  .nl-logo {
+    mat-icon {
+      width: 32px;
+      height: 32px;
+      font-size: 32px;
+    }
+  }
+
+  .nl-titles {
+    .nl-province {
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .nl-municipality {
+      font-size: 11px;
+      line-height: 1.1;
+    }
+  }
+}
+
 .router-link-active {
   background-color: $menu-hover !important;
+  color: $menu-hover-text !important;
 }
 
 .main-logo-container {

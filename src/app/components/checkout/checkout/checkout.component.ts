@@ -367,13 +367,13 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         }
 
         if (!this.form.get('currency').value) {
-          this.form.get('paymentType').setValue('transfermovil');
+          // this.form.get('paymentType').setValue('transfermovil');
 
           if (this.cart.market === MarketEnum.NATIONAL) {
-            // this.form.get('paymentType').setValue('transfermovil');
-            this.form.get('currency').setValue('USD');
+            this.form.get('paymentType').setValue('transfermovil');
+            this.form.get('currency').setValue('CUP');
           } else {
-            // this.form.get('paymentType').setValue('visa');
+            this.form.get('paymentType').setValue('transfermovil');
             this.form.get('currency').setValue('USD');
           }
         }
@@ -636,7 +636,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     if (!data.shippingRequired) {
       delete data.ShippingBusinessId;
     }
-    //data.currency = this.marketCard === MarketEnum.INTERNATIONAL ? CoinEnum.USD : CoinEnum.CUP;
+    // data.currency = this.marketCard === MarketEnum.INTERNATIONAL ? CoinEnum.USD : CoinEnum.CUP;
     data.description = data.description || `Pago realizado por el cliente ${data.name} ${data.lastName}`;
     data.urlClient = environment.url;
     this.loggedInUserService._setDataToStorage('payData', JSON.stringify(this.form.value));
@@ -654,12 +654,12 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     }
   }
 
-  ///////////////////////////////////////////////
+  // /////////////////////////////////////////////
   processTransfermovil(bodyData) {
     this.payService.makePaymentTransfermovil(bodyData).subscribe(
       (data: any) => {
         if (data && data.data) {
-          //this.finalPrice = this.getTotalAmout() as number;
+          // this.finalPrice = this.getTotalAmout() as number;
           const price = this.getTotalWithShippingIncluded();
           // const currency = this.marketCard === MarketEnum.INTERNATIONAL ? CoinEnum.USD : CoinEnum.CUP;
           const currency = this.marketCard === CoinEnum.USD;
@@ -679,7 +679,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           });
 
           dialogRef.afterClosed().subscribe((result) => {
-            console.log('OKOUT_Transfermovil');
+            console.log('Salio Ok!! de Transfermovil');
           });
         } else {
           this.loadingPayment = false;
@@ -719,7 +719,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   processBidaiondo(bodyData) {
     bodyData.amex = amexData[this.paymentType];
-    console.log('AMEX', bodyData.amex);
+    console.log('amex', bodyData.amex);
     this.payService.makePaymentBidaiondo(bodyData).subscribe(
       (data: any) => {
         let dialogRef: MatDialogRef<DialogBidaiondoConfirmToPayComponent, any>;

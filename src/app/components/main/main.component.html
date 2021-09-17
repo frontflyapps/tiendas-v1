@@ -136,10 +136,29 @@
       </button>
 
       <div fxFlex class="search-form" fxLayout="row" fxLayoutAlign="start center">
-        <div class="search-form" fxLayout="row" fxLayoutAlign="start center">
-          <div class="form-wrap">
-            <input [formControl]="searchForm" type="text" placeholder="{{ 'Buscar en Tienda...' | translate }}"
-                   (keyup.enter)="onSearch()" />
+        <div class="search-form" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1rem">
+          <!-- ======== -->
+          <!-- Location -->
+          <div id="nav-location" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="4px">
+            <div class="nl-logo">
+              <mat-icon>room</mat-icon>
+            </div>
+            <div *ngIf="province" class="nl-titles" fxLayout="column" (click)="openSetLocation()">
+              <div class="nl-province">{{province?.name}}</div>
+              <div class="nl-municipality">{{municipality?.name}}</div>
+            </div>
+
+            <div *ngIf="!province" class="nl-titles" fxLayout="column" (click)="openSetLocation()">
+              <div class="nl-province">Enviar a...</div>
+              <div class="nl-municipality">Escoger lugar</div>
+            </div>
+          </div>
+
+          <!-- ======== -->
+          <!-- SEARCHING -->
+          <div fxFlex="grow" class="form-wrap">
+            <input [formControl]="searchForm" type="text" placeholder="{{ 'Buscar en la tienda...' | translate }}"
+                   (keyup.enter)="onSearch()"/>
             <button (click)="onSearch()" class="btn-search">
               <mat-icon>search</mat-icon>
             </button>
@@ -306,11 +325,9 @@
 
       <div fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="gappx">
         <div class="mobile-search" fxLayout="row" fxLayoutAlign="start center">
-          <input fxFlex
-                 [formControl]="searchForm"
-                 type="search"
-                 placeholder="{{ 'Buscar en Tienda...' | translate }}"
-                 (keyup.enter)="onSearch()" />
+          <input fxFlex [formControl]="searchForm" type="search"
+                 placeholder="{{ 'Buscar en la tienda...' | translate }}"
+                 (keyup.enter)="onSearch()"/>
           <button (click)="onSearch()">
             <mat-icon>search</mat-icon>
           </button>

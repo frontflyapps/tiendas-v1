@@ -84,9 +84,24 @@ export class ProductService {
 
   // //////////////////////////////////////////////////////////////
   // ///////////////////////////////////////////////////////////////
-  // ////// Rutas que consumen de Un API ////////////////
+  // //////Rutas que consumen de Un API////////////////
   public getAllProducts(query?: IPagination, params?: any): Observable<any> {
     let httpParams = new HttpParams();
+    httpParams = this.setHttpParams(httpParams, query, params);
+    return this.httpClient.get<any>(this.urlProduct, { params: httpParams });
+    // return this.products();
+  }
+
+  public getProductsByBusiness(businessId, query?: IPagination, params?: any): Observable<any> {
+    let httpParams = new HttpParams();
+    httpParams = this.setHttpParams(httpParams, query, params);
+    if (businessId) {
+      httpParams = httpParams.append('filter[$and][BusinessId]', businessId);
+    }
+    return this.httpClient.get<any>(this.urlProduct, { params: httpParams });
+  }
+
+  setHttpParams(httpParams: HttpParams, query?: IPagination, params?: any) {
     if (query) {
       httpParams = httpParams.append('limit', query.limit.toString());
       httpParams = httpParams.append('offset', query.offset.toString());
@@ -139,8 +154,7 @@ export class ProductService {
         httpParams = httpParams.set('filter[$and][type]', params.type);
       }
     }
-    return this.httpClient.get<any>(this.urlProduct, { params: httpParams });
-    // return this.products();
+    return httpParams;
   }
 
   public searchProduct(data?: any): Observable<any> {

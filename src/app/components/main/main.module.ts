@@ -36,6 +36,7 @@ import { FooterModule } from '../shared/footer/footer.module';
 import { MyContactsComponent } from './my-contacts/my-contacts.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { DialogSetLocationComponent } from './dialog-set-location/dialog-set-location.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     PanelNotificationsComponent,
     NotificationItemComponent,
     ConfirmPaymentOkComponent,
+    DialogSetLocationComponent,
     MenuComponent,
     EditProfileComponent,
     MyContactsComponent,
