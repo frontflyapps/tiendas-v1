@@ -11,7 +11,7 @@ import { ShoppingWidgetsComponent } from './shopping-widgets/shopping-widgets.co
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MenuComponent } from './menu/menu.component';
-import { FooterTwoModule } from './../shared/footer-two/footer-two.module';
+import { FooterTwoModule } from '../shared/footer-two/footer-two.module';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDividerModule } from '@angular/material/divider';
@@ -33,6 +33,8 @@ import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { PreviousRouteService } from '../../core/services/previous-route/previous-route.service';
 import { PipesModule } from 'src/app/core/pipes/pipes.module';
 import { FooterModule } from '../shared/footer/footer.module';
+import { ConfirmCreateBusinessComponent } from './confirm-create-business/confirm-create-business.component';
+import { ConfirmCreateBusinessService } from './confirm-create-business/confirm-create-business.service';
 
 @NgModule({
   declarations: [
@@ -40,6 +42,7 @@ import { FooterModule } from '../shared/footer/footer.module';
     PanelNotificationsComponent,
     NotificationItemComponent,
     ConfirmPaymentOkComponent,
+    ConfirmCreateBusinessComponent,
     MenuComponent,
     EditProfileComponent,
     SidebarComponent,
@@ -72,6 +75,7 @@ import { FooterModule } from '../shared/footer/footer.module';
     MatDialogModule,
     FooterModule,
   ],
-  providers: [SidebarMenuService, PreviousRouteService],
+  providers: [SidebarMenuService, PreviousRouteService, ConfirmCreateBusinessService],
 })
-export class MainModule {}
+export class MainModule {
+}

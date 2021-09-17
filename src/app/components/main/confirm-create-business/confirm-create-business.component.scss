@@ -1,0 +1,23 @@
+.app-confirm-create-business {
+  .mat-dialog-container {
+    padding: 0;
+
+    .mat-toolbar {
+      flex: 1 0 auto;
+      min-height: initial;
+    }
+
+    .toolbar-bottom {
+      height: auto;
+    }
+
+    .mat-dialog-title {
+      margin: 0;
+    }
+
+    .mat-dialog-content {
+      margin: 0;
+      padding: 12px;
+    }
+  }
+}

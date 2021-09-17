@@ -27,6 +27,8 @@ import { UtilsService } from 'src/app/core/services/utils/utils.service';
 import { SidebarMenuService } from './sidebar/sidebar-menu.service';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { CategoriesService } from '../../core/services/categories/catagories.service';
+import { ConfirmCreateBusinessComponent } from './confirm-create-business/confirm-create-business.component';
+import { ConfirmCreateBusinessService } from './confirm-create-business/confirm-create-business.service';
 
 @Component({
   selector: 'app-main',
@@ -89,6 +91,7 @@ export class MainComponent implements OnInit, OnDestroy {
     private orderSevice: MyOrdersService,
     private orderService: MyOrdersService,
     public utilsService: UtilsService,
+    private confirmCreateBusinessService: ConfirmCreateBusinessService,
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
@@ -240,12 +243,37 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   onChangePass() {
-    this.router.navigate(['/my-account/change-pass']);
+    this.router.navigate(['/my-account/change-pass']).then();
     // this.showPaymentSuccess(26);
     // this.showPaymentCancellSuccess(25);
   }
 
-  /////////////////////////////////////////////////////////
+  // ////////////// CREATE BUSINESS TRANSFERMOVIL ////////////////////////////////
+  createYourBusiness() {
+    const dialogRef = this.dialog.open(ConfirmCreateBusinessComponent, {
+      panelClass: 'app-confirm-create-business',
+      maxWidth: '100vw',
+      maxHeight: '100vh',
+      width: '360px',
+      height: 'auto',
+      data: {},
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.goToDigitalPlatformTransfermovil();
+      }
+    });
+  }
+
+  goToDigitalPlatformTransfermovil() {
+    this.confirmCreateBusinessService
+      .etecsaSignUp()
+      .subscribe(dataResponse => {
+        console.log('dataResponse', dataResponse);
+      });
+  }
+
+  // ///////////////////////////////////////////////////////
   _listenToSocketIO() {
     this.socketIoService
       .listen('payment-confirmed')

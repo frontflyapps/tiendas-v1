@@ -1,0 +1,24 @@
+<div class="dialog-content-wrapper">
+  <mat-toolbar id="successPay" matDialogTitle>
+    <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+      <span class="mat-title mb-0">{{'Información importante'|translate}}!</span>
+      <button mat-icon-button (click)="dialogRef.close()" aria-label="Close dialog">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <mat-dialog-content class="mat-typography">
+    <h3>{{'Atención' | translate}}</h3>
+    <p>{{'Usted será redirigido a la Plataforma de Contratación Digital de TRNASFERMOVIL, donde deberá iniciar sesión con las credenciales que aquí obtuvo' | translate}}
+      .</p>
+    <p>{{'Click en Continuar para avanzar en el proceso' | translate}}.</p>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>{{'Cerrar' | translate}}</button>
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>{{'Continuar' | translate}}</button>
+  </mat-dialog-actions>
+</div>
+
+
