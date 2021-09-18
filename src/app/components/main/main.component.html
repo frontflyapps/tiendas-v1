@@ -197,14 +197,14 @@
             <mat-icon>settings</mat-icon>
             <span class="mat-body-1">{{ 'Cambie la contraseña' | translate }}</span>
           </button>
-          <!--          <a *ngIf="loggedInUser" mat-menu-item href="become-a-seller">-->
-          <!--            <mat-icon>shopping_basket</mat-icon>-->
-          <!--            <span class="mat-body-1">{{ 'Crea tu negocio' | translate }}</span>-->
-          <!--          </a>-->
-          <div *ngIf="loggedInUser" mat-menu-item (click)="createYourBusiness()">
+          <a *ngIf="loggedInUser" mat-menu-item href="{{urlToCreateBusiness}}" target="_blank">
             <mat-icon>shopping_basket</mat-icon>
             <span class="mat-body-1">{{ 'Crea tu negocio' | translate }}</span>
-          </div>
+          </a>
+          <!--          <div *ngIf="loggedInUser" mat-menu-item (click)="createYourBusiness()">-->
+          <!--            <mat-icon>shopping_basket</mat-icon>-->
+          <!--            <span class="mat-body-1">{{ 'Crea tu negocio' | translate }}</span>-->
+          <!--          </div>-->
           <button mat-menu-item (click)="onLogout()">
             <mat-icon>exit_to_app</mat-icon>
             <span class="mat-body-1">{{ 'Logout' | translate }}</span>

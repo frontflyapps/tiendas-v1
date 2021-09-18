@@ -59,6 +59,8 @@ export class MainComponent implements OnInit, OnDestroy {
   compareItems: any[] = [];
   compareItemsObservable: Observable<any[]> = of([]);
 
+  public urlToCreateBusiness: string;
+
   public url: any;
   tokenReferal = null;
 
@@ -94,6 +96,9 @@ export class MainComponent implements OnInit, OnDestroy {
     private confirmCreateBusinessService: ConfirmCreateBusinessService,
   ) {
     this._unsubscribeAll = new Subject<any>();
+    this.urlToCreateBusiness = this.confirmCreateBusinessService.url + `?Authorization=${this.loggedInUserService.getTokenCookie()}`;
+    console.log('-> this.urlToCreateBusiness', this.urlToCreateBusiness);
+
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
     this.navItems = this.navigationService.getNavItems();
 

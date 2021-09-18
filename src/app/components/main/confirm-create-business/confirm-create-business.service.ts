@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class ConfirmCreateBusinessService {
-  url = environment.apiUrl + 'etecsa-sign-up';
+  public url = environment.apiUrl + 'etecsa-sign-up';
 
   constructor(private httpClient: HttpClient) {
   }
