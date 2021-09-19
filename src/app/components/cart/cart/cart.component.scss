@@ -3,11 +3,20 @@
 /***************************************
 *  Cart page styles
 ****************************************/
+.cart-card-image {
+  width: 100px;
+  height: 100px;
+}
+
+.cart-card-content {
+  position: relative;
+}
+
 .cart-wrapper {
-  padding: 32px 0px;
+  padding: 32px 0;
 
   @media (max-width: 800px) {
-    padding: 16px 0px;
+    padding: 16px 0;
   }
 
   img.img-fluid.mb-4 {
@@ -102,8 +111,8 @@
 
   ////////////////////////////////////////////////////////////////
   .imageProduct {
-    height: 160px;
-    width: auto;
+    height: 100px;
+    width: 100px;
     object-fit: cover;
     object-position: center;
   }
@@ -130,16 +139,77 @@
     font-weight: 500;
   }
 
+  .buttoms-actions {
+    width: 100%;
+
+    .btn-remove-all {
+      height: 40px;
+    }
+  }
+
+  .subtotal-mat-toolbar {
+    background: transparent;
+
+    @media (max-width: 768px) and (max-width: 599px) {
+      .mat-toolbar-row {
+        padding: 0 !important;
+      }
+    }
+
+    .total {
+      font-weight: 400;
+    }
+
+    .subtotal-price {
+      font-weight: bold;
+      font-size: inherit
+    }
+  }
+
+  .sticky-proceed-pay {
+    background-color: $theme-main;
+    color: white;
+    width: 90vw;
+    margin: 0 auto;
+    padding: 8px 14px;
+    z-index: 2;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: 500;
+    cursor: pointer;
+    font-size: 16px;
+
+    @media (max-width: 360px) {
+      width: 98vw;
+    }
+  }
+
   #inputQuantity {
-    position: absolute;
-    bottom: 47px;
-    right: 10px;
+    position: relative;
+    //bottom: 47px;
+    //right: 10px;
+
+    .btn-remove,
+    .btn-add {
+      border: 1px solid #a7a7a7 !important;
+      background-color: whitesmoke;
+    }
+
+    .btn-remove {
+      border-radius: 4px 0 0 4px;
+      border-right: none;
+    }
+
+    .btn-add {
+      border-radius: 0 4px 4px 0;
+      border-left: none;
+    }
 
     input {
-      width: 50px;
-      height: 20px;
-      border-radius: 4px;
-      border: 1px solid rgba(0, 0, 0, 0.12) !important;
+      width: 40px;
+      height: 36px;
+      border-radius: unset;
+      border: 1px solid #a7a7a7 !important;
       text-align: center;
     }
   }
