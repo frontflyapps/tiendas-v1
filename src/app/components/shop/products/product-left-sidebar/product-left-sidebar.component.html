@@ -1,4 +1,4 @@
-<div *ngIf="(this.cartService.$cartItemsUpdated | async)?.length > 0"
+<div *ngIf="(cartService.$cartItemsUpdated | async)?.length > 0"
      (click)="cartService.goToCheckout(theCart)"
      class="sticky-proceed-pay">
   {{'Proceder al pago'|translate}}&nbsp;({{itemsOnCart}}&nbsp;{{'productos'}})
