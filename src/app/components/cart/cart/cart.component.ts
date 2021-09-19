@@ -25,8 +25,10 @@ export class CartComponent implements OnInit, OnDestroy {
   imageUrl = environment.imageUrl;
   loggedInUser: any = null;
 
+  public itemsOnCart = 0;
+
   constructor(
-    private cartService: CartService,
+    public cartService: CartService,
     public currencyService: CurrencyService,
     public productsService: ProductService,
     public loggedInUserService: LoggedInUserService,
@@ -70,11 +72,22 @@ export class CartComponent implements OnInit, OnDestroy {
     this.cartService.$cartItemsUpdated.pipe(takeUntil(this._unsubscribeAll)).subscribe((_carts) => {
       this.carts = [..._carts];
     });
+
+    this.subsCartChange();
   }
 
   ngOnDestroy() {
     this._unsubscribeAll.next(true);
     this._unsubscribeAll.complete();
+  }
+
+  subsCartChange() {
+    this.cartService.$cartItemsUpdated
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(carts => {
+        this.itemsOnCart = carts[0]?.CartItems?.length || 0;
+        // this.theCart = carts[0];
+      });
   }
 
   // Remove cart items

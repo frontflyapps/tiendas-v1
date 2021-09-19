@@ -16,6 +16,10 @@
         </a>
       </div>
     </div>
+
+    <!--    ===========================================================-->
+    <!-- OCULTO EN MOVIL -->
+    <!--    ===========================================================-->
     <section style="position: relative" *ngIf="carts.length" fxHide.lt-md>
       <div *ngIf="inLoading" class="loading-shade">
         <mat-spinner *ngIf="inLoading"></mat-spinner>
@@ -43,12 +47,10 @@
               />
             </div>
             <div class="mat-cell">
-              <a
-                [routerLink]="['/product']"
-                [queryParams]="{ productId: item?.Product?.id, stockId: item?.Product?.Stock?.id }"
-                class="link-nav-a line-clamp"
-                >{{ item.Product.name[language] ? item.Product.name[language] : item.Product.name['es'] }}</a
-              >
+              <a [routerLink]="['/product']"
+                 [queryParams]="{ productId: item?.Product?.id, stockId: item?.Product?.Stock?.id }"
+                 class="link-nav-a line-clamp"
+              >{{ item.Product.name[language] ? item.Product.name[language] : item.Product.name['es'] }}</a>
             </div>
             <div class="mat-cell">
               <a class="product-name">{{ utilsServ.parserLanguage(item.Product.Category.name, language) }}</a>
@@ -140,7 +142,7 @@
           <div class="mat-row">
             <div class="mat-cell">
               <a mat-raised-button class="btn-project" [routerLink]="['/products/search']" style="color: #fff"
-                ><span style="color: #fff">{{ 'Continue shopping' | translate }}</span></a
+              ><span style="color: #fff">{{ 'Continue shopping' | translate }}</span></a
               >
             </div>
             <div class="mat-cell"></div>
@@ -162,7 +164,7 @@
             <div class="mat-cell text-right">
               <div fxLayout="column" fxLayoutAlign="center end" class="grand-total px-2">
                 <span class="new-price"
-                  >{{ 'Total a pagar' | translate }}: {{ getTotal(cart) | currencyMarket: cart.market }}</span
+                >{{ 'Total a pagar' | translate }}: {{ getTotal(cart) | currencyMarket: cart.market }}</span
                 >
               </div>
             </div>
@@ -176,138 +178,164 @@
       </mat-card>
     </section>
 
+    <!--    ===========================================================-->
+    <!-- OCULTO EN DESKTOP -->
+    <!--    ===========================================================-->
     <section *ngIf="carts.length" fxHide fxShow.lt-md>
       <div *ngFor="let cart of carts" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="gappx">
         <div class="py-2" fxLayout="row" fxLayoutAlign="start center">
-          <img
-            *ngIf="cart?.Business?.logo"
-            style="height: 32px; width: 32px; border-radius: 50%; object-fit: cover"
-            [src]="imageUrl + cart?.Business?.logo"
-          />
+          <img *ngIf="cart?.Business?.logo" alt="image"
+               style="height: 32px; width: 32px; border-radius: 50%; object-fit: cover"
+               [src]="imageUrl + cart?.Business?.logo" />
 
-          <img
-            *ngIf="!cart?.Business?.logo"
-            style="height: 32px; width: 32px; border-radius: 50%; object-fit: cover"
-            src="../../../../assets/images/noImage.jpg"
-          />
+          <img *ngIf="!cart?.Business?.logo" alt="image"
+               style="height: 32px; width: 32px; border-radius: 50%; object-fit: cover"
+               src="../../../../assets/images/noImage.jpg" />
 
           <span class="mat-body-2 ml-2 uppercase">{{ cart.Business?.name }}</span>
         </div>
-        <mat-card
-          style="position: relative"
-          ngClass.sm="w-75 mx-auto"
-          class="pt-0 my-2 px-0"
-          *ngFor="let item of cart.CartItems"
-        >
-          <div *ngIf="inLoading" class="loading-shade">
-            <mat-spinner [diameter]="40" *ngIf="inLoading"></mat-spinner>
-          </div>
-          <p class="text-align-center py-2" style="background-color: #fafafa">
-            <img
-              class="imageProduct"
-              *ngIf="item.Product.Images && item.Product.Images.length"
-              [src]="imageUrl + item.Product.Images[0].image"
-            />
-            <img
-              class="imageProduct"
-              *ngIf="!(item.Product.Images && item.Product.Images.length)"
-              src="../../../../assets/images/noImage.jpg"
-            />
-          </p>
-          <mat-card-content fxLayout="column" fxLayoutAlign="start start" class="px-3 py-2 mb-0">
-            <p class="module line-clamp" style="font-size: 15px; text-align: left">
-              {{ item.Product.name[language] ? item.Product.name[language] : item.Product.name['es'] }}
-            </p>
 
-            <p class="text-muted mb-0">
-              {{ utilsServ.parserLanguage(item.Product.Category.name, language) }}
-            </p>
-
-            <div class="mt-1">
-              <ng-container *ngIf="item.Product.offerValue">
-                <p class="deletePrice mb-0" style="text-align: left">
-                  <del>{{ item.Product | parsePriceProduct }}</del>
-                </p>
-                <p
-                  class="mat-body-2 mb-0"
-                  style="text-align: left"
-                  matTooltip="{{ 'Existe una oferta asociada a este producto' | translate }}"
-                >
-                  {{ item.Product | parsePriceProduct: 'offert' }}
-                </p>
-                <p>
-                  {{ 'Desde ' | translate }}
-                  {{ item.Product.minSale }}
-                  {{ ' unidades' | translate }}
-                </p>
-              </ng-container>
-              <ng-container *ngIf="!item.Product.offerValue">
-                <p class="mat-body-2" style="text-align: left">
-                  {{ item.Product | parsePriceProduct }}
-                </p>
-                <p class="mat-body-2" style="font-size: 14px">
-                  {{ 'Desde ' | translate }}
-                  {{ item.Product.minSale }}
-                  {{ ' unidades' | translate }}
-                </p>
-              </ng-container>
-            </div>
-
-            <div id="inputQuantity" fxLayout="row" fxLayout.xs="column" class="text-muted">
-              <div fxLayout="row" fxLayoutAlign="center center">
-                <button
-                  [disabled]="item.Product.minSale >= item.quantity"
-                  mat-icon-button
-                  matTooltip="Remove"
-                  (click)="decrement(item.Product)"
-                >
-                  <mat-icon>remove</mat-icon>
-                </button>
-                <input type="text" name="quantity" [(ngModel)]="item.quantity" disabled class="input-number" />
-                <button
-                  [disabled]="item.Product.maxSale <= item.quantity"
-                  mat-icon-button
-                  matTooltip="Add"
-                  (click)="increment(item.Product)"
-                >
-                  <mat-icon>add</mat-icon>
-                </button>
-              </div>
-            </div>
-
-            <div id="totalPrice">
-              <span> {{ getTotalPricePerItem(item) | currencyMarket: item.Product.market }}</span>
-            </div>
-          </mat-card-content>
-          <mat-card-actions class="px-3">
-            <mat-divider></mat-divider>
-            <div fxLayout="row" fxLayoutAlign="end end">
-              <button
-                matTooltip="{{ 'Remove from cart' | translate }}"
-                (click)="removeItem(item)"
-                mat-icon-button
-                color="warn"
-              >
-                <mat-icon>delete</mat-icon>
-              </button>
-            </div>
-          </mat-card-actions>
-        </mat-card>
-
-        <mat-toolbar class="mt-2" *ngIf="cart.CartItems.length">
+        <!-- BOTON DE PAGAR -->
+        <mat-toolbar class="mt-2 subtotal-mat-toolbar mb-3" *ngIf="cart.CartItems.length">
           <mat-toolbar-row fxLayoutAlign="space-between center">
-            <span class="total">Total: {{ getTotal(cart) | currencyMarket: cart.market }}</span>
-            <div class="mat-cell text-center">
-              <a mat-raised-button color="primary" (click)="goToCheckout(cart)">
-                <span style="color: #fff">{{ 'Pagar' | translate }}</span>
-              </a>
+            <span class="total">{{'Subtotal' | translate}}:
+              <span class="subtotal-price">{{ getTotal(cart) | currencyMarket: cart.market }}</span>
+            </span>
+            <!--            <div class="mat-cell text-center">-->
+            <!--              <a mat-raised-button color="primary" (click)="goToCheckout(cart)">-->
+            <!--                <span style="color: #fff">{{ 'Pagar' | translate }}</span>-->
+            <!--              </a>-->
+            <!--            </div>-->
+          </mat-toolbar-row>
+          <mat-toolbar-row>
+            <div *ngIf="(cartService.$cartItemsUpdated | async)?.length > 0"
+                 (click)="cartService.goToCheckout(cart)"
+                 class="sticky-proceed-pay">
+              {{'Proceder al pago'|translate}}&nbsp;({{itemsOnCart}}&nbsp;{{'productos'}})
             </div>
           </mat-toolbar-row>
         </mat-toolbar>
 
-        <div class="my-3">
-          <mat-divider *ngFor="let item of [1, 2, 3, 4]"></mat-divider>
-        </div>
+        <mat-card style="position: relative; padding: 0 !important;"
+                  ngClass.sm="w-75 mx-auto"
+                  class="pt-0 my-2 px-0"
+                  *ngFor="let item of cart.CartItems">
+
+          <div *ngIf="inLoading" class="loading-shade">
+
+            <mat-spinner [diameter]="40" *ngIf="inLoading"></mat-spinner>
+          </div>
+
+          <div fxLayout="row" fxLayoutAlign="start">
+            <div class="text-align-center cart-card-image" style="background-color: #fafafa">
+              <img class="imageProduct" alt="Image"
+                   *ngIf="item.Product.Images && item.Product.Images.length"
+                   [src]="imageUrl + item.Product.Images[0].image" />
+              <img class="imageProduct" alt="Image"
+                   *ngIf="!(item.Product.Images && item.Product.Images.length)"
+                   src="../../../../assets/images/noImage.jpg" />
+            </div>
+
+            <mat-card-content fxFlex="100" fxLayout="column" fxLayoutAlign="start start"
+                              class="px-3 py-2 mb-0 cart-card-content">
+              <p class="text-muted mb-0">
+                {{ utilsServ.parserLanguage(item.Product.Category.name, language) }}
+              </p>
+
+              <p class="module line-clamp" style="font-size: 15px; text-align: left">
+                {{ item.Product.name[language] ? item.Product.name[language] : item.Product.name['es'] }}
+              </p>
+
+              <div class="mt-1 mb-3">
+                <ng-container *ngIf="item.Product.offerValue">
+                  <p class="deletePrice mb-0" style="text-align: left">
+                    <del>{{ item.Product | parsePriceProduct }}</del>
+                  </p>
+                  <p class="mat-body-2 mb-0"
+                     style="text-align: left"
+                     matTooltip="{{ 'Existe una oferta asociada a este producto' | translate }}">
+                    {{ item.Product | parsePriceProduct: 'offert' }}
+                  </p>
+                  <!--                  <p>-->
+                  <!--                    {{ 'Desde ' | translate }}-->
+                  <!--                    {{ item.Product.minSale }}-->
+                  <!--                    {{ ' unidades' | translate }}-->
+                  <!--                  </p>-->
+                </ng-container>
+                <ng-container *ngIf="!item.Product.offerValue">
+                  <p class="mat-body-2" style="text-align: left; font-size: 1.1rem">
+                    {{ item.Product | parsePriceProduct }}
+                  </p>
+                  <!--                  <p class="mat-body-2" style="font-size: 14px">-->
+                  <!--                    {{ 'Desde ' | translate }}-->
+                  <!--                    {{ item.Product.minSale }}-->
+                  <!--                    {{ ' unidades' | translate }}-->
+                  <!--                  </p>-->
+                </ng-container>
+              </div>
+
+              <div fxLayout="row" fxLayoutAlign="space-between start" class="buttoms-actions">
+                <div id="inputQuantity" fxLayout="row" fxLayout.xs="column" class="text-muted mb-2">
+                  <div fxLayout="row" fxLayoutAlign="center center">
+                    <button *ngIf="item.quantity > 1"
+                            class="btn-remove"
+                            mat-icon-button
+                            matTooltip="Remove"
+                            (click)="decrement(item.Product)">
+                      <mat-icon>remove</mat-icon>
+                    </button>
+
+                    <button *ngIf="item.quantity <=1"
+                            class="btn-remove"
+                            mat-icon-button
+                            matTooltip="Remove"
+                            (click)="removeItem(item)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+
+                    <input type="text" name="quantity" [(ngModel)]="item.quantity" disabled class="input-number" />
+                    <button [disabled]="item.Product.maxSale <= item.quantity"
+                            class="btn-add"
+                            mat-icon-button
+                            matTooltip="Add"
+                            (click)="increment(item.Product)">
+                      <mat-icon>add</mat-icon>
+                    </button>
+                  </div>
+                </div>
+
+                <button matTooltip="{{ 'Remove from cart' | translate }}"
+                        (click)="removeItem(item)"
+                        mat-stroked-button
+                        class="uppercase btn-remove-all">
+                  {{'Eliminar' | translate}}
+                  <!--                  <mat-icon>delete</mat-icon>-->
+                </button>
+              </div>
+
+              <!--              <div id="totalPrice">-->
+              <!--                <span> {{ getTotalPricePerItem(item) | currencyMarket: item.Product.market }}</span>-->
+              <!--              </div>-->
+            </mat-card-content>
+          </div>
+
+          <!--          <mat-card-actions class="px-3">-->
+          <!--            <mat-divider></mat-divider>-->
+          <!--            <div fxLayout="row" fxLayoutAlign="end end">-->
+          <!--              <button matTooltip="{{ 'Remove from cart' | translate }}"-->
+          <!--                      (click)="removeItem(item)"-->
+          <!--                      mat-icon-button-->
+          <!--                      color="warn">-->
+          <!--                <mat-icon>delete</mat-icon>-->
+          <!--              </button>-->
+          <!--            </div>-->
+          <!--          </mat-card-actions>-->
+
+        </mat-card>
+
+        <!--        <div class="my-3">-->
+        <!--          <mat-divider *ngFor="let item of [1, 2, 3, 4]"></mat-divider>-->
+        <!--        </div>-->
       </div>
     </section>
   </div>
