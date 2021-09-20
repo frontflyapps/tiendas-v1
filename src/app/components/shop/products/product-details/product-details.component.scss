@@ -4,7 +4,41 @@
 .container-product-details {
   max-width: 1360px;
   margin: 0 auto;
-  padding: 0px 15px;
+  padding: 0 15px;
+
+  .products {
+    padding-right: 30px;
+
+    @include media-breakpoint('xs') {
+      padding-right: 0 !important;
+    }
+
+    .title {
+      margin-bottom: 15px;
+      position: relative;
+      padding-bottom: 1.25rem;
+
+      &::before {
+        content: "";
+        left: 0;
+        position: absolute;
+        width: 100%;
+        height: 0.0625rem;
+        bottom: 0.34375rem;
+        background-color: #f6f6f6;
+      }
+
+      &::after {
+        content: "";
+        left: 0;
+        position: absolute;
+        width: 2.5rem;
+        height: 0.125rem;
+        background-color: #222222;
+        bottom: 0.3125rem;
+      }
+    }
+  }
 }
 
 .my-product {
@@ -116,7 +150,6 @@
 
 .InnerHtmlContent {
   padding: 16px;
-
 }
 
 /***************************************
@@ -316,42 +349,6 @@
         }
       }
     }
-
-  }
-
-  .products {
-    padding-right: 30px;
-
-    @include media-breakpoint('xs') {
-      padding-right: 0 !important;
-    }
-
-
-    .title {
-      margin-bottom: 15px;
-      position: relative;
-      padding-bottom: 1.25rem;
-
-      &::before {
-        content: "";
-        left: 0;
-        position: absolute;
-        width: 100%;
-        height: 0.0625rem;
-        bottom: 0.34375rem;
-        background-color: #f6f6f6;
-      }
-
-      &::after {
-        content: "";
-        left: 0;
-        position: absolute;
-        width: 2.5rem;
-        height: 0.125rem;
-        background-color: #222222;
-        bottom: 0.3125rem;
-      }
-    }
   }
 
   .sale-widget {
@@ -402,6 +399,49 @@
       line-height: 24px;
       font-weight: 300;
       font-size: 15px;
+    }
+  }
+}
+
+.product-detail-not-found {
+
+  .pdnf-picture {
+    height: 300px;
+    text-align: end;
+    overflow: hidden;
+
+    img {
+      width: auto;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+
+      @media (max-width: 600px) {
+        width: 100%;
+      }
+    }
+  }
+
+  .pdnf-right-side-text {
+    .pdnf-1-text {
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+
+    .pdnf-2-text,
+    .pdnf-3-text {
+      font-size: 1.25rem;
+
+      @media (max-width: 600px) {
+        font-size: 1rem;
+      }
+
+    }
+
+    .pdnf-action-button {
+      button {
+        height: 40px;
+      }
     }
   }
 }
@@ -526,7 +566,6 @@
     text-decoration: underline;
     color: #2196f3;
   }
-
 }
 
 .popup {
@@ -562,10 +601,7 @@
       max-height: 98%;
       max-width: 98%;
     }
-
   }
-
-
 }
 
 @keyframes show {

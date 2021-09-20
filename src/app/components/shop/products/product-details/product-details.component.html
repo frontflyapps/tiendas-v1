@@ -7,10 +7,10 @@
       <div fxLayout="row wrap" fxLayoutAlign="space-around start" fxFlex="100" fxFlex.gt-md="100" fxFlex.gt-sm="100">
         <div fxLayoutAlign="center center" fxFlex="100" fxFlex.gt-md="50">
           <mat-card class="my-product mat-elevation-z0">
-<!--            <button matTooltip="{{ 'Zoom for a image' | translate }}" id="zoomBtn" mat-icon-button-->
-<!--                    (click)="openZoomViewer()">-->
-<!--              <mat-icon>fullscreen</mat-icon>-->
-<!--            </button>-->
+            <!--            <button matTooltip="{{ 'Zoom for a image' | translate }}" id="zoomBtn" mat-icon-button-->
+            <!--                    (click)="openZoomViewer()">-->
+            <!--              <mat-icon>fullscreen</mat-icon>-->
+            <!--            </button>-->
             <button fxHide fxShow.lt-md matTooltip="{{ 'Compartir en redes sociales' | translate }}" id="shareBtn"
                     mat-icon-button
                     (click)="onShareProduct()">
@@ -352,11 +352,49 @@
     </div>
   </div>
 
-  <ng-container *ngIf="this.errorPage">
-    <section class="py-4">
-      <h1 style="text-align: center">Algo anda mal</h1>
+  <!-- =========================================================== -->
+  <!-- ======== on NO PRODUCT ================================== -->
+  <div *ngIf="errorPage" fxLayout="column" class="mb-4">
+    <section class="py-4 product-detail-not-found" fxLayout="row" fxLayout.xs="column"
+             fxLayoutAlign="center" fxLayoutAlign.xs="start"
+             fxLayoutGap="6rem" fxLayoutGap.xs="0">
+      <picture fxFlex="50" fxFlex.xs="100" [fxFlexOrder.xs]="2" class="pdnf-picture">
+        <!--        <source srcset="assets/images/not-found-product.webp" type="image/webp">-->
+        <!--        <source srcset="assets/images/not-found-product.png" type="image/png">-->
+        <img src="assets/images/not-found-product.png" type="image/png" alt="Producto no encontrado"
+             onerror="this.onerror=null;this.src='assets/images/noImage.jpg';">
+      </picture>
+
+      <div fxFlex="50" fxFlex.xs="100" [fxFlexOrder.xs]="1"
+           fxLayout="column" fxLayoutAlign="center start" class="pdnf-right-side-text">
+        <div class="pdnf-1-text mb-4" [fxFlexOrder.xs]="1">{{'Upss' | translate}}...</div>
+        <div class="pdnf-2-text mb-1" [fxFlexOrder.xs]="2">{{'Lo sentimos' | translate}}</div>
+        <div class="pdnf-3-text mb-4"
+             [fxFlexOrder.xs]="3">{{'El producto que busca no se encuentra disponible' | translate}}</div>
+
+        <div class="pdnf-action-button" [fxFlexOrder.xs]="4">
+          <button mat-flat-button color="primary" ngClass.xs="mb-4"
+                  [routerLink]="['/products/search']">
+            {{'Seguir comprando' | translate}}
+          </button>
+        </div>
+      </div>
     </section>
-  </ng-container>
+
+    <div *ngIf="featuredProducts.length" class="products pt-5 pb-0">
+      <div class="title">
+        <h4 class="widget-title">{{ 'FEATURED PRODUCTS' | translate }}</h4>
+      </div>
+      <app-product-carousel-two *ngIf="!loadingFeatured" [products]="featuredProducts" [btnColor]="'accent'"
+                                [grid]="{ '480': 1, '740': 2, '960': 2, '1024': 2, '1280': 3 }">
+      </app-product-carousel-two>
+      <div *ngIf="loadingFeatured" class="my-3">
+        <app-skeleton-loading-cards *ngIf="loadingFeatured" [setConfiguration]="{ xs: 1, sm: 2, md: 2, lg: 3 }">
+        </app-skeleton-loading-cards>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 <div *ngIf="showZoom" id="popup" class="popup">
