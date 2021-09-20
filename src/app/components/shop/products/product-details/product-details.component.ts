@@ -120,6 +120,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
           this.isLoading = false;
           this.utilsService.errorHandle(error);
           this.errorPage = true;
+          this.getFeaturedProducts();
         },
       );
     });
@@ -227,7 +228,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     if (quantity === 0) {
       return false;
     }
-    this.cartService.addToCart(product, Math.max(product.minSale, quantity));
+    this.cartService.addToCart(product, Math.max(product.minSale, quantity)).then();
   }
 
   // Add to cart
