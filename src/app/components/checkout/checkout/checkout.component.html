@@ -4,11 +4,16 @@
 
 <div class="container-checkout" ngClass.lt-md="px-2">
   <div class="checkout sec-padding" ngClass.lt-md="py-2">
-    <div *ngIf="loadingPayment" class="w-100 my-3" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="gappx">
+    <div *ngIf="loadingPayment" class="w-100 my-3" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="gappx">
       <div class="loading-dots mat-title">{{ 'Procesando los datos' | translate }}</div>
+      <div class="loading-dots mat-subheading-1">{{'Cargando pasarela de pago' | translate}}...</div>
     </div>
+
     <div fxLayout="row wrap">
-      <div class="billing-details"
+
+      <!-- ============================================================= -->
+      <!-- DATA INFO TO PAY -->
+      <div *ngIf="showInfoDataToPay" class="billing-details"
            ngClass.gt-sm="pr-5"
            ngClass.sm="pr-2"
            ngClass.xs="pr-0"
@@ -19,12 +24,11 @@
           <h3 class="grey-800" ngClass.gt-sm="h2" ngClass.xs="h4">{{ 'Billing Details' | translate }}</h3>
         </div>
 
-        <form *ngIf="!loadingPayment" [formGroup]="form" fxLayout="row wrap" fxLayoutAlign="start start" class="mt-3">
+        <div *ngIf="!loadingPayment" [formGroup]="form" fxLayout="row wrap" fxLayoutAlign="start start">
           <div
             fxLayout="column"
             fxLayoutAlign="start stretch"
             fxFlex="100"
-            class="mt-2"
             ngClass.sm="mt-2"
             ngClass.xs="mt-2">
             <p class="mat-body-2 my-2" style="text-transform: uppercase">
@@ -91,37 +95,6 @@
                 </mat-option>
               </mat-select>
             </mat-form-field> -->
-
-            <ng-container
-              *ngIf="
-                form.controls['paymentType'].value === 'visa' ||
-                form.controls['paymentType'].value === 'express' ||
-                form.controls['paymentType'].value === 'masterCard' ||
-                form.controls['paymentType'].value === 'dinners-club-internacional' ||
-                form.controls['paymentType'].value === 'jcb' ||
-                form.controls['paymentType'].value === 'maestro' ||
-                form.controls['paymentType'].value === 'electron' ||
-                form.controls['paymentType'].value === 'tarjeta-virtual' ||
-                form.controls['paymentType'].value === 'bizum' ||
-                form.controls['paymentType'].value === 'iupay' ||
-                form.controls['paymentType'].value === 'discover-global'
-              ">
-              <p class="mat-body-2 my-2" style="text-transform: uppercase">
-                {{ 'Select the currency' | translate }}
-              </p>
-              <div fxLayout="row wrap">
-                <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline">
-                  <mat-label>{{ 'Currency' | translate }}</mat-label>
-                  <mat-select [formControl]="form.controls['currency']" placeholder="{{ 'Currency' | translate }}">
-                    <mat-option *ngFor="let currency of currencies" [value]="currency">
-                      <span class="mat-body-2">
-                        {{ currency }}
-                      </span>
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
-            </ng-container>
 
             <p class="mat-body-2 my-2" style="text-transform: uppercase">
               {{ 'Datos del destinatario' | translate }}
@@ -326,91 +299,135 @@
               ></textarea>
             </mat-form-field>
           </div>
-        </form>
+
+          <div fxFlex="grow" fxLayout="row" fxLayoutAlign="space-between start" class="actions-buttons">
+            <button mat-stroked-button [routerLink]="['/products/search']">{{'Cancel' | translate}}</button>
+            <button mat-raised-button color="primary" (click)="onGoToPayment()"
+                    [disabled]="form.invalid">{{'Continuar' | translate}}</button>
+          </div>
+        </div>
 
         <div *ngIf="loadingPayment" style="width: 100%; min-height: 500px; height: 100%" class="loader"></div>
       </div>
 
-      <div class="mainOrder-wrapper pl-15" fxFlex="100" fxFlex.gt-md="50" fxFlex.md="50">
-        <div *ngIf="!loadingPayment" class="header-title" ngClass.xs="mt-3" ngClass.sm="mt-3">
-          <h3 class="grey-800" ngClass.gt-sm="h2" ngClass.xs="h4">{{ 'My Order' | translate }}</h3>
-        </div>
-        <div *ngIf="!loadingPayment" class="main-order" style="margin-top: 26px">
+      <div *ngIf="showPayment" fxLayout="column" class="mainOrder-wrapper pl-15" fxFlex="100" fxFlex.gt-md="50"
+           fxFlex.md="50">
+        <!--        <div *ngIf="!loadingPayment" class="header-title" ngClass.xs="mt-3" ngClass.sm="mt-3">-->
+        <!--          <h3 class="grey-800" ngClass.gt-sm="h2" ngClass.xs="h4">{{ 'My Order' | translate }}</h3>-->
+        <!--        </div>-->
+
+        <!-- ============================================ -->
+        <!-- SELCTOR DE MONEDAS -->
+        <ng-container *ngIf="!loadingPayment
+                && (form.controls['paymentType'].value === 'visa'
+                || form.controls['paymentType'].value === 'express'
+                || form.controls['paymentType'].value === 'masterCard'
+                || form.controls['paymentType'].value === 'dinners-club-internacional'
+                || form.controls['paymentType'].value === 'jcb'
+                || form.controls['paymentType'].value === 'maestro'
+                || form.controls['paymentType'].value === 'electron'
+                || form.controls['paymentType'].value === 'tarjeta-virtual'
+                || form.controls['paymentType'].value === 'bizum'
+                || form.controls['paymentType'].value === 'iupay'
+                || form.controls['paymentType'].value === 'discover-global')">
+          <p class="mat-body-2 my-2" style="text-transform: uppercase">
+            {{ 'Selecciones moneda para realizar su pago' | translate }}
+          </p>
+          <div fxLayout="row wrap">
+            <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline">
+              <mat-label>{{ 'Currency' | translate }}</mat-label>
+              <mat-select [formControl]="form.controls['currency']" placeholder="{{ 'Currency' | translate }}">
+                <ng-container *ngFor="let currency of currencies">
+                  <mat-option *ngIf="!((currency === 'EUR') && (form.get('paymentType').value === 'transfermovil'))"
+                              [value]="currency">
+                      <span class="mat-body-2">
+                        {{ currency }}
+                      </span>
+                  </mat-option>
+                </ng-container>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </ng-container>
+
+        <div *ngIf="!loadingPayment" class="main-order">
           <div class="order-box">
-            <div class="title-box">
-              <div>
-                {{ 'Product' | translate }} <span class="tl-amount"> {{ 'Total' | translate }}</span>
-              </div>
-            </div>
-            <div *ngIf="buyProducts.length" class="responsive_table">
-              <table mat-table [dataSource]="dataSource">
-                <ng-container matColumnDef="product">
-                  <th class="text-center" style="width: 10%" mat-header-cell *matHeaderCellDef>
-                    <span class="mat-subheading-1">{{ 'Name' | translate }}</span>
-                  </th>
-                  <td class="py-2" mat-cell *matCellDef="let element">
-                    <div fxLayout="row" fxLayoutAlign="start center">
-                      <img
-                        *ngIf="element.Product.Images && element.Product.Images.length"
-                        [src]="imageUrl + element.Product.Images[0].image"
-                      />
-                      <img
-                        *ngIf="!(element.Product.Images && element.Product.Images.length)"
-                        src="../../../../assets/images/noImage.jpg"
-                      />
-                      <p class="name">
-                        <a [href]="'/product?productId=' + element.ProductId + '&stockId=' + element.StockId"
-                        ><strong class="color-grey-800">{{
-                          element.Product.name[language] ? element.Product.name[language] : element.Product.name['es']
-                          }}</strong></a
-                        >
-                      </p>
-                    </div>
-                  </td>
-                </ng-container>
+            <!--            <div class="title-box">-->
+            <!--              <div>-->
+            <!--                {{ 'Product' | translate }} <span class="tl-amount"> {{ 'Total' | translate }}</span>-->
+            <!--              </div>-->
+            <!--            </div>-->
 
-                <ng-container matColumnDef="quantity">
-                  <th style="width: 10%" class="text-center" mat-header-cell *matHeaderCellDef>
-                    <span class="mat-subheading-1">{{ 'Quantity' | translate }}</span>
-                  </th>
-                  <td mat-cell *matCellDef="let element">
-                    <div fxLayout="row" fxLayoutAlign="center center">
-                      <strong style="font-size: 17px">x {{ element.quantity }}</strong>
-                    </div>
-                  </td>
-                </ng-container>
+            <!--            <div *ngIf="buyProducts.length" class="responsive_table">-->
+            <!--              <table mat-table [dataSource]="dataSource">-->
+            <!--                <ng-container matColumnDef="product">-->
+            <!--                  <th class="text-center" style="width: 10%" mat-header-cell *matHeaderCellDef>-->
+            <!--                    <span class="mat-subheading-1">{{ 'Name' | translate }}</span>-->
+            <!--                  </th>-->
+            <!--                  <td class="py-2" mat-cell *matCellDef="let element">-->
+            <!--                    <div fxLayout="row" fxLayoutAlign="start center">-->
+            <!--                      <img-->
+            <!--                        *ngIf="element.Product.Images && element.Product.Images.length"-->
+            <!--                        [src]="imageUrl + element.Product.Images[0].image"-->
+            <!--                      />-->
+            <!--                      <img-->
+            <!--                        *ngIf="!(element.Product.Images && element.Product.Images.length)"-->
+            <!--                        src="../../../../assets/images/noImage.jpg"-->
+            <!--                      />-->
+            <!--                      <p class="name">-->
+            <!--                        <a [href]="'/product?productId=' + element.ProductId + '&stockId=' + element.StockId"-->
+            <!--                        ><strong class="color-grey-800">{{-->
+            <!--                          element.Product.name[language] ? element.Product.name[language] : element.Product.name['es']-->
+            <!--                          }}</strong></a-->
+            <!--                        >-->
+            <!--                      </p>-->
+            <!--                    </div>-->
+            <!--                  </td>-->
+            <!--                </ng-container>-->
 
-                <ng-container matColumnDef="price">
-                  <th class="text-center" style="width: 10%" mat-header-cell *matHeaderCellDef>
-                    <span class="mat-subheading-1">{{ 'Price' | translate }}</span>
-                  </th>
-                  <td mat-cell *matCellDef="let element">
-                    <div fxLayout="row" fxLayoutAlign="center center">
-                      <strong style="font-size: 16px">
-                        {{ getTotalPricePerItemCurrency(element) | currencyMarket: form.controls['currency'].value }}
-                      </strong>
-                    </div>
-                  </td>
-                </ng-container>
-                <ng-container matColumnDef="action">
-                  <th class="text-center" style="width: 10%" mat-header-cell *matHeaderCellDef></th>
-                  <td mat-cell *matCellDef="let element">
-                    <button
-                      (click)="removeItem(element)"
-                      class="ml-auto"
-                      mat-icon-button
-                      color="warn"
-                      matTooltip="{{ 'Eliminar producto del carrito' | translate }}"
-                    >
-                      <mat-icon>clear</mat-icon>
-                    </button>
-                  </td>
-                </ng-container>
+            <!--                <ng-container matColumnDef="quantity">-->
+            <!--                  <th style="width: 10%" class="text-center" mat-header-cell *matHeaderCellDef>-->
+            <!--                    <span class="mat-subheading-1">{{ 'Quantity' | translate }}</span>-->
+            <!--                  </th>-->
+            <!--                  <td mat-cell *matCellDef="let element">-->
+            <!--                    <div fxLayout="row" fxLayoutAlign="center center">-->
+            <!--                      <strong style="font-size: 17px">x {{ element.quantity }}</strong>-->
+            <!--                    </div>-->
+            <!--                  </td>-->
+            <!--                </ng-container>-->
 
-                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                <tr mat-row class="rowData" *matRowDef="let row; columns: displayedColumns"></tr>
-              </table>
-            </div>
+            <!--                <ng-container matColumnDef="price">-->
+            <!--                  <th class="text-center" style="width: 10%" mat-header-cell *matHeaderCellDef>-->
+            <!--                    <span class="mat-subheading-1">{{ 'Price' | translate }}</span>-->
+            <!--                  </th>-->
+            <!--                  <td mat-cell *matCellDef="let element">-->
+            <!--                    <div fxLayout="row" fxLayoutAlign="center center">-->
+            <!--                      <strong style="font-size: 16px">-->
+            <!--                        {{ getTotalPricePerItemCurrency(element) | currencyMarket: form.controls['currency'].value }}-->
+            <!--                      </strong>-->
+            <!--                    </div>-->
+            <!--                  </td>-->
+            <!--                </ng-container>-->
+            <!--                <ng-container matColumnDef="action">-->
+            <!--                  <th class="text-center" style="width: 10%" mat-header-cell *matHeaderCellDef></th>-->
+            <!--                  <td mat-cell *matCellDef="let element">-->
+            <!--                    <button-->
+            <!--                      (click)="removeItem(element)"-->
+            <!--                      class="ml-auto"-->
+            <!--                      mat-icon-button-->
+            <!--                      color="warn"-->
+            <!--                      matTooltip="{{ 'Eliminar producto del carrito' | translate }}"-->
+            <!--                    >-->
+            <!--                      <mat-icon>clear</mat-icon>-->
+            <!--                    </button>-->
+            <!--                  </td>-->
+            <!--                </ng-container>-->
+
+            <!--                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>-->
+            <!--                <tr mat-row class="rowData" *matRowDef="let row; columns: displayedColumns"></tr>-->
+            <!--              </table>-->
+            <!--            </div>-->
+
             <!--<ul class="price-list" *ngIf="buyProducts.length">
               <li *ngFor="let item of buyProducts">
                 <div fxLayout="row" fxLayoutAlign="start center" class="py-2" fxLayoutGap="gappx">
@@ -453,9 +470,11 @@
                 </div>
               </li>
             </ul>-->
+
             <ul class="quantity" *ngIf="buyProducts.length <= 0">
               <li class="empty-checkout">{{ 'There are no products in cart' | translate }}</li>
             </ul>
+
             <ul *ngIf="!loadingCart && showShipping" class="total-amount">
               <li>
                 {{ 'Subtotal' | translate }}:
@@ -465,30 +484,24 @@
               </li>
             </ul>
 
-            <!-- ////////////////TARIFAS DE ENVIO/////////////////////////////////////////// -->
-
-            <div
-              class="mb-3 pb-3"
-              *ngIf="!loadingCart"
-              fxLayout="column"
-              fxLayoutAlign="start start"
-              fxLayoutGap="gappx"
-              style="border-bottom: 1px solid #e5e5e5"
-            >
-              <div
-                fxLayout="row"
-                class="w-100"
-                fxLayout.xs="column"
-                ngClass.gt-xs="pt-1"
-                fxLayoutAlign="space-between center"
-                fxLayoutAlign.xs="start"
-              >
+            <!-- ============================================ -->
+            <!-- TARIFAS DE ENVIO -->
+            <div class="mb-3 pb-3"
+                 *ngIf="!loadingCart"
+                 fxLayout="column"
+                 fxLayoutAlign="start start"
+                 fxLayoutGap="gappx"
+                 style="border-bottom: 1px solid #e5e5e5">
+              <div fxLayout="row"
+                   class="w-100"
+                   fxLayout.xs="column"
+                   ngClass.gt-xs="pt-1"
+                   fxLayoutAlign="space-between center"
+                   fxLayoutAlign.xs="start">
                 <div fxFlexOrder.xs="2">
-                  <p
-                    *ngIf="showShipping"
-                    matTooltip="{{ 'Sistemas de precio del envio de sus productos a la localización brindada' }}"
-                    style="font-size: 16px; font-weight: 500; margin-bottom: 12px !important"
-                  >
+                  <p *ngIf="showShipping"
+                     matTooltip="{{ 'Sistemas de precio del envio de sus productos a la localización brindada' }}"
+                     style="font-size: 16px; font-weight: 500; margin-bottom: 12px !important">
                     {{ 'Seleccione una tarifa de envío*' | translate }}:
                   </p>
                   <p
@@ -500,15 +513,12 @@
                 </div>
 
                 <div fxLayout fxLayoutAlign="start center">
-                  <mat-icon
-                    *ngIf="form.controls['ShippingBusinessId'] && form.controls['ShippingBusinessId'].value"
-                    (click)="detailsShipping()"
-                    matTooltip="{{ 'Shipping Rates Details' | translate }}"
-                    class="mr-3"
-                    style="margin-bottom: 12px; font-size: 25px; cursor: pointer"
-                  >visibility
-                  </mat-icon
-                  >
+                  <mat-icon *ngIf="form.controls['ShippingBusinessId'] && form.controls['ShippingBusinessId'].value"
+                            (click)="detailsShipping()"
+                            matTooltip="{{ 'Shipping Rates Details' | translate }}"
+                            class="mr-3"
+                            style="margin-bottom: 12px; font-size: 25px; cursor: pointer">visibility
+                  </mat-icon>
                   <!--                  <mat-checkbox-->
                   <!--                    ngClass.xs="mb-2"-->
                   <!--                    fxFlexOrder.xs="1"-->
@@ -520,26 +530,22 @@
                 </div>
               </div>
 
-              <div
-                class="w-100"
-                style="position: relative"
-                *ngIf="showShipping"
-                fxLayout="column"
-                fxLayoutAlign="start start"
-                fxLayoutGap="gappx"
-              >
+              <div class="w-100"
+                   style="position: relative"
+                   *ngIf="showShipping"
+                   fxLayout="column"
+                   fxLayoutAlign="start start"
+                   fxLayoutGap="gappx">
                 <div *ngIf="inLoading" class="loading-shade" style="height: 100%">
                   <mat-spinner [diameter]="40" *ngIf="inLoading"></mat-spinner>
                 </div>
                 <mat-radio-group [formControl]="form.get('ShippingBusinessId')" class="w-100">
-                  <mat-radio-button
-                    matTooltip="{{ shipping?.Business?.name }}"
-                    style="height: 50px"
-                    class="w-100"
-                    *ngFor="let shipping of shippingData"
-                    f
-                    [value]="shipping.BusinessId"
-                  >
+                  <mat-radio-button matTooltip="{{ shipping?.Business?.name }}"
+                                    style="height: 50px"
+                                    class="w-100"
+                                    *ngFor="let shipping of shippingData"
+                                    f
+                                    [value]="shipping.BusinessId">
                     <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="gappx">
                       <div fxLayoutAlign="start center">
                         <img
@@ -560,19 +566,15 @@
                   </mat-radio-button>
                 </mat-radio-group>
 
-                <ng-container
-                  *ngIf="!this.form.get('ProvinceId').valid && !this.form.get('MunicipalityId').valid; else showMessage"
-                >
+                <ng-container *ngIf="!this.form.get('ProvinceId').valid
+                  && !this.form.get('MunicipalityId').valid; else showMessage">
                   <span class="my-2" style="font-size: 16px; font-weight: 500; color: #f44336">
                     {{ '*These products cannot be shipped specify a location' | translate }}
                   </span>
                 </ng-container>
                 <ng-template #showMessage>
-                  <ng-container
-                    *ngIf="
-                      !canBeDelivery || !this.form.get('ProvinceId').valid || !this.form.get('MunicipalityId').valid
-                    "
-                  >
+                  <ng-container *ngIf="
+                      !canBeDelivery || !this.form.get('ProvinceId').valid || !this.form.get('MunicipalityId').valid">
                     <span class="my-2" style="font-size: 16px; font-weight: 500; color: #f44336">
                       {{ '*Estos productos no pueden ser enviados a la localización proporcionada' | translate }}
                     </span>
@@ -582,48 +584,36 @@
             </div>
 
             <ng-container *ngIf="loadingCart">
-              <div
-                class="py-2 my-2 w-100 loader"
-                style="border-radius: 4px"
-                fxLayout="row"
-                fxLayoutAlign="start center"
-                fxLayoutGap="gappx"
-              ></div>
-              <div
-                class="py-2 my-2 w-100 loader"
-                style="border-radius: 4px"
-                fxLayout="row"
-                fxLayoutAlign="start center"
-                fxLayoutGap="gappx"
-              ></div>
-              <div
-                class="py-2 my-2 w-100 loader"
-                style="border-radius: 4px"
-                fxLayout="row"
-                fxLayoutAlign="start center"
-                fxLayoutGap="gappx"
-              ></div>
-              <div
-                class="py-2 my-2 w-100 loader"
-                style="border-radius: 4px"
-                fxLayout="row"
-                fxLayoutAlign="start center"
-                fxLayoutGap="gappx"
-              ></div>
-              <div
-                class="py-2 my-2 w-100 loader"
-                style="border-radius: 4px"
-                fxLayout="row"
-                fxLayoutAlign="start center"
-                fxLayoutGap="gappx"
-              ></div>
-              <div
-                class="py-2 my-2 w-100 loader"
-                style="border-radius: 4px"
-                fxLayout="row"
-                fxLayoutAlign="start center"
-                fxLayoutGap="gappx"
-              ></div>
+              <div class="py-2 my-2 w-100 loader"
+                   style="border-radius: 4px"
+                   fxLayout="row"
+                   fxLayoutAlign="start center"
+                   fxLayoutGap="gappx"></div>
+              <div class="py-2 my-2 w-100 loader"
+                   style="border-radius: 4px"
+                   fxLayout="row"
+                   fxLayoutAlign="start center"
+                   fxLayoutGap="gappx"></div>
+              <div class="py-2 my-2 w-100 loader"
+                   style="border-radius: 4px"
+                   fxLayout="row"
+                   fxLayoutAlign="start center"
+                   fxLayoutGap="gappx"></div>
+              <div class="py-2 my-2 w-100 loader"
+                   style="border-radius: 4px"
+                   fxLayout="row"
+                   fxLayoutAlign="start center"
+                   fxLayoutGap="gappx"></div>
+              <div class="py-2 my-2 w-100 loader"
+                   style="border-radius: 4px"
+                   fxLayout="row"
+                   fxLayoutAlign="start center"
+                   fxLayoutGap="gappx"></div>
+              <div class="py-2 my-2 w-100 loader"
+                   style="border-radius: 4px"
+                   fxLayout="row"
+                   fxLayoutAlign="start center"
+                   fxLayoutGap="gappx"></div>
             </ng-container>
             <ul class="total">
               <li>
@@ -636,69 +626,97 @@
             <p class="my-2">
               <strong>{{ 'Pasarelas para efectuar el pago' | translate }}</strong>
             </p>
-            <div class="paymentFinal" id="payment-method">
-              <mat-radio-group [formControl]="form.get('paymentType')" fxLayout.lt-sm="column" fxLayout="row wrap"
-                               fxLayoutGap="10px grid">
-                <ng-container *ngFor="let pay of payments">
-                  <ng-container *ngIf="this.onlyCubanPeople
+
+            <mat-accordion class="payment-method-expansion-panel">
+              <mat-expansion-panel expanded="true" class="mb-2">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    {{'Seleccione método' | translate}}
+                  </mat-panel-title>
+                  <!--                  <mat-panel-description>-->
+                  <!--                    Type your name and age-->
+                  <!--                    <mat-icon>account_circle</mat-icon>-->
+                  <!--                  </mat-panel-description>-->
+                </mat-expansion-panel-header>
+
+                <!-- ============================================ -->
+                <!-- METODOS DE PAGO -->
+                <div class="paymentFinal" id="payment-method">
+                  <!--  fxLayout.lt-sm="column"  -->
+                  <mat-radio-group [formControl]="form.get('paymentType')" fxLayout="row wrap"
+                                   fxLayoutAlign="center start" fxLayoutGap="10px grid">
+                    <ng-container *ngFor="let pay of payments">
+                      <ng-container *ngIf="this.onlyCubanPeople
                                       && cart?.market === 'national'
                                       && pay?.market === 'national'">
-                    <mat-radio-button fxFlex="50%" fxFlex.lt-sm="100%"
-                                      [value]="pay.id"
-                                      class="w-100">
-                      {{this.onlyCubanPeople}} - {{cart?.market}}
-                      <div fxLayout="row" fxLayoutAlign="start center" class="w-100 pay-method-container"
-                           [ngClass]="{'payment-active': form.get('paymentType').value === pay.id}">
-                        <img [src]="pay.logo" class="pay-method-icon pr-2" />
-                        <span class="mat-body-2 uppercase pay-method-name">
-                          {{ pay.name }}
-                        </span>
-                      </div>
-                    </mat-radio-button>
-                  </ng-container>
+                        <!-- fxFlex="50%" fxFlex.lt-sm="100%" -->
+                        <mat-radio-button [value]="pay.id"
+                                          class="radio-button-national">
+                          <!-- {{this.onlyCubanPeople}} - {{cart?.market}}-->
+                          <div fxLayout="row" fxLayoutAlign="start center" class="pay-method-container"
+                               [ngClass]="{'payment-active': form.get('paymentType').value === pay.id}">
+                            <img [src]="pay.logo" class="pay-method-icon" />
+                            <span class="mat-body-2 uppercase pay-method-name">
+                            <!-- {{ pay.name }}-->
+                            </span>
+                          </div>
+                        </mat-radio-button>
+                      </ng-container>
 
-                  <ng-container *ngIf="this.onlyCubanPeople
+                      <ng-container *ngIf="this.onlyCubanPeople
                                       && cart?.market === 'international'
                                       && pay?.market === 'international'">
-                    <mat-radio-button fxFlex="50%" fxFlex.lt-sm="100%"
-                                      *ngIf="this.onlyCubanPeople && cart?.market === 'international'"
-                                      [value]="pay.id"
-                                      class="w-100">
-                      <div fxLayoutAlign="start center" class="w-100 pay-method-container"
-                           [ngClass]="{'payment-active': form.get('paymentType').value === pay.id}">
-                        <img [src]="pay.logo" class="pay-method-icon pr-2" />
-                        <span class="mat-body-2 uppercase pay-method-name">
-                          {{ pay.name }}
-                        </span>
-                      </div>
-                    </mat-radio-button>
-                  </ng-container>
-                </ng-container>
-              </mat-radio-group>
-            </div>
+                        <!--  fxFlex="50%" fxFlex.lt-sm="100%" -->
+                        <mat-radio-button *ngIf="this.onlyCubanPeople && cart?.market === 'international'"
+                                          [value]="pay.id"
+                                          class="radio-button-international">
+                          <div fxLayoutAlign="start center" class="pay-method-container"
+                               [ngClass]="{'payment-active': form.get('paymentType').value === pay.id}">
+                            <img [src]="pay.logo" class="pay-method-icon" />
+                            <span class="mat-body-2 uppercase pay-method-name">
+                              <!-- {{ pay.name }} -->
+                            </span>
+                          </div>
+                        </mat-radio-button>
+                      </ng-container>
+                    </ng-container>
+                  </mat-radio-group>
+                </div>
+
+              </mat-expansion-panel>
+            </mat-accordion>
+
+
             <!-- <p class="my-2">
               <strong>{{'*Taxes and shipping included'|translate}}</strong>
             </p> -->
             <div fxLayout="row" class="w-100" fxLayoutAlign="center stretch">
-              <button
-                [ngClass]="{
-                  paypalBtn: form.valid && buyProducts.length,
-                  paypalBtnInvalid: form.invalid || !buyProducts.length
-                }"
-                mat-raised-button
-                [disabled]="form.invalid || !buyProducts.length"
-                (click)="onPayOrder()"
-              >
-                <span style="text-align: center">
-                  {{ 'PAGAR' | translate }}
-                </span>
-              </button>
+              <!--              <button [ngClass]="{-->
+              <!--                  paypalBtn: form.valid && buyProducts.length,-->
+              <!--                  paypalBtnInvalid: form.invalid || !buyProducts.length-->
+              <!--                }" mat-raised-button-->
+              <!--                      [disabled]="form.invalid || !buyProducts.length"-->
+              <!--                      (click)="onPayOrder()">-->
+              <!--                <span style="text-align: center">-->
+              <!--                  {{ 'PAGAR' | translate }}-->
+              <!--                </span>-->
+              <!--              </button>-->
               <a style="display: none" id="pasarelaLink"></a>
             </div>
           </div>
         </div>
-        <div *ngIf="loadingPayment" style="width: 100%; min-height: 500px; height: 100%" class="loader"></div>
+
+        <div *ngIf="!loadingPayment" fxFlex="grow" fxLayout="row" fxLayoutAlign="space-between start"
+             class="actions-buttons">
+          <button mat-stroked-button (click)="onGoToInfoDataToPay()">{{'Atrás' | translate}}</button>
+          <button mat-raised-button color="primary" (click)="onPayOrder()"
+                  [disabled]="form.invalid || !buyProducts.length">{{'Pagar' | translate}}</button>
+        </div>
+
+        <div *ngIf="loadingPayment" style="width: 100%; min-height: 500px; height: 100%" class="loader">
+        </div>
       </div>
+
     </div>
   </div>
 </div>

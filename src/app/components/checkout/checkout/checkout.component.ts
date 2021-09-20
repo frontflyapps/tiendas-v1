@@ -77,6 +77,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   public cartItemIds: any[] = undefined;
   public theBusiness: IBusiness;
 
+  public showInfoDataToPay = true;
+  public showPayment = false;
+
   inLoading = false;
   selectedCities: any[] = [];
   filteredCities: any[] = [];
@@ -613,6 +616,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   onPayOrder() {
+    this.scrollTopDocument();
     this.loadingPayment = true;
     const data = { ...this.form.value };
     data.phone = '53' + data.phone;
@@ -868,5 +872,26 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         this.loadingPayment = false;
         this.showToastr.showError(data.message, 'Error', 5000);
       });
+  }
+
+  /**
+   * ========== ON GO TO PAY =================
+   */
+
+  onGoToInfoDataToPay() {
+    this.showInfoDataToPay = true;
+    this.showPayment = false;
+    this.scrollTopDocument();
+  }
+
+  onGoToPayment() {
+    this.showInfoDataToPay = false;
+    this.showPayment = true;
+    this.scrollTopDocument();
+  }
+
+  scrollTopDocument() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
   }
 }

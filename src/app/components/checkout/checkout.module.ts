@@ -34,6 +34,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { DetailsShippingComponent } from './details-shipping/details-shipping.component';
 import { MatTableModule } from '@angular/material/table';
 import { DialogTranfermovilQrComponent } from './dialog-tranfermovil-qr/dialog-tranfermovil-qr.component';
+import { MatExpansionModule } from '@angular/material/expansion';
 @NgModule({
   imports: [
     CommonModule,
@@ -61,6 +62,7 @@ import { DialogTranfermovilQrComponent } from './dialog-tranfermovil-qr/dialog-t
     MatMenuModule,
     MatDialogModule,
     ConfirmationDialogFrontModule,
+    MatExpansionModule,
   ],
   declarations: [
     CheckoutComponent,
