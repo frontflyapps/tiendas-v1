@@ -82,7 +82,44 @@ export class MyAccountComponent implements OnInit {
     this.createChangePassForm();
     this.createNewPassForm();
     this.createActivateForm();
+
+    this.getParamsAndInspect();
   }
+
+  /**
+   * ====================================================
+   * Check Params and redirect to view on my-account
+   */
+  getParamsAndInspect() {
+    const params = this.route.queryParams;
+    this.paramsVerifyPositionModal(params);
+    this.route.queryParams.subscribe((data) => {
+      this.paramsVerifyPositionModal(data);
+    });
+  }
+
+  paramsVerifyPositionModal(data) {
+    const viewPositionOfModal = {
+      registration: () => this.onShowRegistration(),
+      password: () => this.onChangePass(),
+      validate: () => this.onShowActivate(),
+    };
+
+    if (data?.modal) {
+      try {
+        viewPositionOfModal[data?.modal]();
+      } catch (e) {
+        this.router.navigate(['/my-account']).then(() => {
+          console.warn('Modal with Error, data.modal:', data?.modal);
+        });
+      }
+    }
+  }
+
+  /**
+   * Check Params and redirect to view on my-account
+   * ====================================================
+   */
 
   showPass() {
     if (this.passType === 'password') {
