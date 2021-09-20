@@ -3,10 +3,26 @@
 /***************************************
 *  Checkout page styles
 ****************************************/
+
+:host {
+  .payment-method-expansion-panel {
+    ::ng-deep .mat-expansion-panel-body {
+      padding: 0 2px 16px;
+    }
+  }
+}
+
 .container-checkout {
   max-width: 1300px;
   margin: 0 auto;
   padding: 0 15px;
+
+  .actions-buttons {
+    button {
+      width: 150px;
+      height: 40px;
+    }
+  }
 }
 
 #CI {
@@ -30,13 +46,38 @@
 }
 
 #payment-method {
+  .radio-button-national,
+  .radio-button-international {
+    width: 60px !important;
+    height: 60px !important;
+    position: relative;
+
+    ::ng-deep .mat-radio-label {
+      border: 1px solid #e3e3e3;
+      border-radius: 8px;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    ::ng-deep .mat-radio-label-content {
+      padding: 0 !important;
+      margin: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+    }
+  }
+
   ::ng-deep .mat-radio-container {
     display: none;
   }
 
   .pay-method-container {
-    padding: 8px 14px;
-    border-radius: 6px;
+    //padding: 8px 14px;
+    //border-radius: 6px;
+    padding: 4px;
+    width: 100%;
+    height: 100%;
   }
 
   .pay-method-name {
@@ -45,17 +86,19 @@
   }
 
   .pay-method-icon {
-    height: auto;
-    width: auto;
+    height: 100%;
+    width: 100%;
     -o-object-fit: cover;
-    object-fit: cover;
-    white-space: normal;
-    max-width: 64px;
-    max-height: 40px;
+    object-fit: contain;
+    object-position: center;
+    /* white-space: normal; */
+    /* max-width: 64px; */
+    /* max-height: 40px;*/
   }
 
   .payment-active {
     background-color: #f5f1f9;
+    border: 2px solid $theme-main;
   }
 }
 
@@ -65,6 +108,13 @@ li {
 
 .checkout {
   .billing-details {
+    min-width: 600px !important;
+    margin: 0 auto;
+
+    @media (max-width: 600px) {
+      min-width: 320px !important;
+    }
+
     .mat-form-field {
       width: 100%;
     }
@@ -76,25 +126,30 @@ li {
 
   .mainOrder-wrapper {
     position: relative;
+    min-width: 600px !important;
+    margin: 0 auto;
+
+    @media (max-width: 600px) {
+      min-width: 320px !important;
+    }
 
     .main-order {
       //border: 1px solid $grey8;
       //border-radius: 4px;
-      box-shadow: 1px 2px 7px rgba(0, 0, 0, 0.12);
-      position: sticky;
+      //box-shadow: 1px 2px 7px rgba(0, 0, 0, 0.12);
+      //position: sticky;
+      position: relative;
       border-radius: 8px;
-      padding: 30px;
+      padding: 24px;
 
-      &:hover {
-        box-shadow: 1px 2px 20px rgba(0, 0, 0, 0.18);
-        //border: 1.25px solid rgba(0, 0, 0, 0.75);
-        transition: box-shadow;
-      }
+      //&:hover {
+      //  box-shadow: 1px 2px 20px rgba(0, 0, 0, 0.18);
+      //border: 1.25px solid rgba(0, 0, 0, 0.75);
+      //transition: box-shadow;
+      //}
 
-      padding: 30px;
-
-      @media (max-width: 500px) {
-        padding: 12px;
+      @media (max-width: 600px) {
+        padding: 4px;
       }
 
       .order-box {
@@ -239,9 +294,9 @@ li {
         position: relative;
         border-bottom: 1px solid $grey6;
         margin-bottom: 30px;
-        padding-bottom: 20px;
+        //padding-bottom: 20px;
         @media (max-width: 800px) {
-          padding-left: 0px;
+          padding-left: 0;
         }
 
         li {
