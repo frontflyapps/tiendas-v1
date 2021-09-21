@@ -90,7 +90,7 @@
                            [max]="item.Product.maxSale"
                            class="inputBtn"
                            type="text"
-                           (keypress)="addAmountSale($event, item?.Product, item)"
+                           (keyup)="checkMinMaxValues($event, item?.Product);addAmountSale($event, item)"
                            [(ngModel)]="item.quantity" />
 
                     <button [disabled]="item?.Product?.maxSale <= item?.quantity"
@@ -105,7 +105,7 @@
                 <div *ngIf="item.Product.type != 'physical'" fxLayout="row" fxLayoutAlign="center center">
                   <input type="text"
                          name="quantity"
-                         [(ngModel)]="item.quantity"
+                         [(ngModel)]="item.quantityCurrent"
                          disabled
                          class="form-control input-number" />
                 </div>

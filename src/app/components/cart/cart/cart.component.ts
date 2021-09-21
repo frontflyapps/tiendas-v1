@@ -147,28 +147,13 @@ export class CartComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Check if can write the number about the amount of product
+   *
    * @param event object with the number typed on keyCode prop
    * @param product product to affect
-   * @param currentItemQuantityOnCart current Item quantity of product on Cart
-   *
-   * @return return true or false
    */
-  addAmountSale(event, product, currentItemQuantityOnCart): boolean {
+  checkMinMaxValues(event, product): boolean {
     const currentAmountOnInput = +event.target.value;
-    const keyTyped = String.fromCharCode(event.keyCode);
-    const finalNumber = +(currentAmountOnInput + '' + keyTyped);
-    const dataToSend = finalNumber - currentItemQuantityOnCart;
-
-    console.log('==========================');
-    console.log('product', product);
-    console.log('currentItemQuantityOnCart', currentItemQuantityOnCart);
-    console.log('currentAmountOnInput', currentAmountOnInput);
-    console.log('keyTyped', keyTyped);
-    console.log('finalNumber', finalNumber);
-    console.log('dataToSend', dataToSend);
-
-    if ((finalNumber < product?.minSale) || (finalNumber > product?.maxSale)) {
+    if ((currentAmountOnInput < product?.minSale) || (currentAmountOnInput > product?.maxSale)) {
       this.showToastr.showInfo(
         `Este producto tiene un mínimo de cantidad a vender de ${product?.minSale} y un máximo de ${product?.maxSale}`,
         'Atención',
@@ -176,12 +161,35 @@ export class CartComponent implements OnInit, OnDestroy {
       );
       return false;
     } else {
-      if ((finalNumber >= product?.minSale) && (finalNumber <= product?.maxSale)) {
-        this.increment(product, dataToSend);
-        return true;
-      }
+      return true;
     }
-    return false;
+  }
+
+  /**
+   * Check if can write the number about the amount of product
+   * @param event object with the number typed on keyCode prop
+   * @param itemCart itemCart to take the affect
+   *
+   */
+  addAmountSale(event, itemCart) {
+    const amountTyped = +event.target.value;
+    const dataToSend = 2;
+
+    console.log('==========================');
+    console.log('itemCart', itemCart);
+    console.log('amountTyped', amountTyped);
+
+    // if ((finalNumber < product?.minSale) || (finalNumber > product?.maxSale)) {
+    //   this.showToastr.showInfo(
+    //     `Este producto tiene un mínimo de cantidad a vender de ${product?.minSale} y un máximo de ${product?.maxSale}`,
+    //     'Atención',
+    //     5000,
+    //   );
+    //   return false;
+    // } else {
+    //   return true;
+    // }
+    // return false;
 
     // if ((finalNumber >= product?.minSale) && (finalNumber <= product?.maxSale)) {
     //   this.increment(product, dataToSend);
