@@ -18,7 +18,7 @@
     </div>
 
     <!--    ===========================================================-->
-    <!-- OCULTO EN MOVIL -->
+    <!-- MODO DESKTOP -->
     <!--    ===========================================================-->
     <section style="position: relative" *ngIf="carts.length" fxHide.lt-md>
       <div *ngIf="inLoading" class="loading-shade">
@@ -77,44 +77,40 @@
             </div>
             <div class="mat-cell text-muted">
               <div fxLayout="row" fxLayoutAlign="center center" class="text-muted">
-                <div *ngIf="item.Product.type == 'physical'" fxLayout="row" fxLayoutAlign="center start">
+
+                <div *ngIf="item?.Product?.type == 'physical'" fxLayout="row" fxLayoutAlign="center start">
                   <div class="addQuantity">
-                    <button
-                      [disabled]="item.Product.minSale >= item.quantity"
-                      class="leftBtn"
-                      matTooltip="Remove"
-                      (click)="decrement(item.Product)"
-                    >
+                    <button [disabled]="item?.Product?.minSale >= item?.quantity"
+                            class="leftBtn"
+                            matTooltip="Remove"
+                            (click)="decrement(item?.Product)">
                       <mat-icon>keyboard_arrow_left</mat-icon>
                     </button>
-                    <input
-                      [min]="item.Product.minSale"
-                      [max]="item.Product.maxSale"
-                      class="inputBtn"
-                      type="text"
-                      [(ngModel)]="item.quantity"
-                      disabled
-                    />
+                    <input [min]="item.Product.minSale"
+                           [max]="item.Product.maxSale"
+                           class="inputBtn"
+                           type="text"
+                           disabled
+                           (keypress)="checkMixMaxSale($event, item?.Product, item.quantity)"
+                           [(ngModel)]="item.quantity" />
 
-                    <button
-                      [disabled]="item.Product.maxSale <= item.quantity"
-                      class="rightBtn"
-                      matTooltip="Add"
-                      (click)="increment(item.Product)"
-                    >
+                    <button [disabled]="item?.Product?.maxSale <= item?.quantity"
+                            class="rightBtn"
+                            matTooltip="Add"
+                            (click)="increment(item?.Product)">
                       <mat-icon>keyboard_arrow_right</mat-icon>
                     </button>
                   </div>
                 </div>
+
                 <div *ngIf="item.Product.type != 'physical'" fxLayout="row" fxLayoutAlign="center center">
-                  <input
-                    type="text"
-                    name="quantity"
-                    [(ngModel)]="item.quantity"
-                    disabled
-                    class="form-control input-number"
-                  />
+                  <input type="text"
+                         name="quantity"
+                         [(ngModel)]="item.quantity"
+                         disabled
+                         class="form-control input-number" />
                 </div>
+
                 <!-- <div *ngIf="type!='wish'">
                          <button mat-icon-button matTooltip="Add to wishlist" (click)="addToWishList(product)"><mat-icon>favorite</mat-icon></button>
                          <button mat-icon-button matTooltip="Add to cart" *ngIf="product?.availibilityCount > 0" (click)="addToCart(product)"><mat-icon>shopping_cart</mat-icon></button>
@@ -179,7 +175,7 @@
     </section>
 
     <!--    ===========================================================-->
-    <!-- OCULTO EN DESKTOP -->
+    <!-- MODO MOVIL -->
     <!--    ===========================================================-->
     <section *ngIf="carts.length" fxHide fxShow.lt-md>
       <div *ngFor="let cart of carts" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="gappx">
