@@ -150,15 +150,23 @@ export class CartComponent implements OnInit, OnDestroy {
    * Check if can write the number about the amount of product
    * @param event object with the number typed on keyCode prop
    * @param product product to affect
-   * @param varBindOnFront Ref to var bind on front
+   * @param currentItemQuantityOnCart current Item quantity of product on Cart
    *
    * @return return true or false
    */
-  checkMixMaxSale(event, product, varBindOnFront): boolean {
-    console.log(event);
-    const currentAmount = +event.target.value;
+  addAmountSale(event, product, currentItemQuantityOnCart): boolean {
+    const currentAmountOnInput = +event.target.value;
     const keyTyped = String.fromCharCode(event.keyCode);
-    const finalNumber = +(currentAmount + '' + keyTyped);
+    const finalNumber = +(currentAmountOnInput + '' + keyTyped);
+    const dataToSend = finalNumber - currentItemQuantityOnCart;
+
+    console.log('==========================');
+    console.log('product', product);
+    console.log('currentItemQuantityOnCart', currentItemQuantityOnCart);
+    console.log('currentAmountOnInput', currentAmountOnInput);
+    console.log('keyTyped', keyTyped);
+    console.log('finalNumber', finalNumber);
+    console.log('dataToSend', dataToSend);
 
     if ((finalNumber < product?.minSale) || (finalNumber > product?.maxSale)) {
       this.showToastr.showInfo(
@@ -167,12 +175,18 @@ export class CartComponent implements OnInit, OnDestroy {
         5000,
       );
       return false;
-    }
-    if ((finalNumber >= product?.minSale) && (finalNumber <= product?.maxSale)) {
-      this.increment(product, finalNumber);
-      varBindOnFront = finalNumber;
-      return true;
+    } else {
+      if ((finalNumber >= product?.minSale) && (finalNumber <= product?.maxSale)) {
+        this.increment(product, dataToSend);
+        return true;
+      }
     }
     return false;
+
+    // if ((finalNumber >= product?.minSale) && (finalNumber <= product?.maxSale)) {
+    //   this.increment(product, dataToSend);
+    //   return true;
+    // }
+    // return false;
   }
 }

@@ -90,8 +90,7 @@
                            [max]="item.Product.maxSale"
                            class="inputBtn"
                            type="text"
-                           disabled
-                           (keypress)="checkMixMaxSale($event, item?.Product, item.quantity)"
+                           (keypress)="addAmountSale($event, item?.Product, item)"
                            [(ngModel)]="item.quantity" />
 
                     <button [disabled]="item?.Product?.maxSale <= item?.quantity"
