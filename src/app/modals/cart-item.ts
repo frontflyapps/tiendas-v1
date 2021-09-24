@@ -32,6 +32,7 @@ export interface CartItem {
   StockId?: number;
   Stock?: Stock;
   quantity?: number;
+  quantityCurrent?: number;
   id?: number;
   createdAt?: any;
   updatedAt?: any;
