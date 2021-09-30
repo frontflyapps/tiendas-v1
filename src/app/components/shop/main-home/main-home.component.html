@@ -166,11 +166,12 @@
 
   <!-- ------------------------------------------------------------ -->
   <!-- ---------------------- APK Promo --------------------------- -->
-  <section id="apk-promo" style="width: 100%">
+  <section id="apk-promo" style="width: 100%; position: relative">
+    <img *ngIf="!applyStyle" src="assets/images/mibulevar/apk-promo/desktop.jpg" alt="APK Promo"
+         class="img-apk-promo">
+    <img *ngIf="applyStyle" src="assets/images/mibulevar/apk-promo/movil.jpg" alt="APK Promo" class="img-apk-promo">
+
     <div class="container">
-      <img *ngIf="!applyStyle" src="assets/images/mibulevar/apk-promo/desktop.jpg" alt="APK Promo"
-           class="img-apk-promo">
-      <img *ngIf="applyStyle" src="assets/images/mibulevar/apk-promo/movil.jpg" alt="APK Promo" class="img-apk-promo">
       <div class="wrapper">
         <div class="super-index mb-3">{{'Ahorra pasos' | translate}}</div>
         <div class="big-text mb-4">
