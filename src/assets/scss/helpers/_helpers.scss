@@ -1,7 +1,32 @@
-$spaceamounts: (2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 36, 38, 40, 42, 48, 50, 52, 54, 58, 60); // Adjust this to include the pixel amounts you need.
+$spaceamounts: (
+  2,
+  4,
+  6,
+  8,
+  10,
+  12,
+  14,
+  16,
+  18,
+  20,
+  22,
+  24,
+  26,
+  28,
+  30,
+  32,
+  36,
+  38,
+  40,
+  42,
+  48,
+  50,
+  52,
+  54,
+  58,
+  60
+); // Adjust this to include the pixel amounts you need.
 $sides: (top, bottom, left, right); // Leave this variable alone
-
-$footer-color: #424242;
 
 @each $space in $spaceamounts {
   @each $side in $sides {
@@ -15,7 +40,7 @@ $footer-color: #424242;
   }
 }
 
-$intervals:(4, 8, 16, 32, 48);
+$intervals: (4, 8, 16, 32, 48);
 
 @for $i from 1 through length($intervals) {
   $c: nth($intervals, $i);
@@ -44,7 +69,6 @@ $intervals:(4, 8, 16, 32, 48);
     padding-bottom: #{$c}px !important;
   }
 
-
   .m-#{$i} {
     margin: #{$c}px !important;
   }
@@ -58,7 +82,6 @@ $intervals:(4, 8, 16, 32, 48);
     margin-top: #{$c}px !important;
     margin-bottom: #{$c}px !important;
   }
-
 }
 
 .ml-auto {
@@ -147,8 +170,29 @@ $intervals:(4, 8, 16, 32, 48);
   padding-bottom: 0 !important;
 }
 
-
-$intervalWith: (0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100); // Adjust this to include the pixel amounts you need.
+$intervalWith: (
+  0,
+  5,
+  10,
+  15,
+  20,
+  25,
+  30,
+  35,
+  40,
+  45,
+  50,
+  55,
+  60,
+  65,
+  70,
+  75,
+  80,
+  85,
+  90,
+  95,
+  100
+); // Adjust this to include the pixel amounts you need.
 
 @each $with in $intervalWith {
   .w-#{$with} {
@@ -158,5 +202,4 @@ $intervalWith: (0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80
   .h-#{$with} {
     height: #{$with}'%' !important;
   }
-
 }

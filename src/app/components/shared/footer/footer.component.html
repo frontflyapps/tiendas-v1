@@ -1,5 +1,5 @@
 <footer class="pt-3">
-  <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutAlign.xs="start center">
+  <div fxLayout="row wrap" fxLayout="column" fxLayoutAlign="center center" fxLayoutAlign.xs="start center">
     <!--<a
       class="item-selector mx-3 my-2"
       fxLayoutAlign="start center"
@@ -17,75 +17,106 @@
         </button>
       </span>
     </mat-menu>-->
-    <a class="item-selector mx-3 my-2"
-       fxLayoutAlign="start center"
-       mat-button
-       [matMenuTriggerFor]="langMenu"
-       #langMenuTrigger="matMenuTrigger">
+    <div class="col" fxLayout="row">
+      <div class="col-1" fxLayout="column" fxLayoutAlign=" start">
+        <a [routerLink]="['']" mat-button class="mat-button">
+          <span>{{ 'Inicio' | translate }}</span>
+        </a>
+        <a *ngIf="loggedInUser" mat-button class="mat-button" (click)="onShowProfile()">
+          <span>{{ 'Tu cuenta' | translate }}</span>
+        </a>
+        <a [routerLink]="['term-conditions']" fxLayoutAlign="start center" mat-button>
+          <span>{{ 'Términos y condiciones' | translate }}</span>
+        </a>
+      </div>
+      <div class="col-2" fxLayout="column" fxLayoutAlign=" start">
+        <a [routerLink]="['/faq']" mat-button class="mat-button">
+          <span>{{ 'Ayuda' | translate }}</span>
+        </a>
+        <a *ngIf="loggedInUser" [routerLink]="['my-orders']" mat-button class="mat-button">
+          <span>{{ 'Tus pedidos' | translate }}</span>
+        </a>
+        <a [routerLink]="['privacy-policy']" fxLayoutAlign="start center" mat-button>
+          <span>{{ 'Políticas de privacidad' | translate }}</span>
+        </a>
+      </div>
+    </div>
+    <a
+      class="item-selector mx-3 my-2"
+      fxLayoutAlign="start center"
+      mat-button
+      [matMenuTriggerFor]="langMenu"
+      #langMenuTrigger="matMenuTrigger"
+    >
       <img [src]="flag?.image" width="18" />
       <mat-icon>arrow_drop_down</mat-icon>
       <span>{{ flag?.name }}</span>
     </a>
     <mat-menu #langMenu="matMenu" [overlapTrigger]="false" xPosition="before" class="app-dropdown">
-        <span>
-          <button mat-menu-item *ngFor="let flag of flags" (click)="changeLang(flag)">
-            <img [src]="flag.image" width="18" /> {{ flag.name }}
-          </button>
-        </span>
+      <span>
+        <button mat-menu-item *ngFor="let flag of flags" (click)="changeLang(flag)">
+          <img [src]="flag.image" width="18" /> {{ flag.name }}
+        </button>
+      </span>
     </mat-menu>
-
-    <a [routerLink]="['term-conditions']"
-       routerLinkActive=" router-link-active"
-       class="item-selector mx-3 my-2"
-       fxLayoutAlign="start center"
-       mat-button>
-      <span>{{ 'Términos y condiciones' | translate }}</span>
-    </a>
-
-    <a [routerLink]="['privacy-policy']"
-       routerLinkActive=" router-link-active"
-       class="item-selector mx-3 my-2"
-       fxLayoutAlign="start center"
-       mat-button>
-      <span>{{ 'Políticas de privacidad' | translate }}</span>
-    </a>
+    <div style="padding-bottom: 16px"></div>
   </div>
 
-  <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="1rem">
-    <img class="mt-4" src="../../../../assets/logos/marlin/logoWhite.svg" alt="footer logo" ngClass.lt-sm="img-footer">
+  <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="1rem" style="background-color: #1976d2">
+    <img
+      class="mt-4"
+      src="../../../../assets/logos/marlin/logoWhite.svg"
+      alt="footer logo"
+      ngClass.lt-sm="img-footer"
+    />
     <ul class="network-icons" fxLayout="row">
       <li fxLayoutAlign="center center">
-        <a href="https://www.facebook.com/MarinasMarlin" target="_blank" class="icon-redes"
-           fxLayoutAlign="center center">
+        <a
+          href="https://www.facebook.com/MarinasMarlin"
+          target="_blank"
+          class="icon-redes"
+          fxLayoutAlign="center center"
+        >
           <i class="fab fa-facebook-f" style="font-size: 18px"></i>
         </a>
       </li>
       <li fxLayoutAlign="center center">
-        <a href="https://twitter.com/MarinasMarlin" target="_blank" class="icon-redes"
-           fxLayoutAlign="center center">
+        <a href="https://twitter.com/MarinasMarlin" target="_blank" class="icon-redes" fxLayoutAlign="center center">
           <i class="fab fa-twitter" style="font-size: 18px"></i>
         </a>
       </li>
       <li fxLayoutAlign="center center">
-        <a href="https://cu.linkedin.com/company/nauticamarlin" target="_blank" class="icon-redes"
-           fxLayoutAlign="center center">
+        <a
+          href="https://cu.linkedin.com/company/nauticamarlin"
+          target="_blank"
+          class="icon-redes"
+          fxLayoutAlign="center center"
+        >
           <i class="fab fa-linkedin-in" style="font-size: 18px"></i>
         </a>
       </li>
       <li fxLayoutAlign="center center">
-        <a href="https://www.youtube.com/channel/UC-1qc8T9YJokRxWAAADLoeA" target="_blank" class="icon-redes"
-           fxLayoutAlign="center center">
+        <a
+          href="https://www.youtube.com/channel/UC-1qc8T9YJokRxWAAADLoeA"
+          target="_blank"
+          class="icon-redes"
+          fxLayoutAlign="center center"
+        >
           <i class="fab fa-youtube" style="font-size: 18px"></i>
         </a>
       </li>
       <li fxLayoutAlign="center center">
-        <a href="https://www.instagram.com/marlin_marinas/" target="_blank" class="icon-redes"
-           fxLayoutAlign="center center">
+        <a
+          href="https://www.instagram.com/marlin_marinas/"
+          target="_blank"
+          class="icon-redes"
+          fxLayoutAlign="center center"
+        >
           <i class="fab fa-instagram" style="font-size: 18px"></i>
         </a>
       </li>
     </ul>
-    <p class="mb-1">Copyright©  {{ year }}. {{'Todos los derechos reservados' | translate}}</p>
-    <span class="mat-body-2 mb-3">{{ 'v' | translate }}{{version}}</span>
+    <p class="mb-1">Copyright© {{ year }}. {{ 'Todos los derechos reservados' | translate }}</p>
+    <span class="mat-body-2 mb-3">{{ 'v' | translate }}{{ version }}</span>
   </div>
 </footer>

@@ -1,6 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from '../../../../environments/environment';
+import { EditProfileComponent } from '../../main/edit-profile/edit-profile.component';
+import { MatDialogRef, MatDialog } from '@angular/material/dialog';
+import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-in-user.service';
+import { IUser } from '../../../core/classes/user.class';
 
 @Component({
   selector: 'app-footer',
@@ -12,6 +16,8 @@ export class FooterComponent implements OnInit {
   language: string;
   currency: string;
   public version = environment.versions.app;
+
+  loggedInUser: IUser;
 
   flag: any;
   flags = [
@@ -33,8 +39,11 @@ export class FooterComponent implements OnInit {
 
   constructor(
     // private loggedInUserService: LoggedInUserService,
+    public dialog: MatDialog,
+    public loggedInUserService: LoggedInUserService,
     public translate: TranslateService,
   ) {
+    this.loggedInUser = this.loggedInUserService.getLoggedInUser();
     let tempFlag = JSON.parse(localStorage.getItem('language'));
     this.flag = tempFlag ? tempFlag : this.flags[0];
   }
@@ -56,5 +65,19 @@ export class FooterComponent implements OnInit {
     this.translate.use(this.language);
     localStorage.setItem('language', this.language);
     // this.loggedInUserService.languageChange(this.language);
+  }
+  onShowProfile(): void {
+    let dialogRef: MatDialogRef<EditProfileComponent, any>;
+    dialogRef = this.dialog.open(EditProfileComponent, {
+      panelClass: 'app-edit-profile',
+      maxWidth: '100vw',
+      maxHeight: '100vh',
+      data: {},
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+      }
+    });
   }
 }
