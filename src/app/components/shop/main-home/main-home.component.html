@@ -20,6 +20,13 @@
                               [setConfiguration]="{ xs: 1, sm: 1, md: 1, lg: 1 }">
   </app-skeleton-loading-cards>
 </div>
+<!--<div class="container" style="height: 300px;" *ngIf="showStatic" ngStyle.lt-md="height: 175px;">-->
+<!--  <div class="swiper-container h-100">-->
+<!--    <div class="swiper-wrapper h-100">-->
+<!--      <div class="swiper-slide h-100 loader"></div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
 
 <div class="home-1-wrap">
   <div *ngIf="allBicons.length > 0 && !loadingAllProduct" fxHide.xs class="info-bar-four-wrapper">
@@ -51,16 +58,16 @@
     <h3 class="mat-title py-4" style="text-align: center">{{ 'No hay ningún producto disponible' | translate }}</h3>
   </ng-container>
 
-  <!-- ---------------------- Featured Items --------------------------- -->
-  <section *ngIf="featuredProducts.length > 0">
+  <!-- ---------------------- Bets Seller Items --------------------------- -->
+  <section *ngIf="bestSellersProducts.length">
     <div class="container">
       <div class="products sec-padding">
         <div class="products-four">
-          <h3 style="color: initial">{{'Productos destacados'|translate}}</h3>
-          <app-product-carousel *ngIf="!loadingFeatured" [products]="featuredProducts" [btnColor]="'accent'">
+          <h3 style="color: initial">{{'Productos más vendidos' | translate }}</h3>
+          <app-product-carousel *ngIf="!loadingBestSellers" [products]="bestSellersProducts" [btnColor]="'accent'">
           </app-product-carousel>
-          <div *ngIf="loadingFeatured" class="my-3">
-            <app-skeleton-loading-cards *ngIf="loadingFeatured" [setConfiguration]="{'xs':1,'sm':2,'md':3,'lg':4}">
+          <div *ngIf="loadingBestSellers" class="my-3">
+            <app-skeleton-loading-cards *ngIf="loadingBestSellers" [setConfiguration]="{ xs: 1, sm: 2, md: 3, lg: 4 }">
             </app-skeleton-loading-cards>
           </div>
         </div>
@@ -115,16 +122,20 @@
   <!-- -------------------------------------------------------------------------------->
 
 
-  <!-- ---------------------- Bets Seller Items --------------------------- -->
-  <section *ngIf="bestSellersProducts.length">
+<!--  -->
+<!--  -->
+<!--  -->
+<!--  -->
+  <!-- ---------------------- Featured Items --------------------------- -->
+  <section *ngIf="featuredProducts.length > 0">
     <div class="container">
-      <div class="products sec-padding pt-0">
+      <div class="products sec-padding">
         <div class="products-four">
-          <h3>{{'Productos más vendidos' | translate }}</h3>
-          <app-product-carousel *ngIf="!loadingBestSellers" [products]="bestSellersProducts" [btnColor]="'accent'">
+          <h3 style="color: initial">{{'Productos destacados'|translate}}</h3>
+          <app-product-carousel *ngIf="!loadingFeatured" [products]="featuredProducts" [btnColor]="'accent'">
           </app-product-carousel>
-          <div *ngIf="loadingBestSellers" class="my-3">
-            <app-skeleton-loading-cards *ngIf="loadingBestSellers" [setConfiguration]="{ xs: 1, sm: 2, md: 3, lg: 4 }">
+          <div *ngIf="loadingFeatured" class="my-3">
+            <app-skeleton-loading-cards *ngIf="loadingFeatured" [setConfiguration]="{'xs':1,'sm':2,'md':3,'lg':4}">
             </app-skeleton-loading-cards>
           </div>
         </div>
@@ -155,6 +166,7 @@
       <app-product-vertical></app-product-vertical>
     </div>
   </section>
+
   <!-- ------------------------------------------------------------ -->
   <!-- ---------------------- Big promo --------------------------- -->
   <section *ngIf="allArticles.length">
