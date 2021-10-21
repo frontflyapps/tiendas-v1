@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject, Subscriber } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Product } from './../../../modals/product.model';
+import { Product } from '../../../modals/product.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { map } from 'rxjs/operators';
 import { IPagination } from '../../../core/classes/pagination.class';
-import { environment } from './../../../../environments/environment';
+import { environment } from '../../../../environments/environment';
 
 // Get product from Localstorage
 let products = JSON.parse(localStorage.getItem('compareItem')) || [];
@@ -15,6 +14,7 @@ let products = JSON.parse(localStorage.getItem('compareItem')) || [];
 })
 export class ProductService {
   ////////// Urls /////////
+  urlFrontProductsData = environment.apiUrl + 'front-data-product';
   urlProduct = environment.apiUrl + 'product';
   urlProductId = environment.apiUrl + 'product/:id';
   urlProductidImage = environment.apiUrl + 'product/:id/image';
@@ -124,7 +124,7 @@ export class ProductService {
     return this.httpClient.post<any>(`${this.urlProduct}/${id}/profile`, data);
   }
 
-  /////////////////RUTAS DE ADMINISTRADOR///////////////////////
+  // ///////////////RUTAS DE ADMINISTRADOR///////////////////////
   public getAllAdminProducts(query?: IPagination, params?: any): Observable<any> {
     let httpParams = new HttpParams();
     if (query) {
@@ -176,9 +176,11 @@ export class ProductService {
   public createImageProduct(data): Observable<any> {
     return this.httpClient.post<any>(this.urlProductidImage.replace(':id', data.fkId), data);
   }
+
   public getImageProduct(data): Observable<any> {
     return this.httpClient.get<any>(this.urlProductidImage.replace(':id', data.fkId), data);
   }
+
   public editImageProduct(data): Promise<any> {
     return this.httpClient
       .patch<any>(this.urlProductidImageId.replace(':id', data.fkId).replace(':imageId', data.id), data)
@@ -235,6 +237,24 @@ export class ProductService {
 
   public productPromotion(data): Observable<any> {
     return this.httpClient.post<any>(this.urlPromotion.replace(':id', data.id), {});
+  }
+
+  public getFrontProductsData(query?: IPagination): Observable<any> {
+    let httpParams = new HttpParams();
+    if (query) {
+      httpParams = httpParams.append('limit', query.limit.toString());
+      httpParams = httpParams.append('offset', query.offset.toString());
+      if (query.order) {
+        httpParams = httpParams.append('order', query.order);
+      }
+    } else {
+      httpParams = httpParams.set('limit', '0');
+      httpParams = httpParams.set('offset', '0');
+    }
+
+    httpParams = httpParams.set('filter[$and][rating][$gte]', '3.0');
+    
+    return this.httpClient.get<any>(this.urlFrontProductsData, { params: httpParams });
   }
 
   /////////////////////////////////////////////////////////////////
@@ -306,7 +326,9 @@ export class ProductService {
         duration: 3000,
       });
     } else {
-      if (products.length < 4) products.push(product);
+      if (products.length < 4) {
+        products.push(product);
+      }
       message = 'El producto ' + product.name['es'] + ' ha sido agregado a la lista de comparación';
       status = 'success';
       this.snackBar.open(message, '×', { panelClass: [status], verticalPosition: 'top', duration: 3000 });
