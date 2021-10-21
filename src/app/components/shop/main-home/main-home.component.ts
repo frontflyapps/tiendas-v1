@@ -7,6 +7,7 @@ import { UtilsService } from '../../../core/services/utils/utils.service';
 import { takeUntil } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { MetaService } from 'src/app/core/services/meta.service';
+import { IProductCard } from '../../../core/classes/product-card.class';
 
 @Component({
   selector: 'app-main-home',
@@ -34,11 +35,11 @@ export class MainHomeComponent implements OnInit, OnDestroy {
 
   ////////////////////////////////////////////////////////////////////////////////
 
-  popularProducts: any[] = [];
-  featuredProducts: any[] = [];
+  popularProducts: IProductCard[] = [];
+  featuredProducts: IProductCard[] = [];
   servicesProducts: any[] = [];
-  bestSellersProducts: any[] = [];
-  allProducts: any[] = [];
+  bestSellersProducts: IProductCard[] = [];
+  allProducts: IProductCard[] = [];
   banners: any[] = [];
   loadingPopular = false;
   loadingFeatured = false;
