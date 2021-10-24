@@ -12,6 +12,8 @@ export const environment = {
   timeToResetSession: 14400000, // Time to reset the session
   timeToResearchProductData: 600000, // Time to research products (ms)
   timeToResearchLandingPageData: 300000, // Time to research products (ms)
+  timeToResearchMenuData: 900000, // Time to research products (ms)
+  timeToResearchCategoriesData: 1200000, // Time to research categories (ms)
 
   url: 'https://www.mibulevar.com',
   urlAboutUs: 'https://www.mibulevar.com',

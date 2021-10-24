@@ -15,6 +15,8 @@ export class CategoriesService {
   urlBrandsByCategories = environment.apiUrl + 'brand-by-category';
   httpOptions = {};
 
+  public allCategories = [];
+
   constructor(private httpClient: HttpClient) {
   }
 

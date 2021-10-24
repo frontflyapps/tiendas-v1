@@ -1,11 +1,13 @@
 import { Component, OnInit, Output, EventEmitter, OnDestroy, Input } from '@angular/core';
-import { environment } from './../../../../../environments/environment';
+import { environment } from '../../../../../environments/environment';
 import { Subject } from 'rxjs';
 import { SelectionModel } from '@angular/cdk/collections';
-import { UtilsService } from './../../../../core/services/utils/utils.service';
-import { LoggedInUserService } from './../../../../core/services/loggedInUser/logged-in-user.service';
+import { UtilsService } from '../../../../core/services/utils/utils.service';
+import { LoggedInUserService } from '../../../../core/services/loggedInUser/logged-in-user.service';
 import { takeUntil } from 'rxjs/operators';
 import { CategoriesService } from 'src/app/core/services/categories/catagories.service';
+import { CATEGORIES_DATA } from '../../../../core/classes/global.const';
+import { LocalStorageService } from '../../../../core/services/localStorage/localStorage.service';
 
 @Component({
   selector: 'app-categories',
@@ -32,10 +34,12 @@ export class CategoriesComponent implements OnInit, OnDestroy {
       });
     }
   }
+
   constructor(
     private utilsService: UtilsService,
     private brandService: CategoriesService,
     public loggedInUserService: LoggedInUserService,
+    private localStorageService: LocalStorageService,
   ) {
     this.selection = new SelectionModel(true, []);
     this._unsubscribeAll = new Subject<any>();
@@ -47,10 +51,46 @@ export class CategoriesComponent implements OnInit, OnDestroy {
       this.language = data.lang;
     });
 
+    this.getCatFromStorage();
+  }
+
+  getCatFromStorage() {
+    try {
+      const categories = this.localStorageService.getFromStorage(CATEGORIES_DATA);
+
+      if (!categories) {
+        this.getCategories();
+        return;
+      }
+
+      if (this.localStorageService.iMostReSearch(categories?.timespan, environment.timeToResearchProductData)) {
+        this.getCategories();
+      } else {
+        this.setDataOnGetCategories(categories.cat);
+      }
+    } catch (e) {
+      this.getCategories();
+    }
+  }
+
+  getCategories() {
     this.brandService.getAllCategories().subscribe((data) => {
-      this.allCategories = data.data;
-      this.getRootCategories();
-    });
+        this.setDataOnGetCategories(data.data);
+
+        const _response: any = {};
+        _response.cat = JSON.parse(JSON.stringify(data.data));
+        _response.timespan = new Date().getTime();
+        this.localStorageService.setOnStorage(CATEGORIES_DATA, _response);
+      },
+      error =>
+        this.brandService.allCategories = [],
+    );
+  }
+
+  setDataOnGetCategories(categories) {
+    this.allCategories = categories;
+    this.brandService.allCategories = categories;
+    this.getRootCategories();
   }
 
   getRootCategories() {

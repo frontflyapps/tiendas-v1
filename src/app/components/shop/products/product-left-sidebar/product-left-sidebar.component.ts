@@ -170,11 +170,11 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
         this.isHandset = data.matches;
       });
 
-    this.categoryService.getAllCategories()
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((data) => {
-        this.allCategories = data.data;
-      });
+    // this.categoryService.getAllCategories()
+    //   .pipe(takeUntil(this._unsubscribeAll))
+    //   .subscribe((data) => {
+    //     this.allCategories = data.data;
+    //   });
 
     this.getPFDFromStorage();
   }
@@ -321,7 +321,14 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
 
   showChips() {
     let chips = [];
-    for (let cat of this.allCategories) {
+
+    let allCategories = this.categoryService?.allCategories || [];
+
+    if (!Array.isArray(allCategories)) {
+      allCategories = [];
+    }
+
+    for (let cat of allCategories) {
       let a = this.categoriesIds.find((i) => i == cat.id);
       if (a) {
         chips.push(cat);
