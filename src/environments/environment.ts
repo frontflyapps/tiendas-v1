@@ -18,6 +18,7 @@ export const environment = {
   defaultLanguage: 'es',
   currencyInternational: 'USD',
   timeToResetSession: 14400000, // Time to reset the session (ms)
+  timeToResearchProductData: 10000, // Time to research products (ms)
 
   url: 'http://tienda.tiendalocal.com:4308',
   urlAboutUs: 'http://tienda.tiendalocal.com:4308',

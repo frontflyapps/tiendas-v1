@@ -54,11 +54,35 @@ export class LocalStorageService {
     localStorage.setItem('_v', JSON.stringify(v));
   }
 
+  setOnStorage(key: string, data: any) {
+    if (data && key) {
+      localStorage.setItem(key, JSON.stringify(data));
+    }
+  }
+
+  getFromStorage(key: string): any {
+    if (key) {
+      const dataStorage = JSON.parse(localStorage.getItem(key));
+      return dataStorage || null;
+    }
+    return null;
+  }
+
   clearLocalStorage() {
     localStorage.clear();
   }
 
   removeCookies() {
     this.cookieService.delete('account', '/', environment.mainDomain);
+  }
+
+  iMostReSearch(timeData, timeDiffENV) {
+    const timeNow = new Date().getTime();
+
+    if (!timeData || !timeDiffENV) {
+      return true;
+    }
+
+    return (timeNow - timeData) >= timeDiffENV;
   }
 }

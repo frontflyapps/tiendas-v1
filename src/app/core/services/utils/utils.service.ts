@@ -14,6 +14,26 @@ export class UtilsService {
   urlImage = environment.apiUrl;
   showErrorState = false;
 
+  /**
+   *
+   * @param arrayBase Array with All product needed
+   * @param arrayIds Array with All Ids to get products
+   *
+   * Return Array of product
+   */
+  static getAnArrayFromIdsAndArray(arrayBase: any[], arrayIds: any[]): any[] {
+    if (
+      !Array.isArray(arrayBase) || !Array.isArray(arrayIds)
+    ) {
+      return [];
+    }
+
+    return arrayIds.map((itemId) =>
+      arrayBase.find((itemProduct) =>
+        itemProduct.id === itemId),
+    );
+  }
+
   constructor(
     public sanitizer: DomSanitizer,
     private showToastr: ShowToastrService,

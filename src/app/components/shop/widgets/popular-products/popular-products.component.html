@@ -1,43 +1,45 @@
-<div fxLayout="column" class="popular-products" ngClass.gt-md="m-0">
-  <div class="title-header">
-    <h4 class="title">{{ 'POPULAR PRODUCTS' | translate }}</h4>
-  </div>
-  <mat-list class="reviews">
-    <mat-list-item class="content" *ngFor="let product of popularProducts">
-      <div class="media">
-        <a style="width: 100%; height: 100%"
-           [routerLink]="['/product']"
-           [queryParams]="{ productId: product.id, stockId: product?.Stock?.id }">
-          <img class="img-fluid"
-               ngp-lazy
-               ngp-threshold="0.1"
-               *ngIf="product.Images && product.Images.length"
-               [src]="imageUrl + product.Images[0].image"
-               alt="" />
-          <img class="img-fluid"
-               ngp-lazy
-               ngp-threshold="0.1"
-               *ngIf="!(product.Images && product.Images.length)"
-               src="assets/images/noImage.jpg"
-               alt="" />
-        </a>
-      </div>
-      <div class="info" style="text-align: left !important">
-        <a class="title"
-           [routerLink]="['/product']"
-           [queryParams]="{ productId: product.id, stockId: product?.Stock?.id }">
-          <h5 class="m-0">
-            <a class="link-nav-a"
-               [routerLink]="['/product']"
-               [queryParams]="{ productId: product.id, stockId: product?.Stock?.id }"
-            >{{ product.name[language] ? product.name[language] : product.name['es'] }}</a>
-          </h5>
-        </a>
-        <div class="mt-2">
-          <ngp-rating-material [value]="product.rating" [config]="{ readOnly: true }"></ngp-rating-material>
+<ng-container *ngIf="popularProducts.length > 0">
+  <div fxLayout="column" class="popular-products" ngClass.gt-md="m-0">
+    <div class="title-header">
+      <h4 class="title">{{ 'POPULAR PRODUCTS' | translate }}</h4>
+    </div>
+    <mat-list class="reviews">
+      <mat-list-item class="content" *ngFor="let product of popularProducts">
+        <div class="media">
+          <a style="width: 100%; height: 100%"
+             [routerLink]="['/product']"
+             [queryParams]="{ productId: product.id, stockId: product?.Stock?.id }">
+            <img class="img-fluid"
+                 ngp-lazy
+                 ngp-threshold="0.1"
+                 *ngIf="product.Images && product.Images.length"
+                 [src]="imageUrl + product.Images[0].image"
+                 alt="" />
+            <img class="img-fluid"
+                 ngp-lazy
+                 ngp-threshold="0.1"
+                 *ngIf="!(product.Images && product.Images.length)"
+                 src="assets/images/noImage.jpg"
+                 alt="" />
+          </a>
         </div>
-        <p class="price">{{ product.price | currency: currencyService.getCurrency().code }}</p>
-      </div>
-    </mat-list-item>
-  </mat-list>
-</div>
+        <div class="info" style="text-align: left !important">
+          <a class="title"
+             [routerLink]="['/product']"
+             [queryParams]="{ productId: product.id, stockId: product?.Stock?.id }">
+            <h5 class="m-0">
+              <a class="link-nav-a"
+                 [routerLink]="['/product']"
+                 [queryParams]="{ productId: product.id, stockId: product?.Stock?.id }"
+              >{{ product.name[language] ? product.name[language] : product.name['es'] }}</a>
+            </h5>
+          </a>
+          <div class="mt-2">
+            <ngp-rating-material [value]="product.rating" [config]="{ readOnly: true }"></ngp-rating-material>
+          </div>
+          <p class="price">{{ product.price | currency: currencyService.getCurrency().code }}</p>
+        </div>
+      </mat-list-item>
+    </mat-list>
+  </div>
+</ng-container>
