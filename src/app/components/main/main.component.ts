@@ -28,6 +28,8 @@ import { SidebarMenuService } from './sidebar/sidebar-menu.service';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { CategoriesService } from '../../core/services/categories/catagories.service';
 import { MyContactsComponent } from './my-contacts/my-contacts.component';
+import { MENU_DATA, PRODUCT_COUNT } from '../../core/classes/global.const';
+import { LocalStorageService } from '../../core/services/localStorage/localStorage.service';
 
 @Component({
   selector: 'app-main',
@@ -76,6 +78,7 @@ export class MainComponent implements OnInit, OnDestroy {
     private navigationService: NavigationService,
     public sidenavMenuService: SidebarMenuService,
     public loggedInUserService: LoggedInUserService,
+    private localStorageService: LocalStorageService,
     private showSnackbBar: ShowSnackbarService,
     private showToastr: ShowToastrService,
     private productService: ProductService,
@@ -156,28 +159,66 @@ export class MainComponent implements OnInit, OnDestroy {
     if (this.loggedInUser) {
       this._listenToSocketIO();
     }
-    this.categoryService.getMenu().subscribe((data) => {
-      this.categories = data.data;
-    });
+
+    this.getFromStorage();
 
     this.loggedInUserService.$languageChanged.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {
       this._language = data.lang;
     });
   }
 
+  getFromStorage() {
+    try {
+      const menuData = this.localStorageService.getFromStorage(MENU_DATA);
+
+      if (!menuData || !menuData?.timespan) {
+        this.getMenu();
+        return;
+      }
+
+      if (this.localStorageService.iMostReSearch(menuData?.timespan, environment.timeToResearchMenuData)) {
+        this.getMenu();
+      } else {
+        this.setCategories(menuData.menu);
+      }
+    } catch (e) {
+      this.getMenu();
+    }
+  }
+
+  private getMenu() {
+    this.categoryService.getMenu()
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((data) => {
+        const _response: any = {};
+        _response.menu = JSON.parse(JSON.stringify(data.data));
+        _response.timespan = new Date().getTime();
+        this.localStorageService.setOnStorage(MENU_DATA, _response);
+
+        this.setCategories(_response.menu);
+      });
+  }
+
+  setCategories(menuData) {
+    this.categories = menuData;
+  }
+
   onSearch() {
     const searchValue = this.searchForm.value;
     localStorage.setItem('searchText', JSON.stringify(searchValue));
     if (searchValue && searchValue.length > 1) {
-      this.router.navigate(['/products/search'], { queryParams: { filterText: searchValue } });
+      this.router.navigate(['/products/search'], { queryParams: { filterText: searchValue } }).then();
     } else {
-      this.router.navigate(['/products/search']);
+      this.router.navigate(['/products/search']).then();
     }
   }
 
   ngOnDestroy(): void {
-    this._unsubscribeAll.next();
-    this._unsubscribeAll.complete();
+    if (this._unsubscribeAll) {
+      this._unsubscribeAll.next();
+      this._unsubscribeAll.complete();
+      this._unsubscribeAll.unsubscribe();
+    }
     this.socketIoService.disconnect();
   }
 
