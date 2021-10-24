@@ -14,6 +14,9 @@ import { DialogFiltersMComponent } from '../dialog-filters-m/dialog-filters-m.co
 import { CategoriesService } from 'src/app/core/services/categories/catagories.service';
 import { CartService } from '../../../shared/services/cart.service';
 import { Cart } from '../../../../modals/cart-item';
+import { LANDING_PAGE, PRODUCT_COUNT } from '../../../../core/classes/global.const';
+import { environment } from '../../../../../environments/environment';
+import { LocalStorageService } from '../../../../core/services/localStorage/localStorage.service';
 
 @Component({
   selector: 'app-product-left-sidebar',
@@ -79,6 +82,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
     private categoryService: CategoriesService,
     private router: Router,
     public loggedInUserService: LoggedInUserService,
+    private localStorageService: LocalStorageService,
     private breakpointObserver: BreakpointObserver,
     public cartService: CartService,
     private route: ActivatedRoute,
@@ -87,10 +91,6 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
-
-    this.productService.getCountProduct().subscribe((data) => {
-      this.isOnlyTwoProducts = data.data.count <= 2;
-    });
 
     this.route.queryParams.pipe(takeUntil(this._unsubscribeAll)).subscribe((data) => {
       this.paramsSearch.categoryIds = data?.categoryIds ? data.categoryIds : this.paramsSearch.categoryIds;
@@ -175,6 +175,43 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
       .subscribe((data) => {
         this.allCategories = data.data;
       });
+
+    this.getPFDFromStorage();
+  }
+
+  getPFDFromStorage() {
+    try {
+      const count = this.localStorageService.getFromStorage(PRODUCT_COUNT);
+
+      if (!count) {
+        this.getProductCount();
+        return;
+      }
+
+      if (this.localStorageService.iMostReSearch(count?.timespan, environment.timeToResearchProductData)) {
+        this.getProductCount();
+      } else {
+        this.setIsOnlyTwoProducts(count);
+      }
+    } catch (e) {
+      this.getProductCount();
+    }
+  }
+
+  getProductCount() {
+    this.productService.getCountProduct().subscribe((data) => {
+      const _response: any = {};
+      _response.count = JSON.parse(JSON.stringify(data.data.count));
+      _response.timespan = new Date().getTime();
+      this.localStorageService.setOnStorage(PRODUCT_COUNT, _response);
+
+      this.setIsOnlyTwoProducts(_response.count);
+
+    });
+  }
+
+  setIsOnlyTwoProducts(count) {
+    this.isOnlyTwoProducts = count <= 2;
   }
 
   initValuesOnSearch() {
