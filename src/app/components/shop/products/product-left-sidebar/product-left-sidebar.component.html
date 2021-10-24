@@ -100,9 +100,13 @@
               </mat-expansion-panel>
             </mat-accordion>
           </div>
-          <div fxHide.lt-md class="popular-products pl-3" fxFlex.lt-md="100">
-            <app-popular-products></app-popular-products>
-          </div>
+
+          <ng-container *ngIf="!isHandset">
+            <div fxHide.lt-md class="popular-products pl-3" fxFlex.lt-md="100">
+              <app-popular-products></app-popular-products>
+            </div>
+          </ng-container>
+
         </div>
       </div>
       <div id="topSearchBar" fxFlex="75" fxFlex.lt-md="100" class="all-products">
@@ -266,9 +270,13 @@
         <!--          </div>-->
         <!--        </div>-->
       </div>
-      <div fxHide fxShow.lt-md class="popular-products mt-2 pl-3" fxFlex.lt-md="100">
-        <app-popular-products></app-popular-products>
-      </div>
+
+      <ng-container *ngIf="isHandset">
+        <div fxHide fxShow.lt-md class="popular-products mt-2 pl-3" fxFlex.lt-md="100">
+          <app-popular-products></app-popular-products>
+        </div>
+      </ng-container>
+
     </div>
   </div>
 </div>

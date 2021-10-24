@@ -32,30 +32,6 @@ export class ProductVerticalComponent implements OnInit, OnDestroy {
   featuredProducts: IProductCard[] = [];
   allProducts: IProductCard[] = [];
 
-  public productsData$: Observable<IProductData>;
-  private getProduct = new Subject<any>();
-
-  // queryPopular: IPagination = {
-  //   limit: 3,
-  //   offset: 0,
-  //   total: 0,
-  //   order: 'rating',
-  // };
-  //
-  // queryFeatured: IPagination = {
-  //   limit: 3,
-  //   offset: 0,
-  //   total: 0,
-  //   order: '-createdAt',
-  // };
-  //
-  // queryAll: IPagination = {
-  //   limit: 3,
-  //   offset: 0,
-  //   total: 0,
-  //   order: '-createdAt',
-  // };
-
   constructor(
     private utilsService: UtilsService,
     private localStorageService: LocalStorageService,
@@ -89,12 +65,7 @@ export class ProductVerticalComponent implements OnInit, OnDestroy {
   }
 
   setServiceGetProduct() {
-    this.productsData$ = this.getProduct.pipe(
-      distinctUntilChanged(),
-      switchMap(() => this.productService.getFrontProductsData()),
-    );
-
-    this.productsData$
+    this.productService.productsData$
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((response) => {
           const _response: any = JSON.parse(JSON.stringify(response));
@@ -106,27 +77,32 @@ export class ProductVerticalComponent implements OnInit, OnDestroy {
   }
 
   getProducts() {
-    this.getProduct.next();
+    this.productService.getProduct.next();
   }
 
   getPFDFromStorage() {
-    console.log('getPFDFromStorage');
+    try {
+      const pfd = this.localStorageService.getFromStorage(FRONT_PRODUCT_DATA);
 
-    const pfd = this.localStorageService.getFromStorage(FRONT_PRODUCT_DATA);
-    if (this.localStorageService.iMostReSearch(pfd?.timespan, environment.timeToResearchProductData)) {
+      if (!pfd) {
+        this.getProducts();
+        return;
+      }
+
+      if (this.localStorageService.iMostReSearch(pfd?.timespan, environment.timeToResearchProductData)) {
+        this.getProducts();
+      } else {
+        this.setValuesFromResponse(pfd);
+      }
+    } catch (e) {
       this.getProducts();
-    } else {
-      this.setValuesFromResponse(pfd);
     }
   }
 
   setValuesFromResponse(response) {
-    let ArrayOfProducts = [];
     this.popularProducts = UtilsService.getAnArrayFromIdsAndArray(response.products, response.rating);
     this.featuredProducts = UtilsService.getAnArrayFromIdsAndArray(response.products, response.isFeatured);
     this.allProducts = UtilsService.getAnArrayFromIdsAndArray(response.products, response.lastCreated);
-
-    console.log('this.popularProducts', this.popularProducts);
   }
 
   ngOnDestroy() {

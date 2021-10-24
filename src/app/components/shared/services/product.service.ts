@@ -1,10 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject, Subscriber } from 'rxjs';
+import { Observable, BehaviorSubject, Subscriber, Subject } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Product } from '../../../modals/product.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { IPagination } from '../../../core/classes/pagination.class';
 import { environment } from '../../../../environments/environment';
+import { distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
+import { IProductData } from '../../shop/products/product-vertical/product-vertical.component';
+import { FRONT_PRODUCT_DATA } from '../../../core/classes/global.const';
+import { LocalStorageService } from '../../../core/services/localStorage/localStorage.service';
 
 // Get product from Localstorage
 let products = JSON.parse(localStorage.getItem('compareItem')) || [];
@@ -29,23 +33,45 @@ export class ProductService {
   // ----------------------------
 
   //////////////////////////
-  public currency: string = 'USD';
-  public catalogMode: boolean = false;
+  public currency = 'USD';
+  public catalogMode = false;
 
-  private _url: string = 'assets/data/';
+  private _url = 'assets/data/';
   public url = 'assets/data/banners.json';
 
   public compareProducts: BehaviorSubject<Product[]> = new BehaviorSubject([]);
   public observer: Subscriber<{}>;
   public productIdDetails = undefined;
 
-  constructor(private httpClient: HttpClient, public snackBar: MatSnackBar) {
-    this.compareProducts.subscribe((products) => (products = products));
+  // ////////////////////////////////////////////////////////////////
+  // Promises to Request
+  public getProduct: Subject<any>;
+  public productsData$: Observable<IProductData>;
+
+  constructor(
+    private httpClient: HttpClient,
+    private localStorageService: LocalStorageService,
+    public snackBar: MatSnackBar,
+  ) {
+    this.compareProducts.subscribe((comProducts) => (products = comProducts));
+
+    this.getProduct = new Subject<any>();
+    this.setGetProductPromise();
   }
 
-  ////////////////////////////////////////////////////////////////
-  /////////////////////////////////////////////////////////////////
-  ////////Rutas que consumen de Un API////////////////
+  // ///////////////////////////////////////////////////////////////
+  // PROMISES
+
+  private setGetProductPromise() {
+    this.productsData$ = this.getProduct.pipe(
+      distinctUntilChanged(),
+      switchMap(() => this.getFrontProductsData()),
+    );
+  }
+
+  // //////////////////////////////////////////////////////////////
+  // ///////////////////////////////////////////////////////////////
+  // ////// Rutas que consumen de Un API ////////////////
   public getAllProducts(query?: IPagination, params?: any): Observable<any> {
     let httpParams = new HttpParams();
     if (query) {
@@ -239,27 +265,21 @@ export class ProductService {
     return this.httpClient.post<any>(this.urlPromotion.replace(':id', data.id), {});
   }
 
-  public getFrontProductsData(query?: IPagination): Observable<any> {
+  public getFrontProductsData(): Observable<any> {
     let httpParams = new HttpParams();
-    if (query) {
-      httpParams = httpParams.append('limit', query.limit.toString());
-      httpParams = httpParams.append('offset', query.offset.toString());
-      if (query.order) {
-        httpParams = httpParams.append('order', query.order);
-      }
-    } else {
-      httpParams = httpParams.set('limit', '0');
-      httpParams = httpParams.set('offset', '0');
-    }
-
-    httpParams = httpParams.set('filter[$and][rating][$gte]', '3.0');
-    
-    return this.httpClient.get<any>(this.urlFrontProductsData, { params: httpParams });
+    return this.httpClient.get<any>(this.urlFrontProductsData, { params: httpParams })
+      .pipe(tap((response) => {
+          const _response: any = JSON.parse(JSON.stringify(response));
+          _response.timespan = new Date().getTime();
+          this.localStorageService.setOnStorage(FRONT_PRODUCT_DATA, _response);
+          return response;
+        }),
+      );
   }
 
-  /////////////////////////////////////////////////////////////////
-  /////////////////////////////////////////////////////////////////
-  /////////////////////////////////////////////////////////////////
+  // ///////////////////////////////////////////////////////////////
+  // ///////////////////////////////////////////////////////////////
+  // ///////////////////////////////////////////////////////////////
 
   // ---------------------------------------------
   // ----------  Review Product  ----------------
@@ -316,7 +336,7 @@ export class ProductService {
   // Add to compare
   public addToCompare(product: Product): Product | boolean {
     let message, status;
-    var item: Product | boolean = false;
+    let item: Product | boolean = false;
     if (this.hasProduct(product)) {
       item = products.filter((item) => item.id === product.id)[0];
       const index = products.indexOf(item);

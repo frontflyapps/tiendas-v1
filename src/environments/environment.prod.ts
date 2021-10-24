@@ -8,8 +8,10 @@ export const environment = {
 
   defaultLanguage: 'es',
   currencyInternational: 'USD',
+
   timeToResetSession: 14400000, // Time to reset the session
   timeToResearchProductData: 600000, // Time to research products (ms)
+  timeToResearchLandingPageData: 300000, // Time to research products (ms)
 
   url: 'https://www.mibulevar.com',
   urlAboutUs: 'https://www.mibulevar.com',
