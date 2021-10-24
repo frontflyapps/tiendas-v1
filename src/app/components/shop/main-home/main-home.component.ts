@@ -8,7 +8,7 @@ import { takeUntil } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { MetaService } from 'src/app/core/services/meta.service';
 import { IProductCard } from '../../../core/classes/product-card.class';
-import { FRONT_PRODUCT_DATA, LANDING_PAGE } from '../../../core/classes/global.const';
+import { FRONT_PRODUCT_DATA, LANDING_PAGE, PRODUCT_COUNT } from '../../../core/classes/global.const';
 import { LocalStorageService } from '../../../core/services/localStorage/localStorage.service';
 
 @Component({
@@ -166,22 +166,17 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     try {
       const lp = this.localStorageService.getFromStorage(LANDING_PAGE);
 
-      console.log('lp', lp);
-      console.log('encuesta', this.localStorageService.iMostReSearch(lp?.timespan, environment.timeToResearchLandingPageData));
-
       if (!lp) {
         this.getFrontData();
         return;
       }
 
       if (this.localStorageService.iMostReSearch(lp?.timespan, environment.timeToResearchLandingPageData)) {
-        console.log('entro this.getFrontData()');
         this.getFrontData();
       } else {
         this.setDataOnLandingPage(lp);
       }
     } catch (e) {
-      console.log('entro cathch error', e);
       this.getFrontData();
     }
   }
@@ -213,11 +208,17 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   getFrontData() {
     this.getFrontDataRequest()
       .then((data: any) => {
+
         this.setDataOnLandingPage(data.data);
 
         const _response: any = JSON.parse(JSON.stringify(data.data));
         _response.timespan = new Date().getTime();
         this.localStorageService.setOnStorage(LANDING_PAGE, _response);
+
+        const _responseCP: any = {};
+        _responseCP.count = JSON.parse(JSON.stringify(_response.countProducts));
+        _responseCP.timespan = new Date().getTime();
+        this.localStorageService.setOnStorage(PRODUCT_COUNT, _responseCP);
 
       })
       .catch((error) => {
