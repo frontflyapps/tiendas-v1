@@ -11,7 +11,7 @@ import { ShoppingWidgetsComponent } from './shopping-widgets/shopping-widgets.co
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MenuComponent } from './menu/menu.component';
-import { FooterTwoModule } from './../shared/footer-two/footer-two.module';
+import { FooterTwoModule } from '../shared/footer-two/footer-two.module';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDividerModule } from '@angular/material/divider';
@@ -33,6 +33,9 @@ import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { PreviousRouteService } from '../../core/services/previous-route/previous-route.service';
 import { PipesModule } from 'src/app/core/pipes/pipes.module';
 import { FooterModule } from '../shared/footer/footer.module';
+import { MyContactsComponent } from './my-contacts/my-contacts.component';
+import { MatSelectModule } from '@angular/material/select';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -42,6 +45,7 @@ import { FooterModule } from '../shared/footer/footer.module';
     ConfirmPaymentOkComponent,
     MenuComponent,
     EditProfileComponent,
+    MyContactsComponent,
     SidebarComponent,
     ShoppingWidgetsComponent,
   ],
@@ -71,7 +75,10 @@ import { FooterModule } from '../shared/footer/footer.module';
     MatButtonModule,
     MatDialogModule,
     FooterModule,
+    MatSelectModule,
+    MatProgressSpinnerModule,
   ],
   providers: [SidebarMenuService, PreviousRouteService],
 })
-export class MainModule {}
+export class MainModule {
+}

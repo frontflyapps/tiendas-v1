@@ -43,8 +43,8 @@
         <mat-icon>build</mat-icon>
         <span class="ml-3">{{ 'Profile' | translate }}</span>
       </a>
-      <a *ngIf="loggedInUser" fxLayoutAlign="start center" mat-list-item (click)="onShowProfile()">
-        <mat-icon>build</mat-icon>
+      <a *ngIf="loggedInUser" fxLayoutAlign="start center" mat-list-item (click)="onShowMyContacts()">
+        <mat-icon>book</mat-icon>
         <span class="ml-3">{{ 'Mis contactos' | translate }}</span>
       </a>
       <a *ngIf="loggedInUser" fxLayoutAlign="start center" mat-list-item (click)="onChangePass()">
@@ -225,8 +225,8 @@
             <span class="mat-body-1">{{ 'Profile' | translate }}</span>
           </button>
 
-          <button mat-menu-item (click)="onShowProfile()">
-            <mat-icon>build</mat-icon>
+          <button mat-menu-item (click)="onShowMyContacts()">
+            <mat-icon>book</mat-icon>
             <span class="mat-body-1">{{ 'Mis contactos' | translate }}</span>
           </button>
 

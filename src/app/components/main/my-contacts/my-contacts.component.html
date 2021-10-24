@@ -1,0 +1,194 @@
+<div class="dialog-content-wrapper">
+  <mat-toolbar matDialogTitle color="primary" id="toolbarHeader">
+    <mat-toolbar-row fxLayoutAlign="space-between center">
+      {{'Mis contactos'|translate}}
+      <button mat-icon-button (click)="dialogRef.close()" aria-label="Close dialog">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <div fxFlex="100" mat-dialog-content class="my-dialog-content">
+
+    <!-- LISTADO DE CONTACTOS -->
+    <ng-container *ngIf="!onCreateContact">
+
+      <ng-container *ngIf="isLoading; then loading; else contentLoaded"></ng-container>
+
+      <ng-template #contentLoaded>
+        <ng-container *ngIf="allContacts.length > 0;then thereIsContacts; else thereIsNoContacts"></ng-container>
+      </ng-template>
+
+
+      <ng-template #thereIsContacts>
+        <div fxFlex="100" fxLayout="column">
+          <ng-container *ngFor="let contact of allContacts; last as lst">
+            <div fxFlex="100" fxLayout="row" fxLayoutAlign="star center" fxLayoutGap="1rem" class="contact-item"
+                 [ngClass]="{'contacts-line-bottom': !lst}">
+              <span fxFlex="grow" class="contact-title">
+                {{contact?.name}}&nbsp;{{contact?.lastName}}
+              </span>
+
+              <div (click)="editContact(contact)" style="cursor: pointer"
+                   fxFlex="48px" fxLayout="row" fxLayoutAlign="center center" class="item-action">
+                <mat-icon>edit</mat-icon>
+              </div>
+
+              <div (click)="removeContact(contact)" style="cursor: pointer"
+                   fxFlex="48px" fxLayout="row" fxLayoutAlign="center center" class="item-action">
+                <mat-icon>delete</mat-icon>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </ng-template>
+
+      <ng-template #thereIsNoContacts>
+        <div fxFlex="100" fxLayout="column" fxLayoutAlign="center center">
+          <span>{{'No tiene contactos'|translate}}</span>
+          <small>{{'Esta información se usan para tener acceso rápidos a ella para el pago'|translate}}</small>
+        </div>
+      </ng-template>
+
+    </ng-container>
+
+    <!-- FORMULARIO DE CRAR UN CONTACTO -->
+    <ng-container *ngIf="onCreateContact">
+      <div fxFlex="100" [formGroup]="form">
+        <div fxFlex="100" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="gappx">
+
+          <mat-form-field appearance="outline">
+            <mat-label>{{'Name'|translate}}</mat-label>
+            <input type="text" [formControl]="form.controls['name']" matInput placeholder="{{'Name'|translate}}">
+            <mat-icon class="greyIcon" matSuffix>person</mat-icon>
+            <mat-error *ngIf="form.controls['name'].hasError('required')">
+              {{'Name'|translate}} <strong>{{'is required'|translate}}</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>{{'Apellidos'|translate}}</mat-label>
+            <input type="text" matInput [formControl]="form.controls['lastName']"
+                   placeholder="{{'Apellidos'|translate}}">
+            <mat-icon class="greyIcon" matSuffix>person</mat-icon>
+            <mat-error *ngIf="form.controls['lastName'].hasError('required')">
+              {{'lastName'|translate}} <strong>{{'is required'|translate}}</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <div fxFlex="100" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1rem">
+
+            <mat-form-field appearance="outline" fxFlex="50">
+              <mat-label>{{'Email'|translate}}</mat-label>
+              <input type="email" matInput [formControl]="form.controls['email']" placeholder="{{'Email'|translate}}">
+              <mat-icon class="greyIcon" matSuffix>mail</mat-icon>
+              <mat-error *ngIf="form.controls['email'].hasError('required')">
+                {{'email'|translate}} <strong>{{'is required'|translate}}</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" fxFlex="50">
+              <mat-label>{{'Documento de identidad'|translate}}</mat-label>
+              <input type="email" matInput [formControl]="form.controls['identification']"
+                     placeholder="{{'identification'|translate}}">
+              <mat-icon class="greyIcon" matSuffix>mail</mat-icon>
+              <mat-error *ngIf="form.controls['identification'].hasError('required')">
+                {{'email'|translate}} <strong>{{'is required'|translate}}</strong>
+              </mat-error>
+            </mat-form-field>
+
+          </div>
+
+          <mat-form-field appearance="outline">
+            <mat-label>{{'Phone'|translate}}</mat-label>
+            <input type="tel" matInput [formControl]="form.controls['phone']" placeholder="{{'Phone'|translate}}">
+            <mat-icon class="greyIcon" matSuffix>mail</mat-icon>
+            <mat-hint>{{'Ejemplo, 5 XXX XX XX' | translate}}</mat-hint>
+            <mat-error *ngIf="form.controls['phone'].hasError('required')">
+              {{'phone'|translate}} <strong>{{'is required'|translate}}</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>{{'Dirección'|translate}}</mat-label>
+            <input type="text" matInput [formControl]="form.controls['address']"
+                   placeholder="{{'Dirección'|translate}}">
+            <mat-icon class="greyIcon" matSuffix>my_location</mat-icon>
+            <mat-error *ngIf="form.controls['address'].hasError('required')">
+              {{'Dirección'|translate}} <strong>{{'is required'|translate}}</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <!-- SOLO PARA CUBANOS -->
+          <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+            <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline">
+              <mat-label>{{ 'Provincia' | translate }}</mat-label>
+              <mat-select [compareWith]="compareById"
+                          required
+                          type="text"
+                          placeholder="{{ 'Nombre de la provincia' | translate }}"
+                          [formControl]="form.controls['ProvinceId']"
+                          (selectionChange)="onSelectProvince($event.value)">
+                <mat-option *ngFor="let province of allProvinces" [value]="province.id">
+                  {{ province.name }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="form.controls['ProvinceId'].hasError('required')">
+                {{ 'Provincia' | translate }} <strong>{{ 'is required' | translate }}</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline">
+              <mat-label>{{ 'Municipio' | translate }}</mat-label>
+              <mat-select [compareWith]="compareById"
+                          required
+                          type="text"
+                          placeholder="{{ 'Nombre del Municipio' | translate }}"
+                          [formControl]="form.controls['MunicipalityId']">
+                <mat-option *ngFor="let municipio of municipalities" [value]="municipio.id">
+                  {{ municipio.name }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="form.controls['MunicipalityId'].hasError('required')">
+                {{ 'Municipio' | translate }} <strong>{{ 'is required' | translate }}</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+        </div>
+      </div>
+
+    </ng-container>
+
+  </div>
+
+
+  <ng-container *ngIf="!onCreateContact">
+    <div mat-dialog-actions fxLayout="row" fxLayoutAlign="end start">
+      <button mat-flat-button color="primary"
+              (click)="onCreateContactFn()">
+        <mat-icon>add</mat-icon>
+        {{'Nuevo'|translate}}
+      </button>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="onCreateContact">
+    <div mat-dialog-actions fxLayout="row" fxLayoutAlign="end start">
+      <button mat-flat-button (click)="onSetBack()"
+              color="primary">{{'Atrás'|translate}}</button>
+      <button mat-flat-button (click)="onSetUpdateContact()"
+              [disabled]="this.form.invalid"
+              color="primary">{{'Save'|translate}}</button>
+    </div>
+  </ng-container>
+
+</div>
+
+
+<ng-template #loading>
+  <div fxFlex="100" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="1rem">
+    <span>{{'Cargando...'|translate}}</span>
+    <mat-spinner diameter="16"></mat-spinner>
+  </div>
+</ng-template>
