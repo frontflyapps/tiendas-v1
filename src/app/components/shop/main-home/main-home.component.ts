@@ -170,14 +170,14 @@ export class MainHomeComponent implements OnInit, OnDestroy {
         this.loadingServices = false;
       });
 
-    this.getBestSellers()
-      .then((data: any) => {
-        this.bestSellersProducts = data.data;
-        this.loadingBestSellers = false;
-      })
-      .catch((e) => {
-        this.loadingBestSellers = false;
-      });
+    // this.getBestSellers()
+    //   .then((data: any) => {
+    //     this.bestSellersProducts = data.data;
+    //     this.loadingBestSellers = false;
+    //   })
+    //   .catch((e) => {
+    //     this.loadingBestSellers = false;
+    //   });
 
     this.loggedInUserService.$languageChanged.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {
       this.language = data.lang;

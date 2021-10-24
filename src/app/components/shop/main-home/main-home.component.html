@@ -58,7 +58,7 @@
     <h3 class="mat-title py-4" style="text-align: center">{{ 'No hay ningún producto disponible' | translate }}</h3>
   </ng-container>
 
-  <!-- ---------------------- Bets Seller Items --------------------------- -->
+  <!-- ---------------------- Best Seller Items --------------------------- -->
   <section *ngIf="bestSellersProducts.length">
     <div class="container">
       <div class="products sec-padding">
@@ -72,22 +72,6 @@
           </div>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- ---------------------- Big promo1 --------------------------- -->
-  <section *ngIf="bigBanner1?.valor">
-    <div class="main-banner">
-      <ng-container *ngIf="applyStyle && bigBanner1?.valor?.imageXs; then bannerPromo1Xs; else bannerPromo1">
-      </ng-container>
-
-      <ng-template #bannerPromo1>
-        <app-banner-promotion [_imageBigPromo]="bigBanner1?.valor?.image"></app-banner-promotion>
-      </ng-template>
-
-      <ng-template #bannerPromo1Xs>
-        <app-banner-promotion [_imageBigPromo]="bigBanner1?.valor?.imageXs"></app-banner-promotion>
-      </ng-template>
     </div>
   </section>
 
@@ -120,6 +104,22 @@
     </div>
   </div>
   <!-- -------------------------------------------------------------------------------->
+
+  <!-- ---------------------- Big promo1 --------------------------- -->
+  <section *ngIf="bigBanner1?.valor">
+    <div class="main-banner">
+      <ng-container *ngIf="applyStyle && bigBanner1?.valor?.imageXs; then bannerPromo1Xs; else bannerPromo1">
+      </ng-container>
+
+      <ng-template #bannerPromo1>
+        <app-banner-promotion [_imageBigPromo]="bigBanner1?.valor?.image"></app-banner-promotion>
+      </ng-template>
+
+      <ng-template #bannerPromo1Xs>
+        <app-banner-promotion [_imageBigPromo]="bigBanner1?.valor?.imageXs"></app-banner-promotion>
+      </ng-template>
+    </div>
+  </section>
 
   <!-- ---------------------- Featured Items --------------------------- -->
   <section *ngIf="featuredProducts.length > 0">
@@ -156,7 +156,8 @@
 
   <!-- ------------------------------------------------------------ -->
   <!-- ---------------------- Product Vertical --------------------------- -->
-  <section *ngIf="featuredProducts.length && this.allProducts.length">
+  <!--  <section *ngIf="featuredProducts.length && this.allProducts.length">-->
+  <section>
     <div class="container">
       <app-product-vertical></app-product-vertical>
     </div>
