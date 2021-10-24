@@ -27,8 +27,7 @@ import { UtilsService } from 'src/app/core/services/utils/utils.service';
 import { SidebarMenuService } from './sidebar/sidebar-menu.service';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { CategoriesService } from '../../core/services/categories/catagories.service';
-import { ConfirmCreateBusinessComponent } from './confirm-create-business/confirm-create-business.component';
-import { ConfirmCreateBusinessService } from './confirm-create-business/confirm-create-business.service';
+import { MyContactsComponent } from './my-contacts/my-contacts.component';
 
 @Component({
   selector: 'app-main',
@@ -58,8 +57,6 @@ export class MainComponent implements OnInit, OnDestroy {
 
   compareItems: any[] = [];
   compareItemsObservable: Observable<any[]> = of([]);
-
-  public urlToCreateBusiness: string;
 
   public url: any;
   tokenReferal = null;
@@ -93,12 +90,8 @@ export class MainComponent implements OnInit, OnDestroy {
     private orderSevice: MyOrdersService,
     private orderService: MyOrdersService,
     public utilsService: UtilsService,
-    private confirmCreateBusinessService: ConfirmCreateBusinessService,
   ) {
     this._unsubscribeAll = new Subject<any>();
-    this.urlToCreateBusiness = this.confirmCreateBusinessService.url + `?Authorization=${this.loggedInUserService.getTokenCookie()}`;
-    console.log('-> this.urlToCreateBusiness', this.urlToCreateBusiness);
-
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
     this.navItems = this.navigationService.getNavItems();
 
@@ -206,6 +199,22 @@ export class MainComponent implements OnInit, OnDestroy {
       panelClass: 'app-edit-profile',
       maxWidth: '100vw',
       maxHeight: '100vh',
+      data: {},
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+      }
+    });
+  }
+
+  onShowMyContacts(): void {
+    let dialogRef: MatDialogRef<MyContactsComponent, any>;
+    dialogRef = this.dialog.open(MyContactsComponent, {
+      panelClass: 'app-my-contacts',
+      maxWidth: '100vw',
+      maxHeight: '100vh',
+      width: '40rem',
       data: {},
     });
 

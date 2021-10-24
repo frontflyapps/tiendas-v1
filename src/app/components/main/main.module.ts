@@ -33,8 +33,11 @@ import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { PreviousRouteService } from '../../core/services/previous-route/previous-route.service';
 import { PipesModule } from 'src/app/core/pipes/pipes.module';
 import { FooterModule } from '../shared/footer/footer.module';
+import { MyContactsComponent } from './my-contacts/my-contacts.component';
 import { ConfirmCreateBusinessComponent } from './confirm-create-business/confirm-create-business.component';
 import { ConfirmCreateBusinessService } from './confirm-create-business/confirm-create-business.service';
+import { MatSelectModule } from '@angular/material/select';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -45,6 +48,7 @@ import { ConfirmCreateBusinessService } from './confirm-create-business/confirm-
     ConfirmCreateBusinessComponent,
     MenuComponent,
     EditProfileComponent,
+    MyContactsComponent,
     SidebarComponent,
     ShoppingWidgetsComponent,
   ],
@@ -74,6 +78,8 @@ import { ConfirmCreateBusinessService } from './confirm-create-business/confirm-
     MatButtonModule,
     MatDialogModule,
     FooterModule,
+    MatSelectModule,
+    MatProgressSpinnerModule,
   ],
   providers: [SidebarMenuService, PreviousRouteService, ConfirmCreateBusinessService],
 })
