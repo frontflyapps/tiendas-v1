@@ -8,6 +8,8 @@ import { takeUntil } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { MetaService } from 'src/app/core/services/meta.service';
 import { IProductCard } from '../../../core/classes/product-card.class';
+import { FRONT_PRODUCT_DATA, LANDING_PAGE } from '../../../core/classes/global.const';
+import { LocalStorageService } from '../../../core/services/localStorage/localStorage.service';
 
 @Component({
   selector: 'app-main-home',
@@ -117,6 +119,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   constructor(
     public utilsService: UtilsService,
     private loggedInUserService: LoggedInUserService,
+    private localStorageService: LocalStorageService,
     private httpClient: HttpClient,
     private metaService: MetaService,
   ) {
@@ -138,37 +141,8 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     this.loadingFeatured = true;
     this.loadingServices = true;
     this.loadingBestSellers = true;
-    this.getFrontData()
-      .then((data: any) => {
-        this.slides = data.data.carrusels.map((item) => {
-          item.image = this.imageUrl + item.image;
-          item.imageXs = this.imageUrl + item.imageXs;
-          return item;
-        });
-        this.showStatic = false;
-        this.allBicons = data.data.bicons || [];
-        this.allProducts = data.data.recentProducts;
-        this.showOnlyTwoProducts = this.allProducts.length <= 2 ? true : false;
-        this.loadingAllProduct = false;
-        this.banners = data.data.banner;
-        this.popularProducts = data.data.popularProducts;
-        this.loadingPopular = false;
-        this.featuredProducts = data.data.featureedProducts;
-        this.loadingFeatured = false;
-        this.allArticles = data.data.blogRecents;
-        this.countProducts = data.data.countProducts;
-        this.servicesProducts = data.data.ourServices;
-        this.bigBanner1 = data.data.bigBanner1;
-        this.bigBanner2 = data.data.bigBanner2;
-        this.loadingServices = false;
-      })
-      .catch((error) => {
-        this.showStatic = true;
-        this.loadingAllProduct = false;
-        this.loadingPopular = false;
-        this.loadingFeatured = false;
-        this.loadingServices = false;
-      });
+
+    this.getPFDFromStorage();
 
     // this.getBestSellers()
     //   .then((data: any) => {
@@ -188,13 +162,80 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     });
   }
 
+  getPFDFromStorage() {
+    try {
+      const lp = this.localStorageService.getFromStorage(LANDING_PAGE);
+
+      console.log('lp', lp);
+      console.log('encuesta', this.localStorageService.iMostReSearch(lp?.timespan, environment.timeToResearchLandingPageData));
+
+      if (!lp) {
+        this.getFrontData();
+        return;
+      }
+
+      if (this.localStorageService.iMostReSearch(lp?.timespan, environment.timeToResearchLandingPageData)) {
+        console.log('entro this.getFrontData()');
+        this.getFrontData();
+      } else {
+        this.setDataOnLandingPage(lp);
+      }
+    } catch (e) {
+      console.log('entro cathch error', e);
+      this.getFrontData();
+    }
+  }
+
+  setDataOnLandingPage(data) {
+    this.slides = data.carrusels.map((item) => {
+      item.image = this.imageUrl + item.image;
+      item.imageXs = this.imageUrl + item.imageXs;
+      return item;
+    });
+    this.showStatic = false;
+    this.allBicons = data.bicons || [];
+    this.allProducts = data.recentProducts;
+    this.showOnlyTwoProducts = this.allProducts.length <= 2;
+    this.loadingAllProduct = false;
+    this.banners = data.banner;
+    this.popularProducts = data.popularProducts;
+    this.loadingPopular = false;
+    this.featuredProducts = data.featureedProducts;
+    this.loadingFeatured = false;
+    this.allArticles = data.blogRecents;
+    this.countProducts = data.countProducts;
+    this.servicesProducts = data.ourServices;
+    this.bigBanner1 = data.bigBanner1;
+    this.bigBanner2 = data.bigBanner2;
+    this.loadingServices = false;
+  }
+
   getFrontData() {
+    this.getFrontDataRequest()
+      .then((data: any) => {
+        this.setDataOnLandingPage(data.data);
+
+        const _response: any = JSON.parse(JSON.stringify(data.data));
+        _response.timespan = new Date().getTime();
+        this.localStorageService.setOnStorage(LANDING_PAGE, _response);
+
+      })
+      .catch((error) => {
+        this.showStatic = true;
+        this.loadingAllProduct = false;
+        this.loadingPopular = false;
+        this.loadingFeatured = false;
+        this.loadingServices = false;
+      });
+  }
+
+  getFrontDataRequest() {
     return this.httpClient.get(this.url).toPromise();
   }
 
-  getBestSellers() {
-    return this.httpClient.get(environment.apiUrl + 'product/best-seller').toPromise();
-  }
+  // getBestSellers() {
+  //   return this.httpClient.get(environment.apiUrl + 'product/best-seller').toPromise();
+  // }
 
   ngOnDestroy() {
     this._unsubscribeAll.next(true);

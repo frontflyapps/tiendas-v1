@@ -1,11 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ProductService } from '../../../shared/services/product.service';
 import { environment } from '../../../../../environments/environment';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { CurrencyService } from '../../../../core/services/currency/currency.service';
 import { LoggedInUserService } from '../../../../core/services/loggedInUser/logged-in-user.service';
-import { distinctUntilChanged, switchMap, takeUntil } from 'rxjs/operators';
-import { IProductData } from '../../products/product-vertical/product-vertical.component';
+import { takeUntil } from 'rxjs/operators';
 import { LocalStorageService } from '../../../../core/services/localStorage/localStorage.service';
 import { FRONT_PRODUCT_DATA } from '../../../../core/classes/global.const';
 import { UtilsService } from '../../../../core/services/utils/utils.service';
@@ -23,9 +22,6 @@ export class PopularProductsComponent implements OnInit, OnDestroy {
 
   popularProducts: any[] = [];
 
-  public productsData$: Observable<IProductData>;
-  private getProduct = new Subject<any>();
-
   // queryPopular: IPagination = {
   //   limit: 3,
   //   offset: 0,
@@ -34,8 +30,8 @@ export class PopularProductsComponent implements OnInit, OnDestroy {
   // };
 
   constructor(
-    private localStorageService: LocalStorageService,
     private productService: ProductService,
+    private localStorageService: LocalStorageService,
     public currencyService: CurrencyService,
     public loggedInUserService: LoggedInUserService,
   ) {
@@ -58,24 +54,17 @@ export class PopularProductsComponent implements OnInit, OnDestroy {
   }
 
   setServiceGetProduct() {
-    this.productsData$ = this.getProduct.pipe(
-      distinctUntilChanged(),
-      switchMap(() => this.productService.getFrontProductsData()),
-    );
-
-    this.productsData$
+    this.productService.productsData$
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((response) => {
-          const _response: any = JSON.parse(JSON.stringify(response));
-          this.setValuesFromResponse(_response);
-          _response.timespan = new Date().getTime();
-          this.localStorageService.setOnStorage(FRONT_PRODUCT_DATA, _response);
+          this.setValuesFromResponse(response);
         },
       );
   }
 
   getProducts() {
-    this.getProduct.next();
+    console.log('entro component');
+    this.productService.getProduct.next();
   }
 
   getPFDFromStorage() {
