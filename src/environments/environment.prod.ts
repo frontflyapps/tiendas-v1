@@ -21,6 +21,12 @@ export const environment = {
   address: 'MiBulevar | TransferMóvil',
   localDatabaseUsers: true,
 
+  contacts: {
+    phone: '(+53) 7202 1381',
+    email: 'tienda@marinasmarlin.com',
+    address: 'Calle 2, esq 7ma, Miramar, Playa',
+  },
+
   adminService: 'https://admin.mibulevar.com/',
   mainDomain: '.mibulevar.com',
 

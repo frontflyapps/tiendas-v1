@@ -139,7 +139,7 @@ export class EditProfileComponent implements OnInit {
         this.dialogRef.close(true);
       },
       (error) => {
-        console.log(error);
+        console.warn(error);
         this.utilsService.errorHandle(error, 'User', 'Editing');
         this.spinner.hide();
       },

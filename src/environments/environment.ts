@@ -30,6 +30,12 @@ export const environment = {
   address: 'MiBulevar SA',
   localDatabaseUsers: true,
 
+  contacts: {
+    phone: '(+53) 7202 1381',
+    email: 'tienda@marinasmarlin.com',
+    address: 'Calle 2, esq 7ma, Miramar, Playa',
+  },
+
   adminService: 'http://admintienda.marinasmarlin.com/',
   mainDomain: 'tiendalocal.com',
 

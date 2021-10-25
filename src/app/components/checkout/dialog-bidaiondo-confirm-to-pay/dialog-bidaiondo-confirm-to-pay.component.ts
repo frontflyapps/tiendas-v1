@@ -12,7 +12,8 @@ export class DialogBidaiondoConfirmToPayComponent implements AfterViewInit {
   constructor(
     public dialogRef: MatDialogRef<DialogBidaiondoConfirmToPayComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-  ) {}
+  ) {
+  }
 
   ngAfterViewInit() {
     this.templateInputs = document.getElementById('inputsHiddenBid');

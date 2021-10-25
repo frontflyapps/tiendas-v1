@@ -246,7 +246,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
           }
         });
       } catch (error) {
-        console.log('error');
+        console.warn(error);
       }
     }
   }

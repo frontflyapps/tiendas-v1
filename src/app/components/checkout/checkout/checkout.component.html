@@ -31,14 +31,44 @@
             fxFlex="100"
             ngClass.sm="mt-2"
             ngClass.xs="mt-2">
-            <p class="mat-body-2 my-2" style="text-transform: uppercase">
-              {{ 'Datos personales del destinatario' | translate }}
-              <mat-icon
-                style="cursor: pointer"
-                matTooltip="{{ 'Name and surname of the client as well as a confirmation email' | translate }}"
-                class="iconHelp">help
-              </mat-icon>
-            </p>
+
+            <div fxLayout="row" fxLayout.xs="column"
+                 fxLayoutAlign="space-between center" fxLayoutAlign.xs="start start"
+                 fxLayoutGap="0.5rem">
+
+              <p class="mat-body-2 my-2" style="text-transform: uppercase"
+                 title="{{ 'Información del cliente que obtendrá los productos' | translate }}">
+                {{ 'Datos personales del destinatario' | translate }}
+                <mat-icon
+                  style="cursor: pointer"
+                  matTooltip="{{ 'Información del cliente que obtendrá los productos' | translate }}"
+                  class="iconHelp">help
+                </mat-icon>
+              </p>
+
+              <button mat-stroked-button color="primary" ngClass.xs="mb-3"
+                      [matMenuTriggerFor]="menuContacts" aria-label="Example icon-button with a menu">
+                <mat-icon>book</mat-icon>
+                {{'Contactos guardados'|translate}}
+              </button>
+              <mat-menu #menuContacts="matMenu">
+
+                <ng-container *ngFor="let contact of contactsService.allContacts">
+                  <button mat-menu-item (click)="onSelectContact(contact)">
+                    <mat-icon>person_outline</mat-icon>
+                    <span>{{contact.name}}&nbsp;{{contact.lastName}}</span>
+                  </button>
+                </ng-container>
+
+                <button mat-menu-item style="border-top: 4px solid #e7e4e4"
+                        (click)="onAddContact()">
+                  <mat-icon>playlist_add</mat-icon>
+                  <span>{{'Agregar / Editar'|translate}}</span>
+                </button>
+              </mat-menu>
+
+
+            </div>
 
             <div fxLayout="row wrap" fxLayoutAlign="space-between center">
               <mat-form-field fxFlex="100" fxFlex.gt-md="48" fxFlex.md="48" appearance="outline">
@@ -96,11 +126,12 @@
               </mat-select>
             </mat-form-field> -->
 
-            <p class="mat-body-2 my-2" style="text-transform: uppercase">
+            <p class="mat-body-2 my-2" style="text-transform: uppercase"
+               title="{{ 'Datos adicionales del cliente que obtendrá los productos' | translate }}">
               {{ 'Datos del destinatario' | translate }}
               <mat-icon
                 style="cursor: pointer"
-                matTooltip="{{ 'Street address and more information about the shipping address' | translate }}"
+                matTooltip="{{ 'Datos adicionales del cliente que obtendrá los productos' | translate }}"
                 class="iconHelp"
               >help
               </mat-icon>
@@ -117,8 +148,7 @@
                     type="text"
                     placeholder="{{ 'Nombre de la provincia' | translate }}"
                     [formControl]="form.controls['ProvinceId']"
-                    (selectionChange)="onSelectProvince($event.value)"
-                  >
+                    (selectionChange)="onSelectProvince($event.value)">
                     <mat-option *ngFor="let province of allProvinces" [value]="province.id">
                       {{ province.name }}
                     </mat-option>

@@ -16,13 +16,14 @@
       <ng-container *ngIf="isLoading; then loading; else contentLoaded"></ng-container>
 
       <ng-template #contentLoaded>
-        <ng-container *ngIf="allContacts.length > 0;then thereIsContacts; else thereIsNoContacts"></ng-container>
+        <ng-container
+          *ngIf="contactsService.allContacts.length > 0;then thereIsContacts; else thereIsNoContacts"></ng-container>
       </ng-template>
 
 
       <ng-template #thereIsContacts>
         <div fxFlex="100" fxLayout="column">
-          <ng-container *ngFor="let contact of allContacts; last as lst">
+          <ng-container *ngFor="let contact of contactsService.allContacts; last as lst">
             <div fxFlex="100" fxLayout="row" fxLayoutAlign="star center" fxLayoutGap="1rem" class="contact-item"
                  [ngClass]="{'contacts-line-bottom': !lst}">
               <span fxFlex="grow" class="contact-title">

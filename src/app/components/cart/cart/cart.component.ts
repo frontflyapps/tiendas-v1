@@ -8,8 +8,8 @@ import { environment } from '../../../../environments/environment';
 import { takeUntil } from 'rxjs/operators';
 import { CartService } from '../../shared/services/cart.service';
 import { UtilsService } from 'src/app/core/services/utils/utils.service';
-import { ProductService } from '../../shared/services/product.service';
 import { Router } from '@angular/router';
+import { ShowToastrService } from '../../../core/services/show-toastr/show-toastr.service';
 
 @Component({
   selector: 'app-cart',
@@ -30,11 +30,12 @@ export class CartComponent implements OnInit, OnDestroy {
   constructor(
     public cartService: CartService,
     public currencyService: CurrencyService,
-    public productsService: ProductService,
+    public utilsService: UtilsService,
     public loggedInUserService: LoggedInUserService,
     public utilsServ: UtilsService,
     private router: Router,
     private metaService: MetaService,
+    private showToastr: ShowToastrService,
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
@@ -141,6 +142,54 @@ export class CartComponent implements OnInit, OnDestroy {
   public goToCheckout(cart: Cart, cartITems?) {
     let cartId = cart.id;
     let cartIds = cartITems ? cartITems.map((i) => i.id) : cart.CartItems.map((i) => i.id);
-    this.router.navigate(['/checkout'], { queryParams: { cartId, cartIds } });
+    this.router.navigate(['/checkout'], { queryParams: { cartId, cartIds } }).then();
+  }
+
+  /**
+   *
+   * @param event object with the number typed on keyCode prop
+   * @param product product to affect
+   */
+  checkMinMaxValues(event, product): boolean {
+    const currentAmountOnInput = +event.target.value;
+    if ((currentAmountOnInput < product?.minSale) || (currentAmountOnInput > product?.maxSale)) {
+      this.showToastr.showInfo(
+        `Este producto tiene un mínimo de cantidad a vender de ${product?.minSale} y un máximo de ${product?.maxSale}`,
+        'Atención',
+        5000,
+      );
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  /**
+   * Check if can write the number about the amount of product
+   * @param event object with the number typed on keyCode prop
+   * @param itemCart itemCart to take the affect
+   *
+   */
+  addAmountSale(event, itemCart) {
+    const amountTyped = +event.target.value;
+    const dataToSend = 2;
+
+    // if ((finalNumber < product?.minSale) || (finalNumber > product?.maxSale)) {
+    //   this.showToastr.showInfo(
+    //     `Este producto tiene un mínimo de cantidad a vender de ${product?.minSale} y un máximo de ${product?.maxSale}`,
+    //     'Atención',
+    //     5000,
+    //   );
+    //   return false;
+    // } else {
+    //   return true;
+    // }
+    // return false;
+
+    // if ((finalNumber >= product?.minSale) && (finalNumber <= product?.maxSale)) {
+    //   this.increment(product, dataToSend);
+    //   return true;
+    // }
+    // return false;
   }
 }

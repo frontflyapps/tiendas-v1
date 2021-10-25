@@ -25,7 +25,6 @@ export class BrandsComponent implements OnInit, OnDestroy {
   @Input() set brandsIds(value) {
     if (value) {
       // this.selection.clear();
-      console.log('brands Ids', value);
       value.map((id) => {
         this.selection.select(+id);
       });
@@ -33,14 +32,12 @@ export class BrandsComponent implements OnInit, OnDestroy {
   }
 
   @Input() set categoriesToSelectBrands(value) {
-    console.log('Categories', value);
     if (this.categories != value) {
       this.categories = value;
       this.getBrands(value);
     }
     // if (value.length > 0) {
     //   // this.selection.clear();
-    //   console.log('brands Ids', value);
     //   value.map((id) => {
     //     this.selection.select(+id);
     //   });

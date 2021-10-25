@@ -9,7 +9,7 @@ import { Observable, of, Subject } from 'rxjs';
 import { CartItem, Cart, IBusiness } from '../../../modals/cart-item';
 import { environment } from '../../../../environments/environment';
 import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-in-user.service';
-import { takeUntil } from 'rxjs/operators';
+import { debounce, debounceTime, takeUntil } from 'rxjs/operators';
 import { CurrencyService } from '../../../core/services/currency/currency.service';
 import { IPagination } from '../../../core/classes/pagination.class';
 import { UtilsService } from '../../../core/services/utils/utils.service';
@@ -33,6 +33,10 @@ import { ConfigurationService } from '../../../core/services/configuration/confi
 import { CurrencyCheckoutPipe } from 'src/app/core/pipes/currency-checkout.pipe';
 import { BusinessService } from '../../../core/services/business/business.service';
 import { CUBAN_PHONE_START_5 } from '../../../core/classes/regex.const';
+import { ContactsService } from '../../../core/services/contacts/contacts.service';
+import { MyContactsComponent } from '../../main/my-contacts/my-contacts.component';
+
+export const PASARELA_BASE = 'transfermovil';
 
 export const amexData = {
   express: 1, // American Express
@@ -182,7 +186,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     private configurationService: ConfigurationService,
     private currencyCheckoutPipe: CurrencyCheckoutPipe,
     private metaService: MetaService,
-    private businessService: BusinessService,
+    public contactsService: ContactsService,
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
@@ -203,6 +207,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       environment.meta?.mainPage?.shareImg,
       environment.meta?.mainPage?.keywords,
     );
+
+    this.setObsContact();
   }
 
   @HostListener('window:resize', ['$event'])
@@ -216,6 +222,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.getContacts();
+
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
     this.rate = 1;
     this.applyResolution();
@@ -268,6 +276,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
     this.form.controls['ProvinceId'].valueChanges.subscribe((data) => {
       this.calculateShippingRequired();
+      this.onSelectProvinceByContactBtn(data);
     });
 
     this.form.controls['MunicipalityId'].valueChanges.subscribe((data) => {
@@ -424,7 +433,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   public removeItem(item: CartItem) {
     this.loadingCart = true;
     this.loggedInUserService._setDataToStorage('payData', JSON.stringify(this.form.value));
-    this.cartService.removeFromCart(item);
+    this.cartService.removeFromCart(item).then();
     setTimeout(() => {
       this.loadingCart = false;
     }, 150);
@@ -433,28 +442,25 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   buildForm() {
     this.selectedDataPay = this.loggedInUserService._getDataFromStorage('payData');
     this.form = this.fb.group({
-      name: [this.selectedDataPay ? this.selectedDataPay.name : this.loggedInUser?.name, [Validators.required]],
-      lastName: [
-        this.selectedDataPay ? this.selectedDataPay.lastName : this.loggedInUser?.lastName,
-        [Validators.required],
-      ],
-      address: [this._getAddress(this.loggedInUser, this.selectedDataPay), [Validators.required]],
-      address2: [this.selectedDataPay ? this.selectedDataPay.address2 : null, []],
-      city: [this._getCity(this.loggedInUser, this.selectedDataPay), [Validators.required]],
-      regionProvinceState: [this._getRegion(this.loggedInUser, this.selectedDataPay), [Validators.required]],
-      CountryId: [this._getCountry(this.loggedInUser, this.selectedDataPay), [Validators.required]],
-      ProvinceId: [this._getProvince(this.loggedInUser, this.selectedDataPay), [Validators.required]],
-      MunicipalityId: [this._getMunicipality(this.loggedInUser, this.selectedDataPay), [Validators.required]],
-      isForCuban: [this.selectedDataPay ? this.selectedDataPay.isForCuban : true, [Validators.required]],
-      dni: [this.selectedDataPay && this.selectedDataPay.dni ? this.selectedDataPay.dni : null, [
+      name: [this.selectedDataPay?.name || null, [Validators.required]],
+      lastName: [this.selectedDataPay?.lastName || null, [Validators.required]],
+      address: [this.selectedDataPay?.address || null, [Validators.required]],
+      address2: [this.selectedDataPay?.address2 || null, []],
+      city: [this.selectedDataPay?.city || null, [Validators.required]],
+      regionProvinceState: [this.selectedDataPay?.regionProvinceState || null, [Validators.required]],
+      CountryId: [this.selectedDataPay?.CountryId || 59, [Validators.required]],
+      ProvinceId: [this.selectedDataPay?.ProvinceId || null, [Validators.required]],
+      MunicipalityId: [this.selectedDataPay?.MunicipalityId || null, [Validators.required]],
+      isForCuban: [this.selectedDataPay?.isForCuban || true, [Validators.required]],
+      dni: [this.selectedDataPay?.dni || null, [
         Validators.required,
         Validators.minLength(this.CI_Length),
         // Validators.maxLength(11),
       ]],
-      email: [this._getEmail(this.loggedInUser, this.selectedDataPay), [Validators.required, Validators.email]],
-      phone: [this._getPhone(this.loggedInUser, this.selectedDataPay), []],
-      info: [this.selectedDataPay && this.selectedDataPay.info ? this.selectedDataPay.info : null, []],
-      paymentType: [this.selectedDataPay ? this.selectedDataPay.paymentType : 'transfermovil', [Validators.required]],
+      email: [this.selectedDataPay?.email || null, [Validators.required, Validators.email]],
+      phone: [this.selectedDataPay?.phone || null, []],
+      info: [this.selectedDataPay?.info || null, []],
+      paymentType: [this.selectedDataPay?.paymentType || PASARELA_BASE, [Validators.required]],
       ShippingBusinessId: [null, []],
       currency: [null, [Validators.required]],
       shippingRequired: [false, []],
@@ -485,9 +491,11 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   onSelectProvince(provinceId) {
-    this.municipalities = this.allMunicipalities.filter((item) => item.ProvinceId == provinceId);
-    this.form.get('MunicipalityId').setValue(null);
-    this.form.get('ShippingBusinessId').setValue(null);
+    setTimeout(() => {
+      this.municipalities = this.allMunicipalities.filter((item) => item.ProvinceId == provinceId);
+      this.form.get('MunicipalityId').setValue(null);
+      this.form.get('ShippingBusinessId').setValue(null);
+    }, 0);
   }
 
   onRecalculateShipping() {
@@ -501,9 +509,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     if (data.CountryId && data.MunicipalityId && data.ProvinceId) {
       this.inLoading = true;
       this.shppingService.getShippinginCheckout(data).subscribe(
-        (data) => {
-          this.shippingData = data.shippings;
-          this.canBeDelivery = data.canBeDelivery;
+        (dataShipping) => {
+          this.shippingData = dataShipping.shippings;
+          this.canBeDelivery = dataShipping.canBeDelivery;
           this.inLoading = false;
         },
         (error) => {
@@ -667,7 +675,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           });
 
           dialogRef.afterClosed().subscribe((result) => {
-            console.log('Salio Ok!! de Transfermovil');
+            console.log('OKOUT_Transfermovil');
           });
         } else {
           this.loadingPayment = false;
@@ -707,7 +715,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   processBidaiondo(bodyData) {
     bodyData.amex = amexData[this.paymentType];
-    console.log('amex', bodyData.amex);
+    console.log('AMEX', bodyData.amex);
     this.payService.makePaymentBidaiondo(bodyData).subscribe(
       (data: any) => {
         let dialogRef: MatDialogRef<DialogBidaiondoConfirmToPayComponent, any>;
@@ -733,14 +741,63 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     );
   }
 
+  // ///////////////////////////////////////////////
+  // CONTACTS
+  setObsContact() {
+    this.contactsService.allContacts$
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((response) => {
+          this.contactsService.allContacts = response.data;
+        },
+      );
+  }
+
+  getContacts() {
+    this.contactsService.getContact.next();
+  }
+
+  onAddContact() {
+    let dialogRef: MatDialogRef<MyContactsComponent, any>;
+    dialogRef = this.dialog.open(MyContactsComponent, {
+      panelClass: 'app-my-contacts',
+      maxWidth: '100vw',
+      maxHeight: '100vh',
+      width: '40rem',
+      data: {},
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+      }
+    });
+  }
+
+  onSelectContact(contact) {
+    this.form.get('name').setValue(contact?.name);
+    this.form.get('lastName').setValue(contact?.lastName);
+    this.form.get('email').setValue(contact?.email);
+    this.form.get('CountryId').setValue(59);
+    this.form.get('ProvinceId').setValue(contact?.ProvinceId);
+    this.form.get('MunicipalityId').setValue(contact?.MunicipalityId);
+    this.form.get('address').setValue(contact?.address);
+    this.form.get('dni').setValue(contact?.identification);
+    this.form.get('phone').setValue(contact?.phone);
+  }
+
+  onSelectProvinceByContactBtn(provinceId) {
+    setTimeout(() => {
+      this.municipalities = this.allMunicipalities.filter((item) => item.ProvinceId == provinceId);
+    }, 0);
+  }
+
   //////////Utiles/////////////////
   _getAddress(user, storagePayData) {
     if (storagePayData) {
       return storagePayData.address;
     }
-    if (user && user.address) {
-      return user.address;
-    }
+    // if (user && user.address) {
+    //   return user.address;
+    // }
     return null;
   }
 
@@ -859,7 +916,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       .listen('payment-confirmed')
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((data) => {
-        console.log('payment-confirmed');
         this.orderSevice.$orderItemsUpdated.next();
         this.getCartData();
       });
@@ -868,7 +924,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       .listen('payment-error')
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((data) => {
-        console.log('payment-error');
         this.loadingPayment = false;
         this.showToastr.showError(data.message, 'Error', 5000);
       });

@@ -63,7 +63,6 @@ export class PopularProductsComponent implements OnInit, OnDestroy {
   }
 
   getProducts() {
-    console.log('entro component');
     this.productService.getProduct.next();
   }
 
