@@ -13,7 +13,6 @@ export class DialogBidaiondoConfirmToPayComponent implements AfterViewInit {
     public dialogRef: MatDialogRef<DialogBidaiondoConfirmToPayComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) {
-    console.log('Pay Bidaiondo');
   }
 
   ngAfterViewInit() {

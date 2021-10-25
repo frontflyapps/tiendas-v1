@@ -97,7 +97,6 @@ export class DialogTranfermovilQrComponent implements OnInit, OnDestroy {
       .listen('payment-confirmed')
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((data) => {
-        console.log('payment-confirmed');
         this.dialogRef.close();
       });
 

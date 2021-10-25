@@ -1,4 +1,3 @@
-import { CompressImageService } from '../../../core/services/image/compress-image.service';
 import { Component, Inject, HostListener, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -10,11 +9,11 @@ import { UtilsService } from '../../../core/services/utils/utils.service';
 import { TranslateService } from '@ngx-translate/core';
 import { RegionsService } from '../../../core/services/regions/regions.service';
 import { LocalStorageService } from '../../../core/services/localStorage/localStorage.service';
-import { FRONT_PRODUCT_DATA, LOCATION_DATA } from '../../../core/classes/global.const';
+import { LOCATION_DATA } from '../../../core/classes/global.const';
 import { environment } from '../../../../environments/environment';
 import { ContactsService } from '../../../core/services/contacts/contacts.service';
-import { Observable, Subject } from 'rxjs';
-import { distinctUntilChanged, switchMap, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-my-contacts',
@@ -36,10 +35,6 @@ export class MyContactsComponent implements OnInit, OnDestroy {
   allMunicipalities: any[] = [];
   municipalities: any[] = [];
 
-  private getContact: Subject<any> = new Subject();
-  public allContacts$: Observable<any>;
-  public allContacts: any[] = [];
-
   onCreateContact = false;
   isEditing = false;
 
@@ -55,7 +50,7 @@ export class MyContactsComponent implements OnInit, OnDestroy {
     private showSnackbar: ShowSnackbarService,
     private regionService: RegionsService,
     private localStorageService: LocalStorageService,
-    private contactsService: ContactsService,
+    public contactsService: ContactsService,
   ) {
     this.dialogRef.disableClose = true;
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
@@ -77,25 +72,19 @@ export class MyContactsComponent implements OnInit, OnDestroy {
   }
 
   setObsContact() {
-    this.allContacts$ = this.getContact.pipe(
-      distinctUntilChanged(),
-      switchMap(() => this.contactsService.get()),
-    );
-
-    this.allContacts$
+    this.contactsService.allContacts$
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((response) => {
-          console.log('contacts', response);
-          this.allContacts = response.data;
+          this.contactsService.allContacts = response.data;
           this.isLoading = false;
         },
-        error => this.isLoading = false,
+        () => this.isLoading = false,
       );
   }
 
   getContacts() {
     this.isLoading = true;
-    this.getContact.next();
+    this.contactsService.getContact.next();
   }
 
   getProvinceMunicipalityFromLocal() {
@@ -176,6 +165,7 @@ export class MyContactsComponent implements OnInit, OnDestroy {
   onCreateContactFn() {
     this.createForm();
     this.onCreateContact = true;
+    this.isEditing = false;
   }
 
   onSetUpdateContact(): void {
@@ -198,7 +188,7 @@ export class MyContactsComponent implements OnInit, OnDestroy {
     this.contactsService.create(data)
       .subscribe((contactRes) => {
 
-        this.allContacts.push({ ...contactRes.data });
+        this.contactsService.allContacts.push({ ...contactRes.data });
 
         this.onCreateContact = false;
 
@@ -209,12 +199,10 @@ export class MyContactsComponent implements OnInit, OnDestroy {
     this.contactsService.edit(data)
       .subscribe((contactRes) => {
 
-        const idx = this.allContacts.findIndex((item) => item.id === data.id);
-        console.log('idx', idx);
+        const idx = this.contactsService.allContacts.findIndex((item) => item.id === data.id);
 
         if (idx >= 0) {
-          this.allContacts[idx] = { ...contactRes.data };
-          console.log('this.allContacts', this.allContacts);
+          this.contactsService.allContacts[idx] = { ...contactRes.data };
         }
 
         this.onCreateContact = false;
@@ -241,8 +229,8 @@ export class MyContactsComponent implements OnInit, OnDestroy {
 
   removeContact(contact) {
     this.contactsService.remove(contact).then(() => {
-      const indexC = this.allContacts.findIndex(item => item.id == contact.id);
-      this.allContacts.splice(indexC, 1);
+      const indexC = this.contactsService.allContacts.findIndex(item => item.id == contact.id);
+      this.contactsService.allContacts.splice(indexC, 1);
     });
   }
 

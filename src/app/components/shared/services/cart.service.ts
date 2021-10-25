@@ -137,7 +137,7 @@ export class CartService implements OnDestroy {
             return this.carts;
           })
           .catch((err) => {
-            console.log(err);
+            console.warn(err);
           });
       } else {
         this.carts = this.loggedInUserService._getDataFromStorage('cartItem') || [];
@@ -208,7 +208,7 @@ export class CartService implements OnDestroy {
             return this.carts;
           })
           .catch((err) => {
-            console.log(err);
+            console.warn(err);
           });
       } else {
         this.carts = this.loggedInUserService._getDataFromStorage('cartItem') || [];
@@ -336,7 +336,7 @@ export class CartService implements OnDestroy {
             this.$cartItemsUpdated.next(this.carts);
           })
           .catch((err) => {
-            console.log(err);
+            console.warn(err);
           });
       } else {
         this.carts = this.loggedInUserService._getDataFromStorage('cartItem') || [];
@@ -406,7 +406,7 @@ export class CartService implements OnDestroy {
             this.$cartItemsUpdated.next(this.carts);
           })
           .catch((err) => {
-            console.log(err);
+            console.warn(err);
           });
       } else {
         this.carts = this.loggedInUserService._getDataFromStorage('cartItem') || [];

@@ -175,10 +175,6 @@ export class CartComponent implements OnInit, OnDestroy {
     const amountTyped = +event.target.value;
     const dataToSend = 2;
 
-    console.log('==========================');
-    console.log('itemCart', itemCart);
-    console.log('amountTyped', amountTyped);
-
     // if ((finalNumber < product?.minSale) || (finalNumber > product?.maxSale)) {
     //   this.showToastr.showInfo(
     //     `Este producto tiene un mínimo de cantidad a vender de ${product?.minSale} y un máximo de ${product?.maxSale}`,

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
+import { distinctUntilChanged, switchMap, takeUntil } from 'rxjs/operators';
 
 export interface IContactBody {
   id?: number;
@@ -23,7 +24,23 @@ export class ContactsService {
   urlId = environment.apiUrl + 'person-contact/:contactId';
   httpOptions = {};
 
+  public getContact: Subject<any> = new Subject();
+  public allContacts$: Observable<any>;
+  public allContacts: any[] = [];
+
   constructor(private httpClient: HttpClient) {
+    this.setObsContact();
+  }
+
+  setObsContact() {
+    this.allContacts$ = this.getContact.pipe(
+      distinctUntilChanged(),
+      switchMap(() => this.get()),
+    );
+  }
+
+  getContacts() {
+    this.getContact.next();
   }
 
   get(): Observable<any> {
@@ -35,11 +52,10 @@ export class ContactsService {
   }
 
   edit(data: IContactBody) {
-    console.log('data', data);
-    return this.httpClient.patch<any>(this.urlId.replace(':contactId', data.id.toString()), data, this.httpOptions);
+    return this.httpClient.patch<any>(this.urlId.replace(':contactId', JSON.stringify(data.id)), data, this.httpOptions);
   }
 
   remove(data: IContactBody): Promise<any> {
-    return this.httpClient.delete<any>(this.urlId.replace(':contactId', data.id.toString()), this.httpOptions).toPromise();
+    return this.httpClient.delete<any>(this.urlId.replace(':contactId', JSON.stringify(data.id)), this.httpOptions).toPromise();
   }
 }

@@ -321,7 +321,6 @@ export class MainComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((data) => {
         this.showPaymentCancellSuccess(data.Payment.id);
-        console.log('payment-cancelled');
         this.cartService.$paymentUpdate.next();
         this.orderService.$orderItemsUpdated.next();
       });

@@ -9,17 +9,23 @@ export const environment = {
   defaultLanguage: 'es',
   currencyInternational: 'USD',
 
-  timeToResetSession: 14400000, // Time to reset the session
-  timeToResearchProductData: 600000, // Time to research products (ms)
-  timeToResearchLandingPageData: 300000, // Time to research products (ms)
-  timeToResearchMenuData: 900000, // Time to research products (ms)
-  timeToResearchCategoriesData: 1200000, // Time to research categories (ms)
+  timeToResetSession: 14400000, // (4hrs) Time to reset the session (ms)
+  timeToResearchProductData: 900000, // (15min) Time to research products (ms)
+  timeToResearchLandingPageData: 1200000, // (20min) Time to research products (ms)
+  timeToResearchMenuData: 1500000, // (25min) Time to research products (ms)
+  timeToResearchCategoriesData: 1500000, // (25min) Time to research categories (ms)
 
   url: 'https://www.tiendascaracol.com',
   urlAboutUs: 'https://www.tiendascaracol.com',
 
   address: 'Tiendas Caracol',
   localDatabaseUsers: true,
+
+  contacts: {
+    phone: '(+53) 7202 1381',
+    email: 'tienda@marinasmarlin.com',
+    address: 'Calle 2, esq 7ma, Miramar, Playa',
+  },
 
   adminService: 'https://admin.tiendascaracol.com/',
   mainDomain: '.tiendascaracol.com',

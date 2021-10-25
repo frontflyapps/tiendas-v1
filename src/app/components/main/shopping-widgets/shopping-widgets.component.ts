@@ -101,7 +101,6 @@ export class ShoppingWidgetsComponent implements OnInit, OnDestroy {
   public removeItem(item: any) {
     this.cartService.removeFromCart(item).then(
       responseData => {
-        console.log('responseData DELETE', responseData);
         // this.globalFacadeService.updateCartState(responseData || []);
         // this.globalFacadeService.updateBusinessState(responseData[0].Business || {});
       },

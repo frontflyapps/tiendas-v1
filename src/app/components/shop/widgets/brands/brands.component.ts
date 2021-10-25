@@ -1,8 +1,8 @@
 import { Component, OnInit, Output, EventEmitter, OnDestroy, Input } from '@angular/core';
-import { UtilsService } from './../../../../core/services/utils/utils.service';
-import { LoggedInUserService } from './../../../../core/services/loggedInUser/logged-in-user.service';
+import { UtilsService } from '../../../../core/services/utils/utils.service';
+import { LoggedInUserService } from '../../../../core/services/loggedInUser/logged-in-user.service';
 import { takeUntil } from 'rxjs/operators';
-import { environment } from './../../../../../environments/environment';
+import { environment } from '../../../../../environments/environment';
 import { Subject } from 'rxjs';
 import { SelectionModel } from '@angular/cdk/collections';
 import { CategoriesService } from 'src/app/core/services/categories/catagories.service';
@@ -18,8 +18,10 @@ export class BrandsComponent implements OnInit, OnDestroy {
   _unsubscribeAll: Subject<any>;
   brands: any[] = [];
   selection: SelectionModel<any>;
+  categories: [] = [];
 
   @Output() brandChanged = new EventEmitter();
+
   @Input() set brandsIds(value) {
     if (value) {
       // this.selection.clear();
@@ -28,6 +30,20 @@ export class BrandsComponent implements OnInit, OnDestroy {
       });
     }
   }
+
+  @Input() set categoriesToSelectBrands(value) {
+    if (this.categories != value) {
+      this.categories = value;
+      this.getBrands(value);
+    }
+    // if (value.length > 0) {
+    //   // this.selection.clear();
+    //   value.map((id) => {
+    //     this.selection.select(+id);
+    //   });
+    // }
+  }
+
   constructor(
     private utilsService: UtilsService,
     private brandService: CategoriesService,
@@ -42,15 +58,18 @@ export class BrandsComponent implements OnInit, OnDestroy {
     this.loggedInUserService.$languageChanged.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {
       this.language = data.lang;
     });
-
-    this.brandService.getAllBrands().subscribe((data) => {
-      this.brands = data.data;
-    });
+    // this.getBrands([]);
   }
 
   ngOnDestroy(): void {
     this._unsubscribeAll.next(true);
     this._unsubscribeAll.complete();
+  }
+
+  getBrands(categories: [] = []) {
+    this.brandService.getBrandsByCategories(categories).subscribe((data) => {
+      this.brands = data.data;
+    });
   }
 
   onChangeSelection(brand) {
