@@ -20,7 +20,6 @@
           *ngIf="contactsService.allContacts.length > 0;then thereIsContacts; else thereIsNoContacts"></ng-container>
       </ng-template>
 
-
       <ng-template #thereIsContacts>
         <div fxFlex="100" fxLayout="column">
           <ng-container *ngFor="let contact of contactsService.allContacts; last as lst">
@@ -102,11 +101,25 @@
 
           <mat-form-field appearance="outline">
             <mat-label>{{'Phone'|translate}}</mat-label>
-            <input type="tel" matInput [formControl]="form.controls['phone']" placeholder="{{'Phone'|translate}}">
+            <input type="tel" matInput
+                   [formControl]="form.controls['phone']"
+                   (keypress)="utilsService.keyPressNumbers($event)"
+                   placeholder="{{'Phone'|translate}}">
             <mat-icon class="greyIcon" matSuffix>mail</mat-icon>
             <mat-hint>{{'Ejemplo, 5 XXX XX XX' | translate}}</mat-hint>
             <mat-error *ngIf="form.controls['phone'].hasError('required')">
               {{'phone'|translate}} <strong>{{'is required'|translate}}</strong>
+            </mat-error>
+            <mat-error *ngIf="form.controls['phone'].hasError('required')">
+              {{ 'Phone' | translate }} <strong>{{ 'is required' | translate }}</strong>
+            </mat-error>
+            <mat-error *ngIf="(form.controls['phone'].hasError('minlength')
+                                || form.controls['phone'].hasError('maxlength'))
+                                && !form.controls['phone'].hasError('pattern')">
+              {{ 'Longitud del número' | translate }}&nbsp;<strong>{{ '8 caracteres, Ex: 51234567' | translate }}</strong>
+            </mat-error>
+            <mat-error *ngIf="form.controls['phone'].hasError('pattern')">
+              {{ 'El número' | translate }}&nbsp;<strong>{{ 'debe empezar con 5, Ex: 51234567' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -162,7 +175,6 @@
     </ng-container>
 
   </div>
-
 
   <ng-container *ngIf="!onCreateContact">
     <div mat-dialog-actions fxLayout="row" fxLayoutAlign="end start">

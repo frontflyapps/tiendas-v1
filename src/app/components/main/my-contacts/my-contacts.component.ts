@@ -13,7 +13,8 @@ import { LOCATION_DATA } from '../../../core/classes/global.const';
 import { environment } from '../../../../environments/environment';
 import { ContactsService } from '../../../core/services/contacts/contacts.service';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { debounceTime, takeUntil } from 'rxjs/operators';
+import { CUBAN_PHONE_START_5 } from '../../../core/classes/regex.const';
 
 @Component({
   selector: 'app-my-contacts',
@@ -90,7 +91,10 @@ export class MyContactsComponent implements OnInit, OnDestroy {
   getProvinceMunicipalityFromLocal() {
     const locationData = this.localStorageService.getFromStorage(LOCATION_DATA);
 
-    if (this.localStorageService.iMostReSearch(locationData?.timespan, environment.timeToResetSession)) {
+    if (
+      this.localStorageService.iMostReSearch(locationData?.timespan, environment.timeToResetSession)
+      || (locationData?.allMunicipalities.length < 1 || locationData?.allProvinces.length < 1)
+    ) {
       this.getProvinceMunicipality();
     } else {
       this.setProvincesFromResponse(locationData.allProvinces);
@@ -140,7 +144,12 @@ export class MyContactsComponent implements OnInit, OnDestroy {
       email: [null, [Validators.required, Validators.email]],
       identification: [null, [Validators.required]],
 
-      phone: [null, [Validators.required]],
+      phone: [null, [
+        Validators.required,
+        Validators.pattern(CUBAN_PHONE_START_5),
+        Validators.minLength(8),
+        Validators.maxLength(8),
+      ]],
       address: [null, [Validators.required]],
 
       MunicipalityId: [null, [Validators.required]],
@@ -148,6 +157,17 @@ export class MyContactsComponent implements OnInit, OnDestroy {
     });
 
     this.form.markAllAsTouched();
+  }
+
+  genSubxProvince() {
+    console.log('entre a sobxxxxx');
+    this.form.get('ProvinceId').valueChanges
+      .pipe(debounceTime(200))
+      .subscribe((provinceIdCh) => {
+        console.log('provinceIdCh', provinceIdCh);
+        console.log('municipppp', this.municipalities);
+        this.onFillMunicipalities(provinceIdCh);
+      });
   }
 
   fillFormByContact(contact) {
@@ -222,6 +242,8 @@ export class MyContactsComponent implements OnInit, OnDestroy {
     this.isEditing = true;
 
     this.createForm();
+    this.genSubxProvince();
+
     this.fillFormByContact(contact);
 
     this.onCreateContact = true;
@@ -235,8 +257,12 @@ export class MyContactsComponent implements OnInit, OnDestroy {
   }
 
   onSelectProvince(provinceId) {
-    this.municipalities = this.allMunicipalities.filter((item) => item.ProvinceId == provinceId);
+    this.onFillMunicipalities(provinceId);
     this.form.get('MunicipalityId').setValue(null);
+  }
+
+  onFillMunicipalities(provinceId) {
+    this.municipalities = this.allMunicipalities.filter((item) => item.ProvinceId == provinceId);
   }
 
   ngOnDestroy() {
