@@ -13,7 +13,9 @@ import { UtilsService } from '../../../core/services/utils/utils.service';
 })
 export class MainCarouselComponent implements OnInit, AfterViewInit, OnDestroy {
   _unsubscribeAll: Subject<any>;
+
   @Input() set slides(values: any[]) {
+    console.log('carusels', values);
     this._slides = [...values];
     // if (this._slides && this._slides.length) {
     //   setTimeout(() => {

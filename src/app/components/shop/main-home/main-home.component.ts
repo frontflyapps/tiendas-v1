@@ -181,12 +181,18 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  setDataOnLandingPage(data) {
+  setUrlPathOnImages(data) {
+    this.slides = [];
     this.slides = data.carrusels.map((item) => {
       item.image = this.imageUrl + item.image;
       item.imageXs = this.imageUrl + item.imageXs;
       return item;
     });
+  }
+
+  setDataOnLandingPage(data) {
+    this.setUrlPathOnImages(data);
+
     this.showStatic = false;
     this.allBicons = data.bicons || [];
     this.allProducts = data.recentProducts;
@@ -209,7 +215,8 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     this.getFrontDataRequest()
       .then((data: any) => {
 
-        this.setDataOnLandingPage(data.data);
+        const dataResponse = JSON.parse(JSON.stringify(data.data));
+        this.setDataOnLandingPage(dataResponse);
 
         const _response: any = JSON.parse(JSON.stringify(data.data));
         _response.timespan = new Date().getTime();
