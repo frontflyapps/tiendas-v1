@@ -2,7 +2,7 @@ import { MetaService } from 'src/app/core/services/meta.service';
 import { ShowToastrService } from '../../../../core/services/show-toastr/show-toastr.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { CartService } from '../../../shared/services/cart.service';
-import { Component, OnInit, OnDestroy, ViewChild, AfterContentInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Product } from '../../../../modals/product.model';
 import { ProductService } from '../../../shared/services/product.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -20,6 +20,8 @@ import { Cart } from 'src/app/modals/cart-item';
 import { BiconService } from 'src/app/core/services/bicon/bicon.service';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { SocialMediaComponent } from './social-media/social-media.component';
+import { LANDING_PAGE, PRODUCT_COUNT } from '../../../../core/classes/global.const';
+import { LocalStorageService } from '../../../../core/services/localStorage/localStorage.service';
 
 @Component({
   selector: 'app-product-details',
@@ -44,12 +46,14 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   allReviews = [];
   showZoom = false;
   public image: any;
-  public zoomImage: any;
   public counter = 1;
   index: number;
   localDatabaseUsers = environment.localDatabaseUsers;
   loadingFeatured = false;
   loadingRelated = false;
+
+  url = environment.apiUrl + 'landing-page';
+
   queryFeatured: IPagination = {
     limit: 8,
     offset: 0,
@@ -79,10 +83,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   errorPage = false;
 
   previewUrl: any;
-  referenceUrl: any;
-  thumbnailUrl: any;
   videoUrl: any;
-  youtubeUrl: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -97,9 +98,10 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     private showToastr: ShowToastrService,
     public _sanitizer: DomSanitizer,
     private fb: FormBuilder,
-    private httpCient: HttpClient,
     private metaService: MetaService,
     private _bottomSheet: MatBottomSheet,
+    private localStorageService: LocalStorageService,
+    private httpClient: HttpClient,
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
@@ -120,7 +122,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
           this.isLoading = false;
           this.utilsService.errorHandle(error);
           this.errorPage = true;
-          this.getFeaturedProducts();
+          // this.getFeaturedProducts();
         },
       );
     });
@@ -141,8 +143,12 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
       this.arrayImages[0].selected = true;
       this.mainImage = this.arrayImages[0];
     }
-    this.getRelatedProducts();
-    this.getFeaturedProducts();
+
+    console.log('this.product', this.product);
+    this.relatedProduct = this.product.Recomended;
+
+    // this.getRelatedProducts();
+    // this.getFeaturedProducts();
     // ////////////////////META///////////////////
     this.metaService.setMeta(
       this.product.name[this.language],
@@ -163,14 +169,16 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
       this.loggedInUser = this.loggedInUserService.getLoggedInUser();
     });
 
-    this.biconService.getAllBicons({ offset: 0, limit: 4, order: 'updatedAt' }).subscribe(
-      (data) => {
-        this.allBicons = data.data;
-      },
-      (error) => {
-        this.allBicons = [];
-      },
-    );
+    // this.biconService.getAllBicons({ offset: 0, limit: 4, order: 'updatedAt' }).subscribe(
+    //   (data) => {
+    //     this.allBicons = data.data;
+    //   },
+    //   (error) => {
+    //     this.allBicons = [];
+    //   },
+    // );
+
+    this.getPFDFromStorage();
 
     this.reviewForm = this.fb.group({
       review: [null, [Validators.required, Validators.maxLength(250), Validators.minLength(10)]],
@@ -181,6 +189,57 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this._unsubscribeAll.next(true);
     this._unsubscribeAll.complete();
+  }
+
+  getPFDFromStorage() {
+    try {
+      const lp = this.localStorageService.getFromStorage(LANDING_PAGE);
+
+      if (!lp) {
+        this.getFrontData();
+        return;
+      }
+
+      if (this.localStorageService.iMostReSearch(lp?.timespan, environment.timeToResearchLandingPageData)) {
+        this.getFrontData();
+      } else {
+        this.setDataOnLandingPage(lp);
+      }
+    } catch (e) {
+      this.getFrontData();
+    }
+  }
+
+  setDataOnLandingPage(data) {
+    this.allBicons = data.bicons || [];
+    this.featuredProducts = data.featureedProducts;
+    this.loadingFeatured = false;
+  }
+
+  getFrontData() {
+    this.getFrontDataRequest()
+      .then((data: any) => {
+
+        const dataResponse = JSON.parse(JSON.stringify(data.data));
+        this.setDataOnLandingPage(dataResponse);
+
+        const _response: any = JSON.parse(JSON.stringify(data.data));
+        _response.timespan = new Date().getTime();
+        this.localStorageService.setOnStorage(LANDING_PAGE, _response);
+
+        const _responseCP: any = {};
+        _responseCP.count = JSON.parse(JSON.stringify(_response.countProducts));
+        _responseCP.timespan = new Date().getTime();
+        this.localStorageService.setOnStorage(PRODUCT_COUNT, _responseCP);
+
+      })
+      .catch((error) => {
+        this.loadingFeatured = false;
+      });
+  }
+
+  getFrontDataRequest() {
+    return this.httpClient.get(this.url).toPromise();
   }
 
   onSelectImage(index) {
@@ -264,16 +323,16 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     let data: any = this.reviewForm.value;
     data.ProductId = this.product.id;
     if (data.id) {
-      this.productsService.editReview(data).subscribe((data) => {
+      this.productsService.editReview(data).subscribe((dataRes) => {
         this.showToastr.showSucces('Comentario editado exitósamente', 'Éxito', 3000);
-        let index = this.allReviews.findIndex((item) => item.id == data.data.id);
-        this.allReviews[index] = data.data;
+        let index = this.allReviews.findIndex((item) => item.id == dataRes.data.id);
+        this.allReviews[index] = dataRes.data;
         this.reviewForm.reset();
       });
     } else {
-      this.productsService.createReview(data).subscribe((data) => {
+      this.productsService.createReview(data).subscribe((dataRes) => {
         this.showToastr.showSucces('Comentario creado exitósamente', 'Éxito', 3000);
-        this.allReviews.unshift(data.data);
+        this.allReviews.unshift(dataRes.data);
         this.reviewForm.reset();
       });
     }
