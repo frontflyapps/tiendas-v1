@@ -213,9 +213,29 @@ export class UtilsService {
     }
   }
 
+  keyPressAlphaAndNumbersModIdentity(event) {
+    const inp = String.fromCharCode(event.keyCode);
+    if (/[a-zA-Z0-9\-_.]/.test(inp)) {
+      return true;
+    } else {
+      event.preventDefault();
+      return false;
+    }
+  }
+
   keyPressAlphaAndNumbersModUsername(event) {
     const inp = String.fromCharCode(event.keyCode);
     if (/[a-zA-Z0-9@.]/.test(inp)) {
+      return true;
+    } else {
+      event.preventDefault();
+      return false;
+    }
+  }
+
+  keyLettersNumberForEmail(event) {
+    const inp = String.fromCharCode(event.keyCode);
+    if (/[a-zA-Z0-9@._\-]/.test(inp)) {
       return true;
     } else {
       event.preventDefault();

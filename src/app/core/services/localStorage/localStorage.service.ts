@@ -8,13 +8,38 @@ export interface IVersionSystem {
   timespan: number;
 }
 
+export const SESSION_STORAGE_KEY = '_ldInit';
+
+export interface ISessionStorageItems {
+  landingPage?: boolean;
+  search?: boolean;
+  profile?: false;
+  cart?: false;
+  checkout?: false;
+  timespan: number;
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class LocalStorageService {
+
+  static initStateSession(): ISessionStorageItems {
+    const today = new Date().getTime();
+    return {
+      landingPage: false,
+      search: false,
+      profile: false,
+      cart: false,
+      checkout: false,
+      timespan: today,
+    };
+  }
+
   constructor(
     private cookieService: CookieService,
   ) {
+    sessionStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(LocalStorageService.initStateSession()));
   }
 
   setVersion() {

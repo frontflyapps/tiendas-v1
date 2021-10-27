@@ -108,7 +108,11 @@ h6 {
   line-height: 24px;
 }
 
-.mat-raised-button:not([class*=mat-elevation-z]) {
+.position-relative {
+  position: relative;
+}
+
+.mat-raised-button:not([class*='mat-elevation-z']) {
   box-shadow: none;
 }
 
@@ -124,9 +128,8 @@ h6 {
   background-color: $theme-main-red;
 }
 
-.mat-card:not([class*=mat-elevation-z]) {
-  box-shadow: 2px 2px 6px 0px rgba(0, 0, 0, 0.1), 0 1px 1px 0 rgba(0, 0, 0, 0), 0 1px 3px 0 rgba(0, 0, 0, 0.12) !important;
-
+.mat-card:not([class*='mat-elevation-z']) {
+  box-shadow: 2px 2px 6px 0 rgba(0, 0, 0, 0.1), 0 1px 1px 0 rgba(0, 0, 0, 0), 0 1px 3px 0 rgba(0, 0, 0, 0.12) !important;
 }
 
 // .overlay {

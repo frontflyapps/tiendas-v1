@@ -22,8 +22,10 @@ export class CartService implements OnDestroy {
   public $cartItemsUpdated: BehaviorSubject<any> = new BehaviorSubject([]);
   public $paymentUpdate: Subject<any> = new Subject();
   public observer: Subscriber<{}>;
+
   url = environment.apiUrl + 'cart';
   urlCheckoutData = environment.apiUrl + 'checkout';
+
   loggedInUser = null;
   _unsubscribeAll: Subject<any>;
   language = null;
@@ -98,11 +100,10 @@ export class CartService implements OnDestroy {
     if (this.carts) {
       items = [];
     }
-    const itemsStream = new Observable<any>((observer) => {
+    return new Observable<any>((observer) => {
       observer.next([items]);
       observer.complete();
     });
-    return itemsStream;
   }
 
   // Add to cart
@@ -269,15 +270,16 @@ export class CartService implements OnDestroy {
   // //////////////FUNCIONES PARA MANEJAR EL ARREGLO DE CARRITOS//////////////////////
 
   _getSimpleCart(BusinessId) {
-    const simpleCart = this.carts.find((item) => item.BusinessId == BusinessId);
-    return simpleCart;
+    return this.carts.find((item) => item.BusinessId == BusinessId);
   }
 
   /**
    *
-   * @param data
-   * {Business, Product, Stock}
-   * @returns  A Cart interface Data
+   * @param Product Product Data
+   * @param Business Business Data
+   * @param Stock Stock Data
+   *
+   * @returns Return a Cart Interface
    */
   _newSimpleCart(Product?, Business?, Stock?): Cart {
     return {
@@ -461,10 +463,7 @@ export class CartService implements OnDestroy {
   }
 
   private isSameMarket(cart, product) {
-    if (cart.market === product.market) {
-      return true;
-    }
-    return false;
+    return cart.market === product.market;
   }
 
   // CheckCart
@@ -671,8 +670,7 @@ export class CartService implements OnDestroy {
   }
 
   getCartNoLogged(): Cart[] {
-    let x = this.loggedInUserService._getDataFromStorage('cartItem') || [];
-    return x;
+    return this.loggedInUserService._getDataFromStorage('cartItem') || [];
   }
 
   deleteCartItem(data): Promise<any> {
