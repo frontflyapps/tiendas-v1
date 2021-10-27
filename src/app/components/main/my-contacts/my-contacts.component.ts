@@ -14,7 +14,7 @@ import { environment } from '../../../../environments/environment';
 import { ContactsService } from '../../../core/services/contacts/contacts.service';
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
-import { CUBAN_PHONE_START_5 } from '../../../core/classes/regex.const';
+import { CUBAN_PHONE_START_5, EMAIL_REGEX, IDENTITY_PASSPORT } from '../../../core/classes/regex.const';
 
 @Component({
   selector: 'app-my-contacts',
@@ -141,8 +141,15 @@ export class MyContactsComponent implements OnInit, OnDestroy {
       name: [null, [Validators.required]],
       lastName: [null, [Validators.required]],
 
-      email: [null, [Validators.required, Validators.email]],
-      identification: [null, [Validators.required]],
+      email: [null, [
+        Validators.required,
+        Validators.email,
+        Validators.pattern(EMAIL_REGEX),
+      ]],
+      identification: [null, [
+        Validators.required,
+        Validators.pattern(IDENTITY_PASSPORT),
+      ]],
 
       phone: [null, [
         Validators.required,

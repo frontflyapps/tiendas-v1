@@ -1,14 +1,14 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { ProductService } from '../../../shared/services/product.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Product } from './../../../../modals/product.model';
-import { CartService } from './../../../shared/services/cart.service';
+import { Product } from '../../../../modals/product.model';
+import { CartService } from '../../../shared/services/cart.service';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { environment } from './../../../../../environments/environment';
-import { LoggedInUserService } from './../../../../core/services/loggedInUser/logged-in-user.service';
+import { environment } from '../../../../../environments/environment';
+import { LoggedInUserService } from '../../../../core/services/loggedInUser/logged-in-user.service';
 import { takeUntil } from 'rxjs/operators';
-import { CurrencyService } from './../../../../core/services/currency/currency.service';
+import { CurrencyService } from '../../../../core/services/currency/currency.service';
 import { UtilsService } from 'src/app/core/services/utils/utils.service';
 
 @Component({
@@ -18,7 +18,7 @@ import { UtilsService } from 'src/app/core/services/utils/utils.service';
 })
 export class ProductDialogComponent implements OnInit {
   public products: any[] = [];
-  public counter: number = 1;
+  public counter = 1;
   public variantImage: any = '';
   public selectedColor: any = '';
   public selectedSize: any = '';
@@ -55,7 +55,9 @@ export class ProductDialogComponent implements OnInit {
   }
 
   public addToCart(product: Product, quantity) {
-    if (quantity == 0) return false;
+    if (quantity == 0) {
+      return false;
+    }
     this.cartService.addToCart(product, parseInt(quantity));
 
 

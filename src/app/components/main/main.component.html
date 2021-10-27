@@ -2,11 +2,11 @@
   <!-- Vista movil menu -->
   <mat-sidenav class="DrawerMobileView" [opened]="false" mode="over" #start>
 
-    <mat-list>
+    <mat-list class="position-relative">
       <mat-list-item>
         <mat-icon> person</mat-icon>
         &nbsp;
-        <span class="mat-body-2" style="font-size: 19px"> Hola, </span>
+        <span class="mat-body-2" style="font-size: 19px"> {{'Hola'|translate}}, </span>
         &nbsp;
         <span *ngIf="loggedInUser" class="mat-body-2" style="font-size: 19px">
           {{ loggedInUser.name }}
@@ -15,6 +15,11 @@
         <a *ngIf="!loggedInUser" href="/my-account" class="mat-body-2" style="font-size: 19px">
           {{ 'Inicia Sesión' | translate }}
         </a>
+
+        <span class="sidebar-close-btn" (click)="start.toggle()">
+          <mat-icon>close</mat-icon>
+        </span>
+
       </mat-list-item>
     </mat-list>
 
@@ -103,15 +108,21 @@
     position="end"
     fixedInViewport
   >
-    <mat-list>
+    <mat-list class="position-relative">
       <mat-list-item>
         <mat-icon> notifications</mat-icon>
         &nbsp;
         <span class="mat-body-2" style="font-size: 19px">
           {{ 'Notificaciones' | translate }}
         </span>
+
+        <span class="sidebar-close-btn" (click)="notificationBar.toggle()">
+          <mat-icon>close</mat-icon>
+        </span>
+
       </mat-list-item>
     </mat-list>
+
     <mat-divider></mat-divider>
     <app-panel-notifications (closePanel)="notificationBar.toggle()"></app-panel-notifications>
   </mat-sidenav>

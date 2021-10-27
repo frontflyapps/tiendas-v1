@@ -76,24 +76,38 @@
             </mat-error>
           </mat-form-field>
 
-          <div fxFlex="100" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1rem">
+          <div fxFlex="100" fxLayout="row" fxLayout.xs="column"
+               fxLayoutAlign="start center" fxLayoutAlign.xs="start"
+               fxLayoutGap="gappx">
 
-            <mat-form-field appearance="outline" fxFlex="50">
+            <mat-form-field appearance="outline" fxFlex="50" fxFlex.xs="100">
               <mat-label>{{'Email'|translate}}</mat-label>
-              <input type="email" matInput [formControl]="form.controls['email']" placeholder="{{'Email'|translate}}">
+              <input type="email" matInput
+                     [formControl]="form.controls['email']"
+                     (keypress)="utilsService.keyLettersNumberForEmail($event)"
+                     placeholder="{{'Email'|translate}}">
               <mat-icon class="greyIcon" matSuffix>mail</mat-icon>
               <mat-error *ngIf="form.controls['email'].hasError('required')">
                 {{'email'|translate}} <strong>{{'is required'|translate}}</strong>
               </mat-error>
+              <mat-error *ngIf="form.controls['email'].hasError('email')
+                        || form.controls['email'].hasError('pattern')">
+                {{'email'|translate}} <strong>{{'incorrecto'|translate}}</strong>
+              </mat-error>
             </mat-form-field>
 
-            <mat-form-field appearance="outline" fxFlex="50">
+            <mat-form-field appearance="outline" fxFlex="50" fxFlex.xs="100">
               <mat-label>{{'Documento de identidad'|translate}}</mat-label>
-              <input type="email" matInput [formControl]="form.controls['identification']"
+              <input type="email" matInput
+                     [formControl]="form.controls['identification']"
+                     (keypress)="utilsService.keyPressAlphaAndNumbersModIdentity($event)"
                      placeholder="{{'identification'|translate}}">
-              <mat-icon class="greyIcon" matSuffix>mail</mat-icon>
+              <mat-icon class="greyIcon" matSuffix>fact_check</mat-icon>
               <mat-error *ngIf="form.controls['identification'].hasError('required')">
-                {{'email'|translate}} <strong>{{'is required'|translate}}</strong>
+                {{'identification'|translate}} <strong>{{'is required'|translate}}</strong>
+              </mat-error>
+              <mat-error *ngIf="form.controls['identification'].hasError('pattern')">
+                {{'identification'|translate}} <strong>{{'incorrecto'|translate}}</strong>
               </mat-error>
             </mat-form-field>
 
@@ -105,11 +119,8 @@
                    [formControl]="form.controls['phone']"
                    (keypress)="utilsService.keyPressNumbers($event)"
                    placeholder="{{'Phone'|translate}}">
-            <mat-icon class="greyIcon" matSuffix>mail</mat-icon>
+            <mat-icon class="greyIcon" matSuffix>ring_volume</mat-icon>
             <mat-hint>{{'Ejemplo, 5 XXX XX XX' | translate}}</mat-hint>
-            <mat-error *ngIf="form.controls['phone'].hasError('required')">
-              {{'phone'|translate}} <strong>{{'is required'|translate}}</strong>
-            </mat-error>
             <mat-error *ngIf="form.controls['phone'].hasError('required')">
               {{ 'Phone' | translate }} <strong>{{ 'is required' | translate }}</strong>
             </mat-error>

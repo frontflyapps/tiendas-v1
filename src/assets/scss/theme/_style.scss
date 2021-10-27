@@ -108,6 +108,10 @@ h6 {
   line-height: 24px;
 }
 
+.position-relative {
+  position: relative;
+}
+
 .mat-raised-button:not([class*='mat-elevation-z']) {
   box-shadow: none;
 }

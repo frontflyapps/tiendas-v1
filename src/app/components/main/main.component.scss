@@ -40,21 +40,34 @@ app-main,
     }
   }
 
+  .sidebar-close-btn {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    position: absolute;
+    right: 4px;
+    top: 0;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+
   .DrawerMobileView {
-    width: 295px !important;
-    padding: 0px !important;
+    width: 360px !important;
+    max-width: 100% !important;
+    padding: 0 !important;
     position: fixed;
-    margin-left: 0px;
+    margin-left: 0;
     color: #6d3112;
   }
 
   .DrawerNotificationPanel {
-    width: 330px !important;
-    padding: 0px !important;
-    position: fixed;
-    margin-left: 0px;
-    background-color: #6d3112;
+    width: 360px !important;
     max-width: 100% !important;
+    padding: 0 !important;
+    position: fixed;
+    margin-left: 0;
+    background-color: #6d3112;
   }
 
   .sidebar-nav-items {
