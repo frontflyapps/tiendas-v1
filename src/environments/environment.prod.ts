@@ -22,9 +22,9 @@ export const environment = {
   localDatabaseUsers: true,
 
   contacts: {
-    phone: '(+53) 7202 1381',
-    email: 'tienda@marinasmarlin.com',
-    address: 'Calle 2, esq 7ma, Miramar, Playa',
+    phone: '(+53) 7XXX XXXX',
+    email: 'tienda@tiendascaracol.com',
+    address: 'Calle X, entre D y F. Direccion',
   },
 
   adminService: 'https://admin.tiendascaracol.com/',

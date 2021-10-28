@@ -7,7 +7,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
-import { PipesModule } from './../../core/pipes/pipes.module';
+import { PipesModule } from '../../core/pipes/pipes.module';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MainCarouselComponent } from './main-carousel/main-carousel.component';
@@ -53,6 +53,7 @@ import { ShareButtonModule } from 'ngx-sharebuttons/button';
 import { SocialMediaComponent } from './products/product-details/social-media/social-media.component';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { NgxImageZoomModule } from 'ngx-image-zoom';
+import { FooterProductCardModule } from '../shared/footer-product-card/footer-product-card.module';
 
 @NgModule({
   declarations: [
@@ -111,6 +112,7 @@ import { NgxImageZoomModule } from 'ngx-image-zoom';
     ShareIconsModule,
     MatBottomSheetModule,
     NgxImageZoomModule,
+    FooterProductCardModule,
   ],
   providers: [
     {

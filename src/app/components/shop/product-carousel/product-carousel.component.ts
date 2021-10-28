@@ -59,7 +59,7 @@ export class ProductCarouselComponent implements OnInit, AfterViewInit, OnDestro
     public loggedInUserService: LoggedInUserService,
     private router: Router,
     public utilsService: UtilsService,
-    private cartService: CartService,
+    public cartService: CartService,
     private breakpointObserver: BreakpointObserver,
     private productService: ProductService,
     private wishlistService: WishlistService,

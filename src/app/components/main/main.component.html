@@ -130,7 +130,7 @@
   <!-- Todos excepto vista movil -->
   <div fxHide.lt-md class="home-header" [class.py-2]="!loggedInUser">
     <div class="container-header" fxLayout="row wrap" fxLayoutAlign="space-between center">
-      <img fxShow fxHide.lt-md class="Logo-img" routerLink="/" src="assets/images/logo-wout-gen-white.png" />
+      <img fxShow fxHide.lt-md class="Logo-img" routerLink="/" src="assets/images/logo.png" />
       <button fxHide fxShow.lt-md mat-icon-button (click)="start.toggle()">
         <mat-icon>menu</mat-icon>
       </button>
@@ -138,7 +138,8 @@
       <div fxFlex class="search-form" fxLayout="row" fxLayoutAlign="start center">
         <div class="search-form" fxLayout="row" fxLayoutAlign="start center">
           <div class="form-wrap">
-            <input [formControl]="searchForm" type="text" placeholder="{{ 'Buscar en Marlin...' | translate }}" />
+            <input [formControl]="searchForm" type="text" placeholder="{{ 'Buscar en Tienda...' | translate }}"
+                   (keyup.enter)="onSearch()" />
             <button (click)="onSearch()" class="btn-search">
               <mat-icon>search</mat-icon>
             </button>
@@ -193,7 +194,7 @@
 
         <app-shopping-widgets></app-shopping-widgets>
 
-        <a *ngIf="loggedInUser" class="px-3" fxLayoutAlign="start center" style="color: white">
+        <a *ngIf="loggedInUser" class="px-3" fxLayoutAlign="start center">
           <button mat-icon-button (click)="notificationBar.toggle()">
             <mat-icon [matBadge]="notificationsService.getUnreadNotifications()" matBadgeColor="warn"
             >notifications
@@ -292,7 +293,7 @@
 
           <app-shopping-widgets></app-shopping-widgets>
 
-          <a *ngIf="loggedInUser" fxLayoutAlign="start center" style="color: white">
+          <a *ngIf="loggedInUser" fxLayoutAlign="start center">
             <button mat-icon-button (click)="notificationBar.toggle()">
               <mat-icon [matBadge]="notificationsService.getUnreadNotifications()" matBadgeColor="warn"
               >notifications
@@ -308,7 +309,8 @@
           <input fxFlex
                  [formControl]="searchForm"
                  type="search"
-                 placeholder="{{ 'Buscar en Marlin...' | translate }}" />
+                 placeholder="{{ 'Buscar en Tienda...' | translate }}"
+                 (keyup.enter)="onSearch()" />
           <button (click)="onSearch()">
             <mat-icon>search</mat-icon>
           </button>

@@ -6,8 +6,8 @@ const packageJson = require('../../package.json');
 export const environment = {
   production: false,
 
-  apiUrl: 'http://192.168.1.12:8998/v1/',
-  imageUrl: 'http://192.168.1.12:8998/v1/',
+  apiUrl: 'http://192.168.1.17:8998/v1/',
+  imageUrl: 'http://192.168.1.17:8998/v1/',
 
   // apiUrl: 'https://api.tiendascaracol.com/v1/',
   // imageUrl: 'https://api.tiendascaracol.com/v1/',
@@ -28,9 +28,9 @@ export const environment = {
   localDatabaseUsers: true,
 
   contacts: {
-    phone: '(+53) 7202 1381',
-    email: 'tienda@marinasmarlin.com',
-    address: 'Calle 2, esq 7ma, Miramar, Playa',
+    phone: '(+53) 7XXX XXXX',
+    email: 'tienda@tiendascaracol.com',
+    address: 'Calle X, entre D y F. Direccion',
   },
 
   adminService: 'http://admintienda.tiendascaracol.com/',

@@ -627,8 +627,10 @@
         <div *ngIf="!loadingPayment" fxFlex="grow" fxLayout="row" fxLayoutAlign="space-between start"
              class="actions-buttons">
           <button mat-stroked-button (click)="onGoToInfoDataToPay()">{{'Atrás' | translate}}</button>
+<!--          <button mat-raised-button color="primary" (click)="onPayOrder()"-->
+<!--                  [disabled]="form.invalid || !buyProducts.length">{{'Pagar' | translate}}</button>-->
           <button mat-raised-button color="primary" (click)="onPayOrder()"
-                  [disabled]="form.invalid || !buyProducts.length">{{'Pagar' | translate}}</button>
+                  [disabled]="true">{{'Pagar' | translate}}</button>
         </div>
 
         <div *ngIf="loadingPayment" style="width: 100%; min-height: 500px; height: 100%" class="loader">
