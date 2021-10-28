@@ -144,7 +144,6 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
       this.mainImage = this.arrayImages[0];
     }
 
-    console.log('this.product', this.product);
     this.relatedProduct = this.product.Recomended;
 
     // this.getRelatedProducts();
