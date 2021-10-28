@@ -17,7 +17,7 @@
         </button>
       </span>
     </mat-menu>-->
-    <div class="col" fxLayout="row">
+    <div class="col" fxLayout="row" fxLayout.xs="column">
       <div class="col-1" fxLayout="column" fxLayoutAlign=" start">
         <a [routerLink]="['']" mat-button class="mat-button">
           <span>{{ 'Inicio' | translate }}</span>
@@ -68,6 +68,27 @@
       src="assets/images/logoWhite.png"
       alt="footer logo"
     />
+
+    <div id="footer-contacts" fxLayout="row" fxLayout.xs="column"
+         fxLayoutAlign="start center" fxLayoutAlign.xs="start"
+         fxLayoutGap="1rem" fxLayoutGap.xs="10px"
+         class="py-3">
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="4px">
+        <mat-icon>phone</mat-icon>
+        <span>{{contacts.phone || ''}}</span>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="4px">
+        <mat-icon>email</mat-icon>
+        <span>{{contacts.email || ''}}</span>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="4px">
+        <mat-icon>location_on</mat-icon>
+        <span>{{contacts.address || ''}}</span>
+      </div>
+    </div>
+
     <ul class="network-icons" fxLayout="row">
       <li fxLayoutAlign="center center">
         <a
@@ -115,7 +136,17 @@
         </a>
       </li>
     </ul>
-    <p class="mb-1">Copyright© {{ year }}. {{ 'Todos los derechos reservados' | translate }}</p>
-    <span class="mat-body-2 mb-3">{{ 'v' | translate }}{{ version }}</span>
+
+    <div fxLayout="row" fxLayout.xs="column"
+         fxLayoutAlign="center"
+         fxLayoutGap="10px" fxLayoutGap.xs="4px"
+         class="mb-3">
+      <span>Copyright© {{ year }}.</span>
+
+      <span>{{ 'Todos los derechos reservados' | translate }}.</span>
+
+      <span>{{ 'v' | translate }}{{ version }}</span>
+    </div>
+
   </div>
 </footer>

@@ -6,6 +6,12 @@ import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-in-user.service';
 import { IUser } from '../../../core/classes/user.class';
 
+export interface IFooterContacts {
+  phone: string;
+  email: string;
+  address: string;
+}
+
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html',
@@ -16,6 +22,8 @@ export class FooterComponent implements OnInit {
   language: string;
   currency: string;
   public version = environment.versions.app;
+
+  public contacts: IFooterContacts = environment.contacts;
 
   loggedInUser: IUser;
 
@@ -66,6 +74,7 @@ export class FooterComponent implements OnInit {
     localStorage.setItem('language', this.language);
     // this.loggedInUserService.languageChange(this.language);
   }
+
   onShowProfile(): void {
     let dialogRef: MatDialogRef<EditProfileComponent, any>;
     dialogRef = this.dialog.open(EditProfileComponent, {
