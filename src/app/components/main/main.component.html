@@ -143,7 +143,8 @@
       <div fxFlex class="search-form" fxLayout="row" fxLayoutAlign="start center">
         <div class="search-form" fxLayout="row" fxLayoutAlign="start center">
           <div class="form-wrap">
-            <input [formControl]="searchForm" type="text" placeholder="{{ 'Buscar en MiBulevar...' | translate }}" />
+            <input [formControl]="searchForm" type="text" placeholder="{{ 'Buscar en MiBulevar...' | translate }}"
+                   (keyup.enter)="onSearch()" />
             <button (click)="onSearch()" class="btn-search">
               <mat-icon>search</mat-icon>
             </button>
@@ -317,7 +318,8 @@
           <input fxFlex
                  [formControl]="searchForm"
                  type="search"
-                 placeholder="{{ 'Buscar en MiBulevar...' | translate }}" />
+                 placeholder="{{ 'Buscar en MiBulevar...' | translate }}"
+                 (keyup.enter)="onSearch()" />
           <button (click)="onSearch()">
             <mat-icon>search</mat-icon>
           </button>
