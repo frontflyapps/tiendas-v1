@@ -42,12 +42,13 @@
         </a>
       </div>
     </div>
-
-    <a class="item-selector mx-3 my-2"
-       fxLayoutAlign="start center"
-       mat-button
-       [matMenuTriggerFor]="langMenu"
-       #langMenuTrigger="matMenuTrigger">
+    <a
+      class="item-selector mx-3 my-2"
+      fxLayoutAlign="start center"
+      mat-button
+      [matMenuTriggerFor]="langMenu"
+      #langMenuTrigger="matMenuTrigger"
+    >
       <img [src]="flag?.image" width="18" />
       <mat-icon>arrow_drop_down</mat-icon>
       <span>{{ flag?.name }}</span>
@@ -67,39 +68,89 @@
   <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="1rem" style="background-color: #1976d2">
     <img class="mt-4 image-footer" src="assets/images/logo-navbar.png" alt="footer logo"
          ngClass.lt-sm="img-footer">
+    <img class="mt-4"
+         src="assets/images/logo-navbar.png"
+         alt="footer logo"
+         ngClass.lt-sm="img-footer" />
+
+    <div id="footer-contacts" fxLayout="row" fxLayout.xs="column"
+         fxLayoutAlign="start center" fxLayoutAlign.xs="start"
+         fxLayoutGap="1rem" fxLayoutGap.xs="10px"
+         class="py-3">
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="4px">
+        <mat-icon>phone</mat-icon>
+        <span>{{contacts.phone || ''}}</span>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="4px">
+        <mat-icon>email</mat-icon>
+        <span>{{contacts.email || ''}}</span>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="4px">
+        <mat-icon>location_on</mat-icon>
+        <span>{{contacts.address || ''}}</span>
+      </div>
+    </div>
+
     <ul class="network-icons" fxLayout="row">
       <li fxLayoutAlign="center center">
-        <a href="https://www.facebook.com/" target="_blank" class="icon-redes"
-           fxLayoutAlign="center center">
+        <a
+          href="https://www.facebook.com/MarinasMarlin"
+          target="_blank"
+          class="icon-redes"
+          fxLayoutAlign="center center"
+        >
           <i class="fab fa-facebook-f" style="font-size: 18px"></i>
         </a>
       </li>
       <li fxLayoutAlign="center center">
-        <a href="https://twitter.com/" target="_blank" class="icon-redes"
-           fxLayoutAlign="center center">
+        <a href="https://twitter.com/MarinasMarlin" target="_blank" class="icon-redes" fxLayoutAlign="center center">
           <i class="fab fa-twitter" style="font-size: 18px"></i>
         </a>
       </li>
       <li fxLayoutAlign="center center">
-        <a href="https://cu.linkedin.com/" target="_blank" class="icon-redes"
-           fxLayoutAlign="center center">
+        <a
+          href="https://cu.linkedin.com/company/nauticamarlin"
+          target="_blank"
+          class="icon-redes"
+          fxLayoutAlign="center center"
+        >
           <i class="fab fa-linkedin-in" style="font-size: 18px"></i>
         </a>
       </li>
       <li fxLayoutAlign="center center">
-        <a href="https://www.youtube.com/" target="_blank" class="icon-redes"
-           fxLayoutAlign="center center">
+        <a
+          href="https://www.youtube.com/channel/UC-1qc8T9YJokRxWAAADLoeA"
+          target="_blank"
+          class="icon-redes"
+          fxLayoutAlign="center center"
+        >
           <i class="fab fa-youtube" style="font-size: 18px"></i>
         </a>
       </li>
       <li fxLayoutAlign="center center">
-        <a href="https://www.instagram.com/" target="_blank" class="icon-redes"
-           fxLayoutAlign="center center">
+        <a
+          href="https://www.instagram.com/marlin_marinas/"
+          target="_blank"
+          class="icon-redes"
+          fxLayoutAlign="center center"
+        >
           <i class="fab fa-instagram" style="font-size: 18px"></i>
         </a>
       </li>
     </ul>
-    <p class="mb-1">Copyright©  {{ year }}. {{'Todos los derechos reservados' | translate}}</p>
-    <span class="mat-body-2 mb-3">{{ 'v' | translate }}{{version}}</span>
+
+    <div fxLayout="row" fxLayout.xs="column"
+         fxLayoutAlign="center"
+         fxLayoutGap="10px" fxLayoutGap.xs="4px"
+         class="mb-3">
+      <span>Copyright© {{ year }}.</span>
+
+      <span>{{ 'Todos los derechos reservados' | translate }}.</span>
+
+      <span>{{ 'v' | translate }}{{ version }}</span>
+    </div>
+
   </div>
 </footer>
