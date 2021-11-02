@@ -21,6 +21,8 @@ export const environment = {
   timeToResetSession: 14400000, // Time to reset the session (ms)
   timeToResearchProductData: 10000, // Time to research products (ms)
   timeToResearchLandingPageData: 10000, // Time to research products (ms)
+  timeToResearchMenuData: 10000, // Time to research products (ms)
+  timeToResearchCategoriesData: 10000, // Time to research categories (ms)
 
   url: 'http://tienda.tiendalocal.com:4308',
   urlAboutUs: 'http://tienda.tiendalocal.com:4308',
