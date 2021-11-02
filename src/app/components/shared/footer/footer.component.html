@@ -1,5 +1,5 @@
 <footer class="pt-3">
-  <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutAlign.xs="start center">
+  <div fxLayout="column" fxLayoutAlign="center center" fxLayoutAlign.xs="start center">
     <!--<a
       class="item-selector mx-3 my-2"
       fxLayoutAlign="start center"
@@ -17,6 +17,32 @@
         </button>
       </span>
     </mat-menu>-->
+
+    <div class="col" fxLayout="row" fxLayout.xs="column">
+      <div class="col-1" fxLayout="column" fxLayoutAlign=" start">
+        <a [routerLink]="['']" mat-button class="mat-button">
+          <span>{{ 'Inicio' | translate }}</span>
+        </a>
+        <a *ngIf="loggedInUser" mat-button class="mat-button" (click)="onShowProfile()">
+          <span>{{ 'Tu cuenta' | translate }}</span>
+        </a>
+        <a [routerLink]="['term-conditions']" fxLayoutAlign="start center" mat-button>
+          <span>{{ 'Términos y condiciones' | translate }}</span>
+        </a>
+      </div>
+      <div class="col-2" fxLayout="column" fxLayoutAlign=" start">
+        <a [routerLink]="['/faq']" mat-button class="mat-button">
+          <span>{{ 'Ayuda' | translate }}</span>
+        </a>
+        <a *ngIf="loggedInUser" [routerLink]="['my-orders']" mat-button class="mat-button">
+          <span>{{ 'Tus pedidos' | translate }}</span>
+        </a>
+        <a [routerLink]="['privacy-policy']" fxLayoutAlign="start center" mat-button>
+          <span>{{ 'Políticas de privacidad' | translate }}</span>
+        </a>
+      </div>
+    </div>
+
     <a class="item-selector mx-3 my-2"
        fxLayoutAlign="start center"
        mat-button
@@ -27,32 +53,20 @@
       <span>{{ flag?.name }}</span>
     </a>
     <mat-menu #langMenu="matMenu" [overlapTrigger]="false" xPosition="before" class="app-dropdown">
-        <span>
-          <button mat-menu-item *ngFor="let flag of flags" (click)="changeLang(flag)">
-            <img [src]="flag.image" width="18" /> {{ flag.name }}
-          </button>
-        </span>
+      <span>
+        <button mat-menu-item *ngFor="let flag of flags" (click)="changeLang(flag)">
+          <img [src]="flag.image" width="18" /> {{ flag.name }}
+        </button>
+      </span>
     </mat-menu>
 
-    <a [routerLink]="['term-conditions']"
-       routerLinkActive=" router-link-active"
-       class="item-selector mx-3 my-2"
-       fxLayoutAlign="start center"
-       mat-button>
-      <span>{{ 'Términos y condiciones' | translate }}</span>
-    </a>
+    <div style="padding-bottom: 16px"></div>
 
-    <a [routerLink]="['privacy-policy']"
-       routerLinkActive=" router-link-active"
-       class="item-selector mx-3 my-2"
-       fxLayoutAlign="start center"
-       mat-button>
-      <span>{{ 'Políticas de privacidad' | translate }}</span>
-    </a>
   </div>
 
-  <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="1rem">
-    <img class="mt-4 image-footer" src="../../../../assets/images/logo-navbar.png" alt="footer logo" ngClass.lt-sm="img-footer">
+  <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="1rem" style="background-color: #1976d2">
+    <img class="mt-4 image-footer" src="assets/images/logo-navbar.png" alt="footer logo"
+         ngClass.lt-sm="img-footer">
     <ul class="network-icons" fxLayout="row">
       <li fxLayoutAlign="center center">
         <a href="https://www.facebook.com/" target="_blank" class="icon-redes"

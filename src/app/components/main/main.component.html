@@ -104,7 +104,8 @@
   <!-- Todos exepto vista movil -->
   <div fxHide.lt-md class="home-header" [class.py-2]="!loggedInUser">
     <div class="container-header" fxLayout="row wrap" fxLayoutAlign="space-between center">
-      <img fxShow fxHide.lt-md class="Logo-img" routerLink="/" src="../../../assets/images/logo-navbar.png" />
+      <img fxShow fxHide.lt-md class="Logo-img" routerLink="/"
+           src="assets/images/logo-navbar.png"  alt="logo"/>
       <button fxHide fxShow.lt-md mat-icon-button (click)="start.toggle()">
         <mat-icon>menu</mat-icon>
       </button>
@@ -171,9 +172,10 @@
         </a>
         <a fxLayoutAlign="start center" mat-icon-button fxShow *ngIf="loggedInUser" [matMenuTriggerFor]="userMenu"
            #userMenuTrigger="matMenuTrigger" class="px-0 pl-2">
-          <img *ngIf="!this.loggedInUser.avatar" src="../../../assets/images/avatars/profile2.png"
-               class="profileImage" />
-          <img *ngIf="this.loggedInUser.avatar" [src]="urlImage + loggedInUser.avatar" class="profileImage" />
+          <img *ngIf="!this.loggedInUser.avatar" src="assets/images/avatars/profile2.png"
+               class="profileImage" alt="avatar"/>
+          <img *ngIf="this.loggedInUser.avatar" [src]="urlImage + loggedInUser.avatar" class="profileImage"
+               alt="avatar"/>
         </a>
 
         <mat-menu #userMenu="matMenu" [overlapTrigger]="false" xPosition="before" class="app-dropdown">
@@ -222,7 +224,7 @@
           <button mat-icon-button (click)="start.toggle()">
             <mat-icon>menu</mat-icon>
           </button>
-          <img style="width: 100px" routerLink="/" src="../../../assets/images/logo-navbar.png" />
+          <img style="width: 100px" routerLink="/" src="assets/images/logo-navbar.png" />
         </div>
 
         <div class="userWidgets m-0 p-0" fxLayoutAlign="start center">
