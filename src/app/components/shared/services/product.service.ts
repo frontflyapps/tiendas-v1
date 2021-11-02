@@ -9,9 +9,22 @@ import { distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
 import { IProductData } from '../../shop/products/product-vertical/product-vertical.component';
 import { FRONT_PRODUCT_DATA } from '../../../core/classes/global.const';
 import { LocalStorageService } from '../../../core/services/localStorage/localStorage.service';
+import { IProductCard } from '../../../core/classes/product-card.class';
 
 // Get product from Localstorage
 let products = JSON.parse(localStorage.getItem('compareItem')) || [];
+
+@Injectable({
+  providedIn: 'root',
+})
+export class ProductDataService {
+
+  popularProducts: IProductCard[] = [];
+  featuredProducts: IProductCard[] = [];
+  bestSellerProducts: IProductCard[] = [];
+  allProducts: IProductCard[] = [];
+
+}
 
 @Injectable({
   providedIn: 'root',

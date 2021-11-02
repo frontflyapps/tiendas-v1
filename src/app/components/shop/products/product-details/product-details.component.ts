@@ -4,7 +4,7 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { CartService } from '../../../shared/services/cart.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Product } from '../../../../modals/product.model';
-import { ProductService } from '../../../shared/services/product.service';
+import { ProductDataService, ProductService } from '../../../shared/services/product.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { UtilsService } from '../../../../core/services/utils/utils.service';
@@ -102,6 +102,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     private _bottomSheet: MatBottomSheet,
     private localStorageService: LocalStorageService,
     private httpClient: HttpClient,
+    public productDataService: ProductDataService,
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
@@ -211,7 +212,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
 
   setDataOnLandingPage(data) {
     this.allBicons = data.bicons || [];
-    this.featuredProducts = data.featureedProducts;
+    this.featuredProducts = this.productDataService.featuredProducts;
     this.loadingFeatured = false;
   }
 
@@ -270,16 +271,16 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     });
   }
 
-  getFeaturedProducts() {
-    this.loadingFeatured = true;
-    this.productsService.getFeaturedProducts(this.queryFeatured).subscribe((data: any) => {
-      this.featuredProducts = data.data;
-      const timeOut = setTimeout(() => {
-        this.loadingFeatured = false;
-        clearTimeout(timeOut);
-      }, 800);
-    });
-  }
+  // getFeaturedProducts() {
+  //   this.loadingFeatured = true;
+  //   this.productsService.getFeaturedProducts(this.queryFeatured).subscribe((data: any) => {
+  //     this.featuredProducts = data.data;
+  //     const timeOut = setTimeout(() => {
+  //       this.loadingFeatured = false;
+  //       clearTimeout(timeOut);
+  //     }, 800);
+  //   });
+  // }
 
   // Add to cart
   public addToCart(product: any, quantity) {
