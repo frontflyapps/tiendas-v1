@@ -1,6 +1,7 @@
 <mat-sidenav-container fullscreen>
   <!-- Vista movil menu -->
   <mat-sidenav class="DrawerMobileView" [opened]="false" mode="over" #start>
+
     <mat-list>
       <mat-list-item>
         <mat-icon> person</mat-icon>
@@ -16,7 +17,9 @@
         </a>
       </mat-list-item>
     </mat-list>
+
     <mat-divider></mat-divider>
+
     <div class="sidebar-nav-items" fxLayout="column" fxLayoutAlign="start stretch">
       <app-sidebar *ngFor="let item of navItems" [item]="item"></app-sidebar>
       <!--      <a mat-list-item class="link-nav-a" href="/become-a-seller">-->
@@ -28,7 +31,9 @@
         <span class="mat-body-2" style="font-size: 15px">{{ 'Crea tu negocio' | translate }}</span>
       </div>
     </div>
+
     <mat-divider *ngFor="let item of [1, 2, 3, 4]"></mat-divider>
+
     <mat-list>
       <mat-list-item>
         <span class="mat-body-2" style="font-size: 19px">
@@ -36,10 +41,15 @@
         </span>
       </mat-list-item>
     </mat-list>
+
     <mat-nav-list>
       <a *ngIf="loggedInUser" fxLayoutAlign="start center" mat-list-item (click)="onShowProfile()">
         <mat-icon>build</mat-icon>
         <span class="ml-3">{{ 'Profile' | translate }}</span>
+      </a>
+      <a *ngIf="loggedInUser" fxLayoutAlign="start center" mat-list-item (click)="onShowProfile()">
+        <mat-icon>build</mat-icon>
+        <span class="ml-3">{{ 'Mis contactos' | translate }}</span>
       </a>
       <a *ngIf="loggedInUser" fxLayoutAlign="start center" mat-list-item (click)="onChangePass()">
         <mat-icon>no_encryption</mat-icon>
@@ -75,14 +85,17 @@
 
       <a *ngIf="loggedInUser && (loggedInUserService.isAdminOrOwnerUser() || loggedInUserService.isMessengerUser())"
          mat-list-item
-         class="link-nav-a" (click)="onGotoBackend()">
+         class="link-nav-a"
+         (click)="onGotoBackend()">
         {{ 'Ir a la administración' | translate }}
       </a>
 
       <a *ngIf="loggedInUser" mat-list-item class="link-nav-a" (click)="onLogout()">
         {{ 'Salir' | translate }}
       </a>
+
     </mat-nav-list>
+
   </mat-sidenav>
 
   <!-- Notifications -->
@@ -105,7 +118,7 @@
   <div fxHide.lt-md class="home-header" [class.py-2]="!loggedInUser">
     <div class="container-header" fxLayout="row wrap" fxLayoutAlign="space-between center">
       <img fxShow fxHide.lt-md class="Logo-img" routerLink="/"
-           src="assets/images/logo-navbar.png"  alt="logo"/>
+           src="assets/images/logo-navbar.png" alt="logo" />
       <button fxHide fxShow.lt-md mat-icon-button (click)="start.toggle()">
         <mat-icon>menu</mat-icon>
       </button>
@@ -113,9 +126,9 @@
       <div fxFlex class="search-form" fxLayout="row" fxLayoutAlign="start center">
         <div class="search-form" fxLayout="row" fxLayoutAlign="start center">
           <div class="form-wrap">
-            <input [formControl]="searchForm" type="text" placeholder="{{ 'Buscar en MiBulevar' | translate }}" />
-            <button (click)="onSearch()" class="btn-search" type="submit">
-              <mat-icon> search</mat-icon>
+            <input [formControl]="searchForm" type="text" placeholder="{{ 'Buscar en MiBulevar...' | translate }}" />
+            <button (click)="onSearch()" class="btn-search">
+              <mat-icon>search</mat-icon>
             </button>
           </div>
         </div>
@@ -173,19 +186,27 @@
         <a fxLayoutAlign="start center" mat-icon-button fxShow *ngIf="loggedInUser" [matMenuTriggerFor]="userMenu"
            #userMenuTrigger="matMenuTrigger" class="px-0 pl-2">
           <img *ngIf="!this.loggedInUser.avatar" src="assets/images/avatars/profile2.png"
-               class="profileImage" alt="avatar"/>
+               class="profileImage" alt="avatar" />
           <img *ngIf="this.loggedInUser.avatar" [src]="urlImage + loggedInUser.avatar" class="profileImage"
-               alt="avatar"/>
+               alt="avatar" />
         </a>
 
         <mat-menu #userMenu="matMenu" [overlapTrigger]="false" xPosition="before" class="app-dropdown">
+
           <button *ngIf="this.loggedInUser" mat-menu-item>
             <strong>{{ this.loggedInUser.name }} {{ this.loggedInUser.lastName || '' }}</strong>
           </button>
+
           <button mat-menu-item (click)="onShowProfile()">
             <mat-icon>build</mat-icon>
             <span class="mat-body-1">{{ 'Profile' | translate }}</span>
           </button>
+
+          <button mat-menu-item (click)="onShowProfile()">
+            <mat-icon>build</mat-icon>
+            <span class="mat-body-1">{{ 'Mis contactos' | translate }}</span>
+          </button>
+
           <button
             *ngIf="loggedInUser && (loggedInUserService.isAdminOrOwnerUser() || loggedInUserService.isMessengerUser())"
             mat-menu-item
@@ -220,11 +241,11 @@
   <div fxHide fxShow.lt-md class="home-header-2 p-2">
     <div fxLayout="column" fxLayoutAlign="start stretch">
       <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="gappx">
-        <div fxLayoutAlign="start center">
-          <button mat-icon-button (click)="start.toggle()">
+        <div fxLayoutAlign="start center" class="main-logo-container">
+          <button mat-icon-button (click)="start.toggle()" class="mr-2">
             <mat-icon>menu</mat-icon>
           </button>
-          <img style="width: 100px" routerLink="/" src="assets/images/logo-navbar.png" />
+          <img class="logo-img-main" routerLink="/" src="assets/images/logo-navbar.png" alt="logo" />
         </div>
 
         <div class="userWidgets m-0 p-0" fxLayoutAlign="start center">
@@ -246,9 +267,12 @@
 
       <div fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="gappx">
         <div class="mobile-search" fxLayout="row" fxLayoutAlign="start center">
-          <input fxFlex [formControl]="searchForm" type="search" placeholder="{{ 'Type to search...' | translate }}" />
-          <button (click)="onSearch()" type="submit">
-            <mat-icon> search</mat-icon>
+          <input fxFlex
+                 [formControl]="searchForm"
+                 type="search"
+                 placeholder="{{ 'Buscar en MiBulevar...' | translate }}" />
+          <button (click)="onSearch()">
+            <mat-icon>search</mat-icon>
           </button>
         </div>
       </div>
