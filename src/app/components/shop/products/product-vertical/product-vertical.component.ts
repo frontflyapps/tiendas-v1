@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ProductService } from '../../../shared/services/product.service';
+import { ProductDataService, ProductService } from '../../../shared/services/product.service';
 import { CurrencyService } from '../../../../core/services/currency/currency.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -27,14 +27,11 @@ export class ProductVerticalComponent implements OnInit, OnDestroy {
   _unsubscribeAll: Subject<any>;
   loggedInUser: any = null;
 
-  popularProducts: IProductCard[] = [];
-  featuredProducts: IProductCard[] = [];
-  allProducts: IProductCard[] = [];
-
   constructor(
     private utilsService: UtilsService,
     private localStorageService: LocalStorageService,
     private productService: ProductService,
+    public productDataService: ProductDataService,
     public currencyService: CurrencyService,
     public loggedInUserService: LoggedInUserService,
   ) {
@@ -99,9 +96,10 @@ export class ProductVerticalComponent implements OnInit, OnDestroy {
   }
 
   setValuesFromResponse(response) {
-    this.popularProducts = UtilsService.getAnArrayFromIdsAndArray(response.products, response.rating);
-    this.featuredProducts = UtilsService.getAnArrayFromIdsAndArray(response.products, response.isFeatured);
-    this.allProducts = UtilsService.getAnArrayFromIdsAndArray(response.products, response.lastCreated);
+    this.productDataService.popularProducts = UtilsService.getAnArrayFromIdsAndArray(response.products, response.rating);
+    this.productDataService.featuredProducts = UtilsService.getAnArrayFromIdsAndArray(response.products, response.isFeatured);
+    this.productDataService.bestSellerProducts = UtilsService.getAnArrayFromIdsAndArray(response.products, response.bestSell);
+    this.productDataService.allProducts = UtilsService.getAnArrayFromIdsAndArray(response.products, response.lastCreated);
   }
 
   ngOnDestroy() {

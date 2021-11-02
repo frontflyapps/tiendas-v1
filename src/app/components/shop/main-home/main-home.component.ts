@@ -10,6 +10,7 @@ import { MetaService } from 'src/app/core/services/meta.service';
 import { IProductCard } from '../../../core/classes/product-card.class';
 import { FRONT_PRODUCT_DATA, LANDING_PAGE, PRODUCT_COUNT } from '../../../core/classes/global.const';
 import { LocalStorageService } from '../../../core/services/localStorage/localStorage.service';
+import { ProductDataService } from '../../shared/services/product.service';
 
 @Component({
   selector: 'app-main-home',
@@ -122,6 +123,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     private localStorageService: LocalStorageService,
     private httpClient: HttpClient,
     private metaService: MetaService,
+    public productDataService: ProductDataService,
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
@@ -195,20 +197,25 @@ export class MainHomeComponent implements OnInit, OnDestroy {
 
     this.showStatic = false;
     this.allBicons = data.bicons || [];
-    this.allProducts = data.recentProducts;
     this.showOnlyTwoProducts = this.allProducts.length <= 2;
-    this.loadingAllProduct = false;
     this.banners = data.banner;
-    this.popularProducts = data.popularProducts;
-    this.loadingPopular = false;
-    this.featuredProducts = data.featureedProducts;
-    this.loadingFeatured = false;
+
     this.allArticles = data.blogRecents;
     this.countProducts = data.countProducts;
     this.servicesProducts = data.ourServices;
     this.bigBanner1 = data.bigBanner1;
     this.bigBanner2 = data.bigBanner2;
     this.loadingServices = false;
+
+    this.allProducts = this.productDataService.allProducts;
+    this.popularProducts = this.productDataService.popularProducts;
+    this.featuredProducts = this.productDataService.featuredProducts;
+    this.bestSellersProducts = this.productDataService.bestSellerProducts;
+
+    this.loadingPopular = false;
+    this.loadingFeatured = false;
+    this.loadingAllProduct = false;
+    this.loadingBestSellers = false;
   }
 
   getFrontData() {
