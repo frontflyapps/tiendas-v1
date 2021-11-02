@@ -4,7 +4,7 @@
       <h4 class="title">{{ 'POPULAR PRODUCTS' | translate }}</h4>
     </div>
     <mat-list class="reviews">
-      <mat-list-item class="content" *ngFor="let product of popularProducts">
+      <mat-list-item class="content" *ngFor="let product of popularProducts.slice(0,3)">
         <div class="media">
           <a style="width: 100%; height: 100%"
              [routerLink]="['/product']"
