@@ -147,7 +147,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   shippingData: any[] = [];
   canBeDelivery = true;
   marketCard: string;
-  showShipping: boolean = false;
+  showShipping = false;
   rate: any;
   currencyInternational = environment.currencyInternational;
   private applyStyle: boolean;
@@ -367,11 +367,13 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         }
 
         if (!this.form.get('currency').value) {
+          this.form.get('paymentType').setValue('transfermovil');
+
           if (this.cart.market === MarketEnum.NATIONAL) {
-            this.form.get('paymentType').setValue('transfermovil');
-            this.form.get('currency').setValue('CUP');
+            // this.form.get('paymentType').setValue('transfermovil');
+            this.form.get('currency').setValue('USD');
           } else {
-            this.form.get('paymentType').setValue('visa');
+            // this.form.get('paymentType').setValue('visa');
             this.form.get('currency').setValue('USD');
           }
         }
@@ -659,7 +661,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         if (data && data.data) {
           //this.finalPrice = this.getTotalAmout() as number;
           const price = this.getTotalWithShippingIncluded();
-          const currency = this.marketCard === MarketEnum.INTERNATIONAL ? CoinEnum.USD : CoinEnum.CUP;
+          // const currency = this.marketCard === MarketEnum.INTERNATIONAL ? CoinEnum.USD : CoinEnum.CUP;
+          const currency = this.marketCard === CoinEnum.USD;
           let dialogRef: MatDialogRef<DialogTranfermovilQrComponent, any>;
 
           dialogRef = this.dialog.open(DialogTranfermovilQrComponent, {
