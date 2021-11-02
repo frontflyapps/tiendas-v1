@@ -28,6 +28,8 @@ import { SidebarMenuService } from './sidebar/sidebar-menu.service';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { CategoriesService } from '../../core/services/categories/catagories.service';
 import { MyContactsComponent } from './my-contacts/my-contacts.component';
+import { ConfirmCreateBusinessComponent } from './confirm-create-business/confirm-create-business.component';
+import { ConfirmCreateBusinessService } from './confirm-create-business/confirm-create-business.service';
 
 @Component({
   selector: 'app-main',
@@ -90,6 +92,7 @@ export class MainComponent implements OnInit, OnDestroy {
     private orderSevice: MyOrdersService,
     private orderService: MyOrdersService,
     public utilsService: UtilsService,
+    private confirmCreateBusinessService: ConfirmCreateBusinessService,
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
