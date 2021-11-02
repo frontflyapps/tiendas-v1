@@ -10,10 +10,10 @@ export const environment = {
   currencyInternational: 'USD',
 
   timeToResetSession: 14400000, // (4hrs) Time to reset the session (ms)
-  timeToResearchProductData: 900000, // (15min) Time to research products (ms)
-  timeToResearchLandingPageData: 1200000, // (20min) Time to research products (ms)
-  timeToResearchMenuData: 1500000, // (25min) Time to research products (ms)
-  timeToResearchCategoriesData: 1500000, // (25min) Time to research categories (ms)
+  timeToResearchProductData: 300000, // (5min) Time to research products (ms)
+  timeToResearchLandingPageData: 1800000, // (30min) Time to research landing-page (ms)
+  timeToResearchMenuData: 1800000, // (30min) Time to research menu (ms)
+  timeToResearchCategoriesData: 600000, // (10min) Time to research categories (ms)
 
   url: 'https://www.tiendascaracol.com',
   urlAboutUs: 'https://www.tiendascaracol.com',
