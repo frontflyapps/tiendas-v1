@@ -73,6 +73,8 @@ export class MainComponent implements OnInit, OnDestroy {
   categories: any[] = [];
   _language = 'es';
 
+  public urlToCreateBusiness = '#';
+
   constructor(
     public router: Router,
     private cartService: CartService,

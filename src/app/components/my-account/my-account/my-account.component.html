@@ -6,7 +6,7 @@
       </div> -->
 
       <div fxLayout="column" fxLayoutAlign="center start" class="py-2 mt-2">
-        <img *ngIf="!showRegistrationForm" src="../../../../assets/images/logo-login.png" class="login-logo mx-auto" />
+        <img *ngIf="!showRegistrationForm" src="assets/images/logo-login.png" class="login-logo mx-auto" alt="logo"/>
       </div>
 
       <div fxLayout="column" id="CardBodyLoggin" class="mat-elevation-z8" fxLayoutAlign="start stretch">
@@ -38,6 +38,8 @@
             }}</span>
         </div>
 
+        <!-- =========================================================================== -->
+        <!-- LOGIN -->
         <div fxLayout="column" fxLayoutAlign="start stretch" *ngIf="showLoginForm" class="FormLayout">
           <form class="login-form" [formGroup]="loginForm">
             <mat-form-field class="example-full-width mt-2" appearance="outline">
@@ -112,6 +114,8 @@
           </form>
         </div>
 
+        <!-- =========================================================================== -->
+        <!-- REGISTRATION -->
         <div fxLayout="column" fxLayoutAlign="start stretch" *ngIf="showRegistrationForm" class="FormLayout">
           <form class="example-full-width">
             <div fxLayout="column" fxLayoutAlign="space-around stretch" class="pt-3">
@@ -157,6 +161,7 @@
               <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline">
                 <mat-label>{{ 'Email' | translate }}</mat-label>
                 <input matInput placeholder="{{ 'Email' | translate }}" required
+                       (keypress)="utilsService.keyLettersNumberForEmail($event)"
                        [formControl]="registrationForm.controls['email']" />
                 <mat-error *ngIf="registrationForm.controls['email'].hasError('required')">
                   {{ 'Email' | translate }} <strong>{{ 'is required' | translate }}</strong>
