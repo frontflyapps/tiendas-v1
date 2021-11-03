@@ -9,11 +9,11 @@ export const environment = {
   defaultLanguage: 'es',
   currencyInternational: 'USD',
 
-  timeToResetSession: 14400000, // Time to reset the session
-  timeToResearchProductData: 600000, // Time to research products (ms)
-  timeToResearchLandingPageData: 300000, // Time to research products (ms)
-  timeToResearchMenuData: 900000, // Time to research products (ms)
-  timeToResearchCategoriesData: 1200000, // Time to research categories (ms)
+  timeToResetSession: 14400000, // (4hrs) Time to reset the session (ms)
+  timeToResearchProductData: 300000, // (5min) Time to research products (ms)
+  timeToResearchLandingPageData: 1800000, // (30min) Time to research landing-page (ms)
+  timeToResearchMenuData: 1800000, // (30min) Time to research menu (ms)
+  timeToResearchCategoriesData: 600000, // (10min) Time to research categories (ms)
 
   url: 'https://www.mibulevar.com',
   urlAboutUs: 'https://www.mibulevar.com',
