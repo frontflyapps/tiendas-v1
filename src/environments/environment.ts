@@ -34,9 +34,9 @@ export const environment = {
   localDatabaseUsers: true,
 
   contacts: {
-    phone: '(+53) 7202 1381',
-    email: 'tienda@marinasmarlin.com',
-    address: 'Calle 2, esq 7ma, Miramar, Playa',
+    phone: '(+53) 7000 0000',
+    email: 'info@transfermovil.com',
+    address: 'Miramar Trade Center, Edificio Beijing, Miramar, Playa',
   },
 
   adminService: 'http://admintienda.marinasmarlin.com/',
