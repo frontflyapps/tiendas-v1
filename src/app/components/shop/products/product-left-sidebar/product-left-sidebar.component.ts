@@ -93,6 +93,8 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
 
     this.route.queryParams.pipe(takeUntil(this._unsubscribeAll)).subscribe((data) => {
+      console.log('params data', data);
+
       this.paramsSearch.categoryIds = data?.categoryIds ? data.categoryIds : this.paramsSearch.categoryIds;
       this.paramsSearch.brandIds = data?.brandIds ? data.brandIds : [];
       this.paramsSearch.minPrice = data?.minPrice ? data.minPrice : 0;
@@ -116,6 +118,8 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
         this.queryProduct.offset = 0;
         this.queryProduct.total = 0;
         this.queryProduct.page = 0;
+      } else {
+        this.paramsSearch.categoryIds = [];
       }
       if (this.paramsSearch.filterText != data.filterText) {
         this.paramsSearch.filterText = data.filterText;
