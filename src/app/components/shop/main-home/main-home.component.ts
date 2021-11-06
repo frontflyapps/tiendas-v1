@@ -166,7 +166,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
 
   getPFDFromStorage() {
     try {
-      const lp = this.localStorageService.getFromStorage(LANDING_PAGE);
+      const lp = this.localStorageService.getFromStorage(FRONT_PRODUCT_DATA);
 
       if (!lp) {
         this.getFrontData();
