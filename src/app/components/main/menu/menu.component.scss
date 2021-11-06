@@ -7,6 +7,7 @@
 
 .menu-container1 {
   background-color: $theme-main-400 !important;
+  //background: $theme-main-400 !important;
 }
 
 #toolbar-menu {
@@ -16,8 +17,9 @@
 .showCategoriesMenu {
   width: 100%;
   min-height: 40px;
-  // margin-top: 8px;
   overflow-x: auto;
+  padding: 0 10px;
+  // margin-top: 8px;
 
   @media (max-width: 1024px) {
     -ms-overflow-style: none;
@@ -28,8 +30,17 @@
 
   .itemCategory {
     min-width: unset !important;
-    padding: 8px 16px !important;
+    margin: 6px 0 !important;
+    font-weight: 400;
     color: #fff;
+    border: 1px solid transparent;
+    transition: all 0.342s ease-out;
+    //padding: 8px 16px !important;
+
+    &:hover {
+      border: 1px solid #8a8a8a;
+      transition: all 0.258s ease-in-out;
+    }
   }
 }
 

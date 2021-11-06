@@ -1,15 +1,15 @@
-<div class="container">
+<div class="">
   <div class="showCategoriesMenu" id="showCategoriesMenu" fxLayout="row" fxLayoutAlign.xs="start center"
        fxLayoutAlign.sm="center center" fxLayoutGap="gappx" fxHide fxShow.gt-sm>
-    <a [routerLink]="['']" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="router-link-active"
-       class="itemCategory"
-       mat-button>{{ 'Inicio' | translate }}</a>
+    <!--    <a [routerLink]="['']" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="router-link-active"-->
+    <!--       class="itemCategory"-->
+    <!--       mat-button>{{ 'Inicio' | translate }}</a>-->
     <a [routerLink]="['/products/search']" routerLinkActive="router-link-active" class="itemCategory" mat-button>{{
-      'Products' | translate
+      'Todos los productos' | translate
       }}</a>
-    <a [routerLink]="['/pages/compare']" routerLinkActive="router-link-active" class="itemCategory" mat-button>{{
-      'Mi lista' | translate
-      }}</a>
+    <!--    <a [routerLink]="['/pages/compare']" routerLinkActive="router-link-active" class="itemCategory" mat-button>{{-->
+    <!--      'Mi lista' | translate-->
+    <!--      }}</a>-->
     <!--
     <a [routerLink]="['/blog']" routerLinkActive="router-link-active" class="itemCategory" mat-button>{{
       'Blog' | translate
@@ -21,7 +21,7 @@
     <a [routerLink]="['/cart']" routerLinkActive="router-link-active" class="itemCategory" mat-button>
       <span *ngIf="shoppingCartItems.length" [matBadge]="shoppingCartItems.length" matBadgePosition="after"
             matBadgeColor="accent">{{ 'Cart' | translate }}</span>
-      <span *ngIf="!shoppingCartItems.length">{{ 'Cart' | translate }}</span>
+      <span *ngIf="!shoppingCartItems.length">{{ 'Carrito de compras' | translate }}</span>
     </a>
 
     <a *ngIf="loggedInUser" [routerLink]="['/my-orders']" routerLinkActive="router-link-active" class="itemCategory"
@@ -34,7 +34,8 @@
     <!-- <a *ngIf="loggedInUser" href="become-a-seller" routerLinkActive="router-link-active" class="itemCategory"
       mat-button>{{ 'Conviértete en vendedor' | translate }}</a> -->
 
-    <a [routerLink]="['/products/search']" routerLinkActive="router-link-active"
+    <!--    <a [routerLink]="['/products/search']" routerLinkActive="router-link-active"-->
+    <a [routerLink]="['/products/search']"
        [queryParams]="{ CategoryId: category.id }"
        *ngFor="let category of categories" class="itemCategory"
        mat-button>{{ utilsSer.parserLanguage(category.name, language) }}</a>
