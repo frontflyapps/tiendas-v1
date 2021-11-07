@@ -12,7 +12,7 @@
         onerror="this.onerror=null;this.src='../../../../assets/images/noImage.jpg';" [src]="imageUrl + product.Images[0].image"
         alt="MiBulevar shop" />
       <img class="image" ngp-lazy ngp-threshold="0.1" *ngIf="!(product.Images && product.Images.length)"
-        src="../../../../assets/images/noImage.jpg" alt="MiBulevar shop" />
+        src="assets/images/noImage.jpg" alt="MiBulevar shop" />
     </a>
   </div>
 
@@ -36,7 +36,8 @@
       {{(product.shortDescription[language])?product.shortDescription[language]:product.shortDescription['es']}}</p> -->
 
     <div class="price mt-2" fxLayout="row" fxLayoutAlign="space-between start">
-      <button matTooltip="{{ 'Añadir al carrito' | translate }}" class="btnAddCart" mat-mini-fab (click)="addToCart(product)"
+      <button matTooltip="{{ 'Añadir al carrito' | translate }}" class="btnAddCart" mat-mini-fab
+              (click)="$event.stopPropagation();addToCart(product)"
         style="z-index: 10">
         <mat-icon>shopping_cart</mat-icon>
       </button>
