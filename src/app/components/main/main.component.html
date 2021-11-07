@@ -323,17 +323,17 @@
            fxLayoutAlign.sm="center center"
            fxLayoutGap="gappx">
 
-        <a [routerLink]="['']"
-           [routerLinkActiveOptions]="{ exact: true }"
-           routerLinkActive="router-link-active"
-           class="itemCategory"
-           mat-button>{{ 'Inicio' | translate }}</a>
+        <!--        <a [routerLink]="['']"-->
+        <!--           [routerLinkActiveOptions]="{ exact: true }"-->
+        <!--           routerLinkActive="router-link-active"-->
+        <!--           class="itemCategory"-->
+        <!--           mat-button>{{ 'Inicio' | translate }}</a>-->
 
         <a [routerLink]="['/products/search']" routerLinkActive="router-link-active" class="itemCategory" mat-button>
-          {{ 'Products' | translate }}</a>
+          {{ 'Todos los productos' | translate }}</a>
 
+        <!--        routerLinkActive="router-link-active"-->
         <a [routerLink]="['/products/search']"
-           routerLinkActive="router-link-active"
            [queryParams]="{ CategoryId: category.id }"
            *ngFor="let category of categories"
            class="itemCategory"
