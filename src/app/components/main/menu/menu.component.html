@@ -20,8 +20,8 @@
 
     <a [routerLink]="['/cart']" routerLinkActive="router-link-active" class="itemCategory" mat-button>
       <span *ngIf="shoppingCartItems.length" [matBadge]="shoppingCartItems.length" matBadgePosition="after"
-            matBadgeColor="accent">{{ 'Cart' | translate }}</span>
-      <span *ngIf="!shoppingCartItems.length">{{ 'Carrito de compras' | translate }}</span>
+            matBadgeColor="accent">{{ 'Carrito' | translate }}</span>
+      <span *ngIf="!shoppingCartItems.length">{{ 'Carrito' | translate }}</span>
     </a>
 
     <a *ngIf="loggedInUser" [routerLink]="['/my-orders']" routerLinkActive="router-link-active" class="itemCategory"
