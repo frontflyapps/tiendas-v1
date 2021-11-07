@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-in-user.service';
 import { CurrencyService } from '../../../core/services/currency/currency.service';
 import { environment } from '../../../../environments/environment';
@@ -36,12 +36,22 @@ export class ShoppingWidgetsComponent implements OnInit, OnDestroy {
     public loggedInUserService: LoggedInUserService,
     private globalFacadeService: GlobalFacadeService,
     private router: Router,
+    private cdr: ChangeDetectorRef,
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
   }
 
   ngOnInit() {
+    this.cartService.$cartItemsUpdated.pipe(takeUntil(this._unsubscribeAll)).subscribe((data) => {
+      this.shoppingCarts = data;
+      this.shoppingCartItems = this.cartService.getShoppingCars();
+    });
+
+    this.cartService.$paymentUpdate.pipe(takeUntil(this._unsubscribeAll)).subscribe(() => {
+      this.fillShoppingCart();
+    });
+
     this.loggedInUserService.$languageChanged.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {
       this.language = data.lang;
     });
@@ -66,15 +76,6 @@ export class ShoppingWidgetsComponent implements OnInit, OnDestroy {
       this.globalFacadeService.updateBusinessState(this.shoppingCarts[0]?.Business || {});
       this.shoppingCartItems = this.cartService.getShoppingCars();
     }
-
-    this.cartService.$cartItemsUpdated.pipe(takeUntil(this._unsubscribeAll)).subscribe((data) => {
-      this.shoppingCarts = data;
-      this.shoppingCartItems = this.cartService.getShoppingCars();
-    });
-
-    this.cartService.$paymentUpdate.pipe(takeUntil(this._unsubscribeAll)).subscribe(() => {
-      this.fillShoppingCart();
-    });
   }
 
   private fillShoppingCart() {
@@ -96,6 +97,14 @@ export class ShoppingWidgetsComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this._unsubscribeAll.next(true);
     this._unsubscribeAll.complete();
+  }
+
+  public trackBusinessFn(index: number, business: any): number {
+    return business.BusinessId;
+  }
+
+  public trackStockFn(index: number, stock: any): number {
+    return stock.StockId;
   }
 
   public removeItem(item: any) {

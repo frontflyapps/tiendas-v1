@@ -18,7 +18,8 @@
     <div class="spCard-dropdown">
       <div class="card-list-title" fxLayout="row" fxLayoutAlign="space-between center">
 
-        <a class="list-compare-link" [routerLink]="['/cart']" routerLinkActive="router-link-active">
+        <!--        <a class="list-compare-link" [routerLink]="['/cart']" routerLinkActive="router-link-active">-->
+        <a class="list-compare-link" [routerLink]="['/cart']">
           <p class="text-muted">
             <a mat-flat-button color="accent" class="my-2">{{ 'Ir al Carrito' | translate }}</a>
           </p>
@@ -33,11 +34,11 @@
       <p></p>
 
       <div class="new-product" fxLayout="column" *ngIf="shoppingCarts?.length">
-        <ng-container *ngFor="let cart of shoppingCarts">
+        <ng-container *ngFor="let cart of shoppingCarts; trackBy: trackBusinessFn">
           <div class="item"
                fxLayout="row"
                fxLayoutAlign="start start"
-               *ngFor="let item of cart.CartItems; let i = index">
+               *ngFor="let item of cart.CartItems; let i = index; trackBy: trackStockFn">
             <div class="product">
               <img *ngIf="item.Product.Images && item.Product.Images.length"
                    [src]="imageUrl + item.Product.Images[0].image"
