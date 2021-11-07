@@ -211,11 +211,11 @@ app-main,
     background-color: white;
 
     input {
-      height: 44px;
+      height: 40px;
       box-sizing: border-box;
       border-top-left-radius: 4px;
       border-bottom-left-radius: 4px;
-      padding: 8px 12px;
+      padding: 4px 12px;
       color: $grey4;
       border: none;
 
@@ -226,9 +226,9 @@ app-main,
 
     button {
       width: 50px;
-      height: 44px;
+      height: 40px;
       border-radius: 4px;
-      padding: 12px 14px;
+      padding: 10px 14px;
       border: none;
       background-color: $theme-main-accent-300;
       color: $theme-main-dark;
@@ -243,7 +243,7 @@ app-main,
   .showCategories {
     width: 100%;
     // height: 40px;
-    margin-top: 8px;
+    margin-top: 6px;
     overflow-x: auto;
     -ms-overflow-style: none;
     /* IE and Edge */
@@ -251,8 +251,18 @@ app-main,
     /* Firefox */
 
     .itemCategory {
-      min-width: unset !important;
       padding: 0 8px !important;
+      min-width: unset !important;
+      font-weight: 400;
+      color: #fff;
+      border: 1px solid transparent;
+      transition: all 0.342s ease-out;
+      //padding: 8px 16px !important;
+
+      &:hover {
+        border: 1px solid #8a8a8a;
+        transition: all 0.258s ease-in-out;
+      }
     }
   }
 
