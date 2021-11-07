@@ -773,6 +773,15 @@ span {
             flex-direction: column;
             align-items: center;
 
+            border: 1px solid #d4d4d4;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+
+            &:hover {
+              transition: 0.5s ease;
+              background: rgba(255, 255, 255, 0.8);
+            }
+
             .mat-icon {
               font-size: 30px;
               width: 30px;
@@ -2184,6 +2193,15 @@ mat-sidenav.filter-sidenav.mat-drawer.mat-sidenav.ng-tns-c15-4.ng-trigger.ng-tri
                 place-content: center;
                 flex-direction: column;
                 align-items: center;
+
+                border: 1px solid #d4d4d4;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.4);
+
+                &:hover {
+                  transition: 0.5s ease;
+                  background: rgba(255, 255, 255, 0.8);
+                }
 
                 .mat-icon {
                   font-size: 30px;
