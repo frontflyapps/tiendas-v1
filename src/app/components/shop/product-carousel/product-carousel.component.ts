@@ -23,7 +23,6 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { UtilsService } from '../../../core/services/utils/utils.service';
-import { ConfirmationDialogFrontComponent } from '../../shared/confirmation-dialog-front/confirmation-dialog-front.component';
 
 @Component({
   selector: 'app-product-carousel',
