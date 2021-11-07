@@ -12,11 +12,11 @@ export const environment = {
   // apiUrl: 'http://192.168.43.231:8998/v1/',
   // imageUrl: 'http://192.168.43.231:8998/v1/',
 
-  apiUrl: 'https://apitienda.marinasmarlin.com/v1/',
-  imageUrl: 'https://apitienda.marinasmarlin.com/v1/',
+  // apiUrl: 'https://apitienda.marinasmarlin.com/v1/',
+  // imageUrl: 'https://apitienda.marinasmarlin.com/v1/',
 
-  // apiUrl: 'https://api.cuentapropias.com/v1/',
-  // imageUrl: 'https://api.cuentapropias.com/v1/',
+  apiUrl: 'https://api.mibulevar.com/v1/',
+  imageUrl: 'https://api.mibulevar.com/v1/',
 
   defaultLanguage: 'es',
   currencyInternational: 'USD',
