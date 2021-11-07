@@ -41,24 +41,30 @@
         </a>
       </div>
     </div>
-    <a
-      class="item-selector mx-3 my-2"
-      fxLayoutAlign="start center"
-      mat-button
-      [matMenuTriggerFor]="langMenu"
-      #langMenuTrigger="matMenuTrigger"
-    >
-      <img [src]="flag?.image" width="18" />
-      <mat-icon>arrow_drop_down</mat-icon>
-      <span>{{ flag?.name }}</span>
-    </a>
-    <mat-menu #langMenu="matMenu" [overlapTrigger]="false" xPosition="before" class="app-dropdown">
+
+    <div fxLayout="row">
+      <a class="item-selector mx-3 my-2"
+         fxLayoutAlign="start center"
+         mat-button
+         [matMenuTriggerFor]="langMenu"
+         #langMenuTrigger="matMenuTrigger">
+        <img [src]="flag?.image" width="18" alt="flag image" />
+        <mat-icon>arrow_drop_down</mat-icon>
+        <span>{{ flag?.name }}</span>
+      </a>
+      <mat-menu #langMenu="matMenu" [overlapTrigger]="false" xPosition="before" class="app-dropdown">
       <span>
         <button mat-menu-item *ngFor="let flag of flags" (click)="changeLang(flag)">
-          <img [src]="flag.image" width="18" /> {{ flag.name }}
+          <img [src]="flag.image" width="18" alt="flag image" /> {{ flag.name }}
         </button>
       </span>
-    </mat-menu>
+      </mat-menu>
+
+      <a [routerLink]="['/contact-us']" class="item-selector mx-3 my-2" mat-button>
+        {{'Contáctenos'|translate}}
+      </a>
+    </div>
+
     <div style="padding-bottom: 16px"></div>
   </div>
 
