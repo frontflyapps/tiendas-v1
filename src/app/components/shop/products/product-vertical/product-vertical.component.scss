@@ -1,5 +1,4 @@
 .list-product {
-
   &:hover {
     img {
       transform: scale(1.1);
@@ -32,21 +31,15 @@
     line-height: 1.4rem;
     height: 2.8rem;
   }
-
-
-
-
 }
 
 @media(max-width:480px) {
   .sec-padding {
-    padding: 24px 0;
+    padding: 14px 0;
   }
 
   .vertical-products .widget-column .title .widget-title {
     font-size: 18px;
     font-weight: 500;
   }
-
-
 }
