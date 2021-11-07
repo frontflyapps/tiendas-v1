@@ -590,7 +590,7 @@ span {
 
   .spCard-dropdown {
     background-color: $white;
-    padding: 15px 10px;
+    padding: 2px 10px;
     max-width: 320px;
     z-index: 400;
 
@@ -605,7 +605,7 @@ span {
     .new-product {
       .product {
         img {
-          width: 70px;
+          width: 50px;
         }
       }
 
@@ -617,6 +617,10 @@ span {
           color: $grey3;
           transition: 0.3s;
           float: right;
+
+          padding: 8px;
+          border: 1px solid lightgrey;
+          border-radius: 4px;
 
           &:hover {
             color: $theme-main;
@@ -632,14 +636,14 @@ span {
         padding: 10px 0;
 
         .product {
-          margin-right: 7px;
+          margin-right: 6px;
           background: $baners-background;
           border-radius: 3px;
         }
 
         .desc {
           p {
-            font-weight: 500;
+            font-weight: 400;
           }
 
           span {
@@ -1982,7 +1986,8 @@ span {
   padding-top: 0;
   padding-bottom: 0;
   // padding: 0 13px !important;
-  border-top: 4px solid $theme-main !important;
+  border-top: unset !important;
+  //border-top: 4px solid $theme-main !important;
 
   .mat-menu-item {
     border-bottom: 1px dashed $gray-lighter;
@@ -2582,7 +2587,8 @@ mat-sidenav.filter-sidenav.mat-drawer.mat-sidenav.ng-tns-c15-4.ng-trigger.ng-tri
   padding-top: 0;
   padding-bottom: 0;
   // padding: 0 13px !important;
-  border-top: 4px solid $theme-main !important;
+  //border-top: 4px solid $theme-main !important;
+  border-top: unset !important;
 
   .mat-menu-item {
     border-bottom: 1px dashed $gray-lighter;
