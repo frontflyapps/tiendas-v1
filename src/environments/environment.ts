@@ -12,11 +12,11 @@ export const environment = {
   // apiUrl: 'http://192.168.43.231:8998/v1/',
   // imageUrl: 'http://192.168.43.231:8998/v1/',
 
-  // apiUrl: 'https://apitienda.marinasmarlin.com/v1/',
-  // imageUrl: 'https://apitienda.marinasmarlin.com/v1/',
+  apiUrl: 'https://apitienda.marinasmarlin.com/v1/',
+  imageUrl: 'https://apitienda.marinasmarlin.com/v1/',
 
-  apiUrl: 'https://api.mibulevar.com/v1/',
-  imageUrl: 'https://api.mibulevar.com/v1/',
+  // apiUrl: 'https://api.mibulevar.com/v1/',
+  // imageUrl: 'https://api.mibulevar.com/v1/',
 
   defaultLanguage: 'es',
   currencyInternational: 'USD',
@@ -30,7 +30,7 @@ export const environment = {
   url: 'http://tienda.tiendalocal.com:4308',
   urlAboutUs: 'http://tienda.tiendalocal.com:4308',
 
-  address: 'MiBulevar SA',
+  address: 'MiBulevar | TransferMóvil',
   localDatabaseUsers: true,
 
   contacts: {
@@ -46,11 +46,11 @@ export const environment = {
 
   meta: {
     mainPage: {
-      title: 'Tiendas Marinas Marlin',
+      title: 'MiBulevar | TransferMóvil',
       description: 'Tienda online desarrollada con el framework Angular permite la modelación de negocios B2C and C2C',
       keywords: 'HTML, CSS, JavaScript, Angular, Tienda Online B2B, comercio online',
-      shareImg: 'https://tienda.marinasmarlin.com/assets/images/share-img.png',
-      url: 'https://tienda.marinasmarlin.com/',
+      shareImg: 'http://tienda.tiendalocal.com:4308/assets/images/share-img.png',
+      url: 'http://tienda.tiendalocal.com:4308',
     },
   },
 
