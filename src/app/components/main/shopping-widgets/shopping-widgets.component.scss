@@ -1,5 +1,11 @@
 @import '../../../../assets/scss/theme/variables';
 
+#shopping-widgets-cart {
+  .close-circle {
+    background: #0b9447;
+  }
+}
+
 .iconCart {
   color: $theme-main !important;
 
@@ -16,9 +22,9 @@
 
 .name {
   overflow: hidden;
-  width: 100%;
+  width: 100%;{
   display: -webkit-box;
-  -webkit-line-clamp: 4;
+  -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
 }
 
