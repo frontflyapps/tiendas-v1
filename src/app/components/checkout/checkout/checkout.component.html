@@ -346,19 +346,20 @@
         <!--        </div>-->
 
         <!-- ============================================ -->
-        <!-- SELCTOR DE MONEDAS -->
-        <ng-container *ngIf="!loadingPayment
-                && (form.controls['paymentType'].value === 'visa'
-                || form.controls['paymentType'].value === 'express'
-                || form.controls['paymentType'].value === 'masterCard'
-                || form.controls['paymentType'].value === 'dinners-club-internacional'
-                || form.controls['paymentType'].value === 'jcb'
-                || form.controls['paymentType'].value === 'maestro'
-                || form.controls['paymentType'].value === 'electron'
-                || form.controls['paymentType'].value === 'tarjeta-virtual'
-                || form.controls['paymentType'].value === 'bizum'
-                || form.controls['paymentType'].value === 'iupay'
-                || form.controls['paymentType'].value === 'discover-global')">
+        <!-- SELECTOR DE MONEDAS -->
+        <!--        <ng-container *ngIf="!loadingPayment-->
+        <!--                && (form.controls['paymentType'].value === 'visa'-->
+        <!--                || form.controls['paymentType'].value === 'express'-->
+        <!--                || form.controls['paymentType'].value === 'masterCard'-->
+        <!--                || form.controls['paymentType'].value === 'dinners-club-internacional'-->
+        <!--                || form.controls['paymentType'].value === 'jcb'-->
+        <!--                || form.controls['paymentType'].value === 'maestro'-->
+        <!--                || form.controls['paymentType'].value === 'electron'-->
+        <!--                || form.controls['paymentType'].value === 'tarjeta-virtual'-->
+        <!--                || form.controls['paymentType'].value === 'bizum'-->
+        <!--                || form.controls['paymentType'].value === 'iupay'-->
+        <!--                || form.controls['paymentType'].value === 'discover-global')">-->
+        <ng-container *ngIf="!loadingPayment">
           <p class="mat-body-2 my-2" style="text-transform: uppercase">
             {{ 'Selecciones moneda para realizar su pago' | translate }}
           </p>
@@ -644,6 +645,7 @@
                    fxLayoutAlign="start center"
                    fxLayoutGap="gappx"></div>
             </ng-container>
+
             <ul class="total">
               <li>
                 {{ 'Total' | translate }}
