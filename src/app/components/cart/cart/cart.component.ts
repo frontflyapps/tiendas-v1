@@ -8,7 +8,6 @@ import { environment } from '../../../../environments/environment';
 import { takeUntil } from 'rxjs/operators';
 import { CartService } from '../../shared/services/cart.service';
 import { UtilsService } from 'src/app/core/services/utils/utils.service';
-import { ProductService } from '../../shared/services/product.service';
 import { Router } from '@angular/router';
 import { ShowToastrService } from '../../../core/services/show-toastr/show-toastr.service';
 

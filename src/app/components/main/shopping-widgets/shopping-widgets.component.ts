@@ -35,8 +35,6 @@ export class ShoppingWidgetsComponent implements OnInit, OnDestroy {
     public currencyService: CurrencyService,
     public loggedInUserService: LoggedInUserService,
     private globalFacadeService: GlobalFacadeService,
-    private router: Router,
-    private cdr: ChangeDetectorRef,
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';

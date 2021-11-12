@@ -62,7 +62,7 @@ export class CartService implements OnDestroy {
     this.loggedInUserService.$loggedInUserUpdated.pipe(takeUntil(this._unsubscribeAll)).subscribe(() => {
       this.loggedInUser = this.loggedInUserService.getLoggedInUser();
       if (this.loggedInUser) {
-        this.registerData();
+        this.registerData().then();
       } else {
         this.carts = [];
       }
@@ -84,7 +84,7 @@ export class CartService implements OnDestroy {
 
   public getShoppingCars(): CartItem[] {
     this.carts = this.loggedInUserService._getDataFromStorage('cartItem') || [];
-    if (this.carts) {
+    if (Array.isArray(this.carts)) {
       let shoppingCartsItems = [];
       for (let cartX of this.carts) {
         shoppingCartsItems = shoppingCartsItems.concat(cartX.CartItems);
