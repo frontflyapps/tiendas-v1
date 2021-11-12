@@ -99,6 +99,7 @@ export class MainComponent implements OnInit, OnDestroy {
     private orderSevice: MyOrdersService,
     private orderService: MyOrdersService,
     public utilsService: UtilsService,
+    private locationService: LocationService
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();

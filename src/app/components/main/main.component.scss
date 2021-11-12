@@ -201,7 +201,7 @@ app-main,
         -o-transition: all 250ms ease-in-out;
         transition: all 250ms ease-in-out;
         text-transform: uppercase;
-        background-color: $theme-main-accent-300;
+        background-color: $theme-main-accent;
         border-radius: 4px;
         -webkit-border-radius: 4px;
         font-weight: 500;
@@ -266,7 +266,7 @@ app-main,
       border-radius: 4px;
       padding: 10px 14px;
       border: none;
-      background-color: $theme-main-accent-400;
+      background-color: $theme-main-accent;
       color: black;
       font-weight: 500;
 

@@ -2,9 +2,9 @@ import { MetaService } from 'src/app/core/services/meta.service';
 import { ShowToastrService } from '../../../../core/services/show-toastr/show-toastr.service';
 import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
 import { CartService } from '../../../shared/services/cart.service';
-import { Component, OnInit, OnDestroy, ViewChild, AfterContentInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Product } from '../../../../modals/product.model';
-import { ProductService } from '../../../shared/services/product.service';
+import { ProductDataService, ProductService } from '../../../shared/services/product.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { UtilsService } from '../../../../core/services/utils/utils.service';
@@ -55,6 +55,8 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   loadingRelated = false;
   loadingMenu = false;
 
+  url = environment.apiUrl + 'landing-page';
+
   public allProductsOnMenu: any;
   public allProductsOnMenuToShow: Observable<any[]>;
 
@@ -89,10 +91,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   errorPage = false;
 
   previewUrl: any;
-  referenceUrl: any;
-  thumbnailUrl: any;
   videoUrl: any;
-  youtubeUrl: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -133,6 +132,8 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
           this.isLoading = false;
           this.utilsService.errorHandle(error);
           this.errorPage = true;
+          this.getProductsByBusiness(this.product.BusinessId);
+          // this.getFeaturedProducts();
         },
       );
     });
@@ -154,7 +155,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
       this.mainImage = this.arrayImages[0];
     }
     this.getRelatedProducts();
-    this.getFeaturedProducts();
+    // this.getFeaturedProducts();
     // ////////////////////META///////////////////
     this.metaService.setMeta(
       this.product.name[this.language],
