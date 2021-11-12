@@ -1,4 +1,17 @@
+<!-- ------------------------------------------------------------ -->
+<!-- -- Offer promo ---------------------------------------------- -->
+<!--<ng-container *ngIf="allBicons.length > 0 && !loadingAllProduct">-->
+<!--  <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="1rem"-->
+<!--       class="text-msg-offer">-->
+<!--    <mat-icon>local_offer</mat-icon>-->
+<!--    <span>{{'Compra más de 1000 USD y obtenga un descuento del 5%'|translate}}</span>-->
+<!--  </div>-->
+<!--</ng-container>-->
+
+<!-- ------------------------------------------------------------ -->
+<!-- -- Carusel ---------------------------------------------- -->
 <app-main-carousel *ngIf="!showStatic && slides.length > 0" [slides]="slides"></app-main-carousel>
+
 <div class="container mt-3">
 
   <!-- BANNER TEMPORAL -->
@@ -29,6 +42,7 @@
 <!--</div>-->
 
 <div class="home-1-wrap">
+
   <div *ngIf="allBicons.length > 0 && !loadingAllProduct" fxHide.xs class="info-bar-four-wrapper">
     <div class="container">
       <div fxLayout="row wrap" class="info-bar-four" fxLayoutAlign="center center">

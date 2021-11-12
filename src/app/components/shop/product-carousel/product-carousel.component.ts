@@ -1,4 +1,4 @@
-import { WishlistService } from './../../shared/services/wishlist.service';
+import { WishlistService } from '../../shared/services/wishlist.service';
 
 import {
   Component,
@@ -6,26 +6,23 @@ import {
   EventEmitter,
   Output,
   Input,
-  OnChanges,
-  SimpleChanges,
   AfterViewInit,
   OnDestroy,
-  ViewEncapsulation,
 } from '@angular/core';
-import { Product } from './../../../modals/product.model';
+import { Product } from '../../../modals/product.model';
 import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
-import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ProductDialogComponent } from '../products/product-dialog/product-dialog.component';
-import { CartService } from './../../shared/services/cart.service';
+import { CartService } from '../../shared/services/cart.service';
 import { ProductService } from '../../shared/services/product.service';
-import { CurrencyService } from './../../../core/services/currency/currency.service';
-import { LoggedInUserService } from './../../../core/services/loggedInUser/logged-in-user.service';
+import { CurrencyService } from '../../../core/services/currency/currency.service';
+import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-in-user.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { environment } from './../../../../environments/environment';
-import { UtilsService } from './../../../core/services/utils/utils.service';
+import { environment } from '../../../../environments/environment';
+import { UtilsService } from '../../../core/services/utils/utils.service';
 import { ConfirmationDialogFrontComponent } from '../../shared/confirmation-dialog-front/confirmation-dialog-front.component';
 
 @Component({
@@ -55,14 +52,14 @@ export class ProductCarouselComponent implements OnInit, AfterViewInit, OnDestro
 
   constructor(
     private dialog: MatDialog,
-    public currencyService: CurrencyService,
-    public loggedInUserService: LoggedInUserService,
     private router: Router,
-    public utilsService: UtilsService,
-    public cartService: CartService,
     private breakpointObserver: BreakpointObserver,
     private productService: ProductService,
     private wishlistService: WishlistService,
+    public utilsService: UtilsService,
+    public cartService: CartService,
+    public currencyService: CurrencyService,
+    public loggedInUserService: LoggedInUserService,
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
