@@ -1,15 +1,15 @@
 import { MetaService } from 'src/app/core/services/meta.service';
 import { DialogNoCartSelectedComponent } from '../no-cart-selected/no-cart-selected.component';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { PayService } from '../../../core/services/pay/pay.service';
-import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
-import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
-import { CartItem, Cart, IBusiness } from '../../../modals/cart-item';
+import { Cart, CartItem, IBusiness } from '../../../modals/cart-item';
 import { environment } from '../../../../environments/environment';
 import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-in-user.service';
-import { debounce, debounceTime, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { CurrencyService } from '../../../core/services/currency/currency.service';
 import { IPagination } from '../../../core/classes/pagination.class';
 import { UtilsService } from '../../../core/services/utils/utils.service';
@@ -31,7 +31,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { DialogBidaiondoConfirmToPayComponent } from '../dialog-bidaiondo-confirm-to-pay/dialog-bidaiondo-confirm-to-pay.component';
 import { ConfigurationService } from '../../../core/services/configuration/configuration.service';
 import { CurrencyCheckoutPipe } from 'src/app/core/pipes/currency-checkout.pipe';
-import { BusinessService } from '../../../core/services/business/business.service';
 import { CUBAN_PHONE_START_5 } from '../../../core/classes/regex.const';
 import { ContactsService } from '../../../core/services/contacts/contacts.service';
 import { MyContactsComponent } from '../../main/my-contacts/my-contacts.component';
@@ -251,7 +250,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     }
 
     this.form.controls['currency'].valueChanges.subscribe((data) => {
-      //this.calculateShippingRequired();
+      // this.calculateShippingRequired();
       if (this.currencyInternational === data) {
         this.rate = 1;
       } else {
@@ -370,10 +369,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           this.form.get('paymentType').setValue('transfermovil');
 
           if (this.cart.market === MarketEnum.NATIONAL) {
-            // this.form.get('paymentType').setValue('transfermovil');
-            this.form.get('currency').setValue('USD');
+            this.form.get('paymentType').setValue('transfermovil');
+            this.form.get('currency').setValue('CUP');
           } else {
-            // this.form.get('paymentType').setValue('visa');
+            this.form.get('paymentType').setValue('transfermovil');
             this.form.get('currency').setValue('USD');
           }
         }
@@ -388,12 +387,11 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   public getTotalWithShippingIncludedCurrency(): any {
     let total = this.getTotalWithShippingIncluded();
-    const result = this.currencyCheckoutPipe.transform({
+    return this.currencyCheckoutPipe.transform({
       currency: this.form.get('currency').value,
       value: total,
       rate: this.rate,
     });
-    return result;
   }
 
   public getTotalWithShippingIncluded(): any {
@@ -409,20 +407,17 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   public getTotalAmountCurrency(): any {
     const subTotal = this.getTotalAmout();
-    const result = this.currencyCheckoutPipe.transform({
+    return this.currencyCheckoutPipe.transform({
       currency: this.form.get('currency').value,
       value: subTotal,
       rate: this.rate,
     });
-    return result;
   }
 
   public getTotalAmout(): any {
-    const value = this.buyProducts.reduce((prev, curr: CartItem) => {
+    return this.buyProducts.reduce((prev, curr: CartItem) => {
       return prev + this.getTotalPricePerItem(curr);
     }, 0);
-
-    return value;
   }
 
   onSubmit(): void {
@@ -597,12 +592,11 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   getTotalPricePerItemCurrency(item: CartItem) {
     const value = this.getTotalPricePerItem(item);
-    const result = this.currencyCheckoutPipe.transform({
+    return this.currencyCheckoutPipe.transform({
       currency: this.form.get('currency').value,
       value: value,
       rate: this.rate,
     });
-    return result;
   }
 
   public getTotalPricePerItem(item: CartItem) {
@@ -636,7 +630,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     if (!data.shippingRequired) {
       delete data.ShippingBusinessId;
     }
-    //data.currency = this.marketCard === MarketEnum.INTERNATIONAL ? CoinEnum.USD : CoinEnum.CUP;
+    // data.currency = this.marketCard === MarketEnum.INTERNATIONAL ? CoinEnum.USD : CoinEnum.CUP;
     data.description = data.description || `Pago realizado por el cliente ${data.name} ${data.lastName}`;
     data.urlClient = environment.url;
     this.loggedInUserService._setDataToStorage('payData', JSON.stringify(this.form.value));
@@ -659,7 +653,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.payService.makePaymentTransfermovil(bodyData).subscribe(
       (data: any) => {
         if (data && data.data) {
-          //this.finalPrice = this.getTotalAmout() as number;
+          // this.finalPrice = this.getTotalAmout() as number;
           const price = this.getTotalWithShippingIncluded();
           // const currency = this.marketCard === MarketEnum.INTERNATIONAL ? CoinEnum.USD : CoinEnum.CUP;
           const currency = this.marketCard === CoinEnum.USD;
@@ -679,7 +673,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           });
 
           dialogRef.afterClosed().subscribe((result) => {
-            console.log('OKOUT_Transfermovil');
+            console.log('OK_OUT_Transfermovil');
           });
         } else {
           this.loadingPayment = false;
@@ -794,7 +788,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     }, 0);
   }
 
-  //////////Utiles/////////////////
+  // //////// Utiles /////////////////
   _getAddress(user, storagePayData) {
     if (storagePayData) {
       return storagePayData.address;
@@ -900,7 +894,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         title: 'Cancelar la confirmación con transfermovil',
         textHtml: `
         <h4 style="text-transform:none !important; line-height:1.6rem !important;">
-          ¿ Desea cancelar la confirmación con transfermóvil ?
+          ¿Desea cancelar la confirmación con transfermóvil?
         </h4>
        `,
       },
@@ -929,7 +923,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((data) => {
         this.loadingPayment = false;
-        this.showToastr.showError(data.message, 'Error', 5000);
+        this.showToastr.showError(data.message, 'Error', 4000);
       });
   }
 
