@@ -92,6 +92,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   dataSource: MatTableDataSource<any>;
   displayedColumns: string[] = ['product', 'quantity', 'price', 'action'];
   amount: number;
+
   payments: any[] = [
     { id: 'transfermovil', name: 'Transfermovil', logo: 'assets/images/cards/transfermovil_logo.png', market: 'national' },
     // { id: 'enzona', name: 'Enzona', logo: 'assets/images/cards/enzona.jpeg', market: 'national' },
@@ -150,6 +151,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   rate: any;
   currencyInternational = environment.currencyInternational;
   private applyStyle: boolean;
+
   query: IPagination = {
     limit: 1000,
     total: 0,
@@ -239,6 +241,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.fetchData();
     // ////////////// Subscripciones para el update del carrito /////////////////
     this.cartService.$cartItemsUpdated.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {
+
       if (data.length > 0) {
         this.theBusiness = data[0].Business;
       }
@@ -941,6 +944,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.showInfoDataToPay = false;
     this.showPayment = true;
     this.scrollTopDocument();
+
+    console.log('this.cart', this.cart);
+
+    console.log('-> this.theBusiness', this.theBusiness);
   }
 
   scrollTopDocument() {

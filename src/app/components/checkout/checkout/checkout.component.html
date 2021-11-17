@@ -13,6 +13,7 @@
 
       <!-- ============================================================= -->
       <!-- DATA INFO TO PAY -->
+      <!-- ============================================================= -->
       <div *ngIf="showInfoDataToPay" class="billing-details"
            ngClass.gt-sm="pr-5"
            ngClass.sm="pr-2"
@@ -339,13 +340,12 @@
         <div *ngIf="loadingPayment" style="width: 100%; min-height: 500px; height: 100%" class="loader"></div>
       </div>
 
-      <div *ngIf="showPayment" fxLayout="column" class="mainOrder-wrapper pl-15" fxFlex="100" fxFlex.gt-md="50"
-           fxFlex.md="50">
+      <!-- =================================================================== -->
+      <!-- PASARELA DE PAGO -->
+      <!-- =================================================================== -->
+      <div *ngIf="showPayment" fxLayout="column" class="mainOrder-wrapper pl-15"
+           fxFlex="100" fxFlex.gt-md="50" fxFlex.md="50">
 
-
-        <!-- =================================================================== -->
-        <!-- PASARELA DE PAGO -->
-        <!-- =================================================================== -->
         <p class="my-2">
           <strong>{{ 'Pasarelas para efectuar el pago' | translate }}</strong>
         </p>
@@ -603,18 +603,49 @@
                    ngClass.gt-xs="pt-1"
                    fxLayoutAlign="space-between center"
                    fxLayoutAlign.xs="start">
+
                 <div fxFlexOrder.xs="2">
+
                   <p *ngIf="showShipping"
                      matTooltip="{{ 'Sistemas de precio del envio de sus productos a la localización brindada' }}"
                      style="font-size: 16px; font-weight: 500; margin-bottom: 12px !important">
                     {{ 'Seleccione una tarifa de envío*' | translate }}:
                   </p>
-                  <p
-                    *ngIf="!showShipping"
-                    style="color: #f44336; font-size: 16px; font-weight: 500; margin-bottom: 12px !important"
-                  >
-                    {{ 'Payment will be made at the Business office' | translate }}:
-                  </p>
+
+                  <!-- ------------------------------------------------- -->
+                  <!-- DESCRIPTION OF ADDRESS BUSINESS -->
+                  <ng-container>
+                    <!--                    <p *ngIf="!showShipping"-->
+                    <!--                       style="color: #f44336; font-size: 16px; font-weight: 500; margin-bottom: 12px !important">-->
+                    <!--                      {{ 'Payment will be made at the Business office' | translate }}:-->
+                    <!--                    </p>-->
+
+                    <!-- ============================================ -->
+                    <!-- INFO DIRECCION DEL NEGOCIO -->
+                    <div *ngIf="!showShipping && buyProducts.length > 0" class="mb-3" fxLayout="column">
+                      <p class="mat-body-2 my-2" style="text-transform: uppercase">
+                        {{ 'Recogida' | translate }}
+                      </p>
+                      <span class="mb-2">{{'Payment will be made at the Business office' | translate }}</span>
+                      <div class="mb-1 font-weight-400" style="color: #585858">
+                        {{'Negocio' | translate}}:
+                        <span class="font-weight-600">{{theBusiness?.name || '-'}}</span>
+                      </div>
+                      <div class="mb-1 font-weight-400" style="color: #585858">
+                        {{'Dirección' | translate}}:
+                        <span class="font-weight-600">{{theBusiness?.address || '-'}}</span>
+                      </div>
+                      <div class="mb-1 font-weight-400" style="color: #585858">
+                        {{'Email' | translate}}:
+                        <span class="font-weight-600">{{theBusiness?.email || '-'}}</span>
+                      </div>
+                      <!--                    <div class="mb-1 font-weight-400" style="color: #585858">-->
+                      <!--                      {{'Recogida' | translate}}:-->
+                      <!--                      <span class="font-weight-600">{{'72 Hrs después de la compra, de Lunes a Viernes'}}</span>-->
+                      <!--                    </div>-->
+                    </div>
+                  </ng-container>
+
                 </div>
 
                 <div fxLayout fxLayoutAlign="start center">
