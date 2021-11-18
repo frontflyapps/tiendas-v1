@@ -7,13 +7,17 @@ import { MarketEnum } from '../classes/market.enum';
   name: 'parsePriceProduct',
 })
 export class ParsePriceProduct implements PipeTransform {
-  constructor(private currency: CurrencyPipe) {}
+  constructor(private currency: CurrencyPipe) {
+  }
 
   transform(product: any, type?: any): string {
     let currency;
     currency = CoinEnum.USD;
     if (product.market == MarketEnum.INTERNATIONAL) {
       currency = CoinEnum.USD;
+    }
+    if (product.market == MarketEnum.NATIONAL) {
+      currency = CoinEnum.CUP;
     }
     if (type) {
       const minPrice = this.currency.transform(product.limitMinOffersPrice, currency);
