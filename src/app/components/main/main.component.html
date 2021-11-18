@@ -198,8 +198,12 @@
           </span>
         </mat-menu> -->
 
+        <!-- ================================ -->
+        <!-- CART MENU -->
         <app-shopping-widgets></app-shopping-widgets>
 
+        <!-- ================================ -->
+        <!-- NOTIFICATIONS -->
         <a *ngIf="loggedInUser" class="px-3" fxLayoutAlign="start center" style="color: white">
           <button mat-icon-button (click)="notificationBar.toggle()">
             <mat-icon [matBadge]="notificationsService.getUnreadNotifications()" matBadgeColor="warn"
@@ -208,6 +212,8 @@
           </button>
         </a>
 
+        <!-- ================================ -->
+        <!-- ACCOUNT MENU -->
         <a class="px-3"
            fxLayoutAlign="start center"
            fxShow="true"
@@ -226,10 +232,10 @@
            #userMenuTrigger="matMenuTrigger"
            class="px-0 pl-2">
 
-          <img *ngIf="!this.loggedInUser.avatar"
-               src="assets/images/avatars/profile2.png"
-               class="profileImage" />
-          <img *ngIf="this.loggedInUser.avatar" [src]="urlImage + loggedInUser.avatar" class="profileImage" />
+          <img *ngIf="!this.loggedInUser.avatar" src="assets/images/avatars/profile2.png"
+               class="profileImage" alt="Profile" />
+          <img *ngIf="this.loggedInUser.avatar" [src]="urlImage + loggedInUser.avatar" class="profileImage"
+               alt="Profile" />
         </a>
 
         <mat-menu #userMenu="matMenu" [overlapTrigger]="false" xPosition="before" class="app-dropdown">
@@ -261,14 +267,19 @@
             <mat-icon>settings</mat-icon>
             <span class="mat-body-1">{{ 'Cambie la contraseña' | translate }}</span>
           </button>
-          <a *ngIf="loggedInUser" mat-menu-item href="{{urlToCreateBusiness}}" target="_blank">
+
+          <!-- ------------------------- -->
+          <!-- NOTIFICATIONS -->
+          <div *ngIf="loggedInUser" mat-menu-item (click)="createYourBusiness()">
             <mat-icon>shopping_basket</mat-icon>
             <span class="mat-body-1">{{ 'Crea tu negocio' | translate }}</span>
-          </a>
-          <!--          <div *ngIf="loggedInUser" mat-menu-item (click)="createYourBusiness()">-->
+          </div>
+          <!--          <a *ngIf="loggedInUser" mat-menu-item href="{{urlToCreateBusiness}}" target="_blank">-->
           <!--            <mat-icon>shopping_basket</mat-icon>-->
           <!--            <span class="mat-body-1">{{ 'Crea tu negocio' | translate }}</span>-->
-          <!--          </div>-->
+          <!--          </a>-->
+
+
           <button mat-menu-item (click)="onLogout()">
             <mat-icon>exit_to_app</mat-icon>
             <span class="mat-body-1">{{ 'Logout' | translate }}</span>

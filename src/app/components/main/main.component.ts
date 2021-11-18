@@ -313,15 +313,16 @@ export class MainComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(ConfirmCreateBusinessComponent, {
       panelClass: 'app-confirm-create-business',
       maxWidth: '100vw',
-      maxHeight: '100vh',
-      width: '360px',
+      maxHeight: '100%',
+      width: '70em',
       height: 'auto',
+      disableClose: true,
       data: {},
     });
     dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.goToDigitalPlatformTransfermovil();
-      }
+      // if (result) {
+      //   this.goToDigitalPlatformTransfermovil();
+      // }
     });
   }
 
