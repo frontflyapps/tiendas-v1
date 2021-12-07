@@ -350,7 +350,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
   }
 
   onRemoveCategory(cat) {
-    let x = this.categoriesIds.findIndex((x) => x == cat.id);
+    let x = this.categoriesIds.findIndex((categoriesIdsIndex) => categoriesIdsIndex == cat.id);
     if (x > -1) {
       this.categoriesIds.splice(x, 1);
       this.onCategoriesChanged([...this.categoriesIds]);

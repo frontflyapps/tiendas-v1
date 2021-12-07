@@ -55,10 +55,12 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   loadingRelated = false;
   loadingMenu = false;
 
-  public allProductsOnMenu: any;
+  public allProductsOnMenu = [];
   public allProductsOnMenuToShow: Observable<any[]>;
 
   searchProductControl = new FormControl();
+
+  url = environment.apiUrl + 'landing-page';
 
   queryFeatured: IPagination = {
     limit: 8,
@@ -130,7 +132,6 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
           this.isLoading = false;
           this.utilsService.errorHandle(error);
           this.errorPage = true;
-          this.getProductsByBusiness(this.product.BusinessId);
           // this.getFeaturedProducts();
         },
       );
@@ -298,6 +299,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   getRelatedProducts() {
     this.loadingRelated = true;
     this.productsService.getRecomendedProduct(this.product.id).subscribe((data: any) => {
+      console.log('-> data.data', data.data);
       this.relatedProduct = data.data;
       const timeOut = setTimeout(() => {
         this.loadingRelated = false;
@@ -353,7 +355,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     this.showZoom = !this.showZoom;
   }
 
-  //////////////////////////////////////////////////////////
+  // ////////////////////////////////////////////////////////
   onPostReview() {
     let data: any = this.reviewForm.value;
     data.ProductId = this.product.id;

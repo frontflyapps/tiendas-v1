@@ -247,14 +247,14 @@
         </mat-tab-group>
       </div>
 
-      <div *ngIf="relatedProduct.length" class="products pt-5">
+      <div *ngIf="allProductsOnMenu?.length > 0" class="products pt-5">
         <div class="title">
-          <h4 class="widget-title">{{ 'Menú del Lugar' | translate }}</h4>
+          <h4 class="widget-title">{{ 'Otros productos del negocio' | translate }}</h4>
 
-          <mat-form-field class="auto-complete-search" appearance="outline">
+          <mat-form-field class="auto-complete-search" appearance="outline" style="min-width: 310px">
             <mat-label>{{'Buscar en este local' | translate}}</mat-label>
             <input type="text"
-                   placeholder="Qué desea...?"
+                   placeholder="Buscar lo que desea...?"
                    aria-label="Number"
                    matInput
                    [formControl]="searchProductControl">
@@ -271,8 +271,9 @@
         <div *ngIf="!loadingMenu" fxLayout="row wrap" fxLayoutAlign="start start" class="w-100">
           <app-product fxFlex.lt-md="100" *ngFor="let products of allProductsOnMenuToShow | async"
                        [product]="products"></app-product>
-          <ng-container *ngIf="allProductsOnMenu?.length == 0">
-            <h3 class="py-4" style="text-align: center">{{'No hay ningún producto disponible' | translate}}</h3>
+          <ng-container *ngIf="(allProductsOnMenuToShow | async)?.length == 0">
+            <h3 class="py-4"
+                style="text-align: center">{{'No hay producto con ese criterio de búsqueda' | translate}}</h3>
           </ng-container>
         </div>
 
