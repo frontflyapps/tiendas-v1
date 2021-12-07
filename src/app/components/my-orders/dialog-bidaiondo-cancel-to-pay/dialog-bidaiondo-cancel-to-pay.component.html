@@ -2,8 +2,8 @@
   <blockquote>
     <p>
       {{
-        'Usted dejará nuestro sistema y navegará hacia la pasarela online, marque CONFIRMAR para proseguir con su cancelación'
-          | translate
+      'Usted dejará nuestro sistema y navegará hacia la pasarela online, marque CONFIRMAR para proseguir con su cancelación'
+        | translate
       }}
     </p>
   </blockquote>
@@ -13,15 +13,10 @@
   <button mat-button mat-dialog-close class="mr-3">{{ 'Cancelar' | translate }}</button>
   <form ngNoForm method="post" target="_self" action="https://www.administracomercios.com/index.php">
     <div id="inputsHiddenBid"></div>
-    <button
-      id="bid-btn-submit"
-      type="submit"
-      value="Enviar"
-      aria-label="Confirm"
-      mat-flat-button
-      color="primary"
-      mat-dialog-close
-    >
+    <button id="bid-btn-submit" type="submit"
+            value="Enviar" aria-label="Confirm"
+            mat-flat-button color="primary"
+            mat-dialog-close>
       {{ 'CONFIRMAR' | translate }}
     </button>
   </form>
