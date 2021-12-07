@@ -254,7 +254,7 @@ export class MyAccountComponent implements OnInit {
             10000,
           );
           this.inLoading = false;
-          this.router.navigate([this.routeToNavigate]);
+          this.router.navigate([this.routeToNavigate]).then();
           this.spinner.hide();
         } else {
           this.toastr.showError(this.translate.instant('Wrong user'));
@@ -262,6 +262,7 @@ export class MyAccountComponent implements OnInit {
         }
       },
       (error) => {
+        console.warn(error);
         this.inLoading = false;
         this.spinner.hide();
       },
@@ -514,8 +515,8 @@ export class MyAccountComponent implements OnInit {
       );
   }
 
-  //////////////////////////////////////////////////////////
-  /////////////////////////////////////////////////////////
+  // ////////////////////////////////////////////////////////
+  // ///////////////////////////////////////////////////////
   handleReset() {
   }
 
@@ -528,5 +529,5 @@ export class MyAccountComponent implements OnInit {
   handleLoad() {
   }
 
-  /////////////////////////////////////////////////////////
+  // ///////////////////////////////////////////////////////
 }

@@ -6,7 +6,7 @@
       </div> -->
 
       <div fxLayout="column" fxLayoutAlign="center start" class="py-2 mt-2">
-        <img *ngIf="!showRegistrationForm" src="../../../../assets/images/logoWhite.png" class="login-logo mx-auto" />
+        <img *ngIf="!showRegistrationForm" src="assets/images/logoWhite.png" class="login-logo mx-auto" alt="logo" />
       </div>
 
       <div fxLayout="column" id="CardBodyLoggin" class="mat-elevation-z8" fxLayoutAlign="start stretch">
@@ -336,7 +336,7 @@
 
         <div fxLayout="column" class="FormLayout" fxLayoutAlign="start stretch" *ngIf="showNewPassForm"
              style="max-height: 60vh; overflow-y: scroll">
-          <div class="alert alert-primary" class="py-2" role="alert">
+          <div class="alert alert-primary py-2" role="alert">
             <span class="mat-body-2">{{ 'Insert the pin sent to your phone' | translate }}</span>
           </div>
 
