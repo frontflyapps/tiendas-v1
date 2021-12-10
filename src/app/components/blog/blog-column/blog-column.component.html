@@ -25,12 +25,14 @@
                   <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="start stretch" fxLayoutGap=" gappx">
                     <div class="image-box" fxFlex="100" fxFlex.gt-sm="50" fxLayoutAlign="center stretch">
                       <a *ngIf="item.link" [href]="item.link" target="_blank">
-                        <img [alt]="item.title[language]" [ngClass]="{'imageDroped':!item.expandable,'imageExpanded':item.expandable}"
+                        <img [alt]="item.title[language]"
+                             [ngClass]="{'imageDroped':!item.expandable,'imageExpanded':item.expandable}"
                              [src]="imageUrl + item.image"
                              ngp-lazy ngp-threshold="0.1">
                       </a>
 
-                      <img *ngIf="!item.link" [alt]="item.title[language]" [ngClass]="{'imageDroped':!item.expandable,'imageExpanded':item.expandable}"
+                      <img *ngIf="!item.link" [alt]="item.title[language]"
+                           [ngClass]="{'imageDroped':!item.expandable,'imageExpanded':item.expandable}"
                            [src]="imageUrl + item.image"
                            ngp-lazy
                            ngp-threshold="0.1">

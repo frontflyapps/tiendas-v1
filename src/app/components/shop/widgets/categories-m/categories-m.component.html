@@ -2,7 +2,8 @@
   <ul>
     <li *ngFor="let category of allCategories">
       <a (change)="$event.stopPropagation()"
-         (click)="$event ? onChangeSelection(category.id) : null " [class]="selection.isSelected(category.id) ? 'category-filter-clicked' : 'category-filter'"
+         (click)="$event ? onChangeSelection(category.id) : null "
+         [class]="selection.isSelected(category.id) ? 'category-filter-clicked' : 'category-filter'"
          href="javascript:void(0)">
         {{this.showNameCategory(category)}}
       </a>

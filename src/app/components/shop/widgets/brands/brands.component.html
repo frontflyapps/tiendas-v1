@@ -1,6 +1,7 @@
 <div class="brands-items">
 
-  <mat-checkbox (change)="$event ? onChangeSelection(brand.id) : null" (click)="$event.stopPropagation()" *ngFor="let brand of brands" [checked]="selection.isSelected(brand.id)"
+  <mat-checkbox (change)="$event ? onChangeSelection(brand.id) : null" (click)="$event.stopPropagation()"
+                *ngFor="let brand of brands" [checked]="selection.isSelected(brand.id)"
                 class="example-radio-button py-1" color="accent"
                 fxLayout="row">
     <span class="mat-body-2"

@@ -89,7 +89,9 @@
               <div fxLayout="row wrap" fxLayoutAlign="start center"
                    fxLayoutGap="gappx"
                    style="border-top: 1px solid #eeeeee; border-bottom: 1px solid #eeeeee">
-                <div *ngFor="let item of product.PriceRanges" [matTooltip]="'entre ' + item.min + ' y ' + item.max + ' unidades'" class="mx-2 py-3" fxLayout="column"
+                <div *ngFor="let item of product.PriceRanges"
+                     [matTooltip]="'entre ' + item.min + ' y ' + item.max + ' unidades'" class="mx-2 py-3"
+                     fxLayout="column"
                      fxLayoutAlign="start start" fxLayoutGap="gappx"
                      style="width: 80px">
                   <p class="mat-body-1">{{ item.min }} - {{ item.max }}</p>
@@ -160,9 +162,11 @@
         <mat-tab-group [selectedIndex]="indexTab" ngClass.gt-sm="w-95" ngClass.lt-md="w-100">
           <mat-tab label="{{ 'Details' | translate }}">
             <div class="full-desc text-muted">
-              <div *ngIf="product.description == null" [id]="'ProductId' + product.id" [innerHTML]="'No tiene descripcion'"
+              <div *ngIf="product.description == null" [id]="'ProductId' + product.id"
+                   [innerHTML]="'No tiene descripcion'"
                    class="InnerHtmlContent"></div>
-              <div *ngIf="product.description != null" [innerHTML]="this.utilsService.parserLanguage(product.description, language)"
+              <div *ngIf="product.description != null"
+                   [innerHTML]="this.utilsService.parserLanguage(product.description, language)"
                    class="InnerHtmlContent"></div>
               <!--<p class="my-3">
                 <span style="font-weight: 600; font-size: 16px">
@@ -228,7 +232,8 @@
                       <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{ 'Post content' | translate }}</mat-label>
                         <textarea #message [formControl]="reviewForm.controls['review']" matInput
-                                  maxlength="250" placeholder="{{ 'Post content' | translate }}" required rows="3"></textarea>
+                                  maxlength="250" placeholder="{{ 'Post content' | translate }}" required
+                                  rows="3"></textarea>
                         <mat-hint align="end">{{ message.value.length }} / 250</mat-hint>
                       </mat-form-field>
                     </div>
@@ -343,16 +348,20 @@
 
         <mat-divider class="my-2"></mat-divider>
         <section *ngIf="!isLoading" fxHide.lt-md>
-          <share-button [description]="this.product?.name?.es+': \n'+this.product?.shortDescription?.es" [title]="this.product?.name?.es"
+          <share-button [description]="this.product?.name?.es+': \n'+this.product?.shortDescription?.es"
+                        [title]="this.product?.name?.es"
                         button="facebook">
           </share-button>
-          <share-button [description]="this.product?.name?.es+': \n'+this.product?.shortDescription?.es" [title]="this.product?.name?.es"
+          <share-button [description]="this.product?.name?.es+': \n'+this.product?.shortDescription?.es"
+                        [title]="this.product?.name?.es"
                         button="whatsapp">
           </share-button>
-          <share-button [description]="this.product?.name?.es+': \n'+this.product?.shortDescription?.es" [title]="this.product?.name?.es"
+          <share-button [description]="this.product?.name?.es+': \n'+this.product?.shortDescription?.es"
+                        [title]="this.product?.name?.es"
                         button="telegram">
           </share-button>
-          <share-button [description]="this.product?.name?.es+': \n'+this.product?.shortDescription?.es" [image]="this.mainImage?.image"
+          <share-button [description]="this.product?.name?.es+': \n'+this.product?.shortDescription?.es"
+                        [image]="this.mainImage?.image"
                         [title]="this.product?.name?.es"
                         button="email">
           </share-button>
@@ -398,7 +407,8 @@
       <picture [fxFlexOrder.xs]="2" class="pdnf-picture" fxFlex="50" fxFlex.xs="100">
         <!--        <source srcset="assets/images/not-found-product.webp" type="image/webp">-->
         <!--        <source srcset="assets/images/not-found-product.png" type="image/png">-->
-        <img alt="Producto no encontrado" onerror="this.onerror=null;this.src='assets/images/noImage.jpg';" src="assets/images/not-found-product.png"
+        <img alt="Producto no encontrado" onerror="this.onerror=null;this.src='assets/images/noImage.jpg';"
+             src="assets/images/not-found-product.png"
              type="image/png">
       </picture>
 
@@ -422,7 +432,8 @@
       <div class="title">
         <h4 class="widget-title">{{ 'FEATURED PRODUCTS' | translate }}</h4>
       </div>
-      <app-product-carousel-two *ngIf="!loadingFeatured" [btnColor]="'accent'" [grid]="{ '480': 1, '740': 2, '960': 2, '1024': 2, '1280': 3 }"
+      <app-product-carousel-two *ngIf="!loadingFeatured" [btnColor]="'accent'"
+                                [grid]="{ '480': 1, '740': 2, '960': 2, '1024': 2, '1280': 3 }"
                                 [products]="featuredProducts">
       </app-product-carousel-two>
       <div *ngIf="loadingFeatured" class="my-3">
