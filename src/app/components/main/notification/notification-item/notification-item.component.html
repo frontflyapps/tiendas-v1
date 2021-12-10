@@ -38,7 +38,8 @@
 
   <div
     (click)="onClickNotification()"
-    *ngIf="notificacion.type == 'payment-confirmed' || notificacion.type=='payment-cancelled' || notificacion.type == 'payment-error'" [@detailExpand]="this.expandedElement ? 'expanded' : 'collapsed'" class="LayoutTable px-5"
+    *ngIf="notificacion.type == 'payment-confirmed' || notificacion.type=='payment-cancelled' || notificacion.type == 'payment-error'"
+    [@detailExpand]="this.expandedElement ? 'expanded' : 'collapsed'" class="LayoutTable px-5"
     fxLayout="column" fxLayoutAlign="start stretch">
     <mat-divider class="my-2"></mat-divider>
     <div class="w-100" fxLayout="row" fxLayoutAlign="space-between center">
@@ -110,7 +111,8 @@
       </button>
     </span>
   </div>
-  <div (click)="onClickNotification()" *ngIf="notificacion.type.split('-')[0]=='payment'" [@detailExpand]="this.expandedElement ? 'expanded' : 'collapsed'"
+  <div (click)="onClickNotification()" *ngIf="notificacion.type.split('-')[0]=='payment'"
+       [@detailExpand]="this.expandedElement ? 'expanded' : 'collapsed'"
        class="LayoutTable px-5"
        fxLayout="column" fxLayoutAlign="start stretch">
     <mat-divider class="my-2"></mat-divider>

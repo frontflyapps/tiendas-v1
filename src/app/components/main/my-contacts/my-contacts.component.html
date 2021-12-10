@@ -23,7 +23,8 @@
       <ng-template #thereIsContacts>
         <div fxFlex="100" fxLayout="column">
           <ng-container *ngFor="let contact of contactsService.allContacts; last as lst">
-            <div [ngClass]="{'contacts-line-bottom': !lst}" class="contact-item" fxFlex="100" fxLayout="row" fxLayoutAlign="star center"
+            <div [ngClass]="{'contacts-line-bottom': !lst}" class="contact-item" fxFlex="100" fxLayout="row"
+                 fxLayoutAlign="star center"
                  fxLayoutGap="1rem">
               <span class="contact-title" fxFlex="grow">
                 {{contact?.name}}&nbsp;{{contact?.lastName}}
@@ -98,7 +99,8 @@
 
             <mat-form-field appearance="outline" fxFlex="50" fxFlex.xs="100">
               <mat-label>{{'Documento de identidad'|translate}}</mat-label>
-              <input (keypress)="utilsService.keyPressAlphaAndNumbersModIdentity($event)" [formControl]="form.controls['identification']"
+              <input (keypress)="utilsService.keyPressAlphaAndNumbersModIdentity($event)"
+                     [formControl]="form.controls['identification']"
                      matInput
                      placeholder="{{'identification'|translate}}"
                      type="email">

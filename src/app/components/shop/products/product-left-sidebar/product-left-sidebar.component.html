@@ -17,13 +17,15 @@
           </button>
         </div>
         <span class="bold">{{ 'Ordenar' | translate }}</span>
-        <div (click)="onSetOrder(this.queryProduct?.order == 'id' ? '-id' : 'id')" [ngClass]="{ selected: this.queryProduct?.order == 'id' || this.queryProduct?.order == '-id' }"
+        <div (click)="onSetOrder(this.queryProduct?.order == 'id' ? '-id' : 'id')"
+             [ngClass]="{ selected: this.queryProduct?.order == 'id' || this.queryProduct?.order == '-id' }"
              class="chip-order">
           {{ 'Creación' | translate }}
           <mat-icon *ngIf="this.queryProduct?.order == 'id'">north</mat-icon>
           <mat-icon *ngIf="this.queryProduct?.order == '-id'">south</mat-icon>
         </div>
-        <div (click)="onSetOrder(this.queryProduct?.order == 'name' ? '-name' : 'name')" [ngClass]="{ selected: this.queryProduct?.order == 'name' || this.queryProduct?.order == '-name' }"
+        <div (click)="onSetOrder(this.queryProduct?.order == 'name' ? '-name' : 'name')"
+             [ngClass]="{ selected: this.queryProduct?.order == 'name' || this.queryProduct?.order == '-name' }"
              class="chip-order">
           {{ 'Nombre' | translate }}
           <mat-icon *ngIf="this.queryProduct?.order == 'name'">north</mat-icon>

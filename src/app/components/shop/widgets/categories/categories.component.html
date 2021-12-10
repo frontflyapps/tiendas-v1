@@ -6,7 +6,8 @@
     </button>
   </div>
 
-  <mat-checkbox (change)="$event ? onChangeSelection(category.id) : null" (click)="$event.stopPropagation()" *ngFor="let category of categories" [checked]="selection.isSelected(category.id)"
+  <mat-checkbox (change)="$event ? onChangeSelection(category.id) : null" (click)="$event.stopPropagation()"
+                *ngFor="let category of categories" [checked]="selection.isSelected(category.id)"
                 class="example-radio-button py-1 layoutCheck" color="accent"
                 fxLayout="row"
                 fxLayoutAlign="start center">

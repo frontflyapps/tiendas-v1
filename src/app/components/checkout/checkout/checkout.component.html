@@ -376,7 +376,8 @@
                     <mat-radio-button [value]="pay.id"
                                       class="radio-button-national">
                       <!-- {{this.onlyCubanPeople}} - {{cart?.market}}-->
-                      <div [ngClass]="{'payment-active': form.get('paymentType').value === pay.id}" class="pay-method-container" fxLayout="row"
+                      <div [ngClass]="{'payment-active': form.get('paymentType').value === pay.id}"
+                           class="pay-method-container" fxLayout="row"
                            fxLayoutAlign="start center">
                         <img [src]="pay.logo" class="pay-method-icon" />
                         <span class="mat-body-2 uppercase pay-method-name">
@@ -393,7 +394,8 @@
                     <mat-radio-button *ngIf="this.onlyCubanPeople && cart?.market === 'international'"
                                       [value]="pay.id"
                                       class="radio-button-international">
-                      <div [ngClass]="{'payment-active': form.get('paymentType').value === pay.id}" class="pay-method-container"
+                      <div [ngClass]="{'payment-active': form.get('paymentType').value === pay.id}"
+                           class="pay-method-container"
                            fxLayoutAlign="start center">
                         <img [src]="pay.logo" class="pay-method-icon" />
                         <span class="mat-body-2 uppercase pay-method-name">

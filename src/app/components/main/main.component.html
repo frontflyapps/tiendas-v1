@@ -144,7 +144,8 @@
       <div class="search-form" fxFlex fxLayout="row" fxLayoutAlign="start center">
         <div class="search-form" fxLayout="row" fxLayoutAlign="start center">
           <div class="form-wrap">
-            <input (keyup.enter)="onSearch()" [formControl]="searchForm" placeholder="{{ 'Buscar en MiBulevar...' | translate }}"
+            <input (keyup.enter)="onSearch()" [formControl]="searchForm"
+                   placeholder="{{ 'Buscar en MiBulevar...' | translate }}"
                    type="text" />
             <button (click)="onSearch()" class="btn-search">
               <mat-icon>search</mat-icon>

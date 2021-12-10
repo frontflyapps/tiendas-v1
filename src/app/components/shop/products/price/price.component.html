@@ -7,7 +7,8 @@
     :
     <mat-form-field appearance="outline" style="width: 120px; margin-right: 8px">
       <mat-label style="text-transform: capitalize"> {{ 'max' | translate }}</mat-label>
-      <input (change)="priceFilter()" [formControl]="priceForm.get('priceTo')" [max]="100000000" [min]="priceForm.get('priceFrom')" matInput
+      <input (change)="priceFilter()" [formControl]="priceForm.get('priceTo')" [max]="100000000"
+             [min]="priceForm.get('priceFrom')" matInput
              type="number" />
     </mat-form-field>
   </div>

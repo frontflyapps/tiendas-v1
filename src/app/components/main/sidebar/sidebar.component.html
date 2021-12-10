@@ -1,5 +1,7 @@
 <ng-container *ngIf="showNavItem(item.displayName)">
-  <a (click)="onItemSelected(item)" [ngClass]="{'active': item.route ? router.isActive(item.route, true): false, 'expanded': expanded}" [ngStyle]="{'padding-left': (depth * 16) + 'px'}" class="menu-list-item grey-700"
+  <a (click)="onItemSelected(item)"
+     [ngClass]="{'active': item.route ? router.isActive(item.route, true): false, 'expanded': expanded}"
+     [ngStyle]="{'padding-left': (depth * 16) + 'px'}" class="menu-list-item grey-700"
      fxLayoutAlign="start center"
      mat-list-item
      matRipple>

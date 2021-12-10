@@ -228,7 +228,8 @@
 
           <div fxLayout="row" fxLayoutAlign="start">
             <div class="text-align-center cart-card-image" style="background-color: #fafafa">
-              <img *ngIf="item.Product.Images && item.Product.Images.length" [src]="imageUrl + item.Product.Images[0].image"
+              <img *ngIf="item.Product.Images && item.Product.Images.length"
+                   [src]="imageUrl + item.Product.Images[0].image"
                    alt="Image"
                    class="imageProduct" />
               <img *ngIf="!(item.Product.Images && item.Product.Images.length)" alt="Image"

@@ -231,7 +231,8 @@
 
       <div class="mt-3" fxLayout="row wrap" fxLayoutAlign="end center" fxLayoutGap="gappx">
 
-        <button (click)="onGetVoucher(this.selectedPayment)" *ngIf="this.selectedPayment.status == 'confirmed' || this.selectedPayment.status == 'delivered' "
+        <button (click)="onGetVoucher(this.selectedPayment)"
+                *ngIf="this.selectedPayment.status == 'confirmed' || this.selectedPayment.status == 'delivered' "
                 class="mx-2"
                 color="primary" mat-stroked-button matTooltip="{{'Obtener el vouvher de pago'|translate}}">
           <mat-icon>cloud_download</mat-icon>

@@ -9,7 +9,8 @@
   </div>
 
   <div class="Paginacion" fxLayoutAlign="center center">
-    <button (click)="onCargarMasNotificaciones()" [disabled]="this.notificationsService.getCount() >= this.notificationsService.getTotal()"
+    <button (click)="onCargarMasNotificaciones()"
+            [disabled]="this.notificationsService.getCount() >= this.notificationsService.getTotal()"
             class="CargarMasBtn" color="primary" mat-button>
       <span style="font-weight: 600;">{{'VER MÁS...' | translate}}</span>
     </button>
