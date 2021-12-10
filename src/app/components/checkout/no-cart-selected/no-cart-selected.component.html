@@ -7,6 +7,6 @@
 
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <a [disabled]="loading" (click)="this.dialogRef.close()" [routerLink]="['/cart']" mat-flat-button
-    color="primary">{{'ACEPTAR'| translate}}</a>
+  <a (click)="this.dialogRef.close()" [disabled]="loading" [routerLink]="['/cart']" color="primary"
+     mat-flat-button>{{'ACEPTAR'| translate}}</a>
 </mat-dialog-actions>

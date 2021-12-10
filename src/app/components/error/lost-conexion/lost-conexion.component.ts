@@ -13,13 +13,15 @@ import { ShowToastrService } from './../../../core/services/show-toastr/show-toa
 })
 export class LostConexionComponent implements OnInit {
   apiUrl = environment.apiUrl;
+
   constructor(
     private httpClient: HttpClient,
     private previousRouteService: PreviousRouteService,
     private utilsService: UtilsService,
     private showToastrService: ShowToastrService,
     private router: Router,
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     // const interVal = setInterval(()=>{

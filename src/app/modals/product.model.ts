@@ -5,7 +5,6 @@ export type ProductTags = 'nike' | 'puma' | 'lifestyle' | 'caprese';
 export type ProductColor = 'white' | 'black' | 'red' | 'green' | 'purple' | 'yellow' | 'blue' | 'gray' | 'orange' | 'pink';
 
 
-
 export class Product {
   id?: number;
   name?: string;
@@ -38,7 +37,7 @@ export class Product {
     sale?: boolean,
     category?: string,
     tags?: ProductTags[],
-    colors?: ProductColor[]
+    colors?: ProductColor[],
   ) {
     this.id = id;
     this.name = name;
@@ -58,6 +57,7 @@ export class Product {
   }
 
 }
+
 // Color Filter
 export interface ColorFilter {
   color?: ProductColor;

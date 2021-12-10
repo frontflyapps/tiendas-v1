@@ -24,14 +24,6 @@ export class CategoriesMComponent implements OnInit, OnDestroy {
 
   @Output() categoryChanged: EventEmitter<any> = new EventEmitter();
 
-  @Input() set categoriesIds(value) {
-    if (value) {
-      this.selection.clear();
-      value.map((id) => {
-        this.selection.select(+id);
-      });
-    }
-  }
   constructor(
     private utilsService: UtilsService,
     private brandService: CategoriesService,
@@ -40,6 +32,15 @@ export class CategoriesMComponent implements OnInit, OnDestroy {
     this.selection = new SelectionModel(true, []);
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
+  }
+
+  @Input() set categoriesIds(value) {
+    if (value) {
+      this.selection.clear();
+      value.map((id) => {
+        this.selection.select(+id);
+      });
+    }
   }
 
   ngOnInit() {

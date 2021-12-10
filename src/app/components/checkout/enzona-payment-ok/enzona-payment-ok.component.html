@@ -1,5 +1,5 @@
 <div *ngIf="this.loadingSearch" class="loading-shade-full">
-  <mat-spinner *ngIf="this.loadingSearch" diameter="60" color="primary"></mat-spinner>
+  <mat-spinner *ngIf="this.loadingSearch" color="primary" diameter="60"></mat-spinner>
 </div>
 
 <div class="container" style="min-height: 500px">
@@ -7,7 +7,7 @@
     <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="gappx">
       <span class="py-3" style="text-align: center; color: #616161; font-size: 30px">
         <mat-icon style="text-align: center; color: #616161; font-size: 30px; height: 30px; width: 30px"
-          >attach_money
+        >attach_money
         </mat-icon>
         {{ 'MAKE A PAYMENT' | translate }}
       </span>
@@ -116,18 +116,18 @@
 
     <div *ngIf="ifSuccess" class="py-4" fxLayout="column" fxLayoutAlign="center center">
       <div fxLayout="column" fxLayoutAlign="start center">
-        <img style="max-height: 80px" src="assets/images/logo-accent.png" class="mb-3" />
+        <img class="mb-3" src="assets/images/logo-accent.png" style="max-height: 80px" />
 
         <h3 style="color: #666768; font-size: 24px; font-weight: 500">{{ '¡Enhorabuena!' | translate }}</h3>
-        <h1 style="color: #09ca5f; font-size: 20px; text-align: center" class="mb-3">
+        <h1 class="mb-3" style="color: #09ca5f; font-size: 20px; text-align: center">
           <span style="color: #666768; font-size: 20px">{{ 'Pago' | translate }}</span> &nbsp;{{
-            'Completado' | translate
+          'Completado' | translate
           }}
         </h1>
 
-        <img src="assets/images/pago_aceptado.png" class="mb-3 mt-2" style="max-width: 260px" />
+        <img class="mb-3 mt-2" src="assets/images/pago_aceptado.png" style="max-width: 260px" />
 
-        <a [routerLink]="['/my-orders']" mat-raised-button color="primary" class="mb-3 mt-3 px-4 py-2">
+        <a [routerLink]="['/my-orders']" class="mb-3 mt-3 px-4 py-2" color="primary" mat-raised-button>
           <mat-icon class="mr-2">arrow_back</mat-icon>
           {{ 'VOLVER' | translate }}
         </a>
@@ -136,19 +136,20 @@
 
     <div *ngIf="showError" class="py-4" fxLayout="column" fxLayoutAlign="center center">
       <div fxLayout="column" fxLayoutAlign="start center">
-        <img style="max-height: 80px" src="assets/images/logo-accent.png" class="mb-3" />
+        <img class="mb-3" src="assets/images/logo-accent.png" style="max-height: 80px" />
 
         <h3 style="color: #666768; font-size: 24px; font-weight: 500">{{ 'Ups!' | translate }}</h3>
-        <h1 style="color: #b5252a; font-size: 20px; text-align: center" class="mb-3">
+        <h1 class="mb-3" style="color: #b5252a; font-size: 20px; text-align: center">
           <span style="color: #666768; font-size: 20px">{{ 'Confirmación de pago' | translate }}</span> &nbsp;{{
-            'Fallida' | translate
+          'Fallida' | translate
           }}
         </h1>
 
-        <img src="assets/images/pago_fallido.png" class="mb-4 mt-4" style="max-width: 260px" />
+        <img class="mb-4 mt-4" src="assets/images/pago_fallido.png" style="max-width: 260px" />
 
-        <a [routerLink]="['/checkout']" mat-raised-button color="primary" class="mb-3 mt-3 px-4 py-2">
-          <mat-icon class="mr-2">arrow_back</mat-icon>{{ 'Aceptar' | translate | uppercase }}
+        <a [routerLink]="['/checkout']" class="mb-3 mt-3 px-4 py-2" color="primary" mat-raised-button>
+          <mat-icon class="mr-2">arrow_back</mat-icon>
+          {{ 'Aceptar' | translate | uppercase }}
         </a>
       </div>
     </div>

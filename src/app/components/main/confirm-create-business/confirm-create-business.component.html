@@ -14,7 +14,7 @@
 <mat-toolbar id="successPay" matDialogTitle>
   <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
     <span class="mat-title mb-0">{{'Información importante'|translate}}!</span>
-    <button mat-icon-button (click)="dialogRef.close(false)" aria-label="Close dialog">
+    <button (click)="dialogRef.close(false)" aria-label="Close dialog" mat-icon-button>
       <mat-icon>close</mat-icon>
     </button>
   </mat-toolbar-row>
@@ -81,6 +81,6 @@
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-  <button mat-button (click)="dialogRef.close(false)" mat-dialog-close>Cancel</button>
-  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Install</button>
+  <button (click)="dialogRef.close(false)" mat-button mat-dialog-close>Cancel</button>
+  <button [mat-dialog-close]="true" cdkFocusInitial mat-button>Install</button>
 </mat-dialog-actions>

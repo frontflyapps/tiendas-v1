@@ -16,7 +16,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
     ForbiddenAccessComponent,
     OutdatedVersionComponent,
     LostConexionComponent,
-    NotFoundComponent
+    NotFoundComponent,
   ],
   imports: [
     CommonModule,
@@ -24,7 +24,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
     FlexLayoutModule,
     MatButtonModule,
     MatIconModule,
-    TranslateModule
-  ]
+    TranslateModule,
+  ],
 })
-export class ErrorModule { }
+export class ErrorModule {
+}

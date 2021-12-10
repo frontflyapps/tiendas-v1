@@ -14,7 +14,8 @@ export class ConfirmationDialogFrontComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<ConfirmationDialogFrontComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.dialogRef.backdropClick().subscribe(() => {

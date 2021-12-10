@@ -14,6 +14,15 @@ export class UtilsService {
   urlImage = environment.apiUrl;
   showErrorState = false;
 
+  constructor(
+    public sanitizer: DomSanitizer,
+    private showToastr: ShowToastrService,
+    private translateService: TranslateService,
+    private showSnackbar: ShowSnackbarService,
+    private httpClient: HttpClient,
+  ) {
+  }
+
   /**
    *
    * @param arrayBase Array with All product needed
@@ -32,15 +41,6 @@ export class UtilsService {
       arrayBase.find((itemProduct) =>
         itemProduct.id === itemId),
     );
-  }
-
-  constructor(
-    public sanitizer: DomSanitizer,
-    private showToastr: ShowToastrService,
-    private translateService: TranslateService,
-    private showSnackbar: ShowSnackbarService,
-    private httpClient: HttpClient,
-  ) {
   }
 
   public getUrlImages(): string {

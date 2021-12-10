@@ -9,6 +9,7 @@ import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bott
 })
 export class SocialMediaComponent implements OnInit {
   product: any;
+
   constructor(
     private _bottomSheetRef: MatBottomSheetRef<SocialMediaComponent>,
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: any,
@@ -16,7 +17,8 @@ export class SocialMediaComponent implements OnInit {
     this.product = data.product;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   openLink(event: MouseEvent): void {
     this._bottomSheetRef.dismiss();

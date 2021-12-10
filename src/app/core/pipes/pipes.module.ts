@@ -30,4 +30,5 @@ import { CurrencyCheckoutPipe } from './currency-checkout.pipe';
   ],
   providers: [DummyPipe],
 })
-export class PipesModule {}
+export class PipesModule {
+}

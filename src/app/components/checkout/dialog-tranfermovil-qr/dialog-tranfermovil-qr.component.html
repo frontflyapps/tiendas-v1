@@ -18,14 +18,14 @@
           {{ 'Precione el botón de lectura de qr y realize su pago.' | translate }}
         </li>
       </div>
-      <a color="primary" [href]="domSanitizer.bypassSecurityTrustUrl(this.launchTM)" class="mt-2" mat-flat-button>
+      <a [href]="domSanitizer.bypassSecurityTrustUrl(this.launchTM)" class="mt-2" color="primary" mat-flat-button>
         {{ 'Abrir la app de tranfermovil' | translate }}</a
       >
     </ul>
   </div>
   <div fxFlexFill fxLayout="column" fxLayoutAlign="start center">
-    <img class="mt-4" [src]="this.imgQR" />
-    <div style="max-width: 20rem" fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="gappx">
+    <img [src]="this.imgQR" class="mt-4" />
+    <div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="gappx" style="max-width: 20rem">
       <span class="mat-title mt-3"> {{ 'Total' | translate }}: &nbsp;{{ finalPrice | currencyMarket: currency }} </span>
     </div>
   </div>
@@ -33,9 +33,9 @@
 <mat-dialog-actions align="end">
   <button
     (click)="onCancelarTranfermovilPayment()"
+    color="warn"
     mat-button
     mat-dialog-close
-    color="warn"
     matTooltip="{{ 'Cancelar la confirmación de pago con transfermóvil' | translate }}"
   >
     {{ 'Cancelar' | translate | uppercase }}

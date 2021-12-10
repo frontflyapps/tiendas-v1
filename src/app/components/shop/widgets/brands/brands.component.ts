@@ -22,6 +22,16 @@ export class BrandsComponent implements OnInit, OnDestroy {
 
   @Output() brandChanged = new EventEmitter();
 
+  constructor(
+    private utilsService: UtilsService,
+    private brandService: CategoriesService,
+    public loggedInUserService: LoggedInUserService,
+  ) {
+    this.selection = new SelectionModel(true, []);
+    this._unsubscribeAll = new Subject<any>();
+    this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
+  }
+
   @Input() set brandsIds(value) {
     if (value) {
       // this.selection.clear();
@@ -42,16 +52,6 @@ export class BrandsComponent implements OnInit, OnDestroy {
     //     this.selection.select(+id);
     //   });
     // }
-  }
-
-  constructor(
-    private utilsService: UtilsService,
-    private brandService: CategoriesService,
-    public loggedInUserService: LoggedInUserService,
-  ) {
-    this.selection = new SelectionModel(true, []);
-    this._unsubscribeAll = new Subject<any>();
-    this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
   }
 
   ngOnInit() {

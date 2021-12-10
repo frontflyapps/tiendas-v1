@@ -462,12 +462,6 @@ export class CartService implements OnDestroy {
     }
   }
 
-  private isSameMarket(cart, product) {
-    return cart.market === product.market;
-  }
-
-  // CheckCart
-
   _isInCart(product): boolean {
     this.carts = this.loggedInUserService._getDataFromStorage('cartItem') || [];
     const cart = this._getSimpleCart(product.BusinessId);
@@ -478,6 +472,8 @@ export class CartService implements OnDestroy {
     const searchResult = shoppingCart.find((item) => item.ProductId == product.id);
     return searchResult != undefined;
   }
+
+  // CheckCart
 
   _calcTotalPrice(cart) {
     if (cart == undefined) {
@@ -685,7 +681,6 @@ export class CartService implements OnDestroy {
     return this.httpClient.get(this.urlCheckoutData, { params: httpParams });
   }
 
-  // ////////////////////// ADD TO CART PRODUCT //////////////////
   // Add to cart
   public addToCartOnCard(product: any, quantity: number = 1) {
     // this.inLoading = true;
@@ -717,5 +712,11 @@ export class CartService implements OnDestroy {
           // this.inLoading = false;
         });
     }
+  }
+
+  // ////////////////////// ADD TO CART PRODUCT //////////////////
+
+  private isSameMarket(cart, product) {
+    return cart.market === product.market;
   }
 }

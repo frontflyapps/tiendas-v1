@@ -11,8 +11,8 @@ import { PipesModule } from 'src/app/core/pipes/pipes.module';
 const routes: Routes = [
   {
     path: '',
-    component: PrivacyPolicyComponent
-  }
+    component: PrivacyPolicyComponent,
+  },
 ];
 
 
@@ -25,7 +25,8 @@ const routes: Routes = [
     MatCardModule,
     MatIconModule,
     RouterModule.forChild(routes),
-    PipesModule
-  ]
+    PipesModule,
+  ],
 })
-export class PrivacyPolicyModule { }
+export class PrivacyPolicyModule {
+}

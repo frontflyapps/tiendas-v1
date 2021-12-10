@@ -1,8 +1,8 @@
 <section>
-  <div fxHide fxShow.gt-md fxLayout="row" class="rowContainer" fxLayoutAlign="space-between center"
-       fxLayoutGap="10px grid">
+  <div class="rowContainer" fxHide fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px grid"
+       fxShow.gt-md>
 
-    <mat-card fxFlex="100%" *ngFor="let item of arrayItems.lg" class="p-0" style="box-shadow: unset !important;
+    <mat-card *ngFor="let item of arrayItems.lg" class="p-0" fxFlex="100%" style="box-shadow: unset !important;
       border: 1px solid rgba(0, 0, 0, 0.12);
       border-radius: 8px !important;">
       <div class="template-image">
@@ -36,8 +36,9 @@
 
   </div>
 
-  <div fxHide fxShow.md fxLayout="row" class="rowContainer" fxLayoutAlign="space-between center" fxLayoutGap="10px grid">
-    <mat-card fxFlex="100%" *ngFor="let item of arrayItems.md" class="p-0" style="box-shadow: unset !important;
+  <div class="rowContainer" fxHide fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px grid"
+       fxShow.md>
+    <mat-card *ngFor="let item of arrayItems.md" class="p-0" fxFlex="100%" style="box-shadow: unset !important;
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 8px !important;">
       <div class="template-image">
@@ -73,9 +74,10 @@
 
   </div>
 
-  <div fxHide fxShow.sm fxLayout="row" class="rowContainer" fxLayoutAlign="space-between center" fxLayoutGap="10px grid">
+  <div class="rowContainer" fxHide fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px grid"
+       fxShow.sm>
 
-    <mat-card fxFlex="100%" *ngFor="let item of arrayItems.sm" class="p-0" style="box-shadow: unset !important;
+    <mat-card *ngFor="let item of arrayItems.sm" class="p-0" fxFlex="100%" style="box-shadow: unset !important;
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 8px !important;">
       <div class="template-image">
@@ -111,9 +113,10 @@
     </mat-card>
 
   </div>
-  <div fxHide fxShow.xs fxLayout="row" class="rowContainer" fxLayoutAlign="space-between center" fxLayoutGap="10px grid">
+  <div class="rowContainer" fxHide fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px grid"
+       fxShow.xs>
 
-    <mat-card fxFlex="100%" *ngFor="let item of arrayItems.xs" class="p-0" style="box-shadow: unset !important;
+    <mat-card *ngFor="let item of arrayItems.xs" class="p-0" fxFlex="100%" style="box-shadow: unset !important;
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 8px !important;">
       <div class="template-image">

@@ -8,5 +8,6 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>{{'Cancelar'|translate}}</button>
-  <a [disabled]="loading" (click)="onEnzonaLoad()" id="inputsHiddenBid" mat-flat-button color="primary">{{'CONFIRMAR'| translate}}</a>
+  <a (click)="onEnzonaLoad()" [disabled]="loading" color="primary" id="inputsHiddenBid"
+     mat-flat-button>{{'CONFIRMAR'| translate}}</a>
 </mat-dialog-actions>

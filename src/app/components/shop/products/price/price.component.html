@@ -1,14 +1,14 @@
 <div class="price-slider">
   <div fxLayout="row" fxLayoutAlign="space-between center">
-    <mat-form-field style="width: 120px; margin-right: 8px" appearance="outline">
+    <mat-form-field appearance="outline" style="width: 120px; margin-right: 8px">
       <mat-label style="text-transform: capitalize"> {{ 'min' | translate }}</mat-label>
-      <input type="number" [min]="0" (change)="priceFilter()" matInput [formControl]="priceForm.get('priceFrom')" />
+      <input (change)="priceFilter()" [formControl]="priceForm.get('priceFrom')" [min]="0" matInput type="number" />
     </mat-form-field>
     :
-    <mat-form-field style="width: 120px; margin-right: 8px" appearance="outline">
+    <mat-form-field appearance="outline" style="width: 120px; margin-right: 8px">
       <mat-label style="text-transform: capitalize"> {{ 'max' | translate }}</mat-label>
-      <input type="number" [min]="priceForm.get('priceFrom')" (change)="priceFilter()" [max]="100000000" matInput
-        [formControl]="priceForm.get('priceTo')" />
+      <input (change)="priceFilter()" [formControl]="priceForm.get('priceTo')" [max]="100000000" [min]="priceForm.get('priceFrom')" matInput
+             type="number" />
     </mat-form-field>
   </div>
 </div>

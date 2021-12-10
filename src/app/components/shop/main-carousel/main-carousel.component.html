@@ -1,8 +1,8 @@
 <div class="main-slider">
-  <div class="swiper-container h-100" [swiper]="config">
+  <div [swiper]="config" class="swiper-container h-100">
     <div class="swiper-wrapper h-100">
       <div *ngFor="let slide of _slides" class="swiper-slide">
-        <div fxHide.lt-md [attr.data-background]="slide.image" class="slide-item swiper-lazy">
+        <div [attr.data-background]="slide.image" class="slide-item swiper-lazy" fxHide.lt-md>
           <div class="container-carrusel">
             <div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
             <div *ngIf="slide.title && slide?.title?.es" class="box">
@@ -12,13 +12,13 @@
               <p class="subtitle">
                 {{slide.subTitle|parseLang:language}}
               </p>
-              <a *ngIf="slide.link" [href]="slide.link" target="_blank" class="myBtn" ngClass.gt-sm="uppercase"
-                mat-raised-button>{{"See more"|translate}}
+              <a *ngIf="slide.link" [href]="slide.link" class="myBtn" mat-raised-button ngClass.gt-sm="uppercase"
+                 target="_blank">{{"See more"|translate}}
               </a>
             </div>
           </div>
         </div>
-        <div fxHide fxShow.lt-md [attr.data-background]="slide.imageXs" class="slide-item swiper-lazy">
+        <div [attr.data-background]="slide.imageXs" class="slide-item swiper-lazy" fxHide fxShow.lt-md>
           <a [href]="slide.link">
             <div class="container-carrusel sl-wrap">
               <div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
@@ -41,10 +41,10 @@
       </div>
     </div>
     <div class="swiper-pagination white"></div>
-    <button mat-mini-fab color="primary" class="swiper-button-prev swipe-arrow">
+    <button class="swiper-button-prev swipe-arrow" color="primary" mat-mini-fab>
       <mat-icon>keyboard_arrow_left</mat-icon>
     </button>
-    <button mat-mini-fab color="primary" class="swiper-button-next swipe-arrow">
+    <button class="swiper-button-next swipe-arrow" color="primary" mat-mini-fab>
       <mat-icon>keyboard_arrow_right</mat-icon>
     </button>
   </div>

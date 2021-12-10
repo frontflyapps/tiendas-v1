@@ -41,4 +41,5 @@ import { NgpMaterialRatingModule } from './../shared/ngp-material-rating/ngp-mat
   ],
   declarations: [WishlistComponent, CompareComponent],
 })
-export class PagesModule {}
+export class PagesModule {
+}

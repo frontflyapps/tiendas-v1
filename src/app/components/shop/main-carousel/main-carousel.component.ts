@@ -13,6 +13,24 @@ import { UtilsService } from '../../../core/services/utils/utils.service';
 })
 export class MainCarouselComponent implements OnInit, AfterViewInit, OnDestroy {
   _unsubscribeAll: Subject<any>;
+  language: any;
+  public config: SwiperConfigInterface = {};
+  show = false;
+  private pagination: SwiperPaginationInterface = {
+    el: '.swiper-pagination',
+    clickable: true,
+  };
+
+  constructor(
+    private translate: TranslateService,
+    private loggedInUserService: LoggedInUserService,
+    public utilsService: UtilsService,
+  ) {
+    this._unsubscribeAll = new Subject();
+    this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
+  }
+
+  _slides: any[] = [];
 
   @Input() set slides(values: any[]) {
     console.log('carusels', values);
@@ -25,27 +43,6 @@ export class MainCarouselComponent implements OnInit, AfterViewInit, OnDestroy {
     //     }
     //   }, 150);
     // }
-  }
-
-  _slides: any[] = [];
-  language: any;
-
-  public config: SwiperConfigInterface = {};
-
-  private pagination: SwiperPaginationInterface = {
-    el: '.swiper-pagination',
-    clickable: true,
-  };
-
-  show = false;
-
-  constructor(
-    private translate: TranslateService,
-    private loggedInUserService: LoggedInUserService,
-    public utilsService: UtilsService,
-  ) {
-    this._unsubscribeAll = new Subject();
-    this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
   }
 
   ngOnInit() {

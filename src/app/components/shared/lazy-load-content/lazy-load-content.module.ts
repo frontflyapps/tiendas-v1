@@ -3,12 +3,12 @@ import { CommonModule } from '@angular/common';
 import { LazyLoadContentDirective } from './lazy-load-content.directive';
 
 
-
 @NgModule({
   declarations: [LazyLoadContentDirective],
   imports: [
-    CommonModule
+    CommonModule,
   ],
-  exports: [LazyLoadContentDirective]
+  exports: [LazyLoadContentDirective],
 })
-export class LazyLoadContentModule { }
+export class LazyLoadContentModule {
+}

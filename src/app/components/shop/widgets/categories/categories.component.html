@@ -1,23 +1,25 @@
 <div class="brands-items">
 
   <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="gappx">
-    <button *ngIf="!this.isRootLevel" mat-icon-button (click)="getChildCategories(this.lastCategoryId)">
+    <button (click)="getChildCategories(this.lastCategoryId)" *ngIf="!this.isRootLevel" mat-icon-button>
       <mat-icon>arrow_back</mat-icon>
     </button>
   </div>
 
-  <mat-checkbox color="accent" fxLayout="row" fxLayoutAlign="start center" class="example-radio-button py-1 layoutCheck"
-    *ngFor="let category of categories" (click)="$event.stopPropagation()" (change)="$event ? onChangeSelection(category.id) : null"
-    [checked]="selection.isSelected(category.id)">
+  <mat-checkbox (change)="$event ? onChangeSelection(category.id) : null" (click)="$event.stopPropagation()" *ngFor="let category of categories" [checked]="selection.isSelected(category.id)"
+                class="example-radio-button py-1 layoutCheck" color="accent"
+                fxLayout="row"
+                fxLayoutAlign="start center">
     <p [matTooltip]="(category.name[language])?category.name[language]:category.name['es']" class="mat-body-2 m-0"
-      style="color:#757575;font-size: 15px !important;">
+       style="color:#757575;font-size: 15px !important;">
       {{this.showNameCategory(category)}}</p>
 
-    <button (click)="getChildCategories(category)" class="clearChipBtn" style="color: #757575;background-color: #bdbdbd;" mat-icon-button>
+    <button (click)="getChildCategories(category)" class="clearChipBtn"
+            mat-icon-button style="color: #757575;background-color: #bdbdbd;">
       <mat-icon>keyboard_arrow_right</mat-icon>
     </button>
   </mat-checkbox>
-  <p class="m-0" *ngIf="!categories.length" style="text-align: center;">
+  <p *ngIf="!categories.length" class="m-0" style="text-align: center;">
     {{'No hay ningún elemento'|translate}}
   </p>
 

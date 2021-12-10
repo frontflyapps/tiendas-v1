@@ -43,7 +43,7 @@
 
   &:hover,
   &:focus {
-    >.mat-list-item:not(.expanded) {
+    > .mat-list-item:not(.expanded) {
       border-radius: 16px;
       transition: border-radius .7s ease;
     }

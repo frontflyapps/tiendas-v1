@@ -14,18 +14,19 @@ export class PriceComponent implements OnInit {
   priceForm: FormGroup;
   // Using Output EventEmitter
   @Output() priceFilters = new EventEmitter();
+  // define min, max and range
+  public min = 100;
+  public max = 2000;
+
+  constructor(public currencyService: CurrencyService, private fb: FormBuilder, private route: ActivatedRoute) {
+  }
+
   @Input() set reset(value) {
     if (value && this.priceForm) {
       this.priceForm.get('priceFrom').setValue(0.0);
       this.priceForm.get('priceTo').setValue(null);
     }
   }
-
-  // define min, max and range
-  public min = 100;
-  public max = 2000;
-
-  constructor(public currencyService: CurrencyService, private fb: FormBuilder, private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.buildPriceForm();

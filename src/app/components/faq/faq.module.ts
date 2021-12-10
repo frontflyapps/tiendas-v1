@@ -12,4 +12,5 @@ import { MatExpansionModule } from '@angular/material/expansion';
   declarations: [FaqComponent],
   imports: [CommonModule, FaqRoutingModule, FlexLayoutModule, MatExpansionModule, TranslateModule, PipesModule],
 })
-export class FaqModule {}
+export class FaqModule {
+}

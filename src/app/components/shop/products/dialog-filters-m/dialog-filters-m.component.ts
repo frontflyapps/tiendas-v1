@@ -9,6 +9,7 @@ import { LoggedInUserService } from '../../../../core/services/loggedInUser/logg
 import { takeUntil } from 'rxjs/operators';
 import { MatPaginator } from '@angular/material/paginator';
 import { CategoriesService } from 'src/app/core/services/categories/catagories.service';
+
 export interface DialogData {
   animal: string;
   name: string;
@@ -126,6 +127,7 @@ export class DialogFiltersMComponent implements OnInit, OnDestroy {
     this._unsubscribeAll.next(true);
     this._unsubscribeAll.complete();
   }
+
   // Update price filter
   updatePriceFilters(price: any) {
     this.paramsSearch.minPrice = price.priceFrom;
@@ -135,6 +137,7 @@ export class DialogFiltersMComponent implements OnInit, OnDestroy {
     this.queryProduct.total = 0;
     this.allProducts = [];
   }
+
   // Update Brands filter
   onBrandsChanged(brandIds) {
     this.paramsSearch.brandIds = brandIds;
@@ -152,12 +155,14 @@ export class DialogFiltersMComponent implements OnInit, OnDestroy {
     this.queryProduct.total = 0;
     this.allProducts = [];
   }
+
   save() {
     this.dialogRef.close({
       paramsSearch: this.paramsSearch,
       queryProduct: this.queryProduct,
     });
   }
+
   close() {
     this.dialogRef.close();
   }

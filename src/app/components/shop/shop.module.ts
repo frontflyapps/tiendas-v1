@@ -121,4 +121,5 @@ import { FooterProductCardModule } from '../shared/footer-product-card/footer-pr
     },
   ],
 })
-export class ShopModule {}
+export class ShopModule {
+}

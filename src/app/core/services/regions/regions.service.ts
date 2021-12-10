@@ -16,7 +16,8 @@ export class RegionsService {
   urlCityId = environment.apiUrl + 'city/:id';
   httpOptions = {};
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) {
+  }
 
   createRegion(body: any): Observable<any> {
     return this.httpClient.post<any>(this.url, body);
@@ -95,6 +96,7 @@ export class RegionsService {
       return this.httpClient.get<any>(this.urlCountryId.replace(':countryId', data.id), this.httpOptions);
     }
   }
+
   //////////////////////////////////CITIES///////////////////////////////////
   getAllCities(query?: IPagination, params?: any) {
     let httpParams = new HttpParams();

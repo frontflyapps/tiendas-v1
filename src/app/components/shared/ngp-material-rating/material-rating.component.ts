@@ -25,7 +25,19 @@ export interface MatStarConfig {
   ],
 })
 export class NgpRatingMaterialComponent implements ControlValueAccessor, OnInit {
+  arrayFill = [];
+
   @Input() _rating = 0.0; // notice the '_
+
+  get rating() {
+    return this._rating;
+  }
+
+  set rating(val) {
+    this._rating = val;
+    this.propagateChange(this._rating);
+  }
+
   @Input() set value(value) {
     this.rating = value;
   }
@@ -40,27 +52,18 @@ export class NgpRatingMaterialComponent implements ControlValueAccessor, OnInit 
     stars: 5,
   };
 
-  arrayFill = [];
-
   @Input() set config(value: MatStarConfig) {
     this.procesConfig(value);
   }
 
-  propagateChange = (_: any) => {};
+  propagateChange = (_: any) => {
+  };
 
   registerOnChange(fn): void {
     this.propagateChange = fn;
   }
 
-  registerOnTouched(): void {}
-
-  get rating() {
-    return this._rating;
-  }
-
-  set rating(val) {
-    this._rating = val;
-    this.propagateChange(this._rating);
+  registerOnTouched(): void {
   }
 
   writeValue(value: any) {

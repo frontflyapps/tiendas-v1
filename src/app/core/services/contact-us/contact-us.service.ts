@@ -13,7 +13,8 @@ export class ContactUsService {
   urlId = environment.apiUrl + 'contact-us/:id';
   httpOptions = {};
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) {
+  }
 
   createContactUs(body: any): Observable<any> {
     return this.httpClient.post<any>(this.url, body);

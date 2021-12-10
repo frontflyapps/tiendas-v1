@@ -28,10 +28,6 @@ export class MenuComponent implements OnInit, OnDestroy {
     total: 0,
   };
 
-  @Input() set _categories(value) {
-    this.categories = [...value];
-  }
-
   constructor(
     public navigationService: NavigationService,
     private cartService: CartService,
@@ -43,6 +39,10 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
     this._unsubscribeAll = new Subject();
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
+  }
+
+  @Input() set _categories(value) {
+    this.categories = [...value];
   }
 
   ngOnInit() {
@@ -87,6 +87,11 @@ export class MenuComponent implements OnInit, OnDestroy {
     });
   }
 
+  ngOnDestroy() {
+    this._unsubscribeAll.next(true);
+    this._unsubscribeAll.complete();
+  }
+
   private getOrdersPayment() {
     const params = {
       status: 'confirmed',
@@ -97,10 +102,5 @@ export class MenuComponent implements OnInit, OnDestroy {
       .subscribe((value) => {
         this.ordersPayment = value.data;
       });
-  }
-
-  ngOnDestroy() {
-    this._unsubscribeAll.next(true);
-    this._unsubscribeAll.complete();
   }
 }

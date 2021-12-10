@@ -24,6 +24,12 @@ export interface ISessionStorageItems {
 })
 export class LocalStorageService {
 
+  constructor(
+    private cookieService: CookieService,
+  ) {
+    sessionStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(LocalStorageService.initStateSession()));
+  }
+
   static initStateSession(): ISessionStorageItems {
     const today = new Date().getTime();
     return {
@@ -34,12 +40,6 @@ export class LocalStorageService {
       checkout: false,
       timespan: today,
     };
-  }
-
-  constructor(
-    private cookieService: CookieService,
-  ) {
-    sessionStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(LocalStorageService.initStateSession()));
   }
 
   setVersion() {

@@ -48,18 +48,16 @@ export class ProductService {
   //////////////////////////
   public currency = 'USD';
   public catalogMode = false;
-
-  private _url = 'assets/data/';
   public url = 'assets/data/banners.json';
-
   public compareProducts: BehaviorSubject<Product[]> = new BehaviorSubject([]);
   public observer: Subscriber<{}>;
   public productIdDetails = undefined;
-
-  // ////////////////////////////////////////////////////////////////
   // Promises to Request
   public getProduct: Subject<any>;
+
+  // ////////////////////////////////////////////////////////////////
   public productsData$: Observable<IProductData>;
+  private _url = 'assets/data/';
 
   constructor(
     private httpClient: HttpClient,
@@ -75,15 +73,6 @@ export class ProductService {
   // ///////////////////////////////////////////////////////////////
   // PROMISES
 
-  private setGetProductPromise() {
-    this.productsData$ = this.getProduct.pipe(
-      distinctUntilChanged(),
-      switchMap(() => this.getFrontProductsData()),
-    );
-  }
-
-  // //////////////////////////////////////////////////////////////
-  // ///////////////////////////////////////////////////////////////
   // ////// Rutas que consumen de Un API ////////////////
   public getAllProducts(query?: IPagination, params?: any): Observable<any> {
     let httpParams = new HttpParams();
@@ -143,6 +132,9 @@ export class ProductService {
     // return this.products();
   }
 
+  // //////////////////////////////////////////////////////////////
+  // ///////////////////////////////////////////////////////////////
+
   public searchProduct(data?: any): Observable<any> {
     return this.httpClient.post<any>(environment.apiUrl + 'search', data);
     // return this.products();
@@ -152,16 +144,16 @@ export class ProductService {
     return this.httpClient.get<any>(this.urlProduct + '-count');
   }
 
-  /*public getProductById(id): Observable<any> {
-    return this.httpClient.get<any>(this.urlProductId.replace(':id', id));
-  }*/
-
   public getProductById(id, StockId): Observable<any> {
     const data = {
       StockId: StockId,
     };
     return this.httpClient.post<any>(`${this.urlProduct}/${id}/profile`, data);
   }
+
+  /*public getProductById(id): Observable<any> {
+    return this.httpClient.get<any>(this.urlProductId.replace(':id', id));
+  }*/
 
   // ///////////////RUTAS DE ADMINISTRADOR///////////////////////
   public getAllAdminProducts(query?: IPagination, params?: any): Observable<any> {
@@ -198,11 +190,11 @@ export class ProductService {
     return this.httpClient.get<any>(this.urlProductIdAdmin.replace(':id', id));
   }
 
-  ////////////////////////////////////////////////////
-
   public createProduct(data): Observable<any> {
     return this.httpClient.post<any>(this.urlProduct, data);
   }
+
+  ////////////////////////////////////////////////////
 
   removeProduct(data): Promise<any> {
     return this.httpClient.delete<any>(this.urlProductId.replace(':id', data.id)).toPromise();
@@ -290,6 +282,10 @@ export class ProductService {
       );
   }
 
+  createReview(data): Observable<any> {
+    return this.httpClient.post(this.urlPreview, data);
+  }
+
   // ///////////////////////////////////////////////////////////////
   // ///////////////////////////////////////////////////////////////
   // ///////////////////////////////////////////////////////////////
@@ -298,10 +294,6 @@ export class ProductService {
   // ----------  Review Product  ----------------
   // ---------------------------------------------
   // */
-
-  createReview(data): Observable<any> {
-    return this.httpClient.post(this.urlPreview, data);
-  }
 
   editReview(data): Observable<any> {
     return this.httpClient.patch(this.urlPreview + '/' + data.id, data);
@@ -326,11 +318,6 @@ export class ProductService {
     return this.httpClient.get<any>(this.urlPreview, { params: httpParams });
   }
 
-  // ---------------------------------------------
-  // ----------  Compare Product  ----------------
-  // ---------------------------------------------
-  // */
-
   // Get Compare Products
   public getComapreProducts(): Observable<Product[]> {
     const itemsStream = new Observable((observer) => {
@@ -339,6 +326,11 @@ export class ProductService {
     });
     return <Observable<Product[]>>itemsStream;
   }
+
+  // ---------------------------------------------
+  // ----------  Compare Product  ----------------
+  // ---------------------------------------------
+  // */
 
   // If item is aleready added In compare
   public hasProduct(product: Product): boolean {
@@ -378,5 +370,12 @@ export class ProductService {
     const index = products.indexOf(product);
     products.splice(index, 1);
     localStorage.setItem('compareItem', JSON.stringify(products));
+  }
+
+  private setGetProductPromise() {
+    this.productsData$ = this.getProduct.pipe(
+      distinctUntilChanged(),
+      switchMap(() => this.getFrontProductsData()),
+    );
   }
 }

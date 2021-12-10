@@ -6,7 +6,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { filter, take } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SplashScreenService {
   splashScreenEl: any;
@@ -15,9 +15,8 @@ export class SplashScreenService {
   constructor(
     private _animationBuilder: AnimationBuilder,
     @Inject(DOCUMENT) private _document: any,
-    private _router: Router
-  )
-  {
+    private _router: Router,
+  ) {
     // Initialize
     this._init();
   }
@@ -27,30 +26,22 @@ export class SplashScreenService {
   // -----------------------------------------------------------------------------------------------------
 
   /**
-   * Initialize
-   *
-   * @private
+   * Show the splash screen
    */
-  private _init(): void
-  {
-    // Get the splash screen element
-    this.splashScreenEl = this._document.body.querySelector('#fuse-splash-screen');
+  show(): void {
+    this.player =
+      this._animationBuilder
+        .build([
+          style({
+            opacity: '0',
+            zIndex: '99999',
+          }),
+          animate('400ms ease', style({ opacity: '1' })),
+        ]).create(this.splashScreenEl);
 
-    // If the splash screen element exists...
-    if ( this.splashScreenEl )
-    {
-      // Hide it on the first NavigationEnd event
-      this._router.events
-        .pipe(
-          filter((event => event instanceof NavigationEnd)),
-          take(1)
-        )
-        .subscribe(() => {
-          setTimeout(() => {
-            this.hide();
-          });
-        });
-    }
+    setTimeout(() => {
+      this.player.play();
+    }, 0);
   }
 
   // -----------------------------------------------------------------------------------------------------
@@ -58,18 +49,17 @@ export class SplashScreenService {
   // -----------------------------------------------------------------------------------------------------
 
   /**
-   * Show the splash screen
+   * Hide the splash screen
    */
-  show(): void
-  {
+  hide(): void {
     this.player =
       this._animationBuilder
         .build([
-          style({
+          style({ opacity: '1' }),
+          animate('400ms ease', style({
             opacity: '0',
-            zIndex : '99999'
-          }),
-          animate('400ms ease', style({opacity: '1'}))
+            zIndex: '-10',
+          })),
         ]).create(this.splashScreenEl);
 
     setTimeout(() => {
@@ -78,22 +68,27 @@ export class SplashScreenService {
   }
 
   /**
-   * Hide the splash screen
+   * Initialize
+   *
+   * @private
    */
-  hide(): void
-  {
-    this.player =
-      this._animationBuilder
-        .build([
-          style({opacity: '1'}),
-          animate('400ms ease', style({
-            opacity: '0',
-            zIndex : '-10'
-          }))
-        ]).create(this.splashScreenEl);
+  private _init(): void {
+    // Get the splash screen element
+    this.splashScreenEl = this._document.body.querySelector('#fuse-splash-screen');
 
-    setTimeout(() => {
-      this.player.play();
-    }, 0);
+    // If the splash screen element exists...
+    if (this.splashScreenEl) {
+      // Hide it on the first NavigationEnd event
+      this._router.events
+        .pipe(
+          filter((event => event instanceof NavigationEnd)),
+          take(1),
+        )
+        .subscribe(() => {
+          setTimeout(() => {
+            this.hide();
+          });
+        });
+    }
   }
 }

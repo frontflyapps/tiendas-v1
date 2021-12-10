@@ -1,7 +1,7 @@
 import { Directive, ElementRef, EventEmitter, Output } from '@angular/core';
 
 @Directive({
-  selector: '[deferLoad]'
+  selector: '[deferLoad]',
 })
 export class LazyLoadContentDirective {
   @Output() public deferLoad: EventEmitter<any> = new EventEmitter();
@@ -9,8 +9,9 @@ export class LazyLoadContentDirective {
   private _intersectionObserver?: IntersectionObserver;
 
   constructor(
-    private _element: ElementRef
-  ) { }
+    private _element: ElementRef,
+  ) {
+  }
 
   public ngAfterViewInit() {
     this._intersectionObserver = new IntersectionObserver(entries => {
@@ -27,7 +28,7 @@ export class LazyLoadContentDirective {
         this._intersectionObserver.disconnect();
       }
     });
-  }
+  };
 
   private checkIfIntersecting(entry: IntersectionObserverEntry) {
     return (<any>entry).isIntersecting && entry.target === this._element.nativeElement;

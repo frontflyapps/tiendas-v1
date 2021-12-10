@@ -72,7 +72,7 @@ input {
   object-position: center;
   margin: auto !important;
 
-  @media (max-width:800px) {
+  @media (max-width: 800px) {
     max-height: 200px !important;
   }
 }
@@ -81,7 +81,7 @@ input {
   min-width: 280px !important;
   max-width: 360px !important;
 
-  @media (max-width:500px) {
+  @media (max-width: 500px) {
     max-width: 290px !important;
   }
 

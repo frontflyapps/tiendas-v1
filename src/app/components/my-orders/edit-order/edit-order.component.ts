@@ -24,12 +24,6 @@ export class EditOrderComponent implements OnInit {
   order: any;
   form: FormGroup;
   onlyCubanPeople = true;
-  private applyStyle: boolean;
-
-  public compareById(val1, val2) {
-    return val1 && val2 && val1 == val2;
-  }
-
   queryCountries: IPagination = {
     limit: 1000,
     total: 0,
@@ -38,6 +32,7 @@ export class EditOrderComponent implements OnInit {
     page: 1,
     filter: { filterText: '', properties: [] },
   };
+  private applyStyle: boolean;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -56,14 +51,13 @@ export class EditOrderComponent implements OnInit {
     this.order = data.order;
   }
 
+  public compareById(val1, val2) {
+    return val1 && val2 && val1 == val2;
+  }
+
   @HostListener('window:resize', ['$event'])
   onResize(event): void {
     this.applyResolution();
-  }
-
-  private applyResolution() {
-    const innerWidth = window.innerWidth;
-    this.applyStyle = innerWidth <= 600;
   }
 
   ngOnInit(): void {
@@ -156,6 +150,11 @@ export class EditOrderComponent implements OnInit {
         // this.spinner.hide();
       },
     );
+  }
+
+  private applyResolution() {
+    const innerWidth = window.innerWidth;
+    this.applyStyle = innerWidth <= 600;
   }
 
 }

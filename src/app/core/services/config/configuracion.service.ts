@@ -8,7 +8,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 export class ConfiguracionService {
   url = environment.apiUrl + 'config';
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) {
+  }
 
   public async getValue(key): Promise<any> {
     let httpParams = new HttpParams();

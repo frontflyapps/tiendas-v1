@@ -8,17 +8,18 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
-    SkeletonLoadingCardsComponent
+    SkeletonLoadingCardsComponent,
   ],
   imports: [
     CommonModule,
     NgxSkeletonLoaderModule,
     MatCardModule,
-    FlexLayoutModule
+    FlexLayoutModule,
   ],
   exports: [
     NgxSkeletonLoaderModule,
-    SkeletonLoadingCardsComponent
-  ]
+    SkeletonLoadingCardsComponent,
+  ],
 })
-export class SkeletonLoadingCardsModule { }
+export class SkeletonLoadingCardsModule {
+}

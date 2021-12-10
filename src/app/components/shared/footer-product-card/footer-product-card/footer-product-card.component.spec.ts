@@ -8,9 +8,9 @@ describe('FooterProductCardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FooterProductCardComponent ]
+      declarations: [FooterProductCardComponent],
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

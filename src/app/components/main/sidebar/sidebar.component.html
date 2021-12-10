@@ -1,19 +1,22 @@
 <ng-container *ngIf="showNavItem(item.displayName)">
-  <a mat-list-item matRipple fxLayoutAlign="start center" [ngStyle]="{'padding-left': (depth * 16) + 'px'}" (click)="onItemSelected(item)"
-    [ngClass]="{'active': item.route ? router.isActive(item.route, true): false, 'expanded': expanded}" class="menu-list-item grey-700">
+  <a (click)="onItemSelected(item)" [ngClass]="{'active': item.route ? router.isActive(item.route, true): false, 'expanded': expanded}" [ngStyle]="{'padding-left': (depth * 16) + 'px'}" class="menu-list-item grey-700"
+     fxLayoutAlign="start center"
+     mat-list-item
+     matRipple>
     <div class="menu-icons" fxLayoutAlign="start center">
       <mat-icon *ngIf="item.material && item.iconName">{{item.iconName}}</mat-icon>
       <span class="mat-body-1 ml-3" style="font-size: 15px;">{{item.displayName | translate}}</span>
     </div>
 
-    <span fxFlex *ngIf="item.children && item.children.length">
+    <span *ngIf="item.children && item.children.length" fxFlex>
       <span fxFlex></span>
-      <mat-icon style="margin:0px !important;" [@indicatorRotate]="expanded ? 'expanded': 'collapsed'">
+      <mat-icon [@indicatorRotate]="expanded ? 'expanded': 'collapsed'" style="margin:0px !important;">
         expand_more
       </mat-icon>
     </span>
-    <span style="transform: translateY(-5px); margin-left: 12px;" *ngIf="item.badge && item.badgeCount" [matBadge]="item.badgeCount"
-      matBadgePosition="after">
+    <span *ngIf="item.badge && item.badgeCount" [matBadge]="item.badgeCount"
+          matBadgePosition="after"
+          style="transform: translateY(-5px); margin-left: 12px;">
     </span>
     <div class="tabActive"></div>
 
@@ -21,7 +24,7 @@
   <mat-divider *ngIf="item.divider" class="my-2"></mat-divider>
 
   <div *ngIf="expanded">
-    <app-sidebar *ngFor="let child of item.children" [item]="child" [depth]="depth+1">
+    <app-sidebar *ngFor="let child of item.children" [depth]="depth+1" [item]="child">
     </app-sidebar>
   </div>
 

@@ -17,7 +17,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { CuDownloadListModule } from 'guachos-cu-down-list';
 import { MatDialogModule } from '@angular/material/dialog';
 import localeEs from '@angular/common/locales/es';
+
 registerLocaleData(localeEs, 'es');
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -60,4 +62,5 @@ registerLocaleData(localeEs, 'es');
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+}

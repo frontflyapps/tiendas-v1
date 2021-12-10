@@ -5,7 +5,8 @@ import { ToastrService } from 'ngx-toastr';
   providedIn: 'root',
 })
 export class ShowToastrService {
-  constructor(private toastr: ToastrService) {}
+  constructor(private toastr: ToastrService) {
+  }
 
   showError(error, secundary?, timeout?) {
     timeout = timeout ? timeout : 5000;

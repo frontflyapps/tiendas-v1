@@ -17,6 +17,7 @@ export class ContactUsComponent implements OnInit {
   form: FormGroup;
   loggedUser: any;
   apiUrl = environment.apiUrl;
+
   constructor(
     private loggedUserServ: LoggedInUserService,
     private fb: FormBuilder,
@@ -43,6 +44,7 @@ export class ContactUsComponent implements OnInit {
       message: ['', [Validators.required]],
     });
   }
+
   onSend() {
     let value = this.form.value;
     this.spinner.show();
@@ -61,6 +63,7 @@ export class ContactUsComponent implements OnInit {
       },
     );
   }
+
   private _createContactMail(data): Observable<any> {
     return this.http.post<any>(this.apiUrl + 'contact-us', data);
   }

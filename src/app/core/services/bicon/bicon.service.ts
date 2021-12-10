@@ -12,7 +12,8 @@ export class BiconService {
   urlId = environment.apiUrl + 'bicon/:id';
   httpOptions = {};
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) {
+  }
 
   createBicon(body: any): Observable<any> {
     return this.httpClient.post<any>(this.url, body);

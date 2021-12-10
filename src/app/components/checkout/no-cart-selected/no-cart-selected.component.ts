@@ -25,7 +25,8 @@ export class DialogNoCartSelectedComponent implements OnInit {
     this.dialogRef.disableClose = true;
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   close() {
     this.dialogRef.close();

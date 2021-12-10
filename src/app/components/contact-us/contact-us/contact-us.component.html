@@ -7,7 +7,7 @@
     <div class="form" fxFlex="30" fxFlex.lt-sm="100">
       <label>{{'Nombre'|translate}}*</label>
       <mat-form-field appearance="fill">
-        <input formControlName="name" placeholder="{{'escriba su Nombre'|translate}}" matInput type="text" required>
+        <input formControlName="name" matInput placeholder="{{'escriba su Nombre'|translate}}" required type="text">
         <mat-error *ngIf="this.form.get('name').hasError('required')">
           {{'Este campo es requerido'|translate}}
         </mat-error>
@@ -16,13 +16,13 @@
     <div class="form" fxFlex="30" fxFlex.lt-sm="100">
       <label>{{'Teléfono'|translate}}</label>
       <mat-form-field appearance="fill">
-        <input formControlName="phone" placeholder="{{'escriba su Teléfono'|translate}}" matInput type="text">
+        <input formControlName="phone" matInput placeholder="{{'escriba su Teléfono'|translate}}" type="text">
       </mat-form-field>
     </div>
     <div class="form" fxFlex="30" fxFlex.lt-sm="100">
       <label>{{'Correo'|translate}}*</label>
       <mat-form-field appearance="fill">
-        <input formControlName="email" placeholder="{{'escriba su Correo'|translate}}" matInput type="text" required>
+        <input formControlName="email" matInput placeholder="{{'escriba su Correo'|translate}}" required type="text">
         <mat-error *ngIf="this.form.get('email').hasError('required')">
           {{'Este campo es requerido'|translate}}
         </mat-error>
@@ -35,7 +35,8 @@
     <div class="form mt-3" fxFlex="100" fxFlex.lt-sm="100">
       <label>{{'Asunto'|translate}}*</label>
       <mat-form-field appearance="fill">
-        <input formControlName="topic" placeholder="{{'escriba un breve Asunto'|translate}}" matInput type="text" required>
+        <input formControlName="topic" matInput placeholder="{{'escriba un breve Asunto'|translate}}" required
+               type="text">
         <mat-error *ngIf="this.form.get('topic').hasError('required')">
           {{'Este campo es requerido'|translate}}
         </mat-error>
@@ -45,7 +46,8 @@
     <div class="form mt-3" fxFlex="100" fxFlex.lt-sm="100">
       <label>{{'Mensaje'|translate}}*</label>
       <mat-form-field appearance="fill">
-        <textarea formControlName="message" rows="4" placeholder="{{'escriba su mensaje'|translate}}" matInput required></textarea>
+        <textarea formControlName="message" matInput placeholder="{{'escriba su mensaje'|translate}}" required
+                  rows="4"></textarea>
         <mat-error *ngIf="this.form.get('message').hasError('required')">
           {{'Este campo es requerido'|translate}}
         </mat-error>
@@ -54,7 +56,8 @@
   </div>
   <br>
   <p style="text-align: right;">
-    <button (click)="onSend()" [disabled]="this.form.invalid" mat-flat-button color="primary">{{'ENVIAR MENSAJE'|translate}}</button>
+    <button (click)="onSend()" [disabled]="this.form.invalid" color="primary"
+            mat-flat-button>{{'ENVIAR MENSAJE'|translate}}</button>
   </p>
 
 </div>

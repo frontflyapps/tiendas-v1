@@ -23,7 +23,8 @@ export class ProcessingPaymentErrorComponent implements OnInit {
     private translate: TranslateService,
     private showToastr: ShowToastrService,
     private payService: PayService,
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.queryParams = this.route.snapshot.queryParams;

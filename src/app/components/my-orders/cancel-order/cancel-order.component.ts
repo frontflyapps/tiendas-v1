@@ -73,17 +73,6 @@ export class CancelOrderComponent implements OnInit {
     }
   }
 
-  private getHourPaymentRules() {
-    let createdPaymentDate = moment(this.order.createdAt).utc(true);
-    let todayDate = moment().utc(true);
-    let diffHours = todayDate.diff(createdPaymentDate, 'hour');
-    this.ruleApply = this.cancellationRule.find((canX) => {
-      if (canX.minHour <= diffHours && canX.maxHour >= diffHours) {
-        return canX;
-      }
-    });
-  }
-
   onCancelar() {
     this.spinner.show();
     const cancelNote = this.form?.value?.cancelNote;
@@ -146,5 +135,16 @@ export class CancelOrderComponent implements OnInit {
         },
       );
     }
+  }
+
+  private getHourPaymentRules() {
+    let createdPaymentDate = moment(this.order.createdAt).utc(true);
+    let todayDate = moment().utc(true);
+    let diffHours = todayDate.diff(createdPaymentDate, 'hour');
+    this.ruleApply = this.cancellationRule.find((canX) => {
+      if (canX.minHour <= diffHours && canX.maxHour >= diffHours) {
+        return canX;
+      }
+    });
   }
 }

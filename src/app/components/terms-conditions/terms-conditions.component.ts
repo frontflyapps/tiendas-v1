@@ -13,7 +13,9 @@ export class TermsConditionsComponent implements OnInit {
   language = null;
   _unsubscribeAll: Subject<any> = new Subject();
   text: undefined;
-  constructor(private loggedInUserService: LoggedInUserService, private termService: CopyTermsService) {}
+
+  constructor(private loggedInUserService: LoggedInUserService, private termService: CopyTermsService) {
+  }
 
   ngOnInit() {
     this.loggedInUserService.$languageChanged.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {

@@ -11,11 +11,6 @@ import { environment } from './../../../../environments/environment';
   styleUrls: ['./banners-four.component.scss'],
 })
 export class BannersFourComponent implements OnInit, OnDestroy {
-  @Input()
-  set _banners(value) {
-    this.banners = [...value];
-  }
-
   banners: any[] = [];
   _unsubscribeAll: Subject<any>;
   language = null;
@@ -24,6 +19,11 @@ export class BannersFourComponent implements OnInit, OnDestroy {
   constructor(private loggedInUserService: LoggedInUserService, public utilsService: UtilsService) {
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
+  }
+
+  @Input()
+  set _banners(value) {
+    this.banners = [...value];
   }
 
   ngOnInit() {

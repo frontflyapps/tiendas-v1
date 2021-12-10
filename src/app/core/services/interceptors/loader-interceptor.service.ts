@@ -14,7 +14,8 @@ import { Observable } from 'rxjs';
 export class LoaderInterceptorService implements HttpInterceptor {
   private requests: HttpRequest<any>[] = [];
 
-  constructor() {}
+  constructor() {
+  }
 
   removeRequest(req: HttpRequest<any>) {
     const i = this.requests.indexOf(req);
@@ -27,6 +28,7 @@ export class LoaderInterceptorService implements HttpInterceptor {
       // this.ngProgress.done();
     }
   }
+
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     this.requests.push(req);
     // this.ngProgress.start();

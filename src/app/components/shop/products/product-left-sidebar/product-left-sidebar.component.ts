@@ -32,30 +32,12 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
 
   public itemsOnCart = 0;
   public theCart: Cart;
-
-  private isFromMoreProductBtn = false;
-  private globalScrollTopS = 0;
-  private globalScrollTopOth = 0;
-
   public allProducts: any[] = [];
   public allProductsResponse: any[] = [];
-
-  private initLimit = 21;
   public amountInitialResults = 3;
   public numberOfSearchBase = 0;
   public numberOfSearch = 0;
-
-  pageSizeOptions: number[] = [this.initLimit, 42, 100];
   resetPrices = false;
-
-  queryProduct: IPagination = {
-    limit: this.initLimit,
-    offset: 0,
-    page: 0,
-    total: 0,
-    order: '-rating',
-  };
-
   paramsSearch: any = {
     filterText: null,
     categoryIds: [],
@@ -64,7 +46,6 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
     minPrice: 1,
     maxPrice: null,
   };
-
   loading = false;
   language: any;
   _unsubscribeAll: Subject<any>;
@@ -75,6 +56,18 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
   productId = null;
   allCategories: any[] = [];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  private isFromMoreProductBtn = false;
+  private globalScrollTopS = 0;
+  private globalScrollTopOth = 0;
+  private initLimit = 21;
+  pageSizeOptions: number[] = [this.initLimit, 42, 100];
+  queryProduct: IPagination = {
+    limit: this.initLimit,
+    offset: 0,
+    page: 0,
+    total: 0,
+    order: '-rating',
+  };
 
   constructor(
     private productService: ProductService,
