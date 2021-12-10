@@ -12,7 +12,8 @@ export class SettingService {
   urlId = environment.apiUrl + 'setting/:bannerId';
   httpOptions = {};
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) {
+  }
 
   getSetting(): Observable<any> {
     return this.httpClient.get(this.url);

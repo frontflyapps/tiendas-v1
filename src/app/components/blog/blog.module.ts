@@ -29,4 +29,5 @@ import { MatIconModule } from '@angular/material/icon';
   ],
   declarations: [BlogColumnComponent, BlogDetailsComponent],
 })
-export class BlogModule {}
+export class BlogModule {
+}

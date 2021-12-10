@@ -21,4 +21,5 @@ import { MatButtonModule } from '@angular/material/button';
   ],
   exports: [FooterTwoComponent],
 })
-export class FooterTwoModule {}
+export class FooterTwoModule {
+}

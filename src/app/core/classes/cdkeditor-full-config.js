@@ -30,8 +30,8 @@ let fullConfig = {
       'exportWord',
       'exportPdf',
       'codeBlock',
-      'code'
-    ]
+      'code',
+    ],
   },
   language: 'es',
   image: {
@@ -44,35 +44,35 @@ let fullConfig = {
       '|',
       'imageResize',
       '|',
-      'imageTextAlternative'
+      'imageTextAlternative',
     ],
     styles: [
       'full',
       'side',
       'alignLeft',
       'alignCenter',
-      'alignRight'
+      'alignRight',
     ],
     upload: {
       panel: {
-        items: ['insertImageViaUrl']
-      }
+        items: ['insertImageViaUrl'],
+      },
     },
     resizeOptions: [{
-        name: 'imageResize:original',
-        label: 'Original',
-        value: null
-      },
+      name: 'imageResize:original',
+      label: 'Original',
+      value: null,
+    },
       {
         name: 'imageResize:50',
         label: '50%',
-        value: '50'
+        value: '50',
       },
       {
         name: 'imageResize:75',
         label: '75%',
-        value: '75'
-      }
+        value: '75',
+      },
     ],
   },
   fontSize: {
@@ -88,8 +88,8 @@ let fullConfig = {
       19,
       21,
       24,
-      32
-    ]
+      32,
+    ],
   },
   table: {
     contentToolbar: [
@@ -97,11 +97,11 @@ let fullConfig = {
       'tableRow',
       'mergeTableCells',
       'tableCellProperties',
-      'tableProperties'
-    ]
+      'tableProperties',
+    ],
   },
   licenseKey: '',
-}
+};
 
 let mediumConfig = {
   toolbar: {
@@ -129,15 +129,15 @@ let mediumConfig = {
       'fontBackgroundColor',
       'horizontalLine',
       'removeFormat',
-    ]
+    ],
   },
   language: 'es',
   image: {
     toolbar: [
       'imageTextAlternative',
       'imageStyle:full',
-      'imageStyle:side'
-    ]
+      'imageStyle:side',
+    ],
   },
   table: {
     contentToolbar: [
@@ -145,11 +145,11 @@ let mediumConfig = {
       'tableRow',
       'mergeTableCells',
       'tableCellProperties',
-      'tableProperties'
-    ]
+      'tableProperties',
+    ],
   },
   licenseKey: '',
-}
+};
 let basicConfig = {
   toolbar: {
     items: [
@@ -176,7 +176,7 @@ let basicConfig = {
       'fontBackgroundColor',
       'horizontalLine',
       'removeFormat',
-    ]
+    ],
   },
   language: 'es',
   image: {
@@ -189,35 +189,35 @@ let basicConfig = {
       '|',
       'imageResize',
       '|',
-      'imageTextAlternative'
+      'imageTextAlternative',
     ],
     styles: [
       'full',
       'side',
       'alignLeft',
       'alignCenter',
-      'alignRight'
+      'alignRight',
     ],
     upload: {
       panel: {
-        items: ['insertImageViaUrl']
-      }
+        items: ['insertImageViaUrl'],
+      },
     },
     resizeOptions: [{
-        name: 'imageResize:original',
-        label: 'Original',
-        value: null
-      },
+      name: 'imageResize:original',
+      label: 'Original',
+      value: null,
+    },
       {
         name: 'imageResize:50',
         label: '50%',
-        value: '50'
+        value: '50',
       },
       {
         name: 'imageResize:75',
         label: '75%',
-        value: '75'
-      }
+        value: '75',
+      },
     ],
   },
   fontSize: {
@@ -233,8 +233,8 @@ let basicConfig = {
       19,
       21,
       24,
-      32
-    ]
+      32,
+    ],
   },
   table: {
     contentToolbar: [
@@ -242,14 +242,14 @@ let basicConfig = {
       'tableRow',
       'mergeTableCells',
       'tableCellProperties',
-      'tableProperties'
-    ]
+      'tableProperties',
+    ],
   },
   licenseKey: '',
-}
+};
 
 module.exports = {
   cdkEditorFullConfig: fullConfig,
   cdkEditorMediumConfig: mediumConfig,
-  cdkEditorBasicConfig: basicConfig
+  cdkEditorBasicConfig: basicConfig,
 };

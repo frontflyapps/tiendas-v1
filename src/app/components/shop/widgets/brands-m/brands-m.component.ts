@@ -20,14 +20,7 @@ export class BrandsMComponent implements OnInit, OnDestroy {
   selection: SelectionModel<any>;
 
   @Output() brandChanged = new EventEmitter();
-  @Input() set brandsIds(value) {
-    if (value) {
-      this.selection.clear();
-      value.map((id) => {
-        this.selection.select(+id);
-      });
-    }
-  }
+
   constructor(
     private utilsService: UtilsService,
     private brandService: CategoriesService,
@@ -36,6 +29,15 @@ export class BrandsMComponent implements OnInit, OnDestroy {
     this.selection = new SelectionModel(true, []);
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
+  }
+
+  @Input() set brandsIds(value) {
+    if (value) {
+      this.selection.clear();
+      value.map((id) => {
+        this.selection.select(+id);
+      });
+    }
   }
 
   ngOnInit() {

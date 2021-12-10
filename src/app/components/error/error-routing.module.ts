@@ -8,25 +8,26 @@ import { NotFoundComponent } from './not-found/not-found.component';
 const routes: Routes = [
   {
     path: 'acceso-prohibido',
-    component: ForbiddenAccessComponent
+    component: ForbiddenAccessComponent,
   },
   {
     path: 'version-desactualizada',
-    component: OutdatedVersionComponent
+    component: OutdatedVersionComponent,
   },
   {
     path: 'conexion-perdida',
-    component: LostConexionComponent
+    component: LostConexionComponent,
   },
   {
     path: '404',
-    component: NotFoundComponent
+    component: NotFoundComponent,
   },
 
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class ErrorRoutingModule { }
+export class ErrorRoutingModule {
+}

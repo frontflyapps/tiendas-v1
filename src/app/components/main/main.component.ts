@@ -196,19 +196,6 @@ export class MainComponent implements OnInit, OnDestroy {
     }
   }
 
-  private getMenu() {
-    this.categoryService.getMenu()
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((data) => {
-        const _response: any = {};
-        _response.menu = JSON.parse(JSON.stringify(data.data));
-        _response.timespan = new Date().getTime();
-        this.localStorageService.setOnStorage(MENU_DATA, _response);
-
-        this.setCategories(_response.menu);
-      });
-  }
-
   setCategories(menuData) {
     this.categories = menuData;
   }
@@ -437,6 +424,19 @@ export class MainComponent implements OnInit, OnDestroy {
       .subscribe((newLocation) => {
         this.setLocationData(newLocation);
         localStorage.setItem(LOCATION, JSON.stringify(newLocation));
+      });
+  }
+
+  private getMenu() {
+    this.categoryService.getMenu()
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((data) => {
+        const _response: any = {};
+        _response.menu = JSON.parse(JSON.stringify(data.data));
+        _response.timespan = new Date().getTime();
+        this.localStorageService.setOnStorage(MENU_DATA, _response);
+
+        this.setCategories(_response.menu);
       });
   }
 }

@@ -28,12 +28,6 @@ export class BlogSectionComponent implements OnInit, OnDestroy {
   };
   getDatafromInput = false;
 
-  @Input()
-  set _banners(articles) {
-    this.allArticles = [...articles];
-    this.getDatafromInput = true;
-  }
-
   constructor(
     private blogService: BlogService,
     public utilsService: UtilsService,
@@ -41,6 +35,12 @@ export class BlogSectionComponent implements OnInit, OnDestroy {
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
+  }
+
+  @Input()
+  set _banners(articles) {
+    this.allArticles = [...articles];
+    this.getDatafromInput = true;
   }
 
   ngOnInit() {

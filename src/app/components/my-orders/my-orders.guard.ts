@@ -16,7 +16,8 @@ import { LoggedInUserService } from './../../core/services/loggedInUser/logged-i
   providedIn: 'root',
 })
 export class MyOrdersGuard implements CanActivate, CanLoad {
-  constructor(private loggedInUserService: LoggedInUserService, private route: Router) {}
+  constructor(private loggedInUserService: LoggedInUserService, private route: Router) {
+  }
 
   canActivate(
     next: ActivatedRouteSnapshot,
@@ -29,6 +30,7 @@ export class MyOrdersGuard implements CanActivate, CanLoad {
       return false;
     }
   }
+
   canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean {
     if (this.loggedInUserService.getLoggedInUser()) {
       return true;

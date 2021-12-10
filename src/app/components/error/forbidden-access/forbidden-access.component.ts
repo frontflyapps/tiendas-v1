@@ -4,14 +4,14 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-forbidden-access',
   templateUrl: './forbidden-access.component.html',
-  styleUrls: ['./forbidden-access.component.scss']
+  styleUrls: ['./forbidden-access.component.scss'],
 })
 
 export class ForbiddenAccessComponent implements OnInit {
 
 
-
-  constructor(private router: Router) { }
+  constructor(private router: Router) {
+  }
 
   ngOnInit() {
 

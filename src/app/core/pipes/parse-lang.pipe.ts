@@ -5,7 +5,8 @@ import { TranslateService } from '@ngx-translate/core';
   name: 'parseLang',
 })
 export class ParseLangPipe implements PipeTransform {
-  constructor(private traslate: TranslateService) {}
+  constructor(private traslate: TranslateService) {
+  }
 
   transform(value: any, lang: string): string {
     if (!value) {

@@ -3,7 +3,7 @@
 <section class="p-3" style="border-bottom: 1px solid #eee;">
   <div class="container-Term">
     <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="gappx">
-      <a class="color-grey-800" [routerLink]="[ '']">
+      <a [routerLink]="[ '']" class="color-grey-800">
         <mat-icon>
           arrow_back
         </mat-icon>
@@ -13,5 +13,5 @@
     </div>
   </div>
 </section>
-<div class="ck-content container-Term py-4" [innerHTML]="text | parseLang:language | safeHtml">
+<div [innerHTML]="text | parseLang:language | safeHtml" class="ck-content container-Term py-4">
 </div>

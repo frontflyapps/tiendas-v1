@@ -7,7 +7,8 @@ import { MarketEnum } from '../classes/market.enum';
   name: 'parsePriceProduct',
 })
 export class ParsePriceProduct implements PipeTransform {
-  constructor(private currency: CurrencyPipe) {}
+  constructor(private currency: CurrencyPipe) {
+  }
 
   transform(product: any, type?: any): string {
     let currency;

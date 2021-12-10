@@ -35,4 +35,5 @@ import { NgxCaptchaModule } from 'ngx-captcha';
     NgxCaptchaModule,
   ],
 })
-export class MyAccountModule {}
+export class MyAccountModule {
+}

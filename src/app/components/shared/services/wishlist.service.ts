@@ -11,7 +11,9 @@ let products = JSON.parse(localStorage.getItem('wishlistItem')) || [];
 })
 export class WishlistService {
   observer: Subscriber<{}>;
-  constructor(public snackBar: MatSnackBar) {}
+
+  constructor(public snackBar: MatSnackBar) {
+  }
 
   // Get  wishlist Products
   public getProducts(): Observable<Product[]> {

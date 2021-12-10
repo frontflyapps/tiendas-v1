@@ -48,9 +48,11 @@ export class PanelNotificationsComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+  }
 
   onEliminarNotification(event): void {
     this.notificationsService.onEliminarNotification(event);
@@ -65,5 +67,6 @@ export class PanelNotificationsComponent implements OnInit {
     this.notificationsService.onCargarMasNotificaciones();
   }
 
-  onClosePanel(data) {}
+  onClosePanel(data) {
+  }
 }

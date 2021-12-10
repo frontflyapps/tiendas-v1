@@ -13,7 +13,8 @@ export class MyOrdersService {
   httpOptions = {};
   public $orderItemsUpdated: Subject<any> = new Subject();
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) {
+  }
 
   ////////////////////////////PAYMENT///////////////////////////////////////////
 
@@ -67,9 +68,9 @@ export class MyOrdersService {
     }
   }
 
-  editPayment(data){
+  editPayment(data) {
     return this.httpClient.patch<any>(this.urlPaymentId.replace(':id', data.id), data, this.httpOptions);
   }
 
-  
+
 }

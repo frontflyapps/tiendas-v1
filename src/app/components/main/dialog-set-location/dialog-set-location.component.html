@@ -1,8 +1,8 @@
-<h2 mat-dialog-title class="mb-2">{{'Elige tu ubicación' | translate}}</h2>
+<h2 class="mb-2" mat-dialog-title>{{'Elige tu ubicación' | translate}}</h2>
 
 <mat-dialog-content class="mat-typography" fxLayout="column">
   <h3>{{'Provincia' | translate}}</h3>
-  <mat-form-field appearance="outline" fxFlex="100%" class="mb-3">
+  <mat-form-field appearance="outline" class="mb-3" fxFlex="100%">
     <mat-label>{{'Escoja...' | translate}}</mat-label>
     <mat-select [formControl]="province">
       <mat-option>- {{'Ninguno' | translate}} -</mat-option>
@@ -28,6 +28,6 @@
 
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>{{'Cerrar' | translate}}</button>
-  <button mat-flat-button [mat-dialog-close]="setDataResponse()" color="accent"
-          cdkFocusInitial>{{'Listo' | translate}}</button>
+  <button [mat-dialog-close]="setDataResponse()" cdkFocusInitial color="accent"
+          mat-flat-button>{{'Listo' | translate}}</button>
 </mat-dialog-actions>

@@ -16,14 +16,11 @@ export class DialogSetLocationComponent implements OnInit, OnDestroy {
 
   innerWidth: any;
   applyStyle = false;
-
-  private dataResult: any = {};
-
   public province: FormControl = new FormControl(null, [Validators.required]);
   public municipality: FormControl = new FormControl(null, [Validators.required]);
-
   public allProvinces: any[];
   public allMunicipalityByProvince: any[];
+  private dataResult: any = {};
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -64,6 +61,24 @@ export class DialogSetLocationComponent implements OnInit, OnDestroy {
     });
   }
 
+  public setDataResponse() {
+    this.dataResult.municipality = this.municipality.value;
+    this.dataResult.province = this.province.value;
+    return this.dataResult;
+  }
+
+  onClose() {
+    this.dialogRef.close(this.setDataResponse());
+  }
+
+  ngOnDestroy(): void {
+    if (this._unsubscribeAll) {
+      this._unsubscribeAll.next();
+      this._unsubscribeAll.complete();
+      this._unsubscribeAll.unsubscribe();
+    }
+  }
+
   private getProvinces() {
     this.locationService
       .getProvince()
@@ -86,23 +101,5 @@ export class DialogSetLocationComponent implements OnInit, OnDestroy {
       .subscribe(responseData => {
         this.allMunicipalityByProvince = responseData.data;
       });
-  }
-
-  public setDataResponse() {
-    this.dataResult.municipality = this.municipality.value;
-    this.dataResult.province = this.province.value;
-    return this.dataResult;
-  }
-
-  onClose() {
-    this.dialogRef.close(this.setDataResponse());
-  }
-
-  ngOnDestroy(): void {
-    if (this._unsubscribeAll) {
-      this._unsubscribeAll.next();
-      this._unsubscribeAll.complete();
-      this._unsubscribeAll.unsubscribe();
-    }
   }
 }

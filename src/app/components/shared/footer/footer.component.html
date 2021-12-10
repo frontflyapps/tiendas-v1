@@ -19,10 +19,10 @@
     </mat-menu>-->
     <div class="col" fxLayout="row" fxLayout.xs="column">
       <div class="col-1" fxLayout="column" fxLayoutAlign=" start">
-        <a [routerLink]="['']" mat-button class="mat-button">
+        <a [routerLink]="['']" class="mat-button" mat-button>
           <span>{{ 'Inicio' | translate }}</span>
         </a>
-        <a *ngIf="loggedInUser" mat-button class="mat-button" (click)="onShowProfile()">
+        <a (click)="onShowProfile()" *ngIf="loggedInUser" class="mat-button" mat-button>
           <span>{{ 'Tu cuenta' | translate }}</span>
         </a>
         <a [routerLink]="['term-conditions']" fxLayoutAlign="start center" mat-button>
@@ -30,10 +30,10 @@
         </a>
       </div>
       <div class="col-2" fxLayout="column" fxLayoutAlign=" start">
-        <a [routerLink]="['/faq']" mat-button class="mat-button">
+        <a [routerLink]="['/faq']" class="mat-button" mat-button>
           <span>{{ 'Ayuda' | translate }}</span>
         </a>
-        <a *ngIf="loggedInUser" [routerLink]="['my-orders']" mat-button class="mat-button">
+        <a *ngIf="loggedInUser" [routerLink]="['my-orders']" class="mat-button" mat-button>
           <span>{{ 'Tus pedidos' | translate }}</span>
         </a>
         <a [routerLink]="['privacy-policy']" fxLayoutAlign="start center" mat-button>
@@ -43,19 +43,19 @@
     </div>
 
     <div fxLayout="row">
-      <a class="item-selector mx-3 my-2"
-         fxLayoutAlign="start center"
-         mat-button
+      <a #langMenuTrigger="matMenuTrigger"
          [matMenuTriggerFor]="langMenu"
-         #langMenuTrigger="matMenuTrigger">
-        <img [src]="flag?.image" width="18" alt="flag image" />
+         class="item-selector mx-3 my-2"
+         fxLayoutAlign="start center"
+         mat-button>
+        <img [src]="flag?.image" alt="flag image" width="18" />
         <mat-icon>arrow_drop_down</mat-icon>
         <span>{{ flag?.name }}</span>
       </a>
-      <mat-menu #langMenu="matMenu" [overlapTrigger]="false" xPosition="before" class="app-dropdown">
+      <mat-menu #langMenu="matMenu" [overlapTrigger]="false" class="app-dropdown" xPosition="before">
       <span>
-        <button mat-menu-item *ngFor="let flag of flags" (click)="changeLang(flag)">
-          <img [src]="flag.image" width="18" alt="flag image" /> {{ flag.name }}
+        <button (click)="changeLang(flag)" *ngFor="let flag of flags" mat-menu-item>
+          <img [src]="flag.image" alt="flag image" width="18" /> {{ flag.name }}
         </button>
       </span>
       </mat-menu>
@@ -70,16 +70,16 @@
 
   <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="1rem" style="background-color: #6d3112">
     <img
-      class="mt-4 img-footer"
-      src="assets/images/logoWhite.png"
       alt="footer logo"
+      class="mt-4 img-footer"
       ngClass.lt-sm="img-footer"
+      src="assets/images/logoWhite.png"
     />
 
-    <div id="footer-contacts" fxLayout="row" fxLayout.xs="column"
+    <div class="py-3" fxLayout="row" fxLayout.xs="column"
          fxLayoutAlign="start center" fxLayoutAlign.xs="start"
          fxLayoutGap="1rem" fxLayoutGap.xs="10px"
-         class="py-3">
+         id="footer-contacts">
       <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="4px">
         <mat-icon>phone</mat-icon>
         <span>{{contacts.phone || ''}}</span>
@@ -100,67 +100,67 @@
 
       <li fxLayoutAlign="center center">
         <a
-          href="https://www.facebook.com/"
-          target="_blank"
           class="icon-redes"
-          fxLayoutAlign="center center">
+          fxLayoutAlign="center center"
+          href="https://www.facebook.com/"
+          target="_blank">
           <!--          <i class="fab fa-facebook-f" style="font-size: 18px"></i>-->
-          <img src="assets/images/social-media/outline/logo-facebook.svg"
-               alt="Facebook logo" style="filter: invert(1);">
+          <img alt="Facebook logo"
+               src="assets/images/social-media/outline/logo-facebook.svg" style="filter: invert(1);">
         </a>
       </li>
 
       <li fxLayoutAlign="center center">
-        <a href="https://twitter.com/" target="_blank" class="icon-redes" fxLayoutAlign="center center">
+        <a class="icon-redes" fxLayoutAlign="center center" href="https://twitter.com/" target="_blank">
           <!--          <i class="fab fa-twitter" style="font-size: 18px"></i>-->
-          <img src="assets/images/social-media/outline/logo-twitter.svg"
-               alt="Facebook logo" style="filter: invert(1);">
+          <img alt="Facebook logo"
+               src="assets/images/social-media/outline/logo-twitter.svg" style="filter: invert(1);">
         </a>
       </li>
 
       <li fxLayoutAlign="center center">
         <a
+          class="icon-redes"
+          fxLayoutAlign="center center"
           href="https://cu.linkedin.com/"
           target="_blank"
-          class="icon-redes"
-          fxLayoutAlign="center center"
         >
           <!--          <i class="fab fa-linkedin-in" style="font-size: 18px"></i>-->
-          <img src="assets/images/social-media/outline/logo-linkedin.svg"
-               alt="Facebook logo" style="filter: invert(1);">
+          <img alt="Facebook logo"
+               src="assets/images/social-media/outline/logo-linkedin.svg" style="filter: invert(1);">
         </a>
       </li>
 
       <li fxLayoutAlign="center center">
         <a
-          href="https://www.youtube.com/"
-          target="_blank"
           class="icon-redes"
           fxLayoutAlign="center center"
+          href="https://www.youtube.com/"
+          target="_blank"
         >
           <!--          <i class="fab fa-youtube" style="font-size: 18px"></i>-->
-          <img src="assets/images/social-media/outline/logo-youtube.svg"
-               alt="Facebook logo" style="filter: invert(1);">
+          <img alt="Facebook logo"
+               src="assets/images/social-media/outline/logo-youtube.svg" style="filter: invert(1);">
         </a>
       </li>
 
       <li fxLayoutAlign="center center">
-        <a href="https://www.instagram.com/"
-           target="_blank"
-           class="icon-redes"
-           fxLayoutAlign="center center">
+        <a class="icon-redes"
+           fxLayoutAlign="center center"
+           href="https://www.instagram.com/"
+           target="_blank">
           <!--          <i class="fab fa-instagram" style="font-size: 18px"></i>-->
-          <img src="assets/images/social-media/outline/logo-instagram.svg"
-               alt="Facebook logo" style="filter: invert(1);">
+          <img alt="Facebook logo"
+               src="assets/images/social-media/outline/logo-instagram.svg" style="filter: invert(1);">
         </a>
       </li>
 
     </ul>
 
-    <div fxLayout="row" fxLayout.xs="column"
-         fxLayoutAlign="center"
-         fxLayoutGap="10px" fxLayoutGap.xs="4px"
-         class="mb-3">
+    <div class="mb-3" fxLayout="row"
+         fxLayout.xs="column"
+         fxLayoutAlign="center" fxLayoutGap="10px"
+         fxLayoutGap.xs="4px">
       <span>Copyright© {{ year }}.</span>
 
       <span>{{ 'Todos los derechos reservados' | translate }}.</span>

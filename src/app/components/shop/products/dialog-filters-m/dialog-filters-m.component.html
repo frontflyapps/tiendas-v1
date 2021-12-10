@@ -4,39 +4,40 @@
 </div>
 <mat-dialog-content class="my-filters">
   <mat-accordion [multi]="true">
-    <mat-expansion-panel class="mat-elevation-z0 no-border bg-acordion" [expanded]=" this.categoriesIds.length ">
+    <mat-expansion-panel [expanded]=" this.categoriesIds.length " class="mat-elevation-z0 no-border bg-acordion">
       <mat-expansion-panel-header>
         <mat-panel-title>
           <h3>{{'Categories'|translate}}</h3>
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <app-categories-m [categoriesIds]="this.categoriesIds" (categoryChanged)="onCategoriesChanged($event)"></app-categories-m>
+      <app-categories-m (categoryChanged)="onCategoriesChanged($event)"
+                        [categoriesIds]="this.categoriesIds"></app-categories-m>
     </mat-expansion-panel>
 
-    <mat-expansion-panel class="mat-elevation-z0 no-border bg-acordion" [expanded]="true">
+    <mat-expansion-panel [expanded]="true" class="mat-elevation-z0 no-border bg-acordion">
       <mat-expansion-panel-header>
         <mat-panel-title>
           <h3>{{'Brands'|translate}}</h3>
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div class="brands">
-        <app-brands-m [brandsIds]="this.brandsIds" (brandChanged)="onBrandsChanged($event)"></app-brands-m>
+        <app-brands-m (brandChanged)="onBrandsChanged($event)" [brandsIds]="this.brandsIds"></app-brands-m>
       </div>
     </mat-expansion-panel>
 
-    <mat-expansion-panel class="mat-elevation-z0 no-border bg-acordion" [expanded]="true">
+    <mat-expansion-panel [expanded]="true" class="mat-elevation-z0 no-border bg-acordion">
       <mat-expansion-panel-header>
         <mat-panel-title>
           <span>{{"Price"|translate}}</span>
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <app-price [reset]="resetPrices" (priceFilters)="updatePriceFilters($event)"></app-price>
+      <app-price (priceFilters)="updatePriceFilters($event)" [reset]="resetPrices"></app-price>
     </mat-expansion-panel>
 
   </mat-accordion>
 </mat-dialog-content>
 <div fxLayout="row" fxLayoutAlign="end end">
   <mat-dialog-actions>
-    <button class="mat-raised-button mat-primary" (click)="save()">{{'Guardar' | translate}}</button>
+    <button (click)="save()" class="mat-raised-button mat-primary">{{'Guardar' | translate}}</button>
   </mat-dialog-actions>
 </div>

@@ -38,4 +38,5 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatDividerModule,
   ],
 })
-export class CartModule {}
+export class CartModule {
+}

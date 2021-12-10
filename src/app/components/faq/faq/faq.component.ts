@@ -13,6 +13,7 @@ export class FaqComponent implements OnInit {
   url = environment.apiUrl + 'faq?filter[$and][status]=enabled&order=id';
   allFaqs: any[] = [];
   lang = 'es';
+
   constructor(private http: HttpClient, private translate: TranslateService, private metaService: MetaService) {
     this.metaService.setMeta(
       environment.meta?.mainPage?.title,

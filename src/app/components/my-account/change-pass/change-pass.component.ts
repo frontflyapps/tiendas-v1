@@ -30,15 +30,6 @@ export class ChangePassComponent implements OnInit {
   form: FormGroup;
   fromPass: FormGroup;
   language = null;
-  @HostListener('window:resize', ['$event'])
-  onResize(event) {
-    this.innerWidth = window.innerWidth;
-    if (this.innerWidth > 600) {
-      this.applyStyle = false;
-    } else {
-      this.applyStyle = true;
-    }
-  }
 
   constructor(
     public authService: AuthenticationService,
@@ -52,6 +43,16 @@ export class ChangePassComponent implements OnInit {
     private loggedInUserService: LoggedInUserService,
   ) {
     this.createForm();
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.innerWidth = window.innerWidth;
+    if (this.innerWidth > 600) {
+      this.applyStyle = false;
+    } else {
+      this.applyStyle = true;
+    }
   }
 
   ngOnInit() {

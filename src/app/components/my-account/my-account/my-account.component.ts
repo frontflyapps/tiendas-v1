@@ -47,16 +47,6 @@ export class MyAccountComponent implements OnInit {
   routeToNavigate = '/checkout';
   localDatabaseUsers = environment.localDatabaseUsers;
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event) {
-    this.innerWidth = window.innerWidth;
-    if (this.innerWidth > 600) {
-      this.applyStyle = false;
-    } else {
-      this.applyStyle = true;
-    }
-  }
-
   constructor(
     public authService: AuthenticationService,
     private toastr: ShowToastrService,
@@ -84,6 +74,16 @@ export class MyAccountComponent implements OnInit {
     this.createActivateForm();
 
     this.getParamsAndInspect();
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.innerWidth = window.innerWidth;
+    if (this.innerWidth > 600) {
+      this.applyStyle = false;
+    } else {
+      this.applyStyle = true;
+    }
   }
 
   /**
@@ -393,39 +393,6 @@ export class MyAccountComponent implements OnInit {
     return this.validatePing(data);
   }
 
-  private validatePing(data) {
-    this.inLoading = true;
-    this.spinner.show();
-    this.authService.validatePing(data).subscribe(
-      (result) => {
-        this.toastr.showSucces('Registrado correctamente', '', 6000);
-        this.showRegistrationForm = false;
-        this.showPinForm = false;
-        this.showResetPassForm = false;
-        this.showActivateForm = false;
-        this.showLoginForm = true;
-        this.spinner.hide();
-        this.loggedInUserService.saveAccountCookie(result.data.Authorization);
-        this.loggedInUserService.updateUserProfile(result.data.profile);
-        this.toastr.showInfo(
-          this.translate.instant('You have successfully logged into our system'),
-          this.translate.instant('User login'),
-          10000,
-        );
-        this.inLoading = false;
-        this.router.navigate([this.routeToNavigate]);
-        return true;
-      },
-      (error) => {
-        this.utilsService.errorHandle(error);
-        this.inLoading = false;
-        this.spinner.hide();
-      },
-    );
-
-    return false;
-  }
-
   onGoBefore() {
     if (this.showRegistrationForm) {
       this.showLoginForm = true;
@@ -515,10 +482,11 @@ export class MyAccountComponent implements OnInit {
       );
   }
 
-  // ////////////////////////////////////////////////////////
   // ///////////////////////////////////////////////////////
   handleReset() {
   }
+
+  // ////////////////////////////////////////////////////////
 
   handleExpire() {
   }
@@ -527,6 +495,39 @@ export class MyAccountComponent implements OnInit {
   }
 
   handleLoad() {
+  }
+
+  private validatePing(data) {
+    this.inLoading = true;
+    this.spinner.show();
+    this.authService.validatePing(data).subscribe(
+      (result) => {
+        this.toastr.showSucces('Registrado correctamente', '', 6000);
+        this.showRegistrationForm = false;
+        this.showPinForm = false;
+        this.showResetPassForm = false;
+        this.showActivateForm = false;
+        this.showLoginForm = true;
+        this.spinner.hide();
+        this.loggedInUserService.saveAccountCookie(result.data.Authorization);
+        this.loggedInUserService.updateUserProfile(result.data.profile);
+        this.toastr.showInfo(
+          this.translate.instant('You have successfully logged into our system'),
+          this.translate.instant('User login'),
+          10000,
+        );
+        this.inLoading = false;
+        this.router.navigate([this.routeToNavigate]);
+        return true;
+      },
+      (error) => {
+        this.utilsService.errorHandle(error);
+        this.inLoading = false;
+        this.spinner.hide();
+      },
+    );
+
+    return false;
   }
 
   // ///////////////////////////////////////////////////////

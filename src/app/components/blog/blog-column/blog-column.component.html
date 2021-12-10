@@ -1,12 +1,12 @@
 <div *ngIf="this.loadingSearch" class="loading-shade-full" style="background: rgba(0, 0, 0, 0.08) !important;">
-  <mat-spinner *ngIf="this.loadingSearch" diameter="60" color="primary"></mat-spinner>
+  <mat-spinner *ngIf="this.loadingSearch" color="primary" diameter="60"></mat-spinner>
 </div>
 
 <div class="blog-column">
   <div class="container">
     <ng-container *ngIf="blogArray.length">
-      <div fxLayout="row wrap" fxLayoutAlign="start start" class="blog-list-wrapper sec-padding">
-        <div fxHide fxShow.lt-md class="search mb-30 w-100">
+      <div class="blog-list-wrapper sec-padding" fxLayout="row wrap" fxLayoutAlign="start start">
+        <div class="search mb-30 w-100" fxHide fxShow.lt-md>
           <input [(ngModel)]="searchText" class="form-control" placeholder="{{'Search...'|translate}}" type="search">
           <button (click)="onSearchArticle()" [disabled]="searchText===null" mat-button type="submit">
             <mat-icon>
@@ -15,38 +15,42 @@
           </button>
         </div>
 
-        <div ngClass.gt-sm="pr-3" fxLayout="column" fxFlex="100" fxFlex.gt-sm="70" fxLayoutAlign="start stretch" fxLayoutGap="gappx">
-          <div [id]="'element'+item.id" *ngFor="let item of blogArray;let i=index" class="main-blog-panel">
+        <div fxFlex="100" fxFlex.gt-sm="70" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="gappx"
+             ngClass.gt-sm="pr-3">
+          <div *ngFor="let item of blogArray;let i=index" [id]="'element'+item.id" class="main-blog-panel">
 
             <a [routerLink]="['/blog',item.id]" class="single-blog-list" fxLayout="row" fxLayout.lt-md="column">
               <mat-card class="cardArticle">
                 <mat-card-content>
                   <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="start stretch" fxLayoutGap=" gappx">
-                    <div fxLayoutAlign="center stretch" fxFlex="100" fxFlex.gt-sm="50" class="image-box">
+                    <div class="image-box" fxFlex="100" fxFlex.gt-sm="50" fxLayoutAlign="center stretch">
                       <a *ngIf="item.link" [href]="item.link" target="_blank">
-                        <img ngp-lazy ngp-threshold="0.1" [ngClass]="{'imageDroped':!item.expandable,'imageExpanded':item.expandable}"
-                          [src]="imageUrl + item.image" [alt]="item.title[language]">
+                        <img [alt]="item.title[language]" [ngClass]="{'imageDroped':!item.expandable,'imageExpanded':item.expandable}"
+                             [src]="imageUrl + item.image"
+                             ngp-lazy ngp-threshold="0.1">
                       </a>
 
-                      <img *ngIf="!item.link" ngp-lazy ngp-threshold="0.1"
-                        [ngClass]="{'imageDroped':!item.expandable,'imageExpanded':item.expandable}" [src]="imageUrl + item.image"
-                        [alt]="item.title[language]">
+                      <img *ngIf="!item.link" [alt]="item.title[language]" [ngClass]="{'imageDroped':!item.expandable,'imageExpanded':item.expandable}"
+                           [src]="imageUrl + item.image"
+                           ngp-lazy
+                           ngp-threshold="0.1">
 
                     </div>
-                    <div fxFlex="100" fxFlex.gt-sm="50" class="text-box">
+                    <div class="text-box" fxFlex="100" fxFlex.gt-sm="50">
 
                       <h4 style="text-transform: none !important;">
-                        {{utilsService.parserLanguage(item.title,language)}}
+                        {{utilsService.parserLanguage(item.title, language)}}
                       </h4>
 
                       <ul fxLayout="row">
                         <li><i class="material-icons">access_time </i>{{item.createdAt | date: 'short'}}</li>
-                        <li><i class="material-icons">person </i>{{item.Creator.name +' '+ item.Creator.lastName}}</li>
+                        <li><i class="material-icons">person </i>{{item.Creator.name + ' ' + item.Creator.lastName}}
+                        </li>
                         <!-- <li><i class="material-icons">sms</i>05 Comments</li> -->
                       </ul>
 
                       <div *ngIf="!item.expandable" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="gappx">
-                        <p class="module1 line-clamp1">{{utilsService.parserLanguage(item.sumarize,language)}}</p>
+                        <p class="module1 line-clamp1">{{utilsService.parserLanguage(item.sumarize, language)}}</p>
                       </div>
 
                     </div>
@@ -58,10 +62,11 @@
 
           </div>
         </div>
-        <div fxFlex="100" fxFlex.gt-sm="30" class="sidebar">
+        <div class="sidebar" fxFlex="100" fxFlex.gt-sm="30">
           <div class="blog-sidebar">
-            <div fxHide.lt-md class="search mb-30">
-              <input [(ngModel)]="searchText" class="form-control" placeholder="{{'Search...'|translate}}" type="search">
+            <div class="search mb-30" fxHide.lt-md>
+              <input [(ngModel)]="searchText" class="form-control" placeholder="{{'Search...'|translate}}"
+                     type="search">
               <button (click)="onSearchArticle()" mat-button type="submit">
                 <mat-icon>
                   search
@@ -76,9 +81,10 @@
                 </div>
                 <ul>
                   <li *ngFor="let item of latestArray;let i =index" fxLayout="row">
-                    <div fxFlex="100" fxFlex.gt-sm="30" class="icon-box"><img [src]="imageUrl + item.image" alt="Awesome Image"></div>
-                    <div fxFlex="100" fxFlex.gt-sm="70" class="text-box">
-                      <h5> {{utilsService.parserLanguage(item.title,language)}} </h5>
+                    <div class="icon-box" fxFlex="100" fxFlex.gt-sm="30"><img [src]="imageUrl + item.image"
+                                                                              alt="Awesome Image"></div>
+                    <div class="text-box" fxFlex="100" fxFlex.gt-sm="70">
+                      <h5> {{utilsService.parserLanguage(item.title, language)}} </h5>
                       <span>{{item.createdAt | date: 'short'}}</span>
                     </div>
                   </li>
@@ -121,17 +127,16 @@
           </div>
         </div>
       </div>
-      <div fxLayout="row" *ngIf="this.query.offset < this.query.total" class="py-3" fxLayoutAlign="center center">
-        <button (click)="onGetMore()" *ngIf="this.query.offset < this.query.total" mat-stroked-button class="px-4"
-          color="accent">{{'LOAD MORE...'|translate}}</button>
+      <div *ngIf="this.query.offset < this.query.total" class="py-3" fxLayout="row" fxLayoutAlign="center center">
+        <button (click)="onGetMore()" *ngIf="this.query.offset < this.query.total" class="px-4" color="accent"
+                mat-stroked-button>{{'LOAD MORE...'|translate}}</button>
       </div>
 
     </ng-container>
 
 
-
     <div *ngIf="isEmptyArray" class="sec-padding" fxLayout="column" fxLayoutAlign="center center">
-      <img src="../../../../assets/images/empty.svg" alt="Empty" style="height: 160px; width: 160px;">
+      <img alt="Empty" src="../../../../assets/images/empty.svg" style="height: 160px; width: 160px;">
       <h3 class="text-muted mt-3">
         {{'The blog articles is empty'|translate}}
       </h3>

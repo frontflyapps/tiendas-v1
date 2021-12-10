@@ -23,7 +23,8 @@ export class CheckoutGuard implements CanActivate, CanLoad {
     private translateService: TranslateService,
     private route: Router,
     private showSnackBar: ShowSnackbarService,
-  ) {}
+  ) {
+  }
 
   canActivate(
     next: ActivatedRouteSnapshot,

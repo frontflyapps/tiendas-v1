@@ -8,9 +8,9 @@ import { LoggedInUserService } from '../loggedInUser/logged-in-user.service';
   providedIn: 'root',
 })
 export class SocketIoService {
+  loggedInUser: any;
   private url = environment.apiUrl + 'connect';
   private socket: SocketIOClient.Socket;
-  loggedInUser: any;
 
   constructor(private loggedInUserService: LoggedInUserService) {
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();

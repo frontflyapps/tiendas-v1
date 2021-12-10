@@ -10,7 +10,8 @@ export class ConfigurationService {
   url = environment.apiUrl + 'currency';
   httpOptions = {};
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) {
+  }
 
   getCurrencys(query?: IPagination, params?: any) {
     let httpParams = new HttpParams();

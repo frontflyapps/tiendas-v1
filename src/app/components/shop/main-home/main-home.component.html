@@ -43,12 +43,12 @@
 
 <div class="home-1-wrap">
 
-  <div *ngIf="allBicons.length > 0 && !loadingAllProduct" fxHide.xs class="info-bar-four-wrapper">
+  <div *ngIf="allBicons.length > 0 && !loadingAllProduct" class="info-bar-four-wrapper" fxHide.xs>
     <div class="container">
-      <div fxLayout="row wrap" class="info-bar-four" fxLayoutAlign="center center">
+      <div class="info-bar-four" fxLayout="row wrap" fxLayoutAlign="center center">
         <div *ngFor="let item of allBicons; let i = index" class="card-wrap" fxFlex="100" fxFlex.gt-md="25"
              fxFlex.gt-xs="50">
-          <mat-card class="light-block" [ngClass]="{ 'no-bd': i === allBicons.length - 1 }" fxLayout="row"
+          <mat-card [ngClass]="{ 'no-bd': i === allBicons.length - 1 }" class="light-block" fxLayout="row"
                     fxLayoutAlign="start center">
             <div fxFlex="20">
               <mat-icon class="mat-icon-xlg m-0">{{ item.icon }}</mat-icon>
@@ -78,7 +78,7 @@
       <div class="products sec-padding">
         <div class="products-four">
           <h3 style="color: initial">{{'Productos más vendidos' | translate }}</h3>
-          <app-product-carousel *ngIf="!loadingBestSellers" [products]="bestSellersProducts" [btnColor]="'accent'">
+          <app-product-carousel *ngIf="!loadingBestSellers" [btnColor]="'accent'" [products]="bestSellersProducts">
           </app-product-carousel>
           <div *ngIf="loadingBestSellers" class="my-3">
             <app-skeleton-loading-cards *ngIf="loadingBestSellers" [setConfiguration]="{ xs: 1, sm: 2, md: 3, lg: 4 }">
@@ -96,7 +96,7 @@
       <div class="products sec-padding">
         <div class="products-four">
           <h3 style="color: initial">{{ 'Ofertas populares' | translate }}</h3>
-          <app-product-carousel *ngIf="!loadingPopular" [products]="popularProducts" [btnColor]="'accent'">
+          <app-product-carousel *ngIf="!loadingPopular" [btnColor]="'accent'" [products]="popularProducts">
           </app-product-carousel>
           <div *ngIf="loadingPopular" class="my-3">
             <app-skeleton-loading-cards *ngIf="loadingPopular" [setConfiguration]="{ xs: 1, sm: 2, md: 3, lg: 4 }">
@@ -141,7 +141,7 @@
       <div class="products sec-padding">
         <div class="products-four">
           <h3 style="color: initial">{{'Productos destacados'|translate}}</h3>
-          <app-product-carousel *ngIf="!loadingFeatured" [products]="featuredProducts" [btnColor]="'accent'">
+          <app-product-carousel *ngIf="!loadingFeatured" [btnColor]="'accent'" [products]="featuredProducts">
           </app-product-carousel>
           <div *ngIf="loadingFeatured" class="my-3">
             <app-skeleton-loading-cards *ngIf="loadingFeatured" [setConfiguration]="{'xs':1,'sm':2,'md':3,'lg':4}">

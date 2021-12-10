@@ -18,6 +18,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgpImagePickerModule } from 'ngp-image-picker';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+
 // import { GoogleMapsModule } from '@angular/google-maps';
 @NgModule({
   declarations: [BecomeASellerComponent],
@@ -42,4 +43,5 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatNativeDateModule,
   ],
 })
-export class BecomeASellerModule {}
+export class BecomeASellerModule {
+}

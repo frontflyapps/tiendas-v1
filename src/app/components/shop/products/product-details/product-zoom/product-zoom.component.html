@@ -1,19 +1,19 @@
 <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="gappx">
-  <button mat-mini-fab color="warn" class="close" (click)="close()">
+  <button (click)="close()" class="close" color="warn" mat-mini-fab>
     <mat-icon>close</mat-icon>
   </button>
 </div>
 
-<div mat-dialog-content class="p-2">
+<div class="p-2" mat-dialog-content>
   <div class="viewer" fxLayout="row" fxLayoutAlign="center stretch">
-    <img [src]="image.image" #zoomImage>
+    <img #zoomImage [src]="image.image">
   </div>
 
   <div class="controls" fxLayout="row" fxLayoutAlign="start-center">
-    <button mat-mini-fab color="primary" class="zoom-in mx-2" (click)="zoomIn()" [disabled]="maxWidth ===100">
+    <button (click)="zoomIn()" [disabled]="maxWidth ===100" class="zoom-in mx-2" color="primary" mat-mini-fab>
       <mat-icon>zoom_in</mat-icon>
     </button>
-    <button mat-mini-fab color="primary" class="zoom-out mx-2" (click)="zoomOut()" [disabled]="maxWidth === 80">
+    <button (click)="zoomOut()" [disabled]="maxWidth === 80" class="zoom-out mx-2" color="primary" mat-mini-fab>
       <mat-icon>zoom_out</mat-icon>
     </button>
   </div>

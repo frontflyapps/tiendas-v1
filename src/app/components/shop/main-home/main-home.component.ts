@@ -107,16 +107,6 @@ export class MainHomeComponent implements OnInit, OnDestroy {
 
   /////////////////////////////////////////////////////////////////////////////////
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event): void {
-    this.applyResolution();
-  }
-
-  private applyResolution() {
-    const innerWidth = window.innerWidth;
-    this.applyStyle = innerWidth <= 600;
-  }
-
   constructor(
     public utilsService: UtilsService,
     private loggedInUserService: LoggedInUserService,
@@ -134,6 +124,11 @@ export class MainHomeComponent implements OnInit, OnDestroy {
       environment.meta?.mainPage?.shareImg,
       environment.meta?.mainPage?.keywords,
     );
+    this.applyResolution();
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event): void {
     this.applyResolution();
   }
 
@@ -248,12 +243,17 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     return this.httpClient.get(this.url).toPromise();
   }
 
+  ngOnDestroy() {
+    this._unsubscribeAll.next(true);
+    this._unsubscribeAll.complete();
+  }
+
   // getBestSellers() {
   //   return this.httpClient.get(environment.apiUrl + 'product/best-seller').toPromise();
   // }
 
-  ngOnDestroy() {
-    this._unsubscribeAll.next(true);
-    this._unsubscribeAll.complete();
+  private applyResolution() {
+    const innerWidth = window.innerWidth;
+    this.applyStyle = innerWidth <= 600;
   }
 }

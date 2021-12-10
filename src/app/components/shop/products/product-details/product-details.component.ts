@@ -199,11 +199,6 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
       );
   }
 
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-    return this.allProductsOnMenu.filter(option => option.name.es.toLowerCase().includes(filterValue));
-  }
-
   ngOnDestroy() {
     this._unsubscribeAll.next(true);
     this._unsubscribeAll.complete();
@@ -308,6 +303,14 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     });
   }
 
+  // Add to cart
+  public addToCart(product: any, quantity) {
+    if (quantity === 0) {
+      return false;
+    }
+    this.cartService.addToCart(product, Math.max(product.minSale, quantity)).then();
+  }
+
   // getFeaturedProducts() {
   //   this.loadingFeatured = true;
   //   this.productsService.getFeaturedProducts(this.queryFeatured).subscribe((data: any) => {
@@ -318,14 +321,6 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   //     }, 800);
   //   });
   // }
-
-  // Add to cart
-  public addToCart(product: any, quantity) {
-    if (quantity === 0) {
-      return false;
-    }
-    this.cartService.addToCart(product, Math.max(product.minSale, quantity)).then();
-  }
 
   // Add to cart
   public buyNow(product: Product, quantity) {
@@ -422,5 +417,10 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
         product: this.product,
       },
     });
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.allProductsOnMenu.filter(option => option.name.es.toLowerCase().includes(filterValue));
   }
 }

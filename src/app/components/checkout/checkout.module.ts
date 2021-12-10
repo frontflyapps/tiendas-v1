@@ -35,6 +35,7 @@ import { DetailsShippingComponent } from './details-shipping/details-shipping.co
 import { MatTableModule } from '@angular/material/table';
 import { DialogTranfermovilQrComponent } from './dialog-tranfermovil-qr/dialog-tranfermovil-qr.component';
 import { MatExpansionModule } from '@angular/material/expansion';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -77,4 +78,5 @@ import { MatExpansionModule } from '@angular/material/expansion';
   entryComponents: [DetailsShippingComponent, DialogTranfermovilQrComponent, DialogBidaiondoConfirmToPayComponent],
   providers: [TaxesShippingService],
 })
-export class CheckoutModule {}
+export class CheckoutModule {
+}

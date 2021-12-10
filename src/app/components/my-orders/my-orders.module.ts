@@ -22,7 +22,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatRippleModule } from '@angular/material/core';
 import { MatTabsModule } from '@angular/material/tabs';
-import { MatSelectModule } from '@angular/material/select'; 
+import { MatSelectModule } from '@angular/material/select';
 import { MyOrdersRoutingModule } from './my-orders-routing.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
@@ -66,4 +66,5 @@ import { EditOrderComponent } from './edit-order/edit-order.component';
   entryComponents: [CancelOrderComponent, DialogBidaiondoCancelToPayComponent, EditOrderComponent],
   providers: [],
 })
-export class MyOrdersModule {}
+export class MyOrdersModule {
+}

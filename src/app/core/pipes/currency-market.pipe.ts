@@ -8,7 +8,8 @@ import { CurrencyService } from '../services/currency/currency.service';
   name: 'currencyMarket',
 })
 export class CurrencyMarket implements PipeTransform {
-  constructor(private currencyPipe: CurrencyPipe) {}
+  constructor(private currencyPipe: CurrencyPipe) {
+  }
 
   transform(price: number, market: string): string {
     let currency;

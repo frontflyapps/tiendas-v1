@@ -1,47 +1,48 @@
 <div class="container">
   <div fxLayout="column" fxLayoutAlign="start stretch">
-    <mat-card id="CardLogin" class="mx-auto my-3">
+    <mat-card class="mx-auto my-3" id="CardLogin">
       <!-- <div *ngIf="inLoading" class="loading-shade">
         <mat-spinner *ngIf="inLoading"></mat-spinner>
       </div> -->
 
-      <div fxLayout="column" fxLayoutAlign="center start" class="py-2 mt-2">
-        <img src="../../../../assets/images/logoWhite.png" class="login-logo mx-auto" />
+      <div class="py-2 mt-2" fxLayout="column" fxLayoutAlign="center start">
+        <img class="login-logo mx-auto" src="../../../../assets/images/logoWhite.png" />
       </div>
 
-      <div fxLayout="column" id="CardBodyLoggin" class="mat-elevation-z8" fxLayoutAlign="start stretch">
-        <div fxLayout="row" class="w-100 p-2 mt-3" fxLayoutAlign="center center">
-          <span ngClass.xs="mat-body-2" class="mat-title mb-0">{{ 'Cambie su contraseña' | translate }}</span>
+      <div class="mat-elevation-z8" fxLayout="column" fxLayoutAlign="start stretch" id="CardBodyLoggin">
+        <div class="w-100 p-2 mt-3" fxLayout="row" fxLayoutAlign="center center">
+          <span class="mat-title mb-0" ngClass.xs="mat-body-2">{{ 'Cambie su contraseña' | translate }}</span>
         </div>
 
-        <div fxLayout="column" fxLayoutAlign="start stretch" class="FormLayout">
+        <div class="FormLayout" fxLayout="column" fxLayoutAlign="start stretch">
           <form [formGroup]="this.form" class="example-full-width">
-            <div fxLayout="column" fxLayoutAlign="space-around stretch" class="pt-3">
+            <div class="pt-3" fxLayout="column" fxLayoutAlign="space-around stretch">
               <mat-form-field appearance="outline">
                 <mat-label>{{ 'Current password' | translate }}</mat-label>
                 <input
+                  [formControl]="form.controls['currentPassword']"
                   matInput
                   placeholder="{{ 'Current password' | translate }}"
-                  type="password"
                   required
-                  [formControl]="form.controls['currentPassword']"
+                  type="password"
                 />
                 <mat-error *ngIf="form.controls['currentPassword'].hasError('required')">
                   {{ 'Current password' | translate }}&nbsp;<strong>{{ 'is required' | translate }}</strong>
                 </mat-error>
               </mat-form-field>
 
-              <mat-form-field class="example-full-width" appearance="outline" fxFlex="48">
+              <mat-form-field appearance="outline" class="example-full-width" fxFlex="48">
                 <mat-label>{{ 'New password' | translate }}</mat-label>
                 <input
+                  [formControl]="fromPass.controls['password']"
                   matInput
                   placeholder="{{ 'New password' | translate }}"
-                  type="{{ passType }}"
                   required
-                  [formControl]="fromPass.controls['password']"
+                  type="{{ passType }}"
                 />
-                <mat-icon style="cursor: pointer" matSuffix class="grey-600" (click)="showPass()"
-                  >remove_red_eye</mat-icon
+                <mat-icon (click)="showPass()" class="grey-600" matSuffix style="cursor: pointer"
+                >remove_red_eye
+                </mat-icon
                 >
                 <mat-error *ngIf="fromPass.controls['password'].hasError('minlength')">
                   {{ 'New password' | translate }} <strong>{{ 'must be at least 6 characters' | translate }}</strong>
@@ -52,26 +53,27 @@
               </mat-form-field>
 
               <mat-form-field
-                class="example-full-width"
-                appearance="outline"
-                fxFlex="48"
                 [ngClass]="{
                   'mat-form-field-invalid': fromPass.hasError('mismatch'),
                   'ng-invalid': fromPass.hasError('mismatch'),
                   'ng-valid': !fromPass.hasError('mismatch')
                 }"
+                appearance="outline"
+                class="example-full-width"
+                fxFlex="48"
               >
                 <mat-label>{{ 'Repita la contraseña' | translate }}</mat-label>
                 <input
+                  [formControl]="fromPass.controls['repeat']"
+                  [ngClass]="{ 'ng-invalid': fromPass.hasError('mismatch') }"
                   matInput
                   placeholder="{{ 'Repita la contraseña' | translate }}"
                   required
                   type="{{ passType }}"
-                  [ngClass]="{ 'ng-invalid': fromPass.hasError('mismatch') }"
-                  [formControl]="fromPass.controls['repeat']"
                 />
-                <mat-icon style="cursor: pointer" matSuffix class="grey-600" (click)="showPass()"
-                  >remove_red_eye</mat-icon
+                <mat-icon (click)="showPass()" class="grey-600" matSuffix style="cursor: pointer"
+                >remove_red_eye
+                </mat-icon
                 >
                 <mat-error *ngIf="fromPass.hasError('mismatch')">
                   {{ 'Password' | translate }} <strong>{{ 'most be equals' | translate }}</strong>
@@ -80,11 +82,11 @@
 
               <div fxLayout="row" fxLayoutAlign="center center">
                 <button
-                  mat-raised-button
-                  color="primary"
-                  class="RegisterBtn"
-                  [disabled]="form.invalid"
                   (click)="onSubmit()"
+                  [disabled]="form.invalid"
+                  class="RegisterBtn"
+                  color="primary"
+                  mat-raised-button
                 >
                   <span class="uppercase color-white">{{ 'Confirm' | translate }}</span>
                 </button>

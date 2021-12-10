@@ -18,7 +18,8 @@ export class ProductZoomComponent implements OnInit {
     private productsService: ProductService,
     public dialogRef: MatDialogRef<ProductZoomComponent>,
     @Inject(MAT_DIALOG_DATA) public image: any,
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.zoomImage.nativeElement.style.maxWidth = this.maxWidth + '%';

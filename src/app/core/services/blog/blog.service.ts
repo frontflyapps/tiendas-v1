@@ -12,7 +12,8 @@ export class BlogService {
   urlId = environment.apiUrl + 'blog/:blogId';
   httpOptions = {};
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) {
+  }
 
   createBlog(body: any): Observable<any> {
     return this.httpClient.post<any>(this.url, body);

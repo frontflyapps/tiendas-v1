@@ -5,7 +5,8 @@ import { TranslateService } from '@ngx-translate/core';
   name: 'dummy',
 })
 export class DummyPipe implements PipeTransform {
-  constructor(private traslate: TranslateService) {}
+  constructor(private traslate: TranslateService) {
+  }
 
   transform(value: any): string {
     return `<h2>Jose Alejandro</h2>` + value;

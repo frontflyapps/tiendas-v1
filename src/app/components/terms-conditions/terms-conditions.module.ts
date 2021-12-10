@@ -8,13 +8,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { PipesModule } from 'src/app/core/pipes/pipes.module';
 
 const routes: Routes = [
-  { path: '', component: TermsConditionsComponent }
+  { path: '', component: TermsConditionsComponent },
 ];
 
 
 @NgModule({
   declarations: [
-    TermsConditionsComponent
+    TermsConditionsComponent,
   ],
   imports: [
     CommonModule,
@@ -22,7 +22,8 @@ const routes: Routes = [
     MatIconModule,
     TranslateModule,
     RouterModule.forChild(routes),
-    PipesModule
-  ]
+    PipesModule,
+  ],
 })
-export class TermsConditionsModule { }
+export class TermsConditionsModule {
+}

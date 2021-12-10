@@ -9,4 +9,5 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   imports: [CommonModule, MatIconModule, MatTooltipModule],
   exports: [NgpRatingMaterialComponent],
 })
-export class NgpMaterialRatingModule {}
+export class NgpMaterialRatingModule {
+}

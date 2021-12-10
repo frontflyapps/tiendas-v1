@@ -21,7 +21,8 @@ export class AuthenticationService {
   // -----------------------URL UPDATE PERSON------------------------ //
   urlProfile = environment.apiUrl + 'profile';
 
-  constructor(private httpClient: HttpClient, private loggedInUserService: LoggedInUserService) {}
+  constructor(private httpClient: HttpClient, private loggedInUserService: LoggedInUserService) {
+  }
 
   login(user: string, password: string) {
     const base64EncodedPw = btoa(user + ':' + password);
@@ -62,6 +63,7 @@ export class AuthenticationService {
     httpParams = httpParams.set('email', body.email);
     return this.httpClient.get<any>(this.urlForgot, { params: httpParams });
   }
+
   changePass(body): Observable<any> {
     return this.httpClient.patch<any>(this.urlChangePass, body);
   }

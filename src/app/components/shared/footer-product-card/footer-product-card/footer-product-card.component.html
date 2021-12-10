@@ -5,47 +5,47 @@
   <!--    </div>-->
   <ul class="product-list footer-product-card">
     <li *ngFor="let product of Products"
-        [routerLink]="['/product']"
         [queryParams]="{
                   productId: product?.id,
                   stockId: product?.Stock?.id
                 }"
+        [routerLink]="['/product']"
         class="list-product" fxLayout="row">
       <div class="media-image">
-        <a [routerLink]="['/product']"
-           [queryParams]="{
+        <a [queryParams]="{
                   productId: product?.id,
                   stockId: product?.Stock?.id
-                }">
+                }"
+           [routerLink]="['/product']">
           <img
+            *ngIf="product.Images && product.Images.length"
+            [alt]="product.name[language] ? product.name[language] : product.name['es']"
+            [src]="imageUrl + product.Images[0].image"
             class="small"
             ngp-lazy
             ngp-threshold="0.1"
-            *ngIf="product.Images && product.Images.length"
-            onerror="this.onerror=null;this.src='assets/images/noImage.jpg';"
-            [src]="imageUrl + product.Images[0].image"
-            [alt]="product.name[language] ? product.name[language] : product.name['es']" />
+            onerror="this.onerror=null;this.src='assets/images/noImage.jpg';" />
 
-          <img class="small"
+          <img *ngIf="!(product.Images && product.Images.length)"
+               alt="No image"
+               class="small"
                ngp-lazy
                ngp-threshold="0.1"
-               *ngIf="!(product.Images && product.Images.length)"
-               src="assets/images/noImage.jpg"
-               alt="No image" />
+               src="assets/images/noImage.jpg" />
         </a>
       </div>
       <div class="media-body">
-        <a [routerLink]="['/product']"
-           [queryParams]="{
+        <a [queryParams]="{
                   productId: product?.id,
                   stockId: product?.Stock?.id
-                }">
+                }"
+           [routerLink]="['/product']">
                 <span class="module line-clamp">{{
                   product.name[language] ? product.name[language] : product.name['es']
                   }}</span>
         </a>
         <div class="mt-2">
-          <ngp-rating-material [value]="product.rating" [config]="{ readOnly: true }"></ngp-rating-material>
+          <ngp-rating-material [config]="{ readOnly: true }" [value]="product.rating"></ngp-rating-material>
         </div>
         <div class="price">
           <ng-container *ngIf="product.offerValue">
@@ -70,10 +70,10 @@
         <!--          <p class="price">{{ product.price | currency: currencyService.getCurrency().code }}</p>-->
       </div>
 
-      <button matTooltip="{{ 'Añadir al carrito' | translate }}"
+      <button (click)="$event.stopPropagation(); cartService.addToCartOnCard(product)"
               class="btnAddCart"
               mat-mini-fab
-              (click)="$event.stopPropagation(); cartService.addToCartOnCard(product)"
+              matTooltip="{{ 'Añadir al carrito' | translate }}"
               style="z-index: 10">
         <mat-icon>shopping_cart</mat-icon>
       </button>

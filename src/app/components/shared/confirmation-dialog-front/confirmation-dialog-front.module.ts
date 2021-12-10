@@ -12,4 +12,5 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule, MatDialogModule, MatButtonModule, TranslateModule, FlexLayoutModule],
   exports: [ConfirmationDialogFrontComponent],
 })
-export class ConfirmationDialogFrontModule {}
+export class ConfirmationDialogFrontModule {
+}

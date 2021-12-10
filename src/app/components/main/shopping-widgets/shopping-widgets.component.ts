@@ -76,22 +76,6 @@ export class ShoppingWidgetsComponent implements OnInit, OnDestroy {
     }
   }
 
-  private fillShoppingCart() {
-    if (this.loggedInUser) {
-      this.cartService.getCart().then((data) => {
-        this.shoppingCarts = data.data;
-        this.globalFacadeService.updateCartState(data.data || []);
-        this.globalFacadeService.updateBusinessState(data.data[0]?.Business || {});
-        this.shoppingCartItems = this.cartService.getShoppingCars();
-      });
-    } else {
-      this.shoppingCarts = [];
-      this.globalFacadeService.updateCartState(this.shoppingCarts || []);
-      this.globalFacadeService.updateBusinessState(this.shoppingCarts[0]?.Business || {});
-      this.shoppingCartItems = this.cartService.getShoppingCars();
-    }
-  }
-
   ngOnDestroy() {
     this._unsubscribeAll.next(true);
     this._unsubscribeAll.complete();
@@ -125,5 +109,21 @@ export class ShoppingWidgetsComponent implements OnInit, OnDestroy {
   public getTotalPricePerItem(item: CartItem) {
     let price = this.cartService.getPriceofProduct(item.Product, item.quantity);
     return price * item.quantity;
+  }
+
+  private fillShoppingCart() {
+    if (this.loggedInUser) {
+      this.cartService.getCart().then((data) => {
+        this.shoppingCarts = data.data;
+        this.globalFacadeService.updateCartState(data.data || []);
+        this.globalFacadeService.updateBusinessState(data.data[0]?.Business || {});
+        this.shoppingCartItems = this.cartService.getShoppingCars();
+      });
+    } else {
+      this.shoppingCarts = [];
+      this.globalFacadeService.updateCartState(this.shoppingCarts || []);
+      this.globalFacadeService.updateBusinessState(this.shoppingCarts[0]?.Business || {});
+      this.shoppingCartItems = this.cartService.getShoppingCars();
+    }
   }
 }

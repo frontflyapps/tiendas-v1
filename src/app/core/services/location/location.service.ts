@@ -25,18 +25,6 @@ export class LocationService {
     this.getLocationOnLocalStorage();
   }
 
-  private getLocationOnLocalStorage() {
-    let locationOnLocalStorage;
-    try {
-      locationOnLocalStorage = JSON.parse(localStorage.getItem(LOCATION));
-      if (locationOnLocalStorage) {
-        this.updateLocation(locationOnLocalStorage);
-      }
-    } catch (e) {
-      console.warn('-> Error getItem storage', e);
-    }
-  }
-
   public updateLocation(location: any) {
     this.location.next(location);
   }
@@ -55,5 +43,17 @@ export class LocationService {
 
   public getMunicipalityId(id): Observable<any> {
     return this.httpClient.get<any>(this.urlMunicipalityId.replace(':id', id));
+  }
+
+  private getLocationOnLocalStorage() {
+    let locationOnLocalStorage;
+    try {
+      locationOnLocalStorage = JSON.parse(localStorage.getItem(LOCATION));
+      if (locationOnLocalStorage) {
+        this.updateLocation(locationOnLocalStorage);
+      }
+    } catch (e) {
+      console.warn('-> Error getItem storage', e);
+    }
   }
 }

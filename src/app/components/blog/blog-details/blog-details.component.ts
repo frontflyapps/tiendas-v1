@@ -43,6 +43,7 @@ export class BlogDetailsComponent implements OnInit, OnDestroy {
       this.language = data.lang;
     });
   }
+
   ngOnDestroy() {
     this._unsubscribeAll.next(true);
     this._unsubscribeAll.complete();

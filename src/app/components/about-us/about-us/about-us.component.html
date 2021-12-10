@@ -1,7 +1,7 @@
 <div class="container my-4">
-  <img class="main-image" *ngIf="this.aboutUs?.image" [src]="imageUrl + this.aboutUs?.image" />
+  <img *ngIf="this.aboutUs?.image" [src]="imageUrl + this.aboutUs?.image" class="main-image" />
   <br>
-  <div class="ck-content" [innerHTML]="this.aboutUs?.text | parseLang:language | safeHtml">
+  <div [innerHTML]="this.aboutUs?.text | parseLang:language | safeHtml" class="ck-content">
 
   </div>
 </div>

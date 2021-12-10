@@ -5,13 +5,14 @@ import { AboutUsComponent } from './about-us/about-us.component';
 
 const routes: Routes = [
   {
-    path:'',
-    component:AboutUsComponent
-  }
+    path: '',
+    component: AboutUsComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AboutUsRoutingModule { }
+export class AboutUsRoutingModule {
+}
