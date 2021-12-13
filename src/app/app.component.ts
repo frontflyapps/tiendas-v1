@@ -11,6 +11,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { EncryptDecryptService } from './core/services/encrypt-decrypt.service';
 import { AuthenticationService } from './core/services/authentication/authentication.service';
 import { LocalStorageService } from './core/services/localStorage/localStorage.service';
+import { LOCATION } from './core/classes/storageNames.class';
 
 @Component({
   selector: 'app-root',

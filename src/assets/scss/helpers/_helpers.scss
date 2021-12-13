@@ -13,7 +13,7 @@ $sides: (top, bottom, left, right); // Leave this variable alone
   }
 }
 
-$intervals:(4, 8, 16, 32, 48);
+$intervals: (4, 8, 16, 32, 48);
 
 @for $i from 1 through length($intervals) {
   $c: nth($intervals, $i);
@@ -154,5 +154,4 @@ $intervalWith: (0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80
   .h-#{$with} {
     height: #{$with}'%' !important;
   }
-
 }

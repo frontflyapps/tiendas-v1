@@ -38,6 +38,10 @@ $my-primary-color: (
   700: #1b3295,
   800: #364556,
   900: #000e66,
+  A100 : #ffffff,
+  A200 : #ffffff,
+  A400 : #ffffff,
+  A700 : #ffffff,
   contrast: (
     50: $black-87-opacity,
     100: $black-87-opacity,
@@ -67,6 +71,10 @@ $my-accent-color: (
   700: #ef8336,
   800: #e87532,
   900: #de5d2b,
+  A100 : #ff8f7a,
+  A200 : #ff6547,
+  A400 : #ff3a14,
+  A700 : #fa2800,
   contrast: (
     50: $black-87-opacity,
     100: $black-87-opacity,
@@ -381,10 +389,9 @@ blockquote {
     height: 33px !important;
     width: 70px !important;
     text-align: center;
-    background-color: #f2f2f2 !important;
-    height: 35px;
+    background-color: #f6f6f6 !important;
     border: 1px solid rgba(0, 0, 0, 0.12);
-    border-radius: 0px !important;
+    border-radius: 0 !important;
   }
 
   .rightBtn {

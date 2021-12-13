@@ -7,11 +7,15 @@
 }
 
 .iconCart {
-  color: #fff !important;
+  color: $white !important;
+
+  @media all and (max-width: 959px) {
+    color: $white !important;
+  }
 }
 
 .top-cart {
-  color: #fff !important;
+  color: $white !important;
   margin-left: 8px;
   margin-top: 8px;
 }

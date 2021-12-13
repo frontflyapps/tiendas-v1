@@ -1,5 +1,40 @@
 @import '../../../assets/scss/theme/variables';
 
+#nav-location {
+  border: 2px solid white;
+  padding: 2px 4px;
+  cursor: pointer;
+  min-width: 146px;
+  width: auto;
+  position: static;
+  height: 48px;
+  overflow: hidden;
+
+  &:hover {
+    border: 2px solid #d1acac;
+  }
+
+  .nl-logo {
+    mat-icon {
+      width: 32px;
+      height: 32px;
+      font-size: 32px;
+    }
+  }
+
+  .nl-titles {
+    .nl-province {
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .nl-municipality {
+      font-size: 11px;
+      line-height: 1.1;
+    }
+  }
+}
+
 .router-link-active {
   background-color: $menu-hover !important;
 }
@@ -178,7 +213,7 @@ app-main,
 
     .userWidgets {
       a {
-        color: #fff;
+        color: $white;
       }
 
       padding: 8px 0px;
@@ -191,15 +226,15 @@ app-main,
     color: #fff;
     z-index: 9000 !important;
     position: relative !important;
-    padding: 0px 16px;
+    padding: 0 16px;
     box-sizing: border-box !important;
 
     .userWidgets {
       a {
-        color: #fff;
+        color: $white;
       }
 
-      padding: 8px 0px;
+      padding: 8px 0;
       margin-left: auto !important;
     }
   }

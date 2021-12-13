@@ -77,7 +77,7 @@ export class ProductCarouselTwoComponent implements OnInit, AfterViewInit, OnDes
       });
       dialogRef.afterClosed().subscribe((result) => {
         if (result) {
-          this.router.navigate(['/products', result.id, result.name]);
+          this.router.navigate(['/products', result.id, result.name]).then();
         }
       });
     });

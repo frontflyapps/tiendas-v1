@@ -9,7 +9,7 @@ import { Observable, of, Subject } from 'rxjs';
 import { Cart, CartItem, IBusiness } from '../../../modals/cart-item';
 import { environment } from '../../../../environments/environment';
 import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-in-user.service';
-import { takeUntil } from 'rxjs/operators';
+import { debounce, debounceTime, takeUntil } from 'rxjs/operators';
 import { CurrencyService } from '../../../core/services/currency/currency.service';
 import { IPagination } from '../../../core/classes/pagination.class';
 import { UtilsService } from '../../../core/services/utils/utils.service';
@@ -304,6 +304,24 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       this.getTotalWithShippingIncluded();
     });
     this.validateShippingRequired();
+  }
+
+  private validateShippingRequired() {
+    if (this.showShipping) {
+      this.form.controls['ShippingBusinessId'].setValidators(Validators.required);
+    } else {
+      this.form.controls['ShippingBusinessId'].setValidators(null);
+    }
+    this.form.controls['ShippingBusinessId'].updateValueAndValidity();
+  }
+
+  private calculateShippingRequired() {
+    if (this.showShipping) {
+      this.onRecalculateShipping();
+    } else {
+      this.shippingData = [];
+      this.canBeDelivery = false;
+    }
   }
 
   processToCart() {
@@ -634,7 +652,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     }
   }
 
-  ///////////////////////////////////////////////
+  // /////////////////////////////////////////////
   processTransfermovil(bodyData) {
     this.payService.makePaymentTransfermovil(bodyData).subscribe(
       (data: any) => {
@@ -920,10 +938,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.showInfoDataToPay = false;
     this.showPayment = true;
     this.scrollTopDocument();
-
-    console.log('this.cart', this.cart);
-
-    console.log('-> this.theBusiness', this.theBusiness);
   }
 
   scrollTopDocument() {
@@ -934,23 +948,5 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   private applyResolution() {
     const innerWidth = window.innerWidth;
     this.applyStyle = innerWidth <= 600;
-  }
-
-  private validateShippingRequired() {
-    if (this.showShipping) {
-      this.form.controls['ShippingBusinessId'].setValidators(Validators.required);
-    } else {
-      this.form.controls['ShippingBusinessId'].setValidators(null);
-    }
-    this.form.controls['ShippingBusinessId'].updateValueAndValidity();
-  }
-
-  private calculateShippingRequired() {
-    if (this.showShipping) {
-      this.onRecalculateShipping();
-    } else {
-      this.shippingData = [];
-      this.canBeDelivery = false;
-    }
   }
 }

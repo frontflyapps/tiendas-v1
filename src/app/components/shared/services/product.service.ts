@@ -30,7 +30,7 @@ export class ProductDataService {
   providedIn: 'root',
 })
 export class ProductService {
-  ////////// Urls /////////
+  // //////// Urls /////////
   urlFrontProductsData = environment.apiUrl + 'front-data-product';
   urlProduct = environment.apiUrl + 'product';
   urlProductId = environment.apiUrl + 'product/:id';
@@ -45,7 +45,7 @@ export class ProductService {
   urlProductIdAdmin = environment.apiUrl + 'admin/product/:id';
   // ----------------------------
 
-  //////////////////////////
+  // ////////////////////////
   public currency = 'USD';
   public catalogMode = false;
   public url = 'assets/data/banners.json';
@@ -76,6 +76,24 @@ export class ProductService {
   // ////// Rutas que consumen de Un API ////////////////
   public getAllProducts(query?: IPagination, params?: any): Observable<any> {
     let httpParams = new HttpParams();
+    httpParams = this.setHttpParams(httpParams, query, params);
+    return this.httpClient.get<any>(this.urlProduct, { params: httpParams });
+    // return this.products();
+  }
+
+  // //////////////////////////////////////////////////////////////
+  // ///////////////////////////////////////////////////////////////
+
+  public getProductsByBusiness(businessId, query?: IPagination, params?: any): Observable<any> {
+    let httpParams = new HttpParams();
+    httpParams = this.setHttpParams(httpParams, query, params);
+    if (businessId) {
+      httpParams = httpParams.append('filter[$and][BusinessId]', businessId);
+    }
+    return this.httpClient.get<any>(this.urlProduct, { params: httpParams });
+  }
+
+  setHttpParams(httpParams: HttpParams, query?: IPagination, params?: any) {
     if (query) {
       httpParams = httpParams.append('limit', query.limit.toString());
       httpParams = httpParams.append('offset', query.offset.toString());
@@ -128,12 +146,8 @@ export class ProductService {
         httpParams = httpParams.set('filter[$and][type]', params.type);
       }
     }
-    return this.httpClient.get<any>(this.urlProduct, { params: httpParams });
-    // return this.products();
+    return httpParams;
   }
-
-  // //////////////////////////////////////////////////////////////
-  // ///////////////////////////////////////////////////////////////
 
   public searchProduct(data?: any): Observable<any> {
     return this.httpClient.post<any>(environment.apiUrl + 'search', data);
@@ -194,7 +208,7 @@ export class ProductService {
     return this.httpClient.post<any>(this.urlProduct, data);
   }
 
-  ////////////////////////////////////////////////////
+  // //////////////////////////////////////////////////
 
   removeProduct(data): Promise<any> {
     return this.httpClient.delete<any>(this.urlProductId.replace(':id', data.id)).toPromise();
@@ -334,7 +348,7 @@ export class ProductService {
 
   // If item is aleready added In compare
   public hasProduct(product: Product): boolean {
-    const item = products.find((item) => item.id === product.id);
+    const item = products.find((itemF) => itemF.id === product.id);
     return item !== undefined;
   }
 
@@ -343,7 +357,7 @@ export class ProductService {
     let message, status;
     let item: Product | boolean = false;
     if (this.hasProduct(product)) {
-      item = products.filter((item) => item.id === product.id)[0];
+      item = products.filter((itemF) => itemF.id === product.id)[0];
       const index = products.indexOf(item);
       this.snackBar.open('El producto ' + product.name['es'] + ' ya está en la lista de comparación.', '×', {
         panelClass: 'error',

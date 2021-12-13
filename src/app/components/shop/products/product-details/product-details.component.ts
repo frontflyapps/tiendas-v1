@@ -1,6 +1,6 @@
 import { MetaService } from 'src/app/core/services/meta.service';
 import { ShowToastrService } from '../../../../core/services/show-toastr/show-toastr.service';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
 import { CartService } from '../../../shared/services/cart.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Product } from '../../../../modals/product.model';
@@ -10,10 +10,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { UtilsService } from '../../../../core/services/utils/utils.service';
 import { IPagination } from '../../../../core/classes/pagination.class';
 import { environment } from '../../../../../environments/environment';
-import { Subject } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { LoggedInUserService } from '../../../../core/services/loggedInUser/logged-in-user.service';
 import { CurrencyService } from '../../../../core/services/currency/currency.service';
-import { takeUntil } from 'rxjs/operators';
+import { debounceTime, map, startWith, takeUntil } from 'rxjs/operators';
 import { DomSanitizer } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
 import { Cart } from 'src/app/modals/cart-item';
@@ -48,9 +48,16 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   public image: any;
   public counter = 1;
   index: number;
+
   localDatabaseUsers = environment.localDatabaseUsers;
   loadingFeatured = false;
   loadingRelated = false;
+  loadingMenu = false;
+
+  public allProductsOnMenu = [];
+  public allProductsOnMenuToShow: Observable<any[]>;
+
+  searchProductControl = new FormControl();
 
   url = environment.apiUrl + 'landing-page';
 
@@ -116,6 +123,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
       this.productsService.getProductById(productId, stockId).subscribe(
         (data) => {
           this.product = data.data;
+          this.getProductsByBusiness(this.product.BusinessId);
           this.initStateView();
           this.isLoading = false;
         },
@@ -144,10 +152,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
       this.arrayImages[0].selected = true;
       this.mainImage = this.arrayImages[0];
     }
-
-    this.relatedProduct = this.product.Recomended;
-
-    // this.getRelatedProducts();
+    this.getRelatedProducts();
     // this.getFeaturedProducts();
     // ////////////////////META///////////////////
     this.metaService.setMeta(
@@ -184,6 +189,13 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
       review: [null, [Validators.required, Validators.maxLength(250), Validators.minLength(10)]],
       rating: [3.5, Validators.required],
     });
+
+    this.allProductsOnMenuToShow = this.searchProductControl.valueChanges
+      .pipe(
+        startWith(''),
+        debounceTime(200),
+        map(value => this._filter(value)),
+      );
   }
 
   ngOnDestroy() {
@@ -260,6 +272,24 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
+  getProductsByBusiness(businessId) {
+    this.loadingMenu = true;
+    this.productsService.getProductsByBusiness(businessId).subscribe((data: any) => {
+        console.log('PRODUCTS ON MENU', data.data);
+        this.allProductsOnMenu = data.data.slice();
+        const timeOut = setTimeout(() => {
+          this.loadingMenu = false;
+          clearTimeout(timeOut);
+        }, 200);
+      },
+      error => {
+        const timeOut = setTimeout(() => {
+          this.loadingMenu = false;
+          clearTimeout(timeOut);
+        }, 200);
+      });
+  }
+
   getRelatedProducts() {
     this.loadingRelated = true;
     this.productsService.getRecomendedProduct(this.product.id).subscribe((data: any) => {
@@ -269,6 +299,14 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
         clearTimeout(timeOut);
       }, 800);
     });
+  }
+
+  // Add to cart
+  public addToCart(product: any, quantity) {
+    if (quantity === 0) {
+      return false;
+    }
+    this.cartService.addToCart(product, Math.max(product.minSale, quantity)).then();
   }
 
   // getFeaturedProducts() {
@@ -281,14 +319,6 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   //     }, 800);
   //   });
   // }
-
-  // Add to cart
-  public addToCart(product: any, quantity) {
-    if (quantity === 0) {
-      return false;
-    }
-    this.cartService.addToCart(product, Math.max(product.minSale, quantity)).then();
-  }
 
   // Add to cart
   public buyNow(product: Product, quantity) {
@@ -318,7 +348,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     this.showZoom = !this.showZoom;
   }
 
-  //////////////////////////////////////////////////////////
+  // ////////////////////////////////////////////////////////
   onPostReview() {
     let data: any = this.reviewForm.value;
     data.ProductId = this.product.id;
@@ -385,5 +415,10 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
         product: this.product,
       },
     });
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.allProductsOnMenu.filter(option => option.name.es.toLowerCase().includes(filterValue));
   }
 }

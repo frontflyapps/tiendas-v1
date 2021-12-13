@@ -6,7 +6,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { CurrencyService } from '../../../../core/services/currency/currency.service';
 import { LoggedInUserService } from '../../../../core/services/loggedInUser/logged-in-user.service';
-import { takeUntil } from 'rxjs/operators';
+import { switchMap, takeUntil } from 'rxjs/operators';
 import { MatPaginator } from '@angular/material/paginator';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -14,6 +14,7 @@ import { DialogFiltersMComponent } from '../dialog-filters-m/dialog-filters-m.co
 import { CategoriesService } from 'src/app/core/services/categories/catagories.service';
 import { CartService } from '../../../shared/services/cart.service';
 import { Cart } from '../../../../modals/cart-item';
+import { LocationService } from '../../../../core/services/location/location.service';
 import { LANDING_PAGE, PRODUCT_COUNT } from '../../../../core/classes/global.const';
 import { environment } from '../../../../../environments/environment';
 import { LocalStorageService } from '../../../../core/services/localStorage/localStorage.service';
@@ -34,6 +35,8 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
   public theCart: Cart;
   public allProducts: any[] = [];
   public allProductsResponse: any[] = [];
+  public province: any = null;
+  public municipality: any = null;
   public amountInitialResults = 3;
   public numberOfSearchBase = 0;
   public numberOfSearch = 0;
@@ -81,7 +84,9 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private metaService: MetaService,
+    private locationService: LocationService,
   ) {
+    this.initSubsLocation();
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
 
@@ -292,26 +297,30 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
       minPrice: this.paramsSearch?.minPrice ? +this.paramsSearch?.minPrice : 0,
       rating: this.paramsSearch?.rating ? +this.paramsSearch?.rating : null,
       text: this.paramsSearch?.filterText ? this.paramsSearch?.filterText : null,
+      ProvinceId: this.province?.id || null,
+      MunicipalityId: this.municipality?.id || null,
     };
-    this.productService.searchProduct(body).subscribe(
-      (data) => {
-        this.allProducts = [];
-        this.allProducts = data.data.slice(0, this.initLimit * (this.numberOfSearch + 1));
-        this.allProductsResponse = data.data;
+    this.productService.searchProduct(body)
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(
+        (data: any) => {
+          this.allProducts = [];
+          this.allProducts = data.data.slice(0, this.initLimit * (this.numberOfSearch + 1));
+          this.allProductsResponse = data.data;
 
-        setTimeout(() => {
-          document.body.scrollTop = 0; // Safari
-          document.documentElement.scrollTop = 0; // Other
-        }, 0);
+          setTimeout(() => {
+            document.body.scrollTop = 0; // Safari
+            document.documentElement.scrollTop = 0; // Other
+          }, 0);
 
-        this.queryProduct.total = data.meta.pagination.total;
-        this.loading = false;
-        this.gotToProductId();
-      },
-      () => {
-        this.loading = false;
-      },
-    );
+          this.queryProduct.total = data.meta.pagination.total;
+          this.loading = false;
+          this.gotToProductId();
+        },
+        () => {
+          this.loading = false;
+        },
+      );
   }
 
   showChips() {
@@ -333,7 +342,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
   }
 
   onRemoveCategory(cat) {
-    let x = this.categoriesIds.findIndex((x) => x == cat.id);
+    let x = this.categoriesIds.findIndex((categoriesIdsIndex) => categoriesIdsIndex == cat.id);
     if (x > -1) {
       this.categoriesIds.splice(x, 1);
       this.onCategoriesChanged([...this.categoriesIds]);
@@ -492,5 +501,19 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
         this.searchProducts();
       }
     });
+  }
+
+  // ============= LOCATION ==================================
+  initSubsLocation() {
+    this.locationService
+      .location$
+      .subscribe((newLocation) => {
+        this.setLocationData(newLocation);
+      });
+  }
+
+  setLocationData(locationOnLocalStorage) {
+    this.municipality = locationOnLocalStorage.municipality;
+    this.province = locationOnLocalStorage.province;
   }
 }

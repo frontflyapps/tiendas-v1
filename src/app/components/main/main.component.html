@@ -1,5 +1,4 @@
 <mat-sidenav-container fullscreen>
-
   <!-- Vista movil menu -->
   <mat-sidenav #start [opened]="false" class="DrawerMobileView" mode="over">
 
@@ -53,22 +52,26 @@
         <mat-icon>build</mat-icon>
         <span class="ml-3">{{ 'Profile' | translate }}</span>
       </a>
+
       <a (click)="onShowMyContacts()" *ngIf="loggedInUser" fxLayoutAlign="start center" mat-list-item>
         <mat-icon>book</mat-icon>
         <span class="ml-3">{{ 'Mis contactos' | translate }}</span>
       </a>
+
       <a (click)="onChangePass()" *ngIf="loggedInUser" fxLayoutAlign="start center" mat-list-item>
         <mat-icon>no_encryption</mat-icon>
         <span class="ml-3">{{ 'Cambiar contraseña' | translate }}</span>
       </a>
+
       <a #langMenuTrigger="matMenuTrigger" [matMenuTriggerFor]="langMenu1" fxLayoutAlign="start center" mat-list-item>
         <img [src]="flag.image" width="18" />
         <span class="ml-3 mat-body-2">{{ flag.name }}</span>
         <mat-icon class="mat-icon-sm caret cur-icon ml-auto">arrow_drop_down</mat-icon>
       </a>
+
       <mat-menu #langMenu1="matMenu" [overlapTrigger]="false" class="app-dropdown" xPosition="before">
         <button (click)="changeLang(flag)" *ngFor="let flag of flags" fxLayoutAlign="start center" mat-menu-item>
-          <img [src]="flag.image" width="18" /> <span class="ml-3 mat-body-2">{{ flag.name }}</span>
+          <img [src]="flag.image" width="18" alt="logo"> <span class="ml-3 mat-body-2">{{ flag.name }}</span>
         </button>
       </mat-menu>
 
@@ -83,6 +86,7 @@
         <span class="ml-3 mat-body-2">{{ currency.name }}</span>
         <mat-icon class="mat-icon-sm caret cur-icon ml-auto">arrow_drop_down</mat-icon>
       </a>-->
+
       <mat-menu #currencyMenu1="matMenu" [overlapTrigger]="false" class="app-dropdown" xPosition="before">
         <button (click)="changeCurrency(cur)" *ngFor="let cur of currencies" fxLayoutAlign="start center" mat-menu-item>
           <span>{{ cur.name }}</span>
@@ -129,6 +133,7 @@
     </mat-list>
 
     <mat-divider></mat-divider>
+
     <app-panel-notifications (closePanel)="notificationBar.toggle()"></app-panel-notifications>
   </mat-sidenav>
 
@@ -142,15 +147,34 @@
       </button>
 
       <div class="search-form" fxFlex fxLayout="row" fxLayoutAlign="start center">
-        <div class="search-form" fxLayout="row" fxLayoutAlign="start center">
-          <div class="form-wrap">
-            <input (keyup.enter)="onSearch()" [formControl]="searchForm"
-                   placeholder="{{ 'Buscar en MiBulevar...' | translate }}"
-                   type="text" />
+        <div class="search-form" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1rem">
+          <!-- ======== -->
+          <!-- Location -->
+          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="4px" id="nav-location">
+            <div class="nl-logo">
+              <mat-icon>room</mat-icon>
+            </div>
+
+            <div (click)="openSetLocation()" *ngIf="province" class="nl-titles" fxLayout="column">
+              <div class="nl-province">{{province?.name}}</div>
+              <div class="nl-municipality">{{municipality?.name}}</div>
+            </div>
+
+            <div (click)="openSetLocation()" *ngIf="!province" class="nl-titles" fxLayout="column">
+              <div class="nl-province">Enviar a...</div>
+              <div class="nl-municipality">Escoger lugar</div>
+            </div>
+          </div>
+
+          <!-- ======== -->
+          <!-- SEARCHING -->
+          <div class="form-wrap" fxFlex="grow">
+            <input [formControl]="searchForm" placeholder="{{ 'Buscar en la tienda...' | translate }}" type="text" />
             <button (click)="onSearch()" class="btn-search">
               <mat-icon>search</mat-icon>
             </button>
           </div>
+
         </div>
       </div>
 

@@ -18,7 +18,7 @@
     </div>
 
     <!--    ===========================================================-->
-    <!-- OCULTO EN MOVIL -->
+    <!-- MODO DESKTOP -->
     <!--    ===========================================================-->
     <section *ngIf="carts.length" fxHide.lt-md style="position: relative">
       <div *ngIf="inLoading" class="loading-shade">
@@ -77,44 +77,39 @@
             </div>
             <div class="mat-cell text-muted">
               <div class="text-muted" fxLayout="row" fxLayoutAlign="center center">
-                <div *ngIf="item.Product.type == 'physical'" fxLayout="row" fxLayoutAlign="center start">
+
+                <div *ngIf="item?.Product?.type == 'physical'" fxLayout="row" fxLayoutAlign="center start">
                   <div class="addQuantity">
-                    <button
-                      (click)="decrement(item.Product)"
-                      [disabled]="item.Product.minSale >= item.quantity"
-                      class="leftBtn"
-                      matTooltip="Remove"
-                    >
+                    <button (click)="decrement(item?.Product)"
+                            [disabled]="item?.Product?.minSale >= item?.quantity"
+                            class="leftBtn"
+                            matTooltip="Remove">
                       <mat-icon>keyboard_arrow_left</mat-icon>
                     </button>
-                    <input
-                      [(ngModel)]="item.quantity"
-                      [max]="item.Product.maxSale"
-                      [min]="item.Product.minSale"
-                      class="inputBtn"
-                      disabled
-                      type="text"
-                    />
+                    <input (keyup)="checkMinMaxValues($event, item?.Product);addAmountSale($event, item)"
+                           [(ngModel)]="item.quantity"
+                           [max]="item.Product.maxSale"
+                           [min]="item.Product.minSale"
+                           class="inputBtn"
+                           type="text" />
 
-                    <button
-                      (click)="increment(item.Product)"
-                      [disabled]="item.Product.maxSale <= item.quantity"
-                      class="rightBtn"
-                      matTooltip="Add"
-                    >
+                    <button (click)="increment(item?.Product)"
+                            [disabled]="item?.Product?.maxSale <= item?.quantity"
+                            class="rightBtn"
+                            matTooltip="Add">
                       <mat-icon>keyboard_arrow_right</mat-icon>
                     </button>
                   </div>
                 </div>
+
                 <div *ngIf="item.Product.type != 'physical'" fxLayout="row" fxLayoutAlign="center center">
-                  <input
-                    [(ngModel)]="item.quantity"
-                    class="form-control input-number"
-                    disabled
-                    name="quantity"
-                    type="text"
-                  />
+                  <input [(ngModel)]="item.quantityCurrent"
+                         class="form-control input-number"
+                         disabled
+                         name="quantity"
+                         type="text" />
                 </div>
+
                 <!-- <div *ngIf="type!='wish'">
                          <button mat-icon-button matTooltip="Add to wishlist" (click)="addToWishList(product)"><mat-icon>favorite</mat-icon></button>
                          <button mat-icon-button matTooltip="Add to cart" *ngIf="product?.availibilityCount > 0" (click)="addToCart(product)"><mat-icon>shopping_cart</mat-icon></button>
@@ -155,7 +150,7 @@
 
               <img
                 *ngIf="!cart?.Business?.logo"
-                src="../../../../assets/images/noImage.jpg"
+                src="assets/images/noImage.jpg"
                 style="height: 32px; width: 32px; border-radius: 50%; object-fit: cover"
               />
 
@@ -179,7 +174,7 @@
     </section>
 
     <!--    ===========================================================-->
-    <!-- OCULTO EN DESKTOP -->
+    <!-- MODO MOVIL -->
     <!--    ===========================================================-->
     <section *ngIf="carts.length" fxHide fxShow.lt-md>
       <div *ngFor="let cart of carts" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="gappx">
@@ -189,7 +184,7 @@
                style="height: 32px; width: 32px; border-radius: 50%; object-fit: cover" />
 
           <img *ngIf="!cart?.Business?.logo" alt="image"
-               src="../../../../assets/images/noImage.jpg"
+               src="assets/images/noImage.jpg"
                style="height: 32px; width: 32px; border-radius: 50%; object-fit: cover" />
 
           <span class="mat-body-2 ml-2 uppercase">{{ cart.Business?.name }}</span>
@@ -234,7 +229,7 @@
                    class="imageProduct" />
               <img *ngIf="!(item.Product.Images && item.Product.Images.length)" alt="Image"
                    class="imageProduct"
-                   src="../../../../assets/images/noImage.jpg" />
+                   src="assets/images/noImage.jpg" />
             </div>
 
             <mat-card-content class="px-3 py-2 mb-0 cart-card-content" fxFlex="100" fxLayout="column"

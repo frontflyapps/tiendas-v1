@@ -10,7 +10,7 @@ import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { NavigationService } from '../../core/services/navigation/navigation.service';
 import { LoggedInUserService } from '../../core/services/loggedInUser/logged-in-user.service';
-import { takeUntil } from 'rxjs/operators';
+import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { Subject, of, Observable } from 'rxjs';
 import { IUser } from '../../core/classes/user.class';
 import { AuthenticationService } from '../../core/services/authentication/authentication.service';
@@ -27,11 +27,14 @@ import { UtilsService } from 'src/app/core/services/utils/utils.service';
 import { SidebarMenuService } from './sidebar/sidebar-menu.service';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { CategoriesService } from '../../core/services/categories/catagories.service';
+import { ConfirmCreateBusinessComponent } from './confirm-create-business/confirm-create-business.component';
+import { ConfirmCreateBusinessService } from './confirm-create-business/confirm-create-business.service';
+import { DialogSetLocationComponent } from './dialog-set-location/dialog-set-location.component';
+import { LOCATION } from '../../core/classes/storageNames.class';
+import { LocationService } from '../../core/services/location/location.service';
 import { MyContactsComponent } from './my-contacts/my-contacts.component';
 import { MENU_DATA, PRODUCT_COUNT } from '../../core/classes/global.const';
 import { LocalStorageService } from '../../core/services/localStorage/localStorage.service';
-import { ConfirmCreateBusinessComponent } from './confirm-create-business/confirm-create-business.component';
-import { ConfirmCreateBusinessService } from './confirm-create-business/confirm-create-business.service';
 
 @Component({
   selector: 'app-main',
@@ -46,6 +49,9 @@ export class MainComponent implements OnInit, OnDestroy {
   public currencies: any[];
   public currency: any;
   urlImage: any = environment.imageUrl;
+
+  public province: any = null;
+  public municipality: any = null;
 
   public flags = [
     { name: 'Español', image: 'assets/images/flags/es.svg', lang: 'es' },
@@ -98,6 +104,7 @@ export class MainComponent implements OnInit, OnDestroy {
     private orderService: MyOrdersService,
     public utilsService: UtilsService,
     private confirmCreateBusinessService: ConfirmCreateBusinessService,
+    private locationService: LocationService,
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
@@ -112,19 +119,22 @@ export class MainComponent implements OnInit, OnDestroy {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.url = event.url;
-        this.sidenav.close();
+        this.sidenav.close().then();
       }
     });
     this.searchForm = new FormControl(null, []);
   }
 
   ngOnInit() {
+    this.initSubsLocation();
+    this.getLocationOnLocalStorage();
+
     const tempFlag = JSON.parse(localStorage.getItem('language'));
     this.flag = tempFlag ? tempFlag : this.flags[0];
     this.currencies = this.currencyService.getCurrencies();
     this.currency = this.currencyService.getCurrency();
 
-    /////// Subscribe to events //////////
+    // ///// Subscribe to events //////////
     this.loggedInUserService.$loggedInUserUpdated.pipe(takeUntil(this._unsubscribeAll)).subscribe((data) => {
       this.loggedInUser = this.loggedInUserService.getLoggedInUser();
 
@@ -151,7 +161,7 @@ export class MainComponent implements OnInit, OnDestroy {
         this._listenToSocketIO();
       }
     });
-    ////////////////////////////////////
+    // //////////////////////////////////
     this.compareItemsObservable = this.productService.getComapreProducts();
     this.compareItemsObservable
       .pipe(takeUntil(this._unsubscribeAll))
@@ -160,7 +170,7 @@ export class MainComponent implements OnInit, OnDestroy {
     // if (localStorage.getItem('searchText')) {
     //   this.searchForm = new FormControl(JSON.parse(localStorage.getItem('searchText')), []);
     // }
-    /////////////////////////////////////////////////////////////////////////////////////
+    // ///////////////////////////////////////////////////////////////////////////////////
     if (this.loggedInUser) {
       this._listenToSocketIO();
     }
@@ -273,7 +283,7 @@ export class MainComponent implements OnInit, OnDestroy {
           this.loggedInUserService.$loggedInUserUpdated.next(null);
           const message = this.translate.instant('User successfully unlogged');
           this.showSnackbBar.showSucces(message, 5000);
-          this.router.navigate(['']);
+          this.router.navigate(['']).then();
           this.socketIoService.disconnect();
         },
         (err) => {
@@ -339,6 +349,7 @@ export class MainComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((data) => {
         this.showPaymentCancellSuccess(data.Payment.id);
+        console.log('payment-cancelled');
         this.cartService.$paymentUpdate.next();
         this.orderService.$orderItemsUpdated.next();
       });
@@ -355,7 +366,7 @@ export class MainComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((data) => {
         this.loggedInUserService.$loggedInUserUpdated.next(null);
-        this.router.navigate(['']);
+        this.router.navigate(['']).then();
       });
 
     this.socketIoService
@@ -414,6 +425,50 @@ export class MainComponent implements OnInit, OnDestroy {
         this.localStorageService.setOnStorage(MENU_DATA, _response);
 
         this.setCategories(_response.menu);
+      });
+  }
+
+  openSetLocation() {
+    const dialogRef = this.dialog.open(DialogSetLocationComponent, {
+      panelClass: 'app-dialog-set-location',
+      maxWidth: '100vw',
+      maxHeight: '100vh',
+      width: '35rem',
+      data: {},
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.locationService.updateLocation(result);
+      }
+    });
+  }
+
+  getLocationOnLocalStorage() {
+    let locationOnLocalStorage;
+    try {
+      locationOnLocalStorage = JSON.parse(localStorage.getItem(LOCATION));
+      if (locationOnLocalStorage) {
+        this.locationService.updateLocation(locationOnLocalStorage);
+      }
+    } catch (e) {
+      console.warn('-> Error getItem storage', e);
+    }
+  }
+
+  setLocationData(locationOnLocalStorage) {
+    this.municipality = locationOnLocalStorage.municipality;
+    this.province = locationOnLocalStorage.province;
+  }
+
+  initSubsLocation() {
+    this.locationService
+      .location$
+      .pipe(
+        distinctUntilChanged(),
+        takeUntil(this._unsubscribeAll))
+      .subscribe((newLocation) => {
+        this.setLocationData(newLocation);
+        localStorage.setItem(LOCATION, JSON.stringify(newLocation));
       });
   }
 }

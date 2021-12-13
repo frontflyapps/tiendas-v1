@@ -21,7 +21,7 @@
   <div (click)="onGoToProduct(product)" class="product-info-wrapper"
        fxLayout="column" ngClass.gt-sm="p-3" ngClass.lt-md="p-2 w-100">
     <span class="category">
-      {{ utilsService.parserLanguage(product.Category.name, language) }}
+      {{ utilsService.parserLanguage(product?.Category?.name, language) }}
     </span>
 
     <div class="title">
@@ -32,11 +32,13 @@
          class="link-nav-a">{{ product.name[language] ? product.name[language] : product.name['es'] }}</a>
     </div>
 
+    <!-- <div style="flex: 1 1 100%"></div> -->
+
     <div class="mt-2">
       <ngp-rating-material [config]="{ readOnly: true }" [value]="product.rating"></ngp-rating-material>
     </div>
     <!-- <p fxHide.xs class="module line-clamp mt-1 mb-2">
-      {{(product.shortDescription[language])?product.shortDescription[language]:product.shortDescription['es']}}</p> -->
+      {{(product?.shortDescription[language])?product?.shortDescription[language]:product?.shortDescription['es']}}</p> -->
 
     <div class="price mt-2" fxLayout="row" fxLayoutAlign="space-between start">
       <button (click)="$event.stopPropagation();addToCart(product)" class="btnAddCart" mat-mini-fab
@@ -48,22 +50,22 @@
         <div *ngIf="product.offerValue">
           <p class="m-0" style="font-size: 12px">
             <del style="color: #616161">{{ product | parsePriceProduct }}</del>
-            <!-- <span style="color: #e53935; font-size: 12px;" class="ml-2 px-0">{{product.offerValue}}<span
-                style="color: #e53935; font-size: 12px;" *ngIf="product.isPercent">% </span>off</span> -->
+            <!-- <span style="color: #e53935; font-size: 12px;" class="ml-2 px-0">{{product?.offerValue}}<span
+                style="color: #e53935; font-size: 12px;" *ngIf="product?.isPercent">% </span>off</span> -->
           </p>
           <p class="mat-body-2 m-0 price-offer">{{ product | parsePriceProduct: 'offert' }}</p>
           <!-- <p class="mat-body-2 m-0" style="font-size: 15px;">
             {{'Desde'|translate}}
-            {{product.minSale}}
+            {{product?.minSale}}
             {{' unidades'|translate}}
           </p> -->
         </div>
 
-        <div *ngIf="!product.offerValue">
+        <div *ngIf="!product?.offerValue">
           <p class="mat-body-2 m-0 price-offer">{{ product | parsePriceProduct }}</p>
           <!-- <p class="mat-body-2 m-0" style="font-size: 15px;">
             {{'Desde'|translate}}
-            {{product.minSale}}
+            {{product?.minSale}}
             {{' unidades'|translate}}
           </p> -->
         </div>
