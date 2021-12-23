@@ -158,6 +158,7 @@ export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
     private activateRoute: ActivatedRoute,
     private showToastr: ShowToastrService,
     private metaService: MetaService,
+    private router: Router,
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
@@ -167,11 +168,13 @@ export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
       .subscribe((data) => {
         this.isHandset = data.matches;
       });
+
     this.activateRoute.queryParams.subscribe((data) => {
       if (data?.orderId) {
         this.onSelectOrder(data?.orderId);
       }
     });
+
     this.metaService.setMeta(
       environment.meta?.mainPage?.title,
       environment.meta?.mainPage?.description,
@@ -183,11 +186,7 @@ export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.innerWidth = window.innerWidth;
-    if (this.innerWidth > 600) {
-      this.applyStyle = false;
-    } else {
-      this.applyStyle = true;
-    }
+    this.applyStyle = this.innerWidth <= 600;
   }
 
   ngOnInit() {
@@ -282,7 +281,7 @@ export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
         this.loadingSelectedItem = false;
         if (this.isHandset) {
           setTimeout(() => {
-            this.sidenav.toggle();
+            this.sidenav.toggle().then();
           }, 250);
         }
       },

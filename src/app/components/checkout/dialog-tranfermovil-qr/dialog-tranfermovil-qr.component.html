@@ -31,13 +31,11 @@
   </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button
-    (click)="onCancelarTranfermovilPayment()"
-    color="warn"
-    mat-button
-    mat-dialog-close
-    matTooltip="{{ 'Cancelar la confirmación de pago con transfermóvil' | translate }}"
-  >
-    {{ 'Cancelar' | translate | uppercase }}
+  <button (click)="onCancelarTranfermovilPayment()"
+          color="warn"
+          mat-button
+          mat-dialog-close
+          title="{{'Pago listo, cerrar modal'|translate}}">
+    {{ 'Listo' | translate | uppercase }}
   </button>
 </mat-dialog-actions>

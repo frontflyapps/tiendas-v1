@@ -6,11 +6,11 @@ const packageJson = require('../../package.json');
 export const environment = {
   production: false,
 
-  // apiUrl: 'http://192.168.1.17:8998/v1/',
-  // imageUrl: 'http://192.168.1.17:8998/v1/',
+  apiUrl: 'http://192.168.1.17:8998/v1/',
+  imageUrl: 'http://192.168.1.17:8998/v1/',
 
-  apiUrl: 'http://127.0.0.1:8998/v1/',
-  imageUrl: 'http://127.0.0.1:8998/v1/',
+  // apiUrl: 'http://127.0.0.1:8998/v1/',
+  // imageUrl: 'http://127.0.0.1:8998/v1/',
 
   // apiUrl: 'https://apitienda.marinasmarlin.com/v1/',
   // imageUrl: 'https://apitienda.marinasmarlin.com/v1/',
@@ -42,7 +42,7 @@ export const environment = {
   adminService: 'http://admintienda.marinasmarlin.com/',
   mainDomain: 'tiendalocal.com',
 
-  tokenBusiness: '',
+  tokenBusiness: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7IkJ1c2luZXNzSWQiOjUsImlkIjo1LCJkYXRlIjoiMjAyMS0xMS0wNFQyMTo1MTo1NC44NDdaIiwibmFtZSI6IlRSRCBDYXJpYmUiLCJlbWFpbCI6ImNvbnRhY3Rvc0B0cmRjYXJpYmUuY29tIn0sImlhdCI6MTYzNjA2MjcxNH0.dCPha0Jbl5NVr0pnTE-1fF4zsjlUprerMyUjw7K5qKc',
 
   meta: {
     mainPage: {

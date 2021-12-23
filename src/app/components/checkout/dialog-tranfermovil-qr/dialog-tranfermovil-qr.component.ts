@@ -7,6 +7,7 @@ import { ConfirmationDialogFrontComponent } from '../../shared/confirmation-dial
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { SocketIoService } from 'src/app/core/services/socket-io/socket-io.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dialog-tranfermovil-qr',
@@ -29,6 +30,7 @@ export class DialogTranfermovilQrComponent implements OnInit, OnDestroy {
     private socketIoService: SocketIoService,
     public domSanitizer: DomSanitizer,
     private dialog: MatDialog,
+    private router: Router,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) {
     this._unsubscribeAll = new Subject<any>();
@@ -69,23 +71,26 @@ export class DialogTranfermovilQrComponent implements OnInit, OnDestroy {
   }
 
   onCancelarTranfermovilPayment() {
-    const dialogRef = this.dialog.open(ConfirmationDialogFrontComponent, {
-      width: '550px',
-      data: {
-        title: 'Cancelar la confirmación con transfermovil',
-        textHtml: `
-        <h4 style="text-transform:none !important; line-height:1.6rem !important;">
-          ¿ Desea cancelar la confirmación con transfermóvil ?
-        </h4>
-       `,
-      },
-    });
+    // this.router.navigate(['/my-orders'], { queryParams: { r: 't' } }).then();
+    window.location.assign(`${environment.url}/my-orders`);
 
-    dialogRef.afterClosed().subscribe(async (result) => {
-      if (result) {
-        window.location.reload();
-      }
-    });
+    // const dialogRef = this.dialog.open(ConfirmationDialogFrontComponent, {
+    //   width: '550px',
+    //   data: {
+    //     title: 'Cancelar la confirmación con transfermovil',
+    //     textHtml: `
+    //     <h4 style="text-transform:none !important; line-height:1.6rem !important;">
+    //       ¿ Desea cancelar la confirmación con transfermóvil ?
+    //     </h4>
+    //    `,
+    //   },
+    // });
+
+    // dialogRef.afterClosed().subscribe(async (result) => {
+    //   if (result) {
+    //     window.location.reload();
+    //   }
+    // });
   }
 
   close() {

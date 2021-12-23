@@ -145,7 +145,7 @@ export class ConfirmPaymentOkComponent implements OnInit {
   }
 
   onAccept(payment): void {
-    this.router.navigate(['/my-orders'], { queryParams: { orderId: payment.id } });
+    this.router.navigate(['/my-orders'], { queryParams: { orderId: payment.id } }).then();
     this.dialogRef.close(true);
   }
 }

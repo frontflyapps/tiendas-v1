@@ -116,7 +116,7 @@ export class CartService implements OnDestroy {
     const productName = product.name[this.language] ? product.name[this.language] : product.name['es'];
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
 
-    if (product.type != 'physical') {
+    if (product.type != 'physical' && product.type != 'digital') {
       if (this._isInCart(product)) {
         message =
           this.translate.instant('The product ') + productName + this.translate.instant(' it is already in the cart.');
