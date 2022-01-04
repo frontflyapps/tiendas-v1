@@ -186,7 +186,7 @@
                         class="imageProduct"
                         ngp-lazy
                         ngp-threshold="0.1"
-                        src="../../../../assets/images/noImage.jpg"
+                        src="assets/images/noImage.jpg"
                       />
                       <a
                         [queryParams]="{
@@ -230,16 +230,15 @@
 
                       <!-- *ngIf="this.selectedOrder.status == 'confirmed' || this.selectedOrder.status == 'delivered' " -->
                       <ng-container
-                        *ngIf="this.selectedOrder.status == 'confirmed' || this.selectedOrder.status == 'delivered'"
-                      >
-                        <a
-                          (click)="onDownloadDigitalProduct(paymentItem.Product.Digital.referenceUrl)"
-                          *ngIf="paymentItem.Product.type == 'digital' && paymentItem.Product.Digital.referenceUrl"
-                          fxLayout="row"
-                          fxLayoutAlign="start center"
-                          mat-button
-                          style="width: 140px !important"
-                        >
+                        *ngIf="this.selectedOrder.status == 'confirmed'
+                        || this.selectedOrder.status == 'delivered'
+                        || this.selectedOrder.status == 'payed'">
+                        <a (click)="onDownloadDigitalProduct(paymentItem.Product.Digital.referenceUrl)"
+                           *ngIf="paymentItem.Product.type == 'digital' && paymentItem.Product.Digital.referenceUrl"
+                           fxLayout="row"
+                           fxLayoutAlign="start center"
+                           mat-button
+                           style="width: 140px !important">
                           <mat-icon class="mr-2"> system_update_alt</mat-icon>
                           {{ 'Descargar' | translate }}
                         </a>
