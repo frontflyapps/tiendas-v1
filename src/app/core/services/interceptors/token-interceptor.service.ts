@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { LoggedInUserService } from '../loggedInUser/logged-in-user.service';
 import { environment } from '../../../../environments/environment';
@@ -25,6 +25,7 @@ export class TokenInterceptorService implements HttpInterceptor {
         },
       });
     }
+
     if (this.token && !request.url.includes('auth/login')) {
       request = request.clone({
         setHeaders: {
@@ -32,6 +33,11 @@ export class TokenInterceptorService implements HttpInterceptor {
         },
       });
     }
+
+    request = request.clone({
+      withCredentials: true,
+    });
+
     return next.handle(request);
   }
 }

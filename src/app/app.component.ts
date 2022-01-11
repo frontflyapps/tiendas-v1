@@ -11,7 +11,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { EncryptDecryptService } from './core/services/encrypt-decrypt.service';
 import { AuthenticationService } from './core/services/authentication/authentication.service';
 import { LocalStorageService } from './core/services/localStorage/localStorage.service';
-import { LOCATION } from './core/classes/storageNames.class';
+import { RequestCookieSecureService } from './core/services/request-cookie-secure/request-cookie-secure.service';
 
 @Component({
   selector: 'app-root',
@@ -29,6 +29,7 @@ export class AppComponent {
   localDatabaseUsers = environment.localDatabaseUsers;
 
   constructor(
+    private rq: RequestCookieSecureService,
     private spinner: NgxSpinnerService,
     private translate: TranslateService,
     private router: Router,
@@ -39,6 +40,8 @@ export class AppComponent {
     private encryptDecryptService: EncryptDecryptService,
     private localStorageService: LocalStorageService,
   ) {
+    this.rq.requestCookiesSecure();
+
     this.localStorageService.setVersion();
     const defaultLanguage: any = { name: 'Español', image: 'assets/images/flags/es.svg', lang: 'es' };
     if ('language' in localStorage) {
