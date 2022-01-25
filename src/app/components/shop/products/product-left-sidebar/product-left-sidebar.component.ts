@@ -18,6 +18,8 @@ import { LocationService } from '../../../../core/services/location/location.ser
 import { LANDING_PAGE, PRODUCT_COUNT } from '../../../../core/classes/global.const';
 import { environment } from '../../../../../environments/environment';
 import { LocalStorageService } from '../../../../core/services/localStorage/localStorage.service';
+import { UtilsService } from 'src/app/core/services/utils/utils.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-product-left-sidebar',
@@ -85,12 +87,14 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private metaService: MetaService,
     private locationService: LocationService,
+    public translate: TranslateService,
   ) {
     this.initSubsLocation();
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
-
     this.route.queryParams.pipe(takeUntil(this._unsubscribeAll)).subscribe((data) => {
+      console.log('params data', data);
+
       this.paramsSearch.categoryIds = data?.categoryIds ? data.categoryIds : this.paramsSearch.categoryIds;
       this.paramsSearch.brandIds = data?.brandIds ? data.brandIds : [];
       this.paramsSearch.minPrice = data?.minPrice ? data.minPrice : 0;
@@ -98,7 +102,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
 
       this.productId = this.productService.productIdDetails ? this.productService.productIdDetails : null;
 
-      this.queryProduct.limit = data?.limit ? data.limit : (this.initLimit * this.amountInitialResults);
+      this.queryProduct.limit = data?.limit ? data.limit : this.initLimit * this.amountInitialResults;
       this.queryProduct.offset = data?.offset ? data.offset : 0;
       this.queryProduct.total = data?.total ? data.total : 0;
       this.queryProduct.page = data?.page ? data.page : 0;
@@ -110,12 +114,10 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
         this.paramsSearch.maxPrice = null;
         this.resetPrices = !this.resetPrices;
 
-        this.queryProduct.limit = (this.initLimit * this.amountInitialResults);
+        this.queryProduct.limit = this.initLimit * this.amountInitialResults;
         this.queryProduct.offset = 0;
         this.queryProduct.total = 0;
         this.queryProduct.page = 0;
-      } else {
-        this.paramsSearch.categoryIds = [];
       }
       if (this.paramsSearch.filterText != data.filterText) {
         this.paramsSearch.filterText = data.filterText;
@@ -123,7 +125,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
         this.paramsSearch.maxPrice = null;
         this.resetPrices = !this.resetPrices;
 
-        this.queryProduct.limit = (this.initLimit * this.amountInitialResults);
+        this.queryProduct.limit = this.initLimit * this.amountInitialResults;
         this.queryProduct.offset = 0;
         this.queryProduct.total = 0;
         this.queryProduct.page = 0;
@@ -146,22 +148,21 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
       this.search();
     });
 
-    this.metaService.setMeta(
+    this.metaService
+      .setMeta
       // environment.meta?.mainPage?.title,
       // environment.meta?.mainPage?.description,
       // environment.meta?.mainPage?.shareImg,
       // environment.meta?.mainPage?.keywords,
-    );
+      ();
   }
 
   ngOnInit() {
     this.subsCartChange();
 
-    this.loggedInUserService.$languageChanged
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((data: any) => {
-        this.language = data.lang;
-      });
+    this.loggedInUserService.$languageChanged.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {
+      this.language = data.lang;
+    });
 
     this.breakpointObserver
       .observe([Breakpoints.Medium, Breakpoints.Small, Breakpoints.XSmall])
@@ -170,11 +171,13 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
         this.isHandset = data.matches;
       });
 
-    // this.categoryService.getAllCategories()
-    //   .pipe(takeUntil(this._unsubscribeAll))
-    //   .subscribe((data) => {
-    //     this.allCategories = data.data;
-    //   });
+    this.categoryService
+      .getAllCategories()
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((data) => {
+        // this.allCategories = data.data;
+        this.categoryService.allCategories = data.data;
+      });
 
     this.getPFDFromStorage();
   }
@@ -206,7 +209,6 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
       this.localStorageService.setOnStorage(PRODUCT_COUNT, _response);
 
       this.setIsOnlyTwoProducts(_response.count);
-
     });
   }
 
@@ -222,12 +224,10 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
   }
 
   subsCartChange() {
-    this.cartService.$cartItemsUpdated
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe(carts => {
-        this.itemsOnCart = carts[0]?.CartItems?.length || 0;
-        this.theCart = carts[0];
-      });
+    this.cartService.$cartItemsUpdated.pipe(takeUntil(this._unsubscribeAll)).subscribe((carts) => {
+      this.itemsOnCart = carts[0]?.CartItems?.length || 0;
+      this.theCart = carts[0];
+    });
   }
 
   ngOnDestroy() {
@@ -241,24 +241,28 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
   searchProducts() {
     this.loading = true;
 
-    this.router.navigate(['/products/search'], {
-      queryParams: {
-        ...this.paramsSearch,
-        ...this.queryProduct,
-      },
-    }).then();
+    this.router
+      .navigate(['/products/search'], {
+        queryParams: {
+          ...this.paramsSearch,
+          ...this.queryProduct,
+        },
+      })
+      .then();
   }
 
   searchMoreProducts() {
     this.loading = true;
     this.isFromMoreProductBtn = true;
 
-    this.router.navigate(['/products/search'], {
-      queryParams: {
-        ...this.paramsSearch,
-        ...this.queryProduct,
-      },
-    }).then();
+    this.router
+      .navigate(['/products/search'], {
+        queryParams: {
+          ...this.paramsSearch,
+          ...this.queryProduct,
+        },
+      })
+      .then();
   }
 
   search() {
@@ -300,7 +304,8 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
       ProvinceId: this.province?.id || null,
       MunicipalityId: this.municipality?.id || null,
     };
-    this.productService.searchProduct(body)
+    this.productService
+      .searchProduct(body)
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(
         (data: any) => {
@@ -326,7 +331,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
   showChips() {
     let chips = [];
 
-    let allCategories = this.categoryService?.allCategories || [];
+    let allCategories = this.categoryService?.allCategories;
 
     if (!Array.isArray(allCategories)) {
       allCategories = [];
@@ -342,7 +347,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
   }
 
   onRemoveCategory(cat) {
-    let x = this.categoriesIds.findIndex((categoriesIdsIndex) => categoriesIdsIndex == cat.id);
+    let x = this.categoriesIds.findIndex((x) => x == cat.id);
     if (x > -1) {
       this.categoriesIds.splice(x, 1);
       this.onCategoriesChanged([...this.categoriesIds]);
@@ -381,7 +386,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
   goToFirstPage(event) {
     event.preventDefault();
 
-    this.globalScrollTopS = document.body.scrollTop;  // Safari
+    this.globalScrollTopS = document.body.scrollTop; // Safari
     this.globalScrollTopOth = document.documentElement.scrollTop; // Other
 
     this.initValuesOnSearch();
@@ -391,18 +396,18 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
   seeMoreProductsBtn(event) {
     event.preventDefault();
 
-    this.globalScrollTopS = document.body.scrollTop;  // Safari
+    this.globalScrollTopS = document.body.scrollTop; // Safari
     this.globalScrollTopOth = document.documentElement.scrollTop; // Other
 
     this.numberOfSearch++;
     if (this.numberOfSearch < this.amountInitialResults) {
       this.allProducts = this.allProductsResponse.slice(0, this.initLimit * (this.numberOfSearch + 1));
-      this.queryProduct.offset = this.initLimit * (this.numberOfSearch);
+      this.queryProduct.offset = this.initLimit * this.numberOfSearch;
     } else {
       this.loading = true;
       this.numberOfSearch = this.numberOfSearchBase;
       this.queryProduct.page++;
-      this.queryProduct.offset = this.initLimit * this.amountInitialResults * (this.queryProduct.page);
+      this.queryProduct.offset = this.initLimit * this.amountInitialResults * this.queryProduct.page;
       this.searchMoreProducts();
     }
   }
@@ -505,11 +510,9 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
 
   // ============= LOCATION ==================================
   initSubsLocation() {
-    this.locationService
-      .location$
-      .subscribe((newLocation) => {
-        this.setLocationData(newLocation);
-      });
+    this.locationService.location$.subscribe((newLocation) => {
+      this.setLocationData(newLocation);
+    });
   }
 
   setLocationData(locationOnLocalStorage) {
