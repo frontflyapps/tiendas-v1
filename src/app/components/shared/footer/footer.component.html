@@ -43,25 +43,27 @@
     </div>
 
     <div fxLayout="row">
-      <a #langMenuTrigger="matMenuTrigger"
-         [matMenuTriggerFor]="langMenu"
-         class="item-selector mx-3 my-2"
-         fxLayoutAlign="start center"
-         mat-button>
+      <a
+        #langMenuTrigger="matMenuTrigger"
+        [matMenuTriggerFor]="langMenu"
+        class="item-selector mx-3 my-2"
+        fxLayoutAlign="start center"
+        mat-button
+      >
         <img [src]="flag?.image" alt="flag image" width="18" />
         <mat-icon>arrow_drop_down</mat-icon>
         <span>{{ flag?.name }}</span>
       </a>
       <mat-menu #langMenu="matMenu" [overlapTrigger]="false" class="app-dropdown" xPosition="before">
-      <span>
-        <button (click)="changeLang(flag)" *ngFor="let flag of flags" mat-menu-item>
-          <img [src]="flag.image" alt="flag image" width="18" /> {{ flag.name }}
-        </button>
-      </span>
+        <span>
+          <button (click)="changeLang(flag)" *ngFor="let flag of flags" mat-menu-item>
+            <img [src]="flag.image" alt="flag image" width="18" /> {{ flag.name }}
+          </button>
+        </span>
       </mat-menu>
 
       <a [routerLink]="['/contact-us']" class="item-selector mx-3 my-2" mat-button>
-        {{'Contáctenos'|translate}}
+        {{ 'Contáctenos' | translate }}
       </a>
     </div>
 
@@ -69,100 +71,109 @@
   </div>
 
   <div class="footer-bottom-color" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="1rem">
-    <img alt="footer logo" class="mt-4 image-footer" ngClass.lt-sm="img-footer"
-         src="assets/images/logo-navbar.png">
+    <img
+      alt="footer logo"
+      class="mt-4 image-footer"
+      ngClass.lt-sm="img-footer"
+      src="assets/images/pymesbulevar/logo-r-white.png"
+    />
 
-    <div class="py-3" fxLayout="row" fxLayout.xs="column"
-         fxLayoutAlign="start center" fxLayoutAlign.xs="start"
-         fxLayoutGap="1rem" fxLayoutGap.xs="10px"
-         id="footer-contacts">
+    <div
+      class="py-3"
+      fxLayout="row"
+      fxLayout.xs="column"
+      fxLayoutAlign="start center"
+      fxLayoutAlign.xs="start"
+      fxLayoutGap="1rem"
+      fxLayoutGap.xs="10px"
+      id="footer-contacts"
+    >
       <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="4px">
         <mat-icon>phone</mat-icon>
-        <span>{{contacts.phone || ''}}</span>
+        <span>{{ contacts.phone || '' }}</span>
       </div>
 
       <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="4px">
         <mat-icon>email</mat-icon>
-        <span>{{contacts.email || ''}}</span>
+        <span>{{ contacts.email || '' }}</span>
       </div>
 
       <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="4px">
         <mat-icon>location_on</mat-icon>
-        <span>{{contacts.address || ''}}</span>
+        <span>{{ contacts.address || '' }}</span>
       </div>
     </div>
 
     <ul class="network-icons" fxLayout="row">
-
       <li fxLayoutAlign="center center">
-        <a
-          class="icon-redes"
-          fxLayoutAlign="center center"
-          href="https://www.facebook.com/"
-          target="_blank">
+        <a class="icon-redes" fxLayoutAlign="center center" href="https://www.facebook.com/" target="_blank">
           <!--          <i class="fab fa-facebook-f" style="font-size: 18px"></i>-->
-          <img alt="Facebook logo"
-               src="assets/images/social-media/outline/logo-facebook.svg" style="filter: invert(1);">
+          <img
+            alt="Facebook logo"
+            src="assets/images/social-media/outline/logo-facebook.svg"
+            style="filter: invert(1)"
+          />
         </a>
       </li>
 
       <li fxLayoutAlign="center center">
         <a class="icon-redes" fxLayoutAlign="center center" href="https://twitter.com/" target="_blank">
           <!--          <i class="fab fa-twitter" style="font-size: 18px"></i>-->
-          <img alt="Facebook logo"
-               src="assets/images/social-media/outline/logo-twitter.svg" style="filter: invert(1);">
+          <img
+            alt="Facebook logo"
+            src="assets/images/social-media/outline/logo-twitter.svg"
+            style="filter: invert(1)"
+          />
         </a>
       </li>
 
       <li fxLayoutAlign="center center">
-        <a
-          class="icon-redes"
-          fxLayoutAlign="center center"
-          href="https://cu.linkedin.com/"
-          target="_blank"
-        >
+        <a class="icon-redes" fxLayoutAlign="center center" href="https://cu.linkedin.com/" target="_blank">
           <!--          <i class="fab fa-linkedin-in" style="font-size: 18px"></i>-->
-          <img alt="Facebook logo"
-               src="assets/images/social-media/outline/logo-linkedin.svg" style="filter: invert(1);">
+          <img
+            alt="Facebook logo"
+            src="assets/images/social-media/outline/logo-linkedin.svg"
+            style="filter: invert(1)"
+          />
         </a>
       </li>
 
       <li fxLayoutAlign="center center">
-        <a
-          class="icon-redes"
-          fxLayoutAlign="center center"
-          href="https://www.youtube.com/"
-          target="_blank"
-        >
+        <a class="icon-redes" fxLayoutAlign="center center" href="https://www.youtube.com/" target="_blank">
           <!--          <i class="fab fa-youtube" style="font-size: 18px"></i>-->
-          <img alt="Facebook logo"
-               src="assets/images/social-media/outline/logo-youtube.svg" style="filter: invert(1);">
+          <img
+            alt="Facebook logo"
+            src="assets/images/social-media/outline/logo-youtube.svg"
+            style="filter: invert(1)"
+          />
         </a>
       </li>
 
       <li fxLayoutAlign="center center">
-        <a class="icon-redes"
-           fxLayoutAlign="center center"
-           href="https://www.instagram.com/"
-           target="_blank">
+        <a class="icon-redes" fxLayoutAlign="center center" href="https://www.instagram.com/" target="_blank">
           <!--          <i class="fab fa-instagram" style="font-size: 18px"></i>-->
-          <img alt="Facebook logo"
-               src="assets/images/social-media/outline/logo-instagram.svg" style="filter: invert(1);">
+          <img
+            alt="Facebook logo"
+            src="assets/images/social-media/outline/logo-instagram.svg"
+            style="filter: invert(1)"
+          />
         </a>
       </li>
-
     </ul>
 
-    <div class="mb-3" fxLayout="row"
-         fxLayout.xs="column"
-         fxLayoutAlign="center" fxLayoutGap="10px"
-         fxLayoutGap.xs="4px">
+    <div
+      class="mb-3"
+      fxLayout="row"
+      fxLayout.xs="column"
+      fxLayoutAlign="center"
+      fxLayoutGap="10px"
+      fxLayoutGap.xs="4px"
+    >
       <span>Copyright© {{ year }}.</span>
 
       <span>{{ 'Todos los derechos reservados' | translate }}.</span>
 
       <span>{{ 'v' | translate }}{{ version }}</span>
     </div>
-
   </div>
 </footer>

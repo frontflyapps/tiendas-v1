@@ -193,14 +193,14 @@ app-main,
         right: -15px;
         top: 0;
         padding: 0 16px;
-        color: $theme-main-dark;
+        color: $white;
         -webkit-transition: all 250ms ease-in-out;
         -moz-transition: all 250ms ease-in-out;
         -ms-transition: all 250ms ease-in-out;
         -o-transition: all 250ms ease-in-out;
         transition: all 250ms ease-in-out;
         text-transform: uppercase;
-        background-color: $theme-main-accent-300;
+        background-color: $theme-main-accent;
         border-radius: 4px;
         -webkit-border-radius: 4px;
         font-weight: 500;

@@ -13,8 +13,26 @@
 <app-main-carousel *ngIf="!showStatic && slides.length > 0" [slides]="slides"></app-main-carousel>
 
 <div class="container mt-3">
-  <app-skeleton-loading-cards *ngIf="showStatic"
-                              [setConfiguration]="{ xs: 1, sm: 1, md: 1, lg: 1 }">
+  <!-- BANNER TEMPORAL -->
+  <div
+    style="
+      padding: 16px;
+      background-color: darkred;
+      color: white !important;
+      font-weight: bold;
+      width: 91%;
+      white-space: normal;
+      max-width: 91% !important;
+      margin: 0 auto;
+    "
+  >
+    <h1 style="color: white !important">
+      Esta tienda online se encuentra en proceso de desarrollo, está trabajando en MODO: Prueba. No están habilitadas
+      las compras. Disculpen las molestias
+    </h1>
+  </div>
+  <!-- BANNER TEMPORAL -->
+  <app-skeleton-loading-cards *ngIf="showStatic" [setConfiguration]="{ xs: 1, sm: 1, md: 1, lg: 1 }">
   </app-skeleton-loading-cards>
 </div>
 <!--<div class="container" style="height: 300px;" *ngIf="showStatic" ngStyle.lt-md="height: 175px;">-->
@@ -26,14 +44,22 @@
 <!--</div>-->
 
 <div class="home-1-wrap">
-
   <div *ngIf="allBicons.length > 0 && !loadingAllProduct" class="info-bar-four-wrapper" fxHide.xs>
     <div class="container">
       <div class="info-bar-four" fxLayout="row wrap" fxLayoutAlign="center center">
-        <div *ngFor="let item of allBicons; let i = index" class="card-wrap" fxFlex="100" fxFlex.gt-md="25"
-             fxFlex.gt-xs="50">
-          <mat-card [ngClass]="{ 'no-bd': i === allBicons.length - 1 }" class="light-block" fxLayout="row"
-                    fxLayoutAlign="start center">
+        <div
+          *ngFor="let item of allBicons; let i = index"
+          class="card-wrap"
+          fxFlex="100"
+          fxFlex.gt-md="25"
+          fxFlex.gt-xs="50"
+        >
+          <mat-card
+            [ngClass]="{ 'no-bd': i === allBicons.length - 1 }"
+            class="light-block"
+            fxLayout="row"
+            fxLayoutAlign="start center"
+          >
             <div fxFlex="20">
               <mat-icon class="mat-icon-xlg m-0">{{ item.icon }}</mat-icon>
             </div>
@@ -61,7 +87,7 @@
     <div class="container">
       <div class="products sec-padding">
         <div class="products-four">
-          <h3 style="color: initial">{{'Productos más vendidos' | translate }}</h3>
+          <h3 style="color: initial">{{ 'Productos más vendidos' | translate }}</h3>
           <app-product-carousel *ngIf="!loadingBestSellers" [btnColor]="'accent'" [products]="bestSellersProducts">
           </app-product-carousel>
           <div *ngIf="loadingBestSellers" class="my-3">
@@ -124,11 +150,11 @@
     <div class="container">
       <div class="products sec-padding">
         <div class="products-four">
-          <h3 style="color: initial">{{'Productos destacados'|translate}}</h3>
+          <h3 style="color: initial">{{ 'Productos destacados' | translate }}</h3>
           <app-product-carousel *ngIf="!loadingFeatured" [btnColor]="'accent'" [products]="featuredProducts">
           </app-product-carousel>
           <div *ngIf="loadingFeatured" class="my-3">
-            <app-skeleton-loading-cards *ngIf="loadingFeatured" [setConfiguration]="{'xs':1,'sm':2,'md':3,'lg':4}">
+            <app-skeleton-loading-cards *ngIf="loadingFeatured" [setConfiguration]="{ xs: 1, sm: 2, md: 3, lg: 4 }">
             </app-skeleton-loading-cards>
           </div>
         </div>
@@ -180,7 +206,7 @@
 
   <!-- ------------------------------------------------------------ -->
   <!-- ---------------------- APK Promo --------------------------- -->
-  <section id="apk-promo" style="width: 100%; position: relative">
+  <!-- <section id="apk-promo" style="width: 100%; position: relative">
     <img *ngIf="!applyStyle" alt="APK Promo" class="img-apk-promo"
          src="assets/images/mibulevar/apk-promo/desktop2.jpg">
     <img *ngIf="applyStyle" alt="APK Promo" class="img-apk-promo" src="assets/images/mibulevar/apk-promo/movil.jpg">
@@ -215,5 +241,5 @@
       </div>
     </div>
 
-  </section>
+  </section> -->
 </div>

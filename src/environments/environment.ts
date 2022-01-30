@@ -8,18 +8,12 @@ export const environment = {
 
   // apiUrl: 'http://192.168.1.17:8998/v1/',
   // imageUrl: 'http://192.168.1.17:8998/v1/',
-
-  // apiUrl: 'http://127.0.0.1:8998/v1/',
-  // imageUrl: 'http://127.0.0.1:8998/v1/',
-
-  apiUrl: 'http://apitienda.tiendalocal.com:8998/v1/',
-  imageUrl: 'http://apitienda.tiendalocal.com:8998/v1/',
-
-  // apiUrl: 'https://apitienda.marinasmarlin.com/v1/',
-  // imageUrl: 'https://apitienda.marinasmarlin.com/v1/',
-
-  // apiUrl: 'https://api.mibulevar.com/v1/',
-  // imageUrl: 'https://api.mibulevar.com/v1/',
+  //
+  // apiUrl: 'http://192.168.43.231:8998/v1/',
+  // imageUrl: 'http://192.168.43.231:8998/v1/',
+  //
+  apiUrl: 'https://api.pymesbulevar.com/v1/',
+  imageUrl: 'https://api.pymesbulevar.com/v1/',
 
   defaultLanguage: 'es',
   currencyInternational: 'USD',
@@ -33,27 +27,27 @@ export const environment = {
   url: 'http://tienda.tiendalocal.com:4308',
   urlAboutUs: 'http://tienda.tiendalocal.com:4308',
 
-  address: 'MiBulevar | TransferMóvil',
+  address: 'Pymes Bulevar',
   localDatabaseUsers: true,
 
   contacts: {
-    phone: '(+53) 7000 0000',
-    email: 'info@transfermovil.com',
-    address: 'Miramar Trade Center, Edificio Beijing, Miramar, Playa',
+    phone: '(+53) 7XXX XXXX',
+    email: 'tienda@tiendalocal.com',
+    address: 'Calle X, entre D y F. Direccion',
   },
 
-  adminService: 'http://admintienda.marinasmarlin.com/',
+  adminService: 'http://admintienda.tiendalocal.com/',
   mainDomain: 'tiendalocal.com',
 
-  tokenBusiness: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7IkJ1c2luZXNzSWQiOjUsImlkIjo1LCJkYXRlIjoiMjAyMS0xMS0wNFQyMTo1MTo1NC44NDdaIiwibmFtZSI6IlRSRCBDYXJpYmUiLCJlbWFpbCI6ImNvbnRhY3Rvc0B0cmRjYXJpYmUuY29tIn0sImlhdCI6MTYzNjA2MjcxNH0.dCPha0Jbl5NVr0pnTE-1fF4zsjlUprerMyUjw7K5qKc',
+  tokenBusiness: '',
 
   meta: {
     mainPage: {
-      title: 'MiBulevar | TransferMóvil',
+      title: 'Pymes Bulevar',
       description: 'Tienda online desarrollada con el framework Angular permite la modelación de negocios B2C and C2C',
       keywords: 'HTML, CSS, JavaScript, Angular, Tienda Online B2B, comercio online',
-      shareImg: 'http://tienda.tiendalocal.com:4308/assets/images/share-img.png',
-      url: 'http://tienda.tiendalocal.com:4308',
+      shareImg: 'https://www.pymesbulevar.com/assets/images/share-img.png',
+      url: 'https://www.pymesbulevar.com/',
     },
   },
 
