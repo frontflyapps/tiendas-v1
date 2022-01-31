@@ -18,12 +18,12 @@ export const environment = {
   url: 'https://www.pymesbulevar.com',
   urlAboutUs: 'https://www.pymesbulevar.com',
 
-  address: 'Tiendas Caracol',
+  address: 'Pymes Bulevar',
   localDatabaseUsers: true,
 
   contacts: {
     phone: '(+53) 7XXX XXXX',
-    email: 'tienda@tiendascaracol.com',
+    email: ' notifications@pymesbulevar.com',
     address: 'Calle X, entre D y F. Direccion',
   },
 
