@@ -198,8 +198,8 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     this.allArticles = data.blogRecents;
     this.countProducts = data.countProducts;
     this.servicesProducts = data.ourServices;
-    this.bigBanner1 = data.bigBanner1;
-    this.bigBanner2 = data.bigBanner2;
+    this.bigBanner1 = data.promotions.filter((promotion) => promotion.type === 'bigBannerPromo1');
+    this.bigBanner2 = data.promotions.filter((promotion) => promotion.type === 'bigBannerPromo2');
     this.loadingServices = false;
 
     this.allProducts = this.productDataService.allProducts;
@@ -216,7 +216,6 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   getFrontData() {
     this.getFrontDataRequest()
       .then((data: any) => {
-
         const dataResponse = JSON.parse(JSON.stringify(data.data));
         this.setDataOnLandingPage(dataResponse);
 
@@ -228,7 +227,6 @@ export class MainHomeComponent implements OnInit, OnDestroy {
         _responseCP.count = JSON.parse(JSON.stringify(_response.countProducts));
         _responseCP.timespan = new Date().getTime();
         this.localStorageService.setOnStorage(PRODUCT_COUNT, _responseCP);
-
       })
       .catch((error) => {
         this.showStatic = true;

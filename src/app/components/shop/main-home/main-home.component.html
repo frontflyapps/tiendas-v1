@@ -13,8 +13,7 @@
 <app-main-carousel *ngIf="!showStatic && slides.length > 0" [slides]="slides"></app-main-carousel>
 
 <div class="container mt-3">
-  <app-skeleton-loading-cards *ngIf="showStatic"
-                              [setConfiguration]="{ xs: 1, sm: 1, md: 1, lg: 1 }">
+  <app-skeleton-loading-cards *ngIf="showStatic" [setConfiguration]="{ xs: 1, sm: 1, md: 1, lg: 1 }">
   </app-skeleton-loading-cards>
 </div>
 <!--<div class="container" style="height: 300px;" *ngIf="showStatic" ngStyle.lt-md="height: 175px;">-->
@@ -26,14 +25,22 @@
 <!--</div>-->
 
 <div class="home-1-wrap">
-
   <div *ngIf="allBicons.length > 0 && !loadingAllProduct" class="info-bar-four-wrapper" fxHide.xs>
     <div class="container">
       <div class="info-bar-four" fxLayout="row wrap" fxLayoutAlign="center center">
-        <div *ngFor="let item of allBicons; let i = index" class="card-wrap" fxFlex="100" fxFlex.gt-md="25"
-             fxFlex.gt-xs="50">
-          <mat-card [ngClass]="{ 'no-bd': i === allBicons.length - 1 }" class="light-block" fxLayout="row"
-                    fxLayoutAlign="start center">
+        <div
+          *ngFor="let item of allBicons; let i = index"
+          class="card-wrap"
+          fxFlex="100"
+          fxFlex.gt-md="25"
+          fxFlex.gt-xs="50"
+        >
+          <mat-card
+            [ngClass]="{ 'no-bd': i === allBicons.length - 1 }"
+            class="light-block"
+            fxLayout="row"
+            fxLayoutAlign="start center"
+          >
             <div fxFlex="20">
               <mat-icon class="mat-icon-xlg m-0">{{ item.icon }}</mat-icon>
             </div>
@@ -61,7 +68,7 @@
     <div class="container">
       <div class="products sec-padding">
         <div class="products-four">
-          <h3 style="color: initial">{{'Productos más vendidos' | translate }}</h3>
+          <h3 style="color: initial">{{ 'Productos más vendidos' | translate }}</h3>
           <app-product-carousel *ngIf="!loadingBestSellers" [btnColor]="'accent'" [products]="bestSellersProducts">
           </app-product-carousel>
           <div *ngIf="loadingBestSellers" class="my-3">
@@ -104,17 +111,17 @@
   <!-- -------------------------------------------------------------------------------->
 
   <!-- ---------------------- Big promo1 --------------------------- -->
-  <section *ngIf="bigBanner1?.valor">
+  <section *ngIf="bigBanner1">
     <div class="main-banner">
-      <ng-container *ngIf="applyStyle && bigBanner1?.valor?.imageXs; then bannerPromo1Xs; else bannerPromo1">
+      <ng-container *ngIf="applyStyle && bigBanner1[0]?.imageXs; then bannerPromo1Xs; else bannerPromo1">
       </ng-container>
 
       <ng-template #bannerPromo1>
-        <app-banner-promotion [_imageBigPromo]="bigBanner1?.valor?.image"></app-banner-promotion>
+        <app-banner-promotion [_imageBigPromo]="imageUrl + bigBanner1[0]?.image"></app-banner-promotion>
       </ng-template>
 
       <ng-template #bannerPromo1Xs>
-        <app-banner-promotion [_imageBigPromo]="bigBanner1?.valor?.imageXs"></app-banner-promotion>
+        <app-banner-promotion [_imageBigPromo]="imageUrl + bigBanner1[0]?.imageXs"></app-banner-promotion>
       </ng-template>
     </div>
   </section>
@@ -124,11 +131,11 @@
     <div class="container">
       <div class="products sec-padding">
         <div class="products-four">
-          <h3 style="color: initial">{{'Productos destacados'|translate}}</h3>
+          <h3 style="color: initial">{{ 'Productos destacados' | translate }}</h3>
           <app-product-carousel *ngIf="!loadingFeatured" [btnColor]="'accent'" [products]="featuredProducts">
           </app-product-carousel>
           <div *ngIf="loadingFeatured" class="my-3">
-            <app-skeleton-loading-cards *ngIf="loadingFeatured" [setConfiguration]="{'xs':1,'sm':2,'md':3,'lg':4}">
+            <app-skeleton-loading-cards *ngIf="loadingFeatured" [setConfiguration]="{ xs: 1, sm: 2, md: 3, lg: 4 }">
             </app-skeleton-loading-cards>
           </div>
         </div>
@@ -137,17 +144,17 @@
   </section>
 
   <!-- ---------------------- Big promo2 --------------------------- -->
-  <section *ngIf="bigBanner2?.valor">
+  <section *ngIf="bigBanner2">
     <div class="main-banner">
-      <ng-container *ngIf="applyStyle && bigBanner2?.valor?.imageXs; then bannerPromo2Xs; else bannerPromo2">
+      <ng-container *ngIf="applyStyle && bigBanner2[0]?.imageXs; then bannerPromo2Xs; else bannerPromo2">
       </ng-container>
 
       <ng-template #bannerPromo2>
-        <app-banner-promotion2 [_imageBigPromo]="bigBanner2?.valor?.image"></app-banner-promotion2>
+        <app-banner-promotion2 [_imageBigPromo]="imageUrl + bigBanner2[0]?.image"></app-banner-promotion2>
       </ng-template>
 
       <ng-template #bannerPromo2Xs>
-        <app-banner-promotion2 [_imageBigPromo]="bigBanner2?.valor?.imageXs"></app-banner-promotion2>
+        <app-banner-promotion2 [_imageBigPromo]="imageUrl + bigBanner2[0]?.imageXs"></app-banner-promotion2>
       </ng-template>
     </div>
   </section>
@@ -181,9 +188,13 @@
   <!-- ------------------------------------------------------------ -->
   <!-- ---------------------- APK Promo --------------------------- -->
   <section id="apk-promo" style="width: 100%; position: relative">
-    <img *ngIf="!applyStyle" alt="APK Promo" class="img-apk-promo"
-         src="assets/images/mibulevar/apk-promo/desktop2.jpg">
-    <img *ngIf="applyStyle" alt="APK Promo" class="img-apk-promo" src="assets/images/mibulevar/apk-promo/movil.jpg">
+    <img
+      *ngIf="!applyStyle"
+      alt="APK Promo"
+      class="img-apk-promo"
+      src="assets/images/mibulevar/apk-promo/desktop2.jpg"
+    />
+    <img *ngIf="applyStyle" alt="APK Promo" class="img-apk-promo" src="assets/images/mibulevar/apk-promo/movil.jpg" />
 
     <div class="container">
       <div class="wrapper">
@@ -194,8 +205,8 @@
         </div>
         <div class="text-paragraph mb-4">
           {{
-          'Descubre las increíbles de ofertas de más de 2 millones de clientes conectados a Transfer móvil.Descargue hoy para mantenerse conectado con las mejores opciones en cualquier momento y en cualquier lugar'
-            | translate
+            'Descubre las increíbles de ofertas de más de 2 millones de clientes conectados a Transfer móvil.Descargue hoy para mantenerse conectado con las mejores opciones en cualquier momento y en cualquier lugar'
+              | translate
           }}
           .
         </div>
@@ -214,6 +225,5 @@
         </a>
       </div>
     </div>
-
   </section>
 </div>
