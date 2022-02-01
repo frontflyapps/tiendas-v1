@@ -45,7 +45,8 @@ export const environment = {
   adminService: 'http://admintienda.marinasmarlin.com/',
   mainDomain: 'tiendalocal.com',
 
-  tokenBusiness: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7IkJ1c2luZXNzSWQiOjUsImlkIjo1LCJkYXRlIjoiMjAyMS0xMS0wNFQyMTo1MTo1NC44NDdaIiwibmFtZSI6IlRSRCBDYXJpYmUiLCJlbWFpbCI6ImNvbnRhY3Rvc0B0cmRjYXJpYmUuY29tIn0sImlhdCI6MTYzNjA2MjcxNH0.dCPha0Jbl5NVr0pnTE-1fF4zsjlUprerMyUjw7K5qKc',
+  tokenBusiness:
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7IkJ1c2luZXNzSWQiOjEsImlkIjoxLCJkYXRlIjoiMjAyMi0wMi0wMVQyMDowODoyNS4wMDBaIiwibmFtZSI6IlRpZW5kYSIsImVtYWlsIjoidGllbmRhQGxvY2FsaG9zdC5jb20ifSwiaWF0IjoxNjQzNzQ2NjAyfQ.DWKKF1FAsh0RLmPeQcPqwVepY4b73GVqzRlnW661tE4',
 
   meta: {
     mainPage: {
