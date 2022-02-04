@@ -30,7 +30,8 @@ export const environment = {
   adminService: 'https://admin.mibulevar.com/',
   mainDomain: '.mibulevar.com',
 
-  tokenBusiness: '',
+  tokenBusiness:
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7IkJ1c2luZXNzSWQiOjksImlkIjo5LCJkYXRlIjoiMjAyMS0xMS0wN1QyMzowMTozNi42MDVaIiwibmFtZSI6IkVURUNTQSIsImVtYWlsIjoiYXRlbmNpb24udXN1YXJpb3NAZXRlY3NhLmN1In0sImlhdCI6MTYzNjMyNjA5Nn0.ywzFLYzBTA0o2LjM6Ppx4XOetOtjL2E7Hwj-D6UiwmA',
 
   meta: {
     mainPage: {
