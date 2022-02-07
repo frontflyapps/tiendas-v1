@@ -11,13 +11,13 @@ export class PayService {
   urlPaymentTransfermovil = environment.apiUrl + 'payment/transfermovil';
   urlPaymentEnzona = environment.apiUrl + 'payment/enzona';
   urlPaymentBidaiondo = environment.apiUrl + 'payment/bidaiondo';
+  urlPaymentPeopleGoTo = environment.apiUrl + 'payment/peoplegoto';
   urlPaymentBidaiondoNew = 'https://apibidpay.guajitech.com/v1/to-bidaiondo-redirect';
   ///////////////////////////////////////////////////////////////////////////
   urlPaySucces = environment.apiUrl + 'pay-success';
   urlPayCancelled = environment.apiUrl + 'pay-cancelled';
 
-  constructor(private httpClient: HttpClient) {
-  }
+  constructor(private httpClient: HttpClient) {}
 
   makePaymentTransfermovil(data): Observable<any> {
     return this.httpClient.post<any>(this.urlPaymentTransfermovil, data);
@@ -42,6 +42,16 @@ export class PayService {
   cancelPaymentBidaiondo(data): Observable<any> {
     return this.httpClient.post<any>(this.urlPaymentBidaiondo + `/${data.id}/cancel`, data);
   }
+
+  /*******************PeopleGoTo******************/
+  makePaymentPeopleGoTo(data): Observable<any> {
+    return this.httpClient.post<any>(this.urlPaymentPeopleGoTo, data).pipe(timeout(60000));
+  }
+
+  cancelPaymentPeopleGoTo(data): Observable<any> {
+    return this.httpClient.post<any>(this.urlPaymentPeopleGoTo + `/${data.id}/cancel`, data);
+  }
+  /**********************************************/
 
   cancelPaymentTranfermovil(data): Observable<any> {
     return this.httpClient.post<any>(this.urlPaymentTransfermovil + `/${data.id}/cancel`, data);

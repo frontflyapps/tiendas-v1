@@ -94,12 +94,22 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   amount: number;
 
   payments: any[] = [
-    { id: 'transfermovil', name: 'Transfermovil', logo: 'assets/images/cards/transfermovil_logo.png', market: 'national' },
+    {
+      id: 'transfermovil',
+      name: 'Transfermovil',
+      logo: 'assets/images/cards/transfermovil_logo.png',
+      market: 'national',
+    },
     // { id: 'enzona', name: 'Enzona', logo: 'assets/images/cards/enzona.jpeg', market: 'national' },
-    { id: 'transfermovil', name: 'Transfermovil', logo: 'assets/images/cards/transfermovil_logo.png', market: 'international' },
-    // { id: 'visa', name: 'Visa', logo: 'assets/images/cards/visa_logo.png', market: 'international' },
+    {
+      id: 'transfermovil',
+      name: 'Transfermovil',
+      logo: 'assets/images/cards/transfermovil_logo.png',
+      market: 'international',
+    },
+    { id: 'visa', name: 'Visa', logo: 'assets/images/cards/visa_logo.png', market: 'international' },
     // { id: 'express', name: 'American Express', logo: 'assets/images/cards/american_express_logo.png', market: 'international' },
-    // { id: 'masterCard', name: 'MasterCard', logo: 'assets/images/cards/mastercard_logo.png', market: 'international' },
+    { id: 'masterCard', name: 'MasterCard', logo: 'assets/images/cards/mastercard_logo.png', market: 'international' },
     // {
     //   id: 'dinners-club-internacional',
     //   name: 'Dinners Club Internacional',
@@ -159,8 +169,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   };
   // tslint:disable-next-line: member-ordering
   qrO: any = {
-    qr:
-      'data:image/png;base64,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',
+    qr: 'data:image/png;base64,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',
     PaymentCode: 'exp-p-00000-00074',
     succes: true,
   };
@@ -242,7 +251,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.fetchData();
     // ////////////// Subscripciones para el update del carrito /////////////////
     this.cartService.$cartItemsUpdated.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {
-
       if (data.length > 0) {
         this.theBusiness = data[0].Business;
       }
@@ -333,8 +341,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         data: {},
       });
 
-      dialogRef.afterClosed().subscribe((result) => {
-      });
+      dialogRef.afterClosed().subscribe((result) => {});
     } else {
       this.getCartData();
     }
@@ -424,8 +431,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     }, 0);
   }
 
-  onSubmit(): void {
-  }
+  onSubmit(): void {}
 
   ngOnDestroy() {
     this._unsubscribeAll.next(true);
@@ -454,11 +460,14 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       ProvinceId: [this.selectedDataPay?.ProvinceId || null, [Validators.required]],
       MunicipalityId: [this.selectedDataPay?.MunicipalityId || null, [Validators.required]],
       isForCuban: [this.selectedDataPay?.isForCuban || true, [Validators.required]],
-      dni: [this.selectedDataPay?.dni || null, [
-        Validators.required,
-        Validators.minLength(this.CI_Length),
-        // Validators.maxLength(11),
-      ]],
+      dni: [
+        this.selectedDataPay?.dni || null,
+        [
+          Validators.required,
+          Validators.minLength(this.CI_Length),
+          // Validators.maxLength(11),
+        ],
+      ],
       email: [this.selectedDataPay?.email || null, [Validators.required, Validators.email]],
       phone: [this.selectedDataPay?.phone || null, []],
       info: [this.selectedDataPay?.info || null, []],
@@ -569,7 +578,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.regionService.getAllCountries(this.queryCountries).subscribe(
       (data) => {
         this.allCountries = data.data.filter((item) => item.name.es != undefined);
-        this.allCountries = this.allCountries.sort(function(a, b) {
+        this.allCountries = this.allCountries.sort(function (a, b) {
           if (a.name['es'] > b.name['es']) {
             return 1;
           } else if (a.name['es'] < b.name['es']) {
@@ -610,7 +619,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   filterCities(val) {
     val = val.trim().toLowerCase();
-    return this.selectedCities.filter(function(item) {
+    return this.selectedCities.filter(function (item) {
       let nameCity = item.name.trim().toLowerCase();
       return nameCity.includes(val);
     });
@@ -647,7 +656,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       return this.processEnzona(data);
     }
     if (data.paymentType == 'visa' || data.paymentType == 'express' || data.paymentType == 'masterCard') {
-      data.paymentType = 'bidaiondo';
+      // data.paymentType = 'bidaiondo';
+      data.paymentType = 'peoplegoto';
       return this.processBidaiondo(data);
     }
   }
@@ -718,7 +728,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   processBidaiondo(bodyData) {
     bodyData.amex = amexData[this.paymentType];
     console.log('AMEX', bodyData.amex);
-    this.payService.makePaymentBidaiondo(bodyData).subscribe(
+    // this.payService.makePaymentBidaiondo(bodyData).subscribe(
+    this.payService.makePaymentPeopleGoTo(bodyData).subscribe(
       (data: any) => {
         let dialogRef: MatDialogRef<DialogBidaiondoConfirmToPayComponent, any>;
 
@@ -745,12 +756,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   // CONTACTS
   setObsContact() {
-    this.contactsService.allContacts$
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((response) => {
-          this.contactsService.allContacts = response.data;
-        },
-      );
+    this.contactsService.allContacts$.pipe(takeUntil(this._unsubscribeAll)).subscribe((response) => {
+      this.contactsService.allContacts = response.data;
+    });
   }
 
   getContacts() {
