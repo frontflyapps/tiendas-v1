@@ -170,8 +170,14 @@ export class MyAccountComponent implements OnInit {
   createRegistrationForm() {
     this.fromPassRegister = this.fb.group(
       {
-        password: [null, [Validators.required, Validators.minLength(6)]],
-        repeat: [null, [Validators.required, Validators.minLength(6)]],
+        password: [
+          null,
+          [Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')],
+        ],
+        repeat: [
+          null,
+          [Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')],
+        ],
       },
       { validator: this.matchValidator.bind(this) },
     );
@@ -179,21 +185,10 @@ export class MyAccountComponent implements OnInit {
     this.registrationForm = this.fb.group({
       name: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
       lastname: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
-      username: [null, [
-        Validators.required,
-        Validators.pattern(USERNAME),
-      ]],
-      phone: [null, [
-        Validators.pattern(CUBAN_PHONE_START_5),
-        Validators.minLength(8),
-        Validators.maxLength(8),
-      ]],
+      username: [null, [Validators.required, Validators.pattern(USERNAME)]],
+      phone: [null, [Validators.pattern(CUBAN_PHONE_START_5), Validators.minLength(8), Validators.maxLength(8)]],
       address: [null, []],
-      email: [null, [
-        Validators.required,
-        Validators.email,
-        Validators.pattern(EMAIL_REGEX),
-      ]],
+      email: [null, [Validators.required, Validators.email, Validators.pattern(EMAIL_REGEX)]],
       // recaptcha: ['', Validators.required],
       passwords: this.fromPassRegister,
     });
@@ -479,19 +474,15 @@ export class MyAccountComponent implements OnInit {
   }
 
   // ///////////////////////////////////////////////////////
-  handleReset() {
-  }
+  handleReset() {}
 
   // ////////////////////////////////////////////////////////
 
-  handleExpire() {
-  }
+  handleExpire() {}
 
-  handleSuccess(event) {
-  }
+  handleSuccess(event) {}
 
-  handleLoad() {
-  }
+  handleLoad() {}
 
   private validatePing(data) {
     this.inLoading = true;
