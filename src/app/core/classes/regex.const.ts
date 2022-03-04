@@ -3,3 +3,4 @@ export const CUBAN_PHONE_START_5 = /^5(\+|[0-9])([0-9]*)$/;
 export const IDENTITY_PASSPORT = /^[a-zA-Z0-9\-._]{7,}[a-zA-Z0-9]{1}$/;
 export const CHARACTERS_AND_NUMBERS = /^[a-zA-Z0-9]*$/;
 export const USERNAME = /^[a-zA-Z0-9@.]*$/;
+export const PASS_CLIENT_REGEX = /^(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z]).{8,}$/;

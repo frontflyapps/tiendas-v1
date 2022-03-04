@@ -9,7 +9,7 @@ import { ShowSnackbarService } from '../../../core/services/show-snackbar/show-s
 import { environment } from '../../../../environments/environment';
 import { AuthenticationService } from '../../../core/services/authentication/authentication.service';
 import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-in-user.service';
-import { CUBAN_PHONE_START_5, EMAIL_REGEX, USERNAME } from '../../../core/classes/regex.const';
+import { CUBAN_PHONE_START_5, EMAIL_REGEX, PASS_CLIENT_REGEX, USERNAME } from '../../../core/classes/regex.const';
 
 @Component({
   selector: 'app-my-account',
@@ -170,8 +170,8 @@ export class MyAccountComponent implements OnInit {
   createRegistrationForm() {
     this.fromPassRegister = this.fb.group(
       {
-        password: [null, [Validators.required, Validators.minLength(6)]],
-        repeat: [null, [Validators.required, Validators.minLength(6)]],
+        password: [null, [Validators.required, Validators.pattern(PASS_CLIENT_REGEX)]],
+        repeat: [null, [Validators.required, Validators.pattern(PASS_CLIENT_REGEX)]],
       },
       { validator: this.matchValidator.bind(this) },
     );
@@ -179,10 +179,7 @@ export class MyAccountComponent implements OnInit {
     this.registrationForm = this.fb.group({
       name: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
       lastname: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
-      // username: [null, [
-      //   Validators.required,
-      //   Validators.pattern(USERNAME),
-      // ]],
+      username: [null, [Validators.required, Validators.pattern(USERNAME)]],
       phone: [null, [Validators.pattern(CUBAN_PHONE_START_5), Validators.minLength(8), Validators.maxLength(8)]],
       address: [null, []],
       email: [null, [Validators.required, Validators.email, Validators.pattern(EMAIL_REGEX)]],
