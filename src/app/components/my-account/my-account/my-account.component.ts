@@ -9,7 +9,7 @@ import { ShowSnackbarService } from '../../../core/services/show-snackbar/show-s
 import { environment } from '../../../../environments/environment';
 import { AuthenticationService } from '../../../core/services/authentication/authentication.service';
 import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-in-user.service';
-import { CUBAN_PHONE_START_5, EMAIL_REGEX, USERNAME } from '../../../core/classes/regex.const';
+import { CUBAN_PHONE_START_5, EMAIL_REGEX, PASS_CLIENT_REGEX, USERNAME } from '../../../core/classes/regex.const';
 
 @Component({
   selector: 'app-my-account',
@@ -170,14 +170,8 @@ export class MyAccountComponent implements OnInit {
   createRegistrationForm() {
     this.fromPassRegister = this.fb.group(
       {
-        password: [
-          null,
-          [Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')],
-        ],
-        repeat: [
-          null,
-          [Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')],
-        ],
+        password: [null, [Validators.required, Validators.pattern(PASS_CLIENT_REGEX)]],
+        repeat: [null, [Validators.required, Validators.pattern(PASS_CLIENT_REGEX)]],
       },
       { validator: this.matchValidator.bind(this) },
     );
