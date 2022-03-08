@@ -408,7 +408,15 @@
       </div>
     </div>
   </div>
-  <div class="mobile-location" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20" fxHide fxShow.lt-md>
+  <div
+    (click)="openSetLocation()"
+    class="mobile-location"
+    fxLayout="row"
+    fxLayoutAlign="center center"
+    fxLayoutGap="20"
+    fxHide
+    fxShow.lt-md
+  >
     <div class="nl-logo" fxLayoutAlign="center center">
       <mat-icon>room</mat-icon>
     </div>
