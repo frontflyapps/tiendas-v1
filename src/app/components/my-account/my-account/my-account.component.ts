@@ -179,7 +179,6 @@ export class MyAccountComponent implements OnInit {
     this.registrationForm = this.fb.group({
       name: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
       lastname: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
-      username: [null],
       // username: [null, [
       //   Validators.required,
       //   Validators.pattern(USERNAME),
@@ -328,7 +327,6 @@ export class MyAccountComponent implements OnInit {
     const data = this.registrationForm.value;
     data.password = data.passwords.password;
     data.lastName = data.lastname;
-    data.username = data.email;
     data.role = 'Client';
     let token = localStorage.getItem('token');
     if (token != undefined) {
