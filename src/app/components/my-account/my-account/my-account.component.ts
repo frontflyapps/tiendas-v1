@@ -179,7 +179,7 @@ export class MyAccountComponent implements OnInit {
     this.registrationForm = this.fb.group({
       name: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
       lastname: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
-      username: [null, [Validators.required, Validators.pattern(USERNAME)]],
+      // username: [null, [Validators.required, Validators.pattern(USERNAME)]],
       phone: [null, [Validators.pattern(CUBAN_PHONE_START_5), Validators.minLength(8), Validators.maxLength(8)]],
       address: [null, []],
       email: [null, [Validators.required, Validators.email, Validators.pattern(EMAIL_REGEX)]],
