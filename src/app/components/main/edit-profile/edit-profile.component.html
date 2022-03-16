@@ -1,8 +1,7 @@
 <div class="dialog-content-wrapper">
-
   <mat-toolbar color="primary" id="toolbarHeader" matDialogTitle>
     <mat-toolbar-row fxLayoutAlign="space-between center">
-      {{'Editar perfil'|translate}}
+      {{ 'Editar perfil' | translate }}
       <button (click)="dialogRef.close()" aria-label="Close dialog" mat-icon-button>
         <mat-icon>close</mat-icon>
       </button>
@@ -11,36 +10,43 @@
 
   <div class="my-dialog-content" mat-dialog-content>
     <div class="imagePickerRow" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="gappx">
-      <ngp-image-picker ($imageChanged)="onImageChange($event)"
-                        [_config]="imagePickerConf"
-                        [_imageSrc]="(loggedInUser.avatar)?urlImage + loggedInUser.avatar:null">
+      <ngp-image-picker
+        ($imageChanged)="onImageChange($event)"
+        [_config]="imagePickerConf"
+        [_imageSrc]="loggedInUser.avatar ? urlImage + loggedInUser.avatar : null"
+      >
       </ngp-image-picker>
     </div>
 
     <form [formGroup]="form">
       <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="gappx">
         <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="gappx">
-          <span *ngIf="this.loggedInUser" class="mat-title my-2" style="font-size:24px;">
-            {{this.loggedInUser.username}}
+          <span *ngIf="this.loggedInUser" class="mat-title my-2" style="font-size: 24px">
+            {{ this.loggedInUser.username }}
           </span>
-          <span *ngIf="!this.loggedInUser" class="mat-title my-2" style="font-size:24px;">
-            {{'Username'}}
+          <span *ngIf="!this.loggedInUser" class="mat-title my-2" style="font-size: 24px">
+            {{ 'Username' }}
           </span>
         </div>
         <mat-form-field appearance="outline">
-          <mat-label>{{'Name'|translate}}</mat-label>
-          <input [formControl]="form.controls['name']" matInput placeholder="{{'Name'|translate}}" type="text">
+          <mat-label>{{ 'Name' | translate }}</mat-label>
+          <input [formControl]="form.controls['name']" matInput placeholder="{{ 'Name' | translate }}" type="text" />
           <mat-icon class="greyIcon" matSuffix>person</mat-icon>
           <mat-error *ngIf="form.controls['name'].hasError('required')">
-            {{'Name'|translate}} <strong>{{'is required'|translate}}</strong>
+            {{ 'Name' | translate }} <strong>{{ 'is required' | translate }}</strong>
           </mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline">
-          <mat-label>{{'Lastname'|translate}}</mat-label>
-          <input [formControl]="form.controls['lastName']" matInput placeholder="{{'Lastname'|translate}}" type="text">
+          <mat-label>{{ 'Lastname' | translate }}</mat-label>
+          <input
+            [formControl]="form.controls['lastName']"
+            matInput
+            placeholder="{{ 'Lastname' | translate }}"
+            type="text"
+          />
           <mat-icon class="greyIcon" matSuffix>person</mat-icon>
           <mat-error *ngIf="form.controls['lastName'].hasError('required')">
-            {{'lastName'|translate}} <strong>{{'is required'|translate}}</strong>
+            {{ 'lastName' | translate }} <strong>{{ 'is required' | translate }}</strong>
           </mat-error>
         </mat-form-field>
 
@@ -53,39 +59,84 @@
         <!--        </mat-form-field>-->
 
         <mat-form-field appearance="outline">
-          <mat-label>{{'Email'|translate}} ({{'Username' | translate}})</mat-label>
-          <input [formControl]="form.controls['email']" matInput placeholder="{{'Email'|translate}}" type="email">
+          <mat-label>{{ 'Email' | translate }} ({{ 'Username' | translate }})</mat-label>
+          <input [formControl]="form.controls['email']" matInput placeholder="{{ 'Email' | translate }}" type="email" />
           <mat-icon class="greyIcon" matSuffix>mail</mat-icon>
           <mat-error *ngIf="form.controls['email'].hasError('required')">
-            {{'email'|translate}} <strong>{{'is required'|translate}}</strong>
+            {{ 'email' | translate }} <strong>{{ 'is required' | translate }}</strong>
           </mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline">
-          <mat-label>{{'Phone'|translate}}</mat-label>
-          <input [formControl]="form.controls['phone']" matInput placeholder="{{'Phone'|translate}}" type="tel">
-          <mat-icon class="greyIcon" matSuffix>mail</mat-icon>
-          <mat-hint>{{'Formato de teléfono de 10 dígitos mínimo' | translate}}</mat-hint>
+          <mat-label>{{ 'Phone' | translate }}</mat-label>
+          <input [formControl]="form.controls['phone']" matInput placeholder="{{ 'Phone' | translate }}" type="tel" />
+          <mat-icon class="greyIcon" matSuffix>call</mat-icon>
+          <mat-hint>{{ 'Formato de teléfono de 10 dígitos mínimo' | translate }}</mat-hint>
           <mat-error *ngIf="form.controls['phone'].hasError('required')">
-            {{'phone'|translate}} <strong>{{'is required'|translate}}</strong>
+            {{ 'phone' | translate }} <strong>{{ 'is required' | translate }}</strong>
           </mat-error>
         </mat-form-field>
-        <mat-form-field appearance="outline">
+        <!-- <mat-form-field appearance="outline">
           <mat-label>{{'Dirección'|translate}}</mat-label>
           <input [formControl]="form.controls['address']" matInput placeholder="{{'Dirección'|translate}}" type="text">
           <mat-icon class="greyIcon" matSuffix>my_location</mat-icon>
           <mat-error *ngIf="form.controls['address'].hasError('required')">
             {{'Dirección'|translate}} <strong>{{'is required'|translate}}</strong>
           </mat-error>
+        </mat-form-field> -->
+        <div fxLayout="row" fxLayoutGap="10px">
+          <mat-form-field appearance="outline" fxFlex="80">
+            <mat-label>{{ 'Calle' | translate }}</mat-label>
+            <input
+              [formControl]="form.controls['street']"
+              matInput
+              placeholder="{{ 'Calle' | translate }}"
+              type="text"
+            />
+            <mat-icon class="greyIcon" matSuffix>my_location</mat-icon>
+            <mat-error *ngIf="form.controls['street'].hasError('required')">
+              {{ 'Calle' | translate }} <strong>{{ 'is required' | translate }}</strong>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline" fxFlex="20">
+            <mat-label>{{ 'Numero' | translate }}</mat-label>
+            <input
+              [formControl]="form.controls['number']"
+              matInput
+              placeholder="{{ 'Numero' | translate }}"
+              type="text"
+            />
+            <mat-icon class="greyIcon" matSuffix>numbers</mat-icon>
+            <mat-error *ngIf="form.controls['number'].hasError('required')">
+              {{ 'Numero' | translate }} <strong>{{ 'is required' | translate }}</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'Entre Calles' | translate }}</mat-label>
+          <input
+            [formControl]="form.controls['between']"
+            matInput
+            placeholder="{{ 'Numero' | translate }}"
+            type="text"
+          />
+          <mat-icon class="greyIcon" matSuffix>signpost</mat-icon>
+          <mat-error *ngIf="form.controls['between'].hasError('required')">
+            {{ 'Entre Calles' | translate }} <strong>{{ 'is required' | translate }}</strong>
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="form-field-width">
-          <mat-label>{{'Feha de nacimiento'|translate}}</mat-label>
-          <input [formControl]="form.controls['birthday']" [matDatepicker]="picker" [readonly]="true" matInput
-                 placeholder="29/9/1995">
+          <mat-label>{{ 'Feha de nacimiento' | translate }}</mat-label>
+          <input
+            [formControl]="form.controls['birthday']"
+            [matDatepicker]="picker"
+            [readonly]="true"
+            matInput
+            placeholder="29/9/1995"
+          />
           <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
           <mat-datepicker #picker [startAt]="startDate" startView="year"></mat-datepicker>
         </mat-form-field>
-
 
         <!-- <mat-slide-toggle color="primary" (change)="onSelectSliderChange($event)" [checked]="isChangePass">
           {{'Change password'|translate}}</mat-slide-toggle>
@@ -127,19 +178,18 @@
           </div>
 
         </div> -->
-
       </div>
-
     </form>
-
-
   </div>
 
   <div fxLayout="row" fxLayoutAlign="end start" mat-dialog-actions>
-    <button (click)="onUpdateProfile()" [disabled]="this.form.invalid || (isChangePass && this.formPass.invalid )"
-            color="primary"
-            mat-flat-button>{{'Save'|translate}}</button>
-
+    <button
+      (click)="onUpdateProfile()"
+      [disabled]="this.form.invalid || (isChangePass && this.formPass.invalid)"
+      color="primary"
+      mat-flat-button
+    >
+      {{ 'Save' | translate }}
+    </button>
   </div>
-
 </div>
