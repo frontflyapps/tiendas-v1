@@ -1,6 +1,6 @@
-<div class='container'>
-  <div fxLayout='column' fxLayoutAlign='start stretch'>
-    <mat-card class='mx-auto my-3' id='CardLogin'>
+<div class="container">
+  <div fxLayout="column" fxLayoutAlign="start stretch">
+    <mat-card id="CardLogin" class="mx-auto my-3">
       <!-- <div *ngIf="inLoading" class="loading-shade">
         <mat-spinner *ngIf="inLoading"></mat-spinner>
       </div> -->
@@ -12,52 +12,52 @@
           class='login-logo mx-auto'
           src='assets/images/pymesbulevar/logo-r-white.png'
         />
+      <div fxLayout="column" fxLayoutAlign="center start" class="py-2 mt-2">
+        <img *ngIf="!showRegistrationForm" src="assets/images/logoWhite.png" class="login-logo mx-auto" />
       </div>
 
-      <div class='mat-elevation-z8' fxLayout='column' fxLayoutAlign='start stretch' id='CardBodyLoggin'>
-        <div class='w-100 p-2 mt-3' fxLayout='row' fxLayoutAlign='center center'>
+      <div fxLayout="column" id="CardBodyLoggin" class="mat-elevation-z8" fxLayoutAlign="start stretch">
+        <div fxLayout="row" class="w-100 p-2 mt-3" fxLayoutAlign="center center">
           <button
-            (click)='onGoBefore()'
-            *ngIf='showRegistrationForm || showResetPassForm || showNewPassForm || showPinForm || showActivateForm'
-            [routerLink]="['/my-account']"
+            *ngIf="showRegistrationForm || showResetPassForm || showNewPassForm || showPinForm || showActivateForm"
             mat-icon-button
+            [routerLink]="['/my-account']"
+            (click)="onGoBefore()"
           >
             <mat-icon>arrow_back</mat-icon>
           </button>
-          <span *ngIf='showLoginForm' class='mat-title mb-0' ngClass.xs='mat-body-2'>{{
+          <span ngClass.xs="mat-body-2" class="mat-title mb-0" *ngIf="showLoginForm">{{
             'Sign in to your account' | translate
-            }}</span>
-          <span *ngIf='showRegistrationForm' class='mat-title mb-0' ngClass.xs='mat-body-2'>{{
+          }}</span>
+          <span ngClass.xs="mat-body-2" class="mat-title mb-0" *ngIf="showRegistrationForm">{{
             'Register and be part of us' | translate
-            }}</span>
-          <span *ngIf='showPinForm' class='mat-title mb-0' ngClass.xs='mat-body-2'>{{
+          }}</span>
+          <span ngClass.xs="mat-body-2" class="mat-title mb-0" *ngIf="showPinForm">{{
             'User validation' | translate
-            }}</span>
-          <span *ngIf='showResetPassForm' class='mat-title mb-0' ngClass.xs='mat-body-2'>{{
+          }}</span>
+          <span ngClass.xs="mat-body-2" class="mat-title mb-0" *ngIf="showResetPassForm">{{
             'Change your password' | translate
-            }}</span>
-          <span *ngIf='showNewPassForm' class='mat-title mb-0' ngClass.xs='mat-body-2'>{{
+          }}</span>
+          <span ngClass.xs="mat-body-2" class="mat-title mb-0" *ngIf="showNewPassForm">{{
             'Create new password' | translate
-            }}</span>
-          <span *ngIf='showActivateForm' class='mat-title mb-0' ngClass.xs='mat-body-2'>{{
+          }}</span>
+          <span ngClass.xs="mat-body-2" class="mat-title mb-0" *ngIf="showActivateForm">{{
             'Validate account' | translate
-            }}</span>
+          }}</span>
         </div>
 
-        <!-- =========================================================================== -->
-        <!-- LOGIN -->
-        <div *ngIf='showLoginForm' class='FormLayout' fxLayout='column' fxLayoutAlign='start stretch'>
-          <form [formGroup]='loginForm' class='login-form'>
-            <mat-form-field appearance='outline' class='example-full-width mt-2'>
+        <div fxLayout="column" fxLayoutAlign="start stretch" *ngIf="showLoginForm" class="FormLayout">
+          <form class="login-form" [formGroup]="loginForm">
+            <mat-form-field class="example-full-width mt-2" appearance="outline">
               <mat-label>{{ 'Email' | translate }}</mat-label>
               <input
-                [disabled]='inLoading'
-                [formControl]="loginForm.controls['username']"
-                autocomplete='username'
                 matInput
-                name='username'
                 placeholder="{{ 'Email' | translate }}"
+                [disabled]="inLoading"
+                [formControl]="loginForm.controls['username']"
                 required
+                autocomplete="username"
+                name="username"
               />
               <mat-error *ngIf="loginForm.controls['username'].hasError('required')">
                 {{ 'Username' | translate }} <strong>{{ 'is required' | translate }}</strong>
@@ -67,35 +67,35 @@
               </mat-error>
             </mat-form-field>
 
-            <mat-form-field appearance='outline' class='example-full-width'>
+            <mat-form-field class="example-full-width" appearance="outline">
               <mat-label>{{ 'Password' | translate }}</mat-label>
               <input
-                [disabled]='inLoading'
-                [formControl]="loginForm.controls['password']"
-                autocomplete='new-password'
+                type="{{ passType }}"
                 matInput
-                name='password'
                 placeholder="{{ 'Password' | translate }}"
-                type='{{ passType }}'
+                autocomplete="new-password"
+                [disabled]="inLoading"
+                [formControl]="loginForm.controls['password']"
+                name="password"
               />
-              <mat-icon (click)='showPass()' class='grey-700' matSuffix style='cursor: pointer'
-              >remove_red_eye
+              <mat-icon style="cursor: pointer" matSuffix class="grey-700" (click)="showPass()"
+                >remove_red_eye
               </mat-icon>
               <mat-error *ngIf="loginForm.controls['username'].hasError('required')">
                 {{ 'Password' | translate }} <strong>{{ 'is required' | translate }}</strong>
               </mat-error>
             </mat-form-field>
 
-            <div class='mb-3' fxLayout='row' fxLayoutAlign='center center'>
+            <div fxLayout="row" fxLayoutAlign="center center" class="mb-3">
               <button
-                (click)="login(loginForm.controls['username'].value, loginForm.controls['password'].value)"
-                [disabled]='!loginForm.valid || inLoading'
-                class='mx-3 w-70'
-                color='primary'
                 mat-raised-button
-                type='submit'
+                color="primary"
+                class="mx-3 w-70"
+                [disabled]="!loginForm.valid || inLoading"
+                type="submit"
+                (click)="login(loginForm.controls['username'].value, loginForm.controls['password'].value)"
               >
-                <span class='uppercase'>{{ 'Entrar' | translate }}</span>
+                <span class="uppercase">{{ 'Entrar' | translate }}</span>
               </button>
             </div>
 
@@ -104,30 +104,30 @@
                 class="uppercase mat-subheading-1 my-1  grey-700 span-link">{{'Forgot my passsword'|translate}}</a>
             </div> -->
 
-            <div *ngIf='localDatabaseUsers' class='my-1' fxLayout='row' fxLayoutAlign='center center'>
+            <div *ngIf="localDatabaseUsers" fxLayout="row" fxLayoutAlign="center center" class="my-1">
               <a
+                [routerLink]="['/my-account']"
                 [queryParams]="{ modal: 'password' }"
-                [routerLink]="['/my-account']"
-                class='uppercase mat-subheading-1 my-1 grey-700 span-link'
-              >{{ 'Forgot my passsword' | translate }}</a
+                class="uppercase mat-subheading-1 my-1 grey-700 span-link"
+                >{{ 'Forgot my passsword' | translate }}</a
               >
             </div>
 
-            <div *ngIf='localDatabaseUsers' class='my-1' fxLayout='row' fxLayoutAlign='center center'>
+            <div *ngIf="localDatabaseUsers" fxLayout="row" fxLayoutAlign="center center" class="my-1">
               <a
+                [routerLink]="['/my-account']"
                 [queryParams]="{ modal: 'validate' }"
-                [routerLink]="['/my-account']"
-                class='uppercase mat-subheading-1 my-1 grey-700 span-link'
-              >{{ 'Validate account' | translate }}</a
+                class="uppercase mat-subheading-1 my-1 grey-700 span-link"
+                >{{ 'Validate account' | translate }}</a
               >
             </div>
 
-            <div *ngIf='localDatabaseUsers' class='my-1' fxLayout='row' fxLayoutAlign='center center'>
+            <div *ngIf="localDatabaseUsers" fxLayout="row" fxLayoutAlign="center center" class="my-1">
               <a
-                [queryParams]="{ modal: 'registration' }"
                 [routerLink]="['/my-account']"
-                class='uppercase mat-subheading-1 my-1 grey-700 span-link'
-              >{{ 'Register' | translate }}</a
+                [queryParams]="{ modal: 'registration' }"
+                class="uppercase mat-subheading-1 my-1 grey-700 span-link"
+                >{{ 'Register' | translate }}</a
               >
             </div>
 
@@ -145,19 +145,18 @@
           </form>
         </div>
 
-        <!-- =========================================================================== -->
-        <!-- REGISTRATION -->
-        <div *ngIf='showRegistrationForm' class='FormLayout' fxLayout='column' fxLayoutAlign='start stretch'>
-          <form class='example-full-width'>
-            <div class='pt-3' fxLayout='column' fxLayoutAlign='space-around stretch'>
-              <div fxLayout='row wrap' fxLayoutAlign='space-between start' fxLayoutGap='gappx'>
-                <mat-form-field appearance='outline' fxFlex='48' fxFlex.lt-md='100'>
+        <div fxLayout="column" fxLayoutAlign="start stretch" *ngIf="showRegistrationForm" class="FormLayout">
+          <form class="example-full-width">
+            <div fxLayout="column" fxLayoutAlign="space-around stretch" class="pt-3" fxLayoutGap="1rem">
+              <span class="section-title" translate>Datos Personales</span>
+              <div fxLayout="row wrap" fxLayoutAlign="space-between start" fxLayoutGap="gappx">
+                <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline">
                   <mat-label>{{ 'Name' | translate }}</mat-label>
                   <input
-                    [formControl]="registrationForm.controls['name']"
                     matInput
                     placeholder="{{ 'Name' | translate }}"
                     required
+                    [formControl]="registrationForm.controls['name']"
                   />
                   <mat-error *ngIf="registrationForm.controls['name'].hasError('required')">
                     {{ 'Name' | translate }}&nbsp;<strong>{{ 'is required' | translate }}</strong>
@@ -167,13 +166,13 @@
                   </mat-error>
                 </mat-form-field>
 
-                <mat-form-field appearance='outline' fxFlex='48' fxFlex.lt-md='100'>
+                <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline">
                   <mat-label>{{ 'Lastname' | translate }}</mat-label>
                   <input
-                    [formControl]="registrationForm.controls['lastname']"
                     matInput
                     placeholder="{{ 'Lastname' | translate }}"
                     required
+                    [formControl]="registrationForm.controls['lastname']"
                   />
                   <mat-error *ngIf="registrationForm.controls['lastname'].hasError('required')">
                     {{ 'Lastname' | translate }}&nbsp;<strong>{{ 'is required' | translate }}</strong>
@@ -184,31 +183,13 @@
                 </mat-form-field>
               </div>
 
-              <!-- <mat-form-field appearance="outline" fxFlex="48" fxFlex.lt-md="100">
-                <mat-label>{{ 'Username' | translate }}</mat-label>
-                <input
-                  (keypress)="utilsService.keyPressAlphaAndNumbersModUsername($event)"
-                  [formControl]="registrationForm.controls['username']"
-                  matInput
-                  placeholder="{{ 'Username' | translate }}"
-                  required
-                />
-                <mat-error *ngIf="registrationForm.controls['username'].hasError('required')">
-                  {{ 'Username' | translate }} <strong>{{ 'is required' | translate }}</strong>
-                </mat-error>
-                <mat-error *ngIf="registrationForm.controls['username'].hasError('pattern')">
-                  {{ 'Solo letra y números' | translate }}
-                </mat-error>
-              </mat-form-field> -->
-
-              <mat-form-field appearance='outline' fxFlex='48' fxFlex.lt-md='100'>
+              <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline">
                 <mat-label>{{ 'Email' | translate }}</mat-label>
                 <input
-                  (keypress)='utilsService.keyLettersNumberForEmail($event)'
-                  [formControl]="registrationForm.controls['email']"
                   matInput
                   placeholder="{{ 'Email' | translate }}"
                   required
+                  [formControl]="registrationForm.controls['email']"
                 />
                 <mat-error *ngIf="registrationForm.controls['email'].hasError('required')">
                   {{ 'Email' | translate }} <strong>{{ 'is required' | translate }}</strong>
@@ -218,105 +199,186 @@
                 </mat-error>
               </mat-form-field>
 
-              <mat-form-field appearance='outline' fxFlex='48' fxFlex.lt-md='100' id='phone'>
-                <mat-label>{{ 'Teléfono (opcional)' | translate }}</mat-label>
-                <span class='mr-2' matPrefix>+ 53</span>
+              <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline">
+                <mat-label>{{ 'No. de Identidad' | translate }}</mat-label>
                 <input
-                  (keypress)='utilsService.keyPressNumbers($event)'
-                  [formControl]="registrationForm.get('phone')"
                   matInput
-                  placeholder="{{ 'Teléfono cubano...' | translate }}"
+                  placeholder="{{ 'No. de Identidad' | translate }}"
+                  required
+                  (keypress)="utilsService.keyPressAlphaAndNumbersModUsername($event)"
+                  [formControl]="registrationForm.controls['ci']"
                 />
-                <mat-hint *ngIf="!registrationForm.get('phone').value">
-                  {{ 'Escriba un teléfono móvil cubano, Ex: 51234567' | translate }}
-                </mat-hint>
-                <mat-hint *ngIf="registrationForm.get('phone').value && registrationForm.get('phone').valid">
-                  {{ 'Número válido' | translate }}
-                </mat-hint>
-                <mat-error
-                  *ngIf="
-                    (registrationForm.controls['phone'].hasError('minlength') ||
-                      registrationForm.controls['phone'].hasError('maxlength')) &&
-                    !registrationForm.controls['phone'].hasError('pattern')
-                  "
-                >
-                  {{ 'Longitud del número' | translate }}&nbsp;<strong>{{
-                  '8 caracteres, Ex: 51234567' | translate
-                  }}</strong>
+                <mat-error *ngIf="registrationForm.controls['ci'].hasError('required')">
+                  {{ 'No. de Identidad' | translate }} <strong>{{ 'is required' | translate }}</strong>
                 </mat-error>
-                <mat-error *ngIf="registrationForm.controls['phone'].hasError('pattern')">
-                  {{ 'El número' | translate }}&nbsp;<strong>{{
-                  'debe empezar con 5, Ex: 51234567' | translate
-                  }}</strong>
+                <mat-error *ngIf="registrationForm.controls['ci'].hasError('minLength')">
+                  {{ 'El número de identidad debe contener 11 dígitos' | translate }}
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline">
+                <mat-label>{{ 'No. de Licencia TCP' | translate }}</mat-label>
+
+                <input
+                  matInput
+                  placeholder="{{ 'No. de Licencia TCP' | translate }}"
+                  required
+                  (keypress)="utilsService.keyPressAlphaAndNumbersModUsername($event)"
+                  [formControl]="registrationForm.controls['licenceTCP']"
+                />
+
+                <mat-error *ngIf="registrationForm.controls['licenceTCP'].hasError('required')">
+                  {{ 'No. de Licencia TCP' | translate }} <strong>{{ 'is required' | translate }}</strong>
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline">
+                <mat-label>{{ 'No. carnet ONAT' | translate }}</mat-label>
+
+                <input
+                  matInput
+                  placeholder="{{ 'No. carnet ONAT' | translate }}"
+                  required
+                  (keypress)="utilsService.keyPressAlphaAndNumbersModUsername($event)"
+                  [formControl]="registrationForm.controls['ciONAT']"
+                />
+
+                <mat-error *ngIf="registrationForm.controls['ciONAT'].hasError('required')">
+                  {{ 'No.  carnet ONAT' | translate }} <strong>{{ 'is required' | translate }}</strong>
+                </mat-error>
+              </mat-form-field>
+
+              <div fxLayout="row wrap" fxLayoutAlign="space-between start" fxLayoutGap="gappx">
+                <mat-form-field id="phone" fxFlex="48" fxFlex.lt-md="100" appearance="outline">
+                  <mat-label>{{ 'Teléfono celular' | translate }}</mat-label>
+                  <span matPrefix class="mr-2">+ 53</span>
+                  <input
+                    matInput
+                    placeholder="{{ 'Teléfono cubano...' | translate }}"
+                    required
+                    (keypress)="utilsService.keyPressNumbers($event)"
+                    [formControl]="registrationForm.get('phoneCel')"
+                  />
+                  <mat-hint *ngIf="!registrationForm.get('phoneCel').value">
+                    {{ 'Escriba un teléfono móvil cubano, Ex: 51234567' | translate }}
+                  </mat-hint>
+                  <mat-hint *ngIf="registrationForm.get('phoneCel').value && registrationForm.get('phoneCel').valid">
+                    {{ 'Número válido' | translate }}
+                  </mat-hint>
+                  <mat-error
+                    *ngIf="
+                      (registrationForm.controls['phoneCel'].hasError('minlength') ||
+                        registrationForm.controls['phoneCel'].hasError('maxlength')) &&
+                      !registrationForm.controls['phoneCel'].hasError('pattern')
+                    "
+                  >
+                    {{ 'Longitud del número' | translate }}&nbsp;<strong>{{
+                      '8 caracteres, Ex: 51234567' | translate
+                    }}</strong>
+                  </mat-error>
+                  <mat-error *ngIf="registrationForm.controls['phoneCel'].hasError('pattern')">
+                    {{ 'El número' | translate }}&nbsp;<strong>{{
+                      'debe empezar con 5, Ex: 51234567' | translate
+                    }}</strong>
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline">
+                  <mat-label>{{ 'Teléfono fijo' | translate }}</mat-label>
+                  <input
+                    matInput
+                    placeholder="{{ 'Teléfono fijo' | translate }}"
+                    required
+                    (keypress)="utilsService.keyPressNumbers($event)"
+                    [formControl]="registrationForm.get('phone')"
+                  />
+
+                  <mat-error *ngIf="registrationForm.controls['phoneCel'].hasError('pattern')">
+                    {{ 'Teléfono fijo' | translate }}&nbsp;<strong>{{ 'is required' | translate }}</strong>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline">
+                <mat-label>{{ 'Actividad que desarrolla' | translate }}</mat-label>
+
+                <textarea
+                  [formControl]="registrationForm.get('activity')"
+                  matInput
+                  required
+                  placeholder="{{ 'Descripción' | translate }}"
+                ></textarea>
+
+                <mat-error *ngIf="registrationForm.controls['activity'].hasError('required')">
+                  {{ 'Actividad que desarrolla' | translate }} <strong>{{ 'is required' | translate }}</strong>
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline">
+                <mat-label>{{ 'Dirección' | translate }}</mat-label>
+                <input
+                  matInput
+                  placeholder="{{ 'Dirección' | translate }}"
+                  required
+                  [formControl]="registrationForm.controls['address']"
+                />
+                <mat-error *ngIf="registrationForm.controls['address'].hasError('required')">
+                  {{ 'Dirección' | translate }} <strong>{{ 'is required' | translate }}</strong>
                 </mat-error>
               </mat-form-field>
 
               <div
-                fxLayout='row'
-                fxLayout.xs='column'
-                fxLayoutAlign='space-between center'
-                fxLayoutAlign.xs='stretch start'
+                fxLayout="row"
+                fxLayoutAlign="space-between center"
+                fxLayout.xs="column"
+                fxLayoutAlign.xs="stretch start"
               >
-                <mat-form-field appearance='outline' class='example-full-width' fxFlex='48'>
+                <mat-form-field class="example-full-width" appearance="outline" fxFlex="48">
                   <mat-label>{{ 'Password' | translate }}</mat-label>
                   <input
-                    [formControl]="fromPassRegister.controls['password']"
                     matInput
                     placeholder="{{ 'Password' | translate }}"
+                    type="{{ passType }}"
                     required
-                    type='{{ passType }}'
+                    [formControl]="fromPassRegister.controls['password']"
                   />
-                  <mat-icon (click)='showPass()' class='grey-600' matSuffix>remove_red_eye</mat-icon>
+                  <mat-icon matSuffix class="grey-600" (click)="showPass()">remove_red_eye</mat-icon>
                   <mat-error *ngIf="fromPassRegister.controls['password'].hasError('required')">
                     {{ 'Password' | translate }} <strong>{{ 'is required' | translate }}</strong>
                   </mat-error>
-
-                  <mat-error
-                    *ngIf="
-                      fromPassRegister.hasError('mismatch') &&
-                      !fromPassRegister.controls['password'].hasError('pattern')
-                    "
-                  >
+                  <mat-error *ngIf="fromPassRegister.controls['password'].hasError('minlength')">
+                    {{ 'Password' | translate }} <strong>{{ 'must be at least 6 characters' | translate }}</strong>
+                  </mat-error>
+                  <mat-error *ngIf="fromPassRegister.hasError('mismatch')">
                     {{ 'Password' | translate }} <strong>{{ 'most be equals' | translate }}</strong>
                   </mat-error>
                 </mat-form-field>
 
                 <mat-form-field
+                  class="example-full-width"
+                  appearance="outline"
+                  fxFlex="48"
                   [ngClass]="{
                     'mat-form-field-invalid': fromPassRegister.hasError('mismatch'),
                     'ng-invalid': fromPassRegister.hasError('mismatch'),
                     'ng-valid': !fromPassRegister.hasError('mismatch')
                   }"
-                  appearance='outline'
-                  class='example-full-width'
-                  fxFlex='48'
                 >
                   <mat-label>{{ 'Repita la contraseña' | translate }}</mat-label>
                   <input
-                    [formControl]="fromPassRegister.controls['repeat']"
-                    [ngClass]="{ 'ng-invalid': fromPassRegister.hasError('mismatch') }"
                     matInput
                     placeholder="{{ 'Repita la contraseña' | translate }}"
                     required
-                    type='{{ passType }}'
+                    type="{{ passType }}"
+                    [ngClass]="{ 'ng-invalid': fromPassRegister.hasError('mismatch') }"
+                    [formControl]="fromPassRegister.controls['repeat']"
                   />
-                  <mat-icon (click)='showPass()' class='grey-600' matSuffix>remove_red_eye</mat-icon>
-                  <mat-error
-                    *ngIf="
-                      fromPassRegister.hasError('mismatch') &&
-                      !fromPassRegister.controls['password'].hasError('pattern')
-                    "
-                  >
+                  <mat-icon matSuffix class="grey-600" (click)="showPass()">remove_red_eye</mat-icon>
+                  <mat-error *ngIf="fromPassRegister.hasError('mismatch')">
                     {{ 'Password' | translate }} <strong>{{ 'most be equals' | translate }}</strong>
                   </mat-error>
                 </mat-form-field>
               </div>
-              <mat-error *ngIf="fromPassRegister.controls['password'].hasError('pattern')">
-                {{
-                'La contraseña debe contener 8 dígitos y al menos una mayúscula, una minúscula, un número y un caracter especial.'
-                  | translate
-                }}
-              </mat-error>
 
               <!-- <div fxLayout="row" fxLayoutAlign="center center">
                 <ngx-recaptcha2 class="mb-3" #captchaElem [siteKey]="secretKeyCaptcha" (reset)="handleReset()" (expire)="handleExpire()"
@@ -325,50 +387,108 @@
                 </ngx-recaptcha2>
               </div> -->
 
-              <div fxLayout='row' fxLayoutAlign='center center'>
+              <span class="section-title" translate>Datos Financieros</span>
+
+              <mat-form-field appearance="outline">
+                <mat-label>{{ 'Cuenta bancaria MLC' | translate }}</mat-label>
+                <input
+                  matInput
+                  placeholder="{{ 'Cuenta bancaria MLC' | translate }}"
+                  required
+                  (keypress)="utilsService.keyPressNumbers($event)"
+                  [formControl]="registrationForm.controls['bankAccount']"
+                />
+                <mat-error *ngIf="registrationForm.controls['bankAccount'].hasError('required')">
+                  {{ 'Cuenta bancaria MLC' | translate }} <strong>{{ 'is required' | translate }}</strong>
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>{{ 'Banco' | translate }}</mat-label>
+                <input
+                  matInput
+                  placeholder="{{ 'Banco' | translate }}"
+                  required
+                  [formControl]="registrationForm.controls['bankName']"
+                />
+                <mat-error *ngIf="registrationForm.controls['bankName'].hasError('required')">
+                  {{ 'Banco' | translate }} <strong>{{ 'is required' | translate }}</strong>
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>{{ 'Sucursal' | translate }}</mat-label>
+                <input
+                  matInput
+                  placeholder="{{ 'Sucursal' | translate }}"
+                  required
+                  [formControl]="registrationForm.controls['bankOffice']"
+                />
+                <mat-error *ngIf="registrationForm.controls['bankOffice'].hasError('required')">
+                  {{ 'Sucursal' | translate }} <strong>{{ 'is required' | translate }}</strong>
+                </mat-error>
+              </mat-form-field>
+
+              <div fxLayout="column" fxLayoutGap=".3rem">
+                <span class="section-title" translate>Documentos adjuntos</span>
+                <span class="mat-caption section-sub-title" translate>
+                  Estos documentos serán usados para validar su registro en nuestra tienda. (Se admiten fotos o pdf de
+                  sus documentos TCP)
+                </span>
+              </div>
+
+              <app-upload-file
+                [fileTypes]="'.pdf'"
+                [multiple]="true"
+                [label]="'Seleccione adjuntos'"
+                (onUploadFile)="onSelectPdf($event)"
+              >
+              </app-upload-file>
+
+              <div fxLayout="row" fxLayoutAlign="center center">
                 <button
-                  (click)='onSignUp()'
-                  [disabled]='registrationForm.invalid'
-                  class='RegisterBtn'
-                  color='primary'
                   mat-raised-button
+                  color="primary"
+                  class="RegisterBtn"
+                  [disabled]="registrationForm.invalid || !selectedDocument"
+                  (click)="onSignUp()"
                 >
-                  <span class='uppercase color-white'>{{ 'Register' | translate }}</span>
+                  <span class="uppercase color-white">{{ 'Register' | translate }}</span>
                 </button>
               </div>
             </div>
           </form>
         </div>
 
-        <div *ngIf='showPinForm' class='FormLayout' fxLayout='column' fxLayoutAlign='start stretch'>
-          <form class='example-full-width'>
-            <div fxLayout='column' fxLayoutAlign='space-around stretch'>
-              <span class='mat-subheader color-grey-700 mb-1'>{{
+        <div fxLayout="column" class="FormLayout" fxLayoutAlign="start stretch" *ngIf="showPinForm">
+          <form class="example-full-width">
+            <div fxLayout="column" fxLayoutAlign="space-around stretch">
+              <span class="mat-subheader color-grey-700 mb-1">{{
                 'Enter the authentication pin sent to your email' | translate
-                }}</span>
+              }}</span>
 
-              <mat-form-field appearance='outline' class='example-full-width'>
+              <mat-form-field class="example-full-width" appearance="outline">
                 <mat-label>{{ 'Authentication pin' | translate }}</mat-label>
                 <input
-                  [formControl]="pinForm.controls['pin']"
                   matInput
                   placeholder="{{ 'Authentication pin' | translate }}"
                   required
+                  [formControl]="pinForm.controls['pin']"
                 />
                 <mat-error *ngIf="pinForm.controls['pin'].hasError('required')">
                   {{ 'Authentication pin' | translate }}&nbsp;<strong>{{ 'is required' | translate }}</strong>
                 </mat-error>
               </mat-form-field>
 
-              <div fxLayout='row' fxLayoutAlign='center center'>
+              <div fxLayout="row" fxLayoutAlign="center center">
                 <button
-                  (click)='onCheckPin()'
-                  [disabled]='!pinForm.valid || inLoading'
-                  class='px-3'
-                  color='primary'
                   mat-raised-button
+                  color="primary"
+                  class="px-3"
+                  [disabled]="!pinForm.valid || inLoading"
+                  (click)="onCheckPin()"
                 >
-                  <span class='uppercase color-white'>{{ 'Validate pin' | translate }}</span>
+                  <span class="uppercase color-white">{{ 'Validate pin' | translate }}</span>
                 </button>
               </div>
             </div>
@@ -381,77 +501,77 @@
           </div>-->
         </div>
 
-        <div *ngIf='showActivateForm' class='FormLayout' fxLayout='column' fxLayoutAlign='start stretch'>
-          <form class='example-full-width'>
-            <div fxLayout='column' fxLayoutAlign='space-around stretch'>
-              <mat-form-field appearance='outline' class='example-full-width'>
+        <div fxLayout="column" class="FormLayout" fxLayoutAlign="start stretch" *ngIf="showActivateForm">
+          <form class="example-full-width">
+            <div fxLayout="column" fxLayoutAlign="space-around stretch">
+              <mat-form-field class="example-full-width" appearance="outline">
                 <mat-label>{{ 'Email' | translate }}</mat-label>
                 <input
-                  [formControl]="activateForm.controls['email']"
                   matInput
                   placeholder="{{ 'Email' | translate }}"
                   required
+                  [formControl]="activateForm.controls['email']"
                 />
                 <mat-error *ngIf="activateForm.controls['email'].hasError('required')">
                   {{ 'Email' | translate }} <strong>{{ 'is required' | translate }}</strong>
                 </mat-error>
               </mat-form-field>
 
-              <mat-form-field appearance='outline' class='example-full-width'>
+              <mat-form-field class="example-full-width" appearance="outline">
                 <mat-label>{{ 'Authentication pin' | translate }}</mat-label>
                 <input
-                  [formControl]="activateForm.controls['pin']"
                   matInput
                   placeholder="{{ 'Authentication pin' | translate }}"
                   required
+                  [formControl]="activateForm.controls['pin']"
                 />
                 <mat-error *ngIf="activateForm.controls['pin'].hasError('required')">
                   {{ 'Authentication pin' | translate }}&nbsp;<strong>{{ 'is required' | translate }}</strong>
                 </mat-error>
               </mat-form-field>
 
-              <div fxLayout='row' fxLayoutAlign='center center'>
+              <div fxLayout="row" fxLayoutAlign="center center">
                 <button
-                  (click)='onValidateAccount()'
-                  [disabled]='!activateForm.valid || inLoading'
-                  class='px-3'
-                  color='primary'
                   mat-raised-button
+                  color="primary"
+                  class="px-3"
+                  [disabled]="!activateForm.valid || inLoading"
+                  (click)="onValidateAccount()"
                 >
-                  <span class='uppercase color-white'>{{ 'Activate account' | translate }}</span>
+                  <span class="uppercase color-white">{{ 'Activate account' | translate }}</span>
                 </button>
               </div>
             </div>
           </form>
         </div>
 
-        <div *ngIf='showResetPassForm' class='FormLayout' fxLayout='column' fxLayoutAlign='start stretch'>
-          <form class='example-full-width'>
-            <div fxLayout='column' fxLayoutAlign='space-around stretch'>
-              <span class='mat-subheader color-grey-700 mb-1'>{{ 'Insert your email' | translate }}</span>
+        <div fxLayout="column" class="FormLayout" fxLayoutAlign="start stretch" *ngIf="showResetPassForm">
+          <form class="example-full-width">
+            <div fxLayout="column" fxLayoutAlign="space-around stretch">
+              <span class="mat-subheader color-grey-700 mb-1">{{ 'Insert your email' | translate }}</span>
 
-              <mat-form-field appearance='outline' class='example-full-width'>
+              <mat-form-field class="example-full-width" appearance="outline">
                 <mat-label>{{ 'Email' | translate }}</mat-label>
                 <input
-                  [formControl]="insertEmailPassForm.controls['email']"
                   matInput
                   placeholder="{{ 'email' | translate }}"
                   required
+                  [formControl]="insertEmailPassForm.controls['email']"
                 />
                 <mat-error *ngIf="insertEmailPassForm.controls['email'].hasError('required')">
                   {{ 'Email' | translate }}&nbsp;<strong>{{ 'is required' | translate }}</strong>
                 </mat-error>
               </mat-form-field>
 
-              <div fxLayout='row' fxLayoutAlign='center center'>
+              <div fxLayout="row" fxLayoutAlign="center center">
                 <button
-                  (click)='onSendEmail2ChangePass()'
-                  [disabled]='!insertEmailPassForm.valid || inLoading'
-                  class='w-70'
-                  color='primary'
                   mat-raised-button
+                  color="primary"
+                  class="w-70"
+                  [disabled]="!insertEmailPassForm.valid || inLoading"
+                  (click)="onSendEmail2ChangePass()"
                 >
-                  <span class='uppercase color-white'>{{ 'Send' | translate }}</span>
+                  <span class="uppercase color-white">{{ 'Send' | translate }}</span>
                 </button>
               </div>
             </div>
@@ -459,25 +579,25 @@
         </div>
 
         <div
-          *ngIf='showNewPassForm'
-          class='FormLayout'
-          fxLayout='column'
-          fxLayoutAlign='start stretch'
-          style='max-height: 60vh; overflow-y: scroll'
+          fxLayout="column"
+          class="FormLayout"
+          fxLayoutAlign="start stretch"
+          *ngIf="showNewPassForm"
+          style="max-height: 60vh; overflow-y: scroll"
         >
-          <div class='alert alert-primary py-2' role='alert'>
-            <span class='mat-body-2'>{{ 'Insert the pin sent to your phone' | translate }}</span>
+          <div class="alert alert-primary" class="py-2" role="alert">
+            <span class="mat-body-2">{{ 'Insert the pin sent to your phone' | translate }}</span>
           </div>
 
-          <form [formGroup]='changeToNewPassForm' class='login-form'>
-            <mat-form-field appearance='outline' class='example-full-width mt-2'>
+          <form class="login-form" [formGroup]="changeToNewPassForm">
+            <mat-form-field class="example-full-width mt-2" appearance="outline">
               <mat-label>{{ 'Código pin' | translate }}</mat-label>
               <input
-                [disabled]='inLoading'
-                [formControl]="changeToNewPassForm.controls['pin']"
                 matInput
                 placeholder="{{ 'Código pin' | translate }}"
+                [disabled]="inLoading"
                 required
+                [formControl]="changeToNewPassForm.controls['pin']"
               />
               <mat-error *ngIf="changeToNewPassForm.controls['pin'].hasError('required')">
                 {{ 'Código pin' | translate }}&nbsp;<strong>{{ 'is required' | translate }}</strong>
@@ -485,23 +605,23 @@
             </mat-form-field>
 
             <div
-              class='mt-3'
-              fxLayout='row wrap'
-              fxLayout.xs='column'
-              fxLayoutAlign='space-between start'
-              fxLayoutAlign.xs='stretch start'
+              fxLayout="row wrap"
+              class="mt-3"
+              fxLayoutAlign="space-between start"
+              fxLayout.xs="column"
+              fxLayoutAlign.xs="stretch start"
             >
-              <mat-form-field appearance='outline' class='example-full-width' fxFlex='100'>
+              <mat-form-field class="example-full-width" appearance="outline" fxFlex="100">
                 <mat-label>{{ 'Password' | translate }}</mat-label>
                 <input
-                  [formControl]="formPass.controls['password']"
                   matInput
                   placeholder="{{ 'Password' | translate }}"
+                  type="{{ passType2 }}"
                   required
-                  type='{{ passType2 }}'
+                  [formControl]="formPass.controls['password']"
                 />
-                <mat-icon (click)='showPass2()' class='grey-600' matSuffix style='cursor: pointer'
-                >remove_red_eye
+                <mat-icon matSuffix style="cursor: pointer" class="grey-600" (click)="showPass2()"
+                  >remove_red_eye
                 </mat-icon>
                 <mat-error *ngIf="formPass.controls['password'].hasError('required')">
                   {{ 'Password' | translate }}&nbsp;<strong>{{ 'is required' | translate }}</strong>
@@ -515,38 +635,38 @@
               </mat-form-field>
 
               <mat-form-field
+                class="example-full-width"
+                appearance="outline"
+                fxFlex="100"
                 [ngClass]="{
                   'mat-form-field-invalid': formPass.hasError('mismatch'),
                   'ng-invalid': formPass.hasError('mismatch'),
                   'ng-valid': !formPass.hasError('mismatch')
                 }"
-                appearance='outline'
-                class='example-full-width'
-                fxFlex='100'
               >
                 <mat-label>{{ 'Repita la contraseña' | translate }}</mat-label>
                 <input
-                  [formControl]="formPass.controls['repeat']"
-                  [ngClass]="{ 'ng-invalid': formPass.hasError('mismatch') }"
                   matInput
                   placeholder="{{ 'Repita la contraseña' | translate }}"
                   required
-                  type='{{ passType }}'
+                  type="{{ passType }}"
+                  [ngClass]="{ 'ng-invalid': formPass.hasError('mismatch') }"
+                  [formControl]="formPass.controls['repeat']"
                 />
-                <mat-icon (click)='showPass()' class='grey-600' matSuffix>remove_red_eye</mat-icon>
+                <mat-icon matSuffix class="grey-600" (click)="showPass()">remove_red_eye</mat-icon>
               </mat-form-field>
             </div>
 
-            <div class='mb-3' fxLayout='row' fxLayoutAlign='center center'>
+            <div fxLayout="row" fxLayoutAlign="center center" class="mb-3">
               <button
-                (click)="onNewPass(changeToNewPassForm.controls['pin'].value, formPass.controls['password'].value)"
-                [disabled]='!changeToNewPassForm.valid || inLoading'
-                class='mx-3 w-70'
-                color='primary'
                 mat-raised-button
-                type='submit'
+                color="primary"
+                class="mx-3 w-70"
+                [disabled]="!changeToNewPassForm.valid || inLoading"
+                type="submit"
+                (click)="onNewPass(changeToNewPassForm.controls['pin'].value, formPass.controls['password'].value)"
               >
-                <span class='uppercase color-white'>{{ 'Send' | translate }}</span>
+                <span class="uppercase color-white">{{ 'Send' | translate }}</span>
               </button>
             </div>
           </form>
