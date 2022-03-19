@@ -1,7 +1,7 @@
 import { MetaService } from 'src/app/core/services/meta.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
-import { CartItem, Cart } from '../../../modals/cart-item';
+import { Cart, CartItem } from '../../../modals/cart-item';
 import { CurrencyService } from '../../../core/services/currency/currency.service';
 import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-in-user.service';
 import { environment } from '../../../../environments/environment';

@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { OrderByPipe } from './pipes/order-by.pipe';
 import { TranslateModule } from '@ngx-translate/core';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PreviousRouteService } from '../../core/services/previous-route/previous-route.service';
 
 @NgModule({

@@ -1,59 +1,59 @@
-<div [id]="'ProductCardId' + product.id" class="card-product" fxLayout="column" fxLayout.lt-md="row"
-     fxLayoutAlign="start stretch" fxLayoutAlign.lt-md="start start" style="position: relative">
-  <div *ngIf="inLoading" class="loading-shade" style="height: 100%">
-    <mat-spinner *ngIf="inLoading" [diameter]="40"></mat-spinner>
+<div [id]="'ProductCardId' + product.id" class='card-product' fxLayout='column' fxLayout.lt-md='row'
+     fxLayoutAlign='start stretch' fxLayoutAlign.lt-md='start start' style='position: relative'>
+  <div *ngIf='inLoading' class='loading-shade' style='height: 100%'>
+    <mat-spinner *ngIf='inLoading' [diameter]='40'></mat-spinner>
   </div>
-  <div class="image-layout" fxFlex.lt-md="35" fxLayoutAlign="center center">
-    <a [queryParams]="{
+  <div class='image-layout' fxFlex.lt-md='35' fxLayoutAlign='center center'>
+    <a [queryParams]='{
         productId: product?.id,
         stockId: product?.Stock?.id
-      }" [routerLink]="['/product']" class="product-link" fxFlex="row" fxLayoutAlign="center center">
-      <img *ngIf="product.Images && product.Images.length" [src]="imageUrl + product.Images[0].image"
-           alt="MiBulevar shop" class="image"
+      }' [routerLink]="['/product']" class='product-link' fxFlex='row' fxLayoutAlign='center center'>
+      <img *ngIf='product.Images && product.Images.length' [src]='imageUrl + product.Images[0].image'
+           alt='MiBulevar shop' class='image'
            ngp-lazy
-           ngp-threshold="0.1"
+           ngp-threshold='0.1'
            onerror="this.onerror=null;this.src='../../../../assets/images/noImage.jpg';" />
-      <img *ngIf="!(product.Images && product.Images.length)" alt="MiBulevar shop" class="image" ngp-lazy
-           ngp-threshold="0.1" src="assets/images/noImage.jpg" />
+      <img *ngIf='!(product.Images && product.Images.length)' alt='MiBulevar shop' class='image' ngp-lazy
+           ngp-threshold='0.1' src='assets/images/noImage.jpg' />
     </a>
   </div>
 
-  <div (click)="onGoToProduct(product)" class="product-info-wrapper"
-       fxLayout="column" ngClass.gt-sm="p-3" ngClass.lt-md="p-2 w-100">
-    <span class="category">
+  <div (click)='onGoToProduct(product)' class='product-info-wrapper'
+       fxLayout='column' ngClass.gt-sm='p-3' ngClass.lt-md='p-2 w-100'>
+    <span class='category'>
       {{ utilsService.parserLanguage(product?.Category?.name, language) }}
     </span>
 
-    <div class="title">
-      <a [queryParams]="{
+    <div class='title'>
+      <a [queryParams]='{
           productId: product?.id,
           stockId: product?.Stock?.id
-        }" [routerLink]="['/product']"
-         class="link-nav-a">{{ product.name[language] ? product.name[language] : product.name['es'] }}</a>
+        }' [routerLink]="['/product']"
+         class='link-nav-a'>{{ product.name[language] ? product.name[language] : product.name['es'] }}</a>
     </div>
 
     <!-- <div style="flex: 1 1 100%"></div> -->
 
-    <div class="mt-2">
-      <ngp-rating-material [config]="{ readOnly: true }" [value]="product.rating"></ngp-rating-material>
+    <div class='mt-2'>
+      <ngp-rating-material [config]='{ readOnly: true }' [value]='product.rating'></ngp-rating-material>
     </div>
     <!-- <p fxHide.xs class="module line-clamp mt-1 mb-2">
       {{(product?.shortDescription[language])?product?.shortDescription[language]:product?.shortDescription['es']}}</p> -->
 
-    <div class="price mt-2" fxLayout="row" fxLayoutAlign="space-between start">
-      <button (click)="$event.stopPropagation();addToCart(product)" class="btnAddCart" mat-mini-fab
+    <div class='price mt-2' fxLayout='row' fxLayoutAlign='space-between start'>
+      <button (click)='$event.stopPropagation();addToCart(product)' class='btnAddCart' mat-mini-fab
               matTooltip="{{ 'Añadir al carrito' | translate }}"
-              style="z-index: 10">
+              style='z-index: 10'>
         <mat-icon>shopping_cart</mat-icon>
       </button>
       <div>
-        <div *ngIf="product.offerValue">
-          <p class="m-0" style="font-size: 12px">
-            <del style="color: #616161">{{ product | parsePriceProduct }}</del>
+        <div *ngIf='product.offerValue'>
+          <p class='m-0' style='font-size: 12px'>
+            <del style='color: #616161'>{{ product | parsePriceProduct }}</del>
             <!-- <span style="color: #e53935; font-size: 12px;" class="ml-2 px-0">{{product?.offerValue}}<span
                 style="color: #e53935; font-size: 12px;" *ngIf="product?.isPercent">% </span>off</span> -->
           </p>
-          <p class="mat-body-2 m-0 price-offer">{{ product | parsePriceProduct: 'offert' }}</p>
+          <p class='mat-body-2 m-0 price-offer'>{{ product | parsePriceProduct: 'offert' }}</p>
           <!-- <p class="mat-body-2 m-0" style="font-size: 15px;">
             {{'Desde'|translate}}
             {{product?.minSale}}
@@ -61,8 +61,8 @@
           </p> -->
         </div>
 
-        <div *ngIf="!product?.offerValue">
-          <p class="mat-body-2 m-0 price-offer">{{ product | parsePriceProduct }}</p>
+        <div *ngIf='!product?.offerValue'>
+          <p class='mat-body-2 m-0 price-offer'>{{ product | parsePriceProduct }}</p>
           <!-- <p class="mat-body-2 m-0" style="font-size: 15px;">
             {{'Desde'|translate}}
             {{product?.minSale}}
@@ -71,7 +71,7 @@
         </div>
       </div>
     </div>
-    <div class="icons" fxLayout="column">
+    <div class='icons' fxLayout='column'>
       <!-- <a (click)="addToWishlist(product)">
           <mat-icon class="mat-icon-lg mat-icon material-icons mr-10">favorite_border</mat-icon>
         </a> -->

@@ -123,4 +123,5 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     },
   ],
 })
-export class ShopModule {}
+export class ShopModule {
+}

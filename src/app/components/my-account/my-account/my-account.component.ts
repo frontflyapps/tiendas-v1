@@ -1,6 +1,6 @@
 import { Component, HostListener, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ShowToastrService } from '../../../core/services/show-toastr/show-toastr.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { UtilsService } from '../../../core/services/utils/utils.service';
@@ -9,7 +9,7 @@ import { ShowSnackbarService } from '../../../core/services/show-snackbar/show-s
 import { environment } from '../../../../environments/environment';
 import { AuthenticationService } from '../../../core/services/authentication/authentication.service';
 import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-in-user.service';
-import { CUBAN_PHONE_START_5, EMAIL_REGEX, PASS_CLIENT_REGEX, USERNAME } from '../../../core/classes/regex.const';
+import { CUBAN_PHONE_START_5, EMAIL_REGEX, PASS_CLIENT_REGEX } from '../../../core/classes/regex.const';
 
 @Component({
   selector: 'app-my-account',
@@ -259,8 +259,8 @@ export class MyAccountComponent implements OnInit {
       error.error.errors && error.error.errors.length
         ? error.error.errors.map((item) => item.message)
         : error.error.message
-        ? error.error.message
-        : 'Error registrando usuario';
+          ? error.error.message
+          : 'Error registrando usuario';
     this.toastr.showError(msg, 'Error', 10000);
   }
 
@@ -468,15 +468,19 @@ export class MyAccountComponent implements OnInit {
   }
 
   // ///////////////////////////////////////////////////////
-  handleReset() {}
+  handleReset() {
+  }
 
   // ////////////////////////////////////////////////////////
 
-  handleExpire() {}
+  handleExpire() {
+  }
 
-  handleSuccess(event) {}
+  handleSuccess(event) {
+  }
 
-  handleLoad() {}
+  handleLoad() {
+  }
 
   private validatePing(data) {
     this.inLoading = true;

@@ -1,13 +1,11 @@
 import { TranslateService } from '@ngx-translate/core';
 import { ShowToastrService } from './../../../core/services/show-toastr/show-toastr.service';
 import { UtilsService } from './../../../core/services/utils/utils.service';
-import { LoggedInUserService } from './../../../core/services/loggedInUser/logged-in-user.service';
 import { CartService } from './../../shared/services/cart.service';
-import { CurrencyService } from './../../../core/services/currency/currency.service';
 import { PayService } from './../../../core/services/pay/pay.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-enzona-payment-ok',

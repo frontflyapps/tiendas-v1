@@ -1,5 +1,5 @@
-<footer class="pt-3">
-  <div fxLayout="column" fxLayoutAlign="center center" fxLayoutAlign.xs="start center">
+<footer class='pt-3'>
+  <div fxLayout='column' fxLayoutAlign='center center' fxLayoutAlign.xs='start center'>
     <!--<a
       class="item-selector mx-3 my-2"
       fxLayoutAlign="start center"
@@ -17,157 +17,157 @@
         </button>
       </span>
     </mat-menu>-->
-    <div class="col" fxLayout="row" fxLayout.xs="column">
-      <div class="col-1" fxLayout="column" fxLayoutAlign=" start">
-        <a [routerLink]="['']" class="mat-button" mat-button>
+    <div class='col' fxLayout='row' fxLayout.xs='column'>
+      <div class='col-1' fxLayout='column' fxLayoutAlign=' start'>
+        <a [routerLink]="['']" class='mat-button' mat-button>
           <span>{{ 'Inicio' | translate }}</span>
         </a>
-        <a (click)="onShowProfile()" *ngIf="loggedInUser" class="mat-button" mat-button>
+        <a (click)='onShowProfile()' *ngIf='loggedInUser' class='mat-button' mat-button>
           <span>{{ 'Tu cuenta' | translate }}</span>
         </a>
-        <a [routerLink]="['term-conditions']" fxLayoutAlign="start center" mat-button>
+        <a [routerLink]="['term-conditions']" fxLayoutAlign='start center' mat-button>
           <span>{{ 'Términos y condiciones' | translate }}</span>
         </a>
       </div>
-      <div class="col-2" fxLayout="column" fxLayoutAlign=" start">
-        <a [routerLink]="['/faq']" class="mat-button" mat-button>
+      <div class='col-2' fxLayout='column' fxLayoutAlign=' start'>
+        <a [routerLink]="['/faq']" class='mat-button' mat-button>
           <span>{{ 'Ayuda' | translate }}</span>
         </a>
-        <a *ngIf="loggedInUser" [routerLink]="['my-orders']" class="mat-button" mat-button>
+        <a *ngIf='loggedInUser' [routerLink]="['my-orders']" class='mat-button' mat-button>
           <span>{{ 'Tus pedidos' | translate }}</span>
         </a>
-        <a [routerLink]="['privacy-policy']" fxLayoutAlign="start center" mat-button>
+        <a [routerLink]="['privacy-policy']" fxLayoutAlign='start center' mat-button>
           <span>{{ 'Políticas de privacidad' | translate }}</span>
         </a>
       </div>
     </div>
 
-    <div fxLayout="row">
+    <div fxLayout='row'>
       <a
-        #langMenuTrigger="matMenuTrigger"
-        [matMenuTriggerFor]="langMenu"
-        class="item-selector mx-3 my-2"
-        fxLayoutAlign="start center"
+        #langMenuTrigger='matMenuTrigger'
+        [matMenuTriggerFor]='langMenu'
+        class='item-selector mx-3 my-2'
+        fxLayoutAlign='start center'
         mat-button
       >
-        <img [src]="flag?.image" alt="flag image" width="18" />
+        <img [src]='flag?.image' alt='flag image' width='18' />
         <mat-icon>arrow_drop_down</mat-icon>
         <span>{{ flag?.name }}</span>
       </a>
-      <mat-menu #langMenu="matMenu" [overlapTrigger]="false" class="app-dropdown" xPosition="before">
+      <mat-menu #langMenu='matMenu' [overlapTrigger]='false' class='app-dropdown' xPosition='before'>
         <span>
-          <button (click)="changeLang(flag)" *ngFor="let flag of flags" mat-menu-item>
-            <img [src]="flag.image" alt="flag image" width="18" /> {{ flag.name }}
+          <button (click)='changeLang(flag)' *ngFor='let flag of flags' mat-menu-item>
+            <img [src]='flag.image' alt='flag image' width='18' /> {{ flag.name }}
           </button>
         </span>
       </mat-menu>
 
-      <a [routerLink]="['/contact-us']" class="item-selector mx-3 my-2" mat-button>
+      <a [routerLink]="['/contact-us']" class='item-selector mx-3 my-2' mat-button>
         {{ 'Contáctenos' | translate }}
       </a>
     </div>
 
-    <div style="padding-bottom: 16px"></div>
+    <div style='padding-bottom: 16px'></div>
   </div>
 
-  <div class="footer-bottom-color" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="1rem">
+  <div class='footer-bottom-color' fxLayout='column' fxLayoutAlign='center center' fxLayoutGap='1rem'>
     <img
-      alt="footer logo"
-      class="mt-4 image-footer"
-      ngClass.lt-sm="img-footer"
-      src="assets/images/pymesbulevar/logo-r-white.png"
+      alt='footer logo'
+      class='mt-4 image-footer'
+      ngClass.lt-sm='img-footer'
+      src='assets/images/pymesbulevar/logo-r-white.png'
     />
 
     <div
-      class="py-3"
-      fxLayout="row"
-      fxLayout.xs="column"
-      fxLayoutAlign="start center"
-      fxLayoutAlign.xs="start"
-      fxLayoutGap="1rem"
-      fxLayoutGap.xs="10px"
-      id="footer-contacts"
+      class='py-3'
+      fxLayout='row'
+      fxLayout.xs='column'
+      fxLayoutAlign='start center'
+      fxLayoutAlign.xs='start'
+      fxLayoutGap='1rem'
+      fxLayoutGap.xs='10px'
+      id='footer-contacts'
     >
-      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="4px">
+      <div fxLayout='row' fxLayoutAlign='start center' fxLayoutGap='4px'>
         <mat-icon>phone</mat-icon>
         <span>{{ contacts.phone || '' }}</span>
       </div>
 
-      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="4px">
+      <div fxLayout='row' fxLayoutAlign='start center' fxLayoutGap='4px'>
         <mat-icon>email</mat-icon>
         <span>{{ contacts.email || '' }}</span>
       </div>
 
-      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="4px">
+      <div fxLayout='row' fxLayoutAlign='start center' fxLayoutGap='4px'>
         <mat-icon>location_on</mat-icon>
         <span>{{ contacts.address || '' }}</span>
       </div>
     </div>
 
-    <ul class="network-icons" fxLayout="row">
-      <li fxLayoutAlign="center center">
-        <a class="icon-redes" fxLayoutAlign="center center" href="https://www.facebook.com/" target="_blank">
+    <ul class='network-icons' fxLayout='row'>
+      <li fxLayoutAlign='center center'>
+        <a class='icon-redes' fxLayoutAlign='center center' href='https://www.facebook.com/' target='_blank'>
           <!--          <i class="fab fa-facebook-f" style="font-size: 18px"></i>-->
           <img
-            alt="Facebook logo"
-            src="assets/images/social-media/outline/logo-facebook.svg"
-            style="filter: invert(1)"
+            alt='Facebook logo'
+            src='assets/images/social-media/outline/logo-facebook.svg'
+            style='filter: invert(1)'
           />
         </a>
       </li>
 
-      <li fxLayoutAlign="center center">
-        <a class="icon-redes" fxLayoutAlign="center center" href="https://twitter.com/" target="_blank">
+      <li fxLayoutAlign='center center'>
+        <a class='icon-redes' fxLayoutAlign='center center' href='https://twitter.com/' target='_blank'>
           <!--          <i class="fab fa-twitter" style="font-size: 18px"></i>-->
           <img
-            alt="Facebook logo"
-            src="assets/images/social-media/outline/logo-twitter.svg"
-            style="filter: invert(1)"
+            alt='Facebook logo'
+            src='assets/images/social-media/outline/logo-twitter.svg'
+            style='filter: invert(1)'
           />
         </a>
       </li>
 
-      <li fxLayoutAlign="center center">
-        <a class="icon-redes" fxLayoutAlign="center center" href="https://cu.linkedin.com/" target="_blank">
+      <li fxLayoutAlign='center center'>
+        <a class='icon-redes' fxLayoutAlign='center center' href='https://cu.linkedin.com/' target='_blank'>
           <!--          <i class="fab fa-linkedin-in" style="font-size: 18px"></i>-->
           <img
-            alt="Facebook logo"
-            src="assets/images/social-media/outline/logo-linkedin.svg"
-            style="filter: invert(1)"
+            alt='Facebook logo'
+            src='assets/images/social-media/outline/logo-linkedin.svg'
+            style='filter: invert(1)'
           />
         </a>
       </li>
 
-      <li fxLayoutAlign="center center">
-        <a class="icon-redes" fxLayoutAlign="center center" href="https://www.youtube.com/" target="_blank">
+      <li fxLayoutAlign='center center'>
+        <a class='icon-redes' fxLayoutAlign='center center' href='https://www.youtube.com/' target='_blank'>
           <!--          <i class="fab fa-youtube" style="font-size: 18px"></i>-->
           <img
-            alt="Facebook logo"
-            src="assets/images/social-media/outline/logo-youtube.svg"
-            style="filter: invert(1)"
+            alt='Facebook logo'
+            src='assets/images/social-media/outline/logo-youtube.svg'
+            style='filter: invert(1)'
           />
         </a>
       </li>
 
-      <li fxLayoutAlign="center center">
-        <a class="icon-redes" fxLayoutAlign="center center" href="https://www.instagram.com/" target="_blank">
+      <li fxLayoutAlign='center center'>
+        <a class='icon-redes' fxLayoutAlign='center center' href='https://www.instagram.com/' target='_blank'>
           <!--          <i class="fab fa-instagram" style="font-size: 18px"></i>-->
           <img
-            alt="Facebook logo"
-            src="assets/images/social-media/outline/logo-instagram.svg"
-            style="filter: invert(1)"
+            alt='Facebook logo'
+            src='assets/images/social-media/outline/logo-instagram.svg'
+            style='filter: invert(1)'
           />
         </a>
       </li>
     </ul>
 
     <div
-      class="mb-3"
-      fxLayout="row"
-      fxLayout.xs="column"
-      fxLayoutAlign="center"
-      fxLayoutGap="10px"
-      fxLayoutGap.xs="4px"
+      class='mb-3'
+      fxLayout='row'
+      fxLayout.xs='column'
+      fxLayoutAlign='center'
+      fxLayoutGap='10px'
+      fxLayoutGap.xs='4px'
     >
       <span>Copyright© {{ year }}.</span>
 

@@ -1,27 +1,27 @@
-<div class="main-slider">
-  <div [swiper]="config" class="swiper-container h-100">
-    <div class="swiper-wrapper h-100">
-      <div *ngFor="let slide of _slides" class="swiper-slide">
-        <div [attr.data-background]="slide.image" class="slide-item swiper-lazy" fxHide.lt-md>
-          <div class="container-carrusel">
-            <div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
-            <div *ngIf="slide.title && slide?.title?.es" class="box">
-              <p class="title">
+<div class='main-slider'>
+  <div [swiper]='config' class='swiper-container h-100'>
+    <div class='swiper-wrapper h-100'>
+      <div *ngFor='let slide of _slides' class='swiper-slide'>
+        <div [attr.data-background]='slide.image' class='slide-item swiper-lazy' fxHide.lt-md>
+          <div class='container-carrusel'>
+            <div class='swiper-lazy-preloader swiper-lazy-preloader-white'></div>
+            <div *ngIf='slide.title && slide?.title?.es' class='box'>
+              <p class='title'>
                 {{slide.title|parseLang:language}}
               </p>
-              <p class="subtitle">
+              <p class='subtitle'>
                 {{slide.subTitle|parseLang:language}}
               </p>
-              <a *ngIf="slide.link" [href]="slide.link" class="myBtn" mat-raised-button ngClass.gt-sm="uppercase"
-                 target="_blank">{{"See more"|translate}}
+              <a *ngIf='slide.link' [href]='slide.link' class='myBtn' mat-raised-button ngClass.gt-sm='uppercase'
+                 target='_blank'>{{"See more"|translate}}
               </a>
             </div>
           </div>
         </div>
-        <div [attr.data-background]="slide.imageXs" class="slide-item swiper-lazy" fxHide fxShow.lt-md>
-          <a [href]="slide.link">
-            <div class="container-carrusel sl-wrap">
-              <div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
+        <div [attr.data-background]='slide.imageXs' class='slide-item swiper-lazy' fxHide fxShow.lt-md>
+          <a [href]='slide.link'>
+            <div class='container-carrusel sl-wrap'>
+              <div class='swiper-lazy-preloader swiper-lazy-preloader-white'></div>
 
               <!-- <div *ngIf="slide.title && slide?.title?.es" class="box">
               <p class="title">
@@ -40,11 +40,11 @@
         </div>
       </div>
     </div>
-    <div class="swiper-pagination white"></div>
-    <button class="swiper-button-prev swipe-arrow" color="primary" mat-mini-fab>
+    <div class='swiper-pagination white'></div>
+    <button class='swiper-button-prev swipe-arrow' color='primary' mat-mini-fab>
       <mat-icon>keyboard_arrow_left</mat-icon>
     </button>
-    <button class="swiper-button-next swipe-arrow" color="primary" mat-mini-fab>
+    <button class='swiper-button-next swipe-arrow' color='primary' mat-mini-fab>
       <mat-icon>keyboard_arrow_right</mat-icon>
     </button>
   </div>

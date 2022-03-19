@@ -1,27 +1,27 @@
-<div class="container" id="app-blog-details">
-  <ng-container *ngIf="!showData">
-    <div class="loader imageBlog">
+<div class='container' id='app-blog-details'>
+  <ng-container *ngIf='!showData'>
+    <div class='loader imageBlog'>
 
     </div>
-    <div *ngFor="let item of [1,2,3,4,5,6,7,8,9,11]" class="loader my-2 w-100"></div>
+    <div *ngFor='let item of [1,2,3,4,5,6,7,8,9,11]' class='loader my-2 w-100'></div>
   </ng-container>
 
-  <ng-container *ngIf="showData">
-    <img [src]="imageUrl + this.selectedArticle?.image" class="loader imageBlog" ngp-lazy ngp-threshold="0.1"
+  <ng-container *ngIf='showData'>
+    <img [src]='imageUrl + this.selectedArticle?.image' class='loader imageBlog' ngp-lazy ngp-threshold='0.1'
          onerror="this.onerror=null;this.src='assets/images/noImage.jpg';" />
-    <div class="text-box">
-      <h4 class="my-3" style="text-transform: none !important;">
+    <div class='text-box'>
+      <h4 class='my-3' style='text-transform: none !important;'>
         {{utilsService.parserLanguage(selectedArticle.title, language)}}
       </h4>
-      <div fxLayout="row" fxLayoutAlign="start center">
-        <span class="color-grey-600">{{selectedArticle.createdAt | date: 'short'}}</span>
-        <img [src]="imageUrl + selectedArticle?.Creator?.avatar" class="avatar ml-3"
+      <div fxLayout='row' fxLayoutAlign='start center'>
+        <span class='color-grey-600'>{{selectedArticle.createdAt | date: 'short'}}</span>
+        <img [src]='imageUrl + selectedArticle?.Creator?.avatar' class='avatar ml-3'
              onerror="this.onerror=null;this.src='assets/images/noImage.jpg';" />
-        <span class="ml-2 color-grey-600">
+        <span class='ml-2 color-grey-600'>
           {{selectedArticle?.Creator?.name + ' ' + selectedArticle?.Creator?.lastName}}
         </span>
       </div>
-      <div [innerHtml]="sanitaizer.bypassSecurityTrustHtml(utilsService.parserLanguage(selectedArticle.text,language))">
+      <div [innerHtml]='sanitaizer.bypassSecurityTrustHtml(utilsService.parserLanguage(selectedArticle.text,language))'>
 
       </div>
     </div>

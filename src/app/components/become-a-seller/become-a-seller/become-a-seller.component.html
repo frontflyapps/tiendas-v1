@@ -1,161 +1,161 @@
-<mat-toolbar color="primary">
-  <mat-toolbar-row fxLayout="row" fxLayoutAlign="start center">
-    <a href="#" mat-icon-button class="example-icon">
+<mat-toolbar color='primary'>
+  <mat-toolbar-row fxLayout='row' fxLayoutAlign='start center'>
+    <a class='example-icon' href='#' mat-icon-button>
       <mat-icon>arrow_back</mat-icon>
     </a>
-    <img src="assets/images/pymesbulevar/logo-r-white.png" style="height: 50px" alt="logo" />
-    <span class="example-spacer"></span>
+    <img alt='logo' src='assets/images/pymesbulevar/logo-r-white.png' style='height: 50px' />
+    <span class='example-spacer'></span>
   </mat-toolbar-row>
 </mat-toolbar>
 
-<div class="w-100 mt-3" fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="gappx">
-  <div class="stepperForm" fxFlex.gt-sm="70" fxFlex.lt-md="100" fxLayout="column" fxLayoutAlign="start stretch">
-    <div class="container-stepper">
-      <mat-horizontal-stepper #stepper [linear]="'true'" color="accent" labelPosition="bottom">
-        <mat-step [stepControl]="basicForm">
+<div class='w-100 mt-3' fxLayout='row wrap' fxLayoutAlign='start start' fxLayoutGap='gappx'>
+  <div class='stepperForm' fxFlex.gt-sm='70' fxFlex.lt-md='100' fxLayout='column' fxLayoutAlign='start stretch'>
+    <div class='container-stepper'>
+      <mat-horizontal-stepper #stepper [linear]="'true'" color='accent' labelPosition='bottom'>
+        <mat-step [stepControl]='basicForm'>
           <ng-template matStepLabel>{{ 'Información de su Negocio' | translate }}</ng-template>
-          <form [formGroup]="basicForm">
-            <p class="mat-body-2 uppercase mb-1">
+          <form [formGroup]='basicForm'>
+            <p class='mat-body-2 uppercase mb-1'>
               {{ 'Logo del negocio' | translate }}
             </p>
 
-            <ngp-image-picker ($imageChanged)="onImageChange($event)" [_config]="imagePickerConf"></ngp-image-picker>
+            <ngp-image-picker ($imageChanged)='onImageChange($event)' [_config]='imagePickerConf'></ngp-image-picker>
 
-            <p class="mat-body-2 uppercase mt-2 mb-1">
+            <p class='mat-body-2 uppercase mt-2 mb-1'>
               {{ 'Nombre del negocio' | translate }}
             </p>
 
-            <mat-form-field appearance="outline" class="form-field-width">
+            <mat-form-field appearance='outline' class='form-field-width'>
               <input
                 [formControl]="basicForm.controls['name']"
                 matInput
                 placeholder="{{ 'Mi Negocio' | translate }}"
-                type="text"
+                type='text'
               />
               <mat-error *ngIf="basicForm.controls['name'].hasError('required')">
                 {{ 'Nombre' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
               </mat-error>
             </mat-form-field>
 
-            <div class="form-field-width" fxLayout="row wrap" fxLayoutAlign="space-between start" fxLayoutGap="gappx">
-              <div fxFlex="49" fxFlex.lt-md="100" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="gappx">
-                <p class="mat-body-2 uppercase mb-1">
+            <div class='form-field-width' fxLayout='row wrap' fxLayoutAlign='space-between start' fxLayoutGap='gappx'>
+              <div fxFlex='49' fxFlex.lt-md='100' fxLayout='column' fxLayoutAlign='start start' fxLayoutGap='gappx'>
+                <p class='mat-body-2 uppercase mb-1'>
                   {{ 'Teléfono fijo de contacto' | translate }}
                   <mat-icon
-                    class="iconHelp"
+                    class='iconHelp'
                     matTooltip="{{
                       'Lo contactarémos a este numero en caso de tenerlo, para realizar una entrevista' | translate
                     }}"
-                    >help
+                  >help
                   </mat-icon>
                 </p>
 
-                <mat-form-field appearance="outline" class="form-field-width">
+                <mat-form-field appearance='outline' class='form-field-width'>
                   <input
                     [formControl]="basicForm.controls['telephone']"
                     matInput
-                    placeholder="ej: 72053519"
-                    type="tel"
+                    placeholder='ej: 72053519'
+                    type='tel'
                   />
-                  <mat-icon class="greyIcon" matSuffix>phone</mat-icon>
+                  <mat-icon class='greyIcon' matSuffix>phone</mat-icon>
                 </mat-form-field>
               </div>
-              <div fxFlex="49" fxFlex.lt-md="100" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="gappx">
-                <p class="mat-body-2 uppercase mb-1">
+              <div fxFlex='49' fxFlex.lt-md='100' fxLayout='column' fxLayoutAlign='start start' fxLayoutGap='gappx'>
+                <p class='mat-body-2 uppercase mb-1'>
                   {{ 'No. de celular' | translate }}
                   <mat-icon
-                    class="iconHelp"
+                    class='iconHelp'
                     matTooltip="{{
                       'Número al cual le enviaremos un codigo de activacion de su cuenta de vendedor' | translate
                     }}"
-                    >help
+                  >help
                   </mat-icon>
                 </p>
 
-                <mat-form-field appearance="outline" class="form-field-width">
+                <mat-form-field appearance='outline' class='form-field-width'>
                   <input
                     [formControl]="basicForm.controls['cellphone']"
                     matInput
-                    placeholder="ej: 5353621645"
-                    type="tel"
+                    placeholder='ej: 5353621645'
+                    type='tel'
                   />
-                  <mat-icon class="greyIcon" matSuffix>smartphone</mat-icon>
+                  <mat-icon class='greyIcon' matSuffix>smartphone</mat-icon>
                 </mat-form-field>
               </div>
             </div>
 
-            <p class="mat-body-2 uppercase mb-1">
+            <p class='mat-body-2 uppercase mb-1'>
               {{ 'Correo electrónico' | translate }}
               <mat-icon
-                class="iconHelp"
+                class='iconHelp'
                 matTooltip="{{
                   'En caso de fallar el envío del pin al celular, lo enviaremos hacia su cuenta de correo y las notificaciones de productos vendidos y pedidos se haran ha esta cuenta'
                     | translate
                 }}"
-                >help
+              >help
               </mat-icon>
             </p>
 
-            <mat-form-field appearance="outline" class="form-field-width">
+            <mat-form-field appearance='outline' class='form-field-width'>
               <input
                 [formControl]="basicForm.controls['email']"
                 matInput
-                placeholder="ej: example@gmail.com"
+                placeholder='ej: example@gmail.com'
                 required
-                type="text"
+                type='text'
               />
-              <mat-icon class="greyIcon" matSuffix>mail</mat-icon>
+              <mat-icon class='greyIcon' matSuffix>mail</mat-icon>
               <mat-error *ngIf="basicForm.controls['email'].hasError('required')">
                 {{ 'Email' }} <strong>{{ 'es requerido' }}</strong>
               </mat-error>
             </mat-form-field>
 
-            <p class="mat-body-2 uppercase mb-1 mt-3">
+            <p class='mat-body-2 uppercase mb-1 mt-3'>
               {{ 'Breve descripción del negocio' | translate }}
             </p>
 
-            <mat-form-field appearance="outline" class="form-field-width">
+            <mat-form-field appearance='outline' class='form-field-width'>
               <textarea
                 [formControl]="basicForm.controls['description']"
                 matInput
-                maxlength="140"
+                maxlength='140'
                 placeholder="{{ 'Description' | translate }}"
-                rows="2"
+                rows='2'
               ></textarea>
               <mat-error *ngIf="basicForm.controls['description'].hasError('required')">
                 {{ 'Descripción' | translate }} <strong>{{ 'is required' | translate }}</strong>
               </mat-error>
               <mat-hint>
                 {{
-                  'Una descripción de texto libre de la aplicación. El número máximo de caracteres es 140.' | translate
+                'Una descripción de texto libre de la aplicación. El número máximo de caracteres es 140.' | translate
                 }}
               </mat-hint>
             </mat-form-field>
 
             <div>
-              <button [disabled]="basicForm.invalid" class="uppercase" mat-button matStepperNext>
+              <button [disabled]='basicForm.invalid' class='uppercase' mat-button matStepperNext>
                 {{ 'Siguiente' | translate }}
               </button>
             </div>
           </form>
         </mat-step>
-        <mat-step [stepControl]="locationForm">
+        <mat-step [stepControl]='locationForm'>
           <ng-template matStepLabel>{{ 'Localización' | translate }}</ng-template>
 
-          <div class="form-field-width" fxLayout="row wrap" fxLayoutAlign="space-between center">
-            <div fxFlex="49" fxFlex.lt-md="100" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="gappx">
-              <p class="mat-body-2 uppercase mb-1">
+          <div class='form-field-width' fxLayout='row wrap' fxLayoutAlign='space-between center'>
+            <div fxFlex='49' fxFlex.lt-md='100' fxLayout='column' fxLayoutAlign='start start' fxLayoutGap='gappx'>
+              <p class='mat-body-2 uppercase mb-1'>
                 {{ 'Provincia' | translate }}
               </p>
-              <mat-form-field appearance="outline" class="form-field-width">
+              <mat-form-field appearance='outline' class='form-field-width'>
                 <mat-select
-                  (selectionChange)="onSelectProvince($event.value)"
+                  (selectionChange)='onSelectProvince($event.value)'
                   [formControl]="locationForm.controls['ProvinceId']"
                   placeholder="{{ 'Nombre de la provincia' | translate }}"
                   required
-                  type="text"
+                  type='text'
                 >
-                  <mat-option *ngFor="let province of allProvinces" [value]="province.id">
+                  <mat-option *ngFor='let province of allProvinces' [value]='province.id'>
                     {{ province.name }}
                   </mat-option>
                 </mat-select>
@@ -165,19 +165,19 @@
               </mat-form-field>
             </div>
 
-            <div fxFlex="49" fxFlex.lt-md="100" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="gappx">
-              <p class="mat-body-2 uppercase mb-1">
+            <div fxFlex='49' fxFlex.lt-md='100' fxLayout='column' fxLayoutAlign='start start' fxLayoutGap='gappx'>
+              <p class='mat-body-2 uppercase mb-1'>
                 {{ 'Municipio' | translate }}
               </p>
 
-              <mat-form-field appearance="outline" class="form-field-width" fxFlex="49" fxFlex.lt-md="100">
+              <mat-form-field appearance='outline' class='form-field-width' fxFlex='49' fxFlex.lt-md='100'>
                 <mat-select
                   [formControl]="locationForm.controls['MunicipalityId']"
                   placeholder="{{ 'Nombre del Municipio' | translate }}"
                   required
-                  type="text"
+                  type='text'
                 >
-                  <mat-option *ngFor="let municipio of municipalities" [value]="municipio.id">
+                  <mat-option *ngFor='let municipio of municipalities' [value]='municipio.id'>
                     {{ municipio.name }}
                   </mat-option>
                 </mat-select>
@@ -190,71 +190,71 @@
 
           <!-- <google-map height="400px" width="100%" [zoom]="zoom" [center]="center" [options]="options"></google-map> -->
 
-          <p class="mat-body-2 uppercase mb-1">
+          <p class='mat-body-2 uppercase mb-1'>
             {{ 'Dirección' | translate }}
             <mat-icon
-              class="iconHelp"
+              class='iconHelp'
               matTooltip="{{ 'Dirección exacta de su negocio, verificaremos esta dirección' | translate }}"
-              >help
+            >help
             </mat-icon>
           </p>
 
-          <mat-form-field appearance="outline" class="form-field-width">
+          <mat-form-field appearance='outline' class='form-field-width'>
             <input
               [formControl]="locationForm.controls['address']"
               matInput
-              placeholder="ej: 39 #3022 e/ 30 y 36 , La Sierra, Playa"
+              placeholder='ej: 39 #3022 e/ 30 y 36 , La Sierra, Playa'
               required
-              type="text"
+              type='text'
             />
-            <mat-icon class="greyIcon" matSuffix>location</mat-icon>
+            <mat-icon class='greyIcon' matSuffix>location</mat-icon>
             <mat-error *ngIf="locationForm.controls['address'].hasError('required')">
               {{ 'Dirección' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <div>
-            <button class="uppercase" mat-button matStepperPrevious>{{ 'Anterior' | translate }}</button>
-            <button [disabled]="locationForm.invalid" class="uppercase" mat-button matStepperNext>
+            <button class='uppercase' mat-button matStepperPrevious>{{ 'Anterior' | translate }}</button>
+            <button [disabled]='locationForm.invalid' class='uppercase' mat-button matStepperNext>
               {{ 'Siguiente' | translate }}
             </button>
           </div>
         </mat-step>
 
-        <mat-step [stepControl]="sellerForm">
+        <mat-step [stepControl]='sellerForm'>
           <ng-template matStepLabel>{{ 'Información del Vendedor' | translate }}</ng-template>
-          <div class="form-field-width" fxLayout="row wrap" fxLayoutAlign="space-between start" fxLayoutGap="gappx">
-            <div fxFlex="49" fxFlex.lt-md="100" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="gappx">
-              <p class="mat-body-2 uppercase mb-1">
+          <div class='form-field-width' fxLayout='row wrap' fxLayoutAlign='space-between start' fxLayoutGap='gappx'>
+            <div fxFlex='49' fxFlex.lt-md='100' fxLayout='column' fxLayoutAlign='start start' fxLayoutGap='gappx'>
+              <p class='mat-body-2 uppercase mb-1'>
                 {{ 'Nombre' | translate }}
               </p>
-              <mat-form-field appearance="outline" class="form-field-width" fxFlex="49" fxFlex.lt-md="100">
+              <mat-form-field appearance='outline' class='form-field-width' fxFlex='49' fxFlex.lt-md='100'>
                 <mat-label>{{ 'Nombre' | translate }}</mat-label>
                 <input
                   [formControl]="sellerForm.controls['name']"
                   matInput
                   placeholder="{{ 'Name' | translate }}"
-                  type="text"
+                  type='text'
                 />
-                <mat-icon class="greyIcon" matSuffix>person</mat-icon>
+                <mat-icon class='greyIcon' matSuffix>person</mat-icon>
                 <mat-error *ngIf="sellerForm.controls['name'].hasError('required')">
                   {{ 'Nombre' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
                 </mat-error>
               </mat-form-field>
             </div>
-            <div fxFlex="49" fxFlex.lt-md="100" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="gappx">
-              <p class="mat-body-2 uppercase mb-1">
+            <div fxFlex='49' fxFlex.lt-md='100' fxLayout='column' fxLayoutAlign='start start' fxLayoutGap='gappx'>
+              <p class='mat-body-2 uppercase mb-1'>
                 {{ 'Apellidos' | translate }}
               </p>
-              <mat-form-field appearance="outline" class="form-field-width">
+              <mat-form-field appearance='outline' class='form-field-width'>
                 <mat-label>{{ 'Apellidos' | translate }}</mat-label>
                 <input
                   [formControl]="sellerForm.controls['lastName']"
                   matInput
                   placeholder="{{ 'Lastname' | translate }}"
-                  type="text"
+                  type='text'
                 />
-                <mat-icon class="greyIcon" matSuffix>person</mat-icon>
+                <mat-icon class='greyIcon' matSuffix>person</mat-icon>
                 <mat-error *ngIf="sellerForm.controls['lastName'].hasError('required')">
                   {{ 'Apellidos' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
                 </mat-error>
@@ -262,27 +262,27 @@
             </div>
           </div>
 
-          <p class="mat-body-2 uppercase mb-1">
+          <p class='mat-body-2 uppercase mb-1'>
             {{ 'Fecha de nacimiento' | translate }}
           </p>
 
-          <mat-form-field appearance="outline" class="form-field-width">
-            <input [formControl]="sellerForm.controls['birthday']" [matDatepicker]="picker" matInput />
-            <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
-            <mat-datepicker #picker [startAt]="startDate" startView="year"></mat-datepicker>
+          <mat-form-field appearance='outline' class='form-field-width'>
+            <input [formControl]="sellerForm.controls['birthday']" [matDatepicker]='picker' matInput />
+            <mat-datepicker-toggle [for]='picker' matSuffix></mat-datepicker-toggle>
+            <mat-datepicker #picker [startAt]='startDate' startView='year'></mat-datepicker>
           </mat-form-field>
 
-          <p class="mat-body-2 uppercase mb-1">
+          <p class='mat-body-2 uppercase mb-1'>
             {{ 'Carné de identidad' | translate }}
           </p>
 
-          <mat-form-field appearance="outline" class="form-field-width">
+          <mat-form-field appearance='outline' class='form-field-width'>
             <input
               [formControl]="sellerForm.controls['ci']"
               matInput
               placeholder="{{ '950929XXXXX' }}"
               required
-              type="text"
+              type='text'
             />
             <mat-error *ngIf="sellerForm.controls['ci'].invalid">
               {{ 'CI' }} <strong>{{ 'es inválido' | translate }}</strong>
@@ -308,11 +308,11 @@
           </mat-form-field> -->
 
           <div>
-            <button class="uppercase" mat-button matStepperPrevious>{{ 'Anterior' | translate }}</button>
+            <button class='uppercase' mat-button matStepperPrevious>{{ 'Anterior' | translate }}</button>
             <button
-              (click)="onCreateBusiness()"
-              [disabled]="sellerForm.invalid"
-              class="uppercase"
+              (click)='onCreateBusiness()'
+              [disabled]='sellerForm.invalid'
+              class='uppercase'
               mat-button
               matStepperNext
             >
@@ -323,34 +323,34 @@
       </mat-horizontal-stepper>
     </div>
   </div>
-  <div class="Preguntas" fxFlex fxLayout="column" fxLayoutAlign="start stretch">
-    <div class="row-line" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="gappx">
-      <span class="mat-title mb-0 color-grey-800" style="font-weight: 600">{{
+  <div class='Preguntas' fxFlex fxLayout='column' fxLayoutAlign='start stretch'>
+    <div class='row-line' fxLayout='row' fxLayoutAlign='start start' fxLayoutGap='gappx'>
+      <span class='mat-title mb-0 color-grey-800' style='font-weight: 600'>{{
         'Preguntas frecuentes' | translate
-      }}</span>
+        }}</span>
     </div>
 
     <mat-accordion multi>
-      <mat-expansion-panel class="mat-elevation-z0">
+      <mat-expansion-panel class='mat-elevation-z0'>
         <mat-expansion-panel-header>
           <mat-panel-title>
-            <span style="color: #0066c0">
+            <span style='color: #0066c0'>
               {{ '¿Qué formato debe tener el número de teléfono?' | translate }}
             </span>
           </mat-panel-title>
         </mat-expansion-panel-header>
         <p>
           {{
-            'Los números tienen que incluir un prefijo con el código de nuestro país. Formato correcto:5353612042 .'
-              | translate
+          'Los números tienen que incluir un prefijo con el código de nuestro país. Formato correcto:5353612042 .'
+            | translate
           }}
         </p>
       </mat-expansion-panel>
 
-      <mat-expansion-panel class="mat-elevation-z0">
+      <mat-expansion-panel class='mat-elevation-z0'>
         <mat-expansion-panel-header>
           <mat-panel-title>
-            <span style="color: #0066c0">
+            <span style='color: #0066c0'>
               {{ '¿Qué tengo que hacer si no dispongo de un número de teléfono móvil para recibir SMS?' | translate }}
             </span>
           </mat-panel-title>
@@ -358,10 +358,10 @@
         </mat-expansion-panel-header>
         <p>A travéz de la cuenta de correo se te generará también el pin.</p>
       </mat-expansion-panel>
-      <mat-expansion-panel class="mat-elevation-z0">
+      <mat-expansion-panel class='mat-elevation-z0'>
         <mat-expansion-panel-header>
           <mat-panel-title>
-            <span style="color: #0066c0">
+            <span style='color: #0066c0'>
               {{ '¿Qué ocurre si no he recibido un SMS con el PIN?' | translate }}
             </span>
           </mat-panel-title>
@@ -369,15 +369,15 @@
         </mat-expansion-panel-header>
         <p>
           {{
-            'Comprueba si has introducido tu número de teléfono en el formato correcto o la cuenta de correo es válida. Solicita el PIN de nuevo.'
-              | translate
+          'Comprueba si has introducido tu número de teléfono en el formato correcto o la cuenta de correo es válida. Solicita el PIN de nuevo.'
+            | translate
           }}
         </p>
       </mat-expansion-panel>
-      <mat-expansion-panel class="mat-elevation-z0">
+      <mat-expansion-panel class='mat-elevation-z0'>
         <mat-expansion-panel-header>
           <mat-panel-title>
-            <span style="color: #0066c0">
+            <span style='color: #0066c0'>
               {{ '¿Es importante tener una cuenta de correo que use frecuentemente?' | translate }}
             </span>
           </mat-panel-title>
@@ -385,8 +385,8 @@
         </mat-expansion-panel-header>
         <p>
           {{
-            'Además de enviar el pin de validación de la cuenta de vendedor, todas las notificaciones de ventas y entregas relacionadas con sus productos se harán a través de esta cuenta de correo'
-              | translate
+          'Además de enviar el pin de validación de la cuenta de vendedor, todas las notificaciones de ventas y entregas relacionadas con sus productos se harán a través de esta cuenta de correo'
+            | translate
           }}
         </p>
       </mat-expansion-panel>

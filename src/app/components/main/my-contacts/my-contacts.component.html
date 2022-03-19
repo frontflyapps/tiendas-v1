@@ -1,42 +1,42 @@
-<div class="dialog-content-wrapper">
-  <mat-toolbar color="primary" id="toolbarHeader" matDialogTitle>
-    <mat-toolbar-row fxLayoutAlign="space-between center">
+<div class='dialog-content-wrapper'>
+  <mat-toolbar color='primary' id='toolbarHeader' matDialogTitle>
+    <mat-toolbar-row fxLayoutAlign='space-between center'>
       {{'Mis contactos'|translate}}
-      <button (click)="dialogRef.close()" aria-label="Close dialog" mat-icon-button>
+      <button (click)='dialogRef.close()' aria-label='Close dialog' mat-icon-button>
         <mat-icon>close</mat-icon>
       </button>
     </mat-toolbar-row>
   </mat-toolbar>
 
-  <div class="my-dialog-content" fxFlex="100" mat-dialog-content>
+  <div class='my-dialog-content' fxFlex='100' mat-dialog-content>
 
     <!-- LISTADO DE CONTACTOS -->
-    <ng-container *ngIf="!onCreateContact">
+    <ng-container *ngIf='!onCreateContact'>
 
-      <ng-container *ngIf="isLoading; then loading; else contentLoaded"></ng-container>
+      <ng-container *ngIf='isLoading; then loading; else contentLoaded'></ng-container>
 
       <ng-template #contentLoaded>
         <ng-container
-          *ngIf="contactsService.allContacts.length > 0;then thereIsContacts; else thereIsNoContacts"></ng-container>
+          *ngIf='contactsService.allContacts.length > 0;then thereIsContacts; else thereIsNoContacts'></ng-container>
       </ng-template>
 
       <ng-template #thereIsContacts>
-        <div fxFlex="100" fxLayout="column">
-          <ng-container *ngFor="let contact of contactsService.allContacts; last as lst">
-            <div [ngClass]="{'contacts-line-bottom': !lst}" class="contact-item" fxFlex="100" fxLayout="row"
-                 fxLayoutAlign="star center"
-                 fxLayoutGap="1rem">
-              <span class="contact-title" fxFlex="grow">
+        <div fxFlex='100' fxLayout='column'>
+          <ng-container *ngFor='let contact of contactsService.allContacts; last as lst'>
+            <div [ngClass]="{'contacts-line-bottom': !lst}" class='contact-item' fxFlex='100' fxLayout='row'
+                 fxLayoutAlign='star center'
+                 fxLayoutGap='1rem'>
+              <span class='contact-title' fxFlex='grow'>
                 {{contact?.name}}&nbsp;{{contact?.lastName}}
               </span>
 
-              <div (click)="editContact(contact)" class="item-action"
-                   fxFlex="48px" fxLayout="row" fxLayoutAlign="center center" style="cursor: pointer">
+              <div (click)='editContact(contact)' class='item-action'
+                   fxFlex='48px' fxLayout='row' fxLayoutAlign='center center' style='cursor: pointer'>
                 <mat-icon>edit</mat-icon>
               </div>
 
-              <div (click)="removeContact(contact)" class="item-action"
-                   fxFlex="48px" fxLayout="row" fxLayoutAlign="center center" style="cursor: pointer">
+              <div (click)='removeContact(contact)' class='item-action'
+                   fxFlex='48px' fxLayout='row' fxLayoutAlign='center center' style='cursor: pointer'>
                 <mat-icon>delete</mat-icon>
               </div>
             </div>
@@ -45,7 +45,7 @@
       </ng-template>
 
       <ng-template #thereIsNoContacts>
-        <div fxFlex="100" fxLayout="column" fxLayoutAlign="center center">
+        <div fxFlex='100' fxLayout='column' fxLayoutAlign='center center'>
           <span>{{'No tiene contactos'|translate}}</span>
           <small>{{'Esta información se usan para tener acceso rápidos a ella para el pago'|translate}}</small>
         </div>
@@ -54,40 +54,40 @@
     </ng-container>
 
     <!-- FORMULARIO DE CRAR UN CONTACTO -->
-    <ng-container *ngIf="onCreateContact">
-      <div [formGroup]="form" fxFlex="100">
-        <div fxFlex="100" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="gappx">
+    <ng-container *ngIf='onCreateContact'>
+      <div [formGroup]='form' fxFlex='100'>
+        <div fxFlex='100' fxLayout='column' fxLayoutAlign='start stretch' fxLayoutGap='gappx'>
 
-          <mat-form-field appearance="outline">
+          <mat-form-field appearance='outline'>
             <mat-label>{{'Name'|translate}}</mat-label>
-            <input [formControl]="form.controls['name']" matInput placeholder="{{'Name'|translate}}" type="text">
-            <mat-icon class="greyIcon" matSuffix>person</mat-icon>
+            <input [formControl]="form.controls['name']" matInput placeholder="{{'Name'|translate}}" type='text'>
+            <mat-icon class='greyIcon' matSuffix>person</mat-icon>
             <mat-error *ngIf="form.controls['name'].hasError('required')">
               {{'Name'|translate}} <strong>{{'is required'|translate}}</strong>
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field appearance="outline">
+          <mat-form-field appearance='outline'>
             <mat-label>{{'Apellidos'|translate}}</mat-label>
             <input [formControl]="form.controls['lastName']" matInput placeholder="{{'Apellidos'|translate}}"
-                   type="text">
-            <mat-icon class="greyIcon" matSuffix>person</mat-icon>
+                   type='text'>
+            <mat-icon class='greyIcon' matSuffix>person</mat-icon>
             <mat-error *ngIf="form.controls['lastName'].hasError('required')">
               {{'lastName'|translate}} <strong>{{'is required'|translate}}</strong>
             </mat-error>
           </mat-form-field>
 
-          <div fxFlex="100" fxLayout="row" fxLayout.xs="column"
-               fxLayoutAlign="start center" fxLayoutAlign.xs="start"
-               fxLayoutGap="1rem" fxLayoutGap.xs="0">
+          <div fxFlex='100' fxLayout='row' fxLayout.xs='column'
+               fxLayoutAlign='start center' fxLayoutAlign.xs='start'
+               fxLayoutGap='1rem' fxLayoutGap.xs='0'>
 
-            <mat-form-field appearance="outline" fxFlex="50" fxFlex.xs="100">
+            <mat-form-field appearance='outline' fxFlex='50' fxFlex.xs='100'>
               <mat-label>{{'Email'|translate}}</mat-label>
-              <input (keypress)="utilsService.keyLettersNumberForEmail($event)" [formControl]="form.controls['email']"
+              <input (keypress)='utilsService.keyLettersNumberForEmail($event)' [formControl]="form.controls['email']"
                      matInput
                      placeholder="{{'Email'|translate}}"
-                     type="email">
-              <mat-icon class="greyIcon" matSuffix>mail</mat-icon>
+                     type='email'>
+              <mat-icon class='greyIcon' matSuffix>mail</mat-icon>
               <mat-error *ngIf="form.controls['email'].hasError('required')">
                 {{'email'|translate}} <strong>{{'is required'|translate}}</strong>
               </mat-error>
@@ -97,14 +97,14 @@
               </mat-error>
             </mat-form-field>
 
-            <mat-form-field appearance="outline" fxFlex="50" fxFlex.xs="100">
+            <mat-form-field appearance='outline' fxFlex='50' fxFlex.xs='100'>
               <mat-label>{{'Documento de identidad'|translate}}</mat-label>
-              <input (keypress)="utilsService.keyPressAlphaAndNumbersModIdentity($event)"
+              <input (keypress)='utilsService.keyPressAlphaAndNumbersModIdentity($event)'
                      [formControl]="form.controls['identification']"
                      matInput
                      placeholder="{{'identification'|translate}}"
-                     type="email">
-              <mat-icon class="greyIcon" matSuffix>fact_check</mat-icon>
+                     type='email'>
+              <mat-icon class='greyIcon' matSuffix>fact_check</mat-icon>
               <mat-error *ngIf="form.controls['identification'].hasError('required')">
                 {{'identification'|translate}} <strong>{{'is required'|translate}}</strong>
               </mat-error>
@@ -115,13 +115,13 @@
 
           </div>
 
-          <mat-form-field appearance="outline">
+          <mat-form-field appearance='outline'>
             <mat-label>{{'Phone'|translate}}</mat-label>
-            <input (keypress)="utilsService.keyPressNumbers($event)" [formControl]="form.controls['phone']"
+            <input (keypress)='utilsService.keyPressNumbers($event)' [formControl]="form.controls['phone']"
                    matInput
                    placeholder="{{'Phone'|translate}}"
-                   type="tel">
-            <mat-icon class="greyIcon" matSuffix>ring_volume</mat-icon>
+                   type='tel'>
+            <mat-icon class='greyIcon' matSuffix>ring_volume</mat-icon>
             <mat-hint>{{'Ejemplo, 5 XXX XX XX' | translate}}</mat-hint>
             <mat-error *ngIf="form.controls['phone'].hasError('required')">
               {{ 'Phone' | translate }} <strong>{{ 'is required' | translate }}</strong>
@@ -136,29 +136,29 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field appearance="outline">
+          <mat-form-field appearance='outline'>
             <mat-label>{{'Dirección'|translate}}</mat-label>
             <input [formControl]="form.controls['address']" matInput placeholder="{{'Dirección'|translate}}"
-                   type="text">
-            <mat-icon class="greyIcon" matSuffix>my_location</mat-icon>
+                   type='text'>
+            <mat-icon class='greyIcon' matSuffix>my_location</mat-icon>
             <mat-error *ngIf="form.controls['address'].hasError('required')">
               {{'Dirección'|translate}} <strong>{{'is required'|translate}}</strong>
             </mat-error>
           </mat-form-field>
 
           <!-- SOLO PARA CUBANOS -->
-          <div fxLayout="row" fxLayout.lt-md="column"
-               fxLayoutAlign="space-between center" fxLayoutAlign.lt-md="start"
-               fxLayoutGap="1rem" fxLayoutGap.lt-md="0">
-            <mat-form-field appearance="outline" fxFlex="50" fxFlex.lt-md="100">
+          <div fxLayout='row' fxLayout.lt-md='column'
+               fxLayoutAlign='space-between center' fxLayoutAlign.lt-md='start'
+               fxLayoutGap='1rem' fxLayoutGap.lt-md='0'>
+            <mat-form-field appearance='outline' fxFlex='50' fxFlex.lt-md='100'>
               <mat-label>{{ 'Provincia' | translate }}</mat-label>
-              <mat-select (selectionChange)="onSelectProvince($event.value)"
-                          [compareWith]="compareById"
+              <mat-select (selectionChange)='onSelectProvince($event.value)'
+                          [compareWith]='compareById'
                           [formControl]="form.controls['ProvinceId']"
                           placeholder="{{ 'Nombre de la provincia' | translate }}"
                           required
-                          type="text">
-                <mat-option *ngFor="let province of allProvinces" [value]="province.id">
+                          type='text'>
+                <mat-option *ngFor='let province of allProvinces' [value]='province.id'>
                   {{ province.name }}
                 </mat-option>
               </mat-select>
@@ -167,14 +167,14 @@
               </mat-error>
             </mat-form-field>
 
-            <mat-form-field appearance="outline" fxFlex="50" fxFlex.lt-md="100">
+            <mat-form-field appearance='outline' fxFlex='50' fxFlex.lt-md='100'>
               <mat-label>{{ 'Municipio' | translate }}</mat-label>
-              <mat-select [compareWith]="compareById"
+              <mat-select [compareWith]='compareById'
                           [formControl]="form.controls['MunicipalityId']"
                           placeholder="{{ 'Nombre del Municipio' | translate }}"
                           required
-                          type="text">
-                <mat-option *ngFor="let municipio of municipalities" [value]="municipio.id">
+                          type='text'>
+                <mat-option *ngFor='let municipio of municipalities' [value]='municipio.id'>
                   {{ municipio.name }}
                 </mat-option>
               </mat-select>
@@ -191,9 +191,9 @@
 
   </div>
 
-  <ng-container *ngIf="!onCreateContact">
-    <div fxLayout="row" fxLayoutAlign="end start" mat-dialog-actions>
-      <button (click)="onCreateContactFn()" color="primary"
+  <ng-container *ngIf='!onCreateContact'>
+    <div fxLayout='row' fxLayoutAlign='end start' mat-dialog-actions>
+      <button (click)='onCreateContactFn()' color='primary'
               mat-flat-button>
         <mat-icon>add</mat-icon>
         {{'Nuevo'|translate}}
@@ -201,12 +201,12 @@
     </div>
   </ng-container>
 
-  <ng-container *ngIf="onCreateContact">
-    <div fxLayout="row" fxLayoutAlign="end start" mat-dialog-actions>
-      <button (click)="onSetBack()" color="primary"
+  <ng-container *ngIf='onCreateContact'>
+    <div fxLayout='row' fxLayoutAlign='end start' mat-dialog-actions>
+      <button (click)='onSetBack()' color='primary'
               mat-flat-button>{{'Atrás'|translate}}</button>
-      <button (click)="onSetUpdateContact()" [disabled]="this.form.invalid"
-              color="primary"
+      <button (click)='onSetUpdateContact()' [disabled]='this.form.invalid'
+              color='primary'
               mat-flat-button>{{'Save'|translate}}</button>
     </div>
   </ng-container>
@@ -215,8 +215,8 @@
 
 
 <ng-template #loading>
-  <div fxFlex="100" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="1rem">
+  <div fxFlex='100' fxLayout='row' fxLayoutAlign='center center' fxLayoutGap='1rem'>
     <span>{{'Cargando...'|translate}}</span>
-    <mat-spinner diameter="16"></mat-spinner>
+    <mat-spinner diameter='16'></mat-spinner>
   </div>
 </ng-template>

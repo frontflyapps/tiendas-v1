@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { BlogColumnComponent } from './blog-column/blog-column.component';
 import { BlogDetailsComponent } from './blog-details/blog-details.component';
 

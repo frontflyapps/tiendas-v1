@@ -1,70 +1,70 @@
-<div (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()" *ngIf="this.notificacion.status =='read'"
-     class="NotificationRead">
+<div (mouseenter)='onMouseEnter()' (mouseleave)='onMouseLeave()' *ngIf="this.notificacion.status =='read'"
+     class='NotificationRead'>
 
-  <div class="NotificationBody" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="gappx">
+  <div class='NotificationBody' fxLayout='row' fxLayoutAlign='start start' fxLayoutGap='gappx'>
 
     <div class='CircleIcon'>
       <!-- <mat-icon (click)="onClickNotification()" class="IconNavBar">{{this.GetIconofNavBar()}}</mat-icon> -->
-      <mat-icon (click)="onClickNotification()">{{this.GetIconofNavBar()}}</mat-icon>
+      <mat-icon (click)='onClickNotification()'>{{this.GetIconofNavBar()}}</mat-icon>
     </div>
-    <div (click)="onClickNotification()" class="textNotification" fxLayout="row" fxLayoutAlign="start start"
-         fxLayoutGap="gappx"
-         style="margin-left:10px;">
-      <span class="mat-body-1">
+    <div (click)='onClickNotification()' class='textNotification' fxLayout='row' fxLayoutAlign='start start'
+         fxLayoutGap='gappx'
+         style='margin-left:10px;'>
+      <span class='mat-body-1'>
         {{this.notificacion.message|translate}}</span>
     </div>
 
   </div>
 
-  <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="gappx" style="padding-left: 57px;">
+  <div fxLayout='row' fxLayoutAlign='space-between center' fxLayoutGap='gappx' style='padding-left: 57px;'>
     <!-- <mat-icon class="iconFecha">date_range</mat-icon> -->
     <div>
-      <span class="mat-caption">{{this.notificacion.createdAt | date:'longDate'}}</span>
-      <button (click)="onEliminarNotification()" *ngIf="showBtnClear" class="ml-2" mat-icon-button>
-        <mat-icon class="mat-18">delete</mat-icon>
+      <span class='mat-caption'>{{this.notificacion.createdAt | date:'longDate'}}</span>
+      <button (click)='onEliminarNotification()' *ngIf='showBtnClear' class='ml-2' mat-icon-button>
+        <mat-icon class='mat-18'>delete</mat-icon>
       </button>
 
     </div>
 
-    <span class="mat-caption ml-2">
-      <button (click)="onShowDetails()" *ngIf="!expandedElement" class="mat-18" mat-icon-button>
+    <span class='mat-caption ml-2'>
+      <button (click)='onShowDetails()' *ngIf='!expandedElement' class='mat-18' mat-icon-button>
         <mat-icon>keyboard_arrow_right</mat-icon>
       </button>
-      <button (click)="onHideDetails()" *ngIf="expandedElement" class="mat-18" mat-icon-button>
+      <button (click)='onHideDetails()' *ngIf='expandedElement' class='mat-18' mat-icon-button>
         <mat-icon>keyboard_arrow_down</mat-icon>
       </button>
     </span>
   </div>
 
   <div
-    (click)="onClickNotification()"
+    (click)='onClickNotification()'
     *ngIf="notificacion.type == 'payment-confirmed' || notificacion.type=='payment-cancelled' || notificacion.type == 'payment-error'"
-    [@detailExpand]="this.expandedElement ? 'expanded' : 'collapsed'" class="LayoutTable px-5"
-    fxLayout="column" fxLayoutAlign="start stretch">
-    <mat-divider class="my-2"></mat-divider>
-    <div class="w-100" fxLayout="row" fxLayoutAlign="space-between center">
-      <div fxFlex="65" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="gappx">
+    [@detailExpand]="this.expandedElement ? 'expanded' : 'collapsed'" class='LayoutTable px-5'
+    fxLayout='column' fxLayoutAlign='start stretch'>
+    <mat-divider class='my-2'></mat-divider>
+    <div class='w-100' fxLayout='row' fxLayoutAlign='space-between center'>
+      <div fxFlex='65' fxLayout='column' fxLayoutAlign='start start' fxLayoutGap='gappx'>
 
-        <div fxLayout="row" fxLayoutAlign="space-between start" style="width: 100% !important">
-          <div fxFlex="90" fxLayout="column" fxLayoutAlign="start start" style="margin-top: 2px;">
-            <span class="mat-caption grey-500">{{'Order' | translate}}</span>
-            <span class="mat-body-1" style="text-transform: capitalize;">{{order.order}}</span>
+        <div fxLayout='row' fxLayoutAlign='space-between start' style='width: 100% !important'>
+          <div fxFlex='90' fxLayout='column' fxLayoutAlign='start start' style='margin-top: 2px;'>
+            <span class='mat-caption grey-500'>{{'Order' | translate}}</span>
+            <span class='mat-body-1' style='text-transform: capitalize;'>{{order.order}}</span>
           </div>
         </div>
 
 
-        <div class="mb-3" fxLayout="row" fxLayoutAlign="start center">
-          <div fxFlex="100" fxLayout="column" fxLayoutAlign="start start" style="margin-top: 2px;">
-            <span class="mat-caption grey-700">{{'Estado'|translate}}</span>
-            <span [class]="this.status[this.order.status].class">
+        <div class='mb-3' fxLayout='row' fxLayoutAlign='start center'>
+          <div fxFlex='100' fxLayout='column' fxLayoutAlign='start start' style='margin-top: 2px;'>
+            <span class='mat-caption grey-700'>{{'Estado'|translate}}</span>
+            <span [class]='this.status[this.order.status].class'>
               {{this.utilsService.parserLanguage(this.status[this.order.status].status, this.language)}}
             </span>
           </div>
         </div>
       </div>
 
-      <div fxFlex="35" fxLayout="column" fxLayoutAlign="center center">
-        <span class="showPrice">{{ order.totalPrice  | currency:order.currency }}
+      <div fxFlex='35' fxLayout='column' fxLayoutAlign='center center'>
+        <span class='showPrice'>{{ order.totalPrice  | currency:order.currency }}
         </span>
       </div>
     </div>
@@ -74,71 +74,71 @@
 
 </div>
 
-<div (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()" *ngIf="this.notificacion.status =='not-read'"
-     class="NotificationnoRead"
-     fxLayout="column">
+<div (mouseenter)='onMouseEnter()' (mouseleave)='onMouseLeave()' *ngIf="this.notificacion.status =='not-read'"
+     class='NotificationnoRead'
+     fxLayout='column'>
 
-  <div class="mb-3" class="NotificationBody" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="gappx">
+  <div class='mb-3' class='NotificationBody' fxLayout='row' fxLayoutAlign='start start' fxLayoutGap='gappx'>
 
     <div class='CircleIcon'>
-      <mat-icon (click)="onClickNotification()">{{this.GetIconofNavBar()}}</mat-icon>
+      <mat-icon (click)='onClickNotification()'>{{this.GetIconofNavBar()}}</mat-icon>
     </div>
-    <div (click)="onClickNotification()" class="textNotification" fxLayout="row" fxLayoutAlign="start start"
-         fxLayoutGap="gappx"
-         style="margin-left:10px;">
-      <p class="mat-body-1">
+    <div (click)='onClickNotification()' class='textNotification' fxLayout='row' fxLayoutAlign='start start'
+         fxLayoutGap='gappx'
+         style='margin-left:10px;'>
+      <p class='mat-body-1'>
         {{this.notificacion.message|translate}}</p>
     </div>
 
   </div>
 
-  <div class="mt-4" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="gappx" style="padding-left: 57px;">
+  <div class='mt-4' fxLayout='row' fxLayoutAlign='space-between center' fxLayoutGap='gappx' style='padding-left: 57px;'>
     <!-- <mat-icon class="iconFecha">date_range</mat-icon> -->
     <div>
-      <span class="mat-caption">{{this.notificacion.createdAt | date:'longDate'}}</span>
-      <button (click)="onEliminarNotification()" *ngIf="showBtnClear" class="ml-2" mat-icon-button>
-        <mat-icon class="mat-18">delete</mat-icon>
+      <span class='mat-caption'>{{this.notificacion.createdAt | date:'longDate'}}</span>
+      <button (click)='onEliminarNotification()' *ngIf='showBtnClear' class='ml-2' mat-icon-button>
+        <mat-icon class='mat-18'>delete</mat-icon>
       </button>
 
     </div>
 
-    <span class="mat-caption ml-2">
-      <button (click)="onShowDetails()" *ngIf="!expandedElement" class="mat-18" mat-icon-button>
+    <span class='mat-caption ml-2'>
+      <button (click)='onShowDetails()' *ngIf='!expandedElement' class='mat-18' mat-icon-button>
         <mat-icon>keyboard_arrow_right</mat-icon>
       </button>
-      <button (click)="onHideDetails()" *ngIf="expandedElement" class="mat-18" mat-icon-button>
+      <button (click)='onHideDetails()' *ngIf='expandedElement' class='mat-18' mat-icon-button>
         <mat-icon>keyboard_arrow_down</mat-icon>
       </button>
     </span>
   </div>
-  <div (click)="onClickNotification()" *ngIf="notificacion.type.split('-')[0]=='payment'"
+  <div (click)='onClickNotification()' *ngIf="notificacion.type.split('-')[0]=='payment'"
        [@detailExpand]="this.expandedElement ? 'expanded' : 'collapsed'"
-       class="LayoutTable px-5"
-       fxLayout="column" fxLayoutAlign="start stretch">
-    <mat-divider class="my-2"></mat-divider>
-    <div class="w-100" fxLayout="row" fxLayoutAlign="space-between center">
-      <div fxFlex="65" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="gappx">
+       class='LayoutTable px-5'
+       fxLayout='column' fxLayoutAlign='start stretch'>
+    <mat-divider class='my-2'></mat-divider>
+    <div class='w-100' fxLayout='row' fxLayoutAlign='space-between center'>
+      <div fxFlex='65' fxLayout='column' fxLayoutAlign='start start' fxLayoutGap='gappx'>
 
-        <div fxLayout="row" fxLayoutAlign="space-between start" style="width: 100% !important">
-          <div fxFlex="90" fxLayout="column" fxLayoutAlign="start start" style="margin-top: 2px;">
-            <span class="mat-caption grey-500">{{'Order' | translate}}</span>
-            <span class="mat-body-1" style="text-transform: capitalize;">{{order.order}}</span>
+        <div fxLayout='row' fxLayoutAlign='space-between start' style='width: 100% !important'>
+          <div fxFlex='90' fxLayout='column' fxLayoutAlign='start start' style='margin-top: 2px;'>
+            <span class='mat-caption grey-500'>{{'Order' | translate}}</span>
+            <span class='mat-body-1' style='text-transform: capitalize;'>{{order.order}}</span>
           </div>
         </div>
 
 
-        <div class="mb-2" fxLayout="row" fxLayoutAlign="start center">
-          <div fxFlex="100" fxLayout="column" fxLayoutAlign="start start" style="margin-top: 2px;">
-            <span class="mat-caption grey-700">{{'Estado'|translate}}</span>
-            <span [class]="this.status[this.order.status].class">
+        <div class='mb-2' fxLayout='row' fxLayoutAlign='start center'>
+          <div fxFlex='100' fxLayout='column' fxLayoutAlign='start start' style='margin-top: 2px;'>
+            <span class='mat-caption grey-700'>{{'Estado'|translate}}</span>
+            <span [class]='this.status[this.order.status].class'>
               {{this.utilsService.parserLanguage(this.status[this.order.status].status, this.language)}}
             </span>
           </div>
         </div>
       </div>
 
-      <div fxFlex="35" fxLayout="column" fxLayoutAlign="center center">
-        <span class="showPrice">{{ order.totalPrice  | currency:order.currency }}
+      <div fxFlex='35' fxLayout='column' fxLayoutAlign='center center'>
+        <span class='showPrice'>{{ order.totalPrice  | currency:order.currency }}
         </span>
       </div>
     </div>

@@ -2,7 +2,6 @@ import { CurrencyPipe } from '@angular/common';
 import { Pipe, PipeTransform } from '@angular/core';
 import { CoinEnum } from '../classes/coin.enum';
 import { MarketEnum } from '../classes/market.enum';
-import { CurrencyService } from '../services/currency/currency.service';
 
 @Pipe({
   name: 'currencyMarket',

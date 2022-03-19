@@ -1,107 +1,107 @@
-<form [formGroup]="form">
+<form [formGroup]='form'>
   <mat-dialog-content>
     <h2>{{ 'Cancelar Pago' | translate }}</h2>
 
-    <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="gappx">
+    <div fxLayout='column' fxLayoutAlign='start stretch' fxLayoutGap='gappx'>
       <blockquote>
         <p>{{ cancellationText }}</p>
       </blockquote>
 
-      <span class="my-2" style="font-weight: 600"
+      <span class='my-2' style='font-weight: 600'
       >{{ 'Penalty for cancellation policies' | translate | uppercase }}:
-        <span *ngIf="ruleApply" class="color-cancellation"> {{ ruleApply?.value }} {{ '%' }}</span></span
+        <span *ngIf='ruleApply' class='color-cancellation'> {{ ruleApply?.value }} {{ '%' }}</span></span
       >
 
-      <span style="font-weight: 600"
+      <span style='font-weight: 600'
       >{{ 'Full refund' | translate | uppercase }}:
-        <span *ngIf="refund" class="color-cancellation"> {{ refund | currency: this.order.currency }}</span></span
+        <span *ngIf='refund' class='color-cancellation'> {{ refund | currency: this.order.currency }}</span></span
       >
 
       <ng-container *ngIf="order.status == 'confirmed'">
-        <p class="mat-body-2 uppercase py-2">
+        <p class='mat-body-2 uppercase py-2'>
           {{ 'Comentario respecto a la cancelación' | translate }}
         </p>
-        <mat-form-field appearance="outline" class="example-full-width" fxFlex="100">
+        <mat-form-field appearance='outline' class='example-full-width' fxFlex='100'>
           <mat-label>{{ 'Comentario' | translate }}</mat-label>
           <textarea
             [formControl]="form.controls['cancelNote']"
-            autocomplete="false"
-            class="w-100"
+            autocomplete='false'
+            class='w-100'
             matInput
             placeholder="{{ 'Comentario' | translate }}"
             required
-            rows="4"
-            type="text"
+            rows='4'
+            type='text'
           ></textarea>
         </mat-form-field>
       </ng-container>
 
       <ng-container>
-        <p class="mat-body-2 uppercase mb-1">
+        <p class='mat-body-2 uppercase mb-1'>
           {{ 'Cancellation policies' | translate }}
         </p>
-        <mat-card class="mat-elevation-z0">
-          <div class="responsive_table">
-            <table [dataSource]="dataSource" mat-table>
-              <ng-container matColumnDef="minHour">
-                <th *matHeaderCellDef mat-header-cell style="width: 10%">
-                  <span class="mat-caption">{{ 'Desde' | translate }}</span>
+        <mat-card class='mat-elevation-z0'>
+          <div class='responsive_table'>
+            <table [dataSource]='dataSource' mat-table>
+              <ng-container matColumnDef='minHour'>
+                <th *matHeaderCellDef mat-header-cell style='width: 10%'>
+                  <span class='mat-caption'>{{ 'Desde' | translate }}</span>
                 </th>
-                <td *matCellDef="let element" mat-cell>
-                  <span class="mat-body-2">{{ element?.minHour }} {{ 'h' }}</span>
+                <td *matCellDef='let element' mat-cell>
+                  <span class='mat-body-2'>{{ element?.minHour }} {{ 'h' }}</span>
                 </td>
               </ng-container>
 
-              <ng-container matColumnDef="maxHour">
-                <th *matHeaderCellDef mat-header-cell style="width: 10%">
-                  <span class="mat-caption">{{ 'Hasta' | translate }}</span>
+              <ng-container matColumnDef='maxHour'>
+                <th *matHeaderCellDef mat-header-cell style='width: 10%'>
+                  <span class='mat-caption'>{{ 'Hasta' | translate }}</span>
                 </th>
-                <td *matCellDef="let element" mat-cell>
-                  <span class="mat-body-2">{{ element?.maxHour }} {{ 'h' }}</span>
+                <td *matCellDef='let element' mat-cell>
+                  <span class='mat-body-2'>{{ element?.maxHour }} {{ 'h' }}</span>
                 </td>
               </ng-container>
 
-              <ng-container matColumnDef="value">
-                <th *matHeaderCellDef mat-header-cell style="width: 10%">
-                  <span class="mat-caption">{{ 'Valor' | translate }}</span>
+              <ng-container matColumnDef='value'>
+                <th *matHeaderCellDef mat-header-cell style='width: 10%'>
+                  <span class='mat-caption'>{{ 'Valor' | translate }}</span>
                 </th>
-                <td *matCellDef="let element" mat-cell>
-                  <span class="mat-body-2">{{ element?.value }} {{ '%' }}</span>
+                <td *matCellDef='let element' mat-cell>
+                  <span class='mat-body-2'>{{ element?.value }} {{ '%' }}</span>
                 </td>
               </ng-container>
 
-              <tr *matHeaderRowDef="displayedColumns; sticky: true" mat-header-row></tr>
-              <tr *matRowDef="let row; columns: displayedColumns" class="rowData" mat-row></tr>
+              <tr *matHeaderRowDef='displayedColumns; sticky: true' mat-header-row></tr>
+              <tr *matRowDef='let row; columns: displayedColumns' class='rowData' mat-row></tr>
             </table>
           </div>
         </mat-card>
 
-        <mat-checkbox *ngIf="ruleApply" [formControl]="form.controls['rule']">
-          <span class="mat-body-2">{{ 'Accept our cancellation policies' | translate | uppercase }}</span>
+        <mat-checkbox *ngIf='ruleApply' [formControl]="form.controls['rule']">
+          <span class='mat-body-2'>{{ 'Accept our cancellation policies' | translate | uppercase }}</span>
         </mat-checkbox>
       </ng-container>
     </div>
-    <mat-spinner *ngIf="this.loadData" class="spinerLoad" color="primary" diameter="80"></mat-spinner>
+    <mat-spinner *ngIf='this.loadData' class='spinerLoad' color='primary' diameter='80'></mat-spinner>
   </mat-dialog-content>
 
   <mat-dialog-actions>
-    <div fxFlex="100" fxLayout="row" fxLayoutAlign="end center">
-      <button class="mr-2" color="primary" mat-dialog-close mat-stroked-button>{{ 'CERRAR' | translate }}</button>
+    <div fxFlex='100' fxLayout='row' fxLayoutAlign='end center'>
+      <button class='mr-2' color='primary' mat-dialog-close mat-stroked-button>{{ 'CERRAR' | translate }}</button>
       <button
-        (click)="onCancelar()"
+        (click)='onCancelar()'
         *ngIf="order.status == 'confirmed'"
-        [disabled]="isCancelRule || form.invalid"
-        class="mr-2"
-        color="warn"
+        [disabled]='isCancelRule || form.invalid'
+        class='mr-2'
+        color='warn'
         mat-stroked-button
       >
         {{ 'CANCELAR ORDEN' | translate }}
       </button>
       <button
-        (click)="this.dialogRef.close(false)"
+        (click)='this.dialogRef.close(false)'
         *ngIf="order.status != 'confirmed'"
-        class="mr-2"
-        color="primary"
+        class='mr-2'
+        color='primary'
         mat-flat-button
       >
         {{ 'ACEPTAR' | translate }}

@@ -1,6 +1,6 @@
 import { MyOrdersGuard } from './../my-orders/my-orders.guard';
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { MainComponent } from './main.component';
 import { CheckoutGuard } from '../checkout/checkout.guard';
 
