@@ -1,6 +1,6 @@
 import { environment } from './../../../../environments/environment';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { timeout } from 'rxjs/operators';
 
@@ -17,7 +17,8 @@ export class PayService {
   urlPaySucces = environment.apiUrl + 'pay-success';
   urlPayCancelled = environment.apiUrl + 'pay-cancelled';
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) {
+  }
 
   makePaymentTransfermovil(data): Observable<any> {
     return this.httpClient.post<any>(this.urlPaymentTransfermovil, data);
@@ -51,6 +52,7 @@ export class PayService {
   cancelPaymentPeopleGoTo(data): Observable<any> {
     return this.httpClient.post<any>(this.urlPaymentPeopleGoTo + `/${data.id}/cancel`, data);
   }
+
   /**********************************************/
 
   cancelPaymentTranfermovil(data): Observable<any> {
