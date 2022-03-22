@@ -303,10 +303,14 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
 
   // Add to cart
   public addToCart(product: any, quantity) {
-    if (quantity === 0) {
-      return false;
+    if (this.loggedInUserService.getLoggedInUser()) {
+      if (quantity === 0) {
+        return false;
+      }
+      this.cartService.addToCart(product, Math.max(product.minSale, quantity)).then();
+    } else {
+      this.router.navigate(['/my-account']);
     }
-    this.cartService.addToCart(product, Math.max(product.minSale, quantity)).then();
   }
 
   // getFeaturedProducts() {
