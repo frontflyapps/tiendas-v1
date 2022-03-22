@@ -87,12 +87,6 @@ export class MyAccountComponent implements OnInit {
     this.getParamsAndInspect();
   }
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event) {
-    this.innerWidth = window.innerWidth;
-    this.applyStyle = this.innerWidth <= 600;
-  }
-
   /**
    * ====================================================
    * Check Params and redirect to view on my-account
