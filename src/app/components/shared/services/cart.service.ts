@@ -125,7 +125,7 @@ export class CartService implements OnDestroy {
         return;
       }
       if (this.loggedInUser) {
-        return this.postCart({ ProductId: product.id, quantity: quantity, goToPay: (goToPay || false) })
+        return this.postCart({ ProductId: product.id, quantity: quantity, goToPay: goToPay || false })
           .then((data) => {
             this.carts = data.data;
             message =
@@ -196,7 +196,12 @@ export class CartService implements OnDestroy {
         // if (this._isInCart(product) && quantity != -1) {
         //   quantity = 1;
         // }
-        return this.postCart({ ProductId: product.id, quantity: quantity, StockId: product?.Stock?.id, goToPay: (goToPay || false) })
+        return this.postCart({
+          ProductId: product.id,
+          quantity: quantity,
+          StockId: product?.Stock?.id,
+          goToPay: goToPay || false,
+        })
           .then((data) => {
             this.carts = data.data;
             message =
@@ -684,34 +689,62 @@ export class CartService implements OnDestroy {
   // Add to cart
   public addToCartOnCard(product: any, quantity: number = 1) {
     // this.inLoading = true;
-    if (product.minSale > 1) {
-      const dialogRef = this.dialog.open(ConfirmationDialogFrontComponent, {
-        width: '10cm',
-        maxWidth: '100vw',
-        data: {
-          question: `Este producto posee un restricción de mínima cantidad de unidades para poder adquirirlo, desea añadirlo al carrito?`,
-        },
-      });
-      dialogRef.afterClosed().subscribe((result) => {
-        if (result) {
-          this.addToCartQuickly(product, product.minSale)
-            .then((data) => {
-              // this.inLoading = false;
-            })
-            .catch((error) => {
-              // this.inLoading = false;
-            });
-        }
-      });
-    } else {
-      this.addToCartQuickly(product, product.minSale)
-        .then((data) => {
-          // this.inLoading = false;
-        })
-        .catch((error) => {
-          // this.inLoading = false;
+    if (this.loggedInUserService.getLoggedInUser()) {
+      if (product.minSale > 1) {
+        const dialogRef = this.dialog.open(ConfirmationDialogFrontComponent, {
+          width: '10cm',
+          maxWidth: '100vw',
+          data: {
+            question: `Este producto posee un restricción de mínima cantidad de unidades para poder adquirirlo, desea añadirlo al carrito?`,
+          },
         });
+        dialogRef.afterClosed().subscribe((result) => {
+          if (result) {
+            this.addToCartQuickly(product, product.minSale)
+              .then((data) => {
+                // this.inLoading = false;
+              })
+              .catch((error) => {
+                // this.inLoading = false;
+              });
+          }
+        });
+      } else {
+        this.addToCartQuickly(product, product.minSale)
+          .then((data) => {
+            // this.inLoading = false;
+          })
+          .catch((error) => {
+            // this.inLoading = false;
+          });
+      }
+    } else {
+      this.redirectToLoginWithOrigin();
     }
+  }
+
+  redirectToLoginWithOrigin() {
+    const dialogRef = this.dialog.open(ConfirmationDialogFrontComponent, {
+      width: '550px',
+      data: {
+        title: 'Información',
+        textHtml: `
+        <h4 style="text-transform:none !important; line-height:1.6rem !important;">
+          Es necesario estar logueado para adicionar al carrito de compra.
+        </h4>
+       `,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe(async (result) => {
+      this.router
+        .navigate(['/my-account'], {
+          queryParams: {
+            redirectToOriginPage: document.location.href,
+          },
+        })
+        .then();
+    });
   }
 
   // ////////////////////// ADD TO CART PRODUCT //////////////////

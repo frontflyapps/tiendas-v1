@@ -22,9 +22,7 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { SocialMediaComponent } from './social-media/social-media.component';
 import { LANDING_PAGE, PRODUCT_COUNT } from '../../../../core/classes/global.const';
 import { LocalStorageService } from '../../../../core/services/localStorage/localStorage.service';
-import {
-  ConfirmationDialogFrontComponent
-} from '../../../shared/confirmation-dialog-front/confirmation-dialog-front.component';
+import { ConfirmationDialogFrontComponent } from '../../../shared/confirmation-dialog-front/confirmation-dialog-front.component';
 
 @Component({
   selector: 'app-product-details',
@@ -193,12 +191,11 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
       rating: [3.5, Validators.required],
     });
 
-    this.allProductsOnMenuToShow = this.searchProductControl.valueChanges
-      .pipe(
-        startWith(''),
-        debounceTime(200),
-        map(value => this._filter(value)),
-      );
+    this.allProductsOnMenuToShow = this.searchProductControl.valueChanges.pipe(
+      startWith(''),
+      debounceTime(200),
+      map((value) => this._filter(value)),
+    );
   }
 
   ngOnDestroy() {
@@ -234,7 +231,6 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   getFrontData() {
     this.getFrontDataRequest()
       .then((data: any) => {
-
         const dataResponse = JSON.parse(JSON.stringify(data.data));
         this.setDataOnLandingPage(dataResponse);
 
@@ -246,7 +242,6 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
         _responseCP.count = JSON.parse(JSON.stringify(_response.countProducts));
         _responseCP.timespan = new Date().getTime();
         this.localStorageService.setOnStorage(PRODUCT_COUNT, _responseCP);
-
       })
       .catch((error) => {
         this.loadingFeatured = false;
@@ -277,7 +272,8 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
 
   getProductsByBusiness(businessId) {
     this.loadingMenu = true;
-    this.productsService.getProductsByBusiness(businessId).subscribe((data: any) => {
+    this.productsService.getProductsByBusiness(businessId).subscribe(
+      (data: any) => {
         console.log('PRODUCTS ON MENU', data.data);
         this.allProductsOnMenu = data.data.slice();
         const timeOut = setTimeout(() => {
@@ -285,12 +281,13 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
           clearTimeout(timeOut);
         }, 200);
       },
-      error => {
+      (error) => {
         const timeOut = setTimeout(() => {
           this.loadingMenu = false;
           clearTimeout(timeOut);
         }, 200);
-      });
+      },
+    );
   }
 
   getRelatedProducts() {
@@ -323,18 +320,20 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
         title: 'Información',
         textHtml: `
         <h4 style="text-transform:none !important; line-height:1.6rem !important;">
-          Es necesario estar logeado para adicionar al carrito de compra.
+          Es necesario estar logueado para adicionar al carrito de compra.
         </h4>
        `,
       },
     });
 
     dialogRef.afterClosed().subscribe(async (result) => {
-      this.router.navigate(['/my-account'], {
-        queryParams: {
-          redirectToOriginPage: document.location.href,
-        }
-      }).then();
+      this.router
+        .navigate(['/my-account'], {
+          queryParams: {
+            redirectToOriginPage: document.location.href,
+          },
+        })
+        .then();
     });
   }
 
@@ -448,6 +447,6 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
-    return this.allProductsOnMenu.filter(option => option.name.es.toLowerCase().includes(filterValue));
+    return this.allProductsOnMenu.filter((option) => option.name.es.toLowerCase().includes(filterValue));
   }
 }
