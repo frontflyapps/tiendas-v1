@@ -1,21 +1,21 @@
 import { ConfirmPaymentOkComponent } from './confirm-payment-ok/confirm-payment-ok.component';
 import { CookieService } from 'ngx-cookie-service';
 import { MatSidenav } from '@angular/material/sidenav';
-import { Component, OnInit, ViewChild, OnDestroy, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Product } from '../../modals/product.model';
 import { CartItem } from '../../modals/cart-item';
 import { ProductService } from '../shared/services/product.service';
 import { CartService } from '../shared/services/cart.service';
-import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { NavigationService } from '../../core/services/navigation/navigation.service';
 import { LoggedInUserService } from '../../core/services/loggedInUser/logged-in-user.service';
 import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
-import { Subject, of, Observable } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { IUser } from '../../core/classes/user.class';
 import { AuthenticationService } from '../../core/services/authentication/authentication.service';
 import { ShowSnackbarService } from '../../core/services/show-snackbar/show-snackbar.service';
-import { MatDialogRef, MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { CurrencyService } from '../../core/services/currency/currency.service';
 import { environment } from '../../../environments/environment';
 import { FormControl } from '@angular/forms';
@@ -33,8 +33,9 @@ import { DialogSetLocationComponent } from './dialog-set-location/dialog-set-loc
 import { LOCATION } from '../../core/classes/storageNames.class';
 import { LocationService } from '../../core/services/location/location.service';
 import { MyContactsComponent } from './my-contacts/my-contacts.component';
-import { MENU_DATA, PRODUCT_COUNT } from '../../core/classes/global.const';
+import { MENU_DATA } from '../../core/classes/global.const';
 import { LocalStorageService } from '../../core/services/localStorage/localStorage.service';
+import { GlobalStateOfCookieService } from '../../core/services/request-cookie-secure/global-state-of-cookie.service';
 
 @Component({
   selector: 'app-main',
@@ -105,6 +106,7 @@ export class MainComponent implements OnInit, OnDestroy {
     public utilsService: UtilsService,
     private confirmCreateBusinessService: ConfirmCreateBusinessService,
     private locationService: LocationService,
+    private globalStateOfCookieService: GlobalStateOfCookieService,
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
@@ -126,6 +128,12 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.globalStateOfCookieService.getCookieState()
+      ? this.initComponent()
+      : this.setSubscriptionToCookie();
+  }
+
+  initComponent() {
     this.initSubsLocation();
     this.getLocationOnLocalStorage();
 
@@ -180,6 +188,16 @@ export class MainComponent implements OnInit, OnDestroy {
     this.loggedInUserService.$languageChanged.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {
       this._language = data.lang;
     });
+  }
+
+  setSubscriptionToCookie() {
+    this.globalStateOfCookieService.stateOfCookie$
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((thereIsCookie) => {
+        if (thereIsCookie) {
+          this.initComponent();
+        }
+      });
   }
 
   getFromStorage() {

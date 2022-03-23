@@ -8,6 +8,7 @@ import { takeUntil } from 'rxjs/operators';
 import { LocalStorageService } from '../../../../core/services/localStorage/localStorage.service';
 import { FRONT_PRODUCT_DATA } from '../../../../core/classes/global.const';
 import { UtilsService } from '../../../../core/services/utils/utils.service';
+import { GlobalStateOfCookieService } from '../../../../core/services/request-cookie-secure/global-state-of-cookie.service';
 
 @Component({
   selector: 'app-popular-products',
@@ -34,12 +35,19 @@ export class PopularProductsComponent implements OnInit, OnDestroy {
     private localStorageService: LocalStorageService,
     public currencyService: CurrencyService,
     public loggedInUserService: LoggedInUserService,
+    private globalStateOfCookieService: GlobalStateOfCookieService
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
   }
 
   ngOnInit() {
+    this.globalStateOfCookieService.getCookieState()
+      ? this.initComponent()
+      : this.setSubscriptionToCookie();
+  }
+
+  initComponent() {
     this.loggedInUserService.$languageChanged.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {
       this.language = data.lang;
     });
@@ -51,6 +59,16 @@ export class PopularProductsComponent implements OnInit, OnDestroy {
     // this.productService.getPopularProduct(this.queryPopular).subscribe((data: any) => {
     //   this.popularProducts = data.data;
     // });
+  }
+
+  setSubscriptionToCookie() {
+    this.globalStateOfCookieService.stateOfCookie$
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((thereIsCookie) => {
+        if (thereIsCookie) {
+          this.initComponent();
+        }
+      });
   }
 
   setServiceGetProduct() {

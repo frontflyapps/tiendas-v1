@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ProductDataService, ProductService } from '../../../shared/services/product.service';
 import { CurrencyService } from '../../../../core/services/currency/currency.service';
 import { Subject } from 'rxjs';
@@ -9,6 +9,7 @@ import { environment } from '../../../../../environments/environment';
 import { IProductCard } from '../../../../core/classes/product-card.class';
 import { LocalStorageService } from '../../../../core/services/localStorage/localStorage.service';
 import { FRONT_PRODUCT_DATA } from '../../../../core/classes/global.const';
+import { GlobalStateOfCookieService } from '../../../../core/services/request-cookie-secure/global-state-of-cookie.service';
 
 export interface IProductData {
   lastCreated: IProductCard[];
@@ -34,12 +35,19 @@ export class ProductVerticalComponent implements OnInit, OnDestroy {
     public productDataService: ProductDataService,
     public currencyService: CurrencyService,
     public loggedInUserService: LoggedInUserService,
+    private globalStateOfCookieService: GlobalStateOfCookieService,
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
   }
 
   ngOnInit() {
+    this.globalStateOfCookieService.getCookieState()
+      ? this.initComponent()
+      : this.setSubscriptionToCookie();
+  }
+
+  initComponent() {
     this.loggedInUserService.$languageChanged.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {
       this.language = data.lang;
     });
@@ -58,6 +66,16 @@ export class ProductVerticalComponent implements OnInit, OnDestroy {
 
     this.setServiceGetProduct();
     this.getPFDFromStorage();
+  }
+
+  setSubscriptionToCookie() {
+    this.globalStateOfCookieService.stateOfCookie$
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((thereIsCookie) => {
+        if (thereIsCookie) {
+          this.initComponent();
+        }
+      });
   }
 
   setServiceGetProduct() {

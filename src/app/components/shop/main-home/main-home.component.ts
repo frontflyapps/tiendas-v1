@@ -1,6 +1,6 @@
 import { environment } from '../../../../environments/environment';
 import { IPagination } from '../../../core/classes/pagination.class';
-import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-in-user.service';
 import { UtilsService } from '../../../core/services/utils/utils.service';
@@ -10,7 +10,8 @@ import { MetaService } from 'src/app/core/services/meta.service';
 import { IProductCard } from '../../../core/classes/product-card.class';
 import { FRONT_PRODUCT_DATA, LANDING_PAGE, PRODUCT_COUNT } from '../../../core/classes/global.const';
 import { LocalStorageService } from '../../../core/services/localStorage/localStorage.service';
-import { ProductDataService } from '../../shared/services/product.service';
+import { ProductDataService, ProductService } from '../../shared/services/product.service';
+import { GlobalStateOfCookieService } from '../../../core/services/request-cookie-secure/global-state-of-cookie.service';
 
 @Component({
   selector: 'app-main-home',
@@ -114,6 +115,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     private httpClient: HttpClient,
     private metaService: MetaService,
     public productDataService: ProductDataService,
+    private globalStateOfCookieService: GlobalStateOfCookieService,
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
@@ -133,13 +135,9 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.loadingAllProduct = true;
-    this.loadingPopular = true;
-    this.loadingFeatured = true;
-    this.loadingServices = true;
-    this.loadingBestSellers = true;
-
-    this.getPFDFromStorage();
+    this.globalStateOfCookieService.getCookieState()
+      ? this.initComponent()
+      : this.setSubscriptionToCookie();
 
     // this.getBestSellers()
     //   .then((data: any) => {
@@ -149,6 +147,16 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     //   .catch((e) => {
     //     this.loadingBestSellers = false;
     //   });
+  }
+
+  initComponent() {
+    this.loadingAllProduct = true;
+    this.loadingPopular = true;
+    this.loadingFeatured = true;
+    this.loadingServices = true;
+    this.loadingBestSellers = true;
+
+    this.getPFDFromStorage();
 
     this.loggedInUserService.$languageChanged.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {
       this.language = data.lang;
@@ -157,6 +165,16 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     this.loggedInUserService.$loggedInUserUpdated.pipe(takeUntil(this._unsubscribeAll)).subscribe((data) => {
       this.loggedInUser = this.loggedInUserService.getLoggedInUser();
     });
+  }
+
+  setSubscriptionToCookie() {
+    this.globalStateOfCookieService.stateOfCookie$
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((thereIsCookie) => {
+        if (thereIsCookie) {
+          this.initComponent();
+        }
+      });
   }
 
   getPFDFromStorage() {

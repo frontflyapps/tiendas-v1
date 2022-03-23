@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 import { environment } from '../../../../environments/environment';
+import { takeUntil } from 'rxjs/operators';
+import { GlobalStateOfCookieService } from './global-state-of-cookie.service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +15,10 @@ export class RequestCookieSecureService {
 
   httpOptions: any;
 
-  constructor(private httpClient: HttpClient) {
+  unsubscribeAll: Subject<any> = new Subject<any>();
+
+  constructor(private httpClient: HttpClient,
+              private globalStateOfCookieService: GlobalStateOfCookieService) {
     this.httpOptions = {};
   }
 
@@ -22,11 +27,30 @@ export class RequestCookieSecureService {
   }
 
   public requestCookiesSecure() {
-    this.rq().subscribe(
-      (res: any) =>
-        console.warn('Cookies Requested Success'),
-      (error: any) => {
-        console.warn('Cookies Requested Error');
-      });
+    this.rq()
+      .pipe(takeUntil(this.unsubscribeAll))
+      .subscribe((res: any) => {
+          console.warn('Cookies Requested Success');
+
+          this.globalStateOfCookieService.stateOfCookie.next(true);
+
+          this.clearUnsubscribeAll();
+        },
+        (error: any) => {
+          console.warn('Cookies Requested Error');
+
+          this.globalStateOfCookieService.stateOfCookie.next(false);
+
+          this.clearUnsubscribeAll();
+        });
+  }
+
+  clearUnsubscribeAll() {
+    setTimeout(() => {
+      if (this.unsubscribeAll) {
+        this.unsubscribeAll.next(null);
+        this.unsubscribeAll.complete();
+      }
+    }, 0);
   }
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject, Subscriber, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, Subscriber } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Product } from '../../../modals/product.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -386,7 +386,7 @@ export class ProductService {
     localStorage.setItem('compareItem', JSON.stringify(products));
   }
 
-  private setGetProductPromise() {
+  public setGetProductPromise() {
     this.productsData$ = this.getProduct.pipe(
       distinctUntilChanged(),
       switchMap(() => this.getFrontProductsData()),

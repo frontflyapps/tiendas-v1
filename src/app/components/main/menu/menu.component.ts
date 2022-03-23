@@ -1,12 +1,13 @@
 import { UtilsService } from 'src/app/core/services/utils/utils.service';
 import { takeUntil } from 'rxjs/operators';
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { NavigationService } from '../../../core/services/navigation/navigation.service';
 import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-in-user.service';
 import { Subject } from 'rxjs';
 import { CartService } from '../../shared/services/cart.service';
 import { IPagination } from 'src/app/core/classes/pagination.class';
 import { MyOrdersService } from '../../my-orders/service/my-orders.service';
+import { GlobalStateOfCookieService } from '../../../core/services/request-cookie-secure/global-state-of-cookie.service';
 
 @Component({
   selector: 'app-menu',
@@ -34,6 +35,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     private loggedInUserService: LoggedInUserService,
     public utilsSer: UtilsService,
     private ordersService: MyOrdersService,
+    private globalStateOfCookieService: GlobalStateOfCookieService,
   ) {
     this.navItems = navigationService.getNavItems();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
@@ -46,6 +48,12 @@ export class MenuComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.globalStateOfCookieService.getCookieState()
+      ? this.initComponent()
+      : this.setSubscriptionToCookie();
+  }
+
+  initComponent() {
     if (this.loggedInUser) {
       this.getOrdersPayment();
     }
@@ -74,6 +82,16 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.loggedInUserService.$languageChanged.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {
       this.language = data.lang;
     });
+  }
+
+  setSubscriptionToCookie() {
+    this.globalStateOfCookieService.stateOfCookie$
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((thereIsCookie) => {
+        if (thereIsCookie) {
+          this.initComponent();
+        }
+      });
   }
 
   openMegaMenu() {
