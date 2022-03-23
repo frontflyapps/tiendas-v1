@@ -24,6 +24,7 @@ export class MyAccountComponent implements OnInit {
   applyStyle = false;
   configuration: any = {};
   message: string;
+  redirectToOriginPage: string;
   inLoading = false;
   loginForm: FormGroup;
   formPass: FormGroup;
@@ -91,6 +92,7 @@ export class MyAccountComponent implements OnInit {
     this.paramsVerifyPositionModal(params);
     this.route.queryParams.subscribe((data) => {
       this.paramsVerifyPositionModal(data);
+      this.redirectToOriginPage = data.redirectToOriginPage;
     });
   }
 
@@ -250,7 +252,11 @@ export class MyAccountComponent implements OnInit {
             10000,
           );
           this.inLoading = false;
-          this.router.navigate([this.routeToNavigate]).then();
+          if (this.redirectToOriginPage) {
+            document.location.href = this.redirectToOriginPage;
+          } else {
+            this.router.navigate([this.routeToNavigate]).then();
+          }
           this.spinner.hide();
         } else {
           this.toastr.showError(this.translate.instant('Wrong user'));
@@ -513,7 +519,11 @@ export class MyAccountComponent implements OnInit {
           10000,
         );
         this.inLoading = false;
-        this.router.navigate([this.routeToNavigate]);
+        if (this.redirectToOriginPage) {
+          document.location.href = this.redirectToOriginPage;
+        } else {
+          this.router.navigate([this.routeToNavigate]).then();
+        }
         return true;
       },
       (error) => {

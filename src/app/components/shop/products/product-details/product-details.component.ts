@@ -22,6 +22,9 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { SocialMediaComponent } from './social-media/social-media.component';
 import { LANDING_PAGE, PRODUCT_COUNT } from '../../../../core/classes/global.const';
 import { LocalStorageService } from '../../../../core/services/localStorage/localStorage.service';
+import {
+  ConfirmationDialogFrontComponent
+} from '../../../shared/confirmation-dialog-front/confirmation-dialog-front.component';
 
 @Component({
   selector: 'app-product-details',
@@ -309,8 +312,30 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
       }
       this.cartService.addToCart(product, Math.max(product.minSale, quantity)).then();
     } else {
-      this.router.navigate(['/my-account']);
+      this.redirectToLoginWithOrigin();
     }
+  }
+
+  redirectToLoginWithOrigin() {
+    const dialogRef = this.dialog.open(ConfirmationDialogFrontComponent, {
+      width: '550px',
+      data: {
+        title: 'Información',
+        textHtml: `
+        <h4 style="text-transform:none !important; line-height:1.6rem !important;">
+          Es necesario estar logeado para adicionar al carrito de compra.
+        </h4>
+       `,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe(async (result) => {
+      this.router.navigate(['/my-account'], {
+        queryParams: {
+          redirectToOriginPage: document.location.href,
+        }
+      }).then();
+    });
   }
 
   // getFeaturedProducts() {
