@@ -31,7 +31,7 @@ export const environment = {
   mainDomain: '.mibulevar.com',
 
   tokenBusiness:
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7IkJ1c2luZXNzSWQiOjksImlkIjo5LCJkYXRlIjoiMjAyMS0xMS0wN1QyMzowMTozNi42MDVaIiwibmFtZSI6IkVURUNTQSIsImVtYWlsIjoiYXRlbmNpb24udXN1YXJpb3NAZXRlY3NhLmN1In0sImlhdCI6MTYzNjMyNjA5Nn0.ywzFLYzBTA0o2LjM6Ppx4XOetOtjL2E7Hwj-D6UiwmA',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7IkJ1c2luZXNzSWQiOjEsImlkIjoxLCJkYXRlIjoiMjAyMS0wOS0xM1QwMTo0NToxOC4wMDBaIiwibmFtZSI6IlRpZW5kYSIsImVtYWlsIjoidGllbmRhQGxvY2FsaG9zdC5jb20ifSwiaWF0IjoxNjMxNDk3NTkxfQ.FF5-276rI9SJmtebVo0spV8Y2wdOZPok7LlUxtTDwh0',
 
   meta: {
     mainPage: {

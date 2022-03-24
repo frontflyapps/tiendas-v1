@@ -42,9 +42,7 @@ export class ProductVerticalComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.globalStateOfCookieService.getCookieState()
-      ? this.initComponent()
-      : this.setSubscriptionToCookie();
+    this.globalStateOfCookieService.getCookieState() ? this.initComponent() : this.setSubscriptionToCookie();
   }
 
   initComponent() {
@@ -69,25 +67,20 @@ export class ProductVerticalComponent implements OnInit, OnDestroy {
   }
 
   setSubscriptionToCookie() {
-    this.globalStateOfCookieService.stateOfCookie$
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((thereIsCookie) => {
-        if (thereIsCookie) {
-          this.initComponent();
-        }
-      });
+    this.globalStateOfCookieService.stateOfCookie$.pipe(takeUntil(this._unsubscribeAll)).subscribe((thereIsCookie) => {
+      if (thereIsCookie) {
+        this.initComponent();
+      }
+    });
   }
 
   setServiceGetProduct() {
-    this.productService.productsData$
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((response) => {
-          const _response: any = JSON.parse(JSON.stringify(response));
-          this.setValuesFromResponse(_response);
-          _response.timespan = new Date().getTime();
-          this.localStorageService.setOnStorage(FRONT_PRODUCT_DATA, _response);
-        },
-      );
+    this.productService.productsData$.pipe(takeUntil(this._unsubscribeAll)).subscribe((response) => {
+      const _response: any = JSON.parse(JSON.stringify(response));
+      this.setValuesFromResponse(_response);
+      _response.timespan = new Date().getTime();
+      this.localStorageService.setOnStorage(FRONT_PRODUCT_DATA, _response);
+    });
   }
 
   getProducts() {
@@ -114,10 +107,23 @@ export class ProductVerticalComponent implements OnInit, OnDestroy {
   }
 
   setValuesFromResponse(response) {
-    this.productDataService.popularProducts = UtilsService.getAnArrayFromIdsAndArray(response.products, response.rating);
-    this.productDataService.featuredProducts = UtilsService.getAnArrayFromIdsAndArray(response.products, response.isFeatured);
-    this.productDataService.bestSellerProducts = UtilsService.getAnArrayFromIdsAndArray(response.products, response.bestSell);
-    this.productDataService.allProducts = UtilsService.getAnArrayFromIdsAndArray(response.products, response.lastCreated);
+    this.productDataService.popularProducts = UtilsService.getAnArrayFromIdsAndArray(
+      response.products,
+      response.rating,
+    );
+    console.log(this.productDataService.popularProducts.slice(0, 3), '******************');
+    this.productDataService.featuredProducts = UtilsService.getAnArrayFromIdsAndArray(
+      response.products,
+      response.isFeatured,
+    );
+    this.productDataService.bestSellerProducts = UtilsService.getAnArrayFromIdsAndArray(
+      response.products,
+      response.bestSell,
+    );
+    this.productDataService.allProducts = UtilsService.getAnArrayFromIdsAndArray(
+      response.products,
+      response.lastCreated,
+    );
   }
 
   ngOnDestroy() {
