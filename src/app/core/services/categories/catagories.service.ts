@@ -8,8 +8,8 @@ import { environment } from '../../../../environments/environment';
   providedIn: 'root',
 })
 export class CategoriesService {
-  url = environment.apiUrl + 'category';
-  urlId = environment.apiUrl + 'category/:categoryId';
+  url = environment.apiUrl + 'category-front';
+  urlId = environment.apiUrl + 'category-front/:categoryId';
   urlBrand = environment.apiUrl + 'brand';
   urlBrandId = environment.apiUrl + 'brand/:brandId';
   urlBrandsByCategories = environment.apiUrl + 'brand-by-category';
@@ -17,8 +17,7 @@ export class CategoriesService {
 
   public allCategories = [];
 
-  constructor(private httpClient: HttpClient) {
-  }
+  constructor(private httpClient: HttpClient) {}
 
   createCategory(body: any): Observable<any> {
     return this.httpClient.post<any>(this.url, body);
