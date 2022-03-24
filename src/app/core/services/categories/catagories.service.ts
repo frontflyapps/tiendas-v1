@@ -8,6 +8,7 @@ import { environment } from '../../../../environments/environment';
   providedIn: 'root',
 })
 export class CategoriesService {
+  urlCategoryMenu = environment.apiUrl + 'category';
   url = environment.apiUrl + 'category-front';
   urlId = environment.apiUrl + 'category-front/:categoryId';
   urlBrand = environment.apiUrl + 'brand';
@@ -24,7 +25,7 @@ export class CategoriesService {
   }
 
   getMenu(): Observable<any> {
-    return this.httpClient.get<any>(this.url + '/menu');
+    return this.httpClient.get<any>(this.urlCategoryMenu + '/menu');
   }
 
   editCategory(data) {
