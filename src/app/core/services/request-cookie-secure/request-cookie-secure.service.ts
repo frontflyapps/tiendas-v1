@@ -30,16 +30,16 @@ export class RequestCookieSecureService {
     this.rq()
       .pipe(takeUntil(this.unsubscribeAll))
       .subscribe((res: any) => {
-          console.warn('Cookies Requested Success');
+          console.warn('Cookies Requested Success', res);
 
           this.globalStateOfCookieService.stateOfCookie.next(true);
 
           this.clearUnsubscribeAll();
         },
         (error: any) => {
-          console.warn('Cookies Requested Error');
+          console.warn('Cookies Requested Error', error);
 
-          this.globalStateOfCookieService.stateOfCookie.next(false);
+          this.globalStateOfCookieService.stateOfCookie.next(true);
 
           this.clearUnsubscribeAll();
         });
