@@ -9,6 +9,11 @@ import { LoggedInUserService } from 'src/app/core/services/loggedInUser/logged-i
 import { CurrencyService } from 'src/app/core/services/currency/currency.service';
 import { takeUntil } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import {
+  ConfirmationDialogFrontComponent
+} from '../../shared/confirmation-dialog-front/confirmation-dialog-front.component';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-compare',
@@ -29,6 +34,8 @@ export class CompareComponent implements OnInit {
     public currencyService: CurrencyService,
     public utilsService: UtilsService,
     public loggedInUserService: LoggedInUserService,
+    public dialog: MatDialog,
+    private router: Router,
     private metaService: MetaService,
   ) {
     this._unsubscribeAll = new Subject<any>();
@@ -52,7 +59,35 @@ export class CompareComponent implements OnInit {
 
   // Add to cart
   public addToCart(product: Product, quantity: number = 1) {
-    this.cartService.addToCart(product, quantity);
+    if (this.loggedInUserService.getLoggedInUser()) {
+      this.cartService.addToCart(product, quantity);
+    } else {
+      this.redirectToLoginWithOrigin();
+    }
+  }
+
+  redirectToLoginWithOrigin() {
+    const dialogRef = this.dialog.open(ConfirmationDialogFrontComponent, {
+      width: '550px',
+      data: {
+        title: 'Información',
+        textHtml: `
+        <h4 style="text-transform:none !important; line-height:1.6rem !important;">
+          Es necesario estar logueado para adicionar al carrito de compra.
+        </h4>
+       `,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe(async (result) => {
+      this.router
+        .navigate(['/my-account'], {
+          queryParams: {
+            redirectToOriginPage: document.location.href,
+          },
+        })
+        .then();
+    });
   }
 
   ngOnDestroy() {

@@ -58,37 +58,66 @@ export class ProductComponent implements OnInit, OnDestroy {
 
   // Add to cart
   public addToCart(product: any, quantity: number = 1) {
-    this.inLoading = true;
-    if (product.minSale > 1) {
-      const dialogRef = this.dialog.open(ConfirmationDialogFrontComponent, {
-        width: '10cm',
-        maxWidth: '100vw',
-        data: {
-          question: `Este producto posee un restricción de mínima cantidad de unidades para poder adquirirlo, desea añadirlo al carrito?`,
-        },
-      });
-      dialogRef.afterClosed().subscribe((result) => {
-        if (result) {
-          this.cartService
-            .addToCart(product, product.minSale)
-            .then((data) => {
-              this.inLoading = false;
-            })
-            .catch((error) => {
-              this.inLoading = false;
-            });
-        }
-      });
-    } else {
-      this.cartService
-        .addToCart(product, product.minSale)
-        .then((data) => {
-          this.inLoading = false;
-        })
-        .catch((error) => {
-          this.inLoading = false;
+    if (this.loggedInUserService.getLoggedInUser()) {
+      this.inLoading = true;
+      if (product.minSale > 1) {
+        const dialogRef = this.dialog.open(ConfirmationDialogFrontComponent, {
+          width: '10cm',
+          maxWidth: '100vw',
+          data: {
+            question: `Este producto posee un restricción de mínima cantidad de unidades para poder adquirirlo, desea añadirlo al carrito?`,
+          },
         });
+        dialogRef.afterClosed().subscribe((result) => {
+          if (result) {
+            this.cartService
+              .addToCart(product, product.minSale)
+              .then((data) => {
+                this.inLoading = false;
+              })
+              .catch((error) => {
+                this.inLoading = false;
+              });
+          }
+        });
+      } else {
+        this.cartService
+          .addToCart(product, product.minSale)
+          .then((data) => {
+            this.inLoading = false;
+          })
+          .catch((error) => {
+            this.inLoading = false;
+          });
+      }
+    } else {
+      this.redirectToLoginWithOrigin()
     }
+
+  }
+
+  redirectToLoginWithOrigin() {
+    const dialogRef = this.dialog.open(ConfirmationDialogFrontComponent, {
+      width: '550px',
+      data: {
+        title: 'Información',
+        textHtml: `
+        <h4 style="text-transform:none !important; line-height:1.6rem !important;">
+          Es necesario estar logueado para adicionar al carrito de compra.
+        </h4>
+       `,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe(async (result) => {
+      this.router
+        .navigate(['/my-account'], {
+          queryParams: {
+            redirectToOriginPage: document.location.href,
+          },
+        })
+        .then();
+    });
   }
 
   // Add to wishlist
