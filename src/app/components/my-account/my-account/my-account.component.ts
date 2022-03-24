@@ -245,7 +245,7 @@ export class MyAccountComponent implements OnInit {
           );
           this.inLoading = false;
           if (this.redirectToOriginPage) {
-            document.location.href = this.redirectToOriginPage;
+            this.router.navigate([this.redirectToOriginPage]).then();
           } else {
             this.router.navigate([this.routeToNavigate]).then();
           }

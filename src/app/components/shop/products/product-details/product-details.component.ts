@@ -424,8 +424,12 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   }
 
   onAddtoCartNav() {
-    this.cartService.addToCart(this.product, this.counter);
-    this.router.navigate(['/cart']);
+    if (this.loggedInUserService.getLoggedInUser()) {
+      this.cartService.addToCart(this.product, this.counter);
+      this.router.navigate(['/cart']);
+    } else {
+      this.redirectToLoginWithOrigin();
+    }
   }
 
   onAddtoCompListNav() {

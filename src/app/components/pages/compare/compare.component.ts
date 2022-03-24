@@ -9,9 +9,7 @@ import { LoggedInUserService } from 'src/app/core/services/loggedInUser/logged-i
 import { CurrencyService } from 'src/app/core/services/currency/currency.service';
 import { takeUntil } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import {
-  ConfirmationDialogFrontComponent
-} from '../../shared/confirmation-dialog-front/confirmation-dialog-front.component';
+import { ConfirmationDialogFrontComponent } from '../../shared/confirmation-dialog-front/confirmation-dialog-front.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
@@ -83,7 +81,7 @@ export class CompareComponent implements OnInit {
       this.router
         .navigate(['/my-account'], {
           queryParams: {
-            redirectToOriginPage: document.location.href,
+            redirectToOriginPage: 'pages/compare',
           },
         })
         .then();
