@@ -18,9 +18,6 @@ export class TokenInterceptorService implements HttpInterceptor {
     this.token = this.loggedInUserService.getTokenCookie();
     const tokenBusiness: any = environment.tokenBusiness;
 
-    console.log('-> observer --', request);
-    console.log('-> this.token --', this.token);
-
     request = request.clone({
       withCredentials: true,
     });
