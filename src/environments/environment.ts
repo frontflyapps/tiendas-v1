@@ -6,8 +6,8 @@ const packageJson = require('../../package.json');
 export const environment = {
   production: false,
 
-  apiUrl: 'http://192.168.1.18:8998/v1/',
-  imageUrl: 'http://192.168.1.18:8998/v1/',
+  apiUrl: 'http://192.168.1.12:8998/v1/',
+  imageUrl: 'http://192.168.1.12:8998/v1/',
 
   // apiUrl: 'http://127.0.0.1:8998/v1/',
   // imageUrl: 'http://127.0.0.1:8998/v1/',
