@@ -21,6 +21,10 @@ export class TokenInterceptorService implements HttpInterceptor {
     console.log('-> observer --', request);
     console.log('-> this.token --', this.token);
 
+    request = request.clone({
+      withCredentials: true,
+    });
+
     if ((request.url).includes('v1/auth/cookies')
       || (request.url).includes('/assets/i18n')) {
       return next.handle(request);
@@ -42,9 +46,9 @@ export class TokenInterceptorService implements HttpInterceptor {
       });
     }
 
-    request = request.clone({
-      withCredentials: true,
-    });
+    // request = request.clone({
+    //   withCredentials: true,
+    // });
 
     return next.handle(request);
   }
