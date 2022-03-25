@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { IPagination } from './../../../core/classes/pagination.class';
 import { UtilsService } from './../../../core/services/utils/utils.service';
 import { environment } from './../../../../environments/environment';

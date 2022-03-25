@@ -1,15 +1,15 @@
-<div class="price-slider">
-  <div fxLayout="row" fxLayoutAlign="space-between center">
-    <mat-form-field appearance="outline" style="width: 120px; margin-right: 8px">
-      <mat-label style="text-transform: capitalize"> {{ 'min' | translate }}</mat-label>
-      <input (change)="priceFilter()" [formControl]="priceForm.get('priceFrom')" [min]="0" matInput type="number" />
+<div class='price-slider'>
+  <div fxLayout='row' fxLayoutAlign='space-between center'>
+    <mat-form-field appearance='outline' style='width: 120px; margin-right: 8px'>
+      <mat-label style='text-transform: capitalize'> {{ 'min' | translate }}</mat-label>
+      <input (change)='priceFilter()' [formControl]="priceForm.get('priceFrom')" [min]='0' matInput type='number' />
     </mat-form-field>
     :
-    <mat-form-field appearance="outline" style="width: 120px; margin-right: 8px">
-      <mat-label style="text-transform: capitalize"> {{ 'max' | translate }}</mat-label>
-      <input (change)="priceFilter()" [formControl]="priceForm.get('priceTo')" [max]="100000000"
+    <mat-form-field appearance='outline' style='width: 120px; margin-right: 8px'>
+      <mat-label style='text-transform: capitalize'> {{ 'max' | translate }}</mat-label>
+      <input (change)='priceFilter()' [formControl]="priceForm.get('priceTo')" [max]='100000000'
              [min]="priceForm.get('priceFrom')" matInput
-             type="number" />
+             type='number' />
     </mat-form-field>
   </div>
 </div>

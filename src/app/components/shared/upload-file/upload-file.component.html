@@ -1,0 +1,34 @@
+<div fxLayout="column" fxLayoutAlign="start stretch" class="my-3">
+
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <span class="my-3"
+          *ngIf="!this.files.length">{{ label }}</span>
+
+    <ng-container *ngIf="this.files.length">
+      <ng-container *ngIf="multiple; else elseTemplate">
+        <span class="my-3">{{this.files.length}} {{ 'fichero(s) seleccionado(s)' | translate }}</span>
+      </ng-container>
+
+      <ng-template #elseTemplate>
+      <span class="my-3">
+      {{this.files[0].data.name}}<b>({{this.files[0].data.size / 1000}}Kb)</b>
+    </span>
+      </ng-template>
+    </ng-container>
+
+    <button mat-raised-button
+            color="primary"
+            (click)="onClick()">
+      <mat-icon>file_upload</mat-icon>
+      {{multiple ? 'Seleccionar Ficheros' : 'Seleccionar Fichero' | translate}}
+    </button>
+  </div>
+
+  <input type="file"
+         #fileUpload
+         id="fileUpload"
+         [multiple]="multiple"
+         name="fileUpload"
+         style="display:none;"
+         [accept]="fileTypes" />
+</div>

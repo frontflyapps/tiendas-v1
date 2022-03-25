@@ -1,18 +1,7 @@
 import { UtilsService } from './../../../../core/services/utils/utils.service';
 import { LoggedInUserService } from './../../../../core/services/loggedInUser/logged-in-user.service';
-import { environment } from './../../../../../environments/environment.prod';
 import { ShowToastrService } from './../../../../core/services/show-toastr/show-toastr.service';
-import {
-  Component,
-  Inject,
-  HostListener,
-  ViewEncapsulation,
-  OnInit,
-  OnDestroy,
-  Output,
-  EventEmitter,
-} from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Component, EventEmitter, HostListener, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { NotificationsService } from '../notifications.service';
 
 @Component({

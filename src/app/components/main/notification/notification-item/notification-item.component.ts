@@ -1,15 +1,5 @@
 import { UtilsService } from './../../../../core/services/utils/utils.service';
-import {
-  Component,
-  OnInit,
-  OnChanges,
-  OnDestroy,
-  ViewEncapsulation,
-  Input,
-  Output,
-  SimpleChanges,
-  EventEmitter,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';

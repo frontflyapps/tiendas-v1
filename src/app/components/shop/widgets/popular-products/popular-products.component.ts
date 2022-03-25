@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ProductService } from '../../../shared/services/product.service';
 import { environment } from '../../../../../environments/environment';
 import { Subject } from 'rxjs';

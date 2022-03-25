@@ -1,6 +1,6 @@
-<mat-dialog-content style="position: relative">
-  <div fxLayout="column" fxLayoutAlign="start center" fxLayoutAlign.lt-md="start start" fxLayoutGap="gappx">
-    <p ngClass.gt-sm="mat-body-2" ngClass.lt-md="mat-body-2">
+<mat-dialog-content style='position: relative'>
+  <div fxLayout='column' fxLayoutAlign='start center' fxLayoutAlign.lt-md='start start' fxLayoutGap='gappx'>
+    <p ngClass.gt-sm='mat-body-2' ngClass.lt-md='mat-body-2'>
       {{ 'Confirmación de pago usando transfermóvil.' | translate }}
     </p>
     <ul>
@@ -18,21 +18,21 @@
           {{ 'Precione el botón de lectura de qr y realize su pago.' | translate }}
         </li>
       </div>
-      <a [href]="domSanitizer.bypassSecurityTrustUrl(this.launchTM)" class="mt-2" color="primary" mat-flat-button>
+      <a [href]='domSanitizer.bypassSecurityTrustUrl(this.launchTM)' class='mt-2' color='primary' mat-flat-button>
         {{ 'Abrir la app de tranfermovil' | translate }}</a
       >
     </ul>
   </div>
-  <div fxFlexFill fxLayout="column" fxLayoutAlign="start center">
-    <img [src]="this.imgQR" class="mt-4" />
-    <div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="gappx" style="max-width: 20rem">
-      <span class="mat-title mt-3"> {{ 'Total' | translate }}: &nbsp;{{ finalPrice | currencyMarket: currency }} </span>
+  <div fxFlexFill fxLayout='column' fxLayoutAlign='start center'>
+    <img [src]='this.imgQR' class='mt-4' />
+    <div fxLayout='row' fxLayoutAlign='start end' fxLayoutGap='gappx' style='max-width: 20rem'>
+      <span class='mat-title mt-3'> {{ 'Total' | translate }}: &nbsp;{{ finalPrice | currencyMarket: currency }} </span>
     </div>
   </div>
 </mat-dialog-content>
-<mat-dialog-actions align="end">
-  <button (click)="onCancelarTranfermovilPayment()"
-          color="warn"
+<mat-dialog-actions align='end'>
+  <button (click)='onCancelarTranfermovilPayment()'
+          color='warn'
           mat-button
           mat-dialog-close
           title="{{'Pago listo, cerrar modal'|translate}}">

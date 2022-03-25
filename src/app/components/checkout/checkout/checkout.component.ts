@@ -9,7 +9,7 @@ import { Observable, of, Subject } from 'rxjs';
 import { Cart, CartItem, IBusiness } from '../../../modals/cart-item';
 import { environment } from '../../../../environments/environment';
 import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-in-user.service';
-import { debounce, debounceTime, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { CurrencyService } from '../../../core/services/currency/currency.service';
 import { IPagination } from '../../../core/classes/pagination.class';
 import { UtilsService } from '../../../core/services/utils/utils.service';
@@ -107,9 +107,13 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       logo: 'assets/images/cards/transfermovil_logo.png',
       market: 'international',
     },
-    { id: 'visa', name: 'Visa', logo: 'assets/images/cards/visa_logo.png', market: 'international' },
+    // { id: 'peopleGoTo', name: 'PeopleGoTo', logo: 'assets/images/cards/people-go-to.svg', market: 'international' },
+    { id: 'peopleGoTo', name: 'Visa', logo: 'assets/images/cards/visa_logo.png', market: 'international' },
+    { id: 'peopleGoTo', name: 'MasterCard', logo: 'assets/images/cards/mastercard_logo.png', market: 'international' },
+    { id: 'peopleGoTo', name: 'American Express', logo: 'assets/images/cards/american_express_logo.png', market: 'international' },
+    // { id: 'visa', name: 'Visa', logo: 'assets/images/cards/visa_logo.png', market: 'international' },
     // { id: 'express', name: 'American Express', logo: 'assets/images/cards/american_express_logo.png', market: 'international' },
-    { id: 'masterCard', name: 'MasterCard', logo: 'assets/images/cards/mastercard_logo.png', market: 'international' },
+    // { id: 'masterCard', name: 'MasterCard', logo: 'assets/images/cards/mastercard_logo.png', market: 'international' },
     // {
     //   id: 'dinners-club-internacional',
     //   name: 'Dinners Club Internacional',
@@ -314,24 +318,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.validateShippingRequired();
   }
 
-  private validateShippingRequired() {
-    if (this.showShipping) {
-      this.form.controls['ShippingBusinessId'].setValidators(Validators.required);
-    } else {
-      this.form.controls['ShippingBusinessId'].setValidators(null);
-    }
-    this.form.controls['ShippingBusinessId'].updateValueAndValidity();
-  }
-
-  private calculateShippingRequired() {
-    if (this.showShipping) {
-      this.onRecalculateShipping();
-    } else {
-      this.shippingData = [];
-      this.canBeDelivery = false;
-    }
-  }
-
   processToCart() {
     if (!this.cartId) {
       let dialogRef: MatDialogRef<DialogNoCartSelectedComponent, any>;
@@ -341,7 +327,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         data: {},
       });
 
-      dialogRef.afterClosed().subscribe((result) => {});
+      dialogRef.afterClosed().subscribe((result) => {
+      });
     } else {
       this.getCartData();
     }
@@ -431,7 +418,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     }, 0);
   }
 
-  onSubmit(): void {}
+  onSubmit(): void {
+  }
 
   ngOnDestroy() {
     this._unsubscribeAll.next(true);
@@ -578,7 +566,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.regionService.getAllCountries(this.queryCountries).subscribe(
       (data) => {
         this.allCountries = data.data.filter((item) => item.name.es != undefined);
-        this.allCountries = this.allCountries.sort(function (a, b) {
+        this.allCountries = this.allCountries.sort(function(a, b) {
           if (a.name['es'] > b.name['es']) {
             return 1;
           } else if (a.name['es'] < b.name['es']) {
@@ -619,7 +607,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   filterCities(val) {
     val = val.trim().toLowerCase();
-    return this.selectedCities.filter(function (item) {
+    return this.selectedCities.filter(function(item) {
       let nameCity = item.name.trim().toLowerCase();
       return nameCity.includes(val);
     });
@@ -655,9 +643,14 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     if (data.paymentType == 'enzona') {
       return this.processEnzona(data);
     }
-    if (data.paymentType == 'visa' || data.paymentType == 'express' || data.paymentType == 'masterCard') {
-      // data.paymentType = 'bidaiondo';
-      data.paymentType = 'peoplegoto';
+    if (data.paymentType == 'peopleGoTo') {
+      data.paymentType = 'peopleGoTo';
+      return this.processBidaiondo(data);
+    }
+    if (data.paymentType == 'visa'
+      || data.paymentType == 'express'
+      || data.paymentType == 'masterCard') {
+      data.paymentType = 'bidaiondo';
       return this.processBidaiondo(data);
     }
   }
@@ -726,10 +719,18 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   processBidaiondo(bodyData) {
-    bodyData.amex = amexData[this.paymentType];
+    let paymentMethod;
+    if (bodyData.paymentType === 'peopleGoTo') {
+      bodyData.amex = null;
+      paymentMethod = this.payService.makePaymentPeopleGoTo(bodyData);
+    } else {
+      bodyData.amex = amexData[this.paymentType];
+      paymentMethod = this.payService.makePaymentBidaiondo(bodyData);
+    }
+
     console.log('AMEX', bodyData.amex);
-    // this.payService.makePaymentBidaiondo(bodyData).subscribe(
-    this.payService.makePaymentPeopleGoTo(bodyData).subscribe(
+
+    paymentMethod.subscribe(
       (data: any) => {
         let dialogRef: MatDialogRef<DialogBidaiondoConfirmToPayComponent, any>;
 
@@ -765,8 +766,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.contactsService.getContact.next();
   }
 
-  // ///////////////////////////////////////////////
-
   onAddContact() {
     let dialogRef: MatDialogRef<MyContactsComponent, any>;
     dialogRef = this.dialog.open(MyContactsComponent, {
@@ -794,6 +793,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.form.get('dni').setValue(contact?.identification);
     this.form.get('phone').setValue(contact?.phone);
   }
+
+  // ///////////////////////////////////////////////
 
   onSelectProvinceByContactBtn(provinceId) {
     setTimeout(() => {
@@ -898,7 +899,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       data: {
         title: 'Cancelar la confirmación con transfermovil',
         textHtml: `
-        <h4 style="text-transform:none !important; line-height:1.6rem !important;">
+        <h4 style='text-transform:none !important; line-height:1.6rem !important;'>
           ¿Desea cancelar la confirmación con transfermóvil?
         </h4>
        `,
@@ -951,6 +952,24 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   scrollTopDocument() {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
+  }
+
+  private validateShippingRequired() {
+    if (this.showShipping) {
+      this.form.controls['ShippingBusinessId'].setValidators(Validators.required);
+    } else {
+      this.form.controls['ShippingBusinessId'].setValidators(null);
+    }
+    this.form.controls['ShippingBusinessId'].updateValueAndValidity();
+  }
+
+  private calculateShippingRequired() {
+    if (this.showShipping) {
+      this.onRecalculateShipping();
+    } else {
+      this.shippingData = [];
+      this.canBeDelivery = false;
+    }
   }
 
   private applyResolution() {

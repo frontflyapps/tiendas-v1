@@ -12,7 +12,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { BlogDetailsComponent } from './blog-details/blog-details.component';
-import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   imports: [

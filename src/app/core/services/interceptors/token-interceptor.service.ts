@@ -18,6 +18,18 @@ export class TokenInterceptorService implements HttpInterceptor {
     this.token = this.loggedInUserService.getTokenCookie();
     const tokenBusiness: any = environment.tokenBusiness;
 
+    request = request.clone({
+      withCredentials: true,
+    });
+
+    // console.log('-> observer --', request);
+    // console.log('-> this.token --', this.token);
+
+    if ((request.url).includes('v1/auth/cookies')
+      || (request.url).includes('/assets/i18n')) {
+      return next.handle(request);
+    }
+
     if (tokenBusiness) {
       request = request.clone({
         setHeaders: {
@@ -33,10 +45,6 @@ export class TokenInterceptorService implements HttpInterceptor {
         },
       });
     }
-
-    request = request.clone({
-      withCredentials: true,
-    });
 
     return next.handle(request);
   }

@@ -1,74 +1,74 @@
-<ng-container *ngIf="products.length > 2 || (isHandset && products.length > 1)">
-  <div [swiper]="config" class="product-item swiper-container">
-    <div class="swiper-wrapper h-100">
-      <div *ngFor="let product of products" class="swiper-slide">
-        <mat-card class="cardProduct" fxLayout="column">
-          <div class="product-img">
+<ng-container *ngIf='products.length > 2 || (isHandset && products.length > 1)'>
+  <div [swiper]='config' class='product-item swiper-container'>
+    <div class='swiper-wrapper h-100'>
+      <div *ngFor='let product of products' class='swiper-slide'>
+        <mat-card class='cardProduct' fxLayout='column'>
+          <div class='product-img'>
             <a
-              [queryParams]="{
+              [queryParams]='{
                 productId: product?.id,
                 stockId: product?.Stock?.id
-              }"
+              }'
               [routerLink]="['/product']"
-              class="product-link"
+              class='product-link'
             >
               <img
-                *ngIf="product.Images && product.Images.length"
+                *ngIf='product.Images && product.Images.length'
                 [alt]="product.name[language] ? product.name[language] : product.name['es']"
-                [src]="imageUrl + product.Images[0].image"
-                class="imageProduct"
+                [src]='imageUrl + product.Images[0].image'
+                class='imageProduct'
                 ngp-lazy
-                ngp-threshold="0.1"
+                ngp-threshold='0.1'
                 onerror="this.onerror=null;this.src='assets/images/noImage.jpg';"
               />
               <img
-                *ngIf="!(product.Images && product.Images.length)"
-                alt="No Image"
-                class="imageProduct"
+                *ngIf='!(product.Images && product.Images.length)'
+                alt='No Image'
+                class='imageProduct'
                 ngp-lazy
-                ngp-threshold="0.1"
-                src="../../../../assets/images/noImage.jpg"
+                ngp-threshold='0.1'
+                src='../../../../assets/images/noImage.jpg'
               />
             </a>
           </div>
-          <div class="product-info-wrapper py-2 px-3">
+          <div class='product-info-wrapper py-2 px-3'>
             <a
-              [queryParams]="{
+              [queryParams]='{
                 productId: product?.id,
                 stockId: product?.Stock?.id
-              }"
+              }'
               [routerLink]="['/product']"
-              class="product-link"
+              class='product-link'
             >
-              <span class="mat-caption" style="font-size: 0.8rem !important">
+              <span class='mat-caption' style='font-size: 0.8rem !important'>
                 {{ utilsService.parserLanguage(product.Category.name, language) }}
               </span>
 
-              <div class="moduleTitle line-clampTitle">
-                <h4 class="mat-body-2">{{ utilsService.parserLanguage(product.name, language) }}</h4>
+              <div class='moduleTitle line-clampTitle'>
+                <h4 class='mat-body-2'>{{ utilsService.parserLanguage(product.name, language) }}</h4>
               </div>
 
-              <div class="mt-2">
-                <ngp-rating-material [config]="{ readOnly: true }" [value]="product.rating"></ngp-rating-material>
+              <div class='mt-2'>
+                <ngp-rating-material [config]='{ readOnly: true }' [value]='product.rating'></ngp-rating-material>
               </div>
               <!-- <p class="module line-clamp mt-1 mb-2">
                 {{utilsService.parserLanguage(product.shortDescription,language)}}</p> -->
             </a>
 
-            <div class="price">
-              <ng-container *ngIf="product.offerValue">
-                <p class="deletePrice m-0">
+            <div class='price'>
+              <ng-container *ngIf='product.offerValue'>
+                <p class='deletePrice m-0'>
                   <del>{{ currencyService.getPriceLabel(product) }}</del>
                 </p>
-                <p class="mat-body-2 m-0" matTooltip="{{ 'Existe una oferta asociada a este producto' | translate }}">
+                <p class='mat-body-2 m-0' matTooltip="{{ 'Existe una oferta asociada a este producto' | translate }}">
                   {{ currencyService.getOfferLabel(product) }}
                 </p>
               </ng-container>
-              <ng-container *ngIf="!product.offerValue">
-                <p class="mat-body-2 m-0">
+              <ng-container *ngIf='!product.offerValue'>
+                <p class='mat-body-2 m-0'>
                   {{ currencyService.getPriceLabel(product) }}
                 </p>
-                <p class="mat-body-2 m-0" style="font-size: 15px">
+                <p class='mat-body-2 m-0' style='font-size: 15px'>
                   {{ 'Desde ' | translate }}
                   {{ product.minSale }}
                   {{ ' unidad' | translate }}
@@ -76,114 +76,114 @@
               </ng-container>
             </div>
             <button
-              (click)="addToCart(product)"
-              class="btnAddCart"
+              (click)='addToCart(product)'
+              class='btnAddCart'
               mat-mini-fab
               matTooltip="{{ 'Añadir al carrito' | translate }}"
-              style="z-index: 10"
+              style='z-index: 10'
             >
               <mat-icon>shopping_cart</mat-icon>
             </button>
 
-            <div class="icons" fxLayout="column">
+            <div class='icons' fxLayout='column'>
               <!-- <a (click)="addToWishlist(product)">
                     <mat-icon class="mat-icon-lg mat-icon material-icons mr-10">favorite_border</mat-icon>
                   </a> -->
               <!--<a (click)="openProductDialog(product)">
                 <mat-icon>info</mat-icon>
               </a>-->
-              <a (click)="addToCompare(product)">
+              <a (click)='addToCompare(product)'>
                 <mat-icon>compare_arrows</mat-icon>
               </a>
             </div>
           </div>
-          <div *ngIf="product.type != 'physical'" class="productType">
+          <div *ngIf="product.type != 'physical'" class='productType'>
             {{ product.type | translate }}
           </div>
         </mat-card>
       </div>
     </div>
-    <button class="swiper-button-prev swipe-arrow" fxHide.lt-md mat-mini-fab>
+    <button class='swiper-button-prev swipe-arrow' fxHide.lt-md mat-mini-fab>
       <mat-icon>keyboard_arrow_left</mat-icon>
     </button>
-    <button class="swiper-button-next swipe-arrow" fxHide.lt-md mat-mini-fab>
+    <button class='swiper-button-next swipe-arrow' fxHide.lt-md mat-mini-fab>
       <mat-icon>keyboard_arrow_right</mat-icon>
     </button>
   </div>
 </ng-container>
 
-<ng-container *ngIf="products.length == 2 && !isHandset">
-  <div class="product-item swiper-container" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="gappx">
-    <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="gappx">
-      <div *ngFor="let product of products" class="pr-3">
-        <mat-card class="cardProduct2" fxLayout="column">
-          <div class="product-img">
+<ng-container *ngIf='products.length == 2 && !isHandset'>
+  <div class='product-item swiper-container' fxLayout='column' fxLayoutAlign='start stretch' fxLayoutGap='gappx'>
+    <div fxLayout='row wrap' fxLayoutAlign='start center' fxLayoutGap='gappx'>
+      <div *ngFor='let product of products' class='pr-3'>
+        <mat-card class='cardProduct2' fxLayout='column'>
+          <div class='product-img'>
             <a
-              [queryParams]="{
+              [queryParams]='{
                 productId: product?.id,
                 stockId: product?.Stock?.id
-              }"
+              }'
               [routerLink]="['/product']"
-              class="product-link"
+              class='product-link'
             >
               <img
-                *ngIf="product.Images && product.Images.length"
-                [src]="imageUrl + product.Images[0].image"
-                alt=""
-                class="imageProduct"
+                *ngIf='product.Images && product.Images.length'
+                [src]='imageUrl + product.Images[0].image'
+                alt=''
+                class='imageProduct'
                 ngp-lazy
-                ngp-threshold="0.1"
+                ngp-threshold='0.1'
                 onerror="this.onerror=null;this.src='assets/images/noImage.jpg';"
               />
 
               <img
-                *ngIf="!(product.Images && product.Images.length)"
-                alt=""
-                class="imageProduct"
+                *ngIf='!(product.Images && product.Images.length)'
+                alt=''
+                class='imageProduct'
                 ngp-lazy
-                ngp-threshold="0.1"
-                src="../../../../assets/images/noImage.jpg"
+                ngp-threshold='0.1'
+                src='../../../../assets/images/noImage.jpg'
               />
             </a>
           </div>
-          <div class="product-info-wrapper py-2 px-3">
+          <div class='product-info-wrapper py-2 px-3'>
             <a
-              [queryParams]="{
+              [queryParams]='{
                 productId: product?.id,
                 stockId: product?.Stock?.id
-              }"
+              }'
               [routerLink]="['/product']"
-              class="product-link"
+              class='product-link'
             >
-              <span class="mat-caption" style="font-size: 0.8rem !important">
+              <span class='mat-caption' style='font-size: 0.8rem !important'>
                 {{ utilsService.parserLanguage(product.Category.name, language) }}
               </span>
 
-              <div class="moduleTitle line-clampTitle">
-                <h4 class="mat-body-2">{{ utilsService.parserLanguage(product.name, language) }}</h4>
+              <div class='moduleTitle line-clampTitle'>
+                <h4 class='mat-body-2'>{{ utilsService.parserLanguage(product.name, language) }}</h4>
               </div>
 
-              <div class="mt-2">
-                <ngp-rating-material [config]="{ readOnly: true }" [value]="product.rating"></ngp-rating-material>
+              <div class='mt-2'>
+                <ngp-rating-material [config]='{ readOnly: true }' [value]='product.rating'></ngp-rating-material>
               </div>
               <!-- <p class="module line-clamp mt-1 mb-2">
                 {{utilsService.parserLanguage(product.shortDescription,language)}}</p> -->
             </a>
 
-            <div class="price">
-              <ng-container *ngIf="product.offerValue">
-                <p class="deletePrice m-0">
+            <div class='price'>
+              <ng-container *ngIf='product.offerValue'>
+                <p class='deletePrice m-0'>
                   <del>{{ currencyService.getPriceLabel(product) }}</del>
                 </p>
-                <p class="mat-body-2 m-0" matTooltip="{{ 'Existe una oferta asociada a este producto' | translate }}">
+                <p class='mat-body-2 m-0' matTooltip="{{ 'Existe una oferta asociada a este producto' | translate }}">
                   {{ currencyService.getOfferLabel(product) }}
                 </p>
               </ng-container>
-              <ng-container *ngIf="!product.offerValue">
-                <p class="mat-body-2 m-0">
+              <ng-container *ngIf='!product.offerValue'>
+                <p class='mat-body-2 m-0'>
                   {{ currencyService.getPriceLabel(product) }}
                 </p>
-                <p class="mat-body-2 m-0" style="font-size: 15px">
+                <p class='mat-body-2 m-0' style='font-size: 15px'>
                   {{ 'Desde ' | translate }}
                   {{ product.minSale }}
                   {{ ' unidad' | translate }}
@@ -191,28 +191,28 @@
               </ng-container>
             </div>
             <button
-              (click)="addToCart(product)"
-              class="btnAddCart"
+              (click)='addToCart(product)'
+              class='btnAddCart'
               mat-mini-fab
               matTooltip="{{ 'Añadir al carrito' | translate }}"
-              style="z-index: 10"
+              style='z-index: 10'
             >
               <mat-icon>shopping_cart</mat-icon>
             </button>
 
-            <div class="icons" fxLayout="column">
+            <div class='icons' fxLayout='column'>
               <!-- <a (click)="addToWishlist(product)">
                     <mat-icon class="mat-icon-lg mat-icon material-icons mr-10">favorite_border</mat-icon>
                   </a> -->
               <!--<a (click)="openProductDialog(product)">
                 <mat-icon>info</mat-icon>
               </a>-->
-              <a (click)="addToCompare(product)">
+              <a (click)='addToCompare(product)'>
                 <mat-icon>compare_arrows</mat-icon>
               </a>
             </div>
           </div>
-          <div *ngIf="product.type != 'physical'" class="productType">
+          <div *ngIf="product.type != 'physical'" class='productType'>
             {{ product.type | translate }}
           </div>
         </mat-card>
@@ -221,77 +221,77 @@
   </div>
 </ng-container>
 
-<ng-container *ngIf="products.length == 1">
-  <div class="product-item swiper-container" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="gappx">
-    <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="gappx">
-      <mat-card *ngFor="let product of products" class="cardProduct3" fxLayout="column">
-        <div class="product-img">
+<ng-container *ngIf='products.length == 1'>
+  <div class='product-item swiper-container' fxLayout='column' fxLayoutAlign='start stretch' fxLayoutGap='gappx'>
+    <div fxLayout='row wrap' fxLayoutAlign='start center' fxLayoutGap='gappx'>
+      <mat-card *ngFor='let product of products' class='cardProduct3' fxLayout='column'>
+        <div class='product-img'>
           <a
-            [queryParams]="{
+            [queryParams]='{
               productId: product?.id,
               stockId: product?.Stock?.id
-            }"
+            }'
             [routerLink]="['/product']"
-            class="product-link"
+            class='product-link'
           >
             <img
-              *ngIf="product.Images && product.Images.length"
-              [src]="imageUrl + product.Images[0].image"
-              alt=""
-              class="imageProduct"
+              *ngIf='product.Images && product.Images.length'
+              [src]='imageUrl + product.Images[0].image'
+              alt=''
+              class='imageProduct'
               ngp-lazy
-              ngp-threshold="0.1"
+              ngp-threshold='0.1'
               onerror="this.onerror=null;this.src='assets/images/noImage.jpg';"
             />
 
             <img
-              *ngIf="!(product.Images && product.Images.length)"
-              alt=""
-              class="imageProduct"
+              *ngIf='!(product.Images && product.Images.length)'
+              alt=''
+              class='imageProduct'
               ngp-lazy
-              ngp-threshold="0.1"
-              src="../../../../assets/images/noImage.jpg"
+              ngp-threshold='0.1'
+              src='../../../../assets/images/noImage.jpg'
             />
           </a>
         </div>
-        <div class="product-info-wrapper py-2 px-3">
+        <div class='product-info-wrapper py-2 px-3'>
           <a
-            [queryParams]="{
+            [queryParams]='{
               productId: product?.id,
               stockId: product?.Stock?.id
-            }"
+            }'
             [routerLink]="['/product']"
-            class="product-link"
+            class='product-link'
           >
-            <span class="mat-caption" style="font-size: 0.8rem !important">
+            <span class='mat-caption' style='font-size: 0.8rem !important'>
               {{ utilsService.parserLanguage(product.Category.name, language) }}
             </span>
 
-            <div class="moduleTitle line-clampTitle">
-              <h4 class="mat-body-2">{{ utilsService.parserLanguage(product.name, language) }}</h4>
+            <div class='moduleTitle line-clampTitle'>
+              <h4 class='mat-body-2'>{{ utilsService.parserLanguage(product.name, language) }}</h4>
             </div>
 
-            <div class="mt-2">
-              <ngp-rating-material [config]="{ readOnly: true }" [value]="product.rating"></ngp-rating-material>
+            <div class='mt-2'>
+              <ngp-rating-material [config]='{ readOnly: true }' [value]='product.rating'></ngp-rating-material>
             </div>
             <!-- <p class="module line-clamp mt-1 mb-2">
               {{utilsService.parserLanguage(product.shortDescription,language)}}</p> -->
           </a>
 
-          <div class="price">
-            <ng-container *ngIf="product.offerValue">
-              <p class="deletePrice m-0">
+          <div class='price'>
+            <ng-container *ngIf='product.offerValue'>
+              <p class='deletePrice m-0'>
                 <del>{{ currencyService.getPriceLabel(product) }}</del>
               </p>
-              <p class="mat-body-2 m-0" matTooltip="{{ 'Existe una oferta asociada a este producto' | translate }}">
+              <p class='mat-body-2 m-0' matTooltip="{{ 'Existe una oferta asociada a este producto' | translate }}">
                 {{ currencyService.getOfferLabel(product) }}
               </p>
             </ng-container>
-            <ng-container *ngIf="!product.offerValue">
-              <p class="mat-body-2 m-0">
+            <ng-container *ngIf='!product.offerValue'>
+              <p class='mat-body-2 m-0'>
                 {{ currencyService.getPriceLabel(product) }}
               </p>
-              <p class="mat-body-2 m-0" style="font-size: 15px">
+              <p class='mat-body-2 m-0' style='font-size: 15px'>
                 {{ 'Desde ' | translate }}
                 {{ product.minSale }}
                 {{ ' unidad' | translate }}
@@ -299,28 +299,28 @@
             </ng-container>
           </div>
           <button
-            (click)="addToCart(product)"
-            class="btnAddCart"
+            (click)='addToCart(product)'
+            class='btnAddCart'
             mat-mini-fab
             matTooltip="{{ 'Añadir al carrito' | translate }}"
-            style="z-index: 10"
+            style='z-index: 10'
           >
             <mat-icon>shopping_cart</mat-icon>
           </button>
 
-          <div class="icons" fxLayout="column">
+          <div class='icons' fxLayout='column'>
             <!-- <a (click)="addToWishlist(product)">
                   <mat-icon class="mat-icon-lg mat-icon material-icons mr-10">favorite_border</mat-icon>
                 </a> -->
             <!--<a (click)="openProductDialog(product)">
               <mat-icon>info</mat-icon>
             </a>-->
-            <a (click)="addToCompare(product)">
+            <a (click)='addToCompare(product)'>
               <mat-icon>compare_arrows</mat-icon>
             </a>
           </div>
         </div>
-        <div *ngIf="product.type != 'physical'" class="productType">
+        <div *ngIf="product.type != 'physical'" class='productType'>
           {{ product.type | translate }}
         </div>
       </mat-card>

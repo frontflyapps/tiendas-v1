@@ -1,15 +1,6 @@
 import { TranslateService } from '@ngx-translate/core';
 import { Injectable } from '@angular/core';
-import {
-  CanActivate,
-  CanLoad,
-  UrlSegment,
-  Router,
-  Route,
-  ActivatedRouteSnapshot,
-  RouterStateSnapshot,
-  UrlTree,
-} from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, CanLoad, Route, Router, RouterStateSnapshot, UrlSegment, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { LoggedInUserService } from './../../core/services/loggedInUser/logged-in-user.service';
 import { ShowSnackbarService } from './../../core/services/show-snackbar/show-snackbar.service';

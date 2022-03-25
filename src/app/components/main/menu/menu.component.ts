@@ -1,6 +1,6 @@
 import { UtilsService } from 'src/app/core/services/utils/utils.service';
 import { takeUntil } from 'rxjs/operators';
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { NavigationService } from '../../../core/services/navigation/navigation.service';
 import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-in-user.service';
 import { Subject } from 'rxjs';

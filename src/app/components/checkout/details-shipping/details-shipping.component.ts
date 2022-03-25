@@ -1,10 +1,9 @@
-import { Component, Inject, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
 import { UtilsService } from 'src/app/core/services/utils/utils.service';
 import { LoggedInUserService } from 'src/app/core/services/loggedInUser/logged-in-user.service';
-import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-details-shipping',

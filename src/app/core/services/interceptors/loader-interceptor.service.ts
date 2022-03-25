@@ -1,13 +1,6 @@
 // loader.interceptors.ts
 import { Injectable } from '@angular/core';
-import {
-  HttpErrorResponse,
-  HttpResponse,
-  HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpInterceptor,
-} from '@angular/common/http';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable()

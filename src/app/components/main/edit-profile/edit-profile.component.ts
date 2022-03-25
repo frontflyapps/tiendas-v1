@@ -1,5 +1,5 @@
 import { CompressImageService } from '../../../core/services/image/compress-image.service';
-import { Component, Inject, HostListener, ViewEncapsulation, OnInit } from '@angular/core';
+import { Component, HostListener, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-in-user.service';

@@ -1,0 +1,164 @@
+// margin
+.m-3 {
+  margin : 16px;
+}
+
+
+blockquote {
+  background  : #f9f9f9;
+  font-size   : 1em;
+  border-left : 10px solid #f44336;
+  margin      : 0.4em 0 1em;
+  padding     : 0.5em 10px;
+  quotes      : "\201C""\201D""\2018""\2019";
+}
+
+blockquote:before {
+  color          : #f44336;
+  content        : open-quote;
+  font-size      : 4em;
+  line-height    : 0.1em;
+  margin-right   : 0.25em;
+  vertical-align : -0.4em;
+}
+
+blockquote p {
+  display     : inline;
+  font-weight : 300;
+  font-size   : 1.3em;
+}
+
+form {
+  max-width  : 800px;
+  width      : 100%;
+  margin     : 0px auto;
+  box-sizing : border-box;
+
+}
+
+.list-cu-form-load-file {
+  max-width  : 800px;
+  width      : 100%;
+  margin     : 0px auto;
+  box-sizing : border-box;
+
+}
+
+.my-3 {
+  margin-top    : 16px;
+  margin-bottom : 16px;
+}
+
+.mb-3 {
+  margin-bottom : 16px;
+}
+
+.mt-3 {
+  margin-top : 16px;
+}
+
+.mx-3 {
+  margin-left  : 16px;
+  margin-right : 16px;
+}
+
+.ml-3 {
+  margin-left : 16px;
+}
+
+.ml-1 {
+  margin-left : 3px;
+}
+
+.mr-3 {
+  margin-right : 16px;
+}
+
+// padding
+.p-3 {
+  padding : 16px;
+}
+
+.py-3 {
+  padding-top    : 16px;
+  padding-bottom : 16px;
+}
+
+.pb-3 {
+  padding-bottom : 16px;
+}
+
+.pt-3 {
+  padding-top : 16px;
+}
+
+.px-3 {
+  padding-left  : 16px;
+  padding-right : 16px;
+}
+
+.pl-3 {
+  padding-left : 16px;
+}
+
+.pr-3 {
+  padding-right : 16px;
+}
+
+// $havanatur-color: #0d47a1;
+ul,
+li {
+  margin     : 0;
+  padding    : 0;
+  list-style : none;
+}
+
+// .login-background {
+//   // background: url('../../../assets/images/background/auto_5.jpg') no-repeat;
+//   background-size: cover;
+//   background-position: center;
+//   background-color: #fafafa;
+//   height: 100vh !important;
+// }
+
+.upload-file-circle {
+  background-color : #fafafa;
+  width            : 100px;
+  height           : 100px;
+  cursor           : pointer;
+  border-radius    : 50%;
+  box-shadow       : 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12);
+
+  mat-icon {
+    height    : 50px;
+    width     : 50px;
+    font-size : 50px;
+    color     : teal;
+  }
+}
+
+mat-radio-button {
+  margin-right : 40px !important;
+}
+
+.mat-radio-label {
+  margin-right : 40px !important;
+}
+
+.mat-radio-button ~ .mat-radio-button {
+  margin-left : 16px;
+}
+
+.example-viewport-cu-form-load {
+  max-height : 400px;
+  width      : 100%;
+  overflow-y : scroll;
+}
+
+.example-item-detail {
+  height : 50px;
+}
+
+.selected-file {
+  background-color : #f6f6f6;
+}

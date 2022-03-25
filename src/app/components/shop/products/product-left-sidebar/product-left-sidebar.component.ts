@@ -1,12 +1,12 @@
 import { MetaService } from '../../../../core/services/meta.service';
 import { IPagination } from '../../../../core/classes/pagination.class';
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ProductService } from '../../../shared/services/product.service';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { CurrencyService } from '../../../../core/services/currency/currency.service';
 import { LoggedInUserService } from '../../../../core/services/loggedInUser/logged-in-user.service';
-import { switchMap, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { MatPaginator } from '@angular/material/paginator';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -15,10 +15,9 @@ import { CategoriesService } from 'src/app/core/services/categories/catagories.s
 import { CartService } from '../../../shared/services/cart.service';
 import { Cart } from '../../../../modals/cart-item';
 import { LocationService } from '../../../../core/services/location/location.service';
-import { LANDING_PAGE, PRODUCT_COUNT } from '../../../../core/classes/global.const';
+import { PRODUCT_COUNT } from '../../../../core/classes/global.const';
 import { environment } from '../../../../../environments/environment';
 import { LocalStorageService } from '../../../../core/services/localStorage/localStorage.service';
-import { UtilsService } from 'src/app/core/services/utils/utils.service';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({

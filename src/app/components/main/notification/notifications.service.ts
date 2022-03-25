@@ -2,9 +2,9 @@ import { LoggedInUserService } from './../../../core/services/loggedInUser/logge
 import { environment } from './../../../../environments/environment';
 import { SocketIoService } from './../../../core/services/socket-io/socket-io.service';
 import { Injectable } from '@angular/core';
-import { Subject, Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { HttpParams, HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',

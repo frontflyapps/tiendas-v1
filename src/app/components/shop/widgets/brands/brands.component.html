@@ -1,11 +1,11 @@
-<div class="brands-items">
+<div class='brands-items'>
 
-  <mat-checkbox (change)="$event ? onChangeSelection(brand.id) : null" (click)="$event.stopPropagation()"
-                *ngFor="let brand of brands" [checked]="selection.isSelected(brand.id)"
-                class="example-radio-button py-1" color="accent"
-                fxLayout="row">
-    <span class="mat-body-2"
-          style="color:#757575;font-size: 15px !important;">{{(brand.name[language]) ? brand.name[language] : brand.name['es']}}</span>
+  <mat-checkbox (change)='$event ? onChangeSelection(brand.id) : null' (click)='$event.stopPropagation()'
+                *ngFor='let brand of brands' [checked]='selection.isSelected(brand.id)'
+                class='example-radio-button py-1' color='accent'
+                fxLayout='row'>
+    <span class='mat-body-2'
+          style='color:#757575;font-size: 15px !important;'>{{(brand.name[language]) ? brand.name[language] : brand.name['es']}}</span>
   </mat-checkbox>
 
 </div>

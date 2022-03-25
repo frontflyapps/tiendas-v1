@@ -1,15 +1,16 @@
 import { Component, HostListener, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { ShowToastrService } from '../../../core/services/show-toastr/show-toastr.service';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { UtilsService } from '../../../core/services/utils/utils.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { ShowSnackbarService } from '../../../core/services/show-snackbar/show-snackbar.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { environment } from '../../../../environments/environment';
+import { CUBAN_PHONE_START_5, EMAIL_REGEX } from '../../../core/classes/regex.const';
 import { AuthenticationService } from '../../../core/services/authentication/authentication.service';
 import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-in-user.service';
-import { CUBAN_PHONE_START_5, EMAIL_REGEX, PASS_CLIENT_REGEX, USERNAME } from '../../../core/classes/regex.const';
+import { ShowSnackbarService } from '../../../core/services/show-snackbar/show-snackbar.service';
+import { ShowToastrService } from '../../../core/services/show-toastr/show-toastr.service';
+import { UtilsService } from '../../../core/services/utils/utils.service';
+import { UploadFilesService } from '../../shared/upload-file/upload-files';
 
 @Component({
   selector: 'app-my-account',
@@ -34,6 +35,9 @@ export class MyAccountComponent implements OnInit {
   insertEmailPassForm: FormGroup;
   changeToNewPassForm: FormGroup;
 
+  pdfData: any[] = [];
+  selectedDocument = false;
+
   showLoginForm = true;
   showRegistrationForm = false;
   showPinForm = false;
@@ -47,6 +51,12 @@ export class MyAccountComponent implements OnInit {
   routeToNavigate = '/checkout';
   localDatabaseUsers = environment.localDatabaseUsers;
 
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.innerWidth = window.innerWidth;
+    this.applyStyle = this.innerWidth <= 600;
+  }
+
   constructor(
     public authService: AuthenticationService,
     private toastr: ShowToastrService,
@@ -55,6 +65,7 @@ export class MyAccountComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private router: Router,
     private route: ActivatedRoute,
+    private uploadFilesService: UploadFilesService,
     private showSnackbar: ShowSnackbarService,
     private loggedInUserService: LoggedInUserService,
     public utilsService: UtilsService,
@@ -74,12 +85,6 @@ export class MyAccountComponent implements OnInit {
     this.createActivateForm();
 
     this.getParamsAndInspect();
-  }
-
-  @HostListener('window:resize', ['$event'])
-  onResize(event) {
-    this.innerWidth = window.innerWidth;
-    this.applyStyle = this.innerWidth <= 600;
   }
 
   /**
@@ -170,8 +175,8 @@ export class MyAccountComponent implements OnInit {
   createRegistrationForm() {
     this.fromPassRegister = this.fb.group(
       {
-        password: [null, [Validators.required, Validators.pattern(PASS_CLIENT_REGEX)]],
-        repeat: [null, [Validators.required, Validators.pattern(PASS_CLIENT_REGEX)]],
+        password: [null, [Validators.required, Validators.minLength(6)]],
+        repeat: [null, [Validators.required, Validators.minLength(6)]],
       },
       { validator: this.matchValidator.bind(this) },
     );
@@ -179,12 +184,42 @@ export class MyAccountComponent implements OnInit {
     this.registrationForm = this.fb.group({
       name: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
       lastname: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
-      // username: [null, [Validators.required, Validators.pattern(USERNAME)]],
-      phone: [null, [Validators.pattern(CUBAN_PHONE_START_5), Validators.minLength(8), Validators.maxLength(8)]],
-      address: [null, []],
-      email: [null, [Validators.required, Validators.email, Validators.pattern(EMAIL_REGEX)]],
+      ci: [
+        null, [
+          Validators.required,
+          Validators.minLength(11),
+          Validators.maxLength(11),
+        ],
+      ],
+      ciONAT: [null, [Validators.required]],
+      licenceTCP: [null, [Validators.required]],
+      activity: [null, [Validators.required]],
+      phoneCel: [
+        null, [
+          Validators.pattern(CUBAN_PHONE_START_5),
+          Validators.minLength(8),
+          Validators.maxLength(8),
+        ],
+      ],
+      phone: [
+        null, [
+          Validators.minLength(8),
+          Validators.maxLength(8),
+        ],
+      ],
+      address: [null, [Validators.required]],
+      email: [
+        null, [
+          Validators.required,
+          Validators.email,
+          Validators.pattern(EMAIL_REGEX),
+        ],
+      ],
       // recaptcha: ['', Validators.required],
       passwords: this.fromPassRegister,
+      bankAccount: [null, Validators.required],
+      bankName: [null, Validators.required],
+      bankOffice: [null, Validators.required],
     });
     this.registrationForm.markAllAsTouched();
   }
@@ -259,8 +294,8 @@ export class MyAccountComponent implements OnInit {
       error.error.errors && error.error.errors.length
         ? error.error.errors.map((item) => item.message)
         : error.error.message
-        ? error.error.message
-        : 'Error registrando usuario';
+          ? error.error.message
+          : 'Error registrando usuario';
     this.toastr.showError(msg, 'Error', 10000);
   }
 
@@ -321,9 +356,11 @@ export class MyAccountComponent implements OnInit {
   }
 
   onSignUp() {
-    const data = this.registrationForm.value;
+    const data = JSON.parse(JSON.stringify(this.registrationForm.value));
     data.password = data.passwords.password;
     data.lastName = data.lastname;
+    data.phone = '53' + data.phone;
+    data.phoneCel = '53' + data.phoneCel;
     data.role = 'Client';
     let token = localStorage.getItem('token');
     if (token != undefined) {
@@ -340,15 +377,17 @@ export class MyAccountComponent implements OnInit {
       (result) => {
         this.toastr.showInfo(
           this.translate.instant(
-            `You have successfully registered, verify your email to complete the account validation`,
+            `Estamos revisando su solicitud de registro. Le daremos respuesta en 48 horas.`,
           ),
           '',
           10000,
         );
+        this.savePdf(result);
         this.inLoading = false;
-        this.showPinForm = true;
+        this.showPinForm = false;
+        this.showPinForm = false;
         this.showRegistrationForm = false;
-        this.showLoginForm = false;
+        this.showLoginForm = true;
         this.showResetPassForm = false;
         this.spinner.hide();
         return true;
@@ -376,6 +415,39 @@ export class MyAccountComponent implements OnInit {
       data.email = this.registrationForm.value.email;
     }
     return this.validatePing(data);
+  }
+
+  private validatePing(data) {
+    this.inLoading = true;
+    this.spinner.show();
+    this.authService.validatePing(data).subscribe(
+      (result) => {
+        this.toastr.showSucces('Registrado correctamente', '', 6000);
+        this.showRegistrationForm = false;
+        this.showPinForm = false;
+        this.showResetPassForm = false;
+        this.showActivateForm = false;
+        this.showLoginForm = true;
+        this.spinner.hide();
+        this.loggedInUserService.saveAccountCookie(result.data.Authorization);
+        this.loggedInUserService.updateUserProfile(result.data.profile);
+        this.toastr.showInfo(
+          this.translate.instant('You have successfully logged into our system'),
+          this.translate.instant('User login'),
+          10000,
+        );
+        this.inLoading = false;
+        this.router.navigate([this.routeToNavigate]);
+        return true;
+      },
+      (error) => {
+        this.utilsService.errorHandle(error);
+        this.inLoading = false;
+        this.spinner.hide();
+      },
+    );
+
+    return false;
   }
 
   onGoBefore() {
@@ -467,48 +539,69 @@ export class MyAccountComponent implements OnInit {
       );
   }
 
-  // ///////////////////////////////////////////////////////
-  handleReset() {}
+  //////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////
+  handleReset() {
+  }
 
-  // ////////////////////////////////////////////////////////
+  handleExpire() {
+  }
 
-  handleExpire() {}
+  handleSuccess(event) {
+  }
 
-  handleSuccess(event) {}
+  handleLoad() {
+  }
 
-  handleLoad() {}
+  onSelectPdf($event) {
+    this.pdfData = [];
+    $event.forEach(doc => {
+      this.pdfData.push({
+        ...doc,
+        fkId: null,
+        fkModel: 'UserId',
+      });
+    });
+    this.validDocumentSelection();
+    //
+    // this.pdfData[index]   = {
+    //   ...$event,
+    //   fkId   : null,
+    //   fkModel: 'UserId',
+    // };
+    // console.log(this.pdfData);
+    // this.selectedDocument = true;
+  }
 
-  private validatePing(data) {
-    this.inLoading = true;
-    this.spinner.show();
-    this.authService.validatePing(data).subscribe(
-      (result) => {
-        this.toastr.showSucces('Registrado correctamente', '', 6000);
-        this.showRegistrationForm = false;
-        this.showPinForm = false;
-        this.showResetPassForm = false;
-        this.showActivateForm = false;
-        this.showLoginForm = true;
-        this.spinner.hide();
-        this.loggedInUserService.saveAccountCookie(result.data.Authorization);
-        this.loggedInUserService.updateUserProfile(result.data.profile);
-        this.toastr.showInfo(
-          this.translate.instant('You have successfully logged into our system'),
-          this.translate.instant('User login'),
-          10000,
-        );
-        this.inLoading = false;
-        this.router.navigate([this.routeToNavigate]);
-        return true;
-      },
-      (error) => {
-        this.utilsService.errorHandle(error);
-        this.inLoading = false;
-        this.spinner.hide();
-      },
-    );
+  validDocumentSelection() {
+    this.selectedDocument = false;
+    this.pdfData.forEach(document => {
+      if (document) {
+        this.selectedDocument = true;
+      }
+    });
+  }
 
-    return false;
+  savePdf(result) {
+    if (this.pdfData) {
+      this.pdfData.forEach(document => {
+        if (document) {
+          let doc = { ...document };
+          doc.fkId = result.data.id;
+          this.uploadFilesService.emitUploadStart(doc);
+        }
+      });
+    }
+  }
+
+  onAddDocument() {
+    this.pdfData.push(null);
+    this.validDocumentSelection();
+  }
+
+  onRemoveDocument(index) {
+    this.pdfData.splice(index, 1);
+    this.validDocumentSelection();
   }
 
   /////////////////////////////////////////////////////////

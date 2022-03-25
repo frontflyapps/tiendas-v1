@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Product } from '../../../modals/product.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Observable, of, Subscriber, Subject } from 'rxjs';
+import { Observable, Subscriber } from 'rxjs';
 
 // Get product from Localstorage
 let products = JSON.parse(localStorage.getItem('wishlistItem')) || [];

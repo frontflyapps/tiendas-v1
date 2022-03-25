@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, Input } from '@angular/core';
 
 import { environment } from '../../../../../environments/environment';
 import { CurrencyService } from '../../../../core/services/currency/currency.service';

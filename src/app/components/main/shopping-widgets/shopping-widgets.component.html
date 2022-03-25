@@ -1,11 +1,11 @@
-<div class="commerce-buttons" fxLayout="row" fxLayoutAlign="start center" id="shopping-widgets-cart">
-  <button [matMenuTriggerFor]="menu" class="flex-row-button mat-button" fxLayoutAlign="space-between center" mat-button>
-    <span class="mat-button-wrapper" fxLayout="row" fxLayoutAlign="space-between center">
-      <span [matBadge]="shoppingCartItems.length"
-            class="iconCart"
-            fxLayout="row"
-            fxLayoutAlign="start center"
-            matBadgeColor="accent"
+<div class='commerce-buttons' fxLayout='row' fxLayoutAlign='start center' id='shopping-widgets-cart'>
+  <button [matMenuTriggerFor]='menu' class='flex-row-button mat-button' fxLayoutAlign='space-between center' mat-button>
+    <span class='mat-button-wrapper' fxLayout='row' fxLayoutAlign='space-between center'>
+      <span [matBadge]='shoppingCartItems.length'
+            class='iconCart'
+            fxLayout='row'
+            fxLayoutAlign='start center'
+            matBadgeColor='accent'
             matTooltip="{{'Carrito de compras'|translate}}">
         <mat-icon>local_grocery_store</mat-icon>
       </span>
@@ -14,14 +14,14 @@
       </div>-->
     </span>
   </button>
-  <mat-menu #menu="matMenu" class="spCard-main">
-    <div class="spCard-dropdown">
-      <div class="card-list-title" fxLayout="row" fxLayoutAlign="space-between center">
+  <mat-menu #menu='matMenu' class='spCard-main'>
+    <div class='spCard-dropdown'>
+      <div class='card-list-title' fxLayout='row' fxLayoutAlign='space-between center'>
 
         <!--        <a class="list-compare-link" [routerLink]="['/cart']" routerLinkActive="router-link-active">-->
-        <a [routerLink]="['/cart']" class="list-compare-link">
-          <p class="text-muted">
-            <a class="my-2" color="accent" mat-stroked-button>{{ 'Ir al Carrito' | translate }}</a>
+        <a [routerLink]="['/cart']" class='list-compare-link'>
+          <p class='text-muted'>
+            <a class='my-2' color='accent' mat-stroked-button>{{ 'Ir al Carrito' | translate }}</a>
           </p>
           <!--          <p>{{ 'Verificar en el carrito' | translate | uppercase }}</p>-->
         </a>
@@ -30,47 +30,47 @@
 
       </div>
       <mat-divider></mat-divider>
-      <p *ngIf="!shoppingCartItems.length" class="woo-message">{{ 'Please add product' | translate }}</p>
+      <p *ngIf='!shoppingCartItems.length' class='woo-message'>{{ 'Please add product' | translate }}</p>
       <p></p>
 
-      <div *ngIf="shoppingCarts?.length" class="new-product" fxLayout="column">
-        <ng-container *ngFor="let cart of shoppingCarts; trackBy: trackBusinessFn">
-          <div *ngFor="let item of cart.CartItems; let i = index; trackBy: trackStockFn"
-               class="item"
-               fxLayout="row"
-               fxLayoutAlign="start start">
-            <div class="product">
-              <img *ngIf="item.Product.Images && item.Product.Images.length"
-                   [src]="imageUrl + item.Product.Images[0].image"
-                   alt="image" />
-              <img *ngIf="!(item.Product.Images && item.Product.Images.length)"
-                   alt="image" src="assets/images/noImage.jpg" />
+      <div *ngIf='shoppingCarts?.length' class='new-product' fxLayout='column'>
+        <ng-container *ngFor='let cart of shoppingCarts; trackBy: trackBusinessFn'>
+          <div *ngFor='let item of cart.CartItems; let i = index; trackBy: trackStockFn'
+               class='item'
+               fxLayout='row'
+               fxLayoutAlign='start start'>
+            <div class='product'>
+              <img *ngIf='item.Product.Images && item.Product.Images.length'
+                   [src]='imageUrl + item.Product.Images[0].image'
+                   alt='image' />
+              <img *ngIf='!(item.Product.Images && item.Product.Images.length)'
+                   alt='image' src='assets/images/noImage.jpg' />
             </div>
-            <div class="desc">
+            <div class='desc'>
 
-              <a [queryParams]="{ productId: item?.Product?.id, stockId: item?.Product?.Stock?.id }"
+              <a [queryParams]='{ productId: item?.Product?.id, stockId: item?.Product?.Stock?.id }'
                  [routerLink]="['/product']"
-                 class="link-nav-a">
-                <p class="name">
+                 class='link-nav-a'>
+                <p class='name'>
                   {{ item.Product.name[language] ? item.Product.name[language] : item.Product.name['es'] }}
                 </p>
               </a>
 
-              <span fxLayout="row">
+              <span fxLayout='row'>
                 <span>(x{{ item.quantity }})</span>&nbsp;
                 <span>{{ getTotalPricePerItem(item) | currencyMarket: cart.market }}</span>
               </span>
 
             </div>
-            <div class="close-circle">
-              <a (click)="removeItem(item);$event.stopPropagation();">
-                <i class="material-icons"> delete </i></a>
+            <div class='close-circle'>
+              <a (click)='removeItem(item);$event.stopPropagation();'>
+                <i class='material-icons'> delete </i></a>
             </div>
           </div>
           <mat-divider></mat-divider>
-          <div class="total" fxLayout="row" fxLayoutAlign="space-between center">
-            <p class="text-muted">
-              <a (click)="cartService.goToCheckout(cart)" class="my-2" color="primary"
+          <div class='total' fxLayout='row' fxLayoutAlign='space-between center'>
+            <p class='text-muted'>
+              <a (click)='cartService.goToCheckout(cart)' class='my-2' color='primary'
                  mat-flat-button>{{ 'Ir a Pagar' | translate }}</a>
             </p>
             <span>{{ getTotal(cart) | currencyMarket: cart.market }}</span>

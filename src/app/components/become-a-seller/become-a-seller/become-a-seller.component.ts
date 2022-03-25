@@ -2,7 +2,7 @@ import { ShowToastrService } from '../../../core/services/show-toastr/show-toast
 import { NgxSpinnerService } from 'ngx-spinner';
 import { LoggedInUserService } from 'src/app/core/services/loggedInUser/logged-in-user.service';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ImagePickerConf } from 'ngp-image-picker';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';

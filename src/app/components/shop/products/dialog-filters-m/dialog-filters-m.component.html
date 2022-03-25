@@ -1,43 +1,43 @@
-<div fxLayout="row" fxLayoutAlign="space-between start">
+<div fxLayout='row' fxLayoutAlign='space-between start'>
   <h2 mat-dialog-title>{{'Filtros de búsqueda' | translate}}</h2>
-  <mat-icon (click)="close()">close</mat-icon>
+  <mat-icon (click)='close()'>close</mat-icon>
 </div>
-<mat-dialog-content class="my-filters">
-  <mat-accordion [multi]="true">
-    <mat-expansion-panel [expanded]=" this.categoriesIds.length " class="mat-elevation-z0 no-border bg-acordion">
+<mat-dialog-content class='my-filters'>
+  <mat-accordion [multi]='true'>
+    <mat-expansion-panel [expanded]=' this.categoriesIds.length ' class='mat-elevation-z0 no-border bg-acordion'>
       <mat-expansion-panel-header>
         <mat-panel-title>
           <h3>{{'Categories'|translate}}</h3>
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <app-categories-m (categoryChanged)="onCategoriesChanged($event)"
-                        [categoriesIds]="this.categoriesIds"></app-categories-m>
+      <app-categories-m (categoryChanged)='onCategoriesChanged($event)'
+                        [categoriesIds]='this.categoriesIds'></app-categories-m>
     </mat-expansion-panel>
 
-    <mat-expansion-panel [expanded]="true" class="mat-elevation-z0 no-border bg-acordion">
+    <mat-expansion-panel [expanded]='true' class='mat-elevation-z0 no-border bg-acordion'>
       <mat-expansion-panel-header>
         <mat-panel-title>
           <h3>{{'Brands'|translate}}</h3>
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <div class="brands">
-        <app-brands-m (brandChanged)="onBrandsChanged($event)" [brandsIds]="this.brandsIds"></app-brands-m>
+      <div class='brands'>
+        <app-brands-m (brandChanged)='onBrandsChanged($event)' [brandsIds]='this.brandsIds'></app-brands-m>
       </div>
     </mat-expansion-panel>
 
-    <mat-expansion-panel [expanded]="true" class="mat-elevation-z0 no-border bg-acordion">
+    <mat-expansion-panel [expanded]='true' class='mat-elevation-z0 no-border bg-acordion'>
       <mat-expansion-panel-header>
         <mat-panel-title>
           <span>{{"Price"|translate}}</span>
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <app-price (priceFilters)="updatePriceFilters($event)" [reset]="resetPrices"></app-price>
+      <app-price (priceFilters)='updatePriceFilters($event)' [reset]='resetPrices'></app-price>
     </mat-expansion-panel>
 
   </mat-accordion>
 </mat-dialog-content>
-<div fxLayout="row" fxLayoutAlign="end end">
+<div fxLayout='row' fxLayoutAlign='end end'>
   <mat-dialog-actions>
-    <button (click)="save()" class="mat-raised-button mat-primary">{{'Guardar' | translate}}</button>
+    <button (click)='save()' class='mat-raised-button mat-primary'>{{'Guardar' | translate}}</button>
   </mat-dialog-actions>
 </div>

@@ -1,8 +1,8 @@
 import { UtilsService } from './../../../core/services/utils/utils.service';
-import { Component, OnInit, EventEmitter, Output, Input, AfterViewInit, OnDestroy } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Product } from './../../../modals/product.model';
 import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
-import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ProductDialogComponent } from '../products/product-dialog/product-dialog.component';
