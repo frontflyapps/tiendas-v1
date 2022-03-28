@@ -16,9 +16,10 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { NgxCaptchaModule } from 'ngx-captcha';
 import { UploadFileModule } from '../shared/upload-file/upload-file.module';
+import { CapitalizeFirstDirective } from 'src/app/core/directives/capitalize-first.directive';
 
 @NgModule({
-  declarations: [MyAccountComponent, ChangePassComponent],
+  declarations: [MyAccountComponent, ChangePassComponent, CapitalizeFirstDirective],
   imports: [
     CommonModule,
     MyAccountRoutingModule,

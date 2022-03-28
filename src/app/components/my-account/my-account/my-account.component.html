@@ -6,7 +6,11 @@
       </div> -->
 
       <div fxLayout="column" fxLayoutAlign="center start" class="py-2 mt-2">
-        <img *ngIf="!showRegistrationForm" src="assets/images/pymesbulevar/logo-r-white.png" class="login-logo mx-auto" />
+        <img
+          *ngIf="!showRegistrationForm"
+          src="assets/images/pymesbulevar/logo-r-white.png"
+          class="login-logo mx-auto"
+        />
       </div>
 
       <div fxLayout="column" id="CardBodyLoggin" class="mat-elevation-z8" fxLayoutAlign="start stretch">
@@ -147,6 +151,7 @@
                   <mat-label>{{ 'Name' | translate }}</mat-label>
                   <input
                     matInput
+                    appCapitalizeFirst
                     placeholder="{{ 'Name' | translate }}"
                     required
                     [formControl]="registrationForm.controls['name']"
@@ -163,6 +168,7 @@
                   <mat-label>{{ 'Lastname' | translate }}</mat-label>
                   <input
                     matInput
+                    appCapitalizeFirst
                     placeholder="{{ 'Lastname' | translate }}"
                     required
                     [formControl]="registrationForm.controls['lastname']"
