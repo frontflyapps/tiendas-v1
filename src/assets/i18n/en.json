@@ -24,6 +24,7 @@
   "Select your creation language": "Select your creation language",
   "Default is Spanish": "Default is Spanish",
   "Language": "Language",
+  "incorrect": "incorrect",
   "is required": "is required",
   "El nombre de la promoción debe tener al menos 5 caracteres": "The promotion name must have at least 5 characters",
   "El nombre de la promoción no debe comenzar con mayúscula": "Promotion name must not start with a capital letter",
