@@ -19,7 +19,7 @@
         </li>
       </div>
       <a [href]="domSanitizer.bypassSecurityTrustUrl(this.launchTM)" class="mt-2" color="primary" mat-flat-button>
-        {{ 'Abrir la app de tranfermovil' | translate }}</a
+        {{ 'Abrir la app de Transfermóvil' | translate }}</a
       >
     </ul>
   </div>
@@ -31,11 +31,13 @@
   </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button (click)="onCancelarTranfermovilPayment()"
-          color="warn"
-          mat-button
-          mat-dialog-close
-          title="{{'Pago listo, cerrar modal'|translate}}">
+  <button
+    (click)="onCancelarTranfermovilPayment()"
+    color="warn"
+    mat-button
+    mat-dialog-close
+    title="{{ 'Pago listo, cerrar modal' | translate }}"
+  >
     {{ 'Listo' | translate | uppercase }}
   </button>
 </mat-dialog-actions>

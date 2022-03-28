@@ -33,7 +33,7 @@ export const environment = {
   url: 'http://tienda.tiendalocal.com:4308',
   urlAboutUs: 'http://tienda.tiendalocal.com:4308',
 
-  address: 'MiBulevar | TransferMóvil',
+  address: 'MiBulevar | Transfermóvil',
   localDatabaseUsers: true,
 
   contacts: {
@@ -50,7 +50,7 @@ export const environment = {
 
   meta: {
     mainPage: {
-      title: 'MiBulevar | TransferMóvil',
+      title: 'MiBulevar | Transfermóvil',
       description: 'Tienda online desarrollada con el framework Angular permite la modelación de negocios B2C and C2C',
       keywords: 'HTML, CSS, JavaScript, Angular, Tienda Online B2B, comercio online',
       shareImg: 'http://tienda.tiendalocal.com:4308/assets/images/share-img.png',
