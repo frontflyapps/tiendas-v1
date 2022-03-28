@@ -48,10 +48,10 @@
               <input
                 [disabled]="inLoading"
                 [formControl]="loginForm.controls['username']"
-                autocomplete="username"
                 matInput
                 name="username"
                 placeholder="{{ 'Email' | translate }}"
+                autocomplete="username"
                 required
               />
               <mat-error *ngIf="loginForm.controls['username'].hasError('required')">
@@ -151,6 +151,7 @@
                   <input
                     [formControl]="registrationForm.controls['name']"
                     matInput
+                    autocomplete="off"
                     placeholder="{{ 'Name' | translate }}"
                     required
                   />
@@ -167,6 +168,7 @@
                   <input
                     [formControl]="registrationForm.controls['lastname']"
                     matInput
+                    autocomplete="off"
                     placeholder="{{ 'Lastname' | translate }}"
                     required
                   />
@@ -202,6 +204,9 @@
                   (keypress)="utilsService.keyLettersNumberForEmail($event)"
                   [formControl]="registrationForm.controls['email']"
                   matInput
+                  type="email"
+                  autocomplete="email"
+                  name="email"
                   placeholder="{{ 'Email' | translate }}"
                   required
                 />
@@ -220,6 +225,7 @@
                   (keypress)="utilsService.keyPressNumbers($event)"
                   [formControl]="registrationForm.get('phone')"
                   matInput
+                  autocomplete="off"
                   placeholder="{{ 'Teléfono cubano...' | translate }}"
                 />
                 <mat-hint *ngIf="!registrationForm.get('phone').value">
