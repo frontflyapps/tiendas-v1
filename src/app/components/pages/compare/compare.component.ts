@@ -52,7 +52,11 @@ export class CompareComponent implements OnInit {
 
   // Add to cart
   public addToCart(product: Product, quantity: number = 1) {
-    this.cartService.addToCart(product, quantity);
+    if (this.loggedInUserService.getLoggedInUser()) {
+      this.cartService.addToCart(product, quantity);
+    } else {
+      this.cartService.redirectToLoginWithOrigin(this.router.routerState.snapshot.url);
+    }
   }
 
   ngOnDestroy() {

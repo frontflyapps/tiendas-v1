@@ -11,6 +11,7 @@ import { IProductCard } from '../../../core/classes/product-card.class';
 import { FRONT_PRODUCT_DATA, LANDING_PAGE, PRODUCT_COUNT } from '../../../core/classes/global.const';
 import { LocalStorageService } from '../../../core/services/localStorage/localStorage.service';
 import { ProductDataService } from '../../shared/services/product.service';
+import { GlobalStateOfCookieService } from 'src/app/core/services/request-cookie-secure/global-state-of-cookie.service';
 
 @Component({
   selector: 'app-main-home',
@@ -114,6 +115,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     private httpClient: HttpClient,
     private metaService: MetaService,
     public productDataService: ProductDataService,
+    private globalStateOfCookieService: GlobalStateOfCookieService,
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
@@ -133,13 +135,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.loadingAllProduct = true;
-    this.loadingPopular = true;
-    this.loadingFeatured = true;
-    this.loadingServices = true;
-    this.loadingBestSellers = true;
-
-    this.getPFDFromStorage();
+    this.globalStateOfCookieService.getCookieState() ? this.initComponent() : this.setSubscriptionToCookie();
 
     // this.getBestSellers()
     //   .then((data: any) => {
@@ -156,6 +152,32 @@ export class MainHomeComponent implements OnInit, OnDestroy {
 
     this.loggedInUserService.$loggedInUserUpdated.pipe(takeUntil(this._unsubscribeAll)).subscribe((data) => {
       this.loggedInUser = this.loggedInUserService.getLoggedInUser();
+    });
+  }
+
+  initComponent() {
+    this.loadingAllProduct = true;
+    this.loadingPopular = true;
+    this.loadingFeatured = true;
+    this.loadingServices = true;
+    this.loadingBestSellers = true;
+
+    this.getPFDFromStorage();
+
+    this.loggedInUserService.$languageChanged.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {
+      this.language = data.lang;
+    });
+
+    this.loggedInUserService.$loggedInUserUpdated.pipe(takeUntil(this._unsubscribeAll)).subscribe((data) => {
+      this.loggedInUser = this.loggedInUserService.getLoggedInUser();
+    });
+  }
+
+  setSubscriptionToCookie() {
+    this.globalStateOfCookieService.stateOfCookie$.pipe(takeUntil(this._unsubscribeAll)).subscribe((thereIsCookie) => {
+      if (thereIsCookie) {
+        this.initComponent();
+      }
     });
   }
 
@@ -216,7 +238,6 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   getFrontData() {
     this.getFrontDataRequest()
       .then((data: any) => {
-
         const dataResponse = JSON.parse(JSON.stringify(data.data));
         this.setDataOnLandingPage(dataResponse);
 
@@ -228,7 +249,6 @@ export class MainHomeComponent implements OnInit, OnDestroy {
         _responseCP.count = JSON.parse(JSON.stringify(_response.countProducts));
         _responseCP.timespan = new Date().getTime();
         this.localStorageService.setOnStorage(PRODUCT_COUNT, _responseCP);
-
       })
       .catch((error) => {
         this.showStatic = true;

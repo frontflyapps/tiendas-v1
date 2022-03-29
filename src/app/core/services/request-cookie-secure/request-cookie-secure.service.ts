@@ -5,6 +5,7 @@ import { Observable, Subject } from 'rxjs';
 
 import { environment } from '../../../../environments/environment';
 import { takeUntil } from 'rxjs/operators';
+import { GlobalStateOfCookieService } from './global-state-of-cookie.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +17,8 @@ export class RequestCookieSecureService {
 
   unsubscribeAll: Subject<any> = new Subject<any>();
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient,
+              private globalStateOfCookieService: GlobalStateOfCookieService) {
     this.httpOptions = {};
   }
 
@@ -30,14 +32,14 @@ export class RequestCookieSecureService {
       .subscribe((res: any) => {
           console.warn('Cookies Requested Success', res);
 
-          // this.globalStateOfCookieService.stateOfCookie.next(true);
+          this.globalStateOfCookieService.stateOfCookie.next(true);
 
           this.clearUnsubscribeAll();
         },
         (error: any) => {
           console.warn('Cookies Requested Error', error);
 
-          // this.globalStateOfCookieService.stateOfCookie.next(true);
+          this.globalStateOfCookieService.stateOfCookie.next(true);
 
           this.clearUnsubscribeAll();
         });

@@ -54,6 +54,9 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   loadingRelated = false;
   loadingMenu = false;
 
+  pathToRedirect: any;
+  paramsToUrlRedirect: any;
+
   public allProductsOnMenu = [];
   public allProductsOnMenuToShow: Observable<any[]>;
 
@@ -190,12 +193,18 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
       rating: [3.5, Validators.required],
     });
 
-    this.allProductsOnMenuToShow = this.searchProductControl.valueChanges
-      .pipe(
-        startWith(''),
-        debounceTime(200),
-        map(value => this._filter(value)),
-      );
+    this.allProductsOnMenuToShow = this.searchProductControl.valueChanges.pipe(
+      startWith(''),
+      debounceTime(200),
+      map((value) => this._filter(value)),
+    );
+
+    ///Data to redirect function///
+    this.pathToRedirect = this.route.snapshot.routeConfig.path;
+    this.paramsToUrlRedirect = {
+      productId: this.route.snapshot.queryParamMap.get('productId'),
+      stockId: this.route.snapshot.queryParamMap.get('stockId'),
+    };
   }
 
   ngOnDestroy() {
@@ -231,7 +240,6 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   getFrontData() {
     this.getFrontDataRequest()
       .then((data: any) => {
-
         const dataResponse = JSON.parse(JSON.stringify(data.data));
         this.setDataOnLandingPage(dataResponse);
 
@@ -243,7 +251,6 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
         _responseCP.count = JSON.parse(JSON.stringify(_response.countProducts));
         _responseCP.timespan = new Date().getTime();
         this.localStorageService.setOnStorage(PRODUCT_COUNT, _responseCP);
-
       })
       .catch((error) => {
         this.loadingFeatured = false;
@@ -274,7 +281,8 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
 
   getProductsByBusiness(businessId) {
     this.loadingMenu = true;
-    this.productsService.getProductsByBusiness(businessId).subscribe((data: any) => {
+    this.productsService.getProductsByBusiness(businessId).subscribe(
+      (data: any) => {
         console.log('PRODUCTS ON MENU', data.data);
         this.allProductsOnMenu = data.data.slice();
         const timeOut = setTimeout(() => {
@@ -282,12 +290,13 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
           clearTimeout(timeOut);
         }, 200);
       },
-      error => {
+      (error) => {
         const timeOut = setTimeout(() => {
           this.loadingMenu = false;
           clearTimeout(timeOut);
         }, 200);
-      });
+      },
+    );
   }
 
   getRelatedProducts() {
@@ -303,10 +312,14 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
 
   // Add to cart
   public addToCart(product: any, quantity) {
-    if (quantity === 0) {
-      return false;
+    if (this.loggedInUserService.getLoggedInUser()) {
+      if (quantity === 0) {
+        return false;
+      }
+      this.cartService.addToCart(product, Math.max(product.minSale, quantity)).then();
+    } else {
+      this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
     }
-    this.cartService.addToCart(product, Math.max(product.minSale, quantity)).then();
   }
 
   // getFeaturedProducts() {
@@ -396,8 +409,12 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   }
 
   onAddtoCartNav() {
-    this.cartService.addToCart(this.product, this.counter);
-    this.router.navigate(['/cart']);
+    if (this.loggedInUserService.getLoggedInUser()) {
+      this.cartService.addToCart(this.product, this.counter);
+      this.router.navigate(['/cart']);
+    } else {
+      this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
+    }
   }
 
   onAddtoCompListNav() {
@@ -419,6 +436,6 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
-    return this.allProductsOnMenu.filter(option => option.name.es.toLowerCase().includes(filterValue));
+    return this.allProductsOnMenu.filter((option) => option.name.es.toLowerCase().includes(filterValue));
   }
 }

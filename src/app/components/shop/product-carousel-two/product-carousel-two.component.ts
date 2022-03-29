@@ -85,21 +85,25 @@ export class ProductCarouselTwoComponent implements OnInit, AfterViewInit, OnDes
 
   // Add to cart
   public addToCart(product: any, quantity: number = 1) {
-    if (product.minSale > 1) {
-      const dialogRef = this.dialog.open(ConfirmationDialogFrontComponent, {
-        width: '10cm',
-        maxWidth: '100vw',
-        data: {
-          question: `Este producto posee un restricción de mínima cantidad de unidades para poder adquirirlo, desea añadirlo al carrito?`,
-        },
-      });
-      dialogRef.afterClosed().subscribe((result) => {
-        if (result) {
-          this.cartService.addToCartQuickly(product, product.minSale);
-        }
-      });
+    if (this.loggedInUserService.getLoggedInUser()) {
+      if (product.minSale > 1) {
+        const dialogRef = this.dialog.open(ConfirmationDialogFrontComponent, {
+          width: '10cm',
+          maxWidth: '100vw',
+          data: {
+            question: `Este producto posee un restricción de mínima cantidad de unidades para poder adquirirlo, desea añadirlo al carrito?`,
+          },
+        });
+        dialogRef.afterClosed().subscribe((result) => {
+          if (result) {
+            this.cartService.addToCartQuickly(product, product.minSale);
+          }
+        });
+      } else {
+        this.cartService.addToCartQuickly(product, product.minSale);
+      }
     } else {
-      this.cartService.addToCartQuickly(product, product.minSale);
+      this.cartService.redirectToLoginWithOrigin(this.router.routerState.snapshot.url);
     }
   }
 

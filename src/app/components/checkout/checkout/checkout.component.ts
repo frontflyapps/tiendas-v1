@@ -32,7 +32,7 @@ import { DialogBidaiondoConfirmToPayComponent } from '../dialog-bidaiondo-confir
 import { ConfigurationService } from '../../../core/services/configuration/configuration.service';
 import { CurrencyCheckoutPipe } from 'src/app/core/pipes/currency-checkout.pipe';
 import { CUBAN_PHONE_START_5 } from '../../../core/classes/regex.const';
-import { ContactsService } from '../../../core/services/contacts/contacts.service';
+import { ContactsService, IContactBody } from '../../../core/services/contacts/contacts.service';
 import { MyContactsComponent } from '../../main/my-contacts/my-contacts.component';
 
 export const PASARELA_BASE = 'transfermovil';
@@ -944,6 +944,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   onGoToPayment() {
+    //save contact data**
+    this.saveRecieverData(this.form.value);
     this.showInfoDataToPay = false;
     this.showPayment = true;
     this.scrollTopDocument();
@@ -954,6 +956,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     document.documentElement.scrollTop = 0;
   }
 
+<<<<<<< HEAD
   private validateShippingRequired() {
     if (this.showShipping) {
       this.form.controls['ShippingBusinessId'].setValidators(Validators.required);
@@ -970,6 +973,22 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       this.shippingData = [];
       this.canBeDelivery = false;
     }
+=======
+  saveRecieverData(data) {
+    let recieverData: IContactBody = {
+      name: data.name,
+      lastName: data.lastName,
+      email: data.email,
+      phone: data.phone,
+      address: data.address,
+      ProvinceId: data.ProvinceId,
+      MunicipalityId: data.MunicipalityId,
+      identification: data.dni,
+    };
+    this.contactsService.create(recieverData).subscribe((contactRes) => {
+      this.contactsService.allContacts.push({ ...contactRes.data });
+    });
+>>>>>>> 7f9b852... update redirect to login for add to cart
   }
 
   private applyResolution() {

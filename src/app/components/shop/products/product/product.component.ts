@@ -3,7 +3,7 @@ import { CartService } from '../../../shared/services/cart.service';
 import { ProductService } from '../../../shared/services/product.service';
 import { WishlistService } from '../../../shared/services/wishlist.service';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Product } from '../../../../modals/product.model';
 import { ProductDialogComponent } from '../product-dialog/product-dialog.component';
 import { Subject } from 'rxjs';
@@ -39,6 +39,7 @@ export class ProductComponent implements OnInit, OnDestroy {
     public utilsService: UtilsService,
     private dialog: MatDialog,
     private router: Router,
+    private routerActive: ActivatedRoute,
     private translate: TranslateService,
   ) {
     this._unsubscribeAll = new Subject<any>();
@@ -58,36 +59,40 @@ export class ProductComponent implements OnInit, OnDestroy {
 
   // Add to cart
   public addToCart(product: any, quantity: number = 1) {
-    this.inLoading = true;
-    if (product.minSale > 1) {
-      const dialogRef = this.dialog.open(ConfirmationDialogFrontComponent, {
-        width: '10cm',
-        maxWidth: '100vw',
-        data: {
-          question: `Este producto posee un restricción de mínima cantidad de unidades para poder adquirirlo, desea añadirlo al carrito?`,
-        },
-      });
-      dialogRef.afterClosed().subscribe((result) => {
-        if (result) {
-          this.cartService
-            .addToCart(product, product.minSale)
-            .then((data) => {
-              this.inLoading = false;
-            })
-            .catch((error) => {
-              this.inLoading = false;
-            });
-        }
-      });
-    } else {
-      this.cartService
-        .addToCart(product, product.minSale)
-        .then((data) => {
-          this.inLoading = false;
-        })
-        .catch((error) => {
-          this.inLoading = false;
+    if (this.loggedInUserService.getLoggedInUser()) {
+      this.inLoading = true;
+      if (product.minSale > 1) {
+        const dialogRef = this.dialog.open(ConfirmationDialogFrontComponent, {
+          width: '10cm',
+          maxWidth: '100vw',
+          data: {
+            question: `Este producto posee un restricción de mínima cantidad de unidades para poder adquirirlo, desea añadirlo al carrito?`,
+          },
         });
+        dialogRef.afterClosed().subscribe((result) => {
+          if (result) {
+            this.cartService
+              .addToCart(product, product.minSale)
+              .then((data) => {
+                this.inLoading = false;
+              })
+              .catch((error) => {
+                this.inLoading = false;
+              });
+          }
+        });
+      } else {
+        this.cartService
+          .addToCart(product, product.minSale)
+          .then((data) => {
+            this.inLoading = false;
+          })
+          .catch((error) => {
+            this.inLoading = false;
+          });
+      }
+    } else {
+      this.cartService.redirectToLoginWithOrigin(this.router.routerState.snapshot.url);
     }
   }
 
@@ -114,8 +119,6 @@ export class ProductComponent implements OnInit, OnDestroy {
   }
 
   public onGoToProduct(product) {
-    this.router.navigate(['/product'],
-      { queryParams: { productId: product?.id, stockId: product?.Stock?.id } })
-      .then();
+    this.router.navigate(['/product'], { queryParams: { productId: product?.id, stockId: product?.Stock?.id } }).then();
   }
 }

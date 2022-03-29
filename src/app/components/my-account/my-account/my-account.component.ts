@@ -25,6 +25,8 @@ export class MyAccountComponent implements OnInit {
   applyStyle = false;
   configuration: any = {};
   message: string;
+  redirectToOriginPage: string;
+  paramsToRedirect: any;
   inLoading = false;
   loginForm: FormGroup;
   formPass: FormGroup;
@@ -96,6 +98,9 @@ export class MyAccountComponent implements OnInit {
     this.paramsVerifyPositionModal(params);
     this.route.queryParams.subscribe((data) => {
       this.paramsVerifyPositionModal(data);
+      this.redirectToOriginPage = data.redirectToOriginPage;
+      this.paramsToRedirect = JSON.parse(data.paramsToRedirect);
+      console.log(this.paramsToRedirect);
     });
   }
 
@@ -184,37 +189,14 @@ export class MyAccountComponent implements OnInit {
     this.registrationForm = this.fb.group({
       name: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
       lastname: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
-      ci: [
-        null, [
-          Validators.required,
-          Validators.minLength(11),
-          Validators.maxLength(11),
-        ],
-      ],
+      ci: [null, [Validators.required, Validators.minLength(11), Validators.maxLength(11)]],
       ciONAT: [null, [Validators.required]],
       licenceTCP: [null, [Validators.required]],
       activity: [null, [Validators.required]],
-      phoneCel: [
-        null, [
-          Validators.pattern(CUBAN_PHONE_START_5),
-          Validators.minLength(8),
-          Validators.maxLength(8),
-        ],
-      ],
-      phone: [
-        null, [
-          Validators.minLength(8),
-          Validators.maxLength(8),
-        ],
-      ],
+      phoneCel: [null, [Validators.pattern(CUBAN_PHONE_START_5), Validators.minLength(8), Validators.maxLength(8)]],
+      phone: [null, [Validators.minLength(8), Validators.maxLength(8)]],
       address: [null, [Validators.required]],
-      email: [
-        null, [
-          Validators.required,
-          Validators.email,
-          Validators.pattern(EMAIL_REGEX),
-        ],
-      ],
+      email: [null, [Validators.required, Validators.email, Validators.pattern(EMAIL_REGEX)]],
       // recaptcha: ['', Validators.required],
       passwords: this.fromPassRegister,
       bankAccount: [null, Validators.required],
@@ -274,7 +256,17 @@ export class MyAccountComponent implements OnInit {
             10000,
           );
           this.inLoading = false;
-          this.router.navigate([this.routeToNavigate]).then();
+          if (this.redirectToOriginPage) {
+            if (this.paramsToRedirect) {
+              this.router.navigate([this.redirectToOriginPage], {
+                queryParams: { productId: this.paramsToRedirect.productId, stockId: this.paramsToRedirect.stockId },
+              });
+            } else {
+              this.router.navigate([this.redirectToOriginPage]).then();
+            }
+          } else {
+            this.router.navigate([this.routeToNavigate]).then();
+          }
           this.spinner.hide();
         } else {
           this.toastr.showError(this.translate.instant('Wrong user'));
@@ -294,8 +286,8 @@ export class MyAccountComponent implements OnInit {
       error.error.errors && error.error.errors.length
         ? error.error.errors.map((item) => item.message)
         : error.error.message
-          ? error.error.message
-          : 'Error registrando usuario';
+        ? error.error.message
+        : 'Error registrando usuario';
     this.toastr.showError(msg, 'Error', 10000);
   }
 
@@ -376,9 +368,7 @@ export class MyAccountComponent implements OnInit {
     this.authService.singUp(data).subscribe(
       (result) => {
         this.toastr.showInfo(
-          this.translate.instant(
-            `Estamos revisando su solicitud de registro. Le daremos respuesta en 48 horas.`,
-          ),
+          this.translate.instant(`Estamos revisando su solicitud de registro. Le daremos respuesta en 48 horas.`),
           '',
           10000,
         );
@@ -541,21 +531,17 @@ export class MyAccountComponent implements OnInit {
 
   //////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////
-  handleReset() {
-  }
+  handleReset() {}
 
-  handleExpire() {
-  }
+  handleExpire() {}
 
-  handleSuccess(event) {
-  }
+  handleSuccess(event) {}
 
-  handleLoad() {
-  }
+  handleLoad() {}
 
   onSelectPdf($event) {
     this.pdfData = [];
-    $event.forEach(doc => {
+    $event.forEach((doc) => {
       this.pdfData.push({
         ...doc,
         fkId: null,
@@ -575,7 +561,7 @@ export class MyAccountComponent implements OnInit {
 
   validDocumentSelection() {
     this.selectedDocument = false;
-    this.pdfData.forEach(document => {
+    this.pdfData.forEach((document) => {
       if (document) {
         this.selectedDocument = true;
       }
@@ -584,7 +570,7 @@ export class MyAccountComponent implements OnInit {
 
   savePdf(result) {
     if (this.pdfData) {
-      this.pdfData.forEach(document => {
+      this.pdfData.forEach((document) => {
         if (document) {
           let doc = { ...document };
           doc.fkId = result.data.id;
