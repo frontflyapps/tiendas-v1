@@ -99,8 +99,7 @@ export class MyAccountComponent implements OnInit {
     this.route.queryParams.subscribe((data) => {
       this.paramsVerifyPositionModal(data);
       this.redirectToOriginPage = data.redirectToOriginPage;
-      this.paramsToRedirect = JSON.parse(data.paramsToRedirect);
-      console.log(this.paramsToRedirect);
+      this.paramsToRedirect = data.paramsToRedirect;
     });
   }
 
@@ -258,8 +257,9 @@ export class MyAccountComponent implements OnInit {
           this.inLoading = false;
           if (this.redirectToOriginPage) {
             if (this.paramsToRedirect) {
+              let params = JSON.parse(this.paramsToRedirect);
               this.router.navigate([this.redirectToOriginPage], {
-                queryParams: { productId: this.paramsToRedirect.productId, stockId: this.paramsToRedirect.stockId },
+                queryParams: { productId: params.productId, stockId: params.stockId },
               });
             } else {
               this.router.navigate([this.redirectToOriginPage]).then();
