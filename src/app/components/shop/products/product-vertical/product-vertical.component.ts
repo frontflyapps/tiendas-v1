@@ -111,7 +111,6 @@ export class ProductVerticalComponent implements OnInit, OnDestroy {
       response.products,
       response.rating,
     );
-    console.log(this.productDataService.popularProducts.slice(0, 3), '******************');
     this.productDataService.featuredProducts = UtilsService.getAnArrayFromIdsAndArray(
       response.products,
       response.isFeatured,
