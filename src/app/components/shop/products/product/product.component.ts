@@ -3,7 +3,7 @@ import { CartService } from '../../../shared/services/cart.service';
 import { ProductService } from '../../../shared/services/product.service';
 import { WishlistService } from '../../../shared/services/wishlist.service';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Product } from '../../../../modals/product.model';
 import { ProductDialogComponent } from '../product-dialog/product-dialog.component';
 import { Subject } from 'rxjs';
@@ -39,6 +39,7 @@ export class ProductComponent implements OnInit, OnDestroy {
     public utilsService: UtilsService,
     private dialog: MatDialog,
     private router: Router,
+    private routerActive: ActivatedRoute,
     private translate: TranslateService,
   ) {
     this._unsubscribeAll = new Subject<any>();
@@ -91,33 +92,8 @@ export class ProductComponent implements OnInit, OnDestroy {
           });
       }
     } else {
-      this.redirectToLoginWithOrigin()
+      this.cartService.redirectToLoginWithOrigin(this.router.routerState.snapshot.url);
     }
-
-  }
-
-  redirectToLoginWithOrigin() {
-    const dialogRef = this.dialog.open(ConfirmationDialogFrontComponent, {
-      width: '550px',
-      data: {
-        title: 'Información',
-        textHtml: `
-        <h4 style="text-transform:none !important; line-height:1.6rem !important;">
-          Es necesario estar logueado para adicionar al carrito de compra.
-        </h4>
-       `,
-      },
-    });
-
-    dialogRef.afterClosed().subscribe(async (result) => {
-      this.router
-        .navigate(['/my-account'], {
-          queryParams: {
-            redirectToOriginPage: document.location.href,
-          },
-        })
-        .then();
-    });
   }
 
   // Add to wishlist
@@ -143,8 +119,6 @@ export class ProductComponent implements OnInit, OnDestroy {
   }
 
   public onGoToProduct(product) {
-    this.router.navigate(['/product'],
-      { queryParams: { productId: product?.id, stockId: product?.Stock?.id } })
-      .then();
+    this.router.navigate(['/product'], { queryParams: { productId: product?.id, stockId: product?.Stock?.id } }).then();
   }
 }

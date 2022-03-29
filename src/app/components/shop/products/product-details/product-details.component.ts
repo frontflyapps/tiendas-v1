@@ -55,6 +55,9 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   loadingRelated = false;
   loadingMenu = false;
 
+  pathToRedirect: any;
+  paramsToUrlRedirect: any;
+
   public allProductsOnMenu = [];
   public allProductsOnMenuToShow: Observable<any[]>;
 
@@ -196,6 +199,13 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
       debounceTime(200),
       map((value) => this._filter(value)),
     );
+
+    ///Data to redirect function///
+    this.pathToRedirect = this.route.snapshot.routeConfig.path;
+    this.paramsToUrlRedirect = {
+      productId: this.route.snapshot.queryParamMap.get('productId'),
+      stockId: this.route.snapshot.queryParamMap.get('stockId'),
+    };
   }
 
   ngOnDestroy() {
@@ -309,32 +319,8 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
       }
       this.cartService.addToCart(product, Math.max(product.minSale, quantity)).then();
     } else {
-      this.redirectToLoginWithOrigin();
+      this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
     }
-  }
-
-  redirectToLoginWithOrigin() {
-    const dialogRef = this.dialog.open(ConfirmationDialogFrontComponent, {
-      width: '550px',
-      data: {
-        title: 'Información',
-        textHtml: `
-        <h4 style="text-transform:none !important; line-height:1.6rem !important;">
-          Es necesario estar logueado para adicionar al carrito de compra.
-        </h4>
-       `,
-      },
-    });
-
-    dialogRef.afterClosed().subscribe(async (result) => {
-      this.router
-        .navigate(['/my-account'], {
-          queryParams: {
-            redirectToOriginPage: document.location.href,
-          },
-        })
-        .then();
-    });
   }
 
   // getFeaturedProducts() {
@@ -428,7 +414,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
       this.cartService.addToCart(this.product, this.counter);
       this.router.navigate(['/cart']);
     } else {
-      this.redirectToLoginWithOrigin();
+      this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
     }
   }
 

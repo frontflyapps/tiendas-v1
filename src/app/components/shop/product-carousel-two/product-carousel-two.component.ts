@@ -103,32 +103,8 @@ export class ProductCarouselTwoComponent implements OnInit, AfterViewInit, OnDes
         this.cartService.addToCartQuickly(product, product.minSale);
       }
     } else {
-      this.redirectToLoginWithOrigin();
+      this.cartService.redirectToLoginWithOrigin(this.router.routerState.snapshot.url);
     }
-  }
-
-  redirectToLoginWithOrigin() {
-    const dialogRef = this.dialog.open(ConfirmationDialogFrontComponent, {
-      width: '550px',
-      data: {
-        title: 'Información',
-        textHtml: `
-        <h4 style="text-transform:none !important; line-height:1.6rem !important;">
-          Es necesario estar logueado para adicionar al carrito de compra.
-        </h4>
-       `,
-      },
-    });
-
-    dialogRef.afterClosed().subscribe(async (result) => {
-      this.router
-        .navigate(['/my-account'], {
-          queryParams: {
-            redirectToOriginPage: document.location.href,
-          },
-        })
-        .then();
-    });
   }
 
   // Add to wishlist

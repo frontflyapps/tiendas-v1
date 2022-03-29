@@ -25,6 +25,7 @@ export class MyAccountComponent implements OnInit {
   configuration: any = {};
   message: string;
   redirectToOriginPage: string;
+  paramsToRedirect: any;
   inLoading = false;
   loginForm: FormGroup;
   formPass: FormGroup;
@@ -93,6 +94,8 @@ export class MyAccountComponent implements OnInit {
     this.route.queryParams.subscribe((data) => {
       this.paramsVerifyPositionModal(data);
       this.redirectToOriginPage = data.redirectToOriginPage;
+      this.paramsToRedirect = JSON.parse(data.paramsToRedirect);
+      console.log(this.paramsToRedirect);
     });
   }
 
@@ -244,8 +247,15 @@ export class MyAccountComponent implements OnInit {
             10000,
           );
           this.inLoading = false;
+          debugger;
           if (this.redirectToOriginPage) {
-            this.router.navigate([this.redirectToOriginPage]).then();
+            if (this.paramsToRedirect) {
+              this.router.navigate([this.redirectToOriginPage], {
+                queryParams: { productId: this.paramsToRedirect.productId, stockId: this.paramsToRedirect.stockId },
+              });
+            } else {
+              this.router.navigate([this.redirectToOriginPage]).then();
+            }
           } else {
             this.router.navigate([this.routeToNavigate]).then();
           }

@@ -5,9 +5,7 @@ import { Product } from './../../../modals/product.model';
 import { CartService } from '../../shared/services/cart.service';
 import { WishlistService } from '../../shared/services/wishlist.service';
 import { environment } from 'src/environments/environment';
-import {
-  ConfirmationDialogFrontComponent
-} from '../../shared/confirmation-dialog-front/confirmation-dialog-front.component';
+import { ConfirmationDialogFrontComponent } from '../../shared/confirmation-dialog-front/confirmation-dialog-front.component';
 import { LoggedInUserService } from 'src/app/core/services/loggedInUser/logged-in-user.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -41,47 +39,22 @@ export class WishlistComponent implements OnInit {
     );
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   // Add to cart
   public addToCart(product: Product, quantity: number = 1) {
     if (this.loggedInUserService.getLoggedInUser()) {
       if (quantity > 0) {
-      this.cartService.addToCart(product, quantity);
-    }
+        this.cartService.addToCart(product, quantity);
+      }
       this.wishlistService.removeFromWishlist(product);
     } else {
-      this.redirectToLoginWithOrigin();
+      this.cartService.redirectToLoginWithOrigin(this.router.routerState.snapshot.url);
     }
   }
 
   // Remove from wishlist
   public removeItem(product: Product) {
     this.wishlistService.removeFromWishlist(product);
-  }
-
-  redirectToLoginWithOrigin() {
-    const dialogRef = this.dialog.open(ConfirmationDialogFrontComponent, {
-      width: '550px',
-      data: {
-        title: 'Información',
-        textHtml: `
-        <h4 style="text-transform:none !important; line-height:1.6rem !important;">
-          Es necesario estar logueado para adicionar al carrito de compra.
-        </h4>
-       `,
-      },
-    });
-
-    dialogRef.afterClosed().subscribe(async (result) => {
-      this.router
-        .navigate(['/my-account'], {
-          queryParams: {
-            redirectToOriginPage: document.location.href,
-          },
-        })
-        .then();
-    });
   }
 }
