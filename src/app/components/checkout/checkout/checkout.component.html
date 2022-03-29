@@ -83,6 +83,7 @@
                   matInput
                   placeholder="{{ 'Name' | translate }}"
                   required
+                  (keypress)="utilsService.keyPressAlpha($event)"
                 />
                 <mat-error *ngIf="form.controls['name'].hasError('required')">
                   {{ 'Name' | translate }} <strong>{{ 'is required' | translate }}</strong>
@@ -96,6 +97,7 @@
                   matInput
                   placeholder="{{ 'Lastname' | translate }}"
                   required
+                  (keypress)="utilsService.keyPressAlpha($event)"
                 />
                 <mat-error *ngIf="form.controls['lastName'].hasError('required')">
                   {{ 'Lastname' | translate }} <strong>{{ 'is required' | translate }}</strong>
