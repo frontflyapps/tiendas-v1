@@ -12,10 +12,10 @@ export const environment = {
   // apiUrl: 'http://127.0.0.1:8998/v1/',
   // imageUrl: 'http://127.0.0.1:8998/v1/',
 
-  // apiUrl: 'http://apitienda.tiendalocal.com:8998/v1/',
-  // imageUrl: 'http://apitienda.tiendalocal.com:8998/v1/',
-  apiUrl: 'http://apitienda.tiendalocal.com:8080/v1/',
-  imageUrl: 'http://apitienda.tiendalocal.com:8080/v1/',
+  apiUrl: 'http://apitienda.tiendalocal.com:8998/v1/',
+  imageUrl: 'http://apitienda.tiendalocal.com:8998/v1/',
+  // apiUrl: 'http://apitienda.tiendalocal.com:8080/v1/',
+  // imageUrl: 'http://apitienda.tiendalocal.com:8080/v1/',
 
   // apiUrl: 'https://apitienda.marinasmarlin.com/v1/',
   // imageUrl: 'https://apitienda.marinasmarlin.com/v1/',
