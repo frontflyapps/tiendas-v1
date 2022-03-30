@@ -11,9 +11,14 @@
             <!--                    (click)="openZoomViewer()">-->
             <!--              <mat-icon>fullscreen</mat-icon>-->
             <!--            </button>-->
-            <button (click)="onShareProduct()" fxHide fxShow.lt-md id="shareBtn"
-                    mat-icon-button
-                    matTooltip="{{ 'Compartir en redes sociales' | translate }}">
+            <button
+              (click)="onShareProduct()"
+              fxHide
+              fxShow.lt-md
+              id="shareBtn"
+              mat-icon-button
+              matTooltip="{{ 'Compartir en redes sociales' | translate }}"
+            >
               <mat-icon>share</mat-icon>
             </button>
             <div fxLayoutAlign="center center">
@@ -31,22 +36,40 @@
                     [magnification]="1"
                     [thumbImage]="image.image"
                     [zoomMode]="'hover'"
-                    class="lib-ngx-image-zoom">
+                    class="lib-ngx-image-zoom"
+                  >
                   </lib-ngx-image-zoom>
                 </ng-container>
               </ng-container>
-              <img *ngIf="!(product.Images && product.Images.length)" alt=""
-                   class="ImageProduct"
-                   ngp-lazy ngp-threshold="0.1" src="assets/images/noImage.jpg" />
+              <img
+                *ngIf="!(product.Images && product.Images.length)"
+                alt=""
+                class="ImageProduct"
+                ngp-lazy
+                ngp-threshold="0.1"
+                src="assets/images/noImage.jpg"
+              />
             </div>
-            <div *ngIf="product.Images && product.Images.length" class="p-2 mt-2" fxLayout="row"
-                 fxLayoutAlign="center center">
-              <div (click)="onSelectImage(i)" *ngFor="let image of arrayImages; let i = index" [ngClass]="{
+            <div
+              *ngIf="product.Images && product.Images.length"
+              class="p-2 mt-2"
+              fxLayout="row"
+              fxLayoutAlign="center center"
+            >
+              <div
+                (click)="onSelectImage(i)"
+                *ngFor="let image of arrayImages; let i = index"
+                [ngClass]="{
                   'mini-images-container': !image.selected,
                   'mini-images-container-selected': image.selected
-                }">
-                <img [src]="image.image" ngp-lazy ngp-threshold="0.1"
-                     onerror="this.onerror=null;this.src='assets/images/noImage.jpg';" />
+                }"
+              >
+                <img
+                  [src]="image.image"
+                  ngp-lazy
+                  ngp-threshold="0.1"
+                  onerror="this.onerror=null;this.src='assets/images/noImage.jpg';"
+                />
               </div>
             </div>
           </mat-card>
@@ -77,23 +100,32 @@
               <p *ngIf="product.shortDescription == null" class="module line-clamp mt-1 mb-2">No tiene descripcion</p>
               <p *ngIf="product.shortDescription != null" class="module line-clamp mt-1 mb-2">
                 {{
-                product.shortDescription[language]
-                  ? product.shortDescription[language]
-                  : product.shortDescription['es']
+                  product.shortDescription[language]
+                    ? product.shortDescription[language]
+                    : product.shortDescription['es']
                 }}
               </p>
-              <p class="mat-body-2 uppercase mb-2"
-                 matTooltip="{{ 'Rango de precios por cantidad de unidades a comprar' | translate }}">
+              <p
+                class="mat-body-2 uppercase mb-2"
+                matTooltip="{{ 'Rango de precios por cantidad de unidades a comprar' | translate }}"
+              >
                 {{ 'Precios de venta según la cantidad a comprar' | translate }}
               </p>
-              <div fxLayout="row wrap" fxLayoutAlign="start center"
-                   fxLayoutGap="gappx"
-                   style="border-top: 1px solid #eeeeee; border-bottom: 1px solid #eeeeee">
-                <div *ngFor="let item of product.PriceRanges"
-                     [matTooltip]="'entre ' + item.min + ' y ' + item.max + ' unidades'" class="mx-2 py-3"
-                     fxLayout="column"
-                     fxLayoutAlign="start start" fxLayoutGap="gappx"
-                     style="width: 80px">
+              <div
+                fxLayout="row wrap"
+                fxLayoutAlign="start center"
+                fxLayoutGap="gappx"
+                style="border-top: 1px solid #eeeeee; border-bottom: 1px solid #eeeeee"
+              >
+                <div
+                  *ngFor="let item of product.PriceRanges"
+                  [matTooltip]="'entre ' + item.min + ' y ' + item.max + ' unidades'"
+                  class="mx-2 py-3"
+                  fxLayout="column"
+                  fxLayoutAlign="start start"
+                  fxLayoutGap="gappx"
+                  style="width: 80px"
+                >
                   <p class="mat-body-1">{{ item.min }} - {{ item.max }}</p>
                   <p *ngIf="product.offerValue" class="mat-body-2">
                     {{ item.priceOffer | currencyMarket: product.market }}
@@ -107,15 +139,18 @@
                 <div class="py-1 mt-15">
                   <p>
                     <span class="text-muted fw-500">{{ 'Avalibility:' | translate }}</span>
-                    <span *ngIf="counter < product?.Stock?.quantity ? product?.Stock?.quantity : 0" class="avalibility"
-                          style="color: #4caf50 !important; font-weight: 500"><span
-                      class="ml-3">{{ 'Disponible en el almacén' | translate }}</span></span>
+                    <span
+                      *ngIf="counter < product?.Stock?.quantity ? product?.Stock?.quantity : 0"
+                      class="avalibility"
+                      style="color: #4caf50 !important; font-weight: 500"
+                      ><span class="ml-3">{{ 'Disponible en el almacén' | translate }}</span></span
+                    >
 
-                    <span *ngIf="counter > product?.Stock?.quantity ? product?.Stock?.quantity : 0" class="avalibility"><span
-                      class="ml-3"
-                      style="color: #f33927 !important; font-weight: 500">{{
-                      'No disponible, está agotado' | translate
-                      }}</span></span>
+                    <span *ngIf="counter > product?.Stock?.quantity ? product?.Stock?.quantity : 0" class="avalibility"
+                      ><span class="ml-3" style="color: #f33927 !important; font-weight: 500">{{
+                        'No disponible, está agotado' | translate
+                      }}</span></span
+                    >
                   </p>
                 </div>
                 <div class="quantity">
@@ -123,16 +158,29 @@
                   <div class="text-muted" fxLayout="row" fxLayout.xs="column">
                     <div fxLayout="row" fxLayoutAlign="center start">
                       <div class="addQuantity">
-                        <button (click)="decrement()" [disabled]="counter <= product.minSale" class="leftBtn"
-                                matTooltip="Remove">
+                        <button
+                          (click)="decrement()"
+                          [disabled]="counter <= product.minSale"
+                          class="leftBtn"
+                          matTooltip="Remove"
+                        >
                           <mat-icon>keyboard_arrow_left</mat-icon>
                         </button>
-                        <input [min]="product.minSale" class="inputBtn"
-                               matTooltip="{{ 'Cantidad de unidades a adquirir' | translate }}"
-                               name="quantity" readonly="true" type="text" value="{{ counter }}" />
-                        <button (click)="increment()" [disabled]="counter > product.stock || counter >= product.maxSale"
-                                class="rightBtn"
-                                matTooltip="Add">
+                        <input
+                          [min]="product.minSale"
+                          class="inputBtn"
+                          matTooltip="{{ 'Cantidad de unidades a adquirir' | translate }}"
+                          name="quantity"
+                          readonly="true"
+                          type="text"
+                          value="{{ counter }}"
+                        />
+                        <button
+                          (click)="increment()"
+                          [disabled]="counter > product.stock || counter >= product.maxSale"
+                          class="rightBtn"
+                          matTooltip="Add"
+                        >
                           <mat-icon>keyboard_arrow_right</mat-icon>
                         </button>
                       </div>
@@ -141,15 +189,30 @@
                 </div>
               </div>
 
-              <div class="buttons mt-20" fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="start center"
-                   fxLayoutAlign.lt-sm="start center">
-                <button (click)="addToCart(product, counter)" class="btn-custom my-2" color="primary" mat-raised-button
-                        ngClass.lt-sm="w-80">
+              <div
+                class="buttons mt-20"
+                fxLayout="row"
+                fxLayout.lt-sm="column"
+                fxLayoutAlign="start center"
+                fxLayoutAlign.lt-sm="start center"
+              >
+                <button
+                  (click)="addToCart(product, counter)"
+                  class="btn-custom my-2"
+                  color="primary"
+                  mat-raised-button
+                  ngClass.lt-sm="w-80"
+                >
                   {{ 'ADD TO CART' | translate }}
                 </button>
 
-                <button (click)="buyNow(product, counter)" class="btn-custom my-2" color="primary" mat-raised-button
-                        ngClass.lt-sm="w-80">
+                <button
+                  (click)="buyNow(product, counter)"
+                  class="btn-custom my-2"
+                  color="primary"
+                  mat-raised-button
+                  ngClass.lt-sm="w-80"
+                >
                   {{ 'BUY NOW' | translate }}
                 </button>
               </div>
@@ -162,12 +225,17 @@
         <mat-tab-group [selectedIndex]="indexTab" ngClass.gt-sm="w-95" ngClass.lt-md="w-100">
           <mat-tab label="{{ 'Details' | translate }}">
             <div class="full-desc text-muted">
-              <div *ngIf="product.description == null" [id]="'ProductId' + product.id"
-                   [innerHTML]="'No tiene descripcion'"
-                   class="InnerHtmlContent"></div>
-              <div *ngIf="product.description != null"
-                   [innerHTML]="this.utilsService.parserLanguage(product.description, language)"
-                   class="InnerHtmlContent"></div>
+              <div
+                *ngIf="product.description == null"
+                [id]="'ProductId' + product.id"
+                [innerHTML]="'No tiene descripcion'"
+                class="InnerHtmlContent"
+              ></div>
+              <div
+                *ngIf="product.description != null"
+                [innerHTML]="this.utilsService.parserLanguage(product.description, language)"
+                class="InnerHtmlContent"
+              ></div>
               <!--<p class="my-3">
                 <span style="font-weight: 600; font-size: 16px">
                   {{ 'Product type:' | translate }}
@@ -181,14 +249,23 @@
             <div fxLayout="container">
               <div class="full-desc lh px-4" ngClass.lt-md="px-0">
                 <div *ngFor="let review of allReviews" class="content" fxLayout="row" fxLayoutAlign="start center">
-                  <img *ngIf="review.Client.avatar" [src]="imageUrl + review.Client.avatar" alt="image"
-                       class="review-author" />
-                  <img *ngIf="!review.Client.avatar" [src]="'../../../../../assets/images/avatars/profile2.png'"
-                       alt="image"
-                       class="review-author" />
+                  <img
+                    *ngIf="review.Client.avatar"
+                    [src]="imageUrl + review.Client.avatar"
+                    alt="image"
+                    class="review-author"
+                  />
+                  <img
+                    *ngIf="!review.Client.avatar"
+                    [src]="'../../../../../assets/images/avatars/profile2.png'"
+                    alt="image"
+                    class="review-author"
+                  />
                   <div class="ml-2 text-list" fxLayout="column" fxLayoutAlign="start start">
-                    <span class="name mat-body-2">{{ review.Client.name + ' ' + (review.Client.lastname || '') }}
-                      <span class="text-muted"><small>&nbsp;{{ review.createdAt | date: 'shortDate' }}</small>
+                    <span class="name mat-body-2"
+                      >{{ review.Client.name + ' ' + (review.Client.lastname || '') }}
+                      <span class="text-muted"
+                        ><small>&nbsp;{{ review.createdAt | date: 'shortDate' }}</small>
                       </span>
                     </span>
                     <!-- <p>
@@ -196,18 +273,30 @@
                       </ngp-rating-material>
                     </p> -->
                     <p class="mat-body-1" ngClass.lt-md="mat-caption">{{ review.review }}</p>
-                    <button (click)="onEditReview(review)" *ngIf="loggedInUser.id == review.ClientId" class="editBtn"
-                            mat-icon-button>
+                    <button
+                      (click)="onEditReview(review)"
+                      *ngIf="loggedInUser.id == review.ClientId"
+                      class="editBtn"
+                      mat-icon-button
+                    >
                       <mat-icon>edit</mat-icon>
                     </button>
                   </div>
                 </div>
 
-                <div *ngIf="this.queryReviews.offset < this.queryReviews.total" class="py-3" fxLayout="row"
-                     fxLayoutAlign="center center">
-                  <button (click)="onGetMorePriviews()" *ngIf="this.queryReviews.offset < this.queryReviews.total"
-                          class="px-4"
-                          color="accent" mat-stroked-button>
+                <div
+                  *ngIf="this.queryReviews.offset < this.queryReviews.total"
+                  class="py-3"
+                  fxLayout="row"
+                  fxLayoutAlign="center center"
+                >
+                  <button
+                    (click)="onGetMorePriviews()"
+                    *ngIf="this.queryReviews.offset < this.queryReviews.total"
+                    class="px-4"
+                    color="accent"
+                    mat-stroked-button
+                  >
                     {{ 'LOAD MORE...' | translate }}
                   </button>
                 </div>
@@ -224,23 +313,34 @@
                       <span class="mr-2">{{ 'Your Rating: ' | translate }}</span>
                       <ngp-rating-material
                         [config]="{ label: 'estrellas', size: '22px', showNumber: true, showClearBtn: true }"
-                        [formControl]="reviewForm.controls['rating']">
+                        [formControl]="reviewForm.controls['rating']"
+                      >
                       </ngp-rating-material>
                     </h3>
 
                     <div fxFlex="100" fxFlex.gt-sm="100">
                       <mat-form-field appearance="outline" class="w-100">
                         <mat-label>{{ 'Post content' | translate }}</mat-label>
-                        <textarea #message [formControl]="reviewForm.controls['review']" matInput
-                                  maxlength="250" placeholder="{{ 'Post content' | translate }}" required
-                                  rows="3"></textarea>
+                        <textarea
+                          #message
+                          [formControl]="reviewForm.controls['review']"
+                          matInput
+                          maxlength="250"
+                          placeholder="{{ 'Post content' | translate }}"
+                          required
+                          rows="3"
+                        ></textarea>
                         <mat-hint align="end">{{ message.value.length }} / 250</mat-hint>
                       </mat-form-field>
                     </div>
-                    <div class="button-wrap px-1 mt-2" fxFlex="100" fxFlex.gt-sm="100"
-                         fxLayoutAlign="end start">
-                      <button (click)="onPostReview()" [disabled]="reviewForm.invalid" color="accent" mat-raised-button
-                              type="submit">
+                    <div class="button-wrap px-1 mt-2" fxFlex="100" fxFlex.gt-sm="100" fxLayoutAlign="end start">
+                      <button
+                        (click)="onPostReview()"
+                        [disabled]="reviewForm.invalid"
+                        color="accent"
+                        mat-raised-button
+                        type="submit"
+                      >
                         {{ 'Submit Review' | translate }}
                       </button>
                     </div>
@@ -253,16 +353,24 @@
       </div>
 
       <div *ngIf="allProductsOnMenu?.length > 0" class="products pt-5">
-        <div class="title">
-          <h4 class="widget-title">{{ 'Otros productos del negocio' | translate }}</h4>
-
+        <div
+          fxLayout
+          fxLayoutAlign="space-between center"
+          fxLayout.lt-md="column"
+          fxLayoutAlign.lt-md="space-between start"
+        >
+          <div class="title">
+            <h4 class="widget-title">{{ 'Otros productos del negocio' | translate }}</h4>
+          </div>
           <mat-form-field appearance="outline" class="auto-complete-search" style="min-width: 310px">
-            <mat-label>{{'Buscar en este local' | translate}}</mat-label>
-            <input [formControl]="searchProductControl"
-                   aria-label="Number"
-                   matInput
-                   placeholder="Buscar lo que desea...?"
-                   type="text">
+            <mat-label>{{ 'Buscar en este local' | translate }}</mat-label>
+            <input
+              [formControl]="searchProductControl"
+              aria-label="Number"
+              matInput
+              placeholder="Buscar lo que desea...?"
+              type="text"
+            />
             <mat-icon matSuffix>search</mat-icon>
             <!--            [matAutocomplete]="auto"-->
             <!--            <mat-autocomplete #auto="matAutocomplete">-->
@@ -274,17 +382,20 @@
         </div>
 
         <div *ngIf="!loadingMenu" class="w-100" fxLayout="row wrap" fxLayoutAlign="start start">
-          <app-product *ngFor="let products of allProductsOnMenuToShow | async" [product]="products"
-                       fxFlex.lt-md="100"></app-product>
+          <app-product
+            *ngFor="let products of allProductsOnMenuToShow | async"
+            [product]="products"
+            fxFlex.lt-md="100"
+          ></app-product>
           <ng-container *ngIf="(allProductsOnMenuToShow | async)?.length == 0">
-            <h3 class="py-4"
-                style="text-align: center">{{'No hay producto con ese criterio de búsqueda' | translate}}</h3>
+            <h3 class="py-4" style="text-align: center">
+              {{ 'No hay producto con ese criterio de búsqueda' | translate }}
+            </h3>
           </ng-container>
         </div>
 
         <div *ngIf="loadingMenu" class="my-3">
-          <app-skeleton-loading-cards [setConfiguration]="{ xs: 1, sm: 2, md: 2, lg: 3 }">
-          </app-skeleton-loading-cards>
+          <app-skeleton-loading-cards [setConfiguration]="{ xs: 1, sm: 2, md: 2, lg: 3 }"> </app-skeleton-loading-cards>
         </div>
       </div>
 
@@ -313,14 +424,17 @@
       <!--          </app-skeleton-loading-cards>-->
       <!--        </div>-->
       <!--      </div>-->
-
     </div>
 
     <div fxFlex="100" fxFlex.gt-sm="23" fxLayout="row wrap" fxLayoutAlign="start start">
       <div class="info-bar" fxHide.xs fxLayout="row wrap" ngClass.gt-md="m-0" style="border-radius: 4px !important">
         <div *ngFor="let item of allBicons; let i = index" class="mt-16" fxFlex="100">
-          <mat-card [ngClass]="{ 'no-border': i === allBicons.length - 1 }" class="light-block" fxLayout="row"
-                    fxLayoutAlign="start center">
+          <mat-card
+            [ngClass]="{ 'no-border': i === allBicons.length - 1 }"
+            class="light-block"
+            fxLayout="row"
+            fxLayoutAlign="start center"
+          >
             <mat-icon class="mat-icon-xlg m-0">{{ item.icon }}</mat-icon>
             <div class="content ml-4">
               <p class="uppercase">{{ utilsService.parserLanguage(item.title, language) }}</p>
@@ -348,22 +462,30 @@
 
         <mat-divider class="my-2"></mat-divider>
         <section *ngIf="!isLoading" fxHide.lt-md>
-          <share-button [description]="this.product?.name?.es+': \n'+this.product?.shortDescription?.es"
-                        [title]="this.product?.name?.es"
-                        button="facebook">
+          <share-button
+            [description]="this.product?.name?.es + ': \n' + this.product?.shortDescription?.es"
+            [title]="this.product?.name?.es"
+            button="facebook"
+          >
           </share-button>
-          <share-button [description]="this.product?.name?.es+': \n'+this.product?.shortDescription?.es"
-                        [title]="this.product?.name?.es"
-                        button="whatsapp">
+          <share-button
+            [description]="this.product?.name?.es + ': \n' + this.product?.shortDescription?.es"
+            [title]="this.product?.name?.es"
+            button="whatsapp"
+          >
           </share-button>
-          <share-button [description]="this.product?.name?.es+': \n'+this.product?.shortDescription?.es"
-                        [title]="this.product?.name?.es"
-                        button="telegram">
+          <share-button
+            [description]="this.product?.name?.es + ': \n' + this.product?.shortDescription?.es"
+            [title]="this.product?.name?.es"
+            button="telegram"
+          >
           </share-button>
-          <share-button [description]="this.product?.name?.es+': \n'+this.product?.shortDescription?.es"
-                        [image]="this.mainImage?.image"
-                        [title]="this.product?.name?.es"
-                        button="email">
+          <share-button
+            [description]="this.product?.name?.es + ': \n' + this.product?.shortDescription?.es"
+            [image]="this.mainImage?.image"
+            [title]="this.product?.name?.es"
+            button="email"
+          >
           </share-button>
         </section>
         <mat-divider class="my-2" fxHide.lt-md></mat-divider>
@@ -371,9 +493,11 @@
       <div style="width: 100%">
         <h4 class="mat-body-2 uppercase">{{ 'Detalles del proveedor' | translate }}</h4>
         <a class="list-compare-link" fxLayout="row" fxLayoutAlign="start center">
-          <img [src]="imageUrl + product?.Business?.logo"
-               onerror="this.onerror=null;this.src='assets/images/noImage.jpg';"
-               style="height: 32px; width: 32px; border-radius: 50%; object-fit: cover" />
+          <img
+            [src]="imageUrl + product?.Business?.logo"
+            onerror="this.onerror=null;this.src='assets/images/noImage.jpg';"
+            style="height: 32px; width: 32px; border-radius: 50%; object-fit: cover"
+          />
 
           <span class="ml-2">{{ product?.Business?.name }}</span>
         </a>
@@ -401,28 +525,43 @@
   <!-- =========================================================== -->
   <!-- ======== on NO PRODUCT ================================== -->
   <div *ngIf="errorPage" class="mb-4" fxLayout="column">
-    <section class="py-4 product-detail-not-found" fxLayout="row" fxLayout.xs="column"
-             fxLayoutAlign="center" fxLayoutAlign.xs="start"
-             fxLayoutGap="6rem" fxLayoutGap.xs="0">
+    <section
+      class="py-4 product-detail-not-found"
+      fxLayout="row"
+      fxLayout.xs="column"
+      fxLayoutAlign="center"
+      fxLayoutAlign.xs="start"
+      fxLayoutGap="6rem"
+      fxLayoutGap.xs="0"
+    >
       <picture [fxFlexOrder.xs]="2" class="pdnf-picture" fxFlex="50" fxFlex.xs="100">
         <!--        <source srcset="assets/images/not-found-product.webp" type="image/webp">-->
         <!--        <source srcset="assets/images/not-found-product.png" type="image/png">-->
-        <img alt="Producto no encontrado" onerror="this.onerror=null;this.src='assets/images/noImage.jpg';"
-             src="assets/images/not-found-product.png"
-             type="image/png">
+        <img
+          alt="Producto no encontrado"
+          onerror="this.onerror=null;this.src='assets/images/noImage.jpg';"
+          src="assets/images/not-found-product.png"
+          type="image/png"
+        />
       </picture>
 
-      <div [fxFlexOrder.xs]="1" class="pdnf-right-side-text" fxFlex="50"
-           fxFlex.xs="100" fxLayout="column" fxLayoutAlign="center start">
-        <div [fxFlexOrder.xs]="1" class="pdnf-1-text mb-4">{{'Upss' | translate}}...</div>
-        <div [fxFlexOrder.xs]="2" class="pdnf-2-text mb-1">{{'Lo sentimos' | translate}}</div>
-        <div [fxFlexOrder.xs]="3"
-             class="pdnf-3-text mb-4">{{'El producto que busca no se encuentra disponible' | translate}}</div>
+      <div
+        [fxFlexOrder.xs]="1"
+        class="pdnf-right-side-text"
+        fxFlex="50"
+        fxFlex.xs="100"
+        fxLayout="column"
+        fxLayoutAlign="center start"
+      >
+        <div [fxFlexOrder.xs]="1" class="pdnf-1-text mb-4">{{ 'Upss' | translate }}...</div>
+        <div [fxFlexOrder.xs]="2" class="pdnf-2-text mb-1">{{ 'Lo sentimos' | translate }}</div>
+        <div [fxFlexOrder.xs]="3" class="pdnf-3-text mb-4">
+          {{ 'El producto que busca no se encuentra disponible' | translate }}
+        </div>
 
         <div [fxFlexOrder.xs]="4" class="pdnf-action-button">
-          <button [routerLink]="['/products/search']" color="primary" mat-flat-button
-                  ngClass.xs="mb-4">
-            {{'Seguir comprando' | translate}}
+          <button [routerLink]="['/products/search']" color="primary" mat-flat-button ngClass.xs="mb-4">
+            {{ 'Seguir comprando' | translate }}
           </button>
         </div>
       </div>
@@ -432,9 +571,12 @@
       <div class="title">
         <h4 class="widget-title">{{ 'FEATURED PRODUCTS' | translate }}</h4>
       </div>
-      <app-product-carousel-two *ngIf="!loadingFeatured" [btnColor]="'accent'"
-                                [grid]="{ '480': 1, '740': 2, '960': 2, '1024': 2, '1280': 3 }"
-                                [products]="featuredProducts">
+      <app-product-carousel-two
+        *ngIf="!loadingFeatured"
+        [btnColor]="'accent'"
+        [grid]="{ '480': 1, '740': 2, '960': 2, '1024': 2, '1280': 3 }"
+        [products]="featuredProducts"
+      >
       </app-product-carousel-two>
       <div *ngIf="loadingFeatured" class="my-3">
         <app-skeleton-loading-cards *ngIf="loadingFeatured" [setConfiguration]="{ xs: 1, sm: 2, md: 2, lg: 3 }">
@@ -442,7 +584,6 @@
       </div>
     </div>
   </div>
-
 </div>
 
 <div *ngIf="showZoom" class="popup" id="popup">
