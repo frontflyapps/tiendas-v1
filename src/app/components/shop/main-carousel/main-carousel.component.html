@@ -3,9 +3,10 @@
     <div class="swiper-wrapper h-100">
       <div *ngFor="let slide of _slides" class="swiper-slide">
         <div [attr.data-background]="slide.image" class="slide-item swiper-lazy" fxHide.lt-md>
-          <div class="container-carrusel">
-            <div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
-            <div *ngIf="slide.title && slide?.title?.es" class="box">
+          <a [href]="slide.link" target="_blank">
+            <div class="container-carrusel">
+              <div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
+              <!-- <div *ngIf="slide.title && slide?.title?.es" class="box">
               <p class="title">
                 {{slide.title|parseLang:language}}
               </p>
@@ -15,11 +16,12 @@
               <a *ngIf="slide.link" [href]="slide.link" class="myBtn" mat-raised-button ngClass.gt-sm="uppercase"
                  target="_blank">{{"See more"|translate}}
               </a>
+            </div> -->
             </div>
-          </div>
+          </a>
         </div>
         <div [attr.data-background]="slide.imageXs" class="slide-item swiper-lazy" fxHide fxShow.lt-md>
-          <a [href]="slide.link">
+          <a [href]="slide.link" target="_blank">
             <div class="container-carrusel sl-wrap">
               <div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
 
@@ -36,7 +38,6 @@
             </div> -->
             </div>
           </a>
-
         </div>
       </div>
     </div>
