@@ -106,7 +106,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
       this.queryProduct.offset = data?.offset ? data.offset : 0;
       this.queryProduct.total = data?.total ? data.total : 0;
       this.queryProduct.page = data?.page ? data.page : 0;
-      this.queryProduct.order = data?.order ? data.order : 'id';
+      this.queryProduct.order = data?.order ? data.order : '-id';
 
       if (data.CategoryId) {
         this.paramsSearch.categoryIds = [data.CategoryId];
