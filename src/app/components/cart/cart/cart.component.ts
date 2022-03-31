@@ -10,6 +10,7 @@ import { CartService } from '../../shared/services/cart.service';
 import { UtilsService } from 'src/app/core/services/utils/utils.service';
 import { Router } from '@angular/router';
 import { ShowToastrService } from '../../../core/services/show-toastr/show-toastr.service';
+import { ConfiguracionService } from '../../../core/services/config/configuracion.service';
 
 @Component({
   selector: 'app-cart',
@@ -55,6 +56,10 @@ export class CartComponent implements OnInit, OnDestroy {
         this.cartService.getCart().then((dataCart: any) => {
           this.carts = dataCart.data;
         });
+      } else {
+        this.carts = [...this.cartService.getCartNoLogged()];
+
+        this.clearCartTimeData();
       }
     });
 
@@ -64,6 +69,8 @@ export class CartComponent implements OnInit, OnDestroy {
       });
     } else {
       this.carts = [...this.cartService.getCartNoLogged()];
+
+      this.clearCartTimeData();
     }
 
     this.loggedInUserService.$languageChanged.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {
@@ -71,10 +78,22 @@ export class CartComponent implements OnInit, OnDestroy {
     });
 
     this.cartService.$cartItemsUpdated.pipe(takeUntil(this._unsubscribeAll)).subscribe((_carts) => {
-      this.carts = [..._carts];
+      if (this.loggedInUser) {
+        this.carts = [..._carts];
+      } else {
+        this.carts = [...this.cartService.getCartNoLogged()];
+
+        this.clearCartTimeData();
+      }
     });
 
     this.subsCartChange();
+  }
+
+  clearCartTimeData() {
+    this.cartService.dateCreatedAtCart = '';
+    this.cartService.cartExpiredTime = '';
+    this.cartService.setCartInPaying(false);
   }
 
   ngOnDestroy() {

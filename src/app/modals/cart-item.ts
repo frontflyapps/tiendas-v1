@@ -5,6 +5,8 @@ export interface Cart {
   id?: number;
   BusinessId?: number;
   market?: string;
+  createdAt?: string;
+  status?: boolean;
   Business?: IBusiness;
 }
 

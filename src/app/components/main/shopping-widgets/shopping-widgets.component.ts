@@ -9,6 +9,7 @@ import { Cart, CartItem } from 'src/app/modals/cart-item';
 import { CartService } from '../../shared/services/cart.service';
 import { ProductService } from '../../shared/services/product.service';
 import { GlobalFacadeService } from '../../../facades/services/global-facade.service';
+import { ConfiguracionService } from '../../../core/services/config/configuracion.service';
 
 @Component({
   selector: 'app-shopping-widgets',
@@ -29,8 +30,11 @@ export class ShoppingWidgetsComponent implements OnInit, OnDestroy {
   imageUrl = environment.imageUrl;
   loggedInUser: any;
 
+  private dataTimeKeyName = 'cartLifeTime';
+
   constructor(
     public cartService: CartService,
+    public configService: ConfiguracionService,
     public productService: ProductService,
     public currencyService: CurrencyService,
     public loggedInUserService: LoggedInUserService,
@@ -46,6 +50,20 @@ export class ShoppingWidgetsComponent implements OnInit, OnDestroy {
     this.cartService.$cartItemsUpdated.pipe(takeUntil(this._unsubscribeAll)).subscribe((data) => {
       this.shoppingCarts = data;
       this.shoppingCartItems = this.cartService.getShoppingCars();
+
+      if (Array.isArray(data) && data.length > 0 && this.loggedInUser) {
+        this.cartService.dateCreatedAtCart = data[0].createdAt;
+
+        this.cartService.setCartInPaying(data[0].status);
+
+        this.getCartTime();
+      }
+
+      if (Array.isArray(data) && data.length == 0) {
+        this.cartService.dateCreatedAtCart = '';
+        this.cartService.cartExpiredTime = '';
+        this.cartService.setCartInPaying(false);
+      }
     });
 
     this.cartService.$paymentUpdate.pipe(takeUntil(this._unsubscribeAll)).subscribe(() => {
@@ -66,6 +84,15 @@ export class ShoppingWidgetsComponent implements OnInit, OnDestroy {
     if (this.loggedInUser) {
       this.cartService.getCart().then((data) => {
         this.shoppingCarts = data.data;
+
+        if (Array.isArray(data.data) && data.data.length > 0) {
+          this.cartService.dateCreatedAtCart = data.data[0].createdAt;
+
+          this.cartService.setCartInPaying(data.data[0].status);
+
+          this.getCartTime();
+        }
+
         this.globalFacadeService.updateCartState(data.data || []);
         this.globalFacadeService.updateBusinessState(data.data[0]?.Business || {});
         this.shoppingCartItems = this.cartService.getShoppingCars();
@@ -76,6 +103,14 @@ export class ShoppingWidgetsComponent implements OnInit, OnDestroy {
       this.globalFacadeService.updateBusinessState(this.shoppingCarts[0]?.Business || {});
       this.shoppingCartItems = this.cartService.getShoppingCars();
     }
+  }
+
+  getCartTime() {
+    this.configService.getValue(this.dataTimeKeyName)
+      .then((dataRes) => {
+        this.cartService.cartDurationTime = dataRes.time;
+        this.cartService.calcExpiredTime(this.cartService.dateCreatedAtCart, this.cartService.cartDurationTime);
+      });
   }
 
   ngOnDestroy() {

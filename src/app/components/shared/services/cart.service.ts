@@ -26,6 +26,11 @@ export class CartService implements OnDestroy {
   url = environment.apiUrl + 'cart';
   urlCheckoutData = environment.apiUrl + 'checkout';
 
+  public cartExpiredTime = '';
+  public dateCreatedAtCart = '';
+  public cartDurationTime = 0;
+  public cartIsPaying = false;
+
   loggedInUser = null;
   _unsubscribeAll: Subject<any>;
   language = null;
@@ -65,10 +70,12 @@ export class CartService implements OnDestroy {
         this.registerData().then();
       } else {
         this.carts = [];
+        this.dateCreatedAtCart = '';
+        this.setCartInPaying(false);
       }
     });
 
-    this.registerData();
+    this.registerData().then();
   }
 
   ngOnDestroy() {
@@ -116,7 +123,7 @@ export class CartService implements OnDestroy {
     const productName = product.name[this.language] ? product.name[this.language] : product.name['es'];
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
 
-    if (product.type != 'physical' && product.type != 'digital') {
+    if (product.type != 'physical') {
       if (this._isInCart(product)) {
         message =
           this.translate.instant('The product ') + productName + this.translate.instant(' it is already in the cart.');
@@ -715,6 +722,39 @@ export class CartService implements OnDestroy {
   }
 
   // ////////////////////// ADD TO CART PRODUCT //////////////////
+
+  // ///////////////////////////////////////////////////////////////
+  calcExpiredTime(createdAt, timeToSum) {
+    if (createdAt && timeToSum) {
+      const dateCart = new Date(createdAt);
+      let timeOfTheDay = 'am';
+
+      if (timeToSum != 0) {
+        dateCart.setMinutes(dateCart.getMinutes() + timeToSum);
+      }
+
+      let h: string | number = dateCart.getHours();
+      let m: string | number = dateCart.getMinutes();
+
+      if (h > 12) {
+        h = h - 12;
+        timeOfTheDay = 'pm';
+      }
+
+      if (m.toString().length === 1) {
+        m = '0' + m;
+      }
+
+      this.cartExpiredTime = h + ':' + m + timeOfTheDay;
+      return;
+    }
+
+    this.cartExpiredTime = '';
+  }
+
+  setCartInPaying(value) {
+    this.cartIsPaying = (value === 'paying');
+  }
 
   private isSameMarket(cart, product) {
     return cart.market === product.market;
