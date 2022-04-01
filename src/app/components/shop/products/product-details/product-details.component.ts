@@ -202,10 +202,9 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
 
     ///Data to redirect function///
     this.pathToRedirect = this.route.snapshot.routeConfig.path;
-    this.paramsToUrlRedirect = {
-      productId: this.route.snapshot.queryParamMap.get('productId'),
-      stockId: this.route.snapshot.queryParamMap.get('stockId'),
-    };
+    this.route.queryParamMap.subscribe((params) => {
+      this.paramsToUrlRedirect = { ...params };
+    });
   }
 
   ngOnDestroy() {
