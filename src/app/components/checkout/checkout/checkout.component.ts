@@ -110,7 +110,12 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     // { id: 'peopleGoTo', name: 'PeopleGoTo', logo: 'assets/images/cards/people-go-to.svg', market: 'international' },
     { id: 'peopleGoTo', name: 'Visa', logo: 'assets/images/cards/visa_logo.png', market: 'international' },
     { id: 'peopleGoTo', name: 'MasterCard', logo: 'assets/images/cards/mastercard_logo.png', market: 'international' },
-    { id: 'peopleGoTo', name: 'American Express', logo: 'assets/images/cards/american_express_logo.png', market: 'international' },
+    {
+      id: 'peopleGoTo',
+      name: 'American Express',
+      logo: 'assets/images/cards/american_express_logo.png',
+      market: 'international',
+    },
     // { id: 'visa', name: 'Visa', logo: 'assets/images/cards/visa_logo.png', market: 'international' },
     // { id: 'express', name: 'American Express', logo: 'assets/images/cards/american_express_logo.png', market: 'international' },
     // { id: 'masterCard', name: 'MasterCard', logo: 'assets/images/cards/mastercard_logo.png', market: 'international' },
@@ -327,8 +332,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         data: {},
       });
 
-      dialogRef.afterClosed().subscribe((result) => {
-      });
+      dialogRef.afterClosed().subscribe((result) => {});
     } else {
       this.getCartData();
     }
@@ -418,8 +422,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     }, 0);
   }
 
-  onSubmit(): void {
-  }
+  onSubmit(): void {}
 
   ngOnDestroy() {
     this._unsubscribeAll.next(true);
@@ -566,7 +569,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.regionService.getAllCountries(this.queryCountries).subscribe(
       (data) => {
         this.allCountries = data.data.filter((item) => item.name.es != undefined);
-        this.allCountries = this.allCountries.sort(function(a, b) {
+        this.allCountries = this.allCountries.sort(function (a, b) {
           if (a.name['es'] > b.name['es']) {
             return 1;
           } else if (a.name['es'] < b.name['es']) {
@@ -607,7 +610,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   filterCities(val) {
     val = val.trim().toLowerCase();
-    return this.selectedCities.filter(function(item) {
+    return this.selectedCities.filter(function (item) {
       let nameCity = item.name.trim().toLowerCase();
       return nameCity.includes(val);
     });
@@ -647,9 +650,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       data.paymentType = 'peopleGoTo';
       return this.processBidaiondo(data);
     }
-    if (data.paymentType == 'visa'
-      || data.paymentType == 'express'
-      || data.paymentType == 'masterCard') {
+    if (data.paymentType == 'visa' || data.paymentType == 'express' || data.paymentType == 'masterCard') {
       data.paymentType = 'bidaiondo';
       return this.processBidaiondo(data);
     }
@@ -956,7 +957,22 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     document.documentElement.scrollTop = 0;
   }
 
-<<<<<<< HEAD
+  saveRecieverData(data) {
+    let recieverData: IContactBody = {
+      name: data.name,
+      lastName: data.lastName,
+      email: data.email,
+      phone: data.phone,
+      address: data.address,
+      ProvinceId: data.ProvinceId,
+      MunicipalityId: data.MunicipalityId,
+      identification: data.dni,
+    };
+    this.contactsService.create(recieverData).subscribe((contactRes) => {
+      this.contactsService.allContacts.push({ ...contactRes.data });
+    });
+  }
+
   private validateShippingRequired() {
     if (this.showShipping) {
       this.form.controls['ShippingBusinessId'].setValidators(Validators.required);
@@ -973,22 +989,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       this.shippingData = [];
       this.canBeDelivery = false;
     }
-=======
-  saveRecieverData(data) {
-    let recieverData: IContactBody = {
-      name: data.name,
-      lastName: data.lastName,
-      email: data.email,
-      phone: data.phone,
-      address: data.address,
-      ProvinceId: data.ProvinceId,
-      MunicipalityId: data.MunicipalityId,
-      identification: data.dni,
-    };
-    this.contactsService.create(recieverData).subscribe((contactRes) => {
-      this.contactsService.allContacts.push({ ...contactRes.data });
-    });
->>>>>>> 7f9b852... update redirect to login for add to cart
   }
 
   private applyResolution() {

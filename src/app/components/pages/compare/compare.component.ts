@@ -9,6 +9,7 @@ import { LoggedInUserService } from 'src/app/core/services/loggedInUser/logged-i
 import { CurrencyService } from 'src/app/core/services/currency/currency.service';
 import { takeUntil } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-compare',
@@ -28,6 +29,7 @@ export class CompareComponent implements OnInit {
     private cartService: CartService,
     public currencyService: CurrencyService,
     public utilsService: UtilsService,
+    private router: Router,
     public loggedInUserService: LoggedInUserService,
     private metaService: MetaService,
   ) {
