@@ -29,6 +29,8 @@ export class ProductComponent implements OnInit, OnDestroy {
   imageUrl = environment.imageUrl;
   isHandset = false;
   language = 'es';
+  pathToRedirect: any;
+  paramsToUrlRedirect: any;
 
   constructor(
     private cartService: CartService,
@@ -39,11 +41,17 @@ export class ProductComponent implements OnInit, OnDestroy {
     public utilsService: UtilsService,
     private dialog: MatDialog,
     private router: Router,
-    private routerActive: ActivatedRoute,
+    private route: ActivatedRoute,
     private translate: TranslateService,
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
+    ///Data to redirect function///
+    this.pathToRedirect = this.route.snapshot.routeConfig.path;
+    this.route.queryParamMap.subscribe((params) => {
+      this.paramsToUrlRedirect = { ...params };
+      console.log(this.paramsToUrlRedirect);
+    });
   }
 
   ngOnInit() {
@@ -92,7 +100,7 @@ export class ProductComponent implements OnInit, OnDestroy {
           });
       }
     } else {
-      this.cartService.redirectToLoginWithOrigin(this.router.routerState.snapshot.url);
+      this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
     }
   }
 

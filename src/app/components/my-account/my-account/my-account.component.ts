@@ -257,9 +257,9 @@ export class MyAccountComponent implements OnInit {
           this.inLoading = false;
           if (this.redirectToOriginPage) {
             if (this.paramsToRedirect) {
-              let params = JSON.parse(this.paramsToRedirect);
+              let tempParams = JSON.parse(this.paramsToRedirect);
               this.router.navigate([this.redirectToOriginPage], {
-                queryParams: { productId: params.productId, stockId: params.stockId },
+                queryParams: { ...tempParams.params },
               });
             } else {
               this.router.navigate([this.redirectToOriginPage]).then();
