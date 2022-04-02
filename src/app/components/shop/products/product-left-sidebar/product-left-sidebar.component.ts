@@ -279,7 +279,8 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
       }
     }
 
-    if (this.paramsSearch.brandIds) {
+    // if (Array.isArray(this.paramsSearch.brandIds) && this.paramsSearch.brandIds.length > 0) {
+    if (this.paramsSearch.categoryIds) {
       if (Array.isArray(this.paramsSearch.brandIds)) {
         if (this.paramsSearch.brandIds.length > 0) {
           brandIds = this.paramsSearch.brandIds.map((i) => Number(i));

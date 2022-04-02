@@ -115,7 +115,7 @@ export class CategoriesService {
     return this.httpClient.get<any>(this.urlBrand, { params: httpParams });
   }
 
-  getBrandsByCategories(dataBody) {
+  getBrandsByCategories(dataBody: []) {
     return this.httpClient.post<any>(this.urlBrandsByCategories, { CategoryIds: dataBody });
   }
 

@@ -38,7 +38,11 @@ export class CategoriesComponent implements OnInit, OnDestroy {
   }
 
   @Input() set categoriesIds(value) {
-    if (value) {
+    if (Array.isArray(value) && value.length === 0) {
+      this.selection.clear();
+    }
+
+    if (Array.isArray(value[0])) {
       this.selection.clear();
       value.map((id) => {
         this.selection.select(+id);
@@ -58,7 +62,7 @@ export class CategoriesComponent implements OnInit, OnDestroy {
     try {
       const categories = this.localStorageService.getFromStorage(CATEGORIES_DATA);
 
-      if (!categories) {
+      if (!categories?.timespan || !Array.isArray(categories.cat) || categories?.cat.length <= 0) {
         this.getCategories();
         return;
       }
@@ -128,19 +132,23 @@ export class CategoriesComponent implements OnInit, OnDestroy {
 
   onChangeSelection(categoryId) {
     this.selection.toggle(categoryId);
-    if (this.selection.isSelected(categoryId)) {
-      this.allCategories
-        .filter((item) => item.ParentCategoryId == categoryId)
-        .map((item) => {
-          this.selection.select(item.id);
-        });
-    } else {
-      this.allCategories
-        .filter((item) => item.ParentCategoryId == categoryId)
-        .map((item) => {
-          this.selection.deselect(item.id);
-        });
-    }
+
+    // if (this.selection.isSelected(categoryId)) {
+    //   this.allCategories
+    //     .filter((item) => item.ParentCategoryId == categoryId)
+    //     .map((item) => {
+    //       this.selection.select(item.id);
+    //       console.log('-> this.selection IIIFFFF', this.selection);
+    //     });
+    // } else {
+    //   this.allCategories
+    //     .filter((item) => item.ParentCategoryId == categoryId)
+    //     .map((item) => {
+    //       this.selection.deselect(item.id);
+    //       console.log('-> this.selection ELSEEE', this.selection);
+    //     });
+    // }
+
     const arrayCategoryIds = [...this.selection.selected];
     this.categoryChanged.emit(arrayCategoryIds);
   }
