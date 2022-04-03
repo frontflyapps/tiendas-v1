@@ -42,6 +42,7 @@ export class BrandsComponent implements OnInit, OnDestroy {
   }
 
   @Input() set categoriesToSelectBrands(value) {
+    debugger;
     if (this.categories != value) {
       this.categories = value;
       this.getBrands(value);
@@ -66,7 +67,7 @@ export class BrandsComponent implements OnInit, OnDestroy {
     this._unsubscribeAll.complete();
   }
 
-  getBrands(categories: [] = []) {
+  getBrands(categories: any) {
     this.brandService.getBrandsByCategories(categories).subscribe((data) => {
       this.brands = data.data;
     });

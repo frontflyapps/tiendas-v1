@@ -730,6 +730,33 @@ export class CartService implements OnDestroy {
     }
   }
 
+  public redirectToLoginWithOrigin(url: string, params?: any) {
+    const dialogRef = this.dialog.open(ConfirmationDialogFrontComponent, {
+      width: '550px',
+      data: {
+        title: 'Información',
+        textHtml: `
+        <h4 style="text-transform:none !important; line-height:1.6rem !important;">
+          Es necesario iniciar sesión para adicionar al carrito de compra.
+        </h4>
+       `,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe(async (result) => {
+      if (result) {
+        this.router
+          .navigate(['/my-account'], {
+            queryParams: {
+              redirectToOriginPage: url,
+              paramsToRedirect: params ? JSON.stringify(params) : null,
+            },
+          })
+          .then();
+      }
+    });
+  }
+
   // ////////////////////// ADD TO CART PRODUCT //////////////////
 
   // ///////////////////////////////////////////////////////////////
@@ -759,33 +786,6 @@ export class CartService implements OnDestroy {
     }
 
     this.cartExpiredTime = '';
-  }
-
-  public redirectToLoginWithOrigin(url: string, params?: any) {
-    const dialogRef = this.dialog.open(ConfirmationDialogFrontComponent, {
-      width: '550px',
-      data: {
-        title: 'Información',
-        textHtml: `
-        <h4 style="text-transform:none !important; line-height:1.6rem !important;">
-          Es necesario iniciar sesión para adicionar al carrito de compra.
-        </h4>
-       `,
-      },
-    });
-
-    dialogRef.afterClosed().subscribe(async (result) => {
-      if (result) {
-        this.router
-          .navigate(['/my-account'], {
-            queryParams: {
-              redirectToOriginPage: url,
-              paramsToRedirect: params ? JSON.stringify(params) : null,
-            },
-          })
-          .then();
-      }
-    });
   }
 
   setCartInPaying(value) {

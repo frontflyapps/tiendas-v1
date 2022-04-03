@@ -9,6 +9,7 @@ import { environment } from '../../../../../environments/environment';
 import { IProductCard } from '../../../../core/classes/product-card.class';
 import { LocalStorageService } from '../../../../core/services/localStorage/localStorage.service';
 import { FRONT_PRODUCT_DATA } from '../../../../core/classes/global.const';
+import { GlobalStateOfCookieService } from '../../../../core/services/request-cookie-secure/global-state-of-cookie.service';
 
 export interface IProductData {
   lastCreated: IProductCard[];
@@ -34,12 +35,17 @@ export class ProductVerticalComponent implements OnInit, OnDestroy {
     public productDataService: ProductDataService,
     public currencyService: CurrencyService,
     public loggedInUserService: LoggedInUserService,
+    private globalStateOfCookieService: GlobalStateOfCookieService,
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
   }
 
   ngOnInit() {
+    this.globalStateOfCookieService.getCookieState() ? this.initComponent() : this.setSubscriptionToCookie();
+  }
+
+  initComponent() {
     this.loggedInUserService.$languageChanged.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {
       this.language = data.lang;
     });
@@ -60,16 +66,21 @@ export class ProductVerticalComponent implements OnInit, OnDestroy {
     this.getPFDFromStorage();
   }
 
+  setSubscriptionToCookie() {
+    this.globalStateOfCookieService.stateOfCookie$.pipe(takeUntil(this._unsubscribeAll)).subscribe((thereIsCookie) => {
+      if (thereIsCookie) {
+        this.initComponent();
+      }
+    });
+  }
+
   setServiceGetProduct() {
-    this.productService.productsData$
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((response) => {
-          const _response: any = JSON.parse(JSON.stringify(response));
-          this.setValuesFromResponse(_response);
-          _response.timespan = new Date().getTime();
-          this.localStorageService.setOnStorage(FRONT_PRODUCT_DATA, _response);
-        },
-      );
+    this.productService.productsData$.pipe(takeUntil(this._unsubscribeAll)).subscribe((response) => {
+      const _response: any = JSON.parse(JSON.stringify(response));
+      this.setValuesFromResponse(_response);
+      _response.timespan = new Date().getTime();
+      this.localStorageService.setOnStorage(FRONT_PRODUCT_DATA, _response);
+    });
   }
 
   getProducts() {
@@ -96,10 +107,22 @@ export class ProductVerticalComponent implements OnInit, OnDestroy {
   }
 
   setValuesFromResponse(response) {
-    this.productDataService.popularProducts = UtilsService.getAnArrayFromIdsAndArray(response.products, response.rating);
-    this.productDataService.featuredProducts = UtilsService.getAnArrayFromIdsAndArray(response.products, response.isFeatured);
-    this.productDataService.bestSellerProducts = UtilsService.getAnArrayFromIdsAndArray(response.products, response.bestSell);
-    this.productDataService.allProducts = UtilsService.getAnArrayFromIdsAndArray(response.products, response.lastCreated);
+    this.productDataService.popularProducts = UtilsService.getAnArrayFromIdsAndArray(
+      response.products,
+      response.rating,
+    );
+    this.productDataService.featuredProducts = UtilsService.getAnArrayFromIdsAndArray(
+      response.products,
+      response.isFeatured,
+    );
+    this.productDataService.bestSellerProducts = UtilsService.getAnArrayFromIdsAndArray(
+      response.products,
+      response.bestSell,
+    );
+    this.productDataService.allProducts = UtilsService.getAnArrayFromIdsAndArray(
+      response.products,
+      response.lastCreated,
+    );
   }
 
   ngOnDestroy() {

@@ -55,6 +55,7 @@ import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { NgxImageZoomModule } from 'ngx-image-zoom';
 import { FooterProductCardModule } from '../shared/footer-product-card/footer-product-card.module';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { ConfirmationDialogFrontModule } from '../shared/confirmation-dialog-front/confirmation-dialog-front.module';
 
 @NgModule({
   declarations: [
@@ -113,6 +114,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     ShareIconsModule,
     MatBottomSheetModule,
     NgxImageZoomModule,
+    ConfirmationDialogFrontModule,
     FooterProductCardModule,
     MatAutocompleteModule,
   ],

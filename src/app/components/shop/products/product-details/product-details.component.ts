@@ -22,6 +22,7 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { SocialMediaComponent } from './social-media/social-media.component';
 import { LANDING_PAGE, PRODUCT_COUNT } from '../../../../core/classes/global.const';
 import { LocalStorageService } from '../../../../core/services/localStorage/localStorage.service';
+import { ConfirmationDialogFrontComponent } from '../../../shared/confirmation-dialog-front/confirmation-dialog-front.component';
 
 @Component({
   selector: 'app-product-details',

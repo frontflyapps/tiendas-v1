@@ -2,95 +2,102 @@
   <mat-spinner *ngIf="this.loadingSearch" diameter="60" color="primary"></mat-spinner>
 </div> -->
 
-<div class='container-checkout' ngClass.lt-md='px-2'>
-  <div class='checkout sec-padding' ngClass.lt-md='py-4'>
-    <div *ngIf='loadingPayment' class='w-100 my-3' fxLayout='column' fxLayoutAlign='center center' fxLayoutGap='gappx'>
-      <div class='loading-dots mat-title'>{{ 'Procesando los datos' | translate }}</div>
-      <div class='loading-dots mat-subheading-1'>{{'Cargando pasarela de pago' | translate}}...</div>
+<div class="container-checkout" ngClass.lt-md="px-2">
+  <div class="checkout sec-padding" ngClass.lt-md="py-4">
+    <div *ngIf="loadingPayment" class="w-100 my-3" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="gappx">
+      <div class="loading-dots mat-title">{{ 'Procesando los datos' | translate }}</div>
+      <div class="loading-dots mat-subheading-1">{{ 'Cargando pasarela de pago' | translate }}...</div>
     </div>
 
-    <div fxLayout='row wrap'>
-
+    <div fxLayout="row wrap">
       <!-- ============================================================= -->
       <!-- DATA INFO TO PAY -->
       <!-- ============================================================= -->
-      <div *ngIf='showInfoDataToPay' class='billing-details'
-           fxFlex='100'
-           fxFlex.gt-md='50'
-           fxFlex.md='50'
-           ngClass.gt-sm='pr-5'
-           ngClass.sm='pr-2'
-           ngClass.xs='pr-0'>
-        <div *ngIf='!loadingPayment' class='header-title'>
-          <h3 class='grey-800' ngClass.gt-sm='h2' ngClass.xs='h4'>{{ 'Billing Details' | translate }}</h3>
+      <div
+        *ngIf="showInfoDataToPay"
+        class="billing-details"
+        fxFlex="100"
+        fxFlex.gt-md="50"
+        fxFlex.md="50"
+        ngClass.gt-sm="pr-5"
+        ngClass.sm="pr-2"
+        ngClass.xs="pr-0"
+      >
+        <div *ngIf="!loadingPayment" class="header-title">
+          <h3 class="grey-800" ngClass.gt-sm="h2" ngClass.xs="h4">{{ 'Billing Details' | translate }}</h3>
         </div>
 
-        <div *ngIf='!loadingPayment' [formGroup]='form' fxLayout='row wrap' fxLayoutAlign='start start'>
-          <div
-            fxFlex='100'
-            fxLayout='column'
-            fxLayoutAlign='start stretch'
-            ngClass.sm='mt-2'
-            ngClass.xs='mt-2'>
-
-            <div fxLayout='row' fxLayout.xs='column'
-                 fxLayoutAlign='space-between center' fxLayoutAlign.xs='start start'
-                 fxLayoutGap='0.5rem'>
-
-              <p class='mat-body-2 my-2' style='text-transform: uppercase'
-                 title="{{ 'Información del cliente que obtendrá los productos' | translate }}">
+        <div *ngIf="!loadingPayment" [formGroup]="form" fxLayout="row wrap" fxLayoutAlign="start start">
+          <div fxFlex="100" fxLayout="column" fxLayoutAlign="start stretch" ngClass.sm="mt-2" ngClass.xs="mt-2">
+            <div
+              fxLayout="row"
+              fxLayout.xs="column"
+              fxLayoutAlign="space-between center"
+              fxLayoutAlign.xs="start start"
+              fxLayoutGap="0.5rem"
+            >
+              <p
+                class="mat-body-2 my-2"
+                style="text-transform: uppercase"
+                title="{{ 'Información del cliente que obtendrá los productos' | translate }}"
+              >
                 {{ 'Datos personales del destinatario' | translate }}
                 <mat-icon
-                  class='iconHelp'
+                  class="iconHelp"
                   matTooltip="{{ 'Información del cliente que obtendrá los productos' | translate }}"
-                  style='cursor: pointer'>help
+                  style="cursor: pointer"
+                  >help
                 </mat-icon>
               </p>
 
-              <button [matMenuTriggerFor]='menuContacts' aria-label='Example icon-button with a menu' color='primary'
-                      mat-stroked-button ngClass.xs='mb-3'>
+              <button
+                [matMenuTriggerFor]="menuContacts"
+                aria-label="Example icon-button with a menu"
+                color="primary"
+                mat-stroked-button
+                ngClass.xs="mb-3"
+              >
                 <mat-icon>book</mat-icon>
-                {{'Contactos guardados'|translate}}
+                {{ 'Contactos guardados' | translate }}
               </button>
-              <mat-menu #menuContacts='matMenu'>
-
-                <ng-container *ngFor='let contact of contactsService.allContacts'>
-                  <button (click)='onSelectContact(contact)' mat-menu-item>
+              <mat-menu #menuContacts="matMenu">
+                <ng-container *ngFor="let contact of contactsService.allContacts">
+                  <button (click)="onSelectContact(contact)" mat-menu-item>
                     <mat-icon>person_outline</mat-icon>
-                    <span>{{contact.name}}&nbsp;{{contact.lastName}}</span>
+                    <span>{{ contact.name }}&nbsp;{{ contact.lastName }}</span>
                   </button>
                 </ng-container>
 
-                <button (click)='onAddContact()' mat-menu-item
-                        style='border-top: 4px solid #e7e4e4'>
+                <button (click)="onAddContact()" mat-menu-item style="border-top: 4px solid #e7e4e4">
                   <mat-icon>playlist_add</mat-icon>
-                  <span>{{'Agregar / Editar'|translate}}</span>
+                  <span>{{ 'Agregar / Editar' | translate }}</span>
                 </button>
               </mat-menu>
-
             </div>
 
-            <div fxLayout='row wrap' fxLayoutAlign='space-between center'>
-              <mat-form-field appearance='outline' fxFlex='100' fxFlex.gt-md='48' fxFlex.md='48'>
+            <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+              <mat-form-field appearance="outline" fxFlex="100" fxFlex.gt-md="48" fxFlex.md="48">
                 <mat-label>{{ 'Name' | translate }}</mat-label>
                 <input
                   [formControl]="this.form.controls['name']"
                   matInput
                   placeholder="{{ 'Name' | translate }}"
                   required
+                  (keypress)="utilsService.keyPressAlpha($event)"
                 />
                 <mat-error *ngIf="form.controls['name'].hasError('required')">
                   {{ 'Name' | translate }} <strong>{{ 'is required' | translate }}</strong>
                 </mat-error>
               </mat-form-field>
 
-              <mat-form-field appearance='outline' fxFlex='100' fxFlex.gt-md='48' fxFlex.md='48'>
+              <mat-form-field appearance="outline" fxFlex="100" fxFlex.gt-md="48" fxFlex.md="48">
                 <mat-label>{{ 'Lastname' | translate }}</mat-label>
                 <input
                   [formControl]="this.form.controls['lastName']"
                   matInput
                   placeholder="{{ 'Lastname' | translate }}"
                   required
+                  (keypress)="utilsService.keyPressAlpha($event)"
                 />
                 <mat-error *ngIf="form.controls['lastName'].hasError('required')">
                   {{ 'Lastname' | translate }} <strong>{{ 'is required' | translate }}</strong>
@@ -98,7 +105,7 @@
               </mat-form-field>
             </div>
 
-            <mat-form-field appearance='outline'>
+            <mat-form-field appearance="outline">
               <mat-label>{{ 'Email' | translate }}</mat-label>
               <input
                 [formControl]="this.form.controls['email']"
@@ -108,6 +115,9 @@
               />
               <mat-error *ngIf="form.controls['email'].hasError('required')">
                 {{ 'Email' | translate }} <strong>{{ 'is required' | translate }}</strong>
+              </mat-error>
+              <mat-error *ngIf="form.controls['email'].hasError('pattern')">
+                {{ 'Email' | translate }} <strong>{{ 'incorrect' | translate }}</strong>
               </mat-error>
             </mat-form-field>
 
@@ -126,30 +136,34 @@
               </mat-select>
             </mat-form-field> -->
 
-            <p class='mat-body-2 my-2' style='text-transform: uppercase'
-               title="{{ 'Datos adicionales del cliente que obtendrá los productos' | translate }}">
+            <p
+              class="mat-body-2 my-2"
+              style="text-transform: uppercase"
+              title="{{ 'Datos adicionales del cliente que obtendrá los productos' | translate }}"
+            >
               {{ 'Datos del destinatario' | translate }}
               <mat-icon
-                class='iconHelp'
+                class="iconHelp"
                 matTooltip="{{ 'Datos adicionales del cliente que obtendrá los productos' | translate }}"
-                style='cursor: pointer'
-              >help
+                style="cursor: pointer"
+                >help
               </mat-icon>
             </p>
 
             <!-- SOLO PARA CUBANOS -->
-            <ng-container *ngIf='onlyCubanPeople'>
-              <div fxLayout='row wrap' fxLayoutAlign='space-between center'>
-                <mat-form-field appearance='outline' fxFlex='48' fxFlex.lt-md='100'>
+            <ng-container *ngIf="onlyCubanPeople">
+              <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+                <mat-form-field appearance="outline" fxFlex="48" fxFlex.lt-md="100">
                   <mat-label>{{ 'Provincia' | translate }}</mat-label>
                   <mat-select
-                    (selectionChange)='onSelectProvince($event.value)'
-                    [compareWith]='compareById'
+                    (selectionChange)="onSelectProvince($event.value)"
+                    [compareWith]="compareById"
                     [formControl]="form.controls['ProvinceId']"
                     placeholder="{{ 'Nombre de la provincia' | translate }}"
                     required
-                    type='text'>
-                    <mat-option *ngFor='let province of allProvinces' [value]='province.id'>
+                    type="text"
+                  >
+                    <mat-option *ngFor="let province of allProvinces" [value]="province.id">
                       {{ province.name }}
                     </mat-option>
                   </mat-select>
@@ -158,17 +172,17 @@
                   </mat-error>
                 </mat-form-field>
 
-                <mat-form-field appearance='outline' fxFlex='48' fxFlex.lt-md='100'>
+                <mat-form-field appearance="outline" fxFlex="48" fxFlex.lt-md="100">
                   <mat-label>{{ 'Municipio' | translate }}</mat-label>
                   <mat-select
                     (selectionChange)="form.controls['ShippingBusinessId'].setValue(null)"
-                    [compareWith]='compareById'
+                    [compareWith]="compareById"
                     [formControl]="form.controls['MunicipalityId']"
                     placeholder="{{ 'Nombre del Municipio' | translate }}"
                     required
-                    type='text'
+                    type="text"
                   >
-                    <mat-option *ngFor='let municipio of municipalities' [value]='municipio.id'>
+                    <mat-option *ngFor="let municipio of municipalities" [value]="municipio.id">
                       {{ municipio.name }}
                     </mat-option>
                   </mat-select>
@@ -180,29 +194,29 @@
             </ng-container>
 
             <!-- SOLO PARA EXTRANGEROS -->
-            <ng-container *ngIf='!onlyCubanPeople'>
-              <p class='mat-body-2 my-2' style='text-transform: uppercase'>
+            <ng-container *ngIf="!onlyCubanPeople">
+              <p class="mat-body-2 my-2" style="text-transform: uppercase">
                 {{ "Customer's location data" | translate }}
                 <mat-icon
-                  class='iconHelp'
+                  class="iconHelp"
                   matTooltip="{{
                     'Country, city, region and more information about the shipping location' | translate
                   }}"
-                  style='cursor: pointer'
-                >help
+                  style="cursor: pointer"
+                  >help
                 </mat-icon>
               </p>
 
-              <mat-form-field appearance='outline'>
+              <mat-form-field appearance="outline">
                 <mat-label>{{ 'Country' | translate }}</mat-label>
                 <mat-select
-                  [compareWith]='compareById'
+                  [compareWith]="compareById"
                   [formControl]="form.controls['CountryId']"
                   placeholder="{{ 'Country name' | translate }}"
                   required
-                  type='text'
+                  type="text"
                 >
-                  <mat-option *ngFor='let country of allCountries' [value]='country.id'>
+                  <mat-option *ngFor="let country of allCountries" [value]="country.id">
                     {{ utilsService.parserLanguage(country.name, language) }}
                   </mat-option>
                 </mat-select>
@@ -211,29 +225,29 @@
                 </mat-error>
               </mat-form-field>
 
-              <div fxLayout='row wrap' fxLayoutAlign='space-between center'>
-                <mat-form-field appearance='outline' fxFlex='48' fxFlex.lt-md='100'>
+              <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+                <mat-form-field appearance="outline" fxFlex="48" fxFlex.lt-md="100">
                   <mat-label>{{ 'City' | translate }}</mat-label>
                   <input
                     [formControl]="this.form.controls['city']"
                     matInput
                     placeholder="{{ 'City' | translate }}"
                     required
-                    type='text'
+                    type="text"
                   />
                   <mat-error *ngIf="form.controls['city'].hasError('required')">
                     {{ 'City' | translate }} <strong>{{ 'is required' | translate }}</strong>
                   </mat-error>
                 </mat-form-field>
 
-                <mat-form-field appearance='outline' fxFlex='48' fxFlex.lt-md='100'>
+                <mat-form-field appearance="outline" fxFlex="48" fxFlex.lt-md="100">
                   <mat-label>{{ 'State / Province / Region' | translate }}</mat-label>
                   <input
                     [formControl]="this.form.controls['regionProvinceState']"
                     matInput
                     placeholder="{{ 'State / Province / Region' | translate }}"
                     required
-                    type='text'
+                    type="text"
                   />
                   <mat-error *ngIf="form.controls['regionProvinceState'].hasError('required')">
                     {{ 'State / Province / Region' | translate }} <strong>{{ 'is required' | translate }}</strong>
@@ -242,14 +256,14 @@
               </div>
             </ng-container>
 
-            <mat-form-field appearance='outline' class='w-100'>
+            <mat-form-field appearance="outline" class="w-100">
               <mat-label>{{ 'Street address' | translate }}</mat-label>
               <textarea
                 [formControl]="this.form.controls['address']"
                 matInput
                 placeholder="{{ 'Street address or your location' | translate }}"
                 required
-                rows='2'
+                rows="2"
               ></textarea>
               <mat-error *ngIf="form.controls['address'].hasError('required')">
                 {{ 'Address' | translate }} <strong>{{ 'is required' | translate }}</strong>
@@ -262,99 +276,111 @@
                 [formControl]="this.form.controls['address2']">
             </mat-form-field> -->
 
-            <div fxLayout='row wrap' fxLayoutAlign='space-between center'>
-              <mat-form-field appearance='outline' fxFlex='100' fxFlex.gt-md='48' fxFlex.md='48' id='CI'>
+            <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+              <mat-form-field appearance="outline" fxFlex="100" fxFlex.gt-md="48" fxFlex.md="48" id="CI">
                 <mat-label>{{ 'Identity card' | translate }}</mat-label>
                 <input
-                  (keypress)='utilsService.keyPressAlphaAndNumbers($event)'
+                  (keypress)="utilsService.keyPressAlphaAndNumbers($event)"
                   [formControl]="this.form.controls['dni']"
                   matInput
                   placeholder="{{ 'Identity card' | translate }}"
                   required
-                  type='text'
+                  type="text"
                 />
-                <mat-hint>{{'Asegúrece de escribir correctamente el CI'}}</mat-hint>
+                <mat-hint>{{ 'Asegúrese de escribirlo correctamente' }}</mat-hint>
                 <mat-error *ngIf="form.controls['dni'].hasError('required')">
                   {{ 'Identity card' | translate }} <strong>{{ 'is required' | translate }}</strong>
                 </mat-error>
-                <mat-error *ngIf="form.controls['dni'].hasError('minlength')">
-                  {{ 'Longitud mínima' | translate }} <strong>{{CI_Length}} {{'caracteres'|translate}}</strong>
+                <mat-error *ngIf="form.controls['dni'].hasError('maxlength')">
+                  {{ 'Longitud máxima' | translate }} <strong>{{ CI_Length }} {{ 'caracteres' | translate }}</strong>
                 </mat-error>
                 <!--                <mat-error *ngIf="form.controls['dni'].hasError('maxlength')">-->
                 <!--                  {{ 'Longitud mínima' | translate }} <strong>{{ '11 caracteres' | translate }}</strong>-->
                 <!--                </mat-error>-->
               </mat-form-field>
 
-              <mat-form-field appearance='outline' fxFlex='100' fxFlex.gt-md='48' fxFlex.md='48' id='phone-checkout'>
+              <mat-form-field appearance="outline" fxFlex="100" fxFlex.gt-md="48" fxFlex.md="48" id="phone-checkout">
                 <mat-label>{{ 'Phone' | translate }} *</mat-label>
-                <span class='mr-2' matPrefix>+ 53</span>
+                <span class="mr-2" matPrefix>+ 53</span>
                 <input
-                  (keypress)='utilsService.keyPressNumbers($event)'
+                  (keypress)="utilsService.keyPressNumbers($event)"
                   [formControl]="this.form.controls['phone']"
                   matInput
-                  placeholder="{{ 'Phone' | translate }}" />
-                <mat-hint
-                  *ngIf="!form.get('phone').value">
-                  {{'Escriba un teléfono móvil cubano, Ex: 51234567'|translate}}
+                  placeholder="{{ 'Phone' | translate }}"
+                />
+                <mat-hint *ngIf="!form.get('phone').value">
+                  {{ 'Escriba un teléfono móvil cubano, Ex: 51234567' | translate }}
                 </mat-hint>
-                <mat-hint *ngIf="form.get('phone').value
-                              && form.get('phone').valid">
-                  {{'Número válido'|translate}}
+                <mat-hint *ngIf="form.get('phone').value && form.get('phone').valid">
+                  {{ 'Número válido' | translate }}
                 </mat-hint>
                 <mat-error *ngIf="form.controls['phone'].hasError('required')">
                   {{ 'Phone' | translate }} <strong>{{ 'is required' | translate }}</strong>
                 </mat-error>
-                <mat-error *ngIf="(form.controls['phone'].hasError('minlength')
-                                || form.controls['phone'].hasError('maxlength'))
-                                && !form.controls['phone'].hasError('pattern')">
-                  {{ 'Longitud del número' | translate }}&nbsp;<strong>{{ '8 caracteres, Ex: 51234567' | translate }}</strong>
+                <mat-error
+                  *ngIf="
+                    (form.controls['phone'].hasError('minlength') || form.controls['phone'].hasError('maxlength')) &&
+                    !form.controls['phone'].hasError('pattern')
+                  "
+                >
+                  {{ 'Longitud del número' | translate }}&nbsp;<strong>{{
+                    '8 caracteres, Ex: 51234567' | translate
+                  }}</strong>
                 </mat-error>
                 <mat-error *ngIf="form.controls['phone'].hasError('pattern')">
-                  {{ 'El número' | translate }}&nbsp;<strong>{{ 'debe empezar con 5, Ex: 51234567' | translate }}</strong>
+                  {{ 'El número' | translate }}&nbsp;<strong>{{
+                    'debe empezar con 5, Ex: 51234567' | translate
+                  }}</strong>
                 </mat-error>
               </mat-form-field>
             </div>
           </div>
 
-          <div class='add-info'>
-            <h3 class='grey-800' ngClass.gt-sm='h2' ngClass.xs='h4'>{{ 'Aditional information' | translate }}</h3>
+          <div class="add-info">
+            <h3 class="grey-800" ngClass.gt-sm="h2" ngClass.xs="h4">{{ 'Aditional information' | translate }}</h3>
           </div>
-          <div class='mt-1' fxFlex='100' fxFlex.gt-sm='100' ngClass.sm='mt-1' ngClass.xs='mt-1'>
-            <mat-form-field appearance='outline' class='w-100'>
+          <div class="mt-1" fxFlex="100" fxFlex.gt-sm="100" ngClass.sm="mt-1" ngClass.xs="mt-1">
+            <mat-form-field appearance="outline" class="w-100">
               <textarea
                 [formControl]="this.form.controls['info']"
                 matInput
                 placeholder="{{ 'Some information about your address or something important' | translate }}"
-                rows='2'
+                rows="2"
               ></textarea>
             </mat-form-field>
           </div>
 
-          <div class='actions-buttons' fxFlex='grow' fxLayout='row' fxLayoutAlign='space-between start'>
-            <button [routerLink]="['/products/search']" mat-stroked-button>{{'Cancel' | translate}}</button>
-            <button (click)='onGoToPayment()' [disabled]='form.invalid' color='primary'
-                    mat-raised-button>{{'Continuar' | translate}}</button>
+          <div class="actions-buttons" fxFlex="grow" fxLayout="row" fxLayoutAlign="space-between start">
+            <button [routerLink]="['/products/search']" mat-stroked-button>{{ 'Cancel' | translate }}</button>
+            <button (click)="onGoToPayment()" [disabled]="form.invalid" color="primary" mat-raised-button>
+              {{ 'Continuar' | translate }}
+            </button>
           </div>
         </div>
 
-        <div *ngIf='loadingPayment' class='loader' style='width: 100%; min-height: 500px; height: 100%'></div>
+        <div *ngIf="loadingPayment" class="loader" style="width: 100%; min-height: 500px; height: 100%"></div>
       </div>
 
       <!-- =================================================================== -->
       <!-- PASARELA DE PAGO -->
       <!-- =================================================================== -->
-      <div *ngIf='showPayment' class='mainOrder-wrapper pl-15' fxFlex='100'
-           fxFlex.gt-md='50' fxFlex.md='50' fxLayout='column'>
-
-        <p class='my-2'>
+      <div
+        *ngIf="showPayment"
+        class="mainOrder-wrapper pl-15"
+        fxFlex="100"
+        fxFlex.gt-md="50"
+        fxFlex.md="50"
+        fxLayout="column"
+      >
+        <p class="my-2">
           <strong>{{ 'Pasarelas para efectuar el pago' | translate }}</strong>
         </p>
 
-        <mat-accordion class='payment-method-expansion-panel'>
-          <mat-expansion-panel class='mb-2' expanded='true'>
+        <mat-accordion class="payment-method-expansion-panel">
+          <mat-expansion-panel class="mb-2" expanded="true">
             <mat-expansion-panel-header>
               <mat-panel-title>
-                {{'Seleccione método' | translate}}
+                {{ 'Seleccione método' | translate }}
               </mat-panel-title>
               <!--                  <mat-panel-description>-->
               <!--                    Type your name and age-->
@@ -364,54 +390,62 @@
 
             <!-- ============================================ -->
             <!-- METODOS DE PAGO -->
-            <div class='paymentFinal' id='payment-method'>
+            <div class="paymentFinal" id="payment-method">
               <!--  fxLayout.lt-sm="column"  -->
-              <mat-radio-group [formControl]="form.get('paymentType')" fxLayout='row wrap'
-                               fxLayoutAlign='center start' fxLayoutGap='10px grid'>
-                <ng-container *ngFor='let pay of payments'>
-                  <ng-container *ngIf="this.onlyCubanPeople
-                                      && cart?.market === 'national'
-                                      && pay?.market === 'national'">
+              <mat-radio-group
+                [formControl]="form.get('paymentType')"
+                fxLayout="row wrap"
+                fxLayoutAlign="center start"
+                fxLayoutGap="10px grid"
+              >
+                <ng-container *ngFor="let pay of payments">
+                  <ng-container
+                    *ngIf="this.onlyCubanPeople && cart?.market === 'national' && pay?.market === 'national'"
+                  >
                     <!-- fxFlex="50%" fxFlex.lt-sm="100%" -->
-                    <mat-radio-button [value]='pay.id'
-                                      class='radio-button-national'>
+                    <mat-radio-button [value]="pay.id" class="radio-button-national">
                       <!-- {{this.onlyCubanPeople}} - {{cart?.market}}-->
-                      <div [ngClass]="{'payment-active': form.get('paymentType').value === pay.id}"
-                           class='pay-method-container' fxLayout='row'
-                           fxLayoutAlign='start center'>
-                        <img [src]='pay.logo' class='pay-method-icon' />
-                        <span class='mat-body-2 uppercase pay-method-name'>
-                            <!-- {{ pay.name }}-->
-                            </span>
+                      <div
+                        [ngClass]="{ 'payment-active': form.get('paymentType').value === pay.id }"
+                        class="pay-method-container"
+                        fxLayout="row"
+                        fxLayoutAlign="start center"
+                      >
+                        <img [src]="pay.logo" class="pay-method-icon" />
+                        <span class="mat-body-2 uppercase pay-method-name">
+                          <!-- {{ pay.name }}-->
+                        </span>
                       </div>
                     </mat-radio-button>
                   </ng-container>
 
-                  <ng-container *ngIf="this.onlyCubanPeople
-                                      && cart?.market === 'international'
-                                      && pay?.market === 'international'">
+                  <ng-container
+                    *ngIf="this.onlyCubanPeople && cart?.market === 'international' && pay?.market === 'international'"
+                  >
                     <!--  fxFlex="50%" fxFlex.lt-sm="100%" -->
-                    <mat-radio-button *ngIf="this.onlyCubanPeople && cart?.market === 'international'"
-                                      [value]='pay.id'
-                                      class='radio-button-international'>
-                      <div [ngClass]="{'payment-active': form.get('paymentType').value === pay.id}"
-                           class='pay-method-container'
-                           fxLayoutAlign='start center'>
-                        <img [src]='pay.logo' class='pay-method-icon' />
-                        <span class='mat-body-2 uppercase pay-method-name'>
-                              <!-- {{ pay.name }} -->
-                            </span>
+                    <mat-radio-button
+                      *ngIf="this.onlyCubanPeople && cart?.market === 'international'"
+                      [value]="pay.id"
+                      class="radio-button-international"
+                    >
+                      <div
+                        [ngClass]="{ 'payment-active': form.get('paymentType').value === pay.id }"
+                        class="pay-method-container"
+                        fxLayoutAlign="start center"
+                      >
+                        <img [src]="pay.logo" class="pay-method-icon" />
+                        <span class="mat-body-2 uppercase pay-method-name">
+                          <!-- {{ pay.name }} -->
+                        </span>
                       </div>
                     </mat-radio-button>
                   </ng-container>
                 </ng-container>
               </mat-radio-group>
             </div>
-
           </mat-expansion-panel>
         </mat-accordion>
         <!-- =================================================================== -->
-
 
         <!--        <div *ngIf="!loadingPayment" class="header-title" ngClass.xs="mt-3" ngClass.sm="mt-3">-->
         <!--          <h3 class="grey-800" ngClass.gt-sm="h2" ngClass.xs="h4">{{ 'My Order' | translate }}</h3>-->
@@ -457,8 +491,8 @@
         <!--        </ng-container>-->
         <!-- =================================================================== -->
 
-        <div *ngIf='!loadingPayment' class='main-order'>
-          <div class='order-box'>
+        <div *ngIf="!loadingPayment" class="main-order">
+          <div class="order-box">
             <!--            <div class="title-box">-->
             <!--              <div>-->
             <!--                {{ 'Product' | translate }} <span class="tl-amount"> {{ 'Total' | translate }}</span>-->
@@ -578,39 +612,43 @@
               </li>
             </ul>-->
 
-            <ul *ngIf='buyProducts.length <= 0' class='quantity'>
-              <li class='empty-checkout'>{{ 'There are no products in cart' | translate }}</li>
+            <ul *ngIf="buyProducts.length <= 0" class="quantity">
+              <li class="empty-checkout">{{ 'There are no products in cart' | translate }}</li>
             </ul>
 
-            <ul *ngIf='!loadingCart && showShipping' class='total-amount'>
+            <ul *ngIf="!loadingCart && showShipping" class="total-amount">
               <li>
                 {{ 'Subtotal' | translate }}:
-                <span class='amount px-2'>{{
+                <span class="amount px-2">{{
                   getTotalAmountCurrency() | currencyMarket: form.controls['currency'].value
-                  }}</span>
+                }}</span>
               </li>
             </ul>
 
             <!-- ============================================ -->
             <!-- TARIFAS DE ENVIO -->
-            <div *ngIf='!loadingCart'
-                 class='mb-3 pb-3'
-                 fxLayout='column'
-                 fxLayoutAlign='start start'
-                 fxLayoutGap='gappx'
-                 style='border-bottom: 1px solid #e5e5e5'>
-              <div class='w-100'
-                   fxLayout='row'
-                   fxLayout.xs='column'
-                   fxLayoutAlign='space-between center'
-                   fxLayoutAlign.xs='start'
-                   ngClass.gt-xs='pt-1'>
-
-                <div fxFlexOrder.xs='2'>
-
-                  <p *ngIf='showShipping'
-                     matTooltip="{{ 'Sistemas de precio del envio de sus productos a la localización brindada' }}"
-                     style='font-size: 16px; font-weight: 500; margin-bottom: 12px !important'>
+            <div
+              *ngIf="!loadingCart"
+              class="mb-3 pb-3"
+              fxLayout="column"
+              fxLayoutAlign="start start"
+              fxLayoutGap="gappx"
+              style="border-bottom: 1px solid #e5e5e5"
+            >
+              <div
+                class="w-100"
+                fxLayout="row"
+                fxLayout.xs="column"
+                fxLayoutAlign="space-between center"
+                fxLayoutAlign.xs="start"
+                ngClass.gt-xs="pt-1"
+              >
+                <div fxFlexOrder.xs="2">
+                  <p
+                    *ngIf="showShipping"
+                    matTooltip="{{ 'Sistemas de precio del envio de sus productos a la localización brindada' }}"
+                    style="font-size: 16px; font-weight: 500; margin-bottom: 12px !important"
+                  >
                     {{ 'Seleccione una tarifa de envío*' | translate }}:
                   </p>
 
@@ -624,22 +662,22 @@
 
                     <!-- ============================================ -->
                     <!-- INFO DIRECCION DEL NEGOCIO -->
-                    <div *ngIf='!showShipping && buyProducts.length > 0' class='mb-3' fxLayout='column'>
-                      <p class='mat-body-2 my-2' style='text-transform: uppercase'>
+                    <div *ngIf="!showShipping && buyProducts.length > 0" class="mb-3" fxLayout="column">
+                      <p class="mat-body-2 my-2" style="text-transform: uppercase">
                         {{ 'Recogida' | translate }}
                       </p>
-                      <span class='mb-2'>{{'Payment will be made at the Business office' | translate }}</span>
-                      <div class='mb-1 font-weight-400' style='color: #585858'>
-                        {{'Negocio' | translate}}:
-                        <span class='font-weight-600'>{{theBusiness?.name || '-'}}</span>
+                      <span class="mb-2">{{ 'Payment will be made at the Business office' | translate }}</span>
+                      <div class="mb-1 font-weight-400" style="color: #585858">
+                        {{ 'Negocio' | translate }}:
+                        <span class="font-weight-600">{{ theBusiness?.name || '-' }}</span>
                       </div>
-                      <div class='mb-1 font-weight-400' style='color: #585858'>
-                        {{'Dirección' | translate}}:
-                        <span class='font-weight-600'>{{theBusiness?.address || '-'}}</span>
+                      <div class="mb-1 font-weight-400" style="color: #585858">
+                        {{ 'Dirección' | translate }}:
+                        <span class="font-weight-600">{{ theBusiness?.address || '-' }}</span>
                       </div>
-                      <div class='mb-1 font-weight-400' style='color: #585858'>
-                        {{'Email' | translate}}:
-                        <span class='font-weight-600'>{{theBusiness?.email || '-'}}</span>
+                      <div class="mb-1 font-weight-400" style="color: #585858">
+                        {{ 'Email' | translate }}:
+                        <span class="font-weight-600">{{ theBusiness?.email || '-' }}</span>
                       </div>
                       <!--                    <div class="mb-1 font-weight-400" style="color: #585858">-->
                       <!--                      {{'Recogida' | translate}}:-->
@@ -647,15 +685,16 @@
                       <!--                    </div>-->
                     </div>
                   </ng-container>
-
                 </div>
 
-                <div fxLayout fxLayoutAlign='start center'>
-                  <mat-icon (click)='detailsShipping()'
-                            *ngIf="form.controls['ShippingBusinessId'] && form.controls['ShippingBusinessId'].value"
-                            class='mr-3'
-                            matTooltip="{{ 'Shipping Rates Details' | translate }}"
-                            style='margin-bottom: 12px; font-size: 25px; cursor: pointer'>visibility
+                <div fxLayout fxLayoutAlign="start center">
+                  <mat-icon
+                    (click)="detailsShipping()"
+                    *ngIf="form.controls['ShippingBusinessId'] && form.controls['ShippingBusinessId'].value"
+                    class="mr-3"
+                    matTooltip="{{ 'Shipping Rates Details' | translate }}"
+                    style="margin-bottom: 12px; font-size: 25px; cursor: pointer"
+                    >visibility
                   </mat-icon>
                   <!--                  <mat-checkbox-->
                   <!--                    ngClass.xs="mb-2"-->
@@ -668,52 +707,60 @@
                 </div>
               </div>
 
-              <div *ngIf='showShipping'
-                   class='w-100'
-                   fxLayout='column'
-                   fxLayoutAlign='start start'
-                   fxLayoutGap='gappx'
-                   style='position: relative'>
-                <div *ngIf='inLoading' class='loading-shade' style='height: 100%'>
-                  <mat-spinner *ngIf='inLoading' [diameter]='40'></mat-spinner>
+              <div
+                *ngIf="showShipping"
+                class="w-100"
+                fxLayout="column"
+                fxLayoutAlign="start start"
+                fxLayoutGap="gappx"
+                style="position: relative"
+              >
+                <div *ngIf="inLoading" class="loading-shade" style="height: 100%">
+                  <mat-spinner *ngIf="inLoading" [diameter]="40"></mat-spinner>
                 </div>
-                <mat-radio-group [formControl]="form.get('ShippingBusinessId')" class='w-100'>
-                  <mat-radio-button *ngFor='let shipping of shippingData'
-                                    [value]='shipping.BusinessId'
-                                    class='w-100'
-                                    f
-                                    matTooltip='{{ shipping?.Business?.name }}'
-                                    style='height: 50px'>
-                    <div fxLayout='row' fxLayoutAlign='space-between center' fxLayoutGap='gappx'>
-                      <div fxLayoutAlign='start center'>
+                <mat-radio-group [formControl]="form.get('ShippingBusinessId')" class="w-100">
+                  <mat-radio-button
+                    *ngFor="let shipping of shippingData"
+                    [value]="shipping.BusinessId"
+                    class="w-100"
+                    f
+                    matTooltip="{{ shipping?.Business?.name }}"
+                    style="height: 50px"
+                  >
+                    <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="gappx">
+                      <div fxLayoutAlign="start center">
                         <img
-                          [src]='imageUrl + shipping?.Business?.logo'
+                          [src]="imageUrl + shipping?.Business?.logo"
                           onerror="this.onerror=null;this.src='assets/images/noImage.jpg';"
-                          style='height: 32px; width: 32px; border-radius: 50%; object-fit: cover; margin-left: 8px'
+                          style="height: 32px; width: 32px; border-radius: 50%; object-fit: cover; margin-left: 8px"
                         />
-                        <span class='ml-2 mat-caption' fxHide.xs style='color: black'>
+                        <span class="ml-2 mat-caption" fxHide.xs style="color: black">
                           {{ 'Entrega a través de ' | translate }}
                         </span>
-                        <span class='ml-2 mat-caption' style='color: black'> ({{ shipping?.Business?.name }}) </span>
+                        <span class="ml-2 mat-caption" style="color: black"> ({{ shipping?.Business?.name }}) </span>
                       </div>
 
-                      <span class='taxAmount' fxFlex='35' style='font-size: 20px'
-                      >{{ shipping.totalPrice || 0 | currencyMarket: marketCard }}
+                      <span class="taxAmount" fxFlex="35" style="font-size: 20px"
+                        >{{ shipping.totalPrice || 0 | currencyMarket: marketCard }}
                       </span>
                     </div>
                   </mat-radio-button>
                 </mat-radio-group>
 
-                <ng-container *ngIf="!this.form.get('ProvinceId').valid
-                  && !this.form.get('MunicipalityId').valid; else showMessage">
-                  <span class='my-2' style='font-size: 16px; font-weight: 500; color: #f44336'>
+                <ng-container
+                  *ngIf="!this.form.get('ProvinceId').valid && !this.form.get('MunicipalityId').valid; else showMessage"
+                >
+                  <span class="my-2" style="font-size: 16px; font-weight: 500; color: #f44336">
                     {{ '*These products cannot be shipped specify a location' | translate }}
                   </span>
                 </ng-container>
                 <ng-template #showMessage>
-                  <ng-container *ngIf="
-                      !canBeDelivery || !this.form.get('ProvinceId').valid || !this.form.get('MunicipalityId').valid">
-                    <span class='my-2' style='font-size: 16px; font-weight: 500; color: #f44336'>
+                  <ng-container
+                    *ngIf="
+                      !canBeDelivery || !this.form.get('ProvinceId').valid || !this.form.get('MunicipalityId').valid
+                    "
+                  >
+                    <span class="my-2" style="font-size: 16px; font-weight: 500; color: #f44336">
                       {{ '*Estos productos no pueden ser enviados a la localización proporcionada' | translate }}
                     </span>
                   </ng-container>
@@ -721,52 +768,64 @@
               </div>
             </div>
 
-            <ng-container *ngIf='loadingCart'>
-              <div class='py-2 my-2 w-100 loader'
-                   fxLayout='row'
-                   fxLayoutAlign='start center'
-                   fxLayoutGap='gappx'
-                   style='border-radius: 4px'></div>
-              <div class='py-2 my-2 w-100 loader'
-                   fxLayout='row'
-                   fxLayoutAlign='start center'
-                   fxLayoutGap='gappx'
-                   style='border-radius: 4px'></div>
-              <div class='py-2 my-2 w-100 loader'
-                   fxLayout='row'
-                   fxLayoutAlign='start center'
-                   fxLayoutGap='gappx'
-                   style='border-radius: 4px'></div>
-              <div class='py-2 my-2 w-100 loader'
-                   fxLayout='row'
-                   fxLayoutAlign='start center'
-                   fxLayoutGap='gappx'
-                   style='border-radius: 4px'></div>
-              <div class='py-2 my-2 w-100 loader'
-                   fxLayout='row'
-                   fxLayoutAlign='start center'
-                   fxLayoutGap='gappx'
-                   style='border-radius: 4px'></div>
-              <div class='py-2 my-2 w-100 loader'
-                   fxLayout='row'
-                   fxLayoutAlign='start center'
-                   fxLayoutGap='gappx'
-                   style='border-radius: 4px'></div>
+            <ng-container *ngIf="loadingCart">
+              <div
+                class="py-2 my-2 w-100 loader"
+                fxLayout="row"
+                fxLayoutAlign="start center"
+                fxLayoutGap="gappx"
+                style="border-radius: 4px"
+              ></div>
+              <div
+                class="py-2 my-2 w-100 loader"
+                fxLayout="row"
+                fxLayoutAlign="start center"
+                fxLayoutGap="gappx"
+                style="border-radius: 4px"
+              ></div>
+              <div
+                class="py-2 my-2 w-100 loader"
+                fxLayout="row"
+                fxLayoutAlign="start center"
+                fxLayoutGap="gappx"
+                style="border-radius: 4px"
+              ></div>
+              <div
+                class="py-2 my-2 w-100 loader"
+                fxLayout="row"
+                fxLayoutAlign="start center"
+                fxLayoutGap="gappx"
+                style="border-radius: 4px"
+              ></div>
+              <div
+                class="py-2 my-2 w-100 loader"
+                fxLayout="row"
+                fxLayoutAlign="start center"
+                fxLayoutGap="gappx"
+                style="border-radius: 4px"
+              ></div>
+              <div
+                class="py-2 my-2 w-100 loader"
+                fxLayout="row"
+                fxLayoutAlign="start center"
+                fxLayoutGap="gappx"
+                style="border-radius: 4px"
+              ></div>
             </ng-container>
 
-            <ul class='total'>
+            <ul class="total">
               <li>
                 {{ 'Total' | translate }}
-                <span class='count px-2'>{{
+                <span class="count px-2">{{
                   getTotalWithShippingIncludedCurrency() | currencyMarket: form.controls['currency'].value
-                  }}</span>
+                }}</span>
               </li>
             </ul>
 
             <!-- <p class="my-2">
               <strong>{{'*Taxes and shipping included'|translate}}</strong>
             </p> -->
-            <div class='w-100' fxLayout='row' fxLayoutAlign='center stretch'>
+            <div class="w-100" fxLayout="row" fxLayoutAlign="center stretch">
               <!--              <button [ngClass]="{-->
               <!--                  paypalBtn: form.valid && buyProducts.length,-->
               <!--                  paypalBtnInvalid: form.invalid || !buyProducts.length-->
@@ -777,22 +836,31 @@
               <!--                  {{ 'PAGAR' | translate }}-->
               <!--                </span>-->
               <!--              </button>-->
-              <a id='pasarelaLink' style='display: none'></a>
+              <a id="pasarelaLink" style="display: none"></a>
             </div>
           </div>
         </div>
 
-        <div *ngIf='!loadingPayment' class='actions-buttons' fxFlex='grow' fxLayout='row'
-             fxLayoutAlign='space-between start'>
-          <button (click)='onGoToInfoDataToPay()' mat-stroked-button>{{'Atrás' | translate}}</button>
-          <button (click)='onPayOrder()' [disabled]='form.invalid || !buyProducts.length' color='primary'
-                  mat-raised-button>{{'Pagar' | translate}}</button>
+        <div
+          *ngIf="!loadingPayment"
+          class="actions-buttons"
+          fxFlex="grow"
+          fxLayout="row"
+          fxLayoutAlign="space-between start"
+        >
+          <button (click)="onGoToInfoDataToPay()" mat-stroked-button>{{ 'Atrás' | translate }}</button>
+          <button
+            (click)="onPayOrder()"
+            [disabled]="form.invalid || !buyProducts.length"
+            color="primary"
+            mat-raised-button
+          >
+            {{ 'Pagar' | translate }}
+          </button>
         </div>
 
-        <div *ngIf='loadingPayment' class='loader' style='width: 100%; min-height: 500px; height: 100%'>
-        </div>
+        <div *ngIf="loadingPayment" class="loader" style="width: 100%; min-height: 500px; height: 100%"></div>
       </div>
-
     </div>
   </div>
 </div>

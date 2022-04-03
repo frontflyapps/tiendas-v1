@@ -35,6 +35,7 @@ import { LocationService } from '../../core/services/location/location.service';
 import { MyContactsComponent } from './my-contacts/my-contacts.component';
 import { MENU_DATA } from '../../core/classes/global.const';
 import { LocalStorageService } from '../../core/services/localStorage/localStorage.service';
+import { GlobalStateOfCookieService } from '../../core/services/request-cookie-secure/global-state-of-cookie.service';
 
 @Component({
   selector: 'app-main',
@@ -105,6 +106,7 @@ export class MainComponent implements OnInit, OnDestroy {
     public utilsService: UtilsService,
     private confirmCreateBusinessService: ConfirmCreateBusinessService,
     private locationService: LocationService,
+    private globalStateOfCookieService: GlobalStateOfCookieService,
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
@@ -126,6 +128,12 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.globalStateOfCookieService.getCookieState()
+      ? this.initComponent()
+      : this.setSubscriptionToCookie();
+  }
+
+  initComponent() {
     this.initSubsLocation();
     this.getLocationOnLocalStorage();
 
@@ -180,6 +188,16 @@ export class MainComponent implements OnInit, OnDestroy {
     this.loggedInUserService.$languageChanged.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {
       this._language = data.lang;
     });
+  }
+
+  setSubscriptionToCookie() {
+    this.globalStateOfCookieService.stateOfCookie$
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((thereIsCookie) => {
+        if (thereIsCookie) {
+          this.initComponent();
+        }
+      });
   }
 
   getFromStorage() {

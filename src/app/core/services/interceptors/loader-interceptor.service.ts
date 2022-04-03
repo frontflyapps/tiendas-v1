@@ -26,6 +26,7 @@ export class LoaderInterceptorService implements HttpInterceptor {
     this.requests.push(req);
     // this.ngProgress.start();
     return Observable.create((observer) => {
+
       const subscription = next.handle(req).subscribe(
         (event) => {
           if (event instanceof HttpResponse) {

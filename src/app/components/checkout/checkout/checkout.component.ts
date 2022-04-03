@@ -31,7 +31,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { DialogBidaiondoConfirmToPayComponent } from '../dialog-bidaiondo-confirm-to-pay/dialog-bidaiondo-confirm-to-pay.component';
 import { ConfigurationService } from '../../../core/services/configuration/configuration.service';
 import { CurrencyCheckoutPipe } from 'src/app/core/pipes/currency-checkout.pipe';
-import { CUBAN_PHONE_START_5 } from '../../../core/classes/regex.const';
+import { CUBAN_PHONE_START_5, EMAIL_REGEX } from '../../../core/classes/regex.const';
 import { ContactsService, IContactBody } from '../../../core/services/contacts/contacts.service';
 import { MyContactsComponent } from '../../main/my-contacts/my-contacts.component';
 
@@ -71,7 +71,7 @@ export const amexData = {
   providers: [CurrencyCheckoutPipe],
 })
 export class CheckoutComponent implements OnInit, OnDestroy {
-  public CI_Length = 7;
+  public CI_Length = 11;
 
   public cartItems: Observable<CartItem[]> = of([]);
   public buyProducts: CartItem[] = [];
@@ -455,11 +455,11 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         this.selectedDataPay?.dni || null,
         [
           Validators.required,
-          Validators.minLength(this.CI_Length),
-          // Validators.maxLength(11),
+          Validators.maxLength(this.CI_Length),
+          // Validators.pattern('[0-9]{2}(?:0[0-9]|1[0-2])(?:0[1-9]|[12][0-9]|3[01])[0-9]{5}'),
         ],
       ],
-      email: [this.selectedDataPay?.email || null, [Validators.required, Validators.email]],
+      email: [this.selectedDataPay?.email || null, [Validators.required, Validators.pattern(EMAIL_REGEX)]],
       phone: [this.selectedDataPay?.phone || null, []],
       info: [this.selectedDataPay?.info || null, []],
       paymentType: [this.selectedDataPay?.paymentType || PASARELA_BASE, [Validators.required]],
@@ -482,6 +482,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.subsToTransfermovilChange();
 
     this.form.markAllAsTouched();
+    this.form.valueChanges.subscribe((data) => {
+      console.log(this.form);
+    });
   }
 
   subsToTransfermovilChange() {

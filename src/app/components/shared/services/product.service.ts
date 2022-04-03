@@ -386,7 +386,7 @@ export class ProductService {
     localStorage.setItem('compareItem', JSON.stringify(products));
   }
 
-  private setGetProductPromise() {
+  public setGetProductPromise() {
     this.productsData$ = this.getProduct.pipe(
       distinctUntilChanged(),
       switchMap(() => this.getFrontProductsData()),

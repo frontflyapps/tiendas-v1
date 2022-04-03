@@ -11,7 +11,7 @@ import { IProductCard } from '../../../core/classes/product-card.class';
 import { FRONT_PRODUCT_DATA, LANDING_PAGE, PRODUCT_COUNT } from '../../../core/classes/global.const';
 import { LocalStorageService } from '../../../core/services/localStorage/localStorage.service';
 import { ProductDataService } from '../../shared/services/product.service';
-import { GlobalStateOfCookieService } from 'src/app/core/services/request-cookie-secure/global-state-of-cookie.service';
+import { GlobalStateOfCookieService } from '../../../core/services/request-cookie-secure/global-state-of-cookie.service';
 
 @Component({
   selector: 'app-main-home',
@@ -145,14 +145,6 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     //   .catch((e) => {
     //     this.loadingBestSellers = false;
     //   });
-
-    this.loggedInUserService.$languageChanged.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {
-      this.language = data.lang;
-    });
-
-    this.loggedInUserService.$loggedInUserUpdated.pipe(takeUntil(this._unsubscribeAll)).subscribe((data) => {
-      this.loggedInUser = this.loggedInUserService.getLoggedInUser();
-    });
   }
 
   initComponent() {
@@ -220,8 +212,8 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     this.allArticles = data.blogRecents;
     this.countProducts = data.countProducts;
     this.servicesProducts = data.ourServices;
-    this.bigBanner1 = data.bigBanner1;
-    this.bigBanner2 = data.bigBanner2;
+    this.bigBanner1 = data.promotions.filter((promotion) => promotion.type === 'bigBannerPromo1');
+    this.bigBanner2 = data.promotions.filter((promotion) => promotion.type === 'bigBannerPromo2');
     this.loadingServices = false;
 
     this.allProducts = this.productDataService.allProducts;

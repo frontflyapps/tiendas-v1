@@ -10,12 +10,12 @@
 
 <!-- ------------------------------------------------------------ -->
 <!-- -- Carusel ---------------------------------------------- -->
-<app-main-carousel *ngIf='!showStatic && slides.length > 0' [slides]='slides'></app-main-carousel>
+<app-main-carousel *ngIf="!showStatic && slides.length > 0" [slides]="slides"></app-main-carousel>
 
-<div class='container mt-3'>
+<div class="container mt-3">
   <!-- BANNER TEMPORAL -->
   <div
-    style='
+    style="
       padding: 16px;
       background-color: darkred;
       color: white !important;
@@ -24,15 +24,15 @@
       white-space: normal;
       max-width: 91% !important;
       margin: 0 auto;
-    '
+    "
   >
-    <h1 style='color: white !important'>
+    <h1 style="color: white !important">
       Esta tienda online se encuentra en proceso de desarrollo, está trabajando en MODO: Prueba. No están habilitadas
       las compras. Disculpen las molestias
     </h1>
   </div>
   <!-- BANNER TEMPORAL -->
-  <app-skeleton-loading-cards *ngIf='showStatic' [setConfiguration]='{ xs: 1, sm: 1, md: 1, lg: 1 }'>
+  <app-skeleton-loading-cards *ngIf="showStatic" [setConfiguration]="{ xs: 1, sm: 1, md: 1, lg: 1 }">
   </app-skeleton-loading-cards>
 </div>
 <!--<div class="container" style="height: 300px;" *ngIf="showStatic" ngStyle.lt-md="height: 175px;">-->
@@ -43,29 +43,29 @@
 <!--  </div>-->
 <!--</div>-->
 
-<div class='home-1-wrap'>
-  <div *ngIf='allBicons.length > 0 && !loadingAllProduct' class='info-bar-four-wrapper' fxHide.xs>
-    <div class='container'>
-      <div class='info-bar-four' fxLayout='row wrap' fxLayoutAlign='center center'>
+<div class="home-1-wrap">
+  <div *ngIf="allBicons.length > 0 && !loadingAllProduct" class="info-bar-four-wrapper" fxHide.xs>
+    <div class="container">
+      <div class="info-bar-four" fxLayout="row wrap" fxLayoutAlign="center center">
         <div
-          *ngFor='let item of allBicons; let i = index'
-          class='card-wrap'
-          fxFlex='100'
-          fxFlex.gt-md='25'
-          fxFlex.gt-xs='50'
+          *ngFor="let item of allBicons; let i = index"
+          class="card-wrap"
+          fxFlex="100"
+          fxFlex.gt-md="25"
+          fxFlex.gt-xs="50"
         >
           <mat-card
             [ngClass]="{ 'no-bd': i === allBicons.length - 1 }"
-            class='light-block'
-            fxLayout='row'
-            fxLayoutAlign='start center'
+            class="light-block"
+            fxLayout="row"
+            fxLayoutAlign="start center"
           >
-            <div fxFlex='20'>
-              <mat-icon class='mat-icon-xlg m-0'>{{ item.icon }}</mat-icon>
+            <div fxFlex="20">
+              <mat-icon class="mat-icon-xlg m-0">{{ item.icon }}</mat-icon>
             </div>
-            <div class='content' fxFlex='80'>
-              <p class='uppercase'>{{ utilsService.parserLanguage(item.title, language) }}</p>
-              <span class='text-muted m-0 mt-2'>{{ utilsService.parserLanguage(item.subTitle, language) }}</span>
+            <div class="content" fxFlex="80">
+              <p class="uppercase">{{ utilsService.parserLanguage(item.title, language) }}</p>
+              <span class="text-muted m-0 mt-2">{{ utilsService.parserLanguage(item.subTitle, language) }}</span>
             </div>
           </mat-card>
         </div>
@@ -78,20 +78,20 @@
       <app-banners-four [_banners]="banners"></app-banners-four>
     </div>
   </div> -->
-  <ng-container *ngIf='countProducts == 0 && !loadingAllProduct'>
-    <h3 class='mat-title py-4' style='text-align: center'>{{ 'No hay ningún producto disponible' | translate }}</h3>
+  <ng-container *ngIf="countProducts == 0 && !loadingAllProduct">
+    <h3 class="mat-title py-4" style="text-align: center">{{ 'No hay ningún producto disponible' | translate }}</h3>
   </ng-container>
 
   <!-- ---------------------- Best Seller Items --------------------------- -->
-  <section *ngIf='bestSellersProducts.length'>
-    <div class='container'>
-      <div class='products sec-padding'>
-        <div class='products-four'>
-          <h3 style='color: initial'>{{ 'Productos más vendidos' | translate }}</h3>
-          <app-product-carousel *ngIf='!loadingBestSellers' [btnColor]="'accent'" [products]='bestSellersProducts'>
+  <section *ngIf="bestSellersProducts.length">
+    <div class="container">
+      <div class="products sec-padding">
+        <div class="products-four">
+          <h3 style="color: initial">{{ 'Productos más vendidos' | translate }}</h3>
+          <app-product-carousel *ngIf="!loadingBestSellers" [btnColor]="'accent'" [products]="bestSellersProducts">
           </app-product-carousel>
-          <div *ngIf='loadingBestSellers' class='my-3'>
-            <app-skeleton-loading-cards *ngIf='loadingBestSellers' [setConfiguration]='{ xs: 1, sm: 2, md: 3, lg: 4 }'>
+          <div *ngIf="loadingBestSellers" class="my-3">
+            <app-skeleton-loading-cards *ngIf="loadingBestSellers" [setConfiguration]="{ xs: 1, sm: 2, md: 3, lg: 4 }">
             </app-skeleton-loading-cards>
           </div>
         </div>
@@ -101,15 +101,15 @@
 
   <!-- ------------------------------------------------------------ -->
   <!-- ---------------------- Popular Items --------------------------- -->
-  <section *ngIf='popularProducts.length'>
-    <div class='container'>
-      <div class='products sec-padding'>
-        <div class='products-four'>
-          <h3 style='color: initial'>{{ 'Ofertas populares' | translate }}</h3>
-          <app-product-carousel *ngIf='!loadingPopular' [btnColor]="'accent'" [products]='popularProducts'>
+  <section *ngIf="popularProducts.length">
+    <div class="container">
+      <div class="products sec-padding">
+        <div class="products-four">
+          <h3 style="color: initial">{{ 'Ofertas populares' | translate }}</h3>
+          <app-product-carousel *ngIf="!loadingPopular" [btnColor]="'accent'" [products]="popularProducts">
           </app-product-carousel>
-          <div *ngIf='loadingPopular' class='my-3'>
-            <app-skeleton-loading-cards *ngIf='loadingPopular' [setConfiguration]='{ xs: 1, sm: 2, md: 3, lg: 4 }'>
+          <div *ngIf="loadingPopular" class="my-3">
+            <app-skeleton-loading-cards *ngIf="loadingPopular" [setConfiguration]="{ xs: 1, sm: 2, md: 3, lg: 4 }">
             </app-skeleton-loading-cards>
           </div>
         </div>
@@ -117,11 +117,11 @@
     </div>
   </section>
 
-  <div *ngIf='loadingPopular' class='container'>
-    <div class='products sec-padding'>
-      <div class='products-four'>
-        <div class='my-3'>
-          <app-skeleton-loading-cards *ngIf='loadingPopular' [setConfiguration]='{ xs: 1, sm: 2, md: 3, lg: 4 }'>
+  <div *ngIf="loadingPopular" class="container">
+    <div class="products sec-padding">
+      <div class="products-four">
+        <div class="my-3">
+          <app-skeleton-loading-cards *ngIf="loadingPopular" [setConfiguration]="{ xs: 1, sm: 2, md: 3, lg: 4 }">
           </app-skeleton-loading-cards>
         </div>
       </div>
@@ -130,31 +130,31 @@
   <!-- -------------------------------------------------------------------------------->
 
   <!-- ---------------------- Big promo1 --------------------------- -->
-  <section *ngIf='bigBanner1?.valor'>
-    <div class='main-banner'>
-      <ng-container *ngIf='applyStyle && bigBanner1?.valor?.imageXs; then bannerPromo1Xs; else bannerPromo1'>
+  <section *ngIf="bigBanner1?.valor">
+    <div class="main-banner">
+      <ng-container *ngIf="applyStyle && bigBanner1?.valor?.imageXs; then bannerPromo1Xs; else bannerPromo1">
       </ng-container>
 
       <ng-template #bannerPromo1>
-        <app-banner-promotion [_imageBigPromo]='bigBanner1?.valor?.image'></app-banner-promotion>
+        <app-banner-promotion [_imageBigPromo]="bigBanner1?.valor?.image"></app-banner-promotion>
       </ng-template>
 
       <ng-template #bannerPromo1Xs>
-        <app-banner-promotion [_imageBigPromo]='bigBanner1?.valor?.imageXs'></app-banner-promotion>
+        <app-banner-promotion [_imageBigPromo]="bigBanner1?.valor?.imageXs"></app-banner-promotion>
       </ng-template>
     </div>
   </section>
 
   <!-- ---------------------- Featured Items --------------------------- -->
-  <section *ngIf='featuredProducts.length > 0'>
-    <div class='container'>
-      <div class='products sec-padding'>
-        <div class='products-four'>
-          <h3 style='color: initial'>{{ 'Productos destacados' | translate }}</h3>
-          <app-product-carousel *ngIf='!loadingFeatured' [btnColor]="'accent'" [products]='featuredProducts'>
+  <section *ngIf="featuredProducts.length > 0">
+    <div class="container">
+      <div class="products sec-padding">
+        <div class="products-four">
+          <h3 style="color: initial">{{ 'Productos destacados' | translate }}</h3>
+          <app-product-carousel *ngIf="!loadingFeatured" [btnColor]="'accent'" [products]="featuredProducts">
           </app-product-carousel>
-          <div *ngIf='loadingFeatured' class='my-3'>
-            <app-skeleton-loading-cards *ngIf='loadingFeatured' [setConfiguration]='{ xs: 1, sm: 2, md: 3, lg: 4 }'>
+          <div *ngIf="loadingFeatured" class="my-3">
+            <app-skeleton-loading-cards *ngIf="loadingFeatured" [setConfiguration]="{ xs: 1, sm: 2, md: 3, lg: 4 }">
             </app-skeleton-loading-cards>
           </div>
         </div>
@@ -163,17 +163,17 @@
   </section>
 
   <!-- ---------------------- Big promo2 --------------------------- -->
-  <section *ngIf='bigBanner2?.valor'>
-    <div class='main-banner'>
-      <ng-container *ngIf='applyStyle && bigBanner2?.valor?.imageXs; then bannerPromo2Xs; else bannerPromo2'>
+  <section *ngIf="bigBanner2?.valor">
+    <div class="main-banner">
+      <ng-container *ngIf="applyStyle && bigBanner2?.valor?.imageXs; then bannerPromo2Xs; else bannerPromo2">
       </ng-container>
 
       <ng-template #bannerPromo2>
-        <app-banner-promotion2 [_imageBigPromo]='bigBanner2?.valor?.image'></app-banner-promotion2>
+        <app-banner-promotion2 [_imageBigPromo]="bigBanner2?.valor?.image"></app-banner-promotion2>
       </ng-template>
 
       <ng-template #bannerPromo2Xs>
-        <app-banner-promotion2 [_imageBigPromo]='bigBanner2?.valor?.imageXs'></app-banner-promotion2>
+        <app-banner-promotion2 [_imageBigPromo]="bigBanner2?.valor?.imageXs"></app-banner-promotion2>
       </ng-template>
     </div>
   </section>
@@ -182,20 +182,20 @@
   <!-- ---------------------- Product Vertical --------------------------- -->
   <!--  <section *ngIf="featuredProducts.length && this.allProducts.length">-->
   <section>
-    <div class='container'>
+    <div class="container">
       <app-product-vertical></app-product-vertical>
     </div>
   </section>
 
   <!-- ------------------------------------------------------------ -->
   <!-- ---------------------- Big promo --------------------------- -->
-  <section *ngIf='allArticles.length'>
-    <div class='featured-products-wrap'>
-      <div class='container'>
-        <div class='products sec-padding bg'>
-          <div class='products-four'>
-            <h3 class='uppercase'>{{ 'Latest From Our Blog' | translate }}</h3>
-            <section style='padding-top: 26px'>
+  <section *ngIf="allArticles.length">
+    <div class="featured-products-wrap">
+      <div class="container">
+        <div class="products sec-padding bg">
+          <div class="products-four">
+            <h3 class="uppercase">{{ 'Latest From Our Blog' | translate }}</h3>
+            <section style="padding-top: 26px">
               <app-blog-section></app-blog-section>
             </section>
           </div>
@@ -220,8 +220,8 @@
         </div>
         <div class="text-paragraph mb-4">
           {{
-          'Descubre las increíbles de ofertas de más de 2 millones de clientes conectados a Transfer móvil.Descargue hoy para mantenerse conectado con las mejores opciones en cualquier momento y en cualquier lugar'
-            | translate
+            'Descubre las increíbles de ofertas de más de 2 millones de clientes conectados a Transfer móvil.Descargue hoy para mantenerse conectado con las mejores opciones en cualquier momento y en cualquier lugar'
+              | translate
           }}
           .
         </div>
