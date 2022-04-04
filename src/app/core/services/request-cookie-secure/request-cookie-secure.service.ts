@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 
 import { environment } from '../../../../environments/environment';
-import { takeUntil } from 'rxjs/operators';
 import { GlobalStateOfCookieService } from './global-state-of-cookie.service';
 
 @Injectable({
@@ -21,30 +20,36 @@ export class RequestCookieSecureService {
     this.httpOptions = {};
   }
 
-  rq(): Observable<any> {
-    return this.httpClient.get<any>(this.url, this.httpOptions);
+  rq(): Promise<any> {
+    return this.httpClient.get<any>(this.url, this.httpOptions).toPromise();
   }
 
-  public requestCookiesSecure() {
-    debugger;
-    this.rq()
-      .pipe(takeUntil(this.unsubscribeAll))
-      .subscribe(
-        (res: any) => {
-          console.warn('Cookies Requested Success', res);
+  public async requestCookiesSecure() {
+    await this.rq()
+      .then()
+      .catch(function (error) {
+        console.error('Cookies Requested Error', error);
+      });
+    this.globalStateOfCookieService.stateOfCookie.next(true);
+    //  this.rq()
+    //     .pipe(takeUntil(this.unsubscribeAll))
+    //     .subscribe(
+    //       (res: any) => {
+    //         console.warn('Cookies Requested Success', res);
 
-          this.globalStateOfCookieService.stateOfCookie.next(true);
+    //         // this.globalStateOfCookieService.stateOfCookie.next(true);
+    //         this.globalStateOfCookieService.stateOfCookie.next(true);
 
-          this.clearUnsubscribeAll();
-        },
-        (error: any) => {
-          console.warn('Cookies Requested Error', error);
+    //         this.clearUnsubscribeAll();
+    //       },
+    //       (error: any) => {
+    //         console.warn('Cookies Requested Error', error);
 
-          this.globalStateOfCookieService.stateOfCookie.next(true);
+    //         this.globalStateOfCookieService.stateOfCookie.next(true);
 
-          this.clearUnsubscribeAll();
-        },
-      );
+    //         this.clearUnsubscribeAll();
+    //       },
+    //     );
   }
 
   clearUnsubscribeAll() {
