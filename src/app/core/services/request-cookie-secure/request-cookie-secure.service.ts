@@ -17,8 +17,7 @@ export class RequestCookieSecureService {
 
   unsubscribeAll: Subject<any> = new Subject<any>();
 
-  constructor(private httpClient: HttpClient,
-              private globalStateOfCookieService: GlobalStateOfCookieService) {
+  constructor(private httpClient: HttpClient, private globalStateOfCookieService: GlobalStateOfCookieService) {
     this.httpOptions = {};
   }
 
@@ -27,9 +26,11 @@ export class RequestCookieSecureService {
   }
 
   public requestCookiesSecure() {
+    debugger;
     this.rq()
       .pipe(takeUntil(this.unsubscribeAll))
-      .subscribe((res: any) => {
+      .subscribe(
+        (res: any) => {
           console.warn('Cookies Requested Success', res);
 
           this.globalStateOfCookieService.stateOfCookie.next(true);
@@ -42,7 +43,8 @@ export class RequestCookieSecureService {
           this.globalStateOfCookieService.stateOfCookie.next(true);
 
           this.clearUnsubscribeAll();
-        });
+        },
+      );
   }
 
   clearUnsubscribeAll() {

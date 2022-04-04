@@ -21,9 +21,6 @@ export class TokenInterceptorService implements HttpInterceptor {
 
     request = request.clone({
       withCredentials: true,
-      setHeaders: {
-        language: language,
-      },
     });
 
     if (request.url.includes('v1/auth/cookies') || request.url.includes('/assets/i18n')) {
@@ -34,6 +31,7 @@ export class TokenInterceptorService implements HttpInterceptor {
       request = request.clone({
         setHeaders: {
           ['xxx-ff-id']: tokenBusiness,
+          language: language,
         },
       });
     }

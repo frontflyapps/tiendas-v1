@@ -14,8 +14,8 @@ export const environment = {
 
   // apiUrl: 'http://apitienda.tiendalocal.com:8998/v1/',
   // imageUrl: 'http://apitienda.tiendalocal.com:8998/v1/',
-  apiUrl: 'http://apitienda.tiendalocal.com:8080/v1/',
-  imageUrl: 'http://apitienda.tiendalocal.com:8080/v1/',
+  apiUrl: 'http://apitienda.tiendalocal.com:7777/v1/',
+  imageUrl: 'http://apitienda.tiendalocal.com:7777/v1/',
 
   // apiUrl: 'https://api.pymesbulevar.com/v1/',
   // imageUrl: 'https://api.pymesbulevar.com/v1/',
