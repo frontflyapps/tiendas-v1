@@ -10,7 +10,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { NavigationService } from '../../core/services/navigation/navigation.service';
 import { LoggedInUserService } from '../../core/services/loggedInUser/logged-in-user.service';
-import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { Observable, of, Subject } from 'rxjs';
 import { IUser } from '../../core/classes/user.class';
 import { AuthenticationService } from '../../core/services/authentication/authentication.service';
@@ -201,13 +201,13 @@ export class MainComponent implements OnInit, OnDestroy {
       });
   }
 
-  getFromStorage() {
+  getFromStorage(): void | boolean {
     try {
       const menuData = this.localStorageService.getFromStorage(MENU_DATA);
 
       if (!menuData || !menuData?.timespan) {
         this.getMenu();
-        return;
+        return false;
       }
 
       if (this.localStorageService.iMostReSearch(menuData?.timespan, environment.timeToResearchMenuData)) {
@@ -453,6 +453,7 @@ export class MainComponent implements OnInit, OnDestroy {
     let locationOnLocalStorage;
     try {
       locationOnLocalStorage = JSON.parse(localStorage.getItem(LOCATION));
+      console.log('-> locationOnLocalStorage', locationOnLocalStorage);
       if (locationOnLocalStorage) {
         this.locationService.updateLocation(locationOnLocalStorage);
       }
@@ -469,9 +470,7 @@ export class MainComponent implements OnInit, OnDestroy {
   initSubsLocation() {
     this.locationService
       .location$
-      .pipe(
-        distinctUntilChanged(),
-        takeUntil(this._unsubscribeAll))
+      .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((newLocation) => {
         this.setLocationData(newLocation);
         localStorage.setItem(LOCATION, JSON.stringify(newLocation));
@@ -479,15 +478,22 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   private getMenu() {
-    this.categoryService.getMenu()
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((data) => {
-        const _response: any = {};
-        _response.menu = JSON.parse(JSON.stringify(data.data));
-        _response.timespan = new Date().getTime();
-        this.localStorageService.setOnStorage(MENU_DATA, _response);
+    console.log('-> ENTRO private getMenu()');
 
-        this.setCategories(_response.menu);
+    debugger;
+
+    this.categoryService
+      .getMenu()
+      .subscribe((data) => {
+        console.log('-> data private getMenu()', data);
+
+        // let _response: any = {};
+        // _response['menu'] = JSON.parse(JSON.stringify(data.data));
+        // _response['timespan'] = new Date().getTime();
+        //
+        // this.localStorageService.setOnStorage(MENU_DATA, _response);
+        //
+        // this.setCategories(_response.menu);
       });
   }
 }

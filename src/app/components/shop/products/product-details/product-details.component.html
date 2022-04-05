@@ -264,8 +264,8 @@
                       </span>
                     </span>
                     <!-- <p>
-                      <ngp-rating-material [config]="{label:'estrellas',readOnly:true,size:'12px'}" [value]="review.rating">
-                      </ngp-rating-material>
+                      <guachos-rating [config]="{label:'estrellas',readOnly:true,size:'12px'}" [value]="review.rating">
+                      </guachos-rating>
                     </p> -->
                     <p class="mat-body-1" ngClass.lt-md="mat-caption">{{ review.review }}</p>
                     <button
@@ -306,11 +306,11 @@
                   <form [formGroup]="reviewForm" fxLayout="row wrap">
                     <h3 class="mt-2" fxLayoutAlign="start center">
                       <span class="mr-2">{{ 'Your Rating: ' | translate }}</span>
-                      <ngp-rating-material
+                      <guachos-rating
                         [config]="{ label: 'estrellas', size: '22px', showNumber: true, showClearBtn: true }"
                         [formControl]="reviewForm.controls['rating']"
                       >
-                      </ngp-rating-material>
+                      </guachos-rating>
                     </h3>
 
                     <div fxFlex="100" fxFlex.gt-sm="100">

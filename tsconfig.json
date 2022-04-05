@@ -14,7 +14,6 @@
     "module": "es2020",
     "moduleResolution": "node",
     "experimentalDecorators": true,
-    "allowJs": true,
     "importHelpers": true,
     "target": "es2018",
     "types": [
@@ -30,10 +29,6 @@
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
-    "strictInjectionParameters": true,
-    "enableIvy": true,
-    "allowEmptyCodegenFiles": true,
-    "experimentalDecorators": true,
-    "allowJs": true
+    "strictInjectionParameters": true
   }
 }

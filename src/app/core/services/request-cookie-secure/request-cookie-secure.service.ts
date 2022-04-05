@@ -21,8 +21,8 @@ export class RequestCookieSecureService {
     this.httpOptions = {};
   }
 
-  rq(): Observable<any> {
-    return this.httpClient.get<any>(this.url, this.httpOptions);
+  private rq(): Observable<any> {
+    return this.httpClient.get<any>(this.url);
   }
 
   public requestCookiesSecure() {
@@ -40,7 +40,7 @@ export class RequestCookieSecureService {
         (error: any) => {
           console.warn('Cookies Requested Error', error);
 
-          this.globalStateOfCookieService.stateOfCookie.next(true);
+          // this.globalStateOfCookieService.stateOfCookie.next(true);
 
           this.clearUnsubscribeAll();
         },
@@ -53,6 +53,6 @@ export class RequestCookieSecureService {
         this.unsubscribeAll.next(null);
         this.unsubscribeAll.complete();
       }
-    }, 0);
+    }, 10);
   }
 }

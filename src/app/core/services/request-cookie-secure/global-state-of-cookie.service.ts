@@ -7,10 +7,17 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 export class GlobalStateOfCookieService {
 
-  stateOfCookie: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  stateOfCookie$: Observable<boolean> = this.stateOfCookie.asObservable();
+  stateOfCookie: BehaviorSubject<boolean>;
+  stateOfCookie$: Observable<boolean>;
+
+  constructor() {
+    this.stateOfCookie = new BehaviorSubject<boolean>(false);
+    this.stateOfCookie$ = this.stateOfCookie.asObservable();
+
+    console.log('ya service');
+  }
 
   getCookieState() {
-    return this.stateOfCookie?.value || false;
+    return this.stateOfCookie.value || false;
   }
 }

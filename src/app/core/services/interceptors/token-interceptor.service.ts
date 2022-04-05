@@ -19,19 +19,19 @@ export class TokenInterceptorService implements HttpInterceptor {
     const tokenBusiness: any = environment.tokenBusiness;
     const language = this.translate.currentLang;
 
-    request = request.clone({
-      withCredentials: true,
-    });
+    // request = request.clone({
+    //   withCredentials: true,
+    // });
 
     if (request.url.includes('v1/auth/cookies') || request.url.includes('/assets/i18n')) {
       return next.handle(request);
     }
 
-    request = request.clone({
-      setHeaders: {
-        language: language,
-      },
-    });
+    // request = request.clone({
+    //   setHeaders: {
+    //     language: language,
+    //   },
+    // });
 
     if (tokenBusiness) {
       request = request.clone({

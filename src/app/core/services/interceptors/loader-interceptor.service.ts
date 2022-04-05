@@ -47,7 +47,9 @@ export class LoaderInterceptorService implements HttpInterceptor {
       // remove request from queue when cancelled
       return () => {
         this.removeRequest(req);
-        subscription.unsubscribe();
+        setTimeout(() => {
+          subscription.unsubscribe();
+        }, 10);
       };
     });
   }

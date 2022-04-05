@@ -117,7 +117,7 @@
           <tr>
             <th class='product-name'>{{ 'Valoración' | translate }}</th>
             <td *ngFor='let product of products' class='item-row' style='max-width: 400px'>
-              <ngp-rating-material [value]='product.rating'></ngp-rating-material>
+              <guachos-rating [value]='product.rating'></guachos-rating>
             </td>
           </tr>
           <!-- Product Availability -->

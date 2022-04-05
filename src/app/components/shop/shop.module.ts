@@ -54,6 +54,7 @@ import { NgxImageZoomModule } from 'ngx-image-zoom';
 import { FooterProductCardModule } from '../shared/footer-product-card/footer-product-card.module';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ConfirmationDialogFrontModule } from '../shared/confirmation-dialog-front/confirmation-dialog-front.module';
+import { GuachosRatingModule } from 'guachos-rating';
 
 @NgModule({
   declarations: [
@@ -113,6 +114,7 @@ import { ConfirmationDialogFrontModule } from '../shared/confirmation-dialog-fro
     ConfirmationDialogFrontModule,
     FooterProductCardModule,
     MatAutocompleteModule,
+    GuachosRatingModule,
   ],
   providers: [
     {

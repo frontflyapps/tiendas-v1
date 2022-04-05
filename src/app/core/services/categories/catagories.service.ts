@@ -18,7 +18,8 @@ export class CategoriesService {
 
   public allCategories = [];
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) {
+  }
 
   createCategory(body: any): Observable<any> {
     return this.httpClient.post<any>(this.url, body);
@@ -26,6 +27,10 @@ export class CategoriesService {
 
   getMenu(): Observable<any> {
     return this.httpClient.get<any>(this.urlCategoryMenu + '/menu');
+  }
+
+  getMenu1(): Observable<any> {
+    return this.httpClient.get<any>(environment.apiUrl + 'category' + '/menu');
   }
 
   editCategory(data) {

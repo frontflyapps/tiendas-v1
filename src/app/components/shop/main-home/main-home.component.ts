@@ -166,11 +166,13 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   }
 
   setSubscriptionToCookie() {
-    this.globalStateOfCookieService.stateOfCookie$.pipe(takeUntil(this._unsubscribeAll)).subscribe((thereIsCookie) => {
-      if (thereIsCookie) {
-        this.initComponent();
-      }
-    });
+    this.globalStateOfCookieService.stateOfCookie$
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((thereIsCookie) => {
+        if (thereIsCookie) {
+          this.initComponent();
+        }
+      });
   }
 
   getPFDFromStorage() {

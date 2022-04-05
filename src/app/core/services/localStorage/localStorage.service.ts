@@ -79,10 +79,12 @@ export class LocalStorageService {
     localStorage.setItem('_v', JSON.stringify(v));
   }
 
-  setOnStorage(key: string, data: any) {
-    if (data && key) {
-      localStorage.setItem(key, JSON.stringify(data));
+  setOnStorage(key: string, data: any): void | boolean {
+    if (!data || !key) {
+      return false;
     }
+
+    localStorage.setItem(key, JSON.stringify(data));
   }
 
   getFromStorage(key: string): any {

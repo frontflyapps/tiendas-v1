@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { PipesModule } from '../../../core/pipes/pipes.module';
+import { GuachosRatingModule } from 'guachos-rating';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import { PipesModule } from '../../../core/pipes/pipes.module';
     MatButtonModule,
     MatTooltipModule,
     PipesModule,
+    GuachosRatingModule,
   ],
   exports: [FooterProductCardComponent],
 })

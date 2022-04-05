@@ -42,7 +42,7 @@ export class ProductVerticalComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.globalStateOfCookieService.getCookieState() ? this.initComponent() : this.setSubscriptionToCookie();
+    // this.globalStateOfCookieService.getCookieState() ? this.initComponent() : this.setSubscriptionToCookie();
   }
 
   initComponent() {
@@ -67,11 +67,13 @@ export class ProductVerticalComponent implements OnInit, OnDestroy {
   }
 
   setSubscriptionToCookie() {
-    this.globalStateOfCookieService.stateOfCookie$.pipe(takeUntil(this._unsubscribeAll)).subscribe((thereIsCookie) => {
-      if (thereIsCookie) {
-        this.initComponent();
-      }
-    });
+    this.globalStateOfCookieService.stateOfCookie$
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((thereIsCookie) => {
+        if (thereIsCookie) {
+          this.initComponent();
+        }
+      });
   }
 
   setServiceGetProduct() {
