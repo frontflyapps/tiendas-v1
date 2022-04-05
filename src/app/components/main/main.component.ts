@@ -478,22 +478,18 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   private getMenu() {
-    console.log('-> ENTRO private getMenu()');
-
-    debugger;
-
     this.categoryService
       .getMenu()
       .subscribe((data) => {
         console.log('-> data private getMenu()', data);
 
-        // let _response: any = {};
-        // _response['menu'] = JSON.parse(JSON.stringify(data.data));
-        // _response['timespan'] = new Date().getTime();
-        //
-        // this.localStorageService.setOnStorage(MENU_DATA, _response);
-        //
-        // this.setCategories(_response.menu);
+        let _response: any = {};
+        _response['menu'] = JSON.parse(JSON.stringify(data.data));
+        _response['timespan'] = new Date().getTime();
+
+        this.localStorageService.setOnStorage(MENU_DATA, _response);
+
+        this.setCategories(_response.menu);
       });
   }
 }

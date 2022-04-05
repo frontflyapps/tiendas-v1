@@ -29,10 +29,6 @@ export class CategoriesService {
     return this.httpClient.get<any>(this.urlCategoryMenu + '/menu');
   }
 
-  getMenu1(): Observable<any> {
-    return this.httpClient.get<any>(environment.apiUrl + 'category' + '/menu');
-  }
-
   editCategory(data) {
     return this.httpClient.patch<any>(this.urlId.replace(':categoryId', data.id), data, this.httpOptions);
   }
