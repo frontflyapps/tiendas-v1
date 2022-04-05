@@ -23,6 +23,12 @@ export class TokenInterceptorService implements HttpInterceptor {
       withCredentials: true,
     });
 
+    request = request.clone({
+      setHeaders: {
+        language: language,
+      },
+    });
+
     if (request.url.includes('v1/auth/cookies') || request.url.includes('/assets/i18n')) {
       return next.handle(request);
     }
