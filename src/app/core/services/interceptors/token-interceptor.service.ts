@@ -23,15 +23,15 @@ export class TokenInterceptorService implements HttpInterceptor {
       withCredentials: true,
     });
 
+    if (request.url.includes('v1/auth/cookies') || request.url.includes('/assets/i18n')) {
+      return next.handle(request);
+    }
+
     request = request.clone({
       setHeaders: {
         language: language,
       },
     });
-
-    if (request.url.includes('v1/auth/cookies') || request.url.includes('/assets/i18n')) {
-      return next.handle(request);
-    }
 
     if (tokenBusiness) {
       request = request.clone({

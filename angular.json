@@ -70,6 +70,14 @@
                   "maximumWarning": "1mb"
                 }
               ]
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
             }
           }
         },
@@ -81,8 +89,12 @@
           "configurations": {
             "production": {
               "browserTarget": "tienda-angular-b2b:build:production"
+            },
+            "development": {
+              "browserTarget": "tienda-angular-b2b:build:development"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -8,9 +8,9 @@ import { BehaviorSubject } from 'rxjs';
 export class GlobalStateOfCookieService {
 
   stateOfCookie: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  stateOfCookie$ = this.stateOfCookie.asObservable();
+  stateOfCookie$: Observable<boolean> = this.stateOfCookie.asObservable();
 
   getCookieState() {
-    return this.stateOfCookie.value;
+    return this.stateOfCookie?.value || false;
   }
 }

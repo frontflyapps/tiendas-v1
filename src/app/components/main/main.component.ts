@@ -139,6 +139,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
     const tempFlag = JSON.parse(localStorage.getItem('language'));
     this.flag = tempFlag ? tempFlag : this.flags[0];
+
     this.currencies = this.currencyService.getCurrencies();
     this.currency = this.currencyService.getCurrency();
 
