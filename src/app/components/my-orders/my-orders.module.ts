@@ -1,7 +1,6 @@
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
 import { CancelOrderComponent } from './cancel-order/cancel-order.component';
-import { NgpImageLazyLoadModule } from 'ngp-lazy-image';
 import { MatCardModule } from '@angular/material/card';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -25,11 +24,11 @@ import { MatSelectModule } from '@angular/material/select';
 import { MyOrdersRoutingModule } from './my-orders-routing.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
-import { NgpMaterialRatingModule } from 'ngp-material-rating';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { DialogBidaiondoCancelToPayComponent } from './dialog-bidaiondo-cancel-to-pay/dialog-bidaiondo-cancel-to-pay.component';
 import { EditOrderComponent } from './edit-order/edit-order.component';
+import { GuachosRatingModule } from 'guachos-rating';
 
 ///////////////////////////////////////////////////////////////////
 
@@ -56,10 +55,9 @@ import { EditOrderComponent } from './edit-order/edit-order.component';
     MatCardModule,
     MatTableModule,
     MatCheckboxModule,
-    NgpMaterialRatingModule,
-    NgpImageLazyLoadModule,
     MatDialogModule,
     MatFormFieldModule,
+    GuachosRatingModule,
   ],
   declarations: [MyOrdersComponent, CancelOrderComponent, DialogBidaiondoCancelToPayComponent, EditOrderComponent],
   entryComponents: [CancelOrderComponent, DialogBidaiondoCancelToPayComponent, EditOrderComponent],

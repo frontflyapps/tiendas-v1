@@ -3,11 +3,11 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { LoggedInUserService } from 'src/app/core/services/loggedInUser/logged-in-user.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ImagePickerConf } from 'ngp-image-picker';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { RegionsService } from '../../../core/services/regions/regions.service';
 import { BusinessService } from '../../../core/services/business/business.service';
+import { ImagePickerConf } from 'guachos-image-picker';
 
 @Component({
   selector: 'app-become-a-seller',

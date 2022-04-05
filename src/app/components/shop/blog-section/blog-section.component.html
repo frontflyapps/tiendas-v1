@@ -4,10 +4,10 @@
       <div class='info'>
         <div class='img-box'>
           <a [routerLink]="['/blog',article.id]">
-            <img *ngIf='article.image' [src]='imageUrl + article.image' alt='' ngp-lazy ngp-threshold='0.1'>
+            <img *ngIf='article.image' [src]='imageUrl + article.image' alt='' >
           </a>
 
-          <img *ngIf='!article.image' alt='' ngp-lazy ngp-threshold='0.1' src='../../../../assets/images/noImage.jpg'>
+          <img *ngIf='!article.image' alt='' src='assets/images/noImage.jpg'>
         </div>
         <div class='text-box' fxLayout='column'>
           <h4>{{utilsService.parserLanguage(article.title, language)}}</h4>
@@ -23,10 +23,10 @@
       <div class='info'>
         <div class='img-box'>
           <a [routerLink]="['/blog']" [routerLink]="['/blog',article.id]">
-            <img *ngIf='article.image' [src]='imageUrl + article.image' alt='' ngp-lazy ngp-threshold='0.1'>
+            <img *ngIf='article.image' [src]='imageUrl + article.image' alt='' >
           </a>
 
-          <img *ngIf='!article.image' alt='' ngp-lazy ngp-threshold='0.1' src='../../../../assets/images/noImage.jpg'>
+          <img *ngIf='!article.image' alt='' src='assets/images/noImage.jpg'>
         </div>
         <div class='text-box' fxLayout='column'>
           <h4 class='module line-clamp mb-2'

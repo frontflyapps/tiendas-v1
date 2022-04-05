@@ -17,16 +17,12 @@
                 [alt]="product.name[language] ? product.name[language] : product.name['es']"
                 [src]='imageUrl + product.Images[0].image'
                 class='imageProduct'
-                ngp-lazy
-                ngp-threshold='0.1'
                 onerror="this.onerror=null;this.src='assets/images/noImage.jpg';"
               />
               <img
                 *ngIf='!(product.Images && product.Images.length)'
                 alt='No Image'
                 class='imageProduct'
-                ngp-lazy
-                ngp-threshold='0.1'
                 src='assets/images/noImage.jpg'
               />
             </a>
@@ -125,8 +121,6 @@
                 [src]='imageUrl + product.Images[0].image'
                 alt='Product Image'
                 class='imageProduct'
-                ngp-lazy
-                ngp-threshold='0.1'
                 onerror="this.onerror=null;this.src='assets/images/noImage.jpg';"
               />
 
@@ -134,8 +128,6 @@
                 *ngIf='!(product.Images && product.Images.length)'
                 alt='Product Image'
                 class='imageProduct'
-                ngp-lazy
-                ngp-threshold='0.1'
                 src='assets/images/noImage.jpg'
               />
             </a>

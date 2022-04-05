@@ -9,7 +9,7 @@ import { AuthenticationService } from '../../../core/services/authentication/aut
 import { NgxSpinnerService } from 'ngx-spinner';
 import { UtilsService } from '../../../core/services/utils/utils.service';
 import { TranslateService } from '@ngx-translate/core';
-import { ImagePickerConf } from 'ngp-image-picker';
+import { ImagePickerConf } from 'guachos-image-picker';
 
 @Component({
   selector: 'app-edit-profile',

@@ -17,7 +17,6 @@ import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { NgpMaterialRatingModule } from './../shared/ngp-material-rating/ngp-material-rating.module';
 import { ConfirmationDialogFrontModule } from '../shared/confirmation-dialog-front/confirmation-dialog-front.module';
 
 @NgModule({
@@ -33,7 +32,6 @@ import { ConfirmationDialogFrontModule } from '../shared/confirmation-dialog-fro
     MatCardModule,
     MatTooltipModule,
     MatAutocompleteModule,
-    NgpMaterialRatingModule,
     MatDialogModule,
     MatChipsModule,
     MatListModule,
