@@ -42,7 +42,6 @@ export class BrandsComponent implements OnInit, OnDestroy {
   }
 
   @Input() set categoriesToSelectBrands(value) {
-    debugger;
     if (this.categories != value) {
       this.categories = value;
       this.getBrands(value);

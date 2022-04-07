@@ -26,11 +26,13 @@ export class RequestCookieSecureService {
 
   public async requestCookiesSecure() {
     await this.rq()
-      .then()
+      .then(() => {
+        this.globalStateOfCookieService.stateOfCookie.next(true);
+      })
       .catch(function (error) {
         console.error('Cookies Requested Error', error);
       });
-    this.globalStateOfCookieService.stateOfCookie.next(true);
+
     //  this.rq()
     //     .pipe(takeUntil(this.unsubscribeAll))
     //     .subscribe(
