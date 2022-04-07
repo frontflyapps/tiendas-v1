@@ -662,7 +662,7 @@
 
                     <!-- ============================================ -->
                     <!-- INFO DIRECCION DEL NEGOCIO -->
-                    <div *ngIf="!showShipping && buyProducts.length > 0" class="mb-3" fxLayout="column">
+                    <div *ngIf="!showShipping && buyProducts.length > 0 && hasPickUpPlace" class="mb-3" fxLayout="column">
                       <p class="mat-body-2 my-2" style="text-transform: uppercase">
                         {{ 'Recogida' | translate }}
                       </p>

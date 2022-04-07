@@ -137,6 +137,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   form: FormGroup;
   selectedDataPay: any = null;
   loadingCart = true;
+  hasPickUpPlace = false;
 
   queryCountries: IPagination = {
     limit: 1000,
@@ -366,6 +367,13 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       .then((data) => {
         this.cart = data.Cart;
         this.buyProducts = data.CartItems || [];
+        ///*Check if have to show pick up place label*///
+        if(data.CartItems.filter(item => item.Product.type ==='physical').length > 0){
+          this.hasPickUpPlace = true;
+        }else {
+          this.hasPickUpPlace = false;
+        }
+        ////
         this.dataSource = new MatTableDataSource(this.buyProducts);
         this.marketCard =
           this.buyProducts && this.buyProducts.length > 0 ? this.buyProducts[0].Product.market : MarketEnum.NATIONAL;
