@@ -498,7 +498,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.updateValidatorsForChangeNationality(this.onlyCubanPeople);
     this.subsToTransfermovilChange();
 
-    this.form.markAllAsTouched();
+    // this.form.markAllAsTouched();
     this.form.valueChanges.subscribe((data) => {
       console.log(this.form);
     });

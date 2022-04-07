@@ -193,7 +193,7 @@ export class MyAccountComponent implements OnInit {
       // recaptcha: ['', Validators.required],
       passwords: this.fromPassRegister,
     });
-    this.registrationForm.markAllAsTouched();
+    // this.registrationForm.markAllAsTouched();
   }
 
   createValidationForm() {

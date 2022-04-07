@@ -163,7 +163,7 @@ export class MyContactsComponent implements OnInit, OnDestroy {
       ProvinceId: [null, [Validators.required]],
     });
 
-    this.form.markAllAsTouched();
+    // this.form.markAllAsTouched();
   }
 
   genSubxProvince() {
