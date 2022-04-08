@@ -12,7 +12,7 @@ export interface IContactBody {
   ProvinceId: number;
   MunicipalityId: number;
   address: string;
-  identification: string;
+  dni: string;
   phone: string;
 }
 

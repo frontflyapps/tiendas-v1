@@ -188,11 +188,11 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     public domSanitizer: DomSanitizer,
     public loggedInUserService: LoggedInUserService,
     private showToastr: ShowToastrService,
-    private orderSevice: MyOrdersService,
+    private orderService: MyOrdersService,
     private dialog: MatDialog,
     private socketIoService: SocketIoService,
     private activateRoute: ActivatedRoute,
-    private shppingService: TaxesShippingService,
+    private shippingService: TaxesShippingService,
     private configurationService: ConfigurationService,
     private currencyCheckoutPipe: CurrencyCheckoutPipe,
     private metaService: MetaService,
@@ -250,7 +250,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       }
     });
     this.fetchData();
-    // ////////////// Subscripciones para el update del carrito /////////////////
+
+    /**
+     * Subscriptions for cart update
+     */
     this.cartService.$cartItemsUpdated.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {
       if (data.length > 0) {
         this.theBusiness = data[0].Business;
@@ -367,13 +370,15 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       .then((data) => {
         this.cart = data.Cart;
         this.buyProducts = data.CartItems || [];
-        ///*Check if have to show pick up place label*///
+        /**
+         * Check if the Pick-Up-Place label has to be displayed
+         **/
         if(data.CartItems.filter(item => item.Product.type ==='physical').length > 0){
           this.hasPickUpPlace = true;
         }else {
           this.hasPickUpPlace = false;
         }
-        ////
+
         this.dataSource = new MatTableDataSource(this.buyProducts);
         this.marketCard =
           this.buyProducts && this.buyProducts.length > 0 ? this.buyProducts[0].Product.market : MarketEnum.NATIONAL;
@@ -457,10 +462,17 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   buildForm() {
     this.selectedDataPay = this.loggedInUserService._getDataFromStorage('payData');
+    console.log('this.loggedInUserService._getDataFromStorage', this.selectedDataPay)
     this.form = this.fb.group({
       name: [this.selectedDataPay?.name || null, [Validators.required]],
       lastName: [this.selectedDataPay?.lastName || null, [Validators.required]],
       address: [this.selectedDataPay?.address || null, [Validators.required]],
+      // address: this.fb.group({
+      //   street: [this.selectedDataPay?.address.street || null, [Validators.required]],
+      //   number: [this.selectedDataPay?.address.number || null, [Validators.required]],
+      //   between: [this.selectedDataPay?.address.between || null, [Validators.required]]
+      //   }
+      // ),
       address2: [this.selectedDataPay?.address2 || null, []],
       city: [this.selectedDataPay?.city || null, [Validators.required]],
       regionProvinceState: [this.selectedDataPay?.regionProvinceState || null, [Validators.required]],
@@ -530,7 +542,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     };
     if (data.CountryId && data.MunicipalityId && data.ProvinceId) {
       this.inLoading = true;
-      this.shppingService.getShippinginCheckout(data).subscribe(
+      this.shippingService.getShippinginCheckout(data).subscribe(
         (dataShipping) => {
           this.shippingData = dataShipping.shippings;
           this.canBeDelivery = dataShipping.canBeDelivery;
@@ -928,7 +940,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       .listen('payment-confirmed')
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((data) => {
-        this.orderSevice.$orderItemsUpdated.next();
+        this.orderService.$orderItemsUpdated.next();
         this.getCartData();
       });
 
@@ -952,7 +964,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   onGoToPayment() {
-    //save contact data**
     this.saveRecieverData(this.form.value);
     this.showInfoDataToPay = false;
     this.showPayment = true;
@@ -964,20 +975,24 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     document.documentElement.scrollTop = 0;
   }
 
+  /**
+   * Save Contact Data on localStorage
+   */
   saveRecieverData(data) {
     let recieverData: IContactBody = {
       name: data.name,
       lastName: data.lastName,
       email: data.email,
       phone: data.phone,
+      dni: data.dni,
       address: data.address,
       ProvinceId: data.ProvinceId,
       MunicipalityId: data.MunicipalityId,
-      identification: data.dni,
     };
-    this.contactsService.create(recieverData).subscribe((contactRes) => {
-      this.contactsService.allContacts.push({ ...contactRes.data });
-    });
+    localStorage.setItem('payData', JSON.stringify(recieverData));
+    // this.contactsService.create(recieverData).subscribe((contactRes) => {
+    //   this.contactsService.allContacts.push({ ...contactRes.data });
+    // });
   }
 
   private applyResolution() {
