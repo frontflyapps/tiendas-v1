@@ -43,22 +43,22 @@
     </div>
 
     <div fxLayout="row">
-      <a #langMenuTrigger="matMenuTrigger"
-         [matMenuTriggerFor]="langMenu"
-         class="item-selector mx-3 my-2"
-         fxLayoutAlign="start center"
-         mat-button>
-        <img [src]="flag?.image" alt="flag image" width="18" />
-        <mat-icon>arrow_drop_down</mat-icon>
-        <span>{{ flag?.name }}</span>
-      </a>
-      <mat-menu #langMenu="matMenu" [overlapTrigger]="false" class="app-dropdown" xPosition="before">
-      <span>
-        <button (click)="changeLang(flag)" *ngFor="let flag of flags" mat-menu-item>
-          <img [src]="flag.image" alt="flag image" width="18" /> {{ flag.name }}
-        </button>
-      </span>
-      </mat-menu>
+<!--      <a #langMenuTrigger="matMenuTrigger"-->
+<!--         [matMenuTriggerFor]="langMenu"-->
+<!--         class="item-selector mx-3 my-2"-->
+<!--         fxLayoutAlign="start center"-->
+<!--         mat-button>-->
+<!--        <img [src]="flag?.image" alt="flag image" width="18" />-->
+<!--        <mat-icon>arrow_drop_down</mat-icon>-->
+<!--        <span>{{ flag?.name }}</span>-->
+<!--      </a>-->
+<!--      <mat-menu #langMenu="matMenu" [overlapTrigger]="false" class="app-dropdown" xPosition="before">-->
+<!--      <span>-->
+<!--        <button (click)="changeLang(flag)" *ngFor="let flag of flags" mat-menu-item>-->
+<!--          <img [src]="flag.image" alt="flag image" width="18" /> {{ flag.name }}-->
+<!--        </button>-->
+<!--      </span>-->
+<!--      </mat-menu>-->
 
       <a [routerLink]="['/contact-us']" class="item-selector mx-3 my-2" mat-button>
         {{'Contáctenos'|translate}}
