@@ -100,13 +100,13 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       logo: 'assets/images/cards/transfermovil_logo.png',
       market: 'national',
     },
-    // { id: 'enzona', name: 'Enzona', logo: 'assets/images/cards/enzona.jpeg', market: 'national' },
     {
       id: 'transfermovil',
       name: 'Transfermovil',
       logo: 'assets/images/cards/transfermovil_logo.png',
       market: 'international',
     },
+    // { id: 'enzona', name: 'Enzona', logo: 'assets/images/cards/enzona.jpeg', market: 'national' },
     // { id: 'visa', name: 'Visa', logo: 'assets/images/cards/visa_logo.png', market: 'international' },
     // { id: 'express', name: 'American Express', logo: 'assets/images/cards/american_express_logo.png', market: 'international' },
     // { id: 'masterCard', name: 'MasterCard', logo: 'assets/images/cards/mastercard_logo.png', market: 'international' },
@@ -176,6 +176,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   };
   private applyStyle: boolean;
   private paymentType: any;
+
+  customFields: any;
 
   constructor(
     public cartService: CartService,
@@ -370,6 +372,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       .then((data) => {
         this.cart = data.Cart;
         this.buyProducts = data.CartItems || [];
+
         /**
          * Check if the Pick-Up-Place label has to be displayed
          **/
@@ -598,6 +601,16 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   ///////////////////////////////
   fetchData() {
+    /**
+     * Getting custom fields by business
+     */
+    this.configurationService.getCustomFields().subscribe((data) => {
+      this.customFields = data.data;
+      console.log('***customFields***',this.customFields);
+    });
+    /**
+     * Getting location data
+     */
     this.regionService.getAllCountries(this.queryCountries).subscribe(
       (data) => {
         this.allCountries = data.data.filter((item) => item.name.es != undefined);
@@ -615,7 +628,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         this.utilsService.errorHandle(error);
       },
     );
-    this.regionService.getProvinces().subscribe((data) => {
+    this.regionService.geBusinesstProvinces().subscribe((data) => {
       this.allProvinces = data.data;
     });
     this.regionService.getMunicipalities().subscribe((data) => {
