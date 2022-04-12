@@ -3,7 +3,15 @@ import { DialogNoCartSelectedComponent } from '../no-cart-selected/no-cart-selec
 import { ActivatedRoute } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { PayService } from '../../../core/services/pay/pay.service';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ValidationErrors,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 import { Cart, CartItem, IBusiness } from '../../../modals/cart-item';
@@ -93,6 +101,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['product', 'quantity', 'price', 'action'];
   amount: number;
 
+  shippingSelected: any;
+
   payments: any[] = [
     {
       id: 'transfermovil',
@@ -157,6 +167,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   finalPrice = 1080;
   shippingData: any[] = [];
   canBeDelivery = true;
+  delivery=false;
   marketCard: string;
   showShipping = false;
   rate: any;
@@ -178,6 +189,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   private paymentType: any;
 
   customFields: any;
+  fields: any;
+  shippingIsRequired = false;
 
   constructor(
     public cartService: CartService,
@@ -295,29 +308,66 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.form.controls['ProvinceId'].valueChanges.subscribe((data) => {
       this.calculateShippingRequired();
       this.onSelectProvinceByContactBtn(data);
+      /** Validate contact province most be equal to shipping province **/
+      if(this.showShipping && this.shippingSelected && data != this.shippingSelected.shippingItems[0].Shipping.ProvinceId){
+        this.form.controls['ProvinceId'].setErrors({forbiddenProvince: {value: data}});
+        // this.shippingSelected = null;
+      }
     });
 
     this.form.controls['MunicipalityId'].valueChanges.subscribe((data) => {
       this.calculateShippingRequired();
     });
 
-    this.form.controls['shippingRequired'].valueChanges.subscribe((value) => {
-      this.showShipping = value;
-      if (value) {
-        this.form.controls['ShippingBusinessId'].setValidators(Validators.required);
-        this.onRecalculateShipping();
-      } else {
-        this.form.controls['ShippingBusinessId'].setValidators(null);
-        this.shippingData = [];
-        this.canBeDelivery = false;
-      }
-      this.form.controls['ShippingBusinessId'].updateValueAndValidity();
-    });
+    // this.form.controls['shippingRequired'].valueChanges.subscribe((value) => {
+    //   debugger;
+    //   this.showShipping = value;
+    //   if (value) {
+    //     this.form.controls['ShippingBusinessId'].setValidators(Validators.required);
+    //     this.onRecalculateShipping();
+    //   } else {
+    //     this.form.controls['ShippingBusinessId'].setValidators(null);
+    //     this.shippingData = [];
+    //     // this.canBeDelivery = false;
+    //   }
+    //   this.form.controls['ShippingBusinessId'].updateValueAndValidity();
+    // });
 
     this.form.controls['ShippingBusinessId'].valueChanges.subscribe((value) => {
       this.getTotalWithShippingIncluded();
     });
     this.validateShippingRequired();
+  }
+
+  onChangeShippingRequired(data){
+    debugger;
+    this.showShipping = data.checked;
+    if (data.checked) {
+      this.form.controls['ShippingBusinessId'].setValidators(Validators.required);
+      this.onRecalculateShipping();
+    } else {
+      this.form.controls['ShippingBusinessId'].setValidators(null);
+      this.shippingData = [];
+      // this.canBeDelivery = false;
+    }
+    this.form.controls['ShippingBusinessId'].updateValueAndValidity();
+  }
+
+  // forbiddenlocationValidator(provinceId: any): ValidatorFn {
+  //   return (control: AbstractControl): ValidationErrors | null => {
+  //     if(provinceId && provinceId !== control.value){
+  //       return {forbiddenProvince: {value: control.value}};
+  //     } else {
+  //       return null;
+  //     }
+  //   };
+  // }
+
+  onShippingSelected(data){
+    this.shippingSelected = data.value;
+    this.form.get('ShippingBusinessId').setValue(data.value);
+    this.form.controls['ProvinceId'].setValue(data.value.shippingItems[0].Shipping.ProvinceId);
+    this.form.controls['MunicipalityId'].setValue(data.value.shippingItems[0].Shipping.MunicipalityId);
   }
 
   private validateShippingRequired() {
@@ -367,12 +417,20 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   public getCartData() {
     this.loadingCart = true;
+    /**/
+    this.shippingData = [];
+    this.canBeDelivery = false;
+    /**/
     this.cartService
       .getCartData({ cartId: this.cartId, cartItemIds: this.cartItemIds })
       .then((data) => {
         this.cart = data.Cart;
         this.buyProducts = data.CartItems || [];
-
+        /** Check if is required shipping by business **/
+        this.shippingIsRequired = data.Cart.shippingRequired;
+        if(this.shippingIsRequired){
+          this.form.controls['shippingRequired'].setValidators([Validators.required]);
+        }
         /**
          * Check if the Pick-Up-Place label has to be displayed
          **/
@@ -412,6 +470,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       });
   }
 
+  getShippingSelectedPrice(){
+      return this.shippingSelected.totalPrice;
+  }
+
   public getTotalWithShippingIncludedCurrency(): any {
     let total = this.getTotalWithShippingIncluded();
     return this.currencyCheckoutPipe.transform({
@@ -422,10 +484,11 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   public getTotalWithShippingIncluded(): any {
+    debugger;
     let total = this.getTotalAmout() as Number;
     let ShippingBusinessId = this.form.get('ShippingBusinessId').value;
     if (ShippingBusinessId) {
-      let ShippingByBusiness = this.shippingData?.find((i) => i.BusinessId == ShippingBusinessId);
+      let ShippingByBusiness = this.shippingData?.find((i) => i.BusinessId == ShippingBusinessId.BusinessId);
       return total + (ShippingByBusiness?.totalPrice || 0.0);
     } else {
       return total;
@@ -465,7 +528,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   buildForm() {
     this.selectedDataPay = this.loggedInUserService._getDataFromStorage('payData');
-    console.log('this.loggedInUserService._getDataFromStorage', this.selectedDataPay)
     this.form = this.fb.group({
       name: [this.selectedDataPay?.name || null, [Validators.required]],
       lastName: [this.selectedDataPay?.lastName || null, [Validators.required]],
@@ -512,11 +574,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     }
     this.updateValidatorsForChangeNationality(this.onlyCubanPeople);
     this.subsToTransfermovilChange();
-
-    // this.form.markAllAsTouched();
-    this.form.valueChanges.subscribe((data) => {
-      console.log(this.form);
-    });
   }
 
   subsToTransfermovilChange() {
@@ -536,26 +593,39 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   onRecalculateShipping() {
-    let data = {
-      CountryId: this.form?.get('CountryId').value,
-      MunicipalityId: this.form?.get('MunicipalityId').value,
-      ProvinceId: this.form?.get('ProvinceId').value,
-      ProductIds: this.buyProducts?.map((i) => i.ProductId),
-      CartId: +this.cartId,
-    };
-    if (data.CountryId && data.MunicipalityId && data.ProvinceId) {
+    if(this.shippingData.length === 0){
+      let dataCartId = {cartId: this.cartId}
       this.inLoading = true;
-      this.shippingService.getShippinginCheckout(data).subscribe(
-        (dataShipping) => {
-          this.shippingData = dataShipping.shippings;
-          this.canBeDelivery = dataShipping.canBeDelivery;
+      this.cartService.getShippingCart(dataCartId).subscribe((item) => {
+        console.log('getShippingCart', item);
+        this.shippingData = item.shippings;
+        this.canBeDelivery = item.canBeDelivery;
+        this.inLoading = false;
+      },(error) => {
           this.inLoading = false;
-        },
-        (error) => {
-          this.inLoading = false;
-        },
-      );
+        });
     }
+
+    // let data = {
+    //   CountryId: this.form?.get('CountryId').value,
+    //   MunicipalityId: this.form?.get('MunicipalityId').value,
+    //   ProvinceId: this.form?.get('ProvinceId').value,
+    //   ProductIds: this.buyProducts?.map((i) => i.ProductId),
+    //   CartId: +this.cartId,
+    // };
+    // if (data.CountryId && data.MunicipalityId && data.ProvinceId) {
+      // this.inLoading = true;
+      // this.shippingService.getShippinginCheckout(data).subscribe(
+      //   (dataShipping) => {
+      //     // this.shippingData = dataShipping.shippings;
+      //     // this.canBeDelivery = dataShipping.canBeDelivery;
+      //     this.inLoading = false;
+      //   },
+      //   (error) => {
+      //     this.inLoading = false;
+      //   },
+      // );
+    // }
   }
 
   onSelectNationality(data) {
@@ -602,12 +672,33 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   ///////////////////////////////
   fetchData() {
     /**
-     * Getting custom fields by business
+     * Getting shippings
      */
-    this.configurationService.getCustomFields().subscribe((data) => {
-      this.customFields = data.data;
-      console.log('***customFields***',this.customFields);
+    let dataCartId = {cartId: this.cartId}
+    this.inLoading = true;
+    this.cartService.getShippingCart(dataCartId).subscribe((item) => {
+      this.shippingData = item.shippings;
+      this.canBeDelivery = item.canBeDelivery;
+      this.inLoading = false;
+    },(error) => {
+      this.inLoading = false;
     });
+
+    /**
+     * Getting custom fields by cartId
+     */
+    this.configurationService.getCustomFields(dataCartId).subscribe((data) => {
+      this.customFields = data.data;
+      if(this.customFields?.length > 0){
+        for(var val of this.customFields){
+          this.fields = val.data;
+          this.fields.forEach((item)=>{
+            this.form.addControl(item.name, new FormControl('', item.required ? Validators.required : []));
+          });
+        }
+      }
+    });
+
     /**
      * Getting location data
      */
@@ -628,7 +719,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         this.utilsService.errorHandle(error);
       },
     );
-    this.regionService.geBusinesstProvinces().subscribe((data) => {
+    this.regionService.geBusinessProvinces(dataCartId).subscribe((data) => {
       this.allProvinces = data.data;
     });
     this.regionService.getMunicipalities().subscribe((data) => {
@@ -672,6 +763,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   onPayOrder() {
     this.scrollTopDocument();
     this.loadingPayment = true;
+    if(this.form.get('ShippingBusinessId').value){
+      this.form.get('ShippingBusinessId').setValue(this.form.get('ShippingBusinessId').value.BusinessId);
+    }
     const data = { ...this.form.value };
     data.phone = '53' + data.phone;
 

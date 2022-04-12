@@ -23,6 +23,71 @@
         ngClass.sm="pr-2"
         ngClass.xs="pr-0"
       >
+        <ng-container *ngIf='canBeDelivery'>
+          <h3 class='grey-800'>{{ 'Shipping Details' | translate}}</h3>
+          <!-- SHIPPING DETAILS -->
+          <div fxLayout fxLayoutAlign="start center">
+            <mat-checkbox
+              ngClass.xs="mb-2"
+              fxFlexOrder.xs="1"
+              style="margin-bottom: 12px"
+              (change)="onChangeShippingRequired($event)"
+              [formControl]="form.get('shippingRequired')"
+            >
+              <span class="mat-body-2">{{ 'Shipping required' | translate }}</span>
+            </mat-checkbox>
+          </div>
+          <div
+            *ngIf="showShipping"
+            class="w-100 mb-3"
+            fxLayout="column"
+            fxLayoutAlign="start start"
+            fxLayoutGap="gappx"
+            style="position: relative"
+          >
+            <div *ngIf="inLoading" class="loading-shade" style="height: 100%">
+              <mat-spinner *ngIf="inLoading" [diameter]="40"></mat-spinner>
+            </div>
+            <mat-radio-group [formControl]="form.get('ShippingBusinessId')" class="w-100" (change)='onShippingSelected($event)'>
+              <mat-radio-button
+                *ngFor="let shipping of shippingData"
+                [value]="shipping"
+                class="w-100"
+                matTooltip="{{ shipping?.Business?.name }}"
+                style="height: 50px"
+              >
+                <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="gappx">
+                  <div fxLayoutAlign="start center">
+                    <img
+                      [src]="imageUrl + shipping?.Business?.logo"
+                      onerror="this.onerror=null;this.src='assets/images/noImage.jpg';"
+                      style="height: 32px; width: 32px; border-radius: 50%; object-fit: cover; margin-left: 8px"
+                    />
+
+                    <div fxLayout='column'>
+                     <span class="ml-2 mat-caption" fxHide.xs style="color: black">
+                      {{ shipping.shippingItems[0].Shipping.Province.name }}, {{ shipping.shippingItems[0].Shipping.Municipality.name }}
+                    </span>
+                      <div fxLayout='row'>
+                    <span class="ml-2 mat-caption" fxHide.xs style="color: black">
+                      {{ 'Entrega a través de ' | translate }}
+                    </span>
+                        <span class="ml-2 mat-caption" style="color: black"> ({{ shipping?.Business?.name }}) </span>
+                      </div>
+                    </div>
+
+                  </div>
+                  <span class="taxAmount" fxFlex="35" style="font-size: 20px"
+                  >{{ shipping.totalPrice || 0 | currencyMarket: marketCard }}
+                      </span>
+                </div>
+              </mat-radio-button>
+            </mat-radio-group>
+
+          </div>
+          <!------------------->
+        </ng-container>
+
         <div *ngIf="!loadingPayment" class="header-title">
           <h3 class="grey-800" ngClass.gt-sm="h2" ngClass.xs="h4">{{ 'Billing Details' | translate }}</h3>
         </div>
@@ -191,6 +256,9 @@
                   </mat-error>
                 </mat-form-field>
               </div>
+              <mat-error *ngIf="form.controls['ProvinceId'].hasError('forbiddenProvince')">
+                {{ '**Esta localización no coincide con la del envío seleccionado.**' | translate }}
+              </mat-error>
             </ng-container>
 
             <!-- SOLO PARA EXTRANGEROS -->
@@ -333,6 +401,30 @@
                   }}</strong>
                 </mat-error>
               </mat-form-field>
+<!--              <ng-container *ngIf='customFields?.length >0 && fields'>-->
+<!--                <p class="mat-body-2 my-2" style="text-transform: uppercase">-->
+<!--                  {{ "Datos especiales" | translate }}-->
+<!--                  <mat-icon-->
+<!--                    class="iconHelp"-->
+<!--                    matTooltip="{{-->
+<!--                    'Datos especiales que solicita el negocio.' | translate-->
+<!--                  }}"-->
+<!--                    style="cursor: pointer"-->
+<!--                  >help-->
+<!--                  </mat-icon>-->
+<!--                </p>-->
+<!--                <mat-form-field *ngFor='let element of fields' appearance='outline'>-->
+<!--                  <mat-label>{{ element?.name }}</mat-label>-->
+<!--                  <input-->
+<!--                    [formControl]="this.form.controls[element?.name]"-->
+<!--                    matInput-->
+<!--                    placeholder="{{ element?.name }}"-->
+<!--                  />-->
+<!--                  <mat-error *ngIf="form.controls[element?.name].hasError('required')">-->
+<!--                    {{ element?.name }} <strong>{{ 'is required' | translate }}</strong>-->
+<!--                  </mat-error>-->
+<!--                </mat-form-field>-->
+<!--              </ng-container>-->
             </div>
           </div>
 
@@ -627,6 +719,16 @@
 
             <!-- ============================================ -->
             <!-- TARIFAS DE ENVIO -->
+            <ul  *ngIf="showShipping" class='total'>
+              <li>
+
+                {{ 'Tarifa de envío' | translate }}:
+
+                <span class="count px-2">
+                          {{ getShippingSelectedPrice() | currencyMarket: marketCard  }}
+                        </span>
+              </li>
+            </ul>
             <div
               *ngIf="!loadingCart"
               class="mb-3 pb-3"
@@ -644,13 +746,6 @@
                 ngClass.gt-xs="pt-1"
               >
                 <div fxFlexOrder.xs="2">
-                  <p
-                    *ngIf="showShipping"
-                    matTooltip="{{ 'Sistemas de precio del envio de sus productos a la localización brindada' }}"
-                    style="font-size: 16px; font-weight: 500; margin-bottom: 12px !important"
-                  >
-                    {{ 'Seleccione una tarifa de envío*' | translate }}:
-                  </p>
 
                   <!-- ------------------------------------------------- -->
                   <!-- DESCRIPTION OF ADDRESS BUSINESS -->
@@ -687,85 +782,86 @@
                   </ng-container>
                 </div>
 
-                <div fxLayout fxLayoutAlign="start center">
-                  <mat-icon
-                    (click)="detailsShipping()"
-                    *ngIf="form.controls['ShippingBusinessId'] && form.controls['ShippingBusinessId'].value"
-                    class="mr-3"
-                    matTooltip="{{ 'Shipping Rates Details' | translate }}"
-                    style="margin-bottom: 12px; font-size: 25px; cursor: pointer"
-                    >visibility
-                  </mat-icon>
-                  <!--                  <mat-checkbox-->
-                  <!--                    ngClass.xs="mb-2"-->
-                  <!--                    fxFlexOrder.xs="1"-->
-                  <!--                    style="margin-bottom: 12px"-->
-                  <!--                    [formControl]="form.get('shippingRequired')"-->
-                  <!--                  >-->
-                  <!--                    <span class="mat-body-2">{{ 'Shipping required' | translate }}</span>-->
-                  <!--                  </mat-checkbox>-->
-                </div>
+<!--                <div fxLayout fxLayoutAlign="start center">-->
+<!--                  <mat-icon-->
+<!--                    (click)="detailsShipping()"-->
+<!--                    *ngIf="form.controls['ShippingBusinessId'] && form.controls['ShippingBusinessId'].value"-->
+<!--                    class="mr-3"-->
+<!--                    matTooltip="{{ 'Shipping Rates Details' | translate }}"-->
+<!--                    style="margin-bottom: 12px; font-size: 25px; cursor: pointer"-->
+<!--                    >visibility-->
+<!--                  </mat-icon>-->
+<!--                                    <mat-checkbox-->
+<!--                                      ngClass.xs="mb-2"-->
+<!--                                      fxFlexOrder.xs="1"-->
+<!--                                      style="margin-bottom: 12px"-->
+<!--                                      [formControl]="form.get('shippingRequired')"-->
+<!--                                    >-->
+<!--                                      <span class="mat-body-2">{{ 'Shipping required' | translate }}</span>-->
+<!--                                    </mat-checkbox>-->
+<!--                </div>-->
               </div>
 
-              <div
-                *ngIf="showShipping"
-                class="w-100"
-                fxLayout="column"
-                fxLayoutAlign="start start"
-                fxLayoutGap="gappx"
-                style="position: relative"
-              >
-                <div *ngIf="inLoading" class="loading-shade" style="height: 100%">
-                  <mat-spinner *ngIf="inLoading" [diameter]="40"></mat-spinner>
-                </div>
-                <mat-radio-group [formControl]="form.get('ShippingBusinessId')" class="w-100">
-                  <mat-radio-button
-                    *ngFor="let shipping of shippingData"
-                    [value]="shipping.BusinessId"
-                    class="w-100"
-                    f
-                    matTooltip="{{ shipping?.Business?.name }}"
-                    style="height: 50px"
-                  >
-                    <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="gappx">
-                      <div fxLayoutAlign="start center">
-                        <img
-                          [src]="imageUrl + shipping?.Business?.logo"
-                          onerror="this.onerror=null;this.src='assets/images/noImage.jpg';"
-                          style="height: 32px; width: 32px; border-radius: 50%; object-fit: cover; margin-left: 8px"
-                        />
-                        <span class="ml-2 mat-caption" fxHide.xs style="color: black">
-                          {{ 'Entrega a través de ' | translate }}
-                        </span>
-                        <span class="ml-2 mat-caption" style="color: black"> ({{ shipping?.Business?.name }}) </span>
-                      </div>
+<!--              &lt;!&ndash; SHIPPING DETAILS &ndash;&gt;-->
+<!--              <div-->
+<!--                *ngIf="showShipping"-->
+<!--                class="w-100"-->
+<!--                fxLayout="column"-->
+<!--                fxLayoutAlign="start start"-->
+<!--                fxLayoutGap="gappx"-->
+<!--                style="position: relative"-->
+<!--              >-->
+<!--                <div *ngIf="inLoading" class="loading-shade" style="height: 100%">-->
+<!--                  <mat-spinner *ngIf="inLoading" [diameter]="40"></mat-spinner>-->
+<!--                </div>-->
+<!--                <mat-radio-group [formControl]="form.get('ShippingBusinessId')" class="w-100">-->
+<!--                  <mat-radio-button-->
+<!--                    *ngFor="let shipping of shippingData"-->
+<!--                    [value]="shipping.BusinessId"-->
+<!--                    class="w-100"-->
+<!--                    f-->
+<!--                    matTooltip="{{ shipping?.Business?.name }}"-->
+<!--                    style="height: 50px"-->
+<!--                  >-->
+<!--                    <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="gappx">-->
+<!--                      <div fxLayoutAlign="start center">-->
+<!--                        <img-->
+<!--                          [src]="imageUrl + shipping?.Business?.logo"-->
+<!--                          onerror="this.onerror=null;this.src='assets/images/noImage.jpg';"-->
+<!--                          style="height: 32px; width: 32px; border-radius: 50%; object-fit: cover; margin-left: 8px"-->
+<!--                        />-->
+<!--                        <span class="ml-2 mat-caption" fxHide.xs style="color: black">-->
+<!--                          {{ 'Entrega a través de ' | translate }}-->
+<!--                        </span>-->
+<!--                        <span class="ml-2 mat-caption" style="color: black"> ({{ shipping?.Business?.name }}) </span>-->
+<!--                      </div>-->
 
-                      <span class="taxAmount" fxFlex="35" style="font-size: 20px"
-                        >{{ shipping.totalPrice || 0 | currencyMarket: marketCard }}
-                      </span>
-                    </div>
-                  </mat-radio-button>
-                </mat-radio-group>
+<!--                      <span class="taxAmount" fxFlex="35" style="font-size: 20px"-->
+<!--                        >{{ shipping.totalPrice || 0 | currencyMarket: marketCard }}-->
+<!--                      </span>-->
+<!--                    </div>-->
+<!--                  </mat-radio-button>-->
+<!--                </mat-radio-group>-->
 
-                <ng-container
-                  *ngIf="!this.form.get('ProvinceId').valid && !this.form.get('MunicipalityId').valid; else showMessage"
-                >
-                  <span class="my-2" style="font-size: 16px; font-weight: 500; color: #f44336">
-                    {{ '*These products cannot be shipped specify a location' | translate }}
-                  </span>
-                </ng-container>
-                <ng-template #showMessage>
-                  <ng-container
-                    *ngIf="
-                      !canBeDelivery || !this.form.get('ProvinceId').valid || !this.form.get('MunicipalityId').valid
-                    "
-                  >
-                    <span class="my-2" style="font-size: 16px; font-weight: 500; color: #f44336">
-                      {{ '*Estos productos no pueden ser enviados a la localización proporcionada' | translate }}
-                    </span>
-                  </ng-container>
-                </ng-template>
-              </div>
+<!--                <ng-container-->
+<!--                  *ngIf="!this.form.get('ProvinceId').valid && !this.form.get('MunicipalityId').valid; else showMessage"-->
+<!--                >-->
+<!--                  <span class="my-2" style="font-size: 16px; font-weight: 500; color: #f44336">-->
+<!--                    {{ '*These products cannot be shipped specify a location' | translate }}-->
+<!--                  </span>-->
+<!--                </ng-container>-->
+<!--                <ng-template #showMessage>-->
+<!--                  <ng-container-->
+<!--                    *ngIf="-->
+<!--                      !canBeDelivery || !this.form.get('ProvinceId').valid || !this.form.get('MunicipalityId').valid-->
+<!--                    "-->
+<!--                  >-->
+<!--                    <span class="my-2" style="font-size: 16px; font-weight: 500; color: #f44336">-->
+<!--                      {{ '*Estos productos no pueden ser enviados a la localización proporcionada' | translate }}-->
+<!--                    </span>-->
+<!--                  </ng-container>-->
+<!--                </ng-template>-->
+<!--              </div>-->
             </div>
 
             <ng-container *ngIf="loadingCart">

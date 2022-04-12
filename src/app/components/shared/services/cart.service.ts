@@ -25,6 +25,7 @@ export class CartService implements OnDestroy {
 
   url = environment.apiUrl + 'cart';
   urlCheckoutData = environment.apiUrl + 'checkout';
+  urlShipping = environment.apiUrl + 'cart/shipping';
 
   public cartExpiredTime = '';
   public dateCreatedAtCart = '';
@@ -683,6 +684,10 @@ export class CartService implements OnDestroy {
 
   deleteCartItem(data): Promise<any> {
     return this.httpClient.post<any>(this.url + '/delete', data).toPromise();
+  }
+
+  getShippingCart(cartId: any): Observable<any> {
+    return this.httpClient.post<any>(this.urlShipping, cartId);
   }
 
   getCheckoutData(params?): Observable<any> {
