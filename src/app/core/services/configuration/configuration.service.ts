@@ -51,7 +51,9 @@ export class ConfigurationService {
    * Obtain custom fields of a business according to cartId
    */
   getCustomFields(cartId: any){
-    return  this.httpClient.post<any>(this.urlBusinessStructure, cartId);
+    let httpParams = new HttpParams();
+    httpParams = httpParams.append('cartId', cartId.cartId);
+    return  this.httpClient.get<any>(this.urlBusinessStructure, { params: httpParams });
   }
   // getCustomFields(){
   //   return  this.httpClient.get<any>(this.urlBusinessStructure);

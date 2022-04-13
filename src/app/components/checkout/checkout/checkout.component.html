@@ -66,7 +66,7 @@
 
                     <div fxLayout='column'>
                      <span class="ml-2 mat-caption" fxHide.xs style="color: black">
-                      {{ shipping.shippingItems[0].Shipping.Province.name }}, {{ shipping.shippingItems[0].Shipping.Municipality.name }}
+                      {{ shipping.shippingItems[0]?.Shipping?.Province?.name }}, {{ shipping.shippingItems[0]?.Shipping?.Municipality?.name }}
                     </span>
                       <div fxLayout='row'>
                     <span class="ml-2 mat-caption" fxHide.xs style="color: black">
