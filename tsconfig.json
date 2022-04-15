@@ -14,7 +14,6 @@
     "module": "es2020",
     "moduleResolution": "node",
     "experimentalDecorators": true,
-    "strictTemplates": true,
     "importHelpers": true,
     "target": "es2018",
     "types": [

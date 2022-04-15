@@ -4,13 +4,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { environment } from '../../../../environments/environment';
-import { CUBAN_PHONE_START_5, EMAIL_REGEX, PASS_CLIENT_REGEX } from '../../../core/classes/regex.const';
 import { AuthenticationService } from '../../../core/services/authentication/authentication.service';
 import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-in-user.service';
 import { ShowSnackbarService } from '../../../core/services/show-snackbar/show-snackbar.service';
 import { ShowToastrService } from '../../../core/services/show-toastr/show-toastr.service';
 import { UtilsService } from '../../../core/services/utils/utils.service';
-import { UploadFilesService } from '../../shared/upload-file/upload-files';
 
 @Component({
   selector: 'app-my-account',
@@ -65,16 +63,15 @@ export class MyAccountComponent implements OnInit {
     private fb: FormBuilder,
     private translate: TranslateService,
     private spinner: NgxSpinnerService,
+    public utilsService: UtilsService,
     private router: Router,
     private route: ActivatedRoute,
-    private uploadFilesService: UploadFilesService,
     private showSnackbar: ShowSnackbarService,
     private loggedInUserService: LoggedInUserService,
-    public utilsService: UtilsService,
   ) {
     this.message = '';
-    this.isRegisterToPay = localStorage.getItem('isRegisterToPay') ? true : false;
-    this.isRegisterToBecomeASeller = localStorage.getItem('isRegisterToBecomeASeller') ? true : false;
+    this.isRegisterToPay = !!localStorage.getItem('isRegisterToPay');
+    this.isRegisterToBecomeASeller = !!localStorage.getItem('isRegisterToBecomeASeller');
     localStorage.removeItem('isRegisterToPay');
     localStorage.removeItem('isRegisterToBecomeASeller');
     this.routeToNavigate = this.isRegisterToPay ? '/cart' : this.isRegisterToBecomeASeller ? '/become-a-seller' : '';
@@ -179,8 +176,10 @@ export class MyAccountComponent implements OnInit {
   createRegistrationForm() {
     this.fromPassRegister = this.fb.group(
       {
-        password: [null, [Validators.required, Validators.pattern(PASS_CLIENT_REGEX)]],
-        repeat: [null, [Validators.required, Validators.pattern(PASS_CLIENT_REGEX)]],
+        // password: [null, [Validators.required, Validators.pattern(PASS_CLIENT_REGEX)]],
+        // repeat: [null, [Validators.required, Validators.pattern(PASS_CLIENT_REGEX)]],
+        password: [null, [Validators.required, Validators.minLength(6)]],
+        repeat: [null, [Validators.required, Validators.minLength(6)]],
       },
       { validator: this.matchValidator.bind(this) },
     );
@@ -188,21 +187,20 @@ export class MyAccountComponent implements OnInit {
     this.registrationForm = this.fb.group({
       name: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
       lastname: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
-      ci: [null, [Validators.required, Validators.minLength(11), Validators.maxLength(11)]],
-      ciONAT: [null, [Validators.required]],
-      licenceTCP: [null, [Validators.required]],
-      activity: [null, [Validators.required]],
-      phoneCel: [null, [Validators.pattern(CUBAN_PHONE_START_5), Validators.minLength(8), Validators.maxLength(8)]],
-      phone: [null, [Validators.minLength(8), Validators.maxLength(8)]],
-      address: [null, [Validators.required]],
-      email: [null, [Validators.required, Validators.email, Validators.pattern(EMAIL_REGEX)]],
+      phoneCel: [null, [Validators.required]],
+      email: [null, [Validators.required, Validators.email]],
+      // username: [null],
+      // phone: [null, []],
+      // address: [null, []],
       // recaptcha: ['', Validators.required],
       passwords: this.fromPassRegister,
-      bankAccount: [null, Validators.required],
-      bankName: [null, Validators.required],
-      bankOffice: [null, Validators.required],
     });
     this.registrationForm.markAllAsTouched();
+
+    this.registrationForm.valueChanges.subscribe(form => {
+      console.log('aaaaaaaaaaaaa', this.registrationForm);
+      console.log('bbbbbbbbbbbbb', this.fromPassRegister);
+    });
   }
 
   createValidationForm() {
@@ -260,7 +258,7 @@ export class MyAccountComponent implements OnInit {
               let tempParams = JSON.parse(this.paramsToRedirect);
               this.router.navigate([this.redirectToOriginPage], {
                 queryParams: { ...tempParams.params },
-              });
+              }).then();
             } else {
               this.router.navigate([this.redirectToOriginPage]).then();
             }
@@ -286,8 +284,8 @@ export class MyAccountComponent implements OnInit {
       error.error.errors && error.error.errors.length
         ? error.error.errors.map((item) => item.message)
         : error.error.message
-        ? error.error.message
-        : 'Error registrando usuario';
+          ? error.error.message
+          : 'Error registrando usuario';
     this.toastr.showError(msg, 'Error', 10000);
   }
 
@@ -349,15 +347,16 @@ export class MyAccountComponent implements OnInit {
 
   onSignUp() {
     const data = JSON.parse(JSON.stringify(this.registrationForm.value));
+
     data.password = data.passwords.password;
     data.lastName = data.lastname;
-    data.phone = '53' + data.phone;
-    data.phoneCel = '53' + data.phoneCel;
+    // data.username = data.email;
     data.role = 'Client';
     let token = localStorage.getItem('token');
     if (token != undefined) {
       data.token = token;
     }
+
     this.spinner.show();
     this.inLoading = true;
     this.showPinForm = false;
@@ -368,16 +367,16 @@ export class MyAccountComponent implements OnInit {
     this.authService.singUp(data).subscribe(
       (result) => {
         this.toastr.showInfo(
-          this.translate.instant(`Estamos revisando su solicitud de registro. Le daremos respuesta en 48 horas.`),
+          this.translate.instant(
+            `You have successfully registered, verify your email to complete the account validation`,
+          ),
           '',
           10000,
         );
-        this.savePdf(result);
         this.inLoading = false;
-        this.showPinForm = false;
-        this.showPinForm = false;
+        this.showPinForm = true;
         this.showRegistrationForm = false;
-        this.showLoginForm = true;
+        this.showLoginForm = false;
         this.showResetPassForm = false;
         this.spinner.hide();
         return true;
@@ -531,13 +530,17 @@ export class MyAccountComponent implements OnInit {
 
   //////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////
-  handleReset() {}
+  handleReset() {
+  }
 
-  handleExpire() {}
+  handleExpire() {
+  }
 
-  handleSuccess(event) {}
+  handleSuccess(event) {
+  }
 
-  handleLoad() {}
+  handleLoad() {
+  }
 
   onSelectPdf($event) {
     this.pdfData = [];
@@ -574,7 +577,7 @@ export class MyAccountComponent implements OnInit {
         if (document) {
           let doc = { ...document };
           doc.fkId = result.data.id;
-          this.uploadFilesService.emitUploadStart(doc);
+          // this.uploadFilesService.emitUploadStart(doc);
         }
       });
     }

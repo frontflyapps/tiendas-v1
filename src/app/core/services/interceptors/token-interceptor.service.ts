@@ -27,17 +27,11 @@ export class TokenInterceptorService implements HttpInterceptor {
       return next.handle(request);
     }
 
-    // request = request.clone({
-    //   setHeaders: {
-    //     language: language,
-    //   },
-    // });
-
     if (tokenBusiness) {
       request = request.clone({
         setHeaders: {
           ['xxx-ff-id']: tokenBusiness,
-          language: language,
+          // language: language,
         },
       });
     }
