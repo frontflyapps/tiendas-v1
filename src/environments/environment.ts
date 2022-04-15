@@ -21,6 +21,9 @@ export const environment = {
   apiUrl: 'https://api.pymesbulevar.com/v1/',
   imageUrl: 'https://api.pymesbulevar.com/v1/',
 
+  // apiUrl: 'https://apitienda.marinasmarlin.com/v1/',
+  // imageUrl: 'https://apitienda.marinasmarlin.com/v1/',
+
   defaultLanguage: 'es',
   currencyInternational: 'USD',
 

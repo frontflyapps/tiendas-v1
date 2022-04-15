@@ -9,6 +9,7 @@ import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-
 import { ShowSnackbarService } from '../../../core/services/show-snackbar/show-snackbar.service';
 import { ShowToastrService } from '../../../core/services/show-toastr/show-toastr.service';
 import { UtilsService } from '../../../core/services/utils/utils.service';
+import { CUBAN_PHONE_START_5, EMAIL_REGEX } from '../../../core/classes/regex.const';
 
 @Component({
   selector: 'app-my-account',
@@ -63,11 +64,11 @@ export class MyAccountComponent implements OnInit {
     private fb: FormBuilder,
     private translate: TranslateService,
     private spinner: NgxSpinnerService,
-    public utilsService: UtilsService,
     private router: Router,
     private route: ActivatedRoute,
     private showSnackbar: ShowSnackbarService,
     private loggedInUserService: LoggedInUserService,
+    public utilsService: UtilsService,
   ) {
     this.message = '';
     this.isRegisterToPay = !!localStorage.getItem('isRegisterToPay');
@@ -187,20 +188,17 @@ export class MyAccountComponent implements OnInit {
     this.registrationForm = this.fb.group({
       name: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
       lastname: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
-      phoneCel: [null, [Validators.required]],
-      email: [null, [Validators.required, Validators.email]],
-      // username: [null],
-      // phone: [null, []],
-      // address: [null, []],
+      // username: [null, [
+      //   Validators.required,
+      //   Validators.pattern(USERNAME),
+      // ]],
+      phone: [null, [Validators.pattern(CUBAN_PHONE_START_5), Validators.minLength(8), Validators.maxLength(8)]],
+      address: [null, []],
+      email: [null, [Validators.required, Validators.email, Validators.pattern(EMAIL_REGEX)]],
       // recaptcha: ['', Validators.required],
       passwords: this.fromPassRegister,
     });
     this.registrationForm.markAllAsTouched();
-
-    this.registrationForm.valueChanges.subscribe(form => {
-      console.log('aaaaaaaaaaaaa', this.registrationForm);
-      console.log('bbbbbbbbbbbbb', this.fromPassRegister);
-    });
   }
 
   createValidationForm() {
@@ -346,17 +344,14 @@ export class MyAccountComponent implements OnInit {
   }
 
   onSignUp() {
-    const data = JSON.parse(JSON.stringify(this.registrationForm.value));
-
+    const data = this.registrationForm.value;
     data.password = data.passwords.password;
     data.lastName = data.lastname;
-    // data.username = data.email;
     data.role = 'Client';
     let token = localStorage.getItem('token');
     if (token != undefined) {
       data.token = token;
     }
-
     this.spinner.show();
     this.inLoading = true;
     this.showPinForm = false;
