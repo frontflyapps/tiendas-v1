@@ -17,7 +17,7 @@ import { Observable, of, Subject } from 'rxjs';
 import { Cart, CartItem, IBusiness } from '../../../modals/cart-item';
 import { environment } from '../../../../environments/environment';
 import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-in-user.service';
-import { debounce, debounceTime, takeUntil } from 'rxjs/operators';
+import { catchError, debounce, debounceTime, takeUntil } from 'rxjs/operators';
 import { CurrencyService } from '../../../core/services/currency/currency.service';
 import { IPagination } from '../../../core/classes/pagination.class';
 import { UtilsService } from '../../../core/services/utils/utils.service';
@@ -340,7 +340,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   onChangeShippingRequired(data){
-    debugger;
     this.showShipping = data.checked;
     if (data.checked) {
       this.form.controls['ShippingBusinessId'].setValidators(Validators.required);
@@ -484,7 +483,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   public getTotalWithShippingIncluded(): any {
-    debugger;
+
     let total = this.getTotalAmout() as Number;
     let ShippingBusinessId = this.form.get('ShippingBusinessId').value;
     if (ShippingBusinessId) {
@@ -546,11 +545,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       MunicipalityId: [this.selectedDataPay?.MunicipalityId || null, [Validators.required]],
       isForCuban: [this.selectedDataPay?.isForCuban || true, [Validators.required]],
       dni: [
-        this.selectedDataPay?.dni || null,
+        this.selectedDataPay?.identification || null,
         [
           Validators.required,
           Validators.maxLength(this.CI_Length),
-          // Validators.pattern('[0-9]{2}(?:0[0-9]|1[0-2])(?:0[1-9]|[12][0-9]|3[01])[0-9]{5}'),
         ],
       ],
       email: [this.selectedDataPay?.email || null, [Validators.required, Validators.pattern(EMAIL_REGEX)]],
@@ -929,7 +927,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     }, 0);
   }
 
-  // //////// Utiles /////////////////
+  // //////// Utils /////////////////
   _getAddress(user, storagePayData) {
     if (storagePayData) {
       return storagePayData.address;
@@ -1071,7 +1069,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   onGoToPayment() {
-    this.saveRecieverData(this.form.value);
+    this.saveReceiverData(this.form.value)
     this.showInfoDataToPay = false;
     this.showPayment = true;
     this.scrollTopDocument();
@@ -1083,23 +1081,28 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Save Contact Data on localStorage
+   * Save Contact Data on localStorage and create
+   * @params: contact info
    */
-  saveRecieverData(data) {
-    let recieverData: IContactBody = {
+  saveReceiverData(data) {
+    let receiverData: any = {
       name: data.name,
       lastName: data.lastName,
       email: data.email,
       phone: data.phone,
-      dni: data.dni,
+      identification: data.dni,
       address: data.address,
       ProvinceId: data.ProvinceId,
       MunicipalityId: data.MunicipalityId,
     };
-    localStorage.setItem('payData', JSON.stringify(recieverData));
-    // this.contactsService.create(recieverData).subscribe((contactRes) => {
-    //   this.contactsService.allContacts.push({ ...contactRes.data });
-    // });
+    localStorage.setItem('payData', JSON.stringify(receiverData));
+    this.contactsService.create(receiverData).subscribe((contactRes) => {
+      if(contactRes.data){
+        this.contactsService.allContacts.push({ ...contactRes.data });
+      }
+    },error => {
+      console.error(error);
+    });
   }
 
   private applyResolution() {
