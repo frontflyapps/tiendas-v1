@@ -26,6 +26,7 @@ export class MyAccountComponent implements OnInit {
   message: string;
   redirectToOriginPage: string;
   paramsToRedirect: any;
+  urlToRedirect: any;
   inLoading = false;
   loginForm: FormGroup;
   formPass: FormGroup;
@@ -95,6 +96,7 @@ export class MyAccountComponent implements OnInit {
       this.paramsVerifyPositionModal(data);
       this.redirectToOriginPage = data.redirectToOriginPage;
       this.paramsToRedirect = data.paramsToRedirect;
+      this.urlToRedirect = data.urlToRedirect;
     });
   }
 
@@ -246,6 +248,7 @@ export class MyAccountComponent implements OnInit {
             10000,
           );
           this.inLoading = false;
+          /** Redirect to origin page **/
           if (this.redirectToOriginPage) {
             if (this.paramsToRedirect) {
               let tempParams = JSON.parse(this.paramsToRedirect);
@@ -255,6 +258,10 @@ export class MyAccountComponent implements OnInit {
             } else {
               this.router.navigate([this.redirectToOriginPage]).then();
             }
+          }
+          /** Redirect to URL when login **/
+          if(this.urlToRedirect){
+            this.router.navigate([this.urlToRedirect]);
           } else {
             this.router.navigate([this.routeToNavigate]).then();
           }

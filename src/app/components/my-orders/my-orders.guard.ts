@@ -26,7 +26,11 @@ export class MyOrdersGuard implements CanActivate, CanLoad {
     if (this.loggedInUserService.getLoggedInUser()) {
       return true;
     } else {
-      this.route.navigate(['/error/acceso-prohibido']);
+      // this.route.navigate(['/error/acceso-prohibido']);
+      let urlToRedirect = 'my-orders';
+      this.route.navigate(['/my-account'], {
+        queryParams: { urlToRedirect },
+      });
       return false;
     }
   }
@@ -35,7 +39,11 @@ export class MyOrdersGuard implements CanActivate, CanLoad {
     if (this.loggedInUserService.getLoggedInUser()) {
       return true;
     } else {
-      this.route.navigate(['/error/acceso-prohibido']);
+      // this.route.navigate(['/error/acceso-prohibido']);
+      let urlToRedirect = 'my-orders';
+      this.route.navigate(['/my-account'], {
+        queryParams: { urlToRedirect },
+      });
       return false;
     }
   }
