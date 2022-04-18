@@ -336,19 +336,19 @@ export class MainComponent implements OnInit, OnDestroy {
       data: {},
     });
     dialogRef.afterClosed().subscribe((result) => {
-      // if (result) {
-      //   this.goToDigitalPlatformTransfermovil();
-      // }
+      if (result) {
+        this.router.navigate(['/become-a-seller']).then();
+      }
     });
   }
 
-  goToDigitalPlatformTransfermovil() {
-    this.confirmCreateBusinessService
-      .etecsaSignUp()
-      .subscribe(dataResponse => {
-        console.log('dataResponse', dataResponse);
-      });
-  }
+  // goToDigitalPlatformTransfermovil() {
+  //   this.confirmCreateBusinessService
+  //     .etecsaSignUp()
+  //     .subscribe(dataResponse => {
+  //       console.log('dataResponse', dataResponse);
+  //     });
+  // }
 
   // ///////////////////////////////////////////////////////
   _listenToSocketIO() {

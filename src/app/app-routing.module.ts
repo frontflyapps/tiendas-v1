@@ -1,4 +1,3 @@
-import { BecomeASellerGuard } from './components/become-a-seller/become-a-seller.guard';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 

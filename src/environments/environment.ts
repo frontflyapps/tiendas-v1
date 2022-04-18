@@ -6,20 +6,20 @@ const packageJson = require('../../package.json');
 export const environment = {
   production: false,
 
-  // apiUrl: 'http://192.168.1.18:7777/v1/',
-  // imageUrl: 'http://192.168.1.18:7777/v1/',
-  //
+  // apiUrl: 'http://192.168.1.20:7777/v1/',
+  // imageUrl: 'http://192.168.1.20:7777/v1/',
+
   // apiUrl: 'http://localhost:8998/v1/',
   // imageUrl: 'http://localhost:8998/v1/',
 
   // apiUrl: 'http://apitienda.tiendalocal.com:8998/v1/',
   // imageUrl: 'http://apitienda.tiendalocal.com:8998/v1/',
 
-  // apiUrl: 'http://apitienda.tiendalocal.com:7777/v1/',
-  // imageUrl: 'http://apitienda.tiendalocal.com:7777/v1/',
+  apiUrl: 'http://api.tiendalocal.com:7777/v1/',
+  imageUrl: 'http://api.tiendalocal.com:7777/v1/',
 
-  apiUrl: 'https://api.pymesbulevar.com/v1/',
-  imageUrl: 'https://api.pymesbulevar.com/v1/',
+  // apiUrl: 'https://api.pymesbulevar.com/v1/',
+  // imageUrl: 'https://api.pymesbulevar.com/v1/',
 
   // apiUrl: 'https://apitienda.marinasmarlin.com/v1/',
   // imageUrl: 'https://apitienda.marinasmarlin.com/v1/',
@@ -46,7 +46,7 @@ export const environment = {
   },
 
   adminService: 'http://admintienda.tiendalocal.com/',
-  mainDomain: 'tiendalocal.com',
+  mainDomain: '.tiendalocal.com',
 
   tokenBusiness: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7IkJ1c2luZXNzSWQiOjEsImlkIjoxLCJkYXRlIjoiMjAyMi0wMS0zMVQwNDo1NDowMC4wMDBaIiwibmFtZSI6IlRpZW5kYSIsImVtYWlsIjoidGllbmRhQGxvY2FsaG9zdC5jb20ifSwiaWF0IjoxNjQzNjQ2Njg3fQ.-pIQscQih10E1-UbtTlyiV3mj_uaxilPMpvLLN-GzSo',
 

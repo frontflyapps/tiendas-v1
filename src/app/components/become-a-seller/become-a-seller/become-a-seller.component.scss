@@ -10,26 +10,24 @@
   padding: 16px;
 
   @media (max-width: 800px) {
-    padding: 0px;
+    padding: 0;
   }
 }
 
 .container-stepper {
   max-width: 900px;
   width: 100%;
-  padding: 0px 15px;
+  padding: 0 15px;
   box-sizing: border-box;
   margin: 0 auto;
 
   @media (max-width: 800px) {
-    padding: 0px;
+    padding: 0;
   }
 }
 
 .Preguntas {
-  padding: 16px;
-  padding-left: 0px;
-  padding-right: 0px;
+  padding: 16px 0;
   border-left: 1px solid rgba(0, 0, 0, .12);
   min-height: 400px;
 }
@@ -65,7 +63,7 @@
 }
 
 .form-field-width {
-  max-width: 35rem;
+  //max-width: 35rem;
   width: 100%;
 }
 

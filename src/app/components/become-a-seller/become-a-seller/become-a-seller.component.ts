@@ -44,6 +44,21 @@ export class BecomeASellerComponent implements OnInit {
   imageBusiness = undefined;
   loggedInUser = undefined;
 
+  managementForm: {
+    viewValue: string;
+    value: string;
+  }[] = [
+    {
+      viewValue: 'Estatal',
+      value: 'state',
+    },
+    {
+      viewValue: 'No estatal',
+      value: 'private',
+    },
+  ];
+  today = new Date();
+
   constructor(
     private fb: FormBuilder,
     private regionService: RegionsService,
@@ -68,10 +83,23 @@ export class BecomeASellerComponent implements OnInit {
   buildForm() {
     this.basicForm = this.fb.group({
       name: [null, [Validators.required]],
+      description: [null],
+
+      socialObject: [null, [Validators.required]],
+      managementForm: [null, [Validators.required]],
+      reeup: [null],
+      nit: [null],
+      commercialRegister: [null],
+
       cellphone: [null, [Validators.required]],
-      email: [null, [Validators.required, Validators.email]],
       telephone: [null, []],
-      description: [null, [Validators.required]],
+      email: [null, [Validators.required, Validators.email]],
+
+      managerName: [null, [Validators.required]],
+      managerCharacter: [null, [Validators.required]],
+      managerDesignation: [null, [Validators.required]],
+      managerDate: [null, [Validators.required]],
+      managerDictatedBy: [null, [Validators.required]],
     });
 
     this.locationForm = this.fb.group({
@@ -123,21 +151,29 @@ export class BecomeASellerComponent implements OnInit {
     //data.business.card = data.owner.card;
     data.business.logo = this.imageBusiness;
     //delete data.owner.card;
+
+    console.log('dataaaaaaaaaaa', data);
+    return;
+
     this.businessService.createBussines(data).subscribe(
       () => {
         this.showToastr.showSucces(
           this.translate.instant(
-            'Su solicitud de negocio ha sido procesado exitosamente, nos pondremos en contacto con usted para aceptar la solicitud y habilitarle el comercio',
+            'Su solicitud de negocio ha sido creada exitosamente, nos pondremos en contacto con usted para comunicarle el proceso de aprobacion',
           ),
           'Éxito',
           8000,
         );
         this.spinner.hide();
-        this.router.navigate(['']);
+        this.router.navigate(['']).then();
       },
       (e) => {
         this.spinner.hide();
       },
     );
+  }
+
+  temp() {
+    console.log('step 1111111', this.basicForm.value);
   }
 }
