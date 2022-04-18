@@ -100,11 +100,17 @@ export class BecomeASellerComponent implements OnInit {
       managerDesignation: [null, [Validators.required]],
       managerDate: [null, [Validators.required]],
       managerDictatedBy: [null, [Validators.required]],
+
+      bankLicense: [null, [Validators.required]],
+      bankCommercialRegister: [null, [Validators.required]],
+
+      card26: [null],
+      cupCard: [null],
     });
 
     this.locationForm = this.fb.group({
-      ProvinceId: [null, [Validators.required]],
       CountryId: [59, [Validators.required]],
+      ProvinceId: [null, [Validators.required]],
       MunicipalityId: [null, [Validators.required]],
       address: [null, [Validators.required]],
       longitude: [null, []],
@@ -152,8 +158,8 @@ export class BecomeASellerComponent implements OnInit {
     data.business.logo = this.imageBusiness;
     //delete data.owner.card;
 
-    console.log('dataaaaaaaaaaa', data);
-    return;
+    // console.log('dataaaaaaaaaaa', data);
+    // return;
 
     this.businessService.createBussines(data).subscribe(
       () => {

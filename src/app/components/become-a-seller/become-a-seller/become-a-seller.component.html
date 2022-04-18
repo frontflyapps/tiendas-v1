@@ -23,195 +23,119 @@
                                   [_config]='imagePickerConf'></guachos-image-picker>
 
             <!-- NOMBRE DEL NEGOCIO -->
-            <p class='mat-body-2 uppercase mt-2 mb-1'>
-              {{ 'Nombre del negocio' | translate }}
-            </p>
-
-            <mat-form-field appearance='outline' class='form-field-width'>
-              <mat-label>{{'Nombre del negocio'|translate}}</mat-label>
-              <input
-                [formControl]="basicForm.controls['name']"
-                matInput
-                placeholder="{{ 'Mi Negocio' | translate }}"
-                type='text'
-              />
-              <mat-error *ngIf="basicForm.controls['name'].hasError('required')">
-                {{ 'Nombre' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
-              </mat-error>
-            </mat-form-field>
-
-            <!-- OBJETO SOCIAL DEL NEGOCIO -->
-            <p class='mat-body-2 uppercase mb-1 mt-3'>
-              {{ 'Objeto social' | translate }}
-            </p>
-
-            <mat-form-field appearance='outline' class='form-field-width'>
-              <mat-label>{{'Objeto social'|translate}}</mat-label>
-              <textarea
-                [formControl]="basicForm.controls['socialObject']"
-                matInput
-                maxlength='140'
-                placeholder="{{'Descripción del objeto social' | translate }}"
-                rows='5'></textarea>
-              <mat-error *ngIf="basicForm.controls['socialObject'].hasError('required')">
-                {{ 'Objeto social' | translate }} <strong>{{ 'is required' | translate }}</strong>
-              </mat-error>
-              <mat-hint>
-                {{
-                'Escriba el objeto social de su empresa' | translate
-                }}
-              </mat-hint>
-            </mat-form-field>
-
-            <!-- OBJETO SOCIAL DEL NEGOCIO -->
-            <p class='mat-body-2 uppercase mb-1 mt-3'>
-              {{ 'Datos de inscripcion' | translate }}
-            </p>
-
-            <mat-form-field fxFlex='grow' appearance='outline'>
-              <mat-label>{{'Forma de gestion'}}</mat-label>
-              <mat-select [formControl]="basicForm.controls['managementForm']">
-                <mat-option *ngFor='let form of managementForm' [value]='form.value'>
-                  {{form.viewValue}}
-                </mat-option>
-              </mat-select>
-              <mat-error *ngIf="basicForm.controls['managementForm'].hasError('required')">
-                {{ 'Forma de gestion' | translate }} <strong>{{ 'is required' | translate }}</strong>
-              </mat-error>
-            </mat-form-field>
-
-            <mat-form-field appearance='outline' class='form-field-width'>
-              <mat-label>{{'Codigo REEUP'|translate}}</mat-label>
-              <input
-                [formControl]="basicForm.controls['reeup']"
-                matInput
-                placeholder="{{ 'Codigo REEUP' | translate }}"
-                type='text'
-                [readonly]="basicForm.get('managementForm').value === managementForm[1].value
-                            || !basicForm.get('managementForm').value"
-              />
-              <mat-icon matSuffix *ngIf="basicForm.get('managementForm').value === managementForm[1].value
-                            || !basicForm.get('managementForm').value">
-                block
-              </mat-icon>
-              <mat-error *ngIf="basicForm.controls['reeup'].hasError('required')">
-                {{ 'Codigo REEUP' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
-              </mat-error>
-            </mat-form-field>
-
-            <mat-form-field appearance='outline' class='form-field-width'>
-              <mat-label>{{'Codigo NIT'|translate}}</mat-label>
-              <input
-                [formControl]="basicForm.controls['nit']"
-                matInput
-                placeholder="{{ 'Codigo NIT' | translate }}"
-                type='text'
-                [readonly]="basicForm.get('managementForm').value === managementForm[0].value
-                            || !basicForm.get('managementForm').value"
-              />
-              <mat-icon matSuffix *ngIf="basicForm.get('managementForm').value === managementForm[0].value
-                            || !basicForm.get('managementForm').value">
-                block
-              </mat-icon>
-              <mat-error *ngIf="basicForm.controls['nit'].hasError('required')">
-                {{ 'Codigo NIT' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
-              </mat-error>
-            </mat-form-field>
-
-            <mat-form-field appearance='outline' class='form-field-width'>
-              <mat-label>{{'Registro mercantil'|translate}}</mat-label>
-              <input
-                [formControl]="basicForm.controls['commercialRegister']"
-                matInput
-                placeholder="{{ 'Registro mercantil' | translate }}"
-                type='text'
-              />
-              <mat-error *ngIf="basicForm.controls['commercialRegister'].hasError('required')">
-                {{ 'Registro mercantil' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
-              </mat-error>
-            </mat-form-field>
-
-            <!-- CONTACTOS DEL NEGOCIO -->
-            <!--            <div class='form-field-width' fxLayout='row wrap' fxLayoutAlign='space-between start' fxLayoutGap='gappx'>-->
-            <div class='form-field-width' fxLayout='column' fxLayoutAlign='start stretch' fxLayoutGap='gappx'>
-              <!--              <div fxFlex='49' fxFlex.lt-md='100' fxLayout='column' fxLayoutAlign='start start' fxLayoutGap='gappx'>-->
-              <p class='mat-body-2 uppercase mb-1'
-                 [title]="'Seccion donde pondra todos los contactos de su negocio, el numero celular es obligatorio, lo contactarémos a este numero en caso de tenerlo, para realizar una entrevista'|translate">
-                {{ 'Contactos del negocio' | translate }}
-                <mat-icon
-                  class='iconHelp'
-                  matTooltip="{{
-                      'Seccion donde pondra todos los contactos de su negocio, el numero celular es obligatorio, lo contactarémos a este numero en caso de tenerlo, para realizar una entrevista' | translate
-                    }}"
-                >help
-                </mat-icon>
+            <ng-container>
+              <p class='mat-body-2 uppercase mt-2 mb-1'>
+                {{ 'Nombre del negocio' | translate }}
               </p>
 
               <mat-form-field appearance='outline' class='form-field-width'>
-                <mat-label>{{'Telefono celular'|translate}}</mat-label>
+                <mat-label>{{'Nombre del negocio'|translate}}</mat-label>
                 <input
-                  [formControl]="basicForm.controls['cellphone']"
+                  [formControl]="basicForm.controls['name']"
                   matInput
-                  placeholder='ej: 53 5262 1645'
-                  type='tel'
-                />
-                <mat-icon class='greyIcon' matSuffix>smartphone</mat-icon>
-                <mat-error *ngIf="basicForm.controls['cellphone'].hasError('required')">
-                  {{'Telefono celular'|translate}} <strong>{{ 'es requerido'|translate }}</strong>
-                </mat-error>
-              </mat-form-field>
-
-              <mat-form-field appearance='outline' class='form-field-width'>
-                <mat-label>{{'Telefono fijo'|translate}}</mat-label>
-                <input
-                  [formControl]="basicForm.controls['telephone']"
-                  matInput
-                  placeholder='ej: 7205 3519'
-                  type='tel'
-                />
-                <mat-icon class='greyIcon' matSuffix>phone</mat-icon>
-              </mat-form-field>
-              <!--              </div>-->
-              <!--              <div fxFlex='49' fxFlex.lt-md='100' fxLayout='column' fxLayoutAlign='start start' fxLayoutGap='gappx'>-->
-              <!--                <p class='mat-body-2 uppercase mb-1'>-->
-              <!--                  {{ 'No. de celular' | translate }}-->
-              <!--                  <mat-icon-->
-              <!--                    class='iconHelp'-->
-              <!--                    matTooltip="{{-->
-              <!--                      'Número al cual le enviaremos un codigo de activacion de su cuenta de vendedor' | translate-->
-              <!--                    }}"-->
-              <!--                  >help-->
-              <!--                  </mat-icon>-->
-              <!--                </p>-->
-
-              <!--              <p class='mat-body-2 uppercase mb-1'>-->
-              <!--                {{ 'Correo electrónico' | translate }}-->
-              <!--                <mat-icon-->
-              <!--                  class='iconHelp'-->
-              <!--                  matTooltip="{{-->
-              <!--                  'En caso de fallar el envío del pin al celular, lo enviaremos hacia su cuenta de correo y las notificaciones de productos vendidos y pedidos se haran ha esta cuenta'-->
-              <!--                    | translate-->
-              <!--                }}"-->
-              <!--                >help-->
-              <!--                </mat-icon>-->
-              <!--              </p>-->
-
-              <mat-form-field appearance='outline' class='form-field-width'>
-                <mat-label>{{'Email'|translate}}</mat-label>
-                <input
-                  [formControl]="basicForm.controls['email']"
-                  matInput
-                  placeholder='ej: example@gmail.com'
-                  required
+                  placeholder="{{ 'Mi Negocio' | translate }}"
                   type='text'
                 />
-                <mat-icon class='greyIcon' matSuffix>mail</mat-icon>
-                <mat-error *ngIf="basicForm.controls['email'].hasError('required')">
-                  {{ 'Email' }} <strong>{{ 'es requerido' }}</strong>
+                <mat-error *ngIf="basicForm.controls['name'].hasError('required')">
+                  {{ 'Nombre' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
                 </mat-error>
               </mat-form-field>
-            </div>
-            <!--    </div>-->
+            </ng-container>
+
+            <!-- OBJETO SOCIAL DEL NEGOCIO -->
+            <ng-container>
+              <p class='mat-body-2 uppercase mb-1 mt-3'>
+                {{ 'Objeto social' | translate }}
+              </p>
+
+              <mat-form-field appearance='outline' class='form-field-width'>
+                <mat-label>{{'Objeto social'|translate}}</mat-label>
+                <textarea
+                  [formControl]="basicForm.controls['socialObject']"
+                  matInput
+                  maxlength='140'
+                  placeholder="{{'Descripción del objeto social' | translate }}"
+                  rows='5'></textarea>
+                <mat-error *ngIf="basicForm.controls['socialObject'].hasError('required')">
+                  {{ 'Objeto social' | translate }} <strong>{{ 'is required' | translate }}</strong>
+                </mat-error>
+                <mat-hint>
+                  {{
+                  'Escriba el objeto social de su empresa' | translate
+                  }}
+                </mat-hint>
+              </mat-form-field>
+            </ng-container>
+
+            <!-- Datos de inscripcion DEL NEGOCIO -->
+            <ng-container>
+              <p class='mat-body-2 uppercase mb-1 mt-3'>
+                {{ 'Datos de inscripcion' | translate }}
+              </p>
+
+              <mat-form-field fxFlex='grow' appearance='outline'>
+                <mat-label>{{'Forma de gestion'}}</mat-label>
+                <mat-select [formControl]="basicForm.controls['managementForm']">
+                  <mat-option *ngFor='let form of managementForm' [value]='form.value'>
+                    {{form.viewValue}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="basicForm.controls['managementForm'].hasError('required')">
+                  {{ 'Forma de gestion' | translate }} <strong>{{ 'is required' | translate }}</strong>
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance='outline' class='form-field-width'>
+                <mat-label>{{'Codigo REEUP'|translate}}</mat-label>
+                <input
+                  [formControl]="basicForm.controls['reeup']"
+                  matInput
+                  placeholder="{{ 'Codigo REEUP' | translate }}"
+                  type='text'
+                  [readonly]="basicForm.get('managementForm').value === managementForm[1].value
+                            || !basicForm.get('managementForm').value"
+                />
+                <mat-icon matSuffix *ngIf="basicForm.get('managementForm').value === managementForm[1].value
+                            || !basicForm.get('managementForm').value">
+                  block
+                </mat-icon>
+                <mat-error *ngIf="basicForm.controls['reeup'].hasError('required')">
+                  {{ 'Codigo REEUP' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance='outline' class='form-field-width'>
+                <mat-label>{{'Codigo NIT'|translate}}</mat-label>
+                <input
+                  [formControl]="basicForm.controls['nit']"
+                  matInput
+                  placeholder="{{ 'Codigo NIT' | translate }}"
+                  type='text'
+                  [readonly]="basicForm.get('managementForm').value === managementForm[0].value
+                            || !basicForm.get('managementForm').value"
+                />
+                <mat-icon matSuffix *ngIf="basicForm.get('managementForm').value === managementForm[0].value
+                            || !basicForm.get('managementForm').value">
+                  block
+                </mat-icon>
+                <mat-error *ngIf="basicForm.controls['nit'].hasError('required')">
+                  {{ 'Codigo NIT' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance='outline' class='form-field-width'>
+                <mat-label>{{'Inscripcion en el Registro mercantil'|translate}}</mat-label>
+                <input
+                  [formControl]="basicForm.controls['commercialRegister']"
+                  matInput
+                  placeholder="{{ 'Registro mercantil' | translate }}"
+                  type='text'
+                />
+                <mat-error *ngIf="basicForm.controls['commercialRegister'].hasError('required')">
+                  {{ 'Registro mercantil' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
+                </mat-error>
+              </mat-form-field>
+            </ng-container>
 
             <!-- REPRESENTANTE -->
             <ng-container>
@@ -284,7 +208,148 @@
                   {{ 'Dictada por' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
                 </mat-error>
               </mat-form-field>
+            </ng-container>
 
+            <!-- Datos Bancarios del Negocio -->
+            <ng-container>
+              <p class='mat-body-2 uppercase mb-1 mt-3'>
+                {{ 'Cuentas' | translate }}
+              </p>
+
+              <mat-form-field appearance='outline' class='form-field-width'>
+                <mat-label>{{'Licencia Bancaria'|translate}}</mat-label>
+                <input
+                  [formControl]="basicForm.controls['bankLicense']"
+                  matInput
+                  placeholder="{{ 'Licencia Bancaria' | translate }}"
+                  type='text' />
+                <mat-error *ngIf="basicForm.controls['bankLicense'].hasError('required')">
+                  {{ 'Licencia Bancaria' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance='outline' class='form-field-width'>
+                <mat-label>{{'Registro Comercial'|translate}}</mat-label>
+                <input
+                  [formControl]="basicForm.controls['bankCommercialRegister']"
+                  matInput
+                  placeholder="{{ 'Registro Comercial' | translate }}"
+                  type='text' />
+                <mat-error *ngIf="basicForm.controls['bankCommercialRegister'].hasError('required')">
+                  {{ 'Registro Comercial' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance='outline' class='form-field-width'>
+                <mat-label>{{'Cuenta bancaria CUP'|translate}}</mat-label>
+                <input
+                  [formControl]="basicForm.controls['cupCard']"
+                  matInput
+                  placeholder="{{ 'Ex. 92xx-9598-xxxx-xxxx' | translate }}"
+                  type='text'
+                />
+                <mat-error *ngIf="basicForm.controls['cupCard'].hasError('required')">
+                  {{ 'Cuenta bancaria CUP' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance='outline' class='form-field-width'>
+                <mat-label>{{'Cuenta bancaria MLC'|translate}}</mat-label>
+                <input
+                  [formControl]="basicForm.controls['card26']"
+                  matInput
+                  placeholder="{{ 'Ex. 9226-9598-xxxx-xxxx' | translate }}"
+                  type='text'
+                />
+                <mat-error *ngIf="basicForm.controls['card26'].hasError('required')">
+                  {{ 'Cuenta bancaria MLC' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
+                </mat-error>
+              </mat-form-field>
+
+            </ng-container>
+
+            <!-- CONTACTOS DEL NEGOCIO -->
+            <ng-container>
+              <!--            <div class='form-field-width' fxLayout='row wrap' fxLayoutAlign='space-between start' fxLayoutGap='gappx'>-->
+              <div class='form-field-width' fxLayout='column' fxLayoutAlign='start stretch' fxLayoutGap='gappx'>
+                <!--              <div fxFlex='49' fxFlex.lt-md='100' fxLayout='column' fxLayoutAlign='start start' fxLayoutGap='gappx'>-->
+                <p class='mat-body-2 uppercase mb-1'
+                   [title]="'Seccion donde pondra todos los contactos de su negocio, el numero celular es obligatorio, lo contactarémos a este numero en caso de tenerlo, para realizar una entrevista'|translate">
+                  {{ 'Contactos del negocio' | translate }}
+                  <mat-icon
+                    class='iconHelp'
+                    matTooltip="{{
+                      'Seccion donde pondra todos los contactos de su negocio, el numero celular es obligatorio, lo contactarémos a este numero en caso de tenerlo, para realizar una entrevista' | translate
+                    }}"
+                  >help
+                  </mat-icon>
+                </p>
+
+                <mat-form-field appearance='outline' class='form-field-width'>
+                  <mat-label>{{'Telefono celular'|translate}}</mat-label>
+                  <input
+                    [formControl]="basicForm.controls['cellphone']"
+                    matInput
+                    placeholder='ej: 53 5262 1645'
+                    type='tel'
+                  />
+                  <mat-icon class='greyIcon' matSuffix>smartphone</mat-icon>
+                  <mat-error *ngIf="basicForm.controls['cellphone'].hasError('required')">
+                    {{'Telefono celular'|translate}} <strong>{{ 'es requerido'|translate }}</strong>
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance='outline' class='form-field-width'>
+                  <mat-label>{{'Telefono fijo'|translate}}</mat-label>
+                  <input
+                    [formControl]="basicForm.controls['telephone']"
+                    matInput
+                    placeholder='ej: 7205 3519'
+                    type='tel'
+                  />
+                  <mat-icon class='greyIcon' matSuffix>phone</mat-icon>
+                </mat-form-field>
+                <!--              </div>-->
+                <!--              <div fxFlex='49' fxFlex.lt-md='100' fxLayout='column' fxLayoutAlign='start start' fxLayoutGap='gappx'>-->
+                <!--                <p class='mat-body-2 uppercase mb-1'>-->
+                <!--                  {{ 'No. de celular' | translate }}-->
+                <!--                  <mat-icon-->
+                <!--                    class='iconHelp'-->
+                <!--                    matTooltip="{{-->
+                <!--                      'Número al cual le enviaremos un codigo de activacion de su cuenta de vendedor' | translate-->
+                <!--                    }}"-->
+                <!--                  >help-->
+                <!--                  </mat-icon>-->
+                <!--                </p>-->
+
+                <!--              <p class='mat-body-2 uppercase mb-1'>-->
+                <!--                {{ 'Correo electrónico' | translate }}-->
+                <!--                <mat-icon-->
+                <!--                  class='iconHelp'-->
+                <!--                  matTooltip="{{-->
+                <!--                  'En caso de fallar el envío del pin al celular, lo enviaremos hacia su cuenta de correo y las notificaciones de productos vendidos y pedidos se haran ha esta cuenta'-->
+                <!--                    | translate-->
+                <!--                }}"-->
+                <!--                >help-->
+                <!--                </mat-icon>-->
+                <!--              </p>-->
+
+                <mat-form-field appearance='outline' class='form-field-width'>
+                  <mat-label>{{'Email'|translate}}</mat-label>
+                  <input
+                    [formControl]="basicForm.controls['email']"
+                    matInput
+                    placeholder='ej: example@gmail.com'
+                    required
+                    type='text'
+                  />
+                  <mat-icon class='greyIcon' matSuffix>mail</mat-icon>
+                  <mat-error *ngIf="basicForm.controls['email'].hasError('required')">
+                    {{ 'Email' }} <strong>{{ 'es requerido' }}</strong>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <!--    </div>-->
             </ng-container>
 
             <div>

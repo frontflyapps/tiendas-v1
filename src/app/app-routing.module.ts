@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { BecomeASellerGuard } from './components/become-a-seller/become-a-seller.guard';
 
 const appRoutes: Routes = [
   {
