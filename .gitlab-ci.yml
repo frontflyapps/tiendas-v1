@@ -9,8 +9,8 @@ deploy_tcp:
     - tienda-online-b2b-pymesbulevar2
   when: always
   script:
-    - npm install
-    - npm install typescript@4.3.5 -s
+    - yarn install
+    - yarn add typescript@4.3.5 -s
     - npm run build --prod
     - curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
     - unzip awscli-bundle.zip
