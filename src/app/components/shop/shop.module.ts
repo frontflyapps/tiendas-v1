@@ -39,7 +39,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
 import { NgpMaterialRatingModule } from '../shared/ngp-material-rating/ngp-material-rating.module';
-import { NgpImageLazyLoadModule } from 'ngp-lazy-image';
+import { NgpLazyLoadModule } from 'ngp-lazy-load';
 import { BannerPromotionComponent } from './banner-promotion/banner-promotion.component';
 import { BannerPromotion2Component } from './banner-promotion2/banner-promotion2.component';
 import { DialogFiltersMComponent } from './products/dialog-filters-m/dialog-filters-m.component';
@@ -92,7 +92,7 @@ import { ConfirmationDialogFrontModule } from '../shared/confirmation-dialog-fro
     NgxPaginationModule,
     MatProgressSpinnerModule,
     TranslateModule,
-    NgpImageLazyLoadModule,
+    NgpLazyLoadModule,
     SkeletonLoadingCardsModule,
     MatTooltipModule,
     MatCheckboxModule,

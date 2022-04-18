@@ -1,6 +1,6 @@
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatCardModule } from '@angular/material/card';
-import { NgpImageLazyLoadModule } from 'ngp-lazy-image';
+import { NgpLazyLoadModule } from 'ngp-lazy-load';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -23,7 +23,7 @@ import { MatIconModule } from '@angular/material/icon';
     TranslateModule,
     MatTooltipModule,
     MatProgressSpinnerModule,
-    NgpImageLazyLoadModule,
+    NgpLazyLoadModule,
     MatCardModule,
     FlexLayoutModule,
   ],

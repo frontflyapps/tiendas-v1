@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FooterProductCardComponent } from './footer-product-card/footer-product-card.component';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { NgpImageLazyLoadModule } from 'ngp-lazy-image';
+import { NgpLazyLoadModule } from 'ngp-lazy-load';
 import { NgpMaterialRatingModule } from '../ngp-material-rating/ngp-material-rating.module';
 import { FlexModule } from '@angular/flex-layout';
 import { MatIconModule } from '@angular/material/icon';
@@ -18,7 +18,7 @@ import { PipesModule } from '../../../core/pipes/pipes.module';
     CommonModule,
     RouterModule,
     TranslateModule,
-    NgpImageLazyLoadModule,
+    NgpLazyLoadModule,
     NgpMaterialRatingModule,
     FlexModule,
     MatIconModule,

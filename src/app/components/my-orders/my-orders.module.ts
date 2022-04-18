@@ -1,7 +1,7 @@
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
 import { CancelOrderComponent } from './cancel-order/cancel-order.component';
-import { NgpImageLazyLoadModule } from 'ngp-lazy-image';
+import { NgpLazyLoadModule } from 'ngp-lazy-load';
 import { MatCardModule } from '@angular/material/card';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -58,7 +58,7 @@ import { EditOrderComponent } from './edit-order/edit-order.component';
     MatTableModule,
     MatCheckboxModule,
     NgpMaterialRatingModule,
-    NgpImageLazyLoadModule,
+    NgpLazyLoadModule,
     MatDialogModule,
     MatFormFieldModule,
   ],
