@@ -157,6 +157,15 @@ export class UtilsService {
     }
   }
 
+  getLang() {
+    try {
+      let lang = JSON.parse(localStorage.getItem('language'));
+      return lang.lang || 'es';
+    } catch (error) {
+      return 'es';
+    }
+  }
+
   public isObjectEquals(x, y): boolean {
     if (x === y) {
       return true;

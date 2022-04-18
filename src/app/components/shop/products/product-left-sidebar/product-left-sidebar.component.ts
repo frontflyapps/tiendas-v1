@@ -19,6 +19,7 @@ import { PRODUCT_COUNT } from '../../../../core/classes/global.const';
 import { environment } from '../../../../../environments/environment';
 import { LocalStorageService } from '../../../../core/services/localStorage/localStorage.service';
 import { TranslateService } from '@ngx-translate/core';
+import { UtilsService } from 'src/app/core/services/utils/utils.service';
 
 @Component({
   selector: 'app-product-left-sidebar',
@@ -87,6 +88,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
     private metaService: MetaService,
     private locationService: LocationService,
     public translate: TranslateService,
+    public utilsService: UtilsService,
   ) {
     this.initSubsLocation();
     this._unsubscribeAll = new Subject<any>();

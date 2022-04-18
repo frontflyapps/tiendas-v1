@@ -6,7 +6,6 @@ import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { SocketIoService } from 'src/app/core/services/socket-io/socket-io.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dialog-tranfermovil-qr',
@@ -29,7 +28,6 @@ export class DialogTranfermovilQrComponent implements OnInit, OnDestroy {
     private socketIoService: SocketIoService,
     public domSanitizer: DomSanitizer,
     private dialog: MatDialog,
-    private router: Router,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) {
     this._unsubscribeAll = new Subject<any>();

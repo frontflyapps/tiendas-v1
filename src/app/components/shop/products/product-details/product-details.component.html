@@ -187,9 +187,8 @@
               <div
                 class="buttons mt-20"
                 fxLayout="row"
-                fxLayout.lt-sm="column"
                 fxLayoutAlign="start center"
-                fxLayoutAlign.lt-sm="start center"
+                fxLayoutAlign.lt-sm="center center"
               >
                 <button
                   (click)="addToCart(product, counter)"
@@ -347,10 +346,20 @@
         </mat-tab-group>
       </div>
 
-      <div *ngIf="allProductsOnMenu?.length > 0" class="products pt-5">
-        <div class="title">
-          <h4 class="widget-title">{{ 'Otros productos del negocio' | translate }}</h4>
+      <div fxHide fxShow.lt-md>
+        <ng-container [ngTemplateOutlet]="providerDetails"></ng-container>
+      </div>
 
+      <div *ngIf="allProductsOnMenu?.length > 0" class="products pt-5">
+        <div
+          fxLayout
+          fxLayoutAlign="space-between center"
+          fxLayout.lt-md="column"
+          fxLayoutAlign.lt-md="space-between start"
+        >
+          <div class="title">
+            <h4 class="widget-title">{{ 'Otros productos del negocio' | translate }}</h4>
+          </div>
           <mat-form-field appearance="outline" class="auto-complete-search" style="min-width: 310px">
             <mat-label>{{ 'Buscar en este local' | translate }}</mat-label>
             <input
@@ -477,33 +486,39 @@
           >
           </share-button>
         </section>
-        <mat-divider class="my-2" fxHide.lt-md></mat-divider>
+        <mat-divider fxHide.lt-md class="my-2"></mat-divider>
       </div>
-      <div style="width: 100%">
-        <h4 class="mat-body-2 uppercase">{{ 'Detalles del proveedor' | translate }}</h4>
-        <a class="list-compare-link" fxLayout="row" fxLayoutAlign="start center">
-          <img
-            [src]="imageUrl + product?.Business?.logo"
-            onerror="this.onerror=null;this.src='assets/images/noImage.jpg';"
-            style="height: 32px; width: 32px; border-radius: 50%; object-fit: cover"
-          />
+      <div fxHide.lt-md fxShow>
+        <ng-container [ngTemplateOutlet]="providerDetails"></ng-container>
+      </div>
 
-          <span class="ml-2">{{ product?.Business?.name }}</span>
-        </a>
-        <a class="list-compare-link" fxLayout="row" fxLayoutAlign="start center">
-          <mat-icon class="mr-2"> phone</mat-icon>
-          {{ product?.Business?.cellphone }}
-        </a>
-        <a class="list-compare-link" fxLayout="row" fxLayoutAlign="start center">
-          <mat-icon class="mr-2"> mail</mat-icon>
-          {{ product?.Business?.email }}
-        </a>
-        <a class="list-compare-link" fxLayout="row" fxLayoutAlign="start center">
-          <mat-icon class="mr-2"> location_on</mat-icon>
-          {{ product?.Business?.address }}
-        </a>
-        <mat-divider class="my-2"></mat-divider>
-      </div>
+      <ng-template #providerDetails>
+        <div style="width: 100%">
+          <h4 class="mat-body-2 uppercase">{{ 'Comprando en' | translate }}</h4>
+          <a class="list-compare-link" fxLayout="row" fxLayoutAlign="start center">
+            <mat-icon class="mr-2"> location_on</mat-icon>
+            {{ product?.Business?.address }}
+          </a>
+          <a class="list-compare-link" fxLayout="row" fxLayoutAlign="start center">
+            <img
+              style="height: 32px; width: 32px; border-radius: 50%; object-fit: cover"
+              [src]="imageUrl + product?.Business?.logo"
+              onerror="this.onerror=null;this.src='assets/images/noImage.jpg';"
+            />
+
+            <span class="ml-2">{{ product?.Business?.name }}</span>
+          </a>
+          <a class="list-compare-link" fxLayout="row" fxLayoutAlign="start center">
+            <mat-icon class="mr-2"> phone</mat-icon>
+            {{ product?.Business?.cellphone }}
+          </a>
+          <a class="list-compare-link" fxLayout="row" fxLayoutAlign="start center">
+            <mat-icon class="mr-2"> mail</mat-icon>
+            {{ product?.Business?.email }}
+          </a>
+          <mat-divider class="my-2"></mat-divider>
+        </div>
+      </ng-template>
 
       <div class="popular-products mt-2" fxFlex.lt-md="100">
         <app-popular-products></app-popular-products>

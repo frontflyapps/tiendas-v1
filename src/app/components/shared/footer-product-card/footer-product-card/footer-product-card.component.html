@@ -30,15 +30,15 @@
                src='assets/images/noImage.jpg' />
         </a>
       </div>
-      <div class='media-body'>
-        <a [queryParams]='{
-                  productId: product?.id,
-                  stockId: product?.Stock?.id
-                }'
-           [routerLink]="['/product']">
-                <span class='module line-clamp'>{{
-                  product.name[language] ? product.name[language] : product.name['es']
-                  }}</span>
+      <div class="media-body">
+        <a
+          [routerLink]="['/product']"
+          [queryParams]="{
+            productId: product?.id,
+            stockId: product?.Stock?.id
+          }"
+        >
+          <span class="module line-clamp">{{ product.name | parseLang: utilsService.getLang() }}</span>
         </a>
         <div class='mt-2'>
           <guachos-rating [config]='{ readOnly: true }' [value]='product.rating'></guachos-rating>

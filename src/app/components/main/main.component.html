@@ -404,7 +404,7 @@
           [routerLink]="['/products/search']"
           class='itemCategory'
           mat-button
-        >{{ utilsService.parserLanguage(category?.name, _language) }}</a
+          >{{ category.name | parseLang: utilsService.getLang() }}</a
         >
       </div>
     </div>

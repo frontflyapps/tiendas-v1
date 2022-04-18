@@ -5,6 +5,7 @@ import { NavigationService } from '../../../core/services/navigation/navigation.
 import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-in-user.service';
 import { Subject } from 'rxjs';
 import { CartService } from '../../shared/services/cart.service';
+import { TranslateService } from '@ngx-translate/core';
 import { IPagination } from 'src/app/core/classes/pagination.class';
 import { MyOrdersService } from '../../my-orders/service/my-orders.service';
 import { GlobalStateOfCookieService } from '../../../core/services/request-cookie-secure/global-state-of-cookie.service';
@@ -34,6 +35,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     private cartService: CartService,
     private loggedInUserService: LoggedInUserService,
     public utilsSer: UtilsService,
+    public translate: TranslateService,
     private ordersService: MyOrdersService,
     private globalStateOfCookieService: GlobalStateOfCookieService,
   ) {

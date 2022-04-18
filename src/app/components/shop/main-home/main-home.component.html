@@ -64,8 +64,8 @@
               <mat-icon class="mat-icon-xlg m-0">{{ item.icon }}</mat-icon>
             </div>
             <div class="content" fxFlex="80">
-              <p class="uppercase">{{ utilsService.parserLanguage(item.title, language) }}</p>
-              <span class="text-muted m-0 mt-2">{{ utilsService.parserLanguage(item.subTitle, language) }}</span>
+              <p class="uppercase">{{ item.title | parseLang: utilsService.getLang() }}</p>
+              <span class="text-muted m-0 mt-2">{{ item.subTitle | parseLang: utilsService.getLang() }}</span>
             </div>
           </mat-card>
         </div>

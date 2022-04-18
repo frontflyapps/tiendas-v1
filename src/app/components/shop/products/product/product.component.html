@@ -15,18 +15,28 @@
     </a>
   </div>
 
-  <div (click)='onGoToProduct(product)' class='product-info-wrapper'
-       fxLayout='column' ngClass.gt-sm='p-3' ngClass.lt-md='p-2 w-100'>
-    <span class='category'>
-      {{ utilsService.parserLanguage(product?.Category?.name, language) }}
+  <div
+    fxLayout="column"
+    class="product-info-wrapper"
+    (click)="onGoToProduct(product)"
+    ngClass.gt-sm="p-3"
+    ngClass.lt-md="p-2 w-100"
+  >
+    <span class="category">
+      {{ product.Category.name | parseLang: utilsService.getLang() }}
     </span>
 
-    <div class='title'>
-      <a [queryParams]='{
+    <div class="title mt-1">
+      <a
+        class="link-nav-a"
+        [routerLink]="['/product']"
+        [queryParams]='{
           productId: product?.id,
           stockId: product?.Stock?.id
-        }' [routerLink]="['/product']"
-         class='link-nav-a'>{{ product.name[language] ? product.name[language] : product.name['es'] }}</a>
+        }'
+      >
+        {{ product.name | parseLang: utilsService.getLang() }}
+      </a>
     </div>
 
     <!-- <div style="flex: 1 1 100%"></div> -->

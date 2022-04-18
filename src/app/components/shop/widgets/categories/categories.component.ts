@@ -150,6 +150,7 @@ export class CategoriesComponent implements OnInit, OnDestroy {
     // }
 
     const arrayCategoryIds = [...this.selection.selected];
+
     this.categoryChanged.emit(arrayCategoryIds);
   }
 }

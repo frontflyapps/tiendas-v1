@@ -35,9 +35,13 @@
       mat-button>{{ 'Conviértete en vendedor' | translate }}</a> -->
 
     <!--    <a [routerLink]="['/products/search']" routerLinkActive="router-link-active"-->
-    <a *ngFor='let category of categories'
-       [queryParams]='{ CategoryId: category.id }'
-       [routerLink]="['/products/search']" class='itemCategory'
-       mat-button>{{ utilsSer.parserLanguage(category.name, language) }}</a>
+    <a
+      *ngFor="let category of categories"
+      [queryParams]="{ CategoryId: category.id }"
+      [routerLink]="['/products/search']"
+      class="itemCategory"
+      mat-button
+      >{{ category.name | parseLang: utilsSer.getLang() }}</a
+    >
   </div>
 </div>
