@@ -23,9 +23,11 @@
                                   [_config]='imagePickerConf'></guachos-image-picker>
 
             <!-- NOMBRE DEL NEGOCIO -->
-            <ng-container>
+<!--              <p class='mat-body-2 uppercase mt-2 mb-1'>-->
+<!--                {{ 'Nombre del negocio' | translate }}-->
+<!--              </p>-->
               <p class='mat-body-2 uppercase mt-2 mb-1'>
-                {{ 'Nombre del negocio' | translate }}
+                {{ 'Datos iniciales' | translate }}
               </p>
 
               <mat-form-field appearance='outline' class='form-field-width'>
@@ -40,13 +42,6 @@
                   {{ 'Nombre' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
                 </mat-error>
               </mat-form-field>
-            </ng-container>
-
-            <!-- OBJETO SOCIAL DEL NEGOCIO -->
-            <ng-container>
-              <p class='mat-body-2 uppercase mb-1 mt-3'>
-                {{ 'Objeto social' | translate }}
-              </p>
 
               <mat-form-field appearance='outline' class='form-field-width'>
                 <mat-label>{{'Objeto social'|translate}}</mat-label>
@@ -65,66 +60,26 @@
                   }}
                 </mat-hint>
               </mat-form-field>
-            </ng-container>
 
-            <!-- Datos de inscripcion DEL NEGOCIO -->
-            <ng-container>
-              <p class='mat-body-2 uppercase mb-1 mt-3'>
+            <!-- DATOS DE INSCRIPCIÓN DEL NEGOCIO -->
+            <p class='mat-body-2 uppercase mb-1 mt-3'>
                 {{ 'Datos de inscripcion' | translate }}
               </p>
 
-              <mat-form-field fxFlex='grow' appearance='outline'>
-                <mat-label>{{'Forma de gestion'}}</mat-label>
-                <mat-select [formControl]="basicForm.controls['managementForm']">
+            <mat-form-field fxFlex='grow' appearance='outline'>
+                <mat-label>{{'Forma de gestión'}}</mat-label>
+                <mat-select [formControl]="basicForm.controls['selfEmployed']">
                   <mat-option *ngFor='let form of managementForm' [value]='form.value'>
                     {{form.viewValue}}
                   </mat-option>
                 </mat-select>
-                <mat-error *ngIf="basicForm.controls['managementForm'].hasError('required')">
-                  {{ 'Forma de gestion' | translate }} <strong>{{ 'is required' | translate }}</strong>
+                <mat-error *ngIf="basicForm.controls['selfEmployed'].hasError('required')">
+                  {{ 'Forma de gestión' | translate }} <strong>{{ 'is required' | translate }}</strong>
                 </mat-error>
               </mat-form-field>
 
-              <mat-form-field appearance='outline' class='form-field-width'>
-                <mat-label>{{'Codigo REEUP'|translate}}</mat-label>
-                <input
-                  [formControl]="basicForm.controls['reeup']"
-                  matInput
-                  placeholder="{{ 'Codigo REEUP' | translate }}"
-                  type='text'
-                  [readonly]="basicForm.get('managementForm').value === managementForm[1].value
-                            || !basicForm.get('managementForm').value"
-                />
-                <mat-icon matSuffix *ngIf="basicForm.get('managementForm').value === managementForm[1].value
-                            || !basicForm.get('managementForm').value">
-                  block
-                </mat-icon>
-                <mat-error *ngIf="basicForm.controls['reeup'].hasError('required')">
-                  {{ 'Codigo REEUP' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
-                </mat-error>
-              </mat-form-field>
-
-              <mat-form-field appearance='outline' class='form-field-width'>
-                <mat-label>{{'Codigo NIT'|translate}}</mat-label>
-                <input
-                  [formControl]="basicForm.controls['nit']"
-                  matInput
-                  placeholder="{{ 'Codigo NIT' | translate }}"
-                  type='text'
-                  [readonly]="basicForm.get('managementForm').value === managementForm[0].value
-                            || !basicForm.get('managementForm').value"
-                />
-                <mat-icon matSuffix *ngIf="basicForm.get('managementForm').value === managementForm[0].value
-                            || !basicForm.get('managementForm').value">
-                  block
-                </mat-icon>
-                <mat-error *ngIf="basicForm.controls['nit'].hasError('required')">
-                  {{ 'Codigo NIT' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
-                </mat-error>
-              </mat-form-field>
-
-              <mat-form-field appearance='outline' class='form-field-width'>
-                <mat-label>{{'Inscripcion en el Registro mercantil'|translate}}</mat-label>
+            <mat-form-field appearance='outline' class='form-field-width'>
+                <mat-label>{{'Inscripción en el Registro mercantil'|translate}}</mat-label>
                 <input
                   [formControl]="basicForm.controls['commercialRegister']"
                   matInput
@@ -135,15 +90,51 @@
                   {{ 'Registro mercantil' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
                 </mat-error>
               </mat-form-field>
-            </ng-container>
+
+            <mat-form-field appearance='outline' class='form-field-width'>
+                <mat-label>{{'Código NIT'|translate}}</mat-label>
+                <input
+                  [formControl]="basicForm.controls['nit']"
+                  matInput
+                  placeholder="{{ 'Código NIT' | translate }}"
+                  type='text'
+                  [readonly]="basicForm.get('selfEmployed').value === managementForm[0].value
+                            || !basicForm.get('selfEmployed').value"
+                />
+                <mat-icon matSuffix *ngIf="basicForm.get('selfEmployed').value === managementForm[0].value
+                            || !basicForm.get('selfEmployed').value">
+                  block
+                </mat-icon>
+                <mat-error *ngIf="basicForm.controls['nit'].hasError('required')">
+                  {{ 'Código NIT' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
+                </mat-error>
+              </mat-form-field>
+
+            <mat-form-field appearance='outline' class='form-field-width'>
+              <mat-label>{{'Código REEUP'|translate}}</mat-label>
+              <input
+                [formControl]="basicForm.controls['reeup']"
+                matInput
+                placeholder="{{ 'Código REEUP' | translate }}"
+                type='text'
+                [readonly]="basicForm.get('selfEmployed').value === managementForm[1].value
+                            || !basicForm.get('selfEmployed').value"
+              />
+              <mat-icon matSuffix *ngIf="basicForm.get('selfEmployed').value === managementForm[1].value
+                            || !basicForm.get('selfEmployed').value">
+                block
+              </mat-icon>
+              <mat-error *ngIf="basicForm.controls['reeup'].hasError('required')">
+                {{ 'Código REEUP' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
+              </mat-error>
+            </mat-form-field>
 
             <!-- REPRESENTANTE -->
-            <ng-container>
-              <p class='mat-body-2 uppercase mb-1'>
+            <p class='mat-body-2 uppercase mb-1'>
                 {{ 'Representante legal del Negocio' | translate }}
               </p>
 
-              <mat-form-field appearance='outline' class='form-field-width'>
+            <mat-form-field appearance='outline' class='form-field-width'>
                 <mat-label>{{'Nombre'|translate}}</mat-label>
                 <input
                   [formControl]="basicForm.controls['managerName']"
@@ -156,7 +147,7 @@
                 </mat-error>
               </mat-form-field>
 
-              <mat-form-field appearance='outline' class='form-field-width'>
+            <mat-form-field appearance='outline' class='form-field-width'>
                 <mat-label>{{'Caracter'|translate}}</mat-label>
                 <input
                   [formControl]="basicForm.controls['managerCharacter']"
@@ -169,7 +160,7 @@
                 </mat-error>
               </mat-form-field>
 
-              <mat-form-field appearance='outline' class='form-field-width'>
+            <mat-form-field appearance='outline' class='form-field-width'>
                 <mat-label>{{'Designado mediante'|translate}}</mat-label>
                 <input
                   [formControl]="basicForm.controls['managerDesignation']"
@@ -182,7 +173,7 @@
                 </mat-error>
               </mat-form-field>
 
-              <mat-form-field (click)='pickerDate.open();$event.preventDefault();$event.stopPropagation()'
+            <mat-form-field (click)='pickerDate.open();$event.preventDefault();$event.stopPropagation()'
                               appearance='outline' class='form-field-width'>
                 <mat-label>{{ 'Fecha' | translate }}</mat-label>
                 <input matInput [formControl]="basicForm.controls['managerDate']"
@@ -197,7 +188,7 @@
                 </mat-error>
               </mat-form-field>
 
-              <mat-form-field appearance='outline' class='form-field-width'>
+            <mat-form-field appearance='outline' class='form-field-width'>
                 <mat-label>{{ 'Dictada por' | translate }}</mat-label>
                 <input
                   [formControl]="basicForm.controls['managerDictatedBy']"
@@ -208,15 +199,13 @@
                   {{ 'Dictada por' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
                 </mat-error>
               </mat-form-field>
-            </ng-container>
 
-            <!-- Datos Bancarios del Negocio -->
-            <ng-container>
-              <p class='mat-body-2 uppercase mb-1 mt-3'>
-                {{ 'Cuentas' | translate }}
+            <!-- DATOS BANCARIOS DEL NEGOCIO -->
+            <p class='mat-body-2 uppercase mb-1 mt-3'>
+                {{ 'Datos bancarios' | translate }}
               </p>
 
-              <mat-form-field appearance='outline' class='form-field-width'>
+            <mat-form-field appearance='outline' class='form-field-width'>
                 <mat-label>{{'Licencia Bancaria'|translate}}</mat-label>
                 <input
                   [formControl]="basicForm.controls['bankLicense']"
@@ -228,7 +217,7 @@
                 </mat-error>
               </mat-form-field>
 
-              <mat-form-field appearance='outline' class='form-field-width'>
+            <mat-form-field appearance='outline' class='form-field-width'>
                 <mat-label>{{'Registro Comercial'|translate}}</mat-label>
                 <input
                   [formControl]="basicForm.controls['bankCommercialRegister']"
@@ -240,33 +229,84 @@
                 </mat-error>
               </mat-form-field>
 
-              <mat-form-field appearance='outline' class='form-field-width'>
-                <mat-label>{{'Cuenta bancaria CUP'|translate}}</mat-label>
+            <div fxLayout='row' fxLayoutAlign='space-between'>
+              <mat-form-field fxFlex='48' fxLayoutGap='10px' appearance='outline' class='form-field-width'>
+                <mat-label>{{'Banco CUP'|translate}}</mat-label>
                 <input
-                  [formControl]="basicForm.controls['cupCard']"
+                  [formControl]="basicForm.controls['cupBank']"
                   matInput
-                  placeholder="{{ 'Ex. 92xx-9598-xxxx-xxxx' | translate }}"
+                  placeholder="{{ 'Banco CUP' | translate }}"
                   type='text'
                 />
-                <mat-error *ngIf="basicForm.controls['cupCard'].hasError('required')">
-                  {{ 'Cuenta bancaria CUP' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
+                <mat-error *ngIf="basicForm.controls['cupBank'].hasError('required')">
+                  {{ 'Banco CUP' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
                 </mat-error>
               </mat-form-field>
-
-              <mat-form-field appearance='outline' class='form-field-width'>
-                <mat-label>{{'Cuenta bancaria MLC'|translate}}</mat-label>
+              <mat-form-field fxFlex='48' appearance='outline' class='form-field-width'>
+                <mat-label>{{'Sucursal Bancaria CUP'|translate}}</mat-label>
                 <input
-                  [formControl]="basicForm.controls['card26']"
+                  [formControl]="basicForm.controls['cupBankBranch']"
                   matInput
-                  placeholder="{{ 'Ex. 9226-9598-xxxx-xxxx' | translate }}"
+                  placeholder="{{ 'Sucursal Bancaria CUP' | translate }}"
                   type='text'
                 />
-                <mat-error *ngIf="basicForm.controls['card26'].hasError('required')">
-                  {{ 'Cuenta bancaria MLC' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
+                <mat-error *ngIf="basicForm.controls['cupBankBranch'].hasError('required')">
+                  {{ 'Sucursal Bancaria CUP' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
                 </mat-error>
               </mat-form-field>
+            </div>
+            <mat-form-field  appearance='outline' class='form-field-width'>
+              <mat-label>{{'Cuenta bancaria CUP'|translate}}</mat-label>
+              <input
+                [formControl]="basicForm.controls['cupCard']"
+                matInput
+                placeholder="{{ 'Ex. 92xx-9598-xxxx-xxxx' | translate }}"
+                type='text'
+              />
+              <mat-error *ngIf="basicForm.controls['cupCard'].hasError('required')">
+                {{ 'Cuenta bancaria CUP' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
+              </mat-error>
+            </mat-form-field>
 
-            </ng-container>
+
+            <div fxLayout='row' fxLayoutAlign='space-between'>
+              <mat-form-field fxFlex='48' fxLayoutGap='10px' appearance='outline' class='form-field-width'>
+                <mat-label>{{'Banco MLC'|translate}}</mat-label>
+                <input
+                  [formControl]="basicForm.controls['usdBank']"
+                  matInput
+                  placeholder="{{ 'Banco MLC' | translate }}"
+                  type='text'
+                />
+                <mat-error *ngIf="basicForm.controls['usdBank'].hasError('required')">
+                  {{ 'Banco MLC' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field fxFlex='48' appearance='outline' class='form-field-width'>
+                <mat-label>{{'Sucursal Bancaria MLC'|translate}}</mat-label>
+                <input
+                  [formControl]="basicForm.controls['usdBankBranch']"
+                  matInput
+                  placeholder="{{ 'Sucursal Bancaria MLC' | translate }}"
+                  type='text'
+                />
+                <mat-error *ngIf="basicForm.controls['usdBankBranch'].hasError('required')">
+                  {{ 'Sucursal Bancaria MLC' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <mat-form-field fxFlex='48' appearance='outline' class='form-field-width'>
+              <mat-label>{{'Cuenta bancaria MLC'|translate}}</mat-label>
+              <input
+                [formControl]="basicForm.controls['card26']"
+                matInput
+                placeholder="{{ 'Ex. 9226-9598-xxxx-xxxx' | translate }}"
+                type='text'
+              />
+              <mat-error *ngIf="basicForm.controls['card26'].hasError('required')">
+                {{ 'Cuenta bancaria MLC' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
+              </mat-error>
+            </mat-form-field>
 
             <!-- CONTACTOS DEL NEGOCIO -->
             <ng-container>

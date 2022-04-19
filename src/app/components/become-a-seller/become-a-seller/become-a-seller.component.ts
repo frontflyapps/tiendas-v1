@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { RegionsService } from '../../../core/services/regions/regions.service';
 import { BusinessService } from '../../../core/services/business/business.service';
 import { ImagePickerConf } from 'guachos-image-picker';
+import { CUBAN_PHONE_START_5, EMAIL_REGEX } from '../../../core/classes/regex.const';
 
 @Component({
   selector: 'app-become-a-seller',
@@ -46,15 +47,15 @@ export class BecomeASellerComponent implements OnInit {
 
   managementForm: {
     viewValue: string;
-    value: string;
+    value: boolean;
   }[] = [
     {
       viewValue: 'Estatal',
-      value: 'state',
+      value: false,
     },
     {
       viewValue: 'No estatal',
-      value: 'private',
+      value: true,
     },
   ];
   today = new Date();
@@ -86,14 +87,14 @@ export class BecomeASellerComponent implements OnInit {
       description: [null],
 
       socialObject: [null, [Validators.required]],
-      managementForm: [null, [Validators.required]],
+      selfEmployed: [null, [Validators.required]],
       reeup: [null],
       nit: [null],
       commercialRegister: [null],
 
-      cellphone: [null, [Validators.required]],
+      cellphone: [null, [Validators.required, Validators.pattern(CUBAN_PHONE_START_5)]],
       telephone: [null, []],
-      email: [null, [Validators.required, Validators.email]],
+      email: [null, [Validators.required,Validators.pattern(EMAIL_REGEX)]],
 
       managerName: [null, [Validators.required]],
       managerCharacter: [null, [Validators.required]],
@@ -105,7 +106,12 @@ export class BecomeASellerComponent implements OnInit {
       bankCommercialRegister: [null, [Validators.required]],
 
       card26: [null],
+      usdBank: [null],
+      usdBankBranch: [null],
+
       cupCard: [null],
+      cupBank: [null],
+      cupBankBranch: [null],
     });
 
     this.locationForm = this.fb.group({
