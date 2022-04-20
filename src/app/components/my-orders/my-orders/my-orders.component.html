@@ -184,8 +184,8 @@
                         *ngIf="!(paymentItem.Product.Images && paymentItem.Product.Images.length)"
                         alt=""
                         class="imageProduct"
-                        ngp-lazy
-                        ngp-threshold="0.1"
+                        lazyImg
+
                         src="assets/images/noImage.jpg"
                       />
                       <a
@@ -201,8 +201,8 @@
                           [src]="this.urlImage + this.paymentItem.Product.Images[0].image"
                           alt="Image product"
                           class="imageProduct"
-                          ngp-lazy
-                          ngp-threshold="0.1"
+                          lazyImg
+
                           onerror="this.onerror=null;this.src='assets/images/noImage.jpg';"
                         />
                       </a>

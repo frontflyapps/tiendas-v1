@@ -2,7 +2,7 @@
   <div [swiper]="config" class="swiper-container h-100">
     <div class="swiper-wrapper h-100">
       <div *ngFor="let slide of _slides" class="swiper-slide">
-        <div [attr.data-background]="slide.image" class="slide-item swiper-lazy" fxHide.lt-md>
+        <div [attr.data-background]="slide.image" class="slide-item swiper-lazyImg" fxHide.lt-md>
           <a [href]="slide.link" target="_blank">
             <div class="container-carrusel">
               <div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>

@@ -7,7 +7,7 @@
   </ng-container>
 
   <ng-container *ngIf="showData">
-    <img [src]="imageUrl + this.selectedArticle?.image" class="loader imageBlog" ngp-lazy ngp-threshold="0.1"
+    <img [src]="imageUrl + this.selectedArticle?.image" class="loader imageBlog" lazyImg
          onerror="this.onerror=null;this.src='assets/images/noImage.jpg';" />
     <div class="text-box">
       <h4 class="my-3" style="text-transform: none !important;">

@@ -14,15 +14,15 @@
               [src]="imageUrl + product.Images[0].image"
               alt=""
               class="productImage"
-              ngp-lazy
-              ngp-threshold="0.1"
+              lazyImg
+
             />
             <img
               *ngIf="!(product.Images && product.Images.length)"
               alt=""
               class="productImage"
-              ngp-lazy
-              ngp-threshold="0.1"
+              lazyImg
+
               src="../../../../../assets/images/noImage.jpg"
             />
           </div>

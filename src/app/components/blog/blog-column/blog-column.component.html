@@ -28,14 +28,14 @@
                         <img [alt]="item.title[language]"
                              [ngClass]="{'imageDroped':!item.expandable,'imageExpanded':item.expandable}"
                              [src]="imageUrl + item.image"
-                             ngp-lazy ngp-threshold="0.1">
+                             lazyImg >
                       </a>
 
                       <img *ngIf="!item.link" [alt]="item.title[language]"
                            [ngClass]="{'imageDroped':!item.expandable,'imageExpanded':item.expandable}"
                            [src]="imageUrl + item.image"
-                           ngp-lazy
-                           ngp-threshold="0.1">
+                           lazyImg
+                           >
 
                     </div>
                     <div class="text-box" fxFlex="100" fxFlex.gt-sm="50">

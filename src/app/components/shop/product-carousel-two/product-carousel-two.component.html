@@ -17,16 +17,16 @@
                 [alt]="product.name[language] ? product.name[language] : product.name['es']"
                 [src]="imageUrl + product.Images[0].image"
                 class="imageProduct"
-                ngp-lazy
-                ngp-threshold="0.1"
+                lazyImg
+
                 onerror="this.onerror=null;this.src='assets/images/noImage.jpg';"
               />
               <img
                 *ngIf="!(product.Images && product.Images.length)"
                 alt="No Image"
                 class="imageProduct"
-                ngp-lazy
-                ngp-threshold="0.1"
+                lazyImg
+
                 src="../../../../assets/images/noImage.jpg"
               />
             </a>
@@ -131,8 +131,8 @@
                 [src]="imageUrl + product.Images[0].image"
                 alt=""
                 class="imageProduct"
-                ngp-lazy
-                ngp-threshold="0.1"
+                lazyImg
+
                 onerror="this.onerror=null;this.src='assets/images/noImage.jpg';"
               />
 
@@ -140,8 +140,8 @@
                 *ngIf="!(product.Images && product.Images.length)"
                 alt=""
                 class="imageProduct"
-                ngp-lazy
-                ngp-threshold="0.1"
+                lazyImg
+
                 src="../../../../assets/images/noImage.jpg"
               />
             </a>
@@ -239,8 +239,8 @@
               [src]="imageUrl + product.Images[0].image"
               alt=""
               class="imageProduct"
-              ngp-lazy
-              ngp-threshold="0.1"
+              lazyImg
+
               onerror="this.onerror=null;this.src='assets/images/noImage.jpg';"
             />
 
@@ -248,8 +248,8 @@
               *ngIf="!(product.Images && product.Images.length)"
               alt=""
               class="imageProduct"
-              ngp-lazy
-              ngp-threshold="0.1"
+              lazyImg
+
               src="../../../../assets/images/noImage.jpg"
             />
           </a>

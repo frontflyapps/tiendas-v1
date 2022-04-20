@@ -25,8 +25,8 @@
               <ng-container *ngIf="product.Images && product.Images.length">
                 <ng-container *ngFor="let image of arrayImages; let i = index">
                   <!--                  <img *ngIf="image.selected"-->
-                  <!--                       onerror="this.onerror=null;this.src='assets/images/noImage.jpg';" ngp-lazy-->
-                  <!--                       ngp-threshold="0.1"-->
+                  <!--                       onerror="this.onerror=null;this.src='assets/images/noImage.jpg';" lazy-->
+                  <!--                       -->
                   <!--                       [src]="image.image" (click)="openZoomViewer()" class="ImageProduct" />-->
 
                   <lib-ngx-image-zoom
@@ -45,8 +45,8 @@
                 *ngIf="!(product.Images && product.Images.length)"
                 alt=""
                 class="ImageProduct"
-                ngp-lazy
-                ngp-threshold="0.1"
+                lazyImg
+
                 src="assets/images/noImage.jpg"
               />
             </div>
@@ -66,8 +66,8 @@
               >
                 <img
                   [src]="image.image"
-                  ngp-lazy
-                  ngp-threshold="0.1"
+                  lazyImg
+
                   onerror="this.onerror=null;this.src='assets/images/noImage.jpg';"
                 />
               </div>
