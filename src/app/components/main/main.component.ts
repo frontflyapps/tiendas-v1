@@ -330,8 +330,8 @@ export class MainComponent implements OnInit, OnDestroy {
       panelClass: 'app-confirm-create-business',
       maxWidth: '100vw',
       maxHeight: '100%',
-      width: '70em',
-      height: 'auto',
+      // width: '70em',
+      // height: 'auto',
       disableClose: true,
       data: {},
     });
