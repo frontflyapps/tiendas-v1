@@ -216,7 +216,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private socketIoService: SocketIoService,
     private activateRoute: ActivatedRoute,
-    private shppingService: TaxesShippingService,
+    private shippingService: TaxesShippingService,
     private configurationService: ConfigurationService,
     private currencyCheckoutPipe: CurrencyCheckoutPipe,
     private metaService: MetaService,
@@ -913,6 +913,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.contactsService.getContact.next();
   }
 
+  // ///////////////////////////////////////////////
+
   onAddContact() {
     let dialogRef: MatDialogRef<MyContactsComponent, any>;
     dialogRef = this.dialog.open(MyContactsComponent, {
@@ -940,8 +942,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.form.get('dni').setValue(contact?.identification);
     this.form.get('phone').setValue(contact?.phone);
   }
-
-  // ///////////////////////////////////////////////
 
   onSelectProvinceByContactBtn(provinceId) {
     setTimeout(() => {
@@ -1046,7 +1046,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       data: {
         title: 'Cancelar la confirmación con transfermovil',
         textHtml: `
-        <h4 style='text-transform:none !important; line-height:1.6rem !important;'>
+        <h4 style="text-transform:none !important; line-height:1.6rem !important;">
           ¿Desea cancelar la confirmación con transfermóvil?
         </h4>
        `,
