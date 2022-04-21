@@ -10,7 +10,7 @@ import { MetaService } from 'src/app/core/services/meta.service';
 import { IProductCard } from '../../../core/classes/product-card.class';
 import { FRONT_PRODUCT_DATA, LANDING_PAGE, PRODUCT_COUNT } from '../../../core/classes/global.const';
 import { LocalStorageService } from '../../../core/services/localStorage/localStorage.service';
-import { ProductDataService } from '../../shared/services/product.service';
+import { ProductDataService, ProductService } from '../../shared/services/product.service';
 import { GlobalStateOfCookieService } from '../../../core/services/request-cookie-secure/global-state-of-cookie.service';
 
 @Component({
@@ -166,13 +166,11 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   }
 
   setSubscriptionToCookie() {
-    this.globalStateOfCookieService.stateOfCookie$
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((thereIsCookie) => {
-        if (thereIsCookie) {
-          this.initComponent();
-        }
-      });
+    this.globalStateOfCookieService.stateOfCookie$.pipe(takeUntil(this._unsubscribeAll)).subscribe((thereIsCookie) => {
+      if (thereIsCookie) {
+        this.initComponent();
+      }
+    });
   }
 
   getPFDFromStorage() {
@@ -254,7 +252,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
       });
   }
 
-  getFrontDataRequest(): Promise<any> {
+  getFrontDataRequest() {
     return this.httpClient.get(this.url).toPromise();
   }
 

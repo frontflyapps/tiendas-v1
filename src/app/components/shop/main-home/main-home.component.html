@@ -128,17 +128,17 @@
   </div>
 
   <!-- ---------------------- Big promo1 --------------------------- -->
-  <section *ngIf="bigBanner1?.valor">
+  <section *ngIf="bigBanner1?.length">
     <div class="main-banner">
-      <ng-container *ngIf="applyStyle && bigBanner1?.valor?.imageXs; then bannerPromo1Xs; else bannerPromo1">
+      <ng-container *ngIf="applyStyle && bigBanner1[0]?.imageXs; then bannerPromo1Xs; else bannerPromo1">
       </ng-container>
 
       <ng-template #bannerPromo1>
-        <app-banner-promotion [_imageBigPromo]="bigBanner1?.valor?.image"></app-banner-promotion>
+        <app-banner-promotion [_imageBigPromo]="imageUrl + bigBanner1[0]?.image"></app-banner-promotion>
       </ng-template>
 
       <ng-template #bannerPromo1Xs>
-        <app-banner-promotion [_imageBigPromo]="bigBanner1?.valor?.imageXs"></app-banner-promotion>
+        <app-banner-promotion [_imageBigPromo]="imageUrl + bigBanner1[0]?.imageXs"></app-banner-promotion>
       </ng-template>
     </div>
   </section>
@@ -161,17 +161,17 @@
   </section>
 
   <!-- ---------------------- Big promo2 --------------------------- -->
-  <section *ngIf="bigBanner2?.valor">
+  <section *ngIf="bigBanner2?.length">
     <div class="main-banner">
-      <ng-container *ngIf="applyStyle && bigBanner2?.valor?.imageXs; then bannerPromo2Xs; else bannerPromo2">
+      <ng-container *ngIf="applyStyle && bigBanner2[0]?.imageXs; then bannerPromo2Xs; else bannerPromo2">
       </ng-container>
 
       <ng-template #bannerPromo2>
-        <app-banner-promotion2 [_imageBigPromo]="bigBanner2?.valor?.image"></app-banner-promotion2>
+        <app-banner-promotion2 [_imageBigPromo]="imageUrl + bigBanner2[0]?.image"></app-banner-promotion2>
       </ng-template>
 
       <ng-template #bannerPromo2Xs>
-        <app-banner-promotion2 [_imageBigPromo]="bigBanner2?.valor?.imageXs"></app-banner-promotion2>
+        <app-banner-promotion2 [_imageBigPromo]="imageUrl + bigBanner2[0]?.imageXs"></app-banner-promotion2>
       </ng-template>
     </div>
   </section>
