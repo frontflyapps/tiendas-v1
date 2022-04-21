@@ -77,7 +77,7 @@ export class BecomeASellerComponent implements OnInit {
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
-    debugger;
+
     if ((document.body.scrollTop > 64 ||
       document.documentElement.scrollTop > 64) && window.innerWidth > 937) {
       document.getElementById('questions-bar').classList.add('fixed-bar');

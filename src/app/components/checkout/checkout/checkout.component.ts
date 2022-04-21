@@ -212,7 +212,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     public domSanitizer: DomSanitizer,
     public loggedInUserService: LoggedInUserService,
     private showToastr: ShowToastrService,
-    private orderSevice: MyOrdersService,
+    private orderService: MyOrdersService,
     private dialog: MatDialog,
     private socketIoService: SocketIoService,
     private activateRoute: ActivatedRoute,
@@ -329,7 +329,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     });
 
     // this.form.controls['shippingRequired'].valueChanges.subscribe((value) => {
-    //   debugger;
+    //
     //   this.showShipping = value;
     //   if (value) {
     //     this.form.controls['ShippingBusinessId'].setValidators(Validators.required);
@@ -1125,24 +1125,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     },error => {
       console.error(error);
     });
-  }
-
-  private validateShippingRequired() {
-    if (this.showShipping) {
-      this.form.controls['ShippingBusinessId'].setValidators(Validators.required);
-    } else {
-      this.form.controls['ShippingBusinessId'].setValidators(null);
-    }
-    this.form.controls['ShippingBusinessId'].updateValueAndValidity();
-  }
-
-  private calculateShippingRequired() {
-    if (this.showShipping) {
-      this.onRecalculateShipping();
-    } else {
-      this.shippingData = [];
-      this.canBeDelivery = false;
-    }
   }
 
   private applyResolution() {
