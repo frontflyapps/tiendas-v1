@@ -6,7 +6,7 @@ cache:
 
 deploy_tcp:
   only:
-    - tienda-online-b2b-pymesbulevar2
+    - MIX-tienda-pymesbulevar2-caracol
   when: always
   script:
     - yarn install
@@ -16,5 +16,5 @@ deploy_tcp:
     - unzip awscli-bundle.zip
     - ./awscli-bundle/install -b ~/bin/aws
     - export PATH=~/bin:$PATH
-    - aws s3 sync --acl public-read --metadata-directive REPLACE --cache-control max-age=0,public dist/tienda-angular-b2b s3://www.pymesbulevar.com --delete
-    - aws cloudfront create-invalidation --distribution-id ENY4CRVGVV4VD --paths "/*"
+    - aws s3 sync --acl public-read --metadata-directive REPLACE --cache-control max-age=0,public dist/tienda-angular-b2b s3://tienda.gkoodu.com --delete
+    - aws cloudfront create-invalidation --distribution-id E13HP0LPIVU6AD --paths "/*"
