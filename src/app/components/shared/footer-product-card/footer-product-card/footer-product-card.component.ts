@@ -3,6 +3,7 @@ import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { environment } from '../../../../../environments/environment';
 import { CurrencyService } from '../../../../core/services/currency/currency.service';
 import { CartService } from '../../services/cart.service';
+import { UtilsService } from '../../../../core/services/utils/utils.service';
 
 @Component({
   selector: 'app-footer-product-card',
@@ -22,6 +23,7 @@ export class FooterProductCardComponent {
     public cdr: ChangeDetectorRef,
     public currencyService: CurrencyService,
     public cartService: CartService,
+    public utilsService: UtilsService
   ) {
   }
 }
