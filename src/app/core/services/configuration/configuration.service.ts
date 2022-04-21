@@ -8,6 +8,7 @@ import { environment } from '../../../../environments/environment';
 })
 export class ConfigurationService {
   url = environment.apiUrl + 'currency';
+  urlBusinessStructure = environment.apiUrl + 'business-structure';
   httpOptions = {};
 
   constructor(private httpClient: HttpClient) {
@@ -45,4 +46,16 @@ export class ConfigurationService {
     }
     return this.httpClient.get<any>(this.url, { params: httpParams });
   }
+
+  /**
+   * Obtain custom fields of a business according to cartId
+   */
+  getCustomFields(cartId: any){
+    let httpParams = new HttpParams();
+    httpParams = httpParams.append('cartId', cartId.cartId);
+    return  this.httpClient.get<any>(this.urlBusinessStructure, { params: httpParams });
+  }
+  // getCustomFields(){
+  //   return  this.httpClient.get<any>(this.urlBusinessStructure);
+  // }
 }

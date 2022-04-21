@@ -82,7 +82,7 @@
     <h3 class="mat-title py-4" style="text-align: center">{{ 'No hay ningún producto disponible' | translate }}</h3>
   </ng-container>
 
-  <!-- ---------------------- Best Seller Items --------------------------- -->
+  <!-- ---------------------- Best Seller Items -------------------- -->
   <section *ngIf="bestSellersProducts.length">
     <div class="container">
       <div class="products sec-padding">
@@ -99,8 +99,7 @@
     </div>
   </section>
 
-  <!-- ------------------------------------------------------------ -->
-  <!-- ---------------------- Popular Items --------------------------- -->
+  <!-- ---------------------- Popular Items ------------------------ -->
   <section *ngIf="popularProducts.length">
     <div class="container">
       <div class="products sec-padding">
@@ -127,25 +126,24 @@
       </div>
     </div>
   </div>
-  <!-- -------------------------------------------------------------------------------->
 
   <!-- ---------------------- Big promo1 --------------------------- -->
-  <section *ngIf="bigBanner1?.valor">
+  <section *ngIf="bigBanner1?.length">
     <div class="main-banner">
-      <ng-container *ngIf="applyStyle && bigBanner1?.valor?.imageXs; then bannerPromo1Xs; else bannerPromo1">
+      <ng-container *ngIf="applyStyle && bigBanner1[0]?.imageXs; then bannerPromo1Xs; else bannerPromo1">
       </ng-container>
 
       <ng-template #bannerPromo1>
-        <app-banner-promotion [_imageBigPromo]="bigBanner1?.valor?.image"></app-banner-promotion>
+        <app-banner-promotion [_imageBigPromo]="imageUrl + bigBanner1[0]?.image"></app-banner-promotion>
       </ng-template>
 
       <ng-template #bannerPromo1Xs>
-        <app-banner-promotion [_imageBigPromo]="bigBanner1?.valor?.imageXs"></app-banner-promotion>
+        <app-banner-promotion [_imageBigPromo]="imageUrl + bigBanner1[0]?.imageXs"></app-banner-promotion>
       </ng-template>
     </div>
   </section>
 
-  <!-- ---------------------- Featured Items --------------------------- -->
+  <!-- ---------------------- Featured Items ----------------------- -->
   <section *ngIf="featuredProducts.length > 0">
     <div class="container">
       <div class="products sec-padding">
@@ -163,23 +161,22 @@
   </section>
 
   <!-- ---------------------- Big promo2 --------------------------- -->
-  <section *ngIf="bigBanner2?.valor">
+  <section *ngIf="bigBanner2?.length">
     <div class="main-banner">
-      <ng-container *ngIf="applyStyle && bigBanner2?.valor?.imageXs; then bannerPromo2Xs; else bannerPromo2">
+      <ng-container *ngIf="applyStyle && bigBanner2[0]?.imageXs; then bannerPromo2Xs; else bannerPromo2">
       </ng-container>
 
       <ng-template #bannerPromo2>
-        <app-banner-promotion2 [_imageBigPromo]="bigBanner2?.valor?.image"></app-banner-promotion2>
+        <app-banner-promotion2 [_imageBigPromo]="imageUrl + bigBanner2[0]?.image"></app-banner-promotion2>
       </ng-template>
 
       <ng-template #bannerPromo2Xs>
-        <app-banner-promotion2 [_imageBigPromo]="bigBanner2?.valor?.imageXs"></app-banner-promotion2>
+        <app-banner-promotion2 [_imageBigPromo]="imageUrl + bigBanner2[0]?.imageXs"></app-banner-promotion2>
       </ng-template>
     </div>
   </section>
 
-  <!-- ------------------------------------------------------------ -->
-  <!-- ---------------------- Product Vertical --------------------------- -->
+  <!-- ---------------------- Product Vertical --------------------- -->
   <!--  <section *ngIf="featuredProducts.length && this.allProducts.length">-->
   <section>
     <div class="container">
@@ -187,8 +184,7 @@
     </div>
   </section>
 
-  <!-- ------------------------------------------------------------ -->
-  <!-- ---------------------- Big promo --------------------------- -->
+  <!-- ---------------------- Big promo s--------------------------- -->
   <section *ngIf="allArticles.length">
     <div class="featured-products-wrap">
       <div class="container">
@@ -204,7 +200,6 @@
     </div>
   </section>
 
-  <!-- ------------------------------------------------------------ -->
   <!-- ---------------------- APK Promo --------------------------- -->
   <!-- <section id="apk-promo" style="width: 100%; position: relative">
     <img *ngIf="!applyStyle" alt="APK Promo" class="img-apk-promo"
@@ -220,7 +215,7 @@
         </div>
         <div class="text-paragraph mb-4">
           {{
-            'Descubre las increíbles de ofertas de más de 2 millones de clientes conectados a Transfer móvil.Descargue hoy para mantenerse conectado con las mejores opciones en cualquier momento y en cualquier lugar'
+            'Descubre las increíbles de ofertas de más de 3 millones de clientes conectados a Transfer móvil.Descargue hoy para mantenerse conectado con las mejores opciones en cualquier momento y en cualquier lugar'
               | translate
           }}
           .

@@ -25,6 +25,7 @@ export class CartService implements OnDestroy {
 
   url = environment.apiUrl + 'cart';
   urlCheckoutData = environment.apiUrl + 'checkout';
+  urlShipping = environment.apiUrl + 'cart/shipping';
 
   public cartExpiredTime = '';
   public dateCreatedAtCart = '';
@@ -123,7 +124,7 @@ export class CartService implements OnDestroy {
     const productName = product.name[this.language] ? product.name[this.language] : product.name['es'];
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
 
-    if (product.type != 'physical' && product.type != 'web') {
+    if (product.type != 'physical' && product.type != 'digital') {
       if (this._isInCart(product)) {
         message =
           this.translate.instant('The product ') + productName + this.translate.instant(' it is already in the cart.');
@@ -683,6 +684,10 @@ export class CartService implements OnDestroy {
 
   deleteCartItem(data): Promise<any> {
     return this.httpClient.post<any>(this.url + '/delete', data).toPromise();
+  }
+
+  getShippingCart(cartId: any): Observable<any> {
+    return this.httpClient.post<any>(this.urlShipping, cartId);
   }
 
   getCheckoutData(params?): Observable<any> {

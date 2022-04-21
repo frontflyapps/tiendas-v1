@@ -203,6 +203,9 @@
                   (keypress)="utilsService.keyLettersNumberForEmail($event)"
                   [formControl]="registrationForm.controls['email']"
                   matInput
+                  type="email"
+                  autocomplete="email"
+                  name="email"
                   placeholder="{{ 'Email' | translate }}"
                   required
                 />
@@ -221,6 +224,7 @@
                   (keypress)="utilsService.keyPressNumbers($event)"
                   [formControl]="registrationForm.get('phone')"
                   matInput
+                  autocomplete="off"
                   placeholder="{{ 'Teléfono cubano...' | translate }}"
                 />
                 <mat-hint *ngIf="!registrationForm.get('phone').value">
@@ -266,10 +270,13 @@
                   <mat-error *ngIf="fromPassRegister.controls['password'].hasError('required')">
                     {{ 'Password' | translate }} <strong>{{ 'is required' | translate }}</strong>
                   </mat-error>
-                  <mat-error *ngIf="fromPassRegister.controls['password'].hasError('minlength')">
-                    {{ 'Password' | translate }} <strong>{{ 'must be at least 6 characters' | translate }}</strong>
-                  </mat-error>
-                  <mat-error *ngIf="fromPassRegister.hasError('mismatch')">
+
+                  <mat-error
+                    *ngIf="
+                      fromPassRegister.hasError('mismatch') &&
+                      !fromPassRegister.controls['password'].hasError('pattern')
+                    "
+                  >
                     {{ 'Password' | translate }} <strong>{{ 'most be equals' | translate }}</strong>
                   </mat-error>
                 </mat-form-field>
@@ -294,11 +301,22 @@
                     type="{{ passType }}"
                   />
                   <mat-icon (click)="showPass()" class="grey-600" matSuffix>remove_red_eye</mat-icon>
-                  <mat-error *ngIf="fromPassRegister.hasError('mismatch')">
+                  <mat-error
+                    *ngIf="
+                      fromPassRegister.hasError('mismatch') &&
+                      !fromPassRegister.controls['password'].hasError('pattern')
+                    "
+                  >
                     {{ 'Password' | translate }} <strong>{{ 'most be equals' | translate }}</strong>
                   </mat-error>
                 </mat-form-field>
               </div>
+              <mat-error *ngIf="fromPassRegister.controls['password'].hasError('pattern')">
+                {{
+                  'La contraseña debe contener 8 dígitos y al menos una mayúscula, una minúscula, un número y un caracter especial.'
+                    | translate
+                }}
+              </mat-error>
 
               <!-- <div fxLayout="row" fxLayoutAlign="center center">
                 <ngx-recaptcha2 class="mb-3" #captchaElem [siteKey]="secretKeyCaptcha" (reset)="handleReset()" (expire)="handleExpire()"
@@ -307,7 +325,7 @@
                 </ngx-recaptcha2>
               </div> -->
 
-              <div fxLayout="row" fxLayoutAlign="center center">
+              <div fxLayout="row" fxLayoutAlign="center center" class="pt-4">
                 <button
                   (click)="onSignUp()"
                   [disabled]="registrationForm.invalid"

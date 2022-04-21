@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 
 import { environment } from '../../../../environments/environment';
-import { takeUntil } from 'rxjs/operators';
 import { GlobalStateOfCookieService } from './global-state-of-cookie.service';
 
 @Injectable({
@@ -21,30 +20,38 @@ export class RequestCookieSecureService {
     this.httpOptions = {};
   }
 
-  private rq(): Observable<any> {
-    return this.httpClient.get<any>(this.url);
+  rq(): Promise<any> {
+    return this.httpClient.get<any>(this.url, this.httpOptions).toPromise();
   }
 
-  public requestCookiesSecure() {
-    // debugger;
-    this.rq()
-      .pipe(takeUntil(this.unsubscribeAll))
-      .subscribe(
-        (res: any) => {
-          console.warn('Cookies Requested Success', res);
+  public async requestCookiesSecure() {
+    await this.rq()
+      .then(() => {
+        this.globalStateOfCookieService.stateOfCookie.next(true);
+      })
+      .catch(function (error) {
+        console.error('Cookies Requested Error', error);
+      });
 
-          this.globalStateOfCookieService.stateOfCookie.next(true);
+    //  this.rq()
+    //     .pipe(takeUntil(this.unsubscribeAll))
+    //     .subscribe(
+    //       (res: any) => {
+    //         console.warn('Cookies Requested Success', res);
 
-          this.clearUnsubscribeAll();
-        },
-        (error: any) => {
-          console.warn('Cookies Requested Error', error);
+    //         // this.globalStateOfCookieService.stateOfCookie.next(true);
+    //         this.globalStateOfCookieService.stateOfCookie.next(true);
 
-          // this.globalStateOfCookieService.stateOfCookie.next(true);
+    //         this.clearUnsubscribeAll();
+    //       },
+    //       (error: any) => {
+    //         console.warn('Cookies Requested Error', error);
 
-          this.clearUnsubscribeAll();
-        },
-      );
+    //         this.globalStateOfCookieService.stateOfCookie.next(true);
+
+    //         this.clearUnsubscribeAll();
+    //       },
+    //     );
   }
 
   clearUnsubscribeAll() {
@@ -53,6 +60,6 @@ export class RequestCookieSecureService {
         this.unsubscribeAll.next(null);
         this.unsubscribeAll.complete();
       }
-    }, 10);
+    }, 0);
   }
 }

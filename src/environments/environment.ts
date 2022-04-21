@@ -6,17 +6,14 @@ const packageJson = require('../../package.json');
 export const environment = {
   production: false,
 
-  // apiUrl: 'http://192.168.1.20:7777/v1/',
+  // apiUrl: 'http://192.168.1.20:7777/v1/',F
   // imageUrl: 'http://192.168.1.20:7777/v1/',
 
   // apiUrl: 'http://localhost:8998/v1/',
   // imageUrl: 'http://localhost:8998/v1/',
 
-  // apiUrl: 'http://apitienda.tiendalocal.com:8998/v1/',
-  // imageUrl: 'http://apitienda.tiendalocal.com:8998/v1/',
-
-  apiUrl: 'http://api.tiendalocal.com:7777/v1/',
-  imageUrl: 'http://api.tiendalocal.com:7777/v1/',
+  apiUrl: 'http://apitienda.tiendalocal.com:8080/v1/',
+  imageUrl: 'http://apitienda.tiendalocal.com:8080/v1/',
 
   // apiUrl: 'https://api.pymesbulevar.com/v1/',
   // imageUrl: 'https://api.pymesbulevar.com/v1/',

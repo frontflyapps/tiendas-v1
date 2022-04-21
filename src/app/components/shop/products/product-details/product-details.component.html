@@ -44,6 +44,8 @@
                 *ngIf="!(product.Images && product.Images.length)"
                 alt=""
                 class="ImageProduct"
+                lazyImg
+
                 src="assets/images/noImage.jpg"
               />
             </div>
@@ -63,6 +65,8 @@
               >
                 <img
                   [src]="image.image"
+                  lazyImg
+
                   onerror="this.onerror=null;this.src='assets/images/noImage.jpg';"
                 />
               </div>
@@ -187,8 +191,9 @@
               <div
                 class="buttons mt-20"
                 fxLayout="row"
+                fxLayout.lt-sm="column"
                 fxLayoutAlign="start center"
-                fxLayoutAlign.lt-sm="center center"
+                fxLayoutAlign.lt-sm="start center"
               >
                 <button
                   (click)="addToCart(product, counter)"
@@ -351,15 +356,9 @@
       </div>
 
       <div *ngIf="allProductsOnMenu?.length > 0" class="products pt-5">
-        <div
-          fxLayout
-          fxLayoutAlign="space-between center"
-          fxLayout.lt-md="column"
-          fxLayoutAlign.lt-md="space-between start"
-        >
-          <div class="title">
-            <h4 class="widget-title">{{ 'Otros productos del negocio' | translate }}</h4>
-          </div>
+        <div class="title">
+          <h4 class="widget-title">{{ 'Otros productos del negocio' | translate }}</h4>
+
           <mat-form-field appearance="outline" class="auto-complete-search" style="min-width: 310px">
             <mat-label>{{ 'Buscar en este local' | translate }}</mat-label>
             <input

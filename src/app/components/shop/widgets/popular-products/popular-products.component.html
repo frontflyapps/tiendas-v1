@@ -1,39 +1,43 @@
-<ng-container *ngIf='popularProducts.length > 0'>
-  <div class='popular-products' fxLayout='column' ngClass.gt-md='m-0'>
-    <div class='title-header'>
-      <h4 class='title'>{{ 'POPULAR PRODUCTS' | translate }}</h4>
+<ng-container *ngIf="popularProducts.length > 0">
+  <div class="popular-products" fxLayout="column" ngClass.gt-md="m-0">
+    <div class="title-header">
+      <h4 class="title">{{ 'POPULAR PRODUCTS' | translate }}</h4>
     </div>
-    <mat-list class='reviews'>
-      <mat-list-item *ngFor='let product of popularProducts.slice(0,3)' class='content'>
-        <div class='media'>
-          <a [queryParams]='{ productId: product.id, stockId: product?.Stock?.id }'
+    <mat-list class="reviews">
+      <mat-list-item *ngFor="let product of popularProducts.slice(0,3)" class="content">
+        <div class="media">
+          <a [queryParams]="{ productId: product.id, stockId: product?.Stock?.id }"
              [routerLink]="['/product']"
-             style='width: 100%; height: 100%'>
-            <img *ngIf='product.Images && product.Images.length'
-                 [src]='imageUrl + product.Images[0].image'
-                 alt=''
-                 class='img-fluid' />
-            <img *ngIf='!(product.Images && product.Images.length)'
-                 alt=''
-                 class='img-fluid'
-                 src='assets/images/noImage.jpg' />
+             style="width: 100%; height: 100%">
+            <img *ngIf="product.Images && product.Images.length"
+                 [src]="imageUrl + product.Images[0].image"
+                 alt=""
+                 class="img-fluid"
+                 lazyImg
+                  />
+            <img *ngIf="!(product.Images && product.Images.length)"
+                 alt=""
+                 class="img-fluid"
+                 lazyImg
+
+                 src="assets/images/noImage.jpg" />
           </a>
         </div>
-        <div class='info' style='text-align: left !important'>
-          <a [queryParams]='{ productId: product.id, stockId: product?.Stock?.id }'
+        <div class="info" style="text-align: left !important">
+          <a [queryParams]="{ productId: product.id, stockId: product?.Stock?.id }"
              [routerLink]="['/product']"
-             class='title'>
-            <h5 class='m-0'>
-              <a [queryParams]='{ productId: product.id, stockId: product?.Stock?.id }'
+             class="title">
+            <h5 class="m-0">
+              <a [queryParams]="{ productId: product.id, stockId: product?.Stock?.id }"
                  [routerLink]="['/product']"
-                 class='link-nav-a'
+                 class="link-nav-a"
               >{{ product.name[language] ? product.name[language] : product.name['es'] }}</a>
             </h5>
           </a>
-          <div class='mt-2'>
-            <guachos-rating [config]='{ readOnly: true }' [value]='product.rating'></guachos-rating>
+          <div class="mt-2">
+            <guachos-rating [config]="{ readOnly: true }" [value]="product.rating"></guachos-rating>
           </div>
-          <p class='price'>{{ product.price | currency: currencyService.getCurrency().code }}</p>
+          <p class="price">{{ product.price | currency: currencyService.getCurrency().code }}</p>
         </div>
       </mat-list-item>
     </mat-list>

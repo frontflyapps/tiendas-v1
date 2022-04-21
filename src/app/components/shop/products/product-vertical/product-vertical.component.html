@@ -23,14 +23,14 @@
       </ng-container>
 
       <!-- MAS VENDIDOS -->
-      <ng-container *ngIf="productDataService.popularProducts.length > 0">
+      <ng-container *ngIf="productDataService.bestSellerProducts.length > 0">
         <div class="product-panel" fxFlex="100" fxFlex.gt-xs="33.3">
           <div class="widget-column">
             <div class="title">
               <h4 class="widget-title">{{ 'Top Selling Products' | translate }}</h4>
             </div>
             <app-footer-product-card
-              [Products]="productDataService.popularProducts.slice(0, 3)"
+              [Products]="productDataService.bestSellerProducts.slice(0, 3)"
               [language]="language"
             ></app-footer-product-card>
           </div>

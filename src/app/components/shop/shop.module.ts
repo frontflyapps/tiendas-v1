@@ -123,5 +123,4 @@ import { GuachosRatingModule } from 'guachos-rating';
     },
   ],
 })
-export class ShopModule {
-}
+export class ShopModule {}

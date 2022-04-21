@@ -9,7 +9,7 @@ import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-
 import { ShowSnackbarService } from '../../../core/services/show-snackbar/show-snackbar.service';
 import { ShowToastrService } from '../../../core/services/show-toastr/show-toastr.service';
 import { UtilsService } from '../../../core/services/utils/utils.service';
-import { CUBAN_PHONE_START_5, EMAIL_REGEX } from '../../../core/classes/regex.const';
+import { CUBAN_PHONE_START_5, EMAIL_REGEX, PASS_CLIENT_REGEX } from '../../../core/classes/regex.const';
 
 @Component({
   selector: 'app-my-account',
@@ -26,6 +26,7 @@ export class MyAccountComponent implements OnInit {
   message: string;
   redirectToOriginPage: string;
   paramsToRedirect: any;
+  urlToRedirect: any;
   inLoading = false;
   loginForm: FormGroup;
   formPass: FormGroup;
@@ -98,6 +99,7 @@ export class MyAccountComponent implements OnInit {
       this.paramsVerifyPositionModal(data);
       this.redirectToOriginPage = data.redirectToOriginPage;
       this.paramsToRedirect = data.paramsToRedirect;
+      this.urlToRedirect = data.urlToRedirect;
     });
   }
 
@@ -177,10 +179,8 @@ export class MyAccountComponent implements OnInit {
   createRegistrationForm() {
     this.fromPassRegister = this.fb.group(
       {
-        // password: [null, [Validators.required, Validators.pattern(PASS_CLIENT_REGEX)]],
-        // repeat: [null, [Validators.required, Validators.pattern(PASS_CLIENT_REGEX)]],
-        password: [null, [Validators.required, Validators.minLength(6)]],
-        repeat: [null, [Validators.required, Validators.minLength(6)]],
+        password: [null, [Validators.required, Validators.pattern(PASS_CLIENT_REGEX)]],
+        repeat: [null, [Validators.required, Validators.pattern(PASS_CLIENT_REGEX)]],
       },
       { validator: this.matchValidator.bind(this) },
     );
@@ -198,7 +198,7 @@ export class MyAccountComponent implements OnInit {
       // recaptcha: ['', Validators.required],
       passwords: this.fromPassRegister,
     });
-    this.registrationForm.markAllAsTouched();
+    // this.registrationForm.markAllAsTouched();
   }
 
   createValidationForm() {
@@ -251,6 +251,7 @@ export class MyAccountComponent implements OnInit {
             10000,
           );
           this.inLoading = false;
+          /** Redirect to origin page **/
           if (this.redirectToOriginPage) {
             if (this.paramsToRedirect) {
               let tempParams = JSON.parse(this.paramsToRedirect);
@@ -260,6 +261,10 @@ export class MyAccountComponent implements OnInit {
             } else {
               this.router.navigate([this.redirectToOriginPage]).then();
             }
+          }
+          /** Redirect to URL when login **/
+          if(this.urlToRedirect){
+            this.router.navigate([this.urlToRedirect]);
           } else {
             this.router.navigate([this.routeToNavigate]).then();
           }

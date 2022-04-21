@@ -1,13 +1,15 @@
 import { ShowToastrService } from '../../../core/services/show-toastr/show-toastr.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { LoggedInUserService } from 'src/app/core/services/loggedInUser/logged-in-user.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { RegionsService } from '../../../core/services/regions/regions.service';
 import { BusinessService } from '../../../core/services/business/business.service';
 import { ImagePickerConf } from 'guachos-image-picker';
+import { CUBAN_PHONE_START_5, EMAIL_REGEX } from '../../../core/classes/regex.const';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-become-a-seller',
@@ -46,15 +48,15 @@ export class BecomeASellerComponent implements OnInit {
 
   managementForm: {
     viewValue: string;
-    value: string;
+    value: boolean;
   }[] = [
     {
       viewValue: 'Estatal',
-      value: 'state',
+      value: false,
     },
     {
       viewValue: 'No estatal',
-      value: 'private',
+      value: true,
     },
   ];
   today = new Date();
@@ -68,8 +70,20 @@ export class BecomeASellerComponent implements OnInit {
     private showToastr: ShowToastrService,
     private translate: TranslateService,
     private router: Router,
+    @Inject(DOCUMENT) private document: Document
   ) {
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
+  }
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+
+    if ((document.body.scrollTop > 64 ||
+      document.documentElement.scrollTop > 64) && window.innerWidth > 937) {
+      document.getElementById('questions-bar').classList.add('fixed-bar');
+    }else{
+      document.getElementById('questions-bar').classList.remove('fixed-bar');
+    }
   }
 
   ngOnInit(): void {
@@ -86,25 +100,36 @@ export class BecomeASellerComponent implements OnInit {
       description: [null],
 
       socialObject: [null, [Validators.required]],
-      managementForm: [null, [Validators.required]],
+      selfEmployed: [null, [Validators.required]],
       reeup: [null],
       nit: [null],
       commercialRegister: [null],
 
-      cellphone: [null, [Validators.required]],
+      cellphone: [null, [Validators.required, Validators.pattern(CUBAN_PHONE_START_5)]],
       telephone: [null, []],
-      email: [null, [Validators.required, Validators.email]],
+      email: [null, [Validators.required,Validators.pattern(EMAIL_REGEX)]],
 
       managerName: [null, [Validators.required]],
       managerCharacter: [null, [Validators.required]],
       managerDesignation: [null, [Validators.required]],
       managerDate: [null, [Validators.required]],
       managerDictatedBy: [null, [Validators.required]],
+
+      bankLicense: [null, [Validators.required]],
+      bankCommercialRegister: [null, [Validators.required]],
+
+      card26: [null],
+      usdBank: [null],
+      usdBankBranch: [null],
+
+      cupCard: [null],
+      cupBank: [null],
+      cupBankBranch: [null],
     });
 
     this.locationForm = this.fb.group({
-      ProvinceId: [null, [Validators.required]],
       CountryId: [59, [Validators.required]],
+      ProvinceId: [null, [Validators.required]],
       MunicipalityId: [null, [Validators.required]],
       address: [null, [Validators.required]],
       longitude: [null, []],
@@ -152,8 +177,8 @@ export class BecomeASellerComponent implements OnInit {
     data.business.logo = this.imageBusiness;
     //delete data.owner.card;
 
-    console.log('dataaaaaaaaaaa', data);
-    return;
+    // console.log('dataaaaaaaaaaa', data);
+    // return;
 
     this.businessService.createBussines(data).subscribe(
       () => {
