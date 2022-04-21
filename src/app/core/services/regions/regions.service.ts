@@ -150,6 +150,12 @@ export class RegionsService {
     return this.httpClient.get(environment.apiUrl + 'province');
   }
 
+  geBusinessProvinces(params: any): Observable<any> {
+    let httpParams = new HttpParams();
+    httpParams = httpParams.set('cartId', params.cartId);
+    return this.httpClient.get(environment.apiUrl + 'business/province', { params: httpParams });
+  }
+
   getMunicipalities(): Observable<any> {
     return this.httpClient.get(environment.apiUrl + 'municipality');
   }

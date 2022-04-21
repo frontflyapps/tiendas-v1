@@ -27,11 +27,18 @@ export class TokenInterceptorService implements HttpInterceptor {
       return next.handle(request);
     }
 
+    if (language) {
+      request = request.clone({
+        setHeaders: {
+          language: language,
+        },
+      });
+    }
+
     if (tokenBusiness) {
       request = request.clone({
         setHeaders: {
           ['xxx-ff-id']: tokenBusiness,
-          // language: language,
         },
       });
     }
@@ -43,6 +50,10 @@ export class TokenInterceptorService implements HttpInterceptor {
         },
       });
     }
+
+    // request = request.clone({
+    //   withCredentials: true,
+    // });
 
     return next.handle(request);
   }

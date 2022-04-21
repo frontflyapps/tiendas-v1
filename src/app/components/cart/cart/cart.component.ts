@@ -27,6 +27,7 @@ export class CartComponent implements OnInit, OnDestroy {
   loggedInUser: any = null;
 
   public itemsOnCart = 0;
+  defaultDigitalQuantity: any = 1;
 
   constructor(
     public cartService: CartService,
