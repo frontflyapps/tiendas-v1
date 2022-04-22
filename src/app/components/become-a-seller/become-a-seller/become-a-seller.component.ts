@@ -2,7 +2,7 @@ import { ShowToastrService } from '../../../core/services/show-toastr/show-toast
 import { NgxSpinnerService } from 'ngx-spinner';
 import { LoggedInUserService } from 'src/app/core/services/loggedInUser/logged-in-user.service';
 import { Component, HostListener, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { RegionsService } from '../../../core/services/regions/regions.service';
@@ -10,6 +10,9 @@ import { BusinessService } from '../../../core/services/business/business.servic
 import { ImagePickerConf } from 'guachos-image-picker';
 import { CUBAN_PHONE_START_5, EMAIL_REGEX } from '../../../core/classes/regex.const';
 import { DOCUMENT } from '@angular/common';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { validate } from 'codelyzer/walkerFactory/walkerFn';
 
 @Component({
   selector: 'app-become-a-seller',
@@ -17,6 +20,7 @@ import { DOCUMENT } from '@angular/common';
   styleUrls: ['./become-a-seller.component.scss'],
 })
 export class BecomeASellerComponent implements OnInit {
+  form: FormGroup;
   basicForm: FormGroup;
   locationForm: FormGroup;
   sellerForm: FormGroup;
@@ -46,6 +50,8 @@ export class BecomeASellerComponent implements OnInit {
   imageBusiness = undefined;
   loggedInUser = undefined;
 
+  _unsubscribeAll: Subject<any>;
+
   managementForm: {
     viewValue: string;
     value: boolean;
@@ -72,6 +78,7 @@ export class BecomeASellerComponent implements OnInit {
     private router: Router,
     @Inject(DOCUMENT) private document: Document
   ) {
+    this._unsubscribeAll = new Subject<any>();
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
   }
 
@@ -111,9 +118,9 @@ export class BecomeASellerComponent implements OnInit {
 
       managerName: [null, [Validators.required]],
       managerCharacter: [null, [Validators.required]],
-      managerDesignation: [null, [Validators.required]],
+      managerDesignation: [null],
       managerDate: [null, [Validators.required]],
-      managerDictatedBy: [null, [Validators.required]],
+      managerDictatedBy: [null],
 
       bankLicense: [null, [Validators.required]],
       bankCommercialRegister: [null, [Validators.required]],

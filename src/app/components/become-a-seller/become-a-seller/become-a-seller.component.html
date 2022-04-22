@@ -16,7 +16,7 @@
           <ng-template matStepLabel>{{ 'Información de su Negocio' | translate }}</ng-template>
           <div [formGroup]='basicForm' fxLayout='column' fxLayoutAlign='start stretch' fxLayoutGap='16px'>
             <p class='mat-body-2 uppercase mb-1'>
-              {{ 'Logo del negocio' | translate }}
+              {{ 'Logo del negocio' | translate }}*
             </p>
 
             <guachos-image-picker ($imageChanged)='onImageChange($event)'
@@ -76,7 +76,33 @@
                 <mat-error *ngIf="basicForm.controls['selfEmployed'].hasError('required')">
                   {{ 'Forma de gestión' | translate }} <strong>{{ 'is required' | translate }}</strong>
                 </mat-error>
-              </mat-form-field>
+            </mat-form-field>
+
+            <mat-form-field appearance='outline' class='form-field-width'>
+              <mat-label>{{'Código NIT'|translate}}</mat-label>
+              <input
+                [formControl]="basicForm.controls['nit']"
+                matInput
+                placeholder="{{ 'Código NIT' | translate }}"
+                type='text'
+              />
+              <mat-error *ngIf="basicForm.controls['nit'].hasError('required')">
+                {{ 'Código NIT' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance='outline' class='form-field-width'>
+              <mat-label>{{'Código REEUP'|translate}}</mat-label>
+              <input
+                [formControl]="basicForm.controls['reeup']"
+                matInput
+                placeholder="{{ 'Código REEUP' | translate }}"
+                type='text'
+              />
+              <mat-error *ngIf="basicForm.controls['reeup'].hasError('required')">
+                {{ 'Código REEUP' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
+              </mat-error>
+            </mat-form-field>
 
             <mat-form-field appearance='outline' class='form-field-width'>
                 <mat-label>{{'Inscripción en el Registro mercantil'|translate}}</mat-label>
@@ -89,44 +115,6 @@
                 <mat-error *ngIf="basicForm.controls['commercialRegister'].hasError('required')">
                   {{ 'Registro mercantil' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
                 </mat-error>
-              </mat-form-field>
-
-            <mat-form-field appearance='outline' class='form-field-width'>
-                <mat-label>{{'Código NIT'|translate}}</mat-label>
-                <input
-                  [formControl]="basicForm.controls['nit']"
-                  matInput
-                  placeholder="{{ 'Código NIT' | translate }}"
-                  type='text'
-                  [readonly]="basicForm.get('selfEmployed').value === managementForm[0].value
-                            || !basicForm.get('selfEmployed').value"
-                />
-                <mat-icon matSuffix *ngIf="basicForm.get('selfEmployed').value === managementForm[0].value
-                            || !basicForm.get('selfEmployed').value">
-                  block
-                </mat-icon>
-                <mat-error *ngIf="basicForm.controls['nit'].hasError('required')">
-                  {{ 'Código NIT' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
-                </mat-error>
-              </mat-form-field>
-
-            <mat-form-field appearance='outline' class='form-field-width'>
-              <mat-label>{{'Código REEUP'|translate}}</mat-label>
-              <input
-                [formControl]="basicForm.controls['reeup']"
-                matInput
-                placeholder="{{ 'Código REEUP' | translate }}"
-                type='text'
-                [readonly]="basicForm.get('selfEmployed').value === managementForm[1].value
-                            || !basicForm.get('selfEmployed').value"
-              />
-              <mat-icon matSuffix *ngIf="basicForm.get('selfEmployed').value === managementForm[1].value
-                            || !basicForm.get('selfEmployed').value">
-                block
-              </mat-icon>
-              <mat-error *ngIf="basicForm.controls['reeup'].hasError('required')">
-                {{ 'Código REEUP' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
-              </mat-error>
             </mat-form-field>
 
             <!-- REPRESENTANTE -->
@@ -168,9 +156,9 @@
                   placeholder="{{ 'Designado mediante' | translate }}"
                   type='text'
                 />
-                <mat-error *ngIf="basicForm.controls['managerDesignation'].hasError('required')">
-                  {{ 'Designado mediante' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
-                </mat-error>
+<!--                <mat-error *ngIf="basicForm.controls['managerDesignation'].hasError('required')">-->
+<!--                  {{ 'Designado mediante' | translate }} <strong>{{ 'es requerido' | translate }}</strong>-->
+<!--                </mat-error>-->
               </mat-form-field>
 
             <mat-form-field (click)='pickerDate.open();$event.preventDefault();$event.stopPropagation()'
@@ -195,9 +183,9 @@
                   matInput placeholder="{{ 'Dictada por' | translate }}"
                   type='text'
                 />
-                <mat-error *ngIf="basicForm.controls['managerDictatedBy'].hasError('required')">
-                  {{ 'Dictada por' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
-                </mat-error>
+<!--                <mat-error *ngIf="basicForm.controls['managerDictatedBy'].hasError('required')">-->
+<!--                  {{ 'Dictada por' | translate }} <strong>{{ 'es requerido' | translate }}</strong>-->
+<!--                </mat-error>-->
               </mat-form-field>
 
             <!-- DATOS BANCARIOS DEL NEGOCIO -->
@@ -393,7 +381,7 @@
             </ng-container>
 
             <div>
-              <button (click)='temp()' [disabled]='basicForm.invalid' class='uppercase' mat-button matStepperNext>
+              <button (click)='temp()' [disabled]='basicForm.invalid && this.imageBusiness' class='uppercase' mat-button matStepperNext>
                 {{ 'Siguiente' | translate }}
               </button>
             </div>

@@ -47,6 +47,8 @@ export class MainComponent implements OnInit, OnDestroy {
   public sidenavMenuItems: Array<any>;
   _unsubscribeAll: Subject<any>;
 
+  isOwner = false;
+
   public currencies: any[];
   public currency: any;
   urlImage: any = environment.imageUrl;
