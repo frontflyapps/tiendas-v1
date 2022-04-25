@@ -18,6 +18,7 @@ export class BrandsMComponent implements OnInit, OnDestroy {
   _unsubscribeAll: Subject<any>;
   brands: any[] = [];
   selection: SelectionModel<any>;
+  categories: [] = [];
 
   @Output() brandChanged = new EventEmitter();
 
@@ -33,22 +34,38 @@ export class BrandsMComponent implements OnInit, OnDestroy {
 
   @Input() set brandsIds(value) {
     if (value) {
-      this.selection.clear();
+      // this.selection.clear();
       value.map((id) => {
         this.selection.select(+id);
       });
     }
   }
 
+  @Input() set categoriesToSelectBrands(value) {
+    if (this.categories != value) {
+      this.categories = value;
+      this.getBrands(value);
+    }
+    // if (value.length > 0) {
+    //   // this.selection.clear();
+    //   value.map((id) => {
+    //     this.selection.select(+id);
+    //   });
+    // }
+  }
+
   ngOnInit() {
     this.loggedInUserService.$languageChanged.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {
       this.language = data.lang;
     });
+  }
 
-    this.brandService.getAllBrands().subscribe((data) => {
+  getBrands(categories) {
+    this.brandService.getBrandsByCategories(categories).subscribe((data) => {
       this.brands = data.data;
     });
   }
+
 
   ngOnDestroy(): void {
     this._unsubscribeAll.next(true);

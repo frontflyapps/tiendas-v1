@@ -10,8 +10,10 @@
           <h3>{{'Categories'|translate}}</h3>
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <app-categories-m (categoryChanged)="onCategoriesChanged($event)"
-                        [categoriesIds]="this.categoriesIds"></app-categories-m>
+<!--      <app-categories-m (categoryChanged)="onCategoriesChanged($event)"-->
+<!--                        [categoriesIds]="this.categoriesIds"></app-categories-m>-->
+      <app-categories (categoryChanged)="onCategoriesChanged($event)"
+                        [categoriesIds]="this.categoriesIds"></app-categories>
     </mat-expansion-panel>
 
     <mat-expansion-panel [expanded]="true" class="mat-elevation-z0 no-border bg-acordion">
@@ -21,7 +23,7 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div class="brands">
-        <app-brands-m (brandChanged)="onBrandsChanged($event)" [brandsIds]="this.brandsIds"></app-brands-m>
+        <app-brands-m [categoriesToSelectBrands]="categoriesIds" (brandChanged)="onBrandsChanged($event)" [brandsIds]="this.brandsIds"></app-brands-m>
       </div>
     </mat-expansion-panel>
 
