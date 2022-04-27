@@ -37,6 +37,7 @@
               <span class="mat-body-2">{{ 'Shipping required' | translate }}</span>
             </mat-checkbox>
           </div>
+          <p class='mb-3' *ngIf='shippingIsRequired'>*{{ 'El envío es requerido para comprar en este negocio.' | translate }}</p>
           <div
             *ngIf="showShipping"
             class="w-100 mb-3"
