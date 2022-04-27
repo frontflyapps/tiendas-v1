@@ -13,6 +13,7 @@ import { DOCUMENT } from '@angular/common';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { validate } from 'codelyzer/walkerFactory/walkerFn';
+import { UtilsService } from '../../../core/services/utils/utils.service';
 
 @Component({
   selector: 'app-become-a-seller',
@@ -24,6 +25,9 @@ export class BecomeASellerComponent implements OnInit {
   basicForm: FormGroup;
   locationForm: FormGroup;
   sellerForm: FormGroup;
+  firstStep: any;
+  secondStep: any;
+  thirdStep: any;
   allProvinces: any[] = [];
   municipalities: any[] = [];
   allMunicipalities: any[] = [];
@@ -57,11 +61,11 @@ export class BecomeASellerComponent implements OnInit {
     value: boolean;
   }[] = [
     {
-      viewValue: 'Estatal',
+      viewValue: 'Estatal (Empresa, Pymes, Mixta, CNA, CPA, CCS, PDL)',
       value: false,
     },
     {
-      viewValue: 'No estatal',
+      viewValue: 'No estatal (Pymes, TCP, CCS, PDL)',
       value: true,
     },
   ];
@@ -72,6 +76,7 @@ export class BecomeASellerComponent implements OnInit {
     private regionService: RegionsService,
     private loggedInUserService: LoggedInUserService,
     private businessService: BusinessService,
+    public utilsService: UtilsService,
     private spinner: NgxSpinnerService,
     private showToastr: ShowToastrService,
     private translate: TranslateService,
@@ -80,11 +85,16 @@ export class BecomeASellerComponent implements OnInit {
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
+    if(localStorage.getItem('bs_image')) {
+      this.imageBusiness = localStorage.getItem('bs_image');
+    }
+    this.firstStep = JSON.parse(localStorage.getItem('bs_step_one'));
+    this.secondStep = JSON.parse(localStorage.getItem('bs_step_two'));
+    this.thirdStep = JSON.parse(localStorage.getItem('bs_step_three'));
   }
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
-
     if ((document.body.scrollTop > 64 ||
       document.documentElement.scrollTop > 64) && window.innerWidth > 937) {
       document.getElementById('questions-bar').classList.add('fixed-bar');
@@ -103,52 +113,56 @@ export class BecomeASellerComponent implements OnInit {
 
   buildForm() {
     this.basicForm = this.fb.group({
-      name: [null, [Validators.required]],
-      description: [null],
+      name: [this.firstStep ? this.firstStep.name : null , [Validators.required]],
+      description: [this.firstStep ? this.firstStep.description : null],
 
-      socialObject: [null, [Validators.required]],
-      selfEmployed: [null, [Validators.required]],
-      reeup: [null],
-      nit: [null],
-      commercialRegister: [null],
+      socialObject: [this.firstStep ? this.firstStep.socialObject : null, [Validators.required]],
+      selfEmployed: [this.firstStep ? this.firstStep.selfEmployed : null, [Validators.required]],
+      reeup: [this.firstStep ? this.firstStep.reeup : null],
+      nit: [this.firstStep ? this.firstStep.nit : null],
+      commercialRegister: [this.firstStep ? this.firstStep.commercialRegister : null],
 
-      cellphone: [null, [Validators.required, Validators.pattern(CUBAN_PHONE_START_5)]],
-      telephone: [null, []],
-      email: [null, [Validators.required,Validators.pattern(EMAIL_REGEX)]],
+      cellphone: [this.firstStep ? this.firstStep.cellphone : null, [Validators.required, Validators.pattern(CUBAN_PHONE_START_5)]],
+      telephone: [this.firstStep ? this.firstStep.telephone : null, []],
+      email: [this.firstStep ? this.firstStep.email : null, [Validators.required,Validators.pattern(EMAIL_REGEX)]],
 
-      managerName: [null, [Validators.required]],
-      managerCharacter: [null, [Validators.required]],
-      managerDesignation: [null],
-      managerDate: [null, [Validators.required]],
-      managerDictatedBy: [null],
+      managerName: [this.firstStep ? this.firstStep.managerName : null, [Validators.required]],
+      managerLastName: [this.firstStep ? this.firstStep.managerLastName : null, [Validators.required]],
+      managerCharge: [this.firstStep ? this.firstStep.managerCharge : null, [Validators.required]],
+      managerIdentification: [this.firstStep ? this.firstStep.managerIdentification : null, [Validators.required]],
+      managerPhone: [this.firstStep ? this.firstStep.managerPhone : null, [Validators.required]],
+      managerEmail: [this.firstStep ? this.firstStep.managerEmail : null, [Validators.required,Validators.pattern(EMAIL_REGEX)]],
+      // managerCharacter: [this.firstStep ? this.firstStep.managerCharacter : null, [Validators.required]],
+      // managerDesignation: [this.firstStep ? this.firstStep.managerDesignation : null],
+      // managerDate: [this.firstStep ? this.firstStep.managerDate : null, [Validators.required]],
+      // managerDictatedBy: [this.firstStep ? this.firstStep.managerDictatedBy : null],
 
-      bankLicense: [null, [Validators.required]],
-      bankCommercialRegister: [null, [Validators.required]],
+      bankLicense: [this.firstStep ? this.firstStep.bankLicense : null, [Validators.required]],
+      bankCommercialRegister: [this.firstStep ? this.firstStep.bankCommercialRegister : null, [Validators.required]],
 
-      card26: [null],
-      usdBank: [null],
-      usdBankBranch: [null],
+      card26: [this.firstStep ? this.firstStep.card26 : null],
+      usdBank: [this.firstStep ? this.firstStep.usdBank : null],
+      usdBankBranch: [this.firstStep ? this.firstStep.usdBankBranch : null],
 
-      cupCard: [null],
-      cupBank: [null],
-      cupBankBranch: [null],
+      cupCard: [this.firstStep ? this.firstStep.cupCard : null],
+      cupBank: [this.firstStep ? this.firstStep.cupBank : null],
+      cupBankBranch: [this.firstStep ? this.firstStep.cupBankBranch : null],
     });
 
     this.locationForm = this.fb.group({
-      CountryId: [59, [Validators.required]],
-      ProvinceId: [null, [Validators.required]],
-      MunicipalityId: [null, [Validators.required]],
-      address: [null, [Validators.required]],
-      longitude: [null, []],
-      latitude: [null, []],
+      CountryId: [this.secondStep ? this.secondStep.CountryId : 59, [Validators.required]],
+      ProvinceId: [this.secondStep ? this.secondStep.ProvinceId : null, [Validators.required]],
+      MunicipalityId: [this.secondStep ? this.secondStep.MunicipalityId : null, [Validators.required]],
+      address: [this.secondStep ? this.secondStep.address : null, [Validators.required]],
+      longitude: [this.secondStep ? this.secondStep.longitude : null, []],
+      latitude: [this.secondStep ? this.secondStep.latitude : null, []],
     });
 
     this.sellerForm = this.fb.group({
       name: [this.loggedInUser?.name, [Validators.required]],
       lastName: [this.loggedInUser?.lastName, [Validators.required]],
-      birthday: [null, [Validators.required]],
-      ci: [null, [Validators.required, Validators.minLength(11), Validators.maxLength(11)]],
-      //card: [null, [Validators.required, Validators.minLength(16), Validators.maxLength(16)]],
+      birthday: [this.thirdStep ? this.thirdStep.birthday : null, [Validators.required]],
+      ci: [this.thirdStep ? this.thirdStep.ci : null, [Validators.required, Validators.minLength(11), Validators.maxLength(11)]],
     });
   }
 
@@ -174,6 +188,31 @@ export class BecomeASellerComponent implements OnInit {
     });
   }
 
+  saveStepOne() {
+    localStorage.setItem('bs_image', this.imageBusiness);
+    localStorage.setItem('bs_step_one', JSON.stringify(this.basicForm.value));
+    this.showToastr.showSucces(
+      this.translate.instant(
+        'Se ha guardado el progreso del formulario.',
+      ),
+      'Éxito',
+      8000,
+    );
+  }
+
+  saveStepTwo() {
+    localStorage.setItem('bs_image', this.imageBusiness);
+    localStorage.setItem('bs_step_one', JSON.stringify(this.basicForm.value));
+    localStorage.setItem('bs_step_two', JSON.stringify(this.locationForm.value));
+    this.showToastr.showSucces(
+      this.translate.instant(
+        'Se ha guardado el progreso del formulario.',
+      ),
+      'Éxito',
+      8000,
+    );
+  }
+
   onCreateBusiness() {
     this.spinner.show();
     let data = {
@@ -186,7 +225,6 @@ export class BecomeASellerComponent implements OnInit {
 
     // console.log('dataaaaaaaaaaa', data);
     // return;
-
     this.businessService.createBussines(data).subscribe(
       () => {
         this.showToastr.showSucces(
@@ -196,6 +234,10 @@ export class BecomeASellerComponent implements OnInit {
           'Éxito',
           8000,
         );
+        localStorage.removeItem('bs_image');
+        localStorage.removeItem('bs_step_one');
+        localStorage.removeItem('bs_step_two');
+        localStorage.removeItem('bs_step_three');
         this.spinner.hide();
         this.router.navigate(['']).then();
       },

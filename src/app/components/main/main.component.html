@@ -172,7 +172,7 @@
           <!-- ======== -->
           <!-- SEARCHING -->
           <div class='form-wrap' fxFlex='grow'>
-            <input [formControl]='searchForm' placeholder="{{ 'Buscar en la tienda...' | translate }}" type='text' />
+            <input (keyup.enter)='onSearch()' [formControl]='searchForm' placeholder="{{ 'Buscar en la tienda...' | translate }}" type='text' />
             <button (click)='onSearch()' class='btn-search'>
               <mat-icon>search</mat-icon>
             </button>
@@ -414,14 +414,18 @@
     class='mobile-location'
     fxHide
     fxLayout='row'
-    fxLayoutAlign='center center'
-    fxLayoutGap='20'
+    fxLayoutAlign='start center'
+    fxLayoutGap='10px'
     fxShow.lt-md
   >
     <div class='nl-logo' fxLayoutAlign='center center'>
       <mat-icon>room</mat-icon>
     </div>
-    <div>{{ 'Escoger tienda...' | translate }}</div>
+    <div *ngIf='!province'>{{ 'Escoger ubicación...' | translate }}</div>
+    <div *ngIf='province' class='nl-titles' fxLayout='row'>
+      <div class='nl-province'>{{ province?.name }},&nbsp;</div>
+      <div class='nl-municipality'>{{ municipality?.name }}</div>
+    </div>
   </div>
 
   <div class='menu-container1'>

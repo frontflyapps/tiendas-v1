@@ -1,7 +1,6 @@
 @import '../../../assets/scss/theme/variables';
 
 #nav-location {
-  border: 2px solid white;
   padding: 2px 4px;
   cursor: pointer;
   min-width: 146px;
@@ -11,7 +10,7 @@
   overflow: hidden;
 
   &:hover {
-    border: 2px solid #d1acac;
+    border: 2px solid white;
   }
 
   .nl-logo {
@@ -122,13 +121,13 @@ app-main,
 
   .mobile-location {
     padding: 0 16px;
-    height: 48px;
-    color: $theme-main;
-    background-color: $theme-main-accent-300 !important;
+    height: 42px;
+    color: white;
+    background-color: $theme-main-400 !important;
   }
 
   #topBarSidebar {
-    background-color: $theme-main-dark !important;
+    background-color: $theme-main !important;
     color: #fff !important;
   }
 
@@ -144,7 +143,7 @@ app-main,
 
   /*  header styles */
   .home-header {
-    background: $theme-main-dark !important;
+    background: $theme-main !important;
     color: #fff;
     z-index: 9000 !important;
     position: relative !important;
@@ -240,7 +239,7 @@ app-main,
   }
 
   .home-header-2 {
-    background: $theme-main-dark !important;
+    background: $theme-main !important;
     color: #fff;
     z-index: 9000 !important;
     position: relative !important;
@@ -283,8 +282,8 @@ app-main,
       border-radius: 4px;
       padding: 10px 14px;
       border: none;
-      background-color: $theme-main-accent-300;
-      color: $theme-main-dark;
+      background-color: $theme-main-accent;
+      color: white;
       font-weight: 500;
 
       &:focus {
