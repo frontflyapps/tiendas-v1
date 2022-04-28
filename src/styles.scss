@@ -27,71 +27,71 @@ $custom-typography: mat-typography-config(
 // Override the typography in the core CSS.
 @include mat-core($custom-typography);
 
- $primary-color: (
-  50 : #e6e4f2,
-    100 : #c1bbde,
-    200 : #988dc9,
-    300 : #6f5fb3,
-    400 : #503da2,
-    500 : #311b92,
-    600 : #2c188a,
-    700 : #25147f,
-    800 : #1f1075,
-    900 : #130863,
-    A100 : #9e95ff,
-    A200 : #6f62ff,
-    A400 : #412fff,
-    A700 : #2915ff,
-    contrast: (
-        50 : #000000,
-        100 : #000000,
-        200 : #000000,
-        300 : #ffffff,
-        400 : #ffffff,
-        500 : #ffffff,
-        600 : #ffffff,
-        700 : #ffffff,
-        800 : #ffffff,
-        900 : #ffffff,
-        A100 : #000000,
-        A200 : #ffffff,
-        A400 : #ffffff,
-        A700 : #ffffff,
-    )
- );
+$primary-color: (
+  50: #e6e4f2,
+  100: #c1bbde,
+  200: #988dc9,
+  300: #6f5fb3,
+  400: #503da2,
+  500: #311b92,
+  600: #2c188a,
+  700: #25147f,
+  800: #1f1075,
+  900: #130863,
+  A100: #9e95ff,
+  A200: #6f62ff,
+  A400: #412fff,
+  A700: #2915ff,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #ffffff,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #ffffff,
+    A400: #ffffff,
+    A700: #ffffff,
+  ),
+);
 
- $accent-color: (
-    50 : #f0ebf8,
-    100 : #d8cded,
-    200 : #bfabe1,
-    300 : #a589d4,
-    400 : #9170cb,
-    500 : #7e57c2,
-    600 : #764fbc,
-    700 : #6b46b4,
-    800 : #613cac,
-    900 : #4e2c9f,
-    A100 : #eae2ff,
-    A200 : #c5afff,
-    A400 : #a17cff,
-    A700 : #8e63ff,
-    contrast: (
-        50 : #000000,
-        100 : #000000,
-        200 : #000000,
-        300 : #000000,
-        400 : #000000,
-        500 : #ffffff,
-        600 : #ffffff,
-        700 : #ffffff,
-        800 : #ffffff,
-        900 : #ffffff,
-        A100 : #000000,
-        A200 : #000000,
-        A400 : #000000,
-        A700 : #000000,
-    )
- );
+$accent-color: (
+  50: #f0ebf8,
+  100: #d8cded,
+  200: #bfabe1,
+  300: #a589d4,
+  400: #9170cb,
+  500: #7e57c2,
+  600: #764fbc,
+  700: #6b46b4,
+  800: #613cac,
+  900: #4e2c9f,
+  A100: #eae2ff,
+  A200: #c5afff,
+  A400: #a17cff,
+  A700: #8e63ff,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
+);
 
 $primary: mat-palette($primary-color, 800, 700, 600);
 $accent: mat-palette($accent-color, 400, 700, 900);
@@ -529,7 +529,4 @@ h4 {
 .mat-mini-fab {
   width: 46px !important;
   height: 46px !important;
-}
-html {
-  scroll-behavior: smooth;
 }

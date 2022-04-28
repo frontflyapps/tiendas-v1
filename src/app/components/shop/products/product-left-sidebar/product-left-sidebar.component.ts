@@ -93,6 +93,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
     this.route.queryParams.pipe(takeUntil(this._unsubscribeAll)).subscribe((data) => {
+      this.isStarting = true;
       this.paramsSearch.categoryIds = data?.categoryIds ? data.categoryIds : this.paramsSearch.categoryIds;
       this.paramsSearch.brandIds = data?.brandIds ? data.brandIds : [];
       this.paramsSearch.minPrice = data?.minPrice ? data.minPrice : 0;
