@@ -124,8 +124,8 @@
                 {{ 'Representante legal del Negocio' | translate }}
               </p>
 
-            <div fxLayout='row' fxLayoutGap='20px'>
-              <mat-form-field appearance='outline' class='form-field-width'>
+            <div fxLayout='row wrap' fxLayoutAlign.gt-sm='space-between'>
+              <mat-form-field fxFlex.gt-sm='48' appearance='outline' class='form-field-width'>
                 <mat-label>{{'Nombre'|translate}}</mat-label>
                 <input
                   [formControl]="basicForm.controls['managerName']"
@@ -138,8 +138,7 @@
                   {{ 'Nombre' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
                 </mat-error>
               </mat-form-field>
-
-              <mat-form-field appearance='outline' class='form-field-width'>
+              <mat-form-field fxFlex.gt-sm='48' appearance='outline' class='form-field-width'>
                 <mat-label>{{'Apellidos'|translate}}</mat-label>
                 <input
                   [formControl]="basicForm.controls['managerLastName']"
@@ -182,8 +181,8 @@
               </mat-error>
             </mat-form-field>
 
-            <div fxLayout='row' fxLayoutGap='20px'>
-              <mat-form-field appearance='outline' class='form-field-width'>
+            <div fxLayout='row wrap' fxLayoutAlign.gt-sm='space-between'>
+              <mat-form-field fxFlex.gt-sm='48' appearance='outline' class='form-field-width'>
                 <mat-label>{{'Teléfono' |translate}}</mat-label>
                 <input
                   [formControl]="basicForm.controls['managerPhone']"
@@ -196,8 +195,7 @@
                   {{ 'Teléfono del representante' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
                 </mat-error>
               </mat-form-field>
-
-              <mat-form-field appearance='outline' class='form-field-width'>
+              <mat-form-field fxFlex.gt-sm='48' appearance='outline' class='form-field-width'>
                 <mat-label>{{'Correo' |translate}}</mat-label>
                 <input
                   [formControl]="basicForm.controls['managerEmail']"
@@ -293,21 +291,8 @@
                 </mat-error>
               </mat-form-field>
 
-            <div fxLayout='row' fxLayoutGap='20px'>
-<!--              <mat-form-field appearance='outline' class='form-field-width'>-->
-<!--                <mat-label>{{'Banco CUP'|translate}}</mat-label>-->
-<!--                <input-->
-<!--                  [formControl]="basicForm.controls['cupBank']"-->
-<!--                  (keypress)='utilsService.keyPressAlpha($event)'-->
-<!--                  matInput-->
-<!--                  placeholder="{{ 'Banco CUP' | translate }}"-->
-<!--                  type='text'-->
-<!--                />-->
-<!--                <mat-error *ngIf="basicForm.controls['cupBank'].hasError('required')">-->
-<!--                  {{ 'Banco CUP' | translate }} <strong>{{ 'es requerido' | translate }}</strong>-->
-<!--                </mat-error>-->
-<!--              </mat-form-field>-->
-              <mat-form-field appearance="outline" class='form-field-width'>
+            <div fxLayout='row wrap' fxLayoutAlign.gt-sm='space-between'>
+              <mat-form-field fxFlex.gt-sm='48' appearance="outline" class='form-field-width'>
                 <mat-label>{{ 'Banco CUP' | translate}}</mat-label>
                 <mat-select [compareWith]="compare" [formControl]="basicForm.controls['cupBank']">
                   <mat-option *ngFor="let bank of allBanks" [value]="bank">{{bank.name}}</mat-option>
@@ -315,8 +300,7 @@
                 <mat-hint>{{'Escoja un banco' | translate}}</mat-hint>
                 <mat-error *ngIf="basicForm.controls['cupBank'].hasError('required')">{{'Campo requerido' | translate}}</mat-error>
               </mat-form-field>
-
-              <mat-form-field appearance='outline' class='form-field-width'>
+              <mat-form-field fxFlex.gt-sm='48' appearance='outline' class='form-field-width'>
                 <mat-label>{{'Sucursal Bancaria CUP'|translate}}</mat-label>
                 <input
                   [formControl]="basicForm.controls['cupBankBranch']"
@@ -352,7 +336,7 @@
               </mat-error>
             </mat-form-field>
 
-            <div fxLayout='row' fxLayoutGap='20px' class='form-field-width'>
+            <div fxLayout='row wrap' fxLayoutAlign.gt-sm='space-between'>
 
 <!--              <mat-form-field appearance='outline' class='form-field-width'>-->
 <!--                <mat-label>{{'Banco MLC'|translate}}</mat-label>-->
@@ -367,7 +351,7 @@
 <!--                  {{ 'Banco MLC' | translate }} <strong>{{ 'es requerido' | translate }}</strong>-->
 <!--                </mat-error>-->
 <!--              </mat-form-field>-->
-              <mat-form-field appearance="outline" class='form-field-width'>
+              <mat-form-field fxFlex.gt-sm='48' appearance="outline" class='form-field-width'>
                 <mat-label>{{ 'Banco MLC' | translate}}</mat-label>
                 <mat-select [compareWith]="compare" [formControl]="basicForm.controls['usdBank']">
                   <mat-option *ngFor="let bank of allBanks" [value]="bank">{{bank.name}}</mat-option>
@@ -375,7 +359,7 @@
                 <mat-hint>{{'Escoja un banco' | translate}}</mat-hint>
                 <mat-error *ngIf="basicForm.controls['usdBank'].hasError('required')">{{'Campo requerido' | translate}}</mat-error>
               </mat-form-field>
-              <mat-form-field appearance='outline' class='form-field-width'>
+              <mat-form-field fxFlex.gt-sm='48' appearance='outline' class='form-field-width'>
                 <mat-label>{{'Sucursal Bancaria MLC'|translate}}</mat-label>
                 <input
                   [formControl]="basicForm.controls['usdBankBranch']"
@@ -389,6 +373,7 @@
                 </mat-error>
               </mat-form-field>
             </div>
+
             <mat-form-field fxFlex='48' appearance='outline' class='form-field-width'>
               <mat-label>{{'Cuenta bancaria MLC'|translate}}</mat-label>
               <input
