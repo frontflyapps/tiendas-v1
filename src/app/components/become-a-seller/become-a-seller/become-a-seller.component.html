@@ -48,6 +48,7 @@
                 <mat-label>{{'Objeto social'|translate}}</mat-label>
                 <textarea
                   [formControl]="basicForm.controls['socialObject']"
+                  (keypress)='utilsService.keyPressAlpha($event)'
                   matInput
                   maxlength='140'
                   placeholder="{{'Descripción del objeto social' | translate }}"
@@ -297,7 +298,7 @@
                 <mat-select [compareWith]="compare" [formControl]="basicForm.controls['cupBank']">
                   <mat-option *ngFor="let bank of allBanks" [value]="bank">{{bank.name}}</mat-option>
                 </mat-select>
-                <mat-hint>{{'Escoja un banco' | translate}}</mat-hint>
+                <mat-hint>{{'Elija un banco' | translate}}</mat-hint>
                 <mat-error *ngIf="basicForm.controls['cupBank'].hasError('required')">{{'Campo requerido' | translate}}</mat-error>
               </mat-form-field>
               <mat-form-field fxFlex.gt-sm='48' appearance='outline' class='form-field-width'>
@@ -356,7 +357,7 @@
                 <mat-select [compareWith]="compare" [formControl]="basicForm.controls['usdBank']">
                   <mat-option *ngFor="let bank of allBanks" [value]="bank">{{bank.name}}</mat-option>
                 </mat-select>
-                <mat-hint>{{'Escoja un banco' | translate}}</mat-hint>
+                <mat-hint>{{'Elija un banco' | translate}}</mat-hint>
                 <mat-error *ngIf="basicForm.controls['usdBank'].hasError('required')">{{'Campo requerido' | translate}}</mat-error>
               </mat-form-field>
               <mat-form-field fxFlex.gt-sm='48' appearance='outline' class='form-field-width'>
