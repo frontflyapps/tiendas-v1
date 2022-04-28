@@ -1,8 +1,10 @@
-import { Component, HostListener, Inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, HostListener, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormControl, Validators } from '@angular/forms';
 import { LocationService } from '../../../core/services/location/location.service';
-import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { Subject, Subscription } from 'rxjs';
+import { type } from 'os';
 
 @Component({
   selector: 'app-dialog-set-location',
@@ -21,12 +23,19 @@ export class DialogSetLocationComponent implements OnInit, OnDestroy {
   public allMunicipalityByProvince: any[];
   private dataResult: any = {};
 
+  compare(f1: any, f2: any) {
+    return f1?.name === f2?.name;
+  }
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<DialogSetLocationComponent>,
     private locationService: LocationService,
   ) {
     this.initSubsLocation();
+    if (this.province.value) {
+      this.getProvinceById(this.province.value.id);
+    }
   }
 
   @HostListener('window:resize', ['$event'])
@@ -42,11 +51,9 @@ export class DialogSetLocationComponent implements OnInit, OnDestroy {
   }
 
   initSubsLocation() {
-    this.locationService
-      .location$
-      .subscribe((newLocation) => {
-        this.setLocationData(newLocation);
-      });
+    this.locationService.location$.subscribe((newLocation) => {
+      this.setLocationData(newLocation);
+    });
   }
 
   setLocationData(locationOnLocalStorage) {
@@ -55,7 +62,7 @@ export class DialogSetLocationComponent implements OnInit, OnDestroy {
   }
 
   subsForm() {
-    this.province.valueChanges.subscribe(value => {
+    this.province.valueChanges.subscribe((value) => {
       this.getProvinceById(value.id);
     });
   }
@@ -79,26 +86,20 @@ export class DialogSetLocationComponent implements OnInit, OnDestroy {
   }
 
   private getProvinces() {
-    this.locationService
-      .getProvince()
-      .subscribe(responseData => {
-        this.allProvinces = responseData.data;
-      });
+    this.locationService.getProvince().subscribe((responseData) => {
+      this.allProvinces = responseData.data;
+    });
   }
 
   private getProvinceById(id) {
-    this.locationService
-      .getProvinceById(id)
-      .subscribe(responseData => {
-        this.allMunicipalityByProvince = responseData.data.Municipalities;
-      });
+    this.locationService.getProvinceById(id).subscribe((responseData) => {
+      this.allMunicipalityByProvince = responseData.data.Municipalities;
+    });
   }
 
   private getMunicipalityById(id) {
-    this.locationService
-      .getMunicipalityId(id)
-      .subscribe(responseData => {
-        this.allMunicipalityByProvince = responseData.data;
-      });
+    this.locationService.getMunicipalityId(id).subscribe((responseData) => {
+      this.allMunicipalityByProvince = responseData.data;
+    });
   }
 }

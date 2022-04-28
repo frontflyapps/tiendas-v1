@@ -424,7 +424,7 @@
     <div *ngIf='!province'>{{ 'Escoger ubicación...' | translate }}</div>
     <div *ngIf='province' class='nl-titles' fxLayout='row'>
       <div class='nl-province'>{{ province?.name }},&nbsp;</div>
-      <div class='nl-municipality'>{{ municipality?.name }}</div>
+      <div style='font-size: 12px;'>{{ municipality?.name }}</div>
     </div>
   </div>
 

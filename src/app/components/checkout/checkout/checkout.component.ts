@@ -355,6 +355,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       this.onRecalculateShipping();
     } else {
       this.form.controls['ShippingBusinessId'].setValidators(null);
+      this.form.controls['ShippingBusinessId'].setValue(null);
       this.shippingData = [];
       // this.canBeDelivery = false;
     }
@@ -392,7 +393,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       this.onRecalculateShipping();
     } else {
       this.shippingData = [];
-      this.canBeDelivery = false;
+      // this.canBeDelivery = false;
     }
   }
 
@@ -427,7 +428,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.loadingCart = true;
     /**/
     this.shippingData = [];
-    this.canBeDelivery = false;
+    // this.canBeDelivery = false;
     /**/
     this.cartService
       .getCartData({ cartId: this.cartId, cartItemIds: this.cartItemIds })
@@ -435,9 +436,11 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         this.cart = data.Cart;
         this.buyProducts = data.CartItems || [];
         /** Check if is required shipping by business **/
-        this.shippingIsRequired = data.Cart.shippingRequired;
+        this.shippingIsRequired = data.Cart.Business.shippingRequired;
         if(this.shippingIsRequired){
-          this.form.controls['shippingRequired'].setValidators([Validators.required]);
+          this.form.controls['shippingRequired'].setValidators(Validators.required);
+          this.form.controls['ShippingBusinessId'].setValidators(Validators.required);
+          this.form.controls['shippingRequired'].updateValueAndValidity();
         }
         /**
          * Check if the Pick-Up-Place label has to be displayed
@@ -455,7 +458,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           this.onRecalculateShipping();
         } else {
           this.shippingData = [];
-          this.canBeDelivery = false;
+          // this.canBeDelivery = false;
         }
 
         if (!this.form.get('currency').value) {
@@ -566,7 +569,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       paymentType: [this.selectedDataPay?.paymentType || PASARELA_BASE, [Validators.required]],
       ShippingBusinessId: [null, []],
       currency: [null, [Validators.required]],
-      shippingRequired: [false, []],
+      shippingRequired: [null, []],
     });
     this.onlyCubanPeople = this.form.get('isForCuban').value;
     if (this.onlyCubanPeople) {

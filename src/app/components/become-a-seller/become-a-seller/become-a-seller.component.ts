@@ -14,6 +14,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { validate } from 'codelyzer/walkerFactory/walkerFn';
 import { UtilsService } from '../../../core/services/utils/utils.service';
+import { BankService } from '../../../core/services/bank/bank.service';
 
 @Component({
   selector: 'app-become-a-seller',
@@ -31,6 +32,9 @@ export class BecomeASellerComponent implements OnInit {
   allProvinces: any[] = [];
   municipalities: any[] = [];
   allMunicipalities: any[] = [];
+  allBanks: any[] = [];
+  allBranchs: any[] = [];
+  branchs: any[] = [];
   isBasicInfoChanged = false;
   startDate = new Date(1985, 1, 1);
   // zoom = 12;
@@ -77,6 +81,7 @@ export class BecomeASellerComponent implements OnInit {
     private loggedInUserService: LoggedInUserService,
     private businessService: BusinessService,
     public utilsService: UtilsService,
+    private bankService: BankService,
     private spinner: NgxSpinnerService,
     private showToastr: ShowToastrService,
     private translate: TranslateService,
@@ -164,11 +169,19 @@ export class BecomeASellerComponent implements OnInit {
       birthday: [this.thirdStep ? this.thirdStep.birthday : null, [Validators.required]],
       ci: [this.thirdStep ? this.thirdStep.ci : null, [Validators.required, Validators.minLength(11), Validators.maxLength(11)]],
     });
+
+    // this.basicForm.controls['cupBank'].valueChanges.subscribe((data) => {
+    //   this.getBranchsByBank(data.id);
+    // });
   }
 
   onImageChange(dataUri) {
     this.imageBusinessChange = true;
     this.imageBusiness = dataUri;
+  }
+
+  compare(f1: any, f2: any) {
+    return f1?.name === f2?.name;
   }
 
   onSelectProvince(provinceId) {
@@ -185,6 +198,16 @@ export class BecomeASellerComponent implements OnInit {
       this.municipalities = this.allMunicipalities.filter(
         (item) => item.ProvinceId == this.locationForm.get('ProvinceId').value,
       );
+    });
+    this.bankService.getAllBank().subscribe((data) => {
+      this.allBanks = [...data.data];
+    });
+  }
+
+  getBranchsByBank(id: any) {
+    let data = { businessId: id };
+    this.bankService.getAllBranch(data).subscribe((data) => {
+      this.allBranchs = [...data.data];
     });
   }
 
