@@ -293,21 +293,30 @@
                 </mat-error>
               </mat-form-field>
 
-            <div fxLayout='row' fxLayoutGap='10px'>
-              <mat-form-field fxFlex='48' appearance='outline' class='form-field-width'>
-                <mat-label>{{'Banco CUP'|translate}}</mat-label>
-                <input
-                  [formControl]="basicForm.controls['cupBank']"
-                  (keypress)='utilsService.keyPressAlpha($event)'
-                  matInput
-                  placeholder="{{ 'Banco CUP' | translate }}"
-                  type='text'
-                />
-                <mat-error *ngIf="basicForm.controls['cupBank'].hasError('required')">
-                  {{ 'Banco CUP' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
-                </mat-error>
+            <div fxLayout='row' fxLayoutGap='20px'>
+<!--              <mat-form-field appearance='outline' class='form-field-width'>-->
+<!--                <mat-label>{{'Banco CUP'|translate}}</mat-label>-->
+<!--                <input-->
+<!--                  [formControl]="basicForm.controls['cupBank']"-->
+<!--                  (keypress)='utilsService.keyPressAlpha($event)'-->
+<!--                  matInput-->
+<!--                  placeholder="{{ 'Banco CUP' | translate }}"-->
+<!--                  type='text'-->
+<!--                />-->
+<!--                <mat-error *ngIf="basicForm.controls['cupBank'].hasError('required')">-->
+<!--                  {{ 'Banco CUP' | translate }} <strong>{{ 'es requerido' | translate }}</strong>-->
+<!--                </mat-error>-->
+<!--              </mat-form-field>-->
+              <mat-form-field appearance="outline" class='form-field-width'>
+                <mat-label>{{ 'Banco CUP' | translate}}</mat-label>
+                <mat-select [compareWith]="compare" [formControl]="basicForm.controls['cupBank']">
+                  <mat-option *ngFor="let bank of allBanks" [value]="bank">{{bank.name}}</mat-option>
+                </mat-select>
+                <mat-hint>{{'Escoja un banco' | translate}}</mat-hint>
+                <mat-error *ngIf="basicForm.controls['cupBank'].hasError('required')">{{'Campo requerido' | translate}}</mat-error>
               </mat-form-field>
-              <mat-form-field fxFlex='48' appearance='outline' class='form-field-width'>
+
+              <mat-form-field appearance='outline' class='form-field-width'>
                 <mat-label>{{'Sucursal Bancaria CUP'|translate}}</mat-label>
                 <input
                   [formControl]="basicForm.controls['cupBankBranch']"
@@ -320,6 +329,14 @@
                   {{ 'Sucursal Bancaria CUP' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
                 </mat-error>
               </mat-form-field>
+<!--              <mat-form-field appearance="outline" class='form-field-width'>-->
+<!--                <mat-label>{{ 'Sucursal Bancaria CUP' | translate}}</mat-label>-->
+<!--                <mat-select [compareWith]="compare" [formControl]="basicForm.controls['cupBankBranch']">-->
+<!--                  <mat-option *ngFor="let branch of allBranchs" [value]="branch"><span>{{branch.code}} - {{branch.name}}</span></mat-option>-->
+<!--                </mat-select>-->
+<!--                <mat-hint>{{'Escoja una sucursal' | translate}}</mat-hint>-->
+<!--                <mat-error *ngIf="basicForm.controls['cupBankBranch'].hasError('required')">{{'Campo requerido' | translate}}</mat-error>-->
+<!--              </mat-form-field>-->
             </div>
             <mat-form-field  appearance='outline' class='form-field-width'>
               <mat-label>{{'Cuenta bancaria CUP'|translate}}</mat-label>
@@ -335,22 +352,30 @@
               </mat-error>
             </mat-form-field>
 
+            <div fxLayout='row' fxLayoutGap='20px' class='form-field-width'>
 
-            <div fxLayout='row' fxLayoutGap='10px'>
-              <mat-form-field fxFlex='48' appearance='outline' class='form-field-width'>
-                <mat-label>{{'Banco MLC'|translate}}</mat-label>
-                <input
-                  [formControl]="basicForm.controls['usdBank']"
-                  (keypress)='utilsService.keyPressAlphaAndNumbers($event)'
-                  matInput
-                  placeholder="{{ 'Banco MLC' | translate }}"
-                  type='text'
-                />
-                <mat-error *ngIf="basicForm.controls['usdBank'].hasError('required')">
-                  {{ 'Banco MLC' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
-                </mat-error>
+<!--              <mat-form-field appearance='outline' class='form-field-width'>-->
+<!--                <mat-label>{{'Banco MLC'|translate}}</mat-label>-->
+<!--                <input-->
+<!--                  [formControl]="basicForm.controls['usdBank']"-->
+<!--                  (keypress)='utilsService.keyPressAlphaAndNumbers($event)'-->
+<!--                  matInput-->
+<!--                  placeholder="{{ 'Banco MLC' | translate }}"-->
+<!--                  type='text'-->
+<!--                />-->
+<!--                <mat-error *ngIf="basicForm.controls['usdBank'].hasError('required')">-->
+<!--                  {{ 'Banco MLC' | translate }} <strong>{{ 'es requerido' | translate }}</strong>-->
+<!--                </mat-error>-->
+<!--              </mat-form-field>-->
+              <mat-form-field appearance="outline" class='form-field-width'>
+                <mat-label>{{ 'Banco MLC' | translate}}</mat-label>
+                <mat-select [compareWith]="compare" [formControl]="basicForm.controls['usdBank']">
+                  <mat-option *ngFor="let bank of allBanks" [value]="bank">{{bank.name}}</mat-option>
+                </mat-select>
+                <mat-hint>{{'Escoja un banco' | translate}}</mat-hint>
+                <mat-error *ngIf="basicForm.controls['usdBank'].hasError('required')">{{'Campo requerido' | translate}}</mat-error>
               </mat-form-field>
-              <mat-form-field fxFlex='48' appearance='outline' class='form-field-width'>
+              <mat-form-field appearance='outline' class='form-field-width'>
                 <mat-label>{{'Sucursal Bancaria MLC'|translate}}</mat-label>
                 <input
                   [formControl]="basicForm.controls['usdBankBranch']"
