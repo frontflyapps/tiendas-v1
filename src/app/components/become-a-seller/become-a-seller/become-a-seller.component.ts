@@ -14,7 +14,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { validate } from 'codelyzer/walkerFactory/walkerFn';
 import { UtilsService } from '../../../core/services/utils/utils.service';
-import { BankService } from '../../../core/services/bank/bank.service';
+// import { BankService } from '../../../core/services/bank/bank.service';
 
 @Component({
   selector: 'app-become-a-seller',
@@ -81,7 +81,7 @@ export class BecomeASellerComponent implements OnInit {
     private loggedInUserService: LoggedInUserService,
     private businessService: BusinessService,
     public utilsService: UtilsService,
-    private bankService: BankService,
+    // private bankService: BankService,
     private spinner: NgxSpinnerService,
     private showToastr: ShowToastrService,
     private translate: TranslateService,
@@ -204,12 +204,12 @@ export class BecomeASellerComponent implements OnInit {
     // });
   }
 
-  getBranchsByBank(id: any) {
-    let data = { businessId: id };
-    this.bankService.getAllBranch(data).subscribe((data) => {
-      this.allBranchs = [...data.data];
-    });
-  }
+  // getBranchsByBank(id: any) {
+  //   let data = { businessId: id };
+  //   this.bankService.getAllBranch(data).subscribe((data) => {
+  //     this.allBranchs = [...data.data];
+  //   });
+  // }
 
   saveStepOne() {
     localStorage.setItem('bs_image', this.imageBusiness);
