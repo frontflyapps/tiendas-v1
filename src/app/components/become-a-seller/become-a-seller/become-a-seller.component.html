@@ -99,7 +99,7 @@
                 [formControl]="basicForm.controls['reeup']"
                 (keypress)='utilsService.keyPressAlphaAndNumbers($event)'
                 matInput
-                placeholder="{{ 'Código REEUP' | translate }}"
+                placeholder="{{ 'Código del Registro Estatal de Empresas y Unidades Presupuestadas' | translate }}"
                 type='text'
               />
               <mat-error *ngIf="basicForm.controls['reeup'].hasError('required')">
