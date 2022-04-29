@@ -1,6 +1,6 @@
 {
   "name": "tienda-angular-b2b",
-  "version": "1.0.26",
+  "version": "1.0.27",
   "type": "module",
   "scripts": {
     "ng": "ng",
