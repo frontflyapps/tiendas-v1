@@ -108,11 +108,11 @@
             </mat-form-field>
 
             <mat-form-field appearance='outline' class='form-field-width'>
-                <mat-label>{{'Inscripción en el Registro mercantil'|translate}}</mat-label>
+                <mat-label>{{'Código de Inscripción en el Registro Mercantil'|translate}}</mat-label>
                 <input
                   [formControl]="basicForm.controls['commercialRegister']"
                   matInput
-                  placeholder="{{ 'Código de inscripción en el Registro Mercantil' | translate }}"
+                  placeholder="{{ 'Código de Inscripción en el Registro Mercantil' | translate }}"
                   type='text'
                 />
                 <mat-error *ngIf="basicForm.controls['commercialRegister'].hasError('required')">
@@ -267,7 +267,7 @@
               </p>
 
             <mat-form-field appearance='outline' class='form-field-width'>
-                <mat-label>{{'Licencia Bancaria'|translate}}</mat-label>
+                <mat-label>{{'Código de Licencia Bancaria'|translate}}</mat-label>
                 <input
                   [formControl]="basicForm.controls['bankLicense']"
                   (keypress)='utilsService.keyPressNumbers($event)'
@@ -280,7 +280,7 @@
               </mat-form-field>
 
             <mat-form-field appearance='outline' class='form-field-width'>
-                <mat-label>{{'Registro Comercial'|translate}}</mat-label>
+                <mat-label>{{'Código de Registro Comercial'|translate}}</mat-label>
                 <input
                   [formControl]="basicForm.controls['bankCommercialRegister']"
                   (keypress)='utilsService.keyPressNumbers($event)'
