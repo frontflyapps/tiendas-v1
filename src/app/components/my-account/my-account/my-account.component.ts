@@ -151,7 +151,7 @@ export class MyAccountComponent implements OnInit {
   }
 
   checkQueryParams() {
-    if (this.queryParams.validate && this.queryParams.pin && this.queryParams.email) {
+    if (this.queryParams.modal == 'validate' && this.queryParams.pin && this.queryParams.email) {
       this.pinForm.controls['pin'].setValue(this.queryParams.pin);
       this.registrationForm.controls['email'].setValue(this.queryParams.email);
       if (this.pinForm.valid && this.registrationForm.controls['email'].valid) {
@@ -166,6 +166,15 @@ export class MyAccountComponent implements OnInit {
           8000,
         );
       }
+    } else if (this.queryParams.modal == 'password' && this.queryParams.pin && this.queryParams.email) {
+      this.showRegistrationForm = false;
+      this.showPinForm = false;
+      this.showResetPassForm = false;
+      this.showLoginForm = false;
+      this.showNewPassForm = true;
+      this.inLoading = false;
+      this.changeToNewPassForm.controls['pin'].setValue(this.queryParams.pin);
+      this.insertEmailPassForm.value.email = this.queryParams.email;
     }
   }
 
@@ -255,15 +264,17 @@ export class MyAccountComponent implements OnInit {
           if (this.redirectToOriginPage) {
             if (this.paramsToRedirect) {
               let tempParams = JSON.parse(this.paramsToRedirect);
-              this.router.navigate([this.redirectToOriginPage], {
-                queryParams: { ...tempParams.params },
-              }).then();
+              this.router
+                .navigate([this.redirectToOriginPage], {
+                  queryParams: { ...tempParams.params },
+                })
+                .then();
             } else {
               this.router.navigate([this.redirectToOriginPage]).then();
             }
           }
           /** Redirect to URL when login **/
-          if(this.urlToRedirect){
+          if (this.urlToRedirect) {
             this.router.navigate([this.urlToRedirect]);
           } else {
             this.router.navigate([this.routeToNavigate]).then();
@@ -287,8 +298,8 @@ export class MyAccountComponent implements OnInit {
       error.error.errors && error.error.errors.length
         ? error.error.errors.map((item) => item.message)
         : error.error.message
-          ? error.error.message
-          : 'Error registrando usuario';
+        ? error.error.message
+        : 'Error registrando usuario';
     this.toastr.showError(msg, 'Error', 10000);
   }
 
@@ -530,17 +541,13 @@ export class MyAccountComponent implements OnInit {
 
   //////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////
-  handleReset() {
-  }
+  handleReset() {}
 
-  handleExpire() {
-  }
+  handleExpire() {}
 
-  handleSuccess(event) {
-  }
+  handleSuccess(event) {}
 
-  handleLoad() {
-  }
+  handleLoad() {}
 
   onSelectPdf($event) {
     this.pdfData = [];
