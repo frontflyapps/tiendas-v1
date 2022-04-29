@@ -295,10 +295,17 @@
             <div fxLayout='row wrap' fxLayoutAlign.gt-sm='space-between'>
               <mat-form-field fxFlex.gt-sm='48' appearance="outline" class='form-field-width'>
                 <mat-label>{{ 'Banco CUP' | translate}}</mat-label>
-                <mat-select [compareWith]="compare" [formControl]="basicForm.controls['cupBank']">
-                  <mat-option *ngFor="let bank of allBanks" [value]="bank">{{bank.name}}</mat-option>
-                </mat-select>
-                <mat-hint>{{'Elija un banco' | translate}}</mat-hint>
+<!--                <mat-select [compareWith]="compare" [formControl]="basicForm.controls['cupBank']">-->
+<!--                  <mat-option *ngFor="let bank of allBanks" [value]="bank">{{bank.name}}</mat-option>-->
+<!--                </mat-select>-->
+<!--                <mat-hint>{{'Elija un banco' | translate}}</mat-hint>-->
+                <input
+                  [formControl]="basicForm.controls['cupBank']"
+                  (keypress)='utilsService.keyPressAlphaAndNumbers($event)'
+                  matInput
+                  placeholder="{{ 'Banco CUP' | translate }}"
+                  type='text'
+                />
                 <mat-error *ngIf="basicForm.controls['cupBank'].hasError('required')">{{'Campo requerido' | translate}}</mat-error>
               </mat-form-field>
               <mat-form-field fxFlex.gt-sm='48' appearance='outline' class='form-field-width'>
@@ -354,10 +361,17 @@
 <!--              </mat-form-field>-->
               <mat-form-field fxFlex.gt-sm='48' appearance="outline" class='form-field-width'>
                 <mat-label>{{ 'Banco MLC' | translate}}</mat-label>
-                <mat-select [compareWith]="compare" [formControl]="basicForm.controls['usdBank']">
-                  <mat-option *ngFor="let bank of allBanks" [value]="bank">{{bank.name}}</mat-option>
-                </mat-select>
-                <mat-hint>{{'Elija un banco' | translate}}</mat-hint>
+<!--                <mat-select [compareWith]="compare" [formControl]="basicForm.controls['usdBank']">-->
+<!--                  <mat-option *ngFor="let bank of allBanks" [value]="bank">{{bank.name}}</mat-option>-->
+<!--                </mat-select>-->
+<!--                <mat-hint>{{'Elija un banco' | translate}}</mat-hint>-->
+                  <input
+                      [formControl]="basicForm.controls['usdBank']"
+                      (keypress)='utilsService.keyPressAlphaAndNumbers($event)'
+                      matInput
+                      placeholder="{{ 'Banco MLC' | translate }}"
+                      type='text'
+                  />
                 <mat-error *ngIf="basicForm.controls['usdBank'].hasError('required')">{{'Campo requerido' | translate}}</mat-error>
               </mat-form-field>
               <mat-form-field fxFlex.gt-sm='48' appearance='outline' class='form-field-width'>

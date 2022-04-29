@@ -199,9 +199,9 @@ export class BecomeASellerComponent implements OnInit {
         (item) => item.ProvinceId == this.locationForm.get('ProvinceId').value,
       );
     });
-    this.bankService.getAllBank().subscribe((data) => {
-      this.allBanks = [...data.data];
-    });
+    // this.bankService.getAllBank().subscribe((data) => {
+    //   this.allBanks = [...data.data];
+    // });
   }
 
   getBranchsByBank(id: any) {
