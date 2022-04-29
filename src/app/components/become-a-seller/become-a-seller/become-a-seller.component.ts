@@ -14,7 +14,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { validate } from 'codelyzer/walkerFactory/walkerFn';
 import { UtilsService } from '../../../core/services/utils/utils.service';
-// import { BankService } from '../../../core/services/bank/bank.service';
+import { BankService } from '../../../core/services/bank/bank.service';
 
 @Component({
   selector: 'app-become-a-seller',
@@ -81,7 +81,7 @@ export class BecomeASellerComponent implements OnInit {
     private loggedInUserService: LoggedInUserService,
     private businessService: BusinessService,
     public utilsService: UtilsService,
-    // private bankService: BankService,
+    private bankService: BankService,
     private spinner: NgxSpinnerService,
     private showToastr: ShowToastrService,
     private translate: TranslateService,
@@ -146,11 +146,11 @@ export class BecomeASellerComponent implements OnInit {
       bankCommercialRegister: [this.firstStep ? this.firstStep.bankCommercialRegister : null, [Validators.required]],
 
       card26: [this.firstStep ? this.firstStep.card26 : null],
-      usdBank: [this.firstStep ? this.firstStep.usdBank : null],
+      UsdBankId: [this.firstStep ? this.firstStep.UsdBankId : null],
       usdBankBranch: [this.firstStep ? this.firstStep.usdBankBranch : null],
 
       cupCard: [this.firstStep ? this.firstStep.cupCard : null],
-      cupBank: [this.firstStep ? this.firstStep.cupBank : null],
+      CupBankId: [this.firstStep ? this.firstStep.CupBankId : null],
       cupBankBranch: [this.firstStep ? this.firstStep.cupBankBranch : null],
     });
 
@@ -199,9 +199,9 @@ export class BecomeASellerComponent implements OnInit {
         (item) => item.ProvinceId == this.locationForm.get('ProvinceId').value,
       );
     });
-    // this.bankService.getAllBank().subscribe((data) => {
-    //   this.allBanks = [...data.data];
-    // });
+    this.bankService.getAllBank().subscribe((data) => {
+      this.allBanks = [...data.data];
+    });
   }
 
   // getBranchsByBank(id: any) {
@@ -214,26 +214,12 @@ export class BecomeASellerComponent implements OnInit {
   saveStepOne() {
     localStorage.setItem('bs_image', this.imageBusiness);
     localStorage.setItem('bs_step_one', JSON.stringify(this.basicForm.value));
-    this.showToastr.showSucces(
-      this.translate.instant(
-        'Se ha guardado el progreso del formulario.',
-      ),
-      'Éxito',
-      8000,
-    );
   }
 
   saveStepTwo() {
     localStorage.setItem('bs_image', this.imageBusiness);
     localStorage.setItem('bs_step_one', JSON.stringify(this.basicForm.value));
     localStorage.setItem('bs_step_two', JSON.stringify(this.locationForm.value));
-    this.showToastr.showSucces(
-      this.translate.instant(
-        'Se ha guardado el progreso del formulario.',
-      ),
-      'Éxito',
-      8000,
-    );
   }
 
   onCreateBusiness() {
@@ -245,9 +231,9 @@ export class BecomeASellerComponent implements OnInit {
     //data.business.card = data.owner.card;
     data.business.logo = this.imageBusiness;
     //delete data.owner.card;
+    data.business.CupBankId = this.basicForm.controls['CupBankId'].value.id;
+    data.business.UsdBankId = this.basicForm.controls['UsdBankId'].value.id;
 
-    // console.log('dataaaaaaaaaaa', data);
-    // return;
     this.businessService.createBussines(data).subscribe(
       () => {
         this.showToastr.showSucces(
