@@ -147,11 +147,11 @@ export class BecomeASellerComponent implements OnInit {
 
       card26: [this.firstStep ? this.firstStep.card26 : null],
       UsdBankId: [this.firstStep ? this.firstStep.UsdBankId : null],
-      usdBankBranch: [this.firstStep ? this.firstStep.usdBankBranch : null],
+      usdBankBranch: [this.firstStep ? this.firstStep.usdBankBranch : null, [Validators.maxLength(4)]],
 
       cupCard: [this.firstStep ? this.firstStep.cupCard : null],
       CupBankId: [this.firstStep ? this.firstStep.CupBankId : null],
-      cupBankBranch: [this.firstStep ? this.firstStep.cupBankBranch : null],
+      cupBankBranch: [this.firstStep ? this.firstStep.cupBankBranch : null, [Validators.maxLength(4)]],
     });
 
     this.locationForm = this.fb.group({
@@ -170,9 +170,9 @@ export class BecomeASellerComponent implements OnInit {
       ci: [this.thirdStep ? this.thirdStep.ci : null, [Validators.required, Validators.minLength(11), Validators.maxLength(11)]],
     });
 
-    // this.basicForm.controls['cupBank'].valueChanges.subscribe((data) => {
-    //   this.getBranchsByBank(data.id);
-    // });
+    this.basicForm.controls['cupBankBranch'].valueChanges.subscribe((data) => {
+      console.log(this.basicForm);
+    });
   }
 
   onImageChange(dataUri) {
