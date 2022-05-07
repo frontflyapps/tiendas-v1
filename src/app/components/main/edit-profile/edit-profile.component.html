@@ -11,10 +11,10 @@
 
   <div class="my-dialog-content" mat-dialog-content>
     <div class="imagePickerRow" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="gappx">
-      <ngp-image-picker ($imageChanged)="onImageChange($event)"
+      <guachos-image-picker ($imageChanged)="onImageChange($event)"
                         [_config]="imagePickerConf"
                         [_imageSrc]="(loggedInUser.avatar)?urlImage + loggedInUser.avatar:null">
-      </ngp-image-picker>
+      </guachos-image-picker>
     </div>
 
     <form [formGroup]="form">

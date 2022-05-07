@@ -15,7 +15,7 @@ import { BecomeASellerComponent } from './become-a-seller/become-a-seller.compon
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { NgpImagePickerModule } from 'ngp-image-picker';
+import { GuachosImagePickerModule } from 'guachos-image-picker';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 
@@ -37,7 +37,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatInputModule,
     MatSelectModule,
     MatExpansionModule,
-    NgpImagePickerModule,
+    GuachosImagePickerModule,
     MatTooltipModule,
     MatDatepickerModule,
     MatNativeDateModule,

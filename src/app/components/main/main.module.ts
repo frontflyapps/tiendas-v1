@@ -2,7 +2,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { NgpImagePickerModule } from 'ngp-image-picker';
+import { GuachosImagePickerModule } from 'guachos-image-picker';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -74,7 +74,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatDatepickerModule,
     MatNativeDateModule,
     MatToolbarModule,
-    NgpImagePickerModule,
+    GuachosImagePickerModule,
     MatTooltipModule,
     FlexLayoutModule,
     MatButtonModule,

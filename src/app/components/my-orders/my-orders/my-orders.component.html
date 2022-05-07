@@ -213,10 +213,10 @@
                         {{ utilsService.parserLanguage(paymentItem.Product.name, language) }}
                       </h2>
                       <div class="my-2">
-                        <ngp-material-rating
+                        <guachos-rating
                           [config]="{ readOnly: true }"
                           [value]="paymentItem.Product.rating"
-                        ></ngp-material-rating>
+                        ></guachos-rating>
                       </div>
                       <h3 class="price">
                         {{ paymentItem.price | currency: selectedOrder.currency }}
