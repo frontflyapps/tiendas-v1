@@ -335,3 +335,20 @@ app-main,
     display: none;
   }
 }
+
+.forgot-button {
+  background: transparent !important;
+  color: $theme-main;
+  text-decoration: underline;
+}
+
+.shepherd-button {
+  background: $theme-main;
+  &:hover {
+    background: $theme-main-400 !important;
+  }
+}
+
+.shepherd-text {
+  padding: 1.5rem;
+}

@@ -153,12 +153,12 @@
         <div class='search-form' fxLayout='row' fxLayoutAlign='start center' fxLayoutGap='1rem'>
           <!-- ======== -->
           <!-- Location -->
-          <div fxLayout='row' fxLayoutAlign='start center' fxLayoutGap='4px' id='nav-location'>
+          <div fxLayout='row' fxLayoutAlign='start center' fxLayoutGap='4px' id='nav-location' class="info-location">
             <div class='nl-logo'>
               <mat-icon>room</mat-icon>
             </div>
 
-            <div (click)='openSetLocation()' *ngIf='province' class='nl-titles' fxLayout='column'>
+            <div (click)='tour.getCurrentStep().isOpen() ? $event.stopPropagation() : openSetLocation()' *ngIf='province' class='nl-titles' fxLayout='column'>
               <div class='nl-province'>{{ province?.name }}</div>
               <div class='nl-municipality'>{{ municipality?.name }}</div>
             </div>
