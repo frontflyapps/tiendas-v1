@@ -63,6 +63,10 @@ const routes: Routes = [
         path: 'contact-us',
         loadChildren: () => import('../../components/contact-us/contact-us.module').then((m) => m.ContactUsModule),
       },
+      {
+        path: 'shops-list',
+        loadChildren: () => import('../../components/shops-list/shops-list.module').then((m) => m.ShopsListModule),
+      },
     ],
   },
 ];

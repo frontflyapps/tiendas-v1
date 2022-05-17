@@ -28,8 +28,8 @@
         <a (click)="onShowProfile()" *ngIf="loggedInUser" class="mat-button" mat-button>
           <span>{{ 'Tu cuenta' | translate }}</span>
         </a>
-        <a [routerLink]="['term-conditions']" fxLayoutAlign="start center" mat-button>
-          <span>{{ 'Términos y condiciones' | translate }}</span>
+        <a [routerLink]="['shops-list']" fxLayoutAlign="start center" mat-button>
+          <span>{{ 'Nuestras tiendas' | translate }}</span>
         </a>
       </div>
       <div class="col-2" fxLayout="column" fxLayoutAlign=" start">
@@ -41,6 +41,9 @@
         </a>
         <a [routerLink]="['privacy-policy']" fxLayoutAlign="start center" mat-button>
           <span>{{ 'Políticas de privacidad' | translate }}</span>
+        </a>
+        <a [routerLink]="['term-conditions']" fxLayoutAlign="start center" mat-button>
+          <span>{{ 'Términos y condiciones' | translate }}</span>
         </a>
       </div>
     </div>
