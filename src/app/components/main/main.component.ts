@@ -92,9 +92,13 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
   categories: any[] = [];
   _language = 'es';
 
-  public urlToCreateBusiness = '#';
-
-  tour = new Shepherd.Tour;
+  tour = new Shepherd.Tour({
+    useModalOverlay: false,
+    defaultStepOptions: {
+      classes: 'shadow-md bg-purple-dark',
+      scrollTo: true,
+    },
+  });
 
   innerWidth: any;
 
@@ -548,7 +552,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.tour.addStep({
       id: 'example-step',
-      text: `Los primeros resultados de búsqueda serán los productos de tiendas más cercanas a:<br><br><strong>${location.province.name}</strong> &nbsp; ${location.municipality ? location.municipality.name : ''}.`,
+      text: `Los primeros resultados de búsqueda serán los productos de tiendas más cercanas a:<br><br><strong>${location?.province?.name}</strong> &nbsp; ${location?.municipality ? location?.municipality.name : ''}.`,
       attachTo: {
         element: attentionClass,
         on: 'bottom',
@@ -600,7 +604,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
     });
 
     // Initiate the tour
-    if (!localStorage.getItem('location-attention') && location.province) {
+    if (!localStorage.getItem('location-attention') && location.province != null) {
       this.tour.start();
     }
   }

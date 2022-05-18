@@ -88,6 +88,12 @@
 
               <div *ngIf="!product.offerValue">
                 <h3 class="price mb-10">{{ product | parsePriceProduct }}</h3>
+                <span class="location-span"
+                  ><mat-icon>room</mat-icon>&nbsp;<strong>{{
+                    product.Business?.Province?.name | parseLang: utilsService.getLang()
+                  }}</strong
+                  >, {{ product.Business?.Municipality?.name | parseLang: utilsService.getLang() }}</span
+                >
               </div>
 
               <p class="mat-body-2" style="font-size: 15px">
@@ -423,9 +429,13 @@
       <!--      </div>-->
     </div>
 
-    <div fxFlex="100" fxFlex.gt-sm="23" fxLayout="row wrap" fxLayoutAlign="start start">
-      <div class="info-bar" fxHide.xs fxLayout="row wrap" ngClass.gt-md="m-0" style="border-radius: 4px !important">
-        <div *ngFor="let item of allBicons; let i = index" class="mt-16" fxFlex="100">
+    <div fxLayout="row wrap" fxLayoutAlign="start start" fxFlex="100" fxFlex.gt-sm="23">
+      <div fxHide.lt-md fxShow>
+        <ng-container [ngTemplateOutlet]="providerDetails"></ng-container>
+      </div>
+
+      <div fxHide.xs fxLayout="row wrap" class="info-bar" style="border-radius: 4px !important" ngClass.gt-md="m-0">
+        <div *ngFor="let item of allBicons; let i = index" fxFlex="100" class="mt-16">
           <mat-card
             [ngClass]="{ 'no-border': i === allBicons.length - 1 }"
             class="light-block"
@@ -496,7 +506,15 @@
           <h4 class="mat-body-2 uppercase">{{ 'Comprando en' | translate }}</h4>
           <a class="list-compare-link" fxLayout="row" fxLayoutAlign="start center">
             <mat-icon class="mr-2"> location_on</mat-icon>
-            {{ product?.Business?.address }}
+            <div fxLayout="column">
+              <div>{{ product?.Business?.address }}.</div>
+              <div>
+                <strong>
+                  {{ product?.Business?.Province?.name | parseLang: utilsService.getLang() }},
+                  {{ product?.Business?.Municipality?.name | parseLang: utilsService.getLang() }}
+                </strong>
+              </div>
+            </div>
           </a>
           <a class="list-compare-link" fxLayout="row" fxLayoutAlign="start center">
             <img

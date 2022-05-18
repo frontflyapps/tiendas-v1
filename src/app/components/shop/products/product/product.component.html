@@ -1,7 +1,22 @@
-<div [id]="'ProductCardId' + product.id" class='card-product' fxLayout='column' fxLayout.lt-md='row'
-     fxLayoutAlign='start stretch' fxLayoutAlign.lt-md='start start' style='position: relative'>
-  <div *ngIf='inLoading' class='loading-shade' style='height: 100%'>
-    <mat-spinner *ngIf='inLoading' [diameter]='40'></mat-spinner>
+<div class="location-label-sm" fxShow.lt-md fxHide>
+  <span>
+    <mat-icon>room</mat-icon>&nbsp;<strong>{{
+      product.Business?.Province?.name | parseLang: utilsService.getLang()
+    }}</strong
+    >, {{ product.Business?.Municipality?.name | parseLang: utilsService.getLang() }}
+  </span>
+</div>
+<div
+  [id]="'ProductCardId' + product.id"
+  fxLayout="column"
+  fxLayoutAlign="start stretch"
+  fxLayout.lt-md="row"
+  fxLayoutAlign.lt-md="start start"
+  class="card-product"
+  style="position: relative"
+>
+  <div *ngIf="inLoading" class="loading-shade" style="height: 100%">
+    <mat-spinner [diameter]="40" *ngIf="inLoading"></mat-spinner>
   </div>
   <div class='image-layout' fxFlex.lt-md='35' fxLayoutAlign='center center'>
     <a [queryParams]='{
@@ -11,7 +26,7 @@
       <img *ngIf='product.Images && product.Images.length' [src]='imageUrl + product.Images[0].image'
            alt='MiBulevar shop' class='image'
            onerror="this.onerror=null;this.src='assets/images/noImage.jpg';" />
-      <img *ngIf='!(product.Images && product.Images.length)' alt='MiBulevar shop' class='image' src='assets/images/noImage.jpg' />
+      <img *ngIf='!(product.Images && product.Images.length)' alt='Image not found' class='image' src='assets/images/noImage.jpg' />
     </a>
   </div>
 
@@ -89,6 +104,14 @@
           <mat-icon>cached</mat-icon>
         </a> -->
     </div>
+  </div>
+  <div class="location-label" fxShow fxHide.lt-md>
+    <span>
+      <mat-icon>room</mat-icon>&nbsp;<strong>{{
+        product.Business?.Province?.name | parseLang: utilsService.getLang()
+      }}</strong
+      >, {{ product.Business?.Municipality?.name | parseLang: utilsService.getLang() }}
+    </span>
   </div>
 </div>
 
