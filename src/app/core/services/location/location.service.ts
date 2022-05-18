@@ -7,6 +7,7 @@ import { LOCATION } from '../../classes/storageNames.class';
 export const LOCATION_BASE = {
   municipality: null,
   province: null,
+  business: null,
 };
 
 @Injectable({

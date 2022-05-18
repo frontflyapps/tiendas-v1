@@ -1,7 +1,6 @@
 @import '../../../assets/scss/theme/variables';
 
 #nav-location {
-  border: 2px solid white;
   padding: 2px 4px;
   cursor: pointer;
   min-width: 146px;
@@ -11,7 +10,7 @@
   overflow: hidden;
 
   &:hover {
-    border: 2px solid #d1acac;
+    border: 2px solid white;
   }
 
   .nl-logo {
@@ -22,16 +21,17 @@
     }
   }
 
-  .nl-titles {
-    .nl-province {
-      font-size: 12px;
-      font-weight: 600;
-    }
+}
 
-    .nl-municipality {
-      font-size: 11px;
-      line-height: 1.1;
-    }
+.nl-titles {
+  .nl-province {
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .nl-municipality {
+    font-size: 11px;
+    line-height: 1.1;
   }
 }
 
@@ -122,13 +122,13 @@ app-main,
 
   .mobile-location {
     padding: 0 16px;
-    height: 48px;
-    color: $theme-main;
-    background-color: $theme-main-accent-300 !important;
+    height: 42px;
+    color: white;
+    background-color: $theme-main-400 !important;
   }
 
   #topBarSidebar {
-    background-color: $theme-main-dark !important;
+    background-color: $theme-main !important;
     color: #fff !important;
   }
 
@@ -144,7 +144,7 @@ app-main,
 
   /*  header styles */
   .home-header {
-    background: $theme-main-dark !important;
+    background: $theme-main !important;
     color: #fff;
     z-index: 9000 !important;
     position: relative !important;
@@ -207,10 +207,10 @@ app-main,
         margin: 0;
         cursor: pointer;
         height: 100%;
-        min-width: 50px;
+        min-width: 45px;
         right: -15px;
         top: 0;
-        padding: 0 16px;
+        padding: 0px 0px;
         color: $white;
         -webkit-transition: all 250ms ease-in-out;
         -moz-transition: all 250ms ease-in-out;
@@ -226,6 +226,12 @@ app-main,
         -webkit-box-shadow: none;
         box-shadow: none;
         -webkit-appearance: none;
+        .mat-icon {
+          line-height: inherit !important;
+          font-size: 27px;
+          width: 27px;
+          height: 27px;
+        }
       }
     }
 
@@ -240,7 +246,7 @@ app-main,
   }
 
   .home-header-2 {
-    background: $theme-main-dark !important;
+    background: $theme-main !important;
     color: #fff;
     z-index: 9000 !important;
     position: relative !important;
@@ -278,17 +284,23 @@ app-main,
     }
 
     button {
-      width: 50px;
+      width: 40px;
       height: 40px;
       border-radius: 4px;
-      padding: 10px 14px;
+      //padding: 10px 14px;
       border: none;
-      background-color: $theme-main-accent-300;
-      color: $theme-main-dark;
+      background-color: $theme-main-accent;
+      color: white;
       font-weight: 500;
 
       &:focus {
         outline: none;
+      }
+      .mat-icon {
+        line-height: inherit !important;
+        font-size: 27px;
+        width: 27px;
+        height: 27px;
       }
     }
   }
@@ -322,4 +334,21 @@ app-main,
   .showCategories::-webkit-scrollbar {
     display: none;
   }
+}
+
+.forgot-button {
+  background: transparent !important;
+  color: $theme-main;
+  text-decoration: underline;
+}
+
+.shepherd-button {
+  background: $theme-main;
+  &:hover {
+    background: $theme-main-400 !important;
+  }
+}
+
+.shepherd-text {
+  padding: 1.5rem;
 }

@@ -6,6 +6,8 @@ import { environment } from '../../../../../environments/environment';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { CategoriesService } from 'src/app/core/services/categories/catagories.service';
+import { CATEGORIES_DATA } from '../../../../core/classes/global.const';
+import { LocalStorageService } from '../../../../core/services/localStorage/localStorage.service';
 
 @Component({
   selector: 'app-categories-m',
@@ -28,6 +30,7 @@ export class CategoriesMComponent implements OnInit, OnDestroy {
     private utilsService: UtilsService,
     private brandService: CategoriesService,
     public loggedInUserService: LoggedInUserService,
+    private localStorageService: LocalStorageService,
   ) {
     this.selection = new SelectionModel(true, []);
     this._unsubscribeAll = new Subject<any>();
@@ -35,7 +38,11 @@ export class CategoriesMComponent implements OnInit, OnDestroy {
   }
 
   @Input() set categoriesIds(value) {
-    if (value) {
+    if (Array.isArray(value) && value.length === 0) {
+      this.selection.clear();
+    }
+
+    if (Array.isArray(value[0])) {
       this.selection.clear();
       value.map((id) => {
         this.selection.select(+id);
@@ -48,14 +55,54 @@ export class CategoriesMComponent implements OnInit, OnDestroy {
       this.language = data.lang;
     });
 
-    this.brandService.getAllCategories().subscribe((data) => {
-      this.allCategories = data.data;
-      this.getRootCategories();
-    });
+    this.getCatFromStorage();
+    // this.brandService.getAllCategories().subscribe((data) => {
+    //   this.allCategories = data.data;
+    //   this.getRootCategories();
+    // });
   }
 
   getRootCategories() {
     this.categories = this.allCategories.filter((item) => item.ParentCategoryId == undefined);
+  }
+
+  getCatFromStorage() {
+    try {
+      const categories = this.localStorageService.getFromStorage(CATEGORIES_DATA);
+
+      if (!categories?.timespan || !Array.isArray(categories.cat) || categories?.cat.length <= 0) {
+        this.getCategories();
+        return;
+      }
+
+      if (this.localStorageService.iMostReSearch(categories?.timespan, environment.timeToResearchProductData)) {
+        this.getCategories();
+      } else {
+        this.setDataOnGetCategories(categories.cat);
+      }
+    } catch (e) {
+      this.getCategories();
+    }
+  }
+
+  getCategories() {
+    this.brandService.getAllCategories().subscribe((data) => {
+        this.setDataOnGetCategories(data.data);
+
+        const _response: any = {};
+        _response.cat = JSON.parse(JSON.stringify(data.data));
+        _response.timespan = new Date().getTime();
+        this.localStorageService.setOnStorage(CATEGORIES_DATA, _response);
+      },
+      error =>
+        this.brandService.allCategories = [],
+    );
+  }
+
+  setDataOnGetCategories(categories) {
+    this.allCategories = categories;
+    this.brandService.allCategories = categories;
+    this.getRootCategories();
   }
 
   getChildCategories(category) {

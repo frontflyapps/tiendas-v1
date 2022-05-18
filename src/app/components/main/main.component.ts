@@ -1,7 +1,16 @@
 import { ConfirmPaymentOkComponent } from './confirm-payment-ok/confirm-payment-ok.component';
 import { CookieService } from 'ngx-cookie-service';
 import { MatSidenav } from '@angular/material/sidenav';
-import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+  AfterViewChecked,
+  AfterViewInit,
+  Component,
+  HostListener,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  ViewEncapsulation,
+} from '@angular/core';
 import { Product } from '../../modals/product.model';
 import { CartItem } from '../../modals/cart-item';
 import { ProductService } from '../shared/services/product.service';
@@ -10,8 +19,8 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { NavigationService } from '../../core/services/navigation/navigation.service';
 import { LoggedInUserService } from '../../core/services/loggedInUser/logged-in-user.service';
-import { takeUntil } from 'rxjs/operators';
-import { Observable, of, Subject } from 'rxjs';
+import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
+import { Subject, of, Observable } from 'rxjs';
 import { IUser } from '../../core/classes/user.class';
 import { AuthenticationService } from '../../core/services/authentication/authentication.service';
 import { ShowSnackbarService } from '../../core/services/show-snackbar/show-snackbar.service';
@@ -36,6 +45,8 @@ import { MyContactsComponent } from './my-contacts/my-contacts.component';
 import { MENU_DATA } from '../../core/classes/global.const';
 import { LocalStorageService } from '../../core/services/localStorage/localStorage.service';
 import { GlobalStateOfCookieService } from '../../core/services/request-cookie-secure/global-state-of-cookie.service';
+import Shepherd from 'shepherd.js';
+import { compile } from 'sass';
 
 @Component({
   selector: 'app-main',
@@ -43,9 +54,11 @@ import { GlobalStateOfCookieService } from '../../core/services/request-cookie-s
   styleUrls: ['./main.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class MainComponent implements OnInit, OnDestroy {
+export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
   public sidenavMenuItems: Array<any>;
   _unsubscribeAll: Subject<any>;
+
+  isOwner = false;
 
   public currencies: any[];
   public currency: any;
@@ -53,6 +66,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
   public province: any = null;
   public municipality: any = null;
+  public business: any = null;
 
   public flags = [
     { name: 'Español', image: 'assets/images/flags/es.svg', lang: 'es' },
@@ -70,8 +84,6 @@ export class MainComponent implements OnInit, OnDestroy {
   compareItemsObservable: Observable<any[]> = of([]);
 
   public url: any;
-  tokenReferal = null;
-
   navItems: any[] = [];
   loggedInUser: IUser;
   @ViewChild('start', { static: true })
@@ -81,6 +93,10 @@ export class MainComponent implements OnInit, OnDestroy {
   _language = 'es';
 
   public urlToCreateBusiness = '#';
+
+  tour = new Shepherd.Tour;
+
+  innerWidth: any;
 
   constructor(
     public router: Router,
@@ -125,6 +141,19 @@ export class MainComponent implements OnInit, OnDestroy {
       }
     });
     this.searchForm = new FormControl(null, []);
+
+    this.tour = new Shepherd.Tour({
+        useModalOverlay: false,
+        defaultStepOptions: {
+          classes: 'shadow-md bg-purple-dark',
+          scrollTo: true,
+        },
+      });
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.innerWidth = window.innerWidth;
   }
 
   ngOnInit() {
@@ -139,7 +168,6 @@ export class MainComponent implements OnInit, OnDestroy {
 
     const tempFlag = JSON.parse(localStorage.getItem('language'));
     this.flag = tempFlag ? tempFlag : this.flags[0];
-
     this.currencies = this.currencyService.getCurrencies();
     this.currency = this.currencyService.getCurrency();
 
@@ -189,6 +217,14 @@ export class MainComponent implements OnInit, OnDestroy {
     this.loggedInUserService.$languageChanged.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {
       this._language = data.lang;
     });
+
+    /**
+     * Open location dialog when app start
+     */
+    const location = JSON.parse(localStorage.getItem('location'));
+    if (!location.province || !location.municipality) {
+      this.openSetLocation();
+    }
   }
 
   setSubscriptionToCookie() {
@@ -440,7 +476,11 @@ export class MainComponent implements OnInit, OnDestroy {
       maxWidth: '100vw',
       maxHeight: '100vh',
       width: '35rem',
-      data: {},
+      data: {
+        provinceData: this.province,
+        municipalityData: this.municipality,
+        businessData: this.business,
+      },
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
@@ -465,12 +505,12 @@ export class MainComponent implements OnInit, OnDestroy {
   setLocationData(locationOnLocalStorage) {
     this.municipality = locationOnLocalStorage.municipality;
     this.province = locationOnLocalStorage.province;
+    this.business = locationOnLocalStorage.business;
   }
 
   initSubsLocation() {
-    this.locationService
-      .location$
-      .pipe(takeUntil(this._unsubscribeAll))
+    this.locationService.location$
+      .pipe(distinctUntilChanged(), takeUntil(this._unsubscribeAll))
       .subscribe((newLocation) => {
         this.setLocationData(newLocation);
         localStorage.setItem(LOCATION, JSON.stringify(newLocation));
@@ -491,5 +531,77 @@ export class MainComponent implements OnInit, OnDestroy {
 
         this.setCategories(_response.menu);
       });
+  }
+
+  ngAfterViewInit() {
+    if (innerWidth >= 960) {
+      this.addAttention('.info-location');
+    } else {
+      this.addAttention('.mobile-location');
+    }
+  }
+
+  public addAttention(attentionClass: string) {
+    const dialog = this.dialog;
+    const location = JSON.parse(localStorage.getItem('location'));
+    let locationServ = location.locationService;
+
+    this.tour.addStep({
+      id: 'example-step',
+      text: `Los primeros resultados de búsqueda serán los productos de tiendas más cercanas a:<br><br><strong>${location.province.name}</strong> &nbsp; ${location.municipality ? location.municipality.name : ''}.`,
+      attachTo: {
+        element: attentionClass,
+        on: 'bottom',
+      },
+      classes: 'example-step-extra-class',
+      buttons: [
+        {
+          text: 'Olvidar',
+          classes: 'forgot-button',
+          action() {
+            // Dismiss the tour when the forgot button is clicked
+            localStorage.setItem('location-attention', 'yes');
+            return this.cancel();
+          },
+        },
+        {
+          text: 'Cambiar',
+          action() {
+            return this.hide();
+          },
+        },
+        {
+          text: 'Aceptar',
+          classes: 'accept-button',
+          action: this.tour.complete
+        },
+      ],
+      when: {
+        hide: function () {
+          const dialogRef = dialog.open(DialogSetLocationComponent, {
+            panelClass: 'app-dialog-set-location',
+            maxWidth: '100vw',
+            maxHeight: '100vh',
+            width: '35rem',
+            data: {
+              provinceData: location.province,
+              municipalityData: location.municipality,
+              businessData: location.business,
+            },
+          });
+          dialogRef.afterClosed().subscribe((result) => {
+            if (result) {
+              locationServ.updateLocation(result);
+            }
+          });
+        },
+
+      },
+    });
+
+    // Initiate the tour
+    if (!localStorage.getItem('location-attention') && location.province) {
+      this.tour.start();
+    }
   }
 }

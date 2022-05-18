@@ -18,6 +18,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { GuachosImagePickerModule } from 'guachos-image-picker';
+import { BankService } from '../../core/services/bank/bank.service';
+import { MatDivider, MatDividerModule } from '@angular/material/divider';
 
 // import { GoogleMapsModule } from '@angular/google-maps';
 @NgModule({
@@ -40,8 +42,10 @@ import { GuachosImagePickerModule } from 'guachos-image-picker';
     MatTooltipModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatDividerModule,
     GuachosImagePickerModule,
   ],
+  providers:[BankService]
 })
 export class BecomeASellerModule {
 }

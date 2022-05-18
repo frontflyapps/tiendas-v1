@@ -39,6 +39,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MyContactsComponent } from './my-contacts/my-contacts.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { GuachosImagePickerModule } from 'guachos-image-picker';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [
@@ -81,6 +82,7 @@ import { GuachosImagePickerModule } from 'guachos-image-picker';
     FooterModule,
     MatSelectModule,
     MatProgressSpinnerModule,
+    MatAutocompleteModule,
     GuachosImagePickerModule,
   ],
   providers: [SidebarMenuService, PreviousRouteService, ConfirmCreateBusinessService],
