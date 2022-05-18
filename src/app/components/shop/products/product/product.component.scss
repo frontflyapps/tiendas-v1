@@ -91,6 +91,36 @@
       font-size: 15px;
     }
   }
+
+  .location-label {
+    position: absolute;
+    top: -6px;
+    left: -6px;
+    background-color: $theme-main-accent;
+    color: white;
+    border-radius: 4px;
+    span {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2px 8px;
+    }
+  }
+}
+
+.location-label-sm {
+  border: 1px solid #f58429;
+  border-bottom: none;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  color: white;
+  background-color: $theme-main-accent;
+  span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 8px;
+  }
 }
 
 .image {
