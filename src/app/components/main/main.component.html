@@ -374,7 +374,8 @@
         <!--           routerLinkActive="router-link-active"-->
         <!--           class="itemCategory"-->
         <!--           mat-button>{{ 'Inicio' | translate }}</a>-->
-
+        <a [routerLink]="['/shops-list']" class='itemCategory' mat-button routerLinkActive='router-link-active'>
+          {{ 'Nuestras tiendas' | translate }}</a>
         <a [routerLink]="['/products/search']" class='itemCategory' mat-button routerLinkActive='router-link-active'>
           {{ 'Todos los productos' | translate }}</a>
 
