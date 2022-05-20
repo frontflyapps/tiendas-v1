@@ -35,7 +35,7 @@ export class MainCarouselComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() set slides(values: any[]) {
     console.log('carusels', values);
     this._slides = [...values];
-    // if (this._slides && this._slides.length) {
+        // if (this._slides && this._slides.length) {
     //   setTimeout(() => {
     //     let element = document.getElementById('my-main-slider');
     //     if (element.classList.contains('loader')) {
