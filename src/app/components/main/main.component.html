@@ -257,8 +257,11 @@
            fxShow
            mat-icon-button>
 
-          <img *ngIf='!this.loggedInUser?.avatar' alt='Profile'
-               class='profileImage' src='assets/images/avatars/profile2.png' />
+<!--          <img *ngIf='!this.loggedInUser?.avatar' alt='Profile'-->
+<!--               class='profileImage' src='assets/images/avatars/profile2.png' />-->
+          <mat-icon *ngIf='!this.loggedInUser?.avatar' alt='Profile'>
+              account_circle
+          </mat-icon>
           <img *ngIf='this.loggedInUser?.avatar' [src]='urlImage + loggedInUser?.avatar' alt='Profile'
                class='profileImage' />
         </a>

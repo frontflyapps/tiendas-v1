@@ -33,29 +33,26 @@ export class BusinessService {
       httpParams = httpParams.set('limit', '0');
       httpParams = httpParams.set('offset', '0');
     }
+    httpParams = httpParams.set('filter[$and][status]', 'approved');
     if (params) {
       if (params.name) {
         httpParams = httpParams.set('filter[$and][name][$like]', '%' + params.name.toString() + '%');
       }
 
-      if (params.address) {
-        httpParams = httpParams.set('filter[$and][address][$like]', '%' + params.address.toString() + '%');
-      }
-
-      if (params.status) {
-        if (params.status.constructor != Array) {
-          httpParams = httpParams.set('filter[$and][status]', params.status.toString());
-        }
-        if (params.status.constructor == Array && params.status.length) {
-          if (params.status.length == 1) {
-            httpParams = httpParams.set('filter[$and][status]', params.status[0].toString());
-          } else {
-            params.status.map((item) => {
-              httpParams = httpParams.append('filter[$and][status]', item.toString());
-            });
-          }
-        }
-      }
+      // if (params.status) {
+      //   if (params.status.constructor != Array) {
+      //     httpParams = httpParams.set('filter[$and][status]', params.status.toString());
+      //   }
+      //   if (params.status.constructor == Array && params.status.length) {
+      //     if (params.status.length == 1) {
+      //       httpParams = httpParams.set('filter[$and][status]', params.status[0].toString());
+      //     } else {
+      //       params.status.map((item) => {
+      //         httpParams = httpParams.append('filter[$and][status]', item.toString());
+      //       });
+      //     }
+      //   }
+      // }
     }
     return this.httpClient.get<any>(this.url, { params: httpParams });
   }
