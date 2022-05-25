@@ -22,8 +22,7 @@ export const environment = {
   localDatabaseUsers: true,
 
   contacts: {
-    phone: '(+53) 7000 0000',
-    email: 'info@transfermovil.com',
+    email: 'negociosdigitales@etecsa.cu',
     address: 'Miramar Trade Center, Edificio Beijing, Miramar, Playa',
   },
 

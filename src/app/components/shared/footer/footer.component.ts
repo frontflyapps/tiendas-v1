@@ -7,7 +7,6 @@ import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-
 import { IUser } from '../../../core/classes/user.class';
 
 export interface IFooterContacts {
-  phone: string;
   email: string;
   address: string;
 }
