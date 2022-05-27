@@ -6,7 +6,7 @@ const packageJson = require('../../package.json');
 export const environment = {
   production: false,
 
-  // apiUrl: 'http://192.168.1.20:7777/v1/',F
+  // apiUrl: 'http://192.168.1.20:7777/v1/',
   // imageUrl: 'http://192.168.1.20:7777/v1/',
 
   // apiUrl: 'http://localhost:8998/v1/',
@@ -37,9 +37,9 @@ export const environment = {
   localDatabaseUsers: true,
 
   contacts: {
-    phone: '(+53) 7XXX XXXX',
-    email: 'tienda@tiendalocal.com',
-    address: 'Calle X, entre D y F. Direccion',
+    phone: '',
+    email: '',
+    address: '',
   },
 
   adminService: 'http://admintienda.tiendalocal.com/',

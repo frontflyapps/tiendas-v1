@@ -6,6 +6,7 @@ import { debounceTime, filter, map, startWith, takeUntil } from 'rxjs/operators'
 import { Observable, Subject, Subscription } from 'rxjs';
 import { BusinessService } from 'src/app/core/services/business/business.service';
 import { Console } from 'console';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-dialog-set-location',
@@ -40,6 +41,7 @@ export class DialogSetLocationComponent implements OnInit, OnDestroy {
     public dialogRef: MatDialogRef<DialogSetLocationComponent>,
     private fb: FormBuilder,
     private locationService: LocationService,
+    public translate: TranslateService
   ) {
     this.storageLocation = data;
     this.getProvinces();

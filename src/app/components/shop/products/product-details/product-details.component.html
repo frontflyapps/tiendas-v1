@@ -41,12 +41,11 @@
                 </ng-container>
               </ng-container>
               <img
+                lazyImg
                 *ngIf="!(product.Images && product.Images.length)"
+                src="../../../../assets/images/noImage.jpg"
                 alt=""
                 class="ImageProduct"
-                lazyImg
-
-                src="assets/images/noImage.jpg"
               />
             </div>
             <div
@@ -56,19 +55,14 @@
               fxLayoutAlign="center center"
             >
               <div
-                (click)="onSelectImage(i)"
                 *ngFor="let image of arrayImages; let i = index"
+                (click)="onSelectImage(i)"
                 [ngClass]="{
                   'mini-images-container': !image.selected,
                   'mini-images-container-selected': image.selected
                 }"
               >
-                <img
-                  [src]="image.image"
-                  lazyImg
-
-                  onerror="this.onerror=null;this.src='assets/images/noImage.jpg';"
-                />
+                <img lazyImg [src]="image.image" onerror="this.onerror=null;this.src='assets/images/noImage.jpg';" />
               </div>
             </div>
           </mat-card>
@@ -145,10 +139,16 @@
                   <p>
                     <span class="text-muted fw-500">{{ 'Avalibility:' | translate }}</span>
                     <span
-                      *ngIf="counter < product?.Stock?.quantity ? product?.Stock?.quantity : 0"
                       class="avalibility"
                       style="color: #4caf50 !important; font-weight: 500"
-                      ><span class="ml-3">{{ 'Disponible en el almacén' | translate }}</span></span
+                      *ngIf="counter < product?.Stock?.quantity ? product?.Stock?.quantity : 0"
+                      ><span class="ml-3"
+                        >{{ 'Disponible en la
+                        tienda' | translate }} "{{
+                          product?.Business?.name
+                        }}" {{ 'ubicada en la provincia' | translate }} "{{ product?.Business?.Province?.name }}"
+                        {{ 'en el municipio' | translate }} "{{ product?.Business?.Municipality?.name }}"</span
+                      ></span
                     >
 
                     <span *ngIf="counter > product?.Stock?.quantity ? product?.Stock?.quantity : 0" class="avalibility"
@@ -197,9 +197,8 @@
               <div
                 class="buttons mt-20"
                 fxLayout="row"
-                fxLayout.lt-sm="column"
                 fxLayoutAlign="start center"
-                fxLayoutAlign.lt-sm="start center"
+                fxLayoutAlign.lt-sm="center center"
               >
                 <button
                   (click)="addToCart(product, counter)"
@@ -290,9 +289,9 @@
                 </div>
 
                 <div
+                  fxLayout="row"
                   *ngIf="this.queryReviews.offset < this.queryReviews.total"
                   class="py-3"
-                  fxLayout="row"
                   fxLayoutAlign="center center"
                 >
                   <button
@@ -375,9 +374,15 @@
       </div>  
 
       <div *ngIf="allProductsOnMenu?.length > 0" class="products pt-5">
-        <div class="title">
-          <h4 class="widget-title">{{ 'Otros productos del negocio' | translate }}</h4>
-
+        <div
+          fxLayout
+          fxLayoutAlign="space-between center"
+          fxLayout.lt-md="column"
+          fxLayoutAlign.lt-md="space-between start"
+        >
+          <div class="title">
+            <h4 class="widget-title">{{ 'Otros productos del negocio' | translate }}</h4>
+          </div>
           <mat-form-field appearance="outline" class="auto-complete-search" style="min-width: 310px">
             <mat-label>{{ 'Buscar en este local' | translate }}</mat-label>
             <input
@@ -450,8 +455,8 @@
       <div fxHide.xs fxLayout="row wrap" class="info-bar" style="border-radius: 4px !important" ngClass.gt-md="m-0">
         <div *ngFor="let item of allBicons; let i = index" fxFlex="100" class="mt-16">
           <mat-card
-            [ngClass]="{ 'no-border': i === allBicons.length - 1 }"
             class="light-block"
+            [ngClass]="{ 'no-border': i === allBicons.length - 1 }"
             fxLayout="row"
             fxLayoutAlign="start center"
           >
@@ -510,14 +515,11 @@
         </section>
         <mat-divider fxHide.lt-md class="my-2"></mat-divider>
       </div>
-      <div fxHide.lt-md fxShow>
-        <ng-container [ngTemplateOutlet]="providerDetails"></ng-container>
-      </div>
 
       <ng-template #providerDetails>
         <div style="width: 100%">
           <h4 class="mat-body-2 uppercase">{{ 'Comprando en' | translate }}</h4>
-          <a class="list-compare-link" fxLayout="row" fxLayoutAlign="start center">
+          <a class="list-compare-link no-decoration" fxLayout="row" fxLayoutAlign="start center">
             <mat-icon class="mr-2"> location_on</mat-icon>
             <div fxLayout="column">
               <div>{{ product?.Business?.address }}.</div>
@@ -529,7 +531,7 @@
               </div>
             </div>
           </a>
-          <a class="list-compare-link" fxLayout="row" fxLayoutAlign="start center">
+          <a class="list-compare-link no-decoration" fxLayout="row" fxLayoutAlign="start center">
             <img
               style="height: 32px; width: 32px; border-radius: 50%; object-fit: cover"
               [src]="imageUrl + product?.Business?.logo"

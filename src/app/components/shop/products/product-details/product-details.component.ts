@@ -120,8 +120,8 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
 
     this.route.queryParams.subscribe((query) => {
-      const productId = +query.productId;
-      const stockId = +query.stockId;
+      const productId = query.productId;
+      const stockId = query.stockId;
       this.productsService.productIdDetails = productId;
       this.isLoading = true;
       this.productsService.getProductById(productId, stockId).subscribe(
