@@ -22,9 +22,9 @@ export const environment = {
   localDatabaseUsers: true,
 
   contacts: {
-    phone: '(+53) 7XXX XXXX',
-    email: ' tienda@gkoodu.com',
-    address: 'Calle X, entre D y F. Direccion',
+    phone: '',
+    email: '',
+    address: '',
   },
 
   adminService: 'https://admintienda.gkoodu.com/',
