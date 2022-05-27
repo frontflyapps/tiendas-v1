@@ -104,44 +104,12 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   shippingSelected: any;
 
   payments: any[] = [
-    {
-      id: 'transfermovil',
-      name: 'Transfermovil',
-      logo: 'assets/images/cards/transfermovil_logo.png',
-      market: 'national',
-    },
+    { id: 'transfermovil', name: 'Transfermovil', logo: 'assets/images/cards/transfermovil_logo.png', market: 'national' },
     // { id: 'enzona', name: 'Enzona', logo: 'assets/images/cards/enzona.jpeg', market: 'national' },
-    {
-      id: 'transfermovil',
-      name: 'Transfermovil',
-      logo: 'assets/images/cards/transfermovil_logo.png',
-      market: 'international',
-    },
-    // { id: 'peopleGoTo', name: 'PeopleGoTo', logo: 'assets/images/cards/people-go-to.svg', market: 'international' },
+    { id: 'transfermovil', name: 'Transfermovil', logo: 'assets/images/cards/transfermovil_logo.png', market: 'international' },
     { id: 'peopleGoTo', name: 'Visa', logo: 'assets/images/cards/visa_logo.png', market: 'international' },
     { id: 'peopleGoTo', name: 'MasterCard', logo: 'assets/images/cards/mastercard_logo.png', market: 'international' },
-    {
-      id: 'peopleGoTo',
-      name: 'American Express',
-      logo: 'assets/images/cards/american_express_logo.png',
-      market: 'international',
-    },
-    // { id: 'visa', name: 'Visa', logo: 'assets/images/cards/visa_logo.png', market: 'international' },
-    // { id: 'express', name: 'American Express', logo: 'assets/images/cards/american_express_logo.png', market: 'international' },
-    // { id: 'masterCard', name: 'MasterCard', logo: 'assets/images/cards/mastercard_logo.png', market: 'international' },
-    // {
-    //   id: 'dinners-club-internacional',
-    //   name: 'Dinners Club Internacional',
-    //   logo: 'assets/images/cards/dinners.jpg',
-    //   market: 'international',
-    // },
-    // { id: 'jcb', name: 'JCB', logo: 'assets/images/cards/jcb.png', market: 'international' },
-    // { id: 'maestro', name: 'Mastercard Maestro', logo: 'assets/images/cards/maestro.jpg', market: 'international' },
-    // { id: 'electron', name: 'Visa Electrón', logo: 'assets/images/cards/electron.png', market: 'international' },
-    // { id: 'tarjeta-virtual', name: 'Tarjeta Virtual', logo: 'assets/images/cards/virtual.png', market: 'international' },
-    // { id: 'bizum', name: 'Bizum', logo: 'assets/images/cards/bizum.jpg', market: 'international' },
-    // { id: 'iupay', name: 'Iupay', logo: 'assets/images/cards/iupay.png', market: 'international' },
-    // { id: 'discover-global', name: 'Discover Global', logo: 'assets/images/cards/discover.png', market: 'international' },
+    { id: 'peopleGoTo', name: 'American Express', logo: 'assets/images/cards/american_express_logo.png', market: 'international' },
   ];
 
   nationalitiy: any[] = [
