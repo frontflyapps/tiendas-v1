@@ -75,8 +75,15 @@
   </div>
 
   <div class="footer-bottom-color" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="1rem">
-    <img alt="footer logo" class="mt-4 image-footer" ngClass.lt-sm="img-footer"
-         src="assets/images/logo-navbar.svg">
+    <div fxLayout='row' fxLayoutAlign='center center' fxLayoutGap='20px'>
+      <div class='image-footer' ngClass.lt-sm="img-footer">
+        <img alt="footer logo" class="mt-4"
+             src="assets/images/logo-navbar.svg">
+      </div>
+      <div class='etecsa-footer' ngClass.lt-sm="etecsa-img-footer">
+        <img alt='etecsa logo' class="mt-4"  src='assets/images/logo-etecsa.svg'>
+      </div>
+    </div>
 
     <div class="py-3" fxLayout="row" fxLayout.xs="column"
          fxLayoutAlign="start center" fxLayoutAlign.xs="start"

@@ -22,7 +22,7 @@ export const environment = {
   localDatabaseUsers: true,
 
   contacts: {
-    email: 'negociosdigitales@etecsa.cu',
+    email: 'bulevar@etecsa.cu',
     address: 'Miramar Trade Center, Edificio Beijing, Miramar, Playa',
   },
 
