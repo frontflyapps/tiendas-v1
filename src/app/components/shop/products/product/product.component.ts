@@ -49,8 +49,7 @@ export class ProductComponent implements OnInit, OnDestroy {
     ///Data to redirect function///
     this.pathToRedirect = this.route.snapshot.routeConfig.path;
     this.route.queryParamMap.subscribe((params) => {
-      this.paramsToUrlRedirect = { ...params };
-      console.log(this.paramsToUrlRedirect);
+        this.paramsToUrlRedirect = params ;
     });
   }
 
@@ -100,7 +99,7 @@ export class ProductComponent implements OnInit, OnDestroy {
           });
       }
     } else {
-      this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
+        this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect)
     }
   }
 

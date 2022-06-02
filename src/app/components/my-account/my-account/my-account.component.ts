@@ -248,22 +248,17 @@ export class MyAccountComponent implements OnInit {
             10000,
           );
           this.inLoading = false;
-          /** Redirect to origin page **/
+          /** Redirect to origin URL when login **/
           if (this.redirectToOriginPage) {
+            /** URL with params **/
             if (this.paramsToRedirect) {
               let tempParams = JSON.parse(this.paramsToRedirect);
               this.router.navigate([this.redirectToOriginPage], {
                 queryParams: { ...tempParams.params },
-              });
+              }).then();
             } else {
               this.router.navigate([this.redirectToOriginPage]).then();
             }
-          }
-          /** Redirect to URL when login **/
-          if(this.urlToRedirect){
-            this.router.navigate([this.urlToRedirect]);
-          } else {
-            this.router.navigate([this.routeToNavigate]).then();
           }
           this.spinner.hide();
         } else {
