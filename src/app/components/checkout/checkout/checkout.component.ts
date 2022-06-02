@@ -346,15 +346,16 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   onChangeShippingRequired(data) {
     this.showShipping = data.checked;
     if (data.checked) {
-      this.form.controls['ShippingBusinessId'].setValidators(Validators.required);
+      this.form.get('ShippingBusinessId').setValidators(Validators.required);
       this.onRecalculateShipping();
     } else {
-      this.form.controls['ShippingBusinessId'].setValidators(null);
-      this.form.controls['ShippingBusinessId'].setValue(null);
+      this.form.get('ShippingBusinessId').setValue(null);
+      this.form.get('ShippingBusinessId').clearValidators();
       this.shippingData = [];
       // this.canBeDelivery = false;
     }
-    this.form.controls['ShippingBusinessId'].updateValueAndValidity();
+    this.form.updateValueAndValidity();
+    console.log(this.form)
   }
 
   // forbiddenlocationValidator(provinceId: any): ValidatorFn {
@@ -594,17 +595,12 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     if (this.shippingData.length === 0) {
       let dataCartId = { cartId: this.cartId };
       this.inLoading = true;
-      this.cartService.getShippingCart(dataCartId).subscribe(
-        (item) => {
-          console.log('getShippingCart', item);
-          this.shippingData = item.shippings;
-          this.canBeDelivery = item.canBeDelivery;
-          if (!this.canBeDelivery) {
-            this.form.get('shippingRequired').setValue(false);
-          }
-          this.inLoading = false;
-        },
-        (error) => {
+      this.cartService.getShippingCart(dataCartId).subscribe((item) => {
+        console.log('getShippingCart', item);
+        this.shippingData = item.shippings;
+        this.canBeDelivery = item.canBeDelivery;
+        this.inLoading = false;
+      },(error) => {
           this.inLoading = false;
         },
       );
