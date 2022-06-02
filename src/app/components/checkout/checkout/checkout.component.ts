@@ -568,6 +568,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       shippingRequired: [null, []],
     });
     this.onlyCubanPeople = this.form.get('isForCuban').value;
+    this.onlyCubanPeople = this.form.get('isForCuban').value;
     if (this.onlyCubanPeople) {
       this.form
         .get('phone')
@@ -923,6 +924,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   onSelectContact(contact) {
+    console.log(contact)
     this.form.get('name').setValue(contact?.name);
     this.form.get('lastName').setValue(contact?.lastName);
     this.form.get('email').setValue(contact?.email);
@@ -1084,6 +1086,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   onGoToPayment() {
+    if (this.form.get('shippingRequired').value === null) {
+      this.form.get('shippingRequired').setValue(false);
+    }
     this.saveReceiverData(this.form.value);
     this.showInfoDataToPay = false;
     this.showPayment = true;
