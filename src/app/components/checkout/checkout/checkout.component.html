@@ -360,8 +360,8 @@
                 <mat-error *ngIf="form.controls['dni'].hasError('required')">
                   {{ 'Identity card' | translate }} <strong>{{ 'is required' | translate }}</strong>
                 </mat-error>
-                <mat-error *ngIf="form.controls['dni'].hasError('maxlength')">
-                  {{ 'Longitud máxima' | translate }} <strong>{{ CI_Length }} {{ 'caracteres' | translate }}</strong>
+                <mat-error *ngIf="form.controls['dni'].hasError('minlength')">
+                  {{ 'Longitud mínima' | translate }} <strong>{{ CI_Length }} {{ 'caracteres' | translate }}</strong>
                 </mat-error>
                 <!--                <mat-error *ngIf="form.controls['dni'].hasError('maxlength')">-->
                 <!--                  {{ 'Longitud mínima' | translate }} <strong>{{ '11 caracteres' | translate }}</strong>-->

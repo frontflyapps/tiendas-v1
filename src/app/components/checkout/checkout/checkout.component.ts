@@ -344,6 +344,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   onChangeShippingRequired(data) {
+    debugger;
     this.showShipping = data.checked;
     if (data.checked) {
       this.form.get('ShippingBusinessId').setValidators(Validators.required);
@@ -551,7 +552,13 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       ProvinceId: [this.selectedDataPay?.ProvinceId || null, [Validators.required]],
       MunicipalityId: [this.selectedDataPay?.MunicipalityId || null, [Validators.required]],
       isForCuban: [this.selectedDataPay?.isForCuban || true, [Validators.required]],
-      dni: [this.selectedDataPay?.identification || null, [Validators.required, Validators.maxLength(this.CI_Length)]],
+      dni: [
+        this.selectedDataPay?.dni || null,
+        [
+          Validators.required,
+          Validators.minLength(this.CI_Length),
+        ],
+      ],
       email: [this.selectedDataPay?.email || null, [Validators.required, Validators.pattern(EMAIL_REGEX)]],
       phone: [this.selectedDataPay?.phone || null, []],
       info: [this.selectedDataPay?.info || null, []],
@@ -571,6 +578,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           Validators.maxLength(8),
         ]);
     }
+    this.form.updateValueAndValidity();
     this.updateValidatorsForChangeNationality(this.onlyCubanPeople);
     this.subsToTransfermovilChange();
   }
@@ -924,6 +932,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.form.get('address').setValue(contact?.address);
     this.form.get('dni').setValue(contact?.identification);
     this.form.get('phone').setValue(contact?.phone);
+
+    this.form.updateValueAndValidity();
   }
 
   onSelectProvinceByContactBtn(provinceId) {
