@@ -23,7 +23,7 @@ export const environment = {
 
   contacts: {
     email: 'bulevar@etecsa.cu',
-    address: 'Miramar Trade Center, Edificio Beijing, Miramar, Playa',
+    address: 'Centro de Negocios Miramar, Edificio Barcelona oficina 201, Miramar, Playa.',
   },
 
   adminService: 'https://admin.mibulevar.com/',
