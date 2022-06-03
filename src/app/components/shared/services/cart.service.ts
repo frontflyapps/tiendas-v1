@@ -750,14 +750,25 @@ export class CartService implements OnDestroy {
 
     dialogRef.afterClosed().subscribe(async (result) => {
       if (result) {
-        this.router
-          .navigate(['/my-account'], {
-            queryParams: {
-              redirectToOriginPage: url,
-              paramsToRedirect: params ? JSON.stringify(params) : null,
-            },
-          })
-          .then();
+        if (params && Object.keys(params.params).length) {
+          this.router
+            .navigate(['/my-account'], {
+              queryParams: {
+                redirectToOriginPage: url,
+                paramsToRedirect: JSON.stringify(params)
+              },
+            })
+            .then();
+        } else {
+          this.router
+            .navigate(['/my-account'], {
+              queryParams: {
+                redirectToOriginPage: url,
+              },
+            })
+            .then();
+        }
+
       }
     });
   }

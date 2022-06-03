@@ -319,15 +319,15 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   onChangeShippingRequired(data){
     this.showShipping = data.checked;
     if (data.checked) {
-      this.form.controls['ShippingBusinessId'].setValidators(Validators.required);
+      this.form.get('ShippingBusinessId').setValidators(Validators.required);
       this.onRecalculateShipping();
     } else {
-      this.form.controls['ShippingBusinessId'].setValidators(null);
-      this.form.controls['ShippingBusinessId'].setValue(null);
+      this.form.get('ShippingBusinessId').setValue(null);
+      this.form.get('ShippingBusinessId').clearValidators();
       this.shippingData = [];
       // this.canBeDelivery = false;
     }
-    this.form.controls['ShippingBusinessId'].updateValueAndValidity();
+    this.form.updateValueAndValidity();
   }
 
   // forbiddenlocationValidator(provinceId: any): ValidatorFn {
@@ -525,10 +525,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       MunicipalityId: [this.selectedDataPay?.MunicipalityId || null, [Validators.required]],
       isForCuban: [this.selectedDataPay?.isForCuban || true, [Validators.required]],
       dni: [
-        this.selectedDataPay?.identification || null,
+        this.selectedDataPay?.dni || null,
         [
           Validators.required,
-          Validators.maxLength(this.CI_Length),
+          Validators.minLength(this.CI_Length),
         ],
       ],
       email: [this.selectedDataPay?.email || null, [Validators.required, Validators.pattern(EMAIL_REGEX)]],
@@ -912,6 +912,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.form.get('address').setValue(contact?.address);
     this.form.get('dni').setValue(contact?.identification);
     this.form.get('phone').setValue(contact?.phone);
+
+    this.form.updateValueAndValidity();
   }
 
   onSelectProvinceByContactBtn(provinceId) {
@@ -1062,7 +1064,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   onGoToPayment() {
-    this.saveReceiverData(this.form.value)
+    if (this.form.get('shippingRequired').value === null) {
+      this.form.get('shippingRequired').setValue(false);
+    }
+    this.saveReceiverData(this.form.value);
     this.showInfoDataToPay = false;
     this.showPayment = true;
     this.scrollTopDocument();
