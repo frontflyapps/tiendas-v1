@@ -259,6 +259,8 @@ export class MyAccountComponent implements OnInit {
             } else {
               this.router.navigate([this.redirectToOriginPage]).then();
             }
+          } else {
+            this.router.navigate(['/']).then();
           }
           this.spinner.hide();
         } else {
