@@ -234,7 +234,7 @@
                         || this.selectedOrder.status == 'delivered'
                         || this.selectedOrder.status == 'payed'">
                         <a (click)="onDownloadDigitalProduct(paymentItem.Product.Digital.referenceUrl)"
-                           *ngIf="paymentItem.Product.type == 'digital' && paymentItem.Product.Digital.referenceUrl"
+                           *ngIf="paymentItem.type == 'digital' && paymentItem.Product.Digital.referenceUrl"
                            fxLayout="row"
                            fxLayoutAlign="start center"
                            mat-button

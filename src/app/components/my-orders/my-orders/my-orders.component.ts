@@ -376,7 +376,7 @@ export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onDownloadDigitalProduct(url) {
-    const urlDownload = url + '?Authorization=' + this.loggedInUserService.getTokenCookie();
+    const urlDownload = environment.apiUrl + url + '?Authorization=' + this.loggedInUserService.getTokenCookie();
     const link = document.createElement('a');
     link.href = urlDownload;
     link.download = 'data';
