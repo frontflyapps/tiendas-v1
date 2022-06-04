@@ -305,7 +305,7 @@ export class MainComponent implements OnInit, OnDestroy {
           this.socketIoService.disconnect();
         },
         (err) => {
-          const message = this.translate.instant('User sing out unsuccessfully');
+          const message = this.translate.instant('Unsuccessful logout');
           this.showSnackbBar.showError(message, 8000);
           /*this.loggedInUserService.removeCookies();
           this.loggedInUserService.setLoggedInUser(null);

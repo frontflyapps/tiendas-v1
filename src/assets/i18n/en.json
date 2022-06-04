@@ -740,7 +740,7 @@
   "Tax successfully created": "Tax successfully created",
   "Tax created successfully": "Tax created successfully",
   "User successfully unlogged": "User successfully unlogged",
-  "User sing out unsuccessfully": "User sing out unsuccessfully",
+  "Unsuccessful logout": "Unsuccessful logout",
   "Debe iniciar sesión para entrar en la creación de cuenta de vendedor": "You must log in to enter the seller account creation",
   "Su solicitud de negocio ha sido procesado exitosamente, nos pondremos en contacto con usted para aceptar la solicitud y habilitarle el comercio": "Your business request has been successfully processed, we will contact you to accept the request and enable the trade",
   "You need to be logged in to pay, please register or create an account": "You need to be logged in to pay, please register or create an account",
