@@ -665,7 +665,7 @@
 
                   <button
                     (click)="onCancelarOrder(this.selectedOrder)"
-                    *ngIf="this.selectedOrder.status == 'confirmed' || this.selectedOrder.status == 'on-delivery'"
+                    *ngIf="(this.selectedOrder.status == 'confirmed' || this.selectedOrder.status == 'on-delivery') && this.canCancel"
                     class="mx-2"
                     color="warn"
                     fxFlex=" 30"

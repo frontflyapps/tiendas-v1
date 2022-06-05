@@ -129,6 +129,8 @@ export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
     },
   };
 
+  canCancel: boolean;
+
   loadingSearch = true;
   loadingSelectedItem = false;
 
@@ -277,6 +279,8 @@ export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
     this.ordersService.getPayment(item).subscribe(
       (data) => {
         this.selectedOrder = data.data;
+        this.canCancel = this.selectedOrder.PaymentItems.some((ele: any) => ele.type === 'physical');
+        console.log(this.canCancel);
         this.showOrderDetails = true;
         this.loadingSelectedItem = false;
         if (this.isHandset) {
