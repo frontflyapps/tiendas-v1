@@ -497,8 +497,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     if (ShippingBusinessId) {
       let ShippingByBusiness = this.shippingData?.find((i) => (
         i.BusinessId === ShippingBusinessId.BusinessId &&
-        i.shippingItems[0].Province.id === this.form.get('ProvinceId') &&
-        i.shippingItems[0].Municipality.id === this.form.get('MunicipalityId') )
+        i.shippingItems[0].Shipping?.ProvinceId === this.form.get('ProvinceId') &&
+        i.shippingItems[0].Shipping?.MunicipalityId === this.form.get('MunicipalityId') )
       );
       return total + (ShippingByBusiness?.totalPrice || 0.0);
     } else {
