@@ -495,7 +495,11 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     let total = this.getTotalAmout() as Number;
     let ShippingBusinessId = this.form.get('ShippingBusinessId').value;
     if (ShippingBusinessId) {
-      let ShippingByBusiness = this.shippingData?.find((i) => i.BusinessId == ShippingBusinessId.BusinessId);
+      let ShippingByBusiness = this.shippingData?.find((i) => (
+        i.BusinessId === ShippingBusinessId.BusinessId &&
+        i.shippingItems[0].Province.id === this.form.get('ProvinceId') &&
+        i.shippingItems[0].Municipality.id === this.form.get('MunicipalityId') )
+      );
       return total + (ShippingByBusiness?.totalPrice || 0.0);
     } else {
       return total;
