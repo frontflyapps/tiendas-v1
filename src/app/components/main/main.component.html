@@ -135,7 +135,7 @@
   <!-- Todos excepto vista movil -->
   <div [class.py-2]="!loggedInUser" class="home-header" fxHide.lt-md>
     <div class="container-header" fxLayout="row wrap" fxLayoutAlign="space-between center">
-      <img alt="logo" class="Logo-img" fxHide.lt-md fxShow routerLink="/" src="assets/images/logoWhite.png" />
+      <img alt="logo" class="Logo-img" fxHide.lt-md fxShow routerLink="/" src="assets/images/pymesbulevar/logo-r-white.png" />
       <button (click)="start.toggle()" fxHide fxShow.lt-md mat-icon-button>
         <mat-icon>menu</mat-icon>
       </button>
@@ -288,6 +288,12 @@
           <button *ngIf="this.loggedInUser" mat-menu-item>
             <strong>{{ this.loggedInUser.name }} {{ this.loggedInUser.lastName || '' }}</strong>
           </button>
+
+          <button [routerLink]="['/my-orders']" mat-menu-item>
+            <mat-icon>receipt</mat-icon>
+            <span class="mat-body-1">{{ 'Mis órdenes' | translate }}</span>
+          </button>
+
 
           <button (click)="onShowProfile()" mat-menu-item>
             <mat-icon>build</mat-icon>
