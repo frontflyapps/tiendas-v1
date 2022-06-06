@@ -144,7 +144,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   finalPrice = 1080;
   shippingData: any[] = [];
   canBeDelivery = true;
-  delivery=false;
+  delivery = false;
   marketCard: string;
   showShipping = false;
   rate: any;
@@ -316,7 +316,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.validateShippingRequired();
   }
 
-  onChangeShippingRequired(data){
+  onChangeShippingRequired(data) {
     this.showShipping = data.checked;
     if (data.checked) {
       this.form.get('ShippingBusinessId').setValidators(Validators.required);
@@ -340,7 +340,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   //   };
   // }
 
-  onShippingSelected(data){
+  onShippingSelected(data) {
     this.shippingSelected = data.value;
     this.form.get('ShippingBusinessId').setValue(data.value);
     this.form.controls['ProvinceId'].setValue(data.value.shippingItems[0].Shipping.ProvinceId);
@@ -405,7 +405,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         this.buyProducts = data.CartItems || [];
         /** Check if is required shipping by business **/
         this.shippingIsRequired = data.Cart.Business.shippingRequired;
-        if(this.shippingIsRequired){
+        if (this.shippingIsRequired) {
           this.form.controls['shippingRequired'].setValidators(Validators.required);
           this.form.controls['ShippingBusinessId'].setValidators(Validators.required);
           this.form.controls['shippingRequired'].updateValueAndValidity();
@@ -413,9 +413,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         /**
          * Check if the Pick-Up-Place label has to be displayed
          **/
-        if(data.CartItems.filter(item => item.Product.type ==='physical').length > 0){
+        if (data.CartItems.filter((item) => item.Product.type === 'physical').length > 0) {
           this.hasPickUpPlace = true;
-        }else {
+        } else {
           this.hasPickUpPlace = false;
         }
 
@@ -449,8 +449,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       });
   }
 
-  getShippingSelectedPrice(){
-      return this.shippingSelected.totalPrice;
+  getShippingSelectedPrice() {
+    return this.shippingSelected.totalPrice;
   }
 
   public getTotalWithShippingIncludedCurrency(): any {
@@ -467,7 +467,11 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     let total = this.getTotalAmout() as Number;
     let ShippingBusinessId = this.form.get('ShippingBusinessId').value;
     if (ShippingBusinessId) {
-      let ShippingByBusiness = this.shippingData?.find((i) => i.BusinessId == ShippingBusinessId.BusinessId);
+      let ShippingByBusiness = this.shippingData?.find((i) => (
+        i.BusinessId === ShippingBusinessId.BusinessId &&
+        i.shippingItems[0].Shipping?.ProvinceId === this.form.get('ProvinceId').value &&
+        i.shippingItems[0].Shipping?.MunicipalityId === this.form.get('MunicipalityId').value )
+      );
       return total + (ShippingByBusiness?.totalPrice || 0.0);
     } else {
       return total;
@@ -571,8 +575,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   onRecalculateShipping() {
-    if(this.shippingData.length === 0){
-      let dataCartId = {cartId: this.cartId}
+    if (this.shippingData.length === 0) {
+      let dataCartId = { cartId: this.cartId };
       this.inLoading = true;
       this.cartService.getShippingCart(dataCartId).subscribe((item) => {
         console.log('getShippingCart', item);
@@ -652,7 +656,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     /**
      * Getting shippings
      */
-    let dataCartId = {cartId: this.cartId}
+    let dataCartId = { cartId: this.cartId };
     this.inLoading = true;
     this.cartService.getShippingCart(dataCartId).subscribe((item) => {
       this.shippingData = item.shippings;
@@ -667,10 +671,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
      */
     this.configurationService.getCustomFields(dataCartId).subscribe((data) => {
       this.customFields = data.data;
-      if(this.customFields?.length > 0){
-        for(var val of this.customFields){
+      if (this.customFields?.length > 0) {
+        for (var val of this.customFields) {
           this.fields = val.data;
-          this.fields.forEach((item)=>{
+          this.fields.forEach((item) => {
             this.form.addControl(item.name, new FormControl('', item.required ? Validators.required : []));
           });
         }
@@ -741,7 +745,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   onPayOrder() {
     this.scrollTopDocument();
     this.loadingPayment = true;
-    if(this.form.get('ShippingBusinessId').value){
+    if (this.form.get('ShippingBusinessId').value) {
       this.form.get('ShippingBusinessId').setValue(this.form.get('ShippingBusinessId').value.BusinessId);
     }
     const data = { ...this.form.value };

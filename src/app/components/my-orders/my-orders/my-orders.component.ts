@@ -129,6 +129,8 @@ export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
     },
   };
 
+  canCancel: boolean;
+
   loadingSearch = true;
   loadingSelectedItem = false;
 
@@ -277,6 +279,7 @@ export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
     this.ordersService.getPayment(item).subscribe(
       (data) => {
         this.selectedOrder = data.data;
+        this.canCancel = this.selectedOrder.PaymentItems.some((ele: any) => ele.type === 'physical');
         this.showOrderDetails = true;
         this.loadingSelectedItem = false;
         if (this.isHandset) {
@@ -376,7 +379,7 @@ export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onDownloadDigitalProduct(url) {
-    const urlDownload = url + '?Authorization=' + this.loggedInUserService.getTokenCookie();
+    const urlDownload = environment.apiUrl + url + '?Authorization=' + this.loggedInUserService.getTokenCookie();
     const link = document.createElement('a');
     link.href = urlDownload;
     link.download = 'data';

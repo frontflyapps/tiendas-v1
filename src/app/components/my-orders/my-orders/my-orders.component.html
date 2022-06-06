@@ -234,7 +234,7 @@
                         || this.selectedOrder.status == 'delivered'
                         || this.selectedOrder.status == 'payed'">
                         <a (click)="onDownloadDigitalProduct(paymentItem.Product.Digital.referenceUrl)"
-                           *ngIf="paymentItem.Product.type == 'digital' && paymentItem.Product.Digital.referenceUrl"
+                           *ngIf="paymentItem.type == 'digital' && paymentItem.Product.Digital.referenceUrl"
                            fxLayout="row"
                            fxLayoutAlign="start center"
                            mat-button
@@ -665,7 +665,7 @@
 
                   <button
                     (click)="onCancelarOrder(this.selectedOrder)"
-                    *ngIf="this.selectedOrder.status == 'confirmed' || this.selectedOrder.status == 'on-delivery'"
+                    *ngIf="(this.selectedOrder.status == 'confirmed' || this.selectedOrder.status == 'on-delivery') && this.canCancel"
                     class="mx-2"
                     color="warn"
                     fxFlex=" 30"

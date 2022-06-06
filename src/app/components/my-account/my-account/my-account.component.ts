@@ -151,7 +151,7 @@ export class MyAccountComponent implements OnInit {
   }
 
   checkQueryParams() {
-    if (this.queryParams.modal == 'validate' && this.queryParams.pin && this.queryParams.email) {
+    if (this.queryParams.validate && this.queryParams.pin && this.queryParams.email) {
       this.pinForm.controls['pin'].setValue(this.queryParams.pin);
       this.registrationForm.controls['email'].setValue(this.queryParams.email);
       if (this.pinForm.valid && this.registrationForm.controls['email'].valid) {
