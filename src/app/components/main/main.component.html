@@ -19,7 +19,6 @@
         <span (click)='start.toggle()' class='sidebar-close-btn'>
           <mat-icon>close</mat-icon>
         </span>
-
       </mat-list-item>
     </mat-list>
 
@@ -103,9 +102,7 @@
       <a (click)='onLogout()' *ngIf='loggedInUser' class='link-nav-a' mat-list-item>
         {{ 'Salir' | translate }}
       </a>
-
     </mat-nav-list>
-
   </mat-sidenav>
 
   <!-- Notifications -->
@@ -128,13 +125,11 @@
         <span (click)='notificationBar.toggle()' class='sidebar-close-btn'>
           <mat-icon>close</mat-icon>
         </span>
-
       </mat-list-item>
     </mat-list>
 
     <mat-divider></mat-divider>
-
-    <app-panel-notifications (closePanel)='notificationBar.toggle()'></app-panel-notifications>
+    <app-panel-notifications (closePanel)="notificationBar.toggle()"></app-panel-notifications>
   </mat-sidenav>
 
   <!-- Todos excepto vista movil -->
@@ -150,31 +145,52 @@
         <div class='search-form' fxLayout='row' fxLayoutAlign='start center' fxLayoutGap='1rem'>
           <!-- ======== -->
           <!-- Location -->
-          <div fxLayout='row' fxLayoutAlign='start center' fxLayoutGap='4px' id='nav-location'>
-            <div class='nl-logo'>
+          <div
+            fxLayout="row"
+            fxLayoutAlign="start center"
+            fxLayoutGap="4px"
+            id="nav-location"
+            class="info-location"
+            fxHide.lt-md
+            fxShow
+            (click)="tour?.getCurrentStep()?.isOpen() ? $event.stopPropagation() : openSetLocation()"
+          >
+            <div class="nl-logo">
               <mat-icon>room</mat-icon>
             </div>
-
-            <div (click)='openSetLocation()' *ngIf='province' class='nl-titles' fxLayout='column'>
-              <div class='nl-province'>{{province?.name}}</div>
-              <div class='nl-municipality'>{{municipality?.name}}</div>
+            <div
+              *ngIf="business || province"
+              class="nl-titles"
+              fxLayout="column"
+            >
+              <ng-container *ngIf="business">
+                <div class="nl-province">{{ business?.name }}</div>
+                <div class="nl-municipality">{{ province?.name }}</div>
+              </ng-container>
+              <ng-container *ngIf="!business">
+                <div class="nl-province">{{ province?.name }}</div>
+                <div class="nl-municipality">{{ municipality?.name }}</div>
+              </ng-container>
             </div>
 
-            <div (click)='openSetLocation()' *ngIf='!province' class='nl-titles' fxLayout='column'>
-              <div class='nl-province'>Enviar a...</div>
-              <div class='nl-municipality'>Escoger lugar</div>
+            <div (click)="openSetLocation()" *ngIf="!business && !province" class="nl-titles" fxLayout="column">
+              <!-- <span></span>
+              <span></span>
+              <span></span>
+              <span></span> -->
+              <div class="nl-province">{{ 'Comprar en...' | translate }}</div>
+              <div class="nl-municipality">{{ 'Escoger tienda' | translate }}</div>
             </div>
           </div>
 
           <!-- ======== -->
           <!-- SEARCHING -->
           <div class='form-wrap' fxFlex='grow'>
-            <input [formControl]='searchForm' placeholder="{{ 'Buscar en la tienda...' | translate }}" type='text' />
+            <input (keyup.enter)='onSearch()' [formControl]='searchForm' placeholder="{{ 'Buscar en la tienda...' | translate }}" type='text' />
             <button (click)='onSearch()' class='btn-search'>
               <mat-icon>search</mat-icon>
             </button>
           </div>
-
         </div>
       </div>
 
@@ -266,10 +282,14 @@
                class='profileImage' />
         </a>
 
-        <mat-menu #userMenu='matMenu' [overlapTrigger]='false' class='app-dropdown' xPosition='before'>
+        <mat-menu #userMenu="matMenu" [overlapTrigger]="false" class="app-dropdown" xPosition="before">
+          <button *ngIf="this.loggedInUser" mat-menu-item>
+            <strong>{{ this.loggedInUser.name }} {{ this.loggedInUser.lastName || '' }}</strong>
+          </button>
 
-          <button *ngIf='this.loggedInUser' mat-menu-item>
-            <strong>{{ this.loggedInUser?.name }} {{ this.loggedInUser?.lastName || '' }}</strong>
+          <button [routerLink]="['/my-orders']" mat-menu-item>
+            <mat-icon>receipt</mat-icon>
+            <span class="mat-body-1">{{ 'Mis órdenes' | translate }}</span>
           </button>
 
           <button (click)='onShowProfile()' mat-menu-item>
@@ -349,18 +369,19 @@
               </mat-icon>
             </button>
           </a>
-
         </div>
       </div>
 
-      <div fxLayout='row' fxLayoutAlign='center start' fxLayoutGap='gappx'>
-        <div class='mobile-search' fxLayout='row' fxLayoutAlign='start center'>
-          <input (keyup.enter)='onSearch()'
-                 [formControl]='searchForm'
-                 fxFlex
-                 placeholder="{{ 'Buscar en MiBulevar...' | translate }}"
-                 type='search' />
-          <button (click)='onSearch()'>
+      <div fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="gappx">
+        <div class="mobile-search" fxLayout="row" fxLayoutAlign="start center">
+          <input
+            (keyup.enter)="onSearch()"
+            [formControl]="searchForm"
+            fxFlex
+            placeholder="{{ 'Buscar en la tienda...' | translate }}"
+            type="search"
+          />
+          <button (click)="onSearch()">
             <mat-icon>search</mat-icon>
           </button>
         </div>
@@ -383,14 +404,32 @@
           {{ 'Todos los productos' | translate }}</a>
 
         <!--        routerLinkActive="router-link-active"-->
-        <a *ngFor='let category of categories'
-           [queryParams]='{ CategoryId: category.id }'
-           [routerLink]="['/products/search']"
-           class='itemCategory'
-           mat-button>{{ utilsService.parserLanguage(category?.name, _language) }}</a>
-
+        <a
+          *ngFor="let category of categories"
+          [queryParams]="{ CategoryId: category.id }"
+          [routerLink]="['/products/search']"
+          class="itemCategory"
+          mat-button
+          >{{ category.name | parseLang: utilsService.getLang() }}</a
+        >
       </div>
     </div>
+  </div>
+  <div
+    (click)="openSetLocation()"
+    class="mobile-location"
+    fxLayout="row"
+    fxLayoutAlign="start center"
+    fxLayoutGap="20"
+    fxHide
+    fxShow.lt-md
+  >
+    <div class="nl-logo" fxLayoutAlign="center center">
+      <mat-icon>room</mat-icon>
+    </div>
+    <div *ngIf="!business && !province">{{ 'Comprar en...' | translate }}</div>
+    <div *ngIf="province && !business">{{ province?.name }}, {{ municipality?.name }}</div>
+    <div *ngIf="business">{{ business?.name }}, {{ province?.name }}</div>
   </div>
 
   <div class='menu-container1'>

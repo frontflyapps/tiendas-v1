@@ -1,4 +1,4 @@
-import { Component, Inject, HostListener, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
+import { Component, HostListener, Inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-in-user.service';
@@ -73,14 +73,13 @@ export class MyContactsComponent implements OnInit, OnDestroy {
   }
 
   setObsContact() {
-    this.contactsService.allContacts$
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((response) => {
-          this.contactsService.allContacts = response.data;
-          this.isLoading = false;
-        },
-        () => this.isLoading = false,
-      );
+    this.contactsService.allContacts$.pipe(takeUntil(this._unsubscribeAll)).subscribe(
+      (response) => {
+        this.contactsService.allContacts = response.data;
+        this.isLoading = false;
+      },
+      () => (this.isLoading = false),
+    );
   }
 
   getContacts() {

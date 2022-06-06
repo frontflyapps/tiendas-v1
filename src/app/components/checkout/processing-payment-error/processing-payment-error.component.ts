@@ -3,7 +3,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { ShowToastrService } from './../../../core/services/show-toastr/show-toastr.service';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { CartService } from '../../shared/services/cart.service';
 
 @Component({
   selector: 'app-processing-payment-error',

@@ -30,7 +30,6 @@ export class DialogTranfermovilQrComponent implements OnInit, OnDestroy {
     private socketIoService: SocketIoService,
     public domSanitizer: DomSanitizer,
     private dialog: MatDialog,
-    private router: Router,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) {
     this._unsubscribeAll = new Subject<any>();

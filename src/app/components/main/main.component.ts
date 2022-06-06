@@ -36,6 +36,8 @@ import { MyContactsComponent } from './my-contacts/my-contacts.component';
 import { MENU_DATA } from '../../core/classes/global.const';
 import { LocalStorageService } from '../../core/services/localStorage/localStorage.service';
 import { GlobalStateOfCookieService } from '../../core/services/request-cookie-secure/global-state-of-cookie.service';
+import Shepherd from 'shepherd.js';
+import { compile } from 'sass';
 
 @Component({
   selector: 'app-main',
@@ -43,9 +45,11 @@ import { GlobalStateOfCookieService } from '../../core/services/request-cookie-s
   styleUrls: ['./main.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class MainComponent implements OnInit, OnDestroy {
+export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
   public sidenavMenuItems: Array<any>;
   _unsubscribeAll: Subject<any>;
+
+  isOwner = false;
 
   public currencies: any[];
   public currency: any;
@@ -53,6 +57,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
   public province: any = null;
   public municipality: any = null;
+  public business: any = null;
 
   public flags = [
     { name: 'Español', image: 'assets/images/flags/es.svg', lang: 'es' },
@@ -80,7 +85,15 @@ export class MainComponent implements OnInit, OnDestroy {
   categories: any[] = [];
   _language = 'es';
 
-  public urlToCreateBusiness = '#';
+  tour = new Shepherd.Tour({
+    useModalOverlay: false,
+    defaultStepOptions: {
+      classes: 'shadow-md bg-purple-dark',
+      scrollTo: true,
+    },
+  });
+
+  innerWidth: any;
 
   constructor(
     public router: Router,

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { ForbiddenAccessComponent } from './forbidden-access/forbidden-access.component';
 import { OutdatedVersionComponent } from './outdated-version/outdated-version.component';
 import { LostConexionComponent } from './lost-conexion/lost-conexion.component';

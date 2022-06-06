@@ -1,6 +1,6 @@
 import { IPagination } from './../../../core/classes/pagination.class';
 import { UtilsService } from './../../../core/services/utils/utils.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { environment } from './../../../../environments/environment';
 import { Subject } from 'rxjs';

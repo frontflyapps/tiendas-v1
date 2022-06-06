@@ -355,7 +355,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       // this.canBeDelivery = false;
     }
     this.form.updateValueAndValidity();
-    console.log(this.form)
   }
 
   // forbiddenlocationValidator(provinceId: any): ValidatorFn {
@@ -570,7 +569,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       currency: [null, [Validators.required]],
       shippingRequired: [null, []],
     });
-    this.onlyCubanPeople = this.form.get('isForCuban').value;
     this.onlyCubanPeople = this.form.get('isForCuban').value;
     if (this.onlyCubanPeople) {
       this.form

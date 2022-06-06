@@ -1,7 +1,6 @@
 @import '../../../assets/scss/theme/variables';
 
 #nav-location {
-  border: 2px solid white;
   padding: 2px 4px;
   cursor: pointer;
   min-width: 146px;
@@ -11,7 +10,7 @@
   overflow: hidden;
 
   &:hover {
-    border: 2px solid #d1acac;
+    border: 2px solid white;
   }
 
   .nl-logo {
@@ -22,16 +21,17 @@
     }
   }
 
-  .nl-titles {
-    .nl-province {
-      font-size: 12px;
-      font-weight: 600;
-    }
+}
 
-    .nl-municipality {
-      font-size: 11px;
-      line-height: 1.1;
-    }
+.nl-titles {
+  .nl-province {
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .nl-municipality {
+    font-size: 11px;
+    line-height: 1.1;
   }
 }
 
@@ -47,8 +47,10 @@
 }
 
 .logo-img-main {
-  height: 45px;
-  width: 145px;
+  max-height: 35px;
+  width: auto;
+  height: auto;
+  max-width: 170px;
 }
 
 app-main,
@@ -105,6 +107,24 @@ app-main,
 
   .sidebar-nav-items {
     padding: 14px 16px;
+
+    .link-nav-a {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      box-sizing: border-box;
+      padding: 0 16px;
+      position: relative;
+      height: 48px;
+      width: 100%;
+    }
+  }
+
+  .mobile-location {
+    padding: 0 16px;
+    height: 42px;
+    color: white;
+    background-color: $theme-main-400 !important;
   }
 
   #topBarSidebar {
@@ -187,10 +207,10 @@ app-main,
         margin: 0;
         cursor: pointer;
         height: 100%;
-        min-width: 50px;
+        min-width: 45px;
         right: -15px;
         top: 0;
-        padding: 0 16px;
+        padding: 0px 0px;
         color: $theme-main-dark;
         -webkit-transition: all 250ms ease-in-out;
         -moz-transition: all 250ms ease-in-out;
@@ -206,6 +226,12 @@ app-main,
         -webkit-box-shadow: none;
         box-shadow: none;
         -webkit-appearance: none;
+        .mat-icon {
+          line-height: inherit !important;
+          font-size: 27px;
+          width: 27px;
+          height: 27px;
+        }
       }
     }
 
@@ -270,6 +296,12 @@ app-main,
       &:focus {
         outline: none;
       }
+      .mat-icon {
+        line-height: inherit !important;
+        font-size: 27px;
+        width: 27px;
+        height: 27px;
+      }
     }
   }
 
@@ -302,4 +334,21 @@ app-main,
   .showCategories::-webkit-scrollbar {
     display: none;
   }
+}
+
+.forgot-button {
+  background: transparent !important;
+  color: $theme-main;
+  text-decoration: underline;
+}
+
+.shepherd-button {
+  background: $theme-main;
+  &:hover {
+    background: $theme-main-400 !important;
+  }
+}
+
+.shepherd-text {
+  padding: 1.5rem;
 }

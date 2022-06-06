@@ -4,7 +4,7 @@ import { LoggedInUserService } from './../../../core/services/loggedInUser/logge
 import { environment } from './../../../../environments/environment';
 import { ShowToastrService } from './../../../core/services/show-toastr/show-toastr.service';
 import { IUser } from '../../../core/classes/user.class';
-import { Component, Inject, HostListener, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
+import { Component, HostListener, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';

@@ -15,9 +15,11 @@ import { BecomeASellerComponent } from './become-a-seller/become-a-seller.compon
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { GuachosImagePickerModule } from 'guachos-image-picker';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { GuachosImagePickerModule } from 'guachos-image-picker';
+import { BankService } from '../../core/services/bank/bank.service';
+import { MatDivider, MatDividerModule } from '@angular/material/divider';
 
 // import { GoogleMapsModule } from '@angular/google-maps';
 @NgModule({
@@ -37,11 +39,13 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatInputModule,
     MatSelectModule,
     MatExpansionModule,
-    GuachosImagePickerModule,
     MatTooltipModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatDividerModule,
+    GuachosImagePickerModule,
   ],
+  providers:[BankService]
 })
 export class BecomeASellerModule {
 }

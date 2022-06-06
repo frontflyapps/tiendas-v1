@@ -1,4 +1,4 @@
-import { Component, Inject, HostListener, ViewEncapsulation, OnInit } from '@angular/core';
+import { Component, HostListener, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
