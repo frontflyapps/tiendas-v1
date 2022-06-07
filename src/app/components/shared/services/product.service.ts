@@ -57,6 +57,7 @@ export class ProductService {
 
   // ////////////////////////////////////////////////////////////////
   public productsData$: Observable<IProductData>;
+  updatedProducts$ = new Subject<any>();
   private _url = 'assets/data/';
 
   constructor(
@@ -291,6 +292,7 @@ export class ProductService {
           const _response: any = JSON.parse(JSON.stringify(response));
           _response.timespan = new Date().getTime();
           this.localStorageService.setOnStorage(FRONT_PRODUCT_DATA, _response);
+          this.updatedProducts$.next(true);
           return response;
         }),
       );
