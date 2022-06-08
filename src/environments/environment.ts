@@ -6,16 +6,20 @@ const packageJson = require('../../package.json');
 export const environment = {
   production: false,
 
-  // apiUrl: 'http://apitienda.tiendalocal.com:8998/v1/',
-  // imageUrl: 'http://apitienda.tiendalocal.com:8998/v1/',
-  apiUrl: 'http://apitienda.tiendalocal.com:8080/v1/',
-  imageUrl: 'http://apitienda.tiendalocal.com:8080/v1/',
+  // apiUrl: 'http://192.168.1.20:7777/v1/',
+  // imageUrl: 'http://192.168.1.20:7777/v1/',
+
+  // apiUrl: 'http://localhost:8998/v1/',
+  // imageUrl: 'http://localhost:8998/v1/',
+
+  apiUrl: 'http://apitienda.tiendalocal.com:5000/v1/',
+  imageUrl: 'http://apitienda.tiendalocal.com:5000/v1/',
+
+  // apiUrl: 'https://api.pymesbulevar.com/v1/',
+  // imageUrl: 'https://api.pymesbulevar.com/v1/',
 
   // apiUrl: 'https://apitienda.marinasmarlin.com/v1/',
   // imageUrl: 'https://apitienda.marinasmarlin.com/v1/',
-
-  // apiUrl: 'https://api.mibulevar.com/v1/',
-  // imageUrl: 'https://api.mibulevar.com/v1/',
 
   defaultLanguage: 'es',
   currencyInternational: 'USD',
@@ -29,28 +33,27 @@ export const environment = {
   url: 'http://tienda.tiendalocal.com:4308',
   urlAboutUs: 'http://tienda.tiendalocal.com:4308',
 
-  address: 'MiBulevar | Transfermóvil',
+  address: 'Pymes Bulevar',
   localDatabaseUsers: true,
 
   contacts: {
-    phone: '(+53) 7000 0000',
-    email: 'info@transfermovil.com',
-    address: 'Miramar Trade Center, Edificio Beijing, Miramar, Playa',
+    phone: '',
+    email: '',
+    address: '',
   },
 
-  adminService: 'http://admintienda.marinasmarlin.com/',
-  mainDomain: 'tiendalocal.com',
+  adminService: 'http://admintienda.tiendalocal.com/',
+  mainDomain: '.tiendalocal.com',
 
-  tokenBusiness:
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7IkJ1c2luZXNzSWQiOjEsImlkIjoxLCJkYXRlIjoiMjAyMS0wOS0xM1QwMTo0NToxOC4wMDBaIiwibmFtZSI6IlRpZW5kYSIsImVtYWlsIjoidGllbmRhQGxvY2FsaG9zdC5jb20ifSwiaWF0IjoxNjMxNDk3NTkxfQ.FF5-276rI9SJmtebVo0spV8Y2wdOZPok7LlUxtTDwh0',
+  tokenBusiness: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7IkJ1c2luZXNzSWQiOjEsImlkIjoxLCJkYXRlIjoiMjAyMi0wMS0zMVQwNDo1NDowMC4wMDBaIiwibmFtZSI6IlRpZW5kYSIsImVtYWlsIjoidGllbmRhQGxvY2FsaG9zdC5jb20ifSwiaWF0IjoxNjQzNjQ2Njg3fQ.-pIQscQih10E1-UbtTlyiV3mj_uaxilPMpvLLN-GzSo',
 
   meta: {
     mainPage: {
-      title: 'MiBulevar | Transfermóvil',
+      title: 'Pymes Bulevar',
       description: 'Tienda online desarrollada con el framework Angular permite la modelación de negocios B2C and C2C',
       keywords: 'HTML, CSS, JavaScript, Angular, Tienda Online B2B, comercio online',
-      shareImg: 'http://tienda.tiendalocal.com:4308/assets/images/share-img.png',
-      url: 'http://tienda.tiendalocal.com:4308',
+      shareImg: 'https://www.pymesbulevar.com/assets/images/share-img.png',
+      url: 'https://www.pymesbulevar.com/',
     },
   },
 
@@ -73,7 +76,7 @@ export const environment = {
  * This import should be commented out in production mode because it will have a negative impact
  * on performance if an error is thrown.
  */
-// import 'zone.js/dist/zone-error';  // Included with Angular CLI.
+// import 'zone.js/plugins/zone-error';  // Included with Angular CLI.
 
 /**
  * Esto es la tienda Online B2b De Guajiritos

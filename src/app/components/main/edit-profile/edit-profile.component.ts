@@ -79,7 +79,10 @@ export class EditProfileComponent implements OnInit {
         this.loggedInUser && this.loggedInUser.lastName ? this.loggedInUser.lastName : null,
         [Validators.required],
       ],
-      address: [this.loggedInUser && this.loggedInUser.address ? this.loggedInUser.address : null, []],
+      // address: [this.loggedInUser && this.loggedInUser.address ? this.loggedInUser.address : null, []],
+      street: [this.loggedInUser && this.loggedInUser.address ? this.loggedInUser.address.street : null, []],
+      number: [this.loggedInUser && this.loggedInUser.address ? this.loggedInUser.address.number : null, []],
+      between: [this.loggedInUser && this.loggedInUser.address ? this.loggedInUser.address.between : null, []],
       phone: [this.loggedInUser && this.loggedInUser.phone ? this.loggedInUser.phone : null, []],
       email: [
         this.loggedInUser && this.loggedInUser.email ? this.loggedInUser.email : null,
@@ -120,7 +123,17 @@ export class EditProfileComponent implements OnInit {
   }
 
   onUpdateProfile(): void {
-    const data = this.form.value;
+    let temp = this.form.value;
+    let address = { ...this.form.value };
+    delete temp.street;
+    delete temp.number;
+    delete temp.between;
+    const data = temp;
+    data.address = {
+      street: address.street,
+      number: address.number,
+      between: address.between,
+    };
     if (this.imageAvatarChange) {
       data.avatar = this.imageAvatar;
     }
@@ -130,6 +143,7 @@ export class EditProfileComponent implements OnInit {
       delete data.password;
     }
     // data.id = this.loggedInUser.id;
+    console.log(data, '*****');
     this.spinner.show();
     this.authService.editProfile(data).subscribe(
       (newProfile) => {

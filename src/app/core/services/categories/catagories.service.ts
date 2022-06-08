@@ -1,6 +1,6 @@
 import { IPagination } from '../../classes/pagination.class';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 
@@ -18,7 +18,8 @@ export class CategoriesService {
 
   public allCategories = [];
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) {
+  }
 
   createCategory(body: any): Observable<any> {
     return this.httpClient.post<any>(this.url, body);
@@ -115,7 +116,7 @@ export class CategoriesService {
     return this.httpClient.get<any>(this.urlBrand, { params: httpParams });
   }
 
-  getBrandsByCategories(dataBody: []) {
+  getBrandsByCategories(dataBody: any[]) {
     return this.httpClient.post<any>(this.urlBrandsByCategories, { CategoryIds: dataBody });
   }
 

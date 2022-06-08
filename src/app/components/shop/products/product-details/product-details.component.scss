@@ -229,7 +229,21 @@
         }
       }
 
+      .location-span {
+        background-color: $theme-main-accent;
+        color: white;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2px 8px;
 
+        .mat-icon {
+          width: 20px;
+          height: 20px;
+          font-size: 20px;
+        }
+      }
     }
 
     .quantity {
@@ -609,8 +623,13 @@
 
   &:hover {
     text-decoration: underline;
-    color: #2196f3;
+    //color: #2196f3;
   }
+}
+
+.no-decoration {
+  text-decoration: none !important;
+  cursor: default;
 }
 
 .popup {

@@ -1,54 +1,54 @@
-<footer class="footer-two py-4" style="position: relative">
-  <div class="container">
-    <div class="footer-one" fxLayout="row wrap" fxLayoutAlign="start start">
-      <div class="footer-widget about-widget" fxFlex="100" fxFlex.gt-xs="30">
-        <a class="logo" href="index.html"><img alt="Awesome Image" src="../../../../assets/images/logo-footer.png"
-                                               style="height: 200px" /></a>
+<footer class='footer-two py-4' style='position: relative'>
+  <div class='container'>
+    <div class='footer-one' fxLayout='row wrap' fxLayoutAlign='start start'>
+      <div class='footer-widget about-widget' fxFlex='100' fxFlex.gt-xs='30'>
+        <a class='logo' href='index.html'><img alt='Awesome Image' src='../../../../assets/images/logo-footer.png'
+                                               style='height: 200px' /></a>
       </div>
 
-      <div class="footer-widget links-widget links-widget-pac footerItems" fxFlex="100" fxFlex.gt-xs="25">
-        <div class="row">
+      <div class='footer-widget links-widget links-widget-pac footerItems' fxFlex='100' fxFlex.gt-xs='25'>
+        <div class='row'>
           <ul>
             <li>
-              <a [routerLink]="['']" class="mat-button" mat-button routerLinkActive=" router-link-active">
-                <span class="page-title">{{ 'Inicio' | translate }}</span>
+              <a [routerLink]="['']" class='mat-button' mat-button routerLinkActive=' router-link-active'>
+                <span class='page-title'>{{ 'Inicio' | translate }}</span>
               </a>
             </li>
             <li>
               <a
                 [routerLink]="['/products/search']"
-                class="mat-button page-title"
+                class='mat-button page-title'
                 mat-button
-                routerLinkActive=" router-link-active"
+                routerLinkActive=' router-link-active'
               >
-                <span class="page-title">{{ 'Productos' | translate }}</span>
+                <span class='page-title'>{{ 'Productos' | translate }}</span>
               </a>
             </li>
             <li>
               <a
                 [routerLink]="['/cart']"
-                class="mat-button page-title"
+                class='mat-button page-title'
                 mat-button
-                routerLinkActive=" router-link-active"
+                routerLinkActive=' router-link-active'
               >
-                <span class="page-title">{{ 'Carrito' | translate }}</span>
+                <span class='page-title'>{{ 'Carrito' | translate }}</span>
               </a>
             </li>
             <li>
-              <a [routerLink]="['/about']" class="mat-button" mat-button routerLinkActive=" router-link-active">
-                <span class="page-title">{{ 'Quienes somos' | translate }}</span>
+              <a [routerLink]="['/about']" class='mat-button' mat-button routerLinkActive=' router-link-active'>
+                <span class='page-title'>{{ 'Quienes somos' | translate }}</span>
               </a>
             </li>
           </ul>
         </div>
       </div>
 
-      <div class="footer-widget links-widget links-widget-pac footerItems" fxFlex="100" fxFlex.gt-xs="25">
-        <div class="row">
+      <div class='footer-widget links-widget links-widget-pac footerItems' fxFlex='100' fxFlex.gt-xs='25'>
+        <div class='row'>
           <ul>
             <li>
-              <a class="mat-button page-title" href="become-a-seller" mat-button routerLinkActive=" router-link-active">
-                <span class="page-title">{{ 'Conviértete en vendedor' | translate }}</span>
+              <a class='mat-button page-title' href='become-a-seller' mat-button routerLinkActive=' router-link-active'>
+                <span class='page-title'>{{ 'Conviértete en vendedor' | translate }}</span>
               </a>
             </li>
             <!-- <li><a [routerLink]="['/about']" routerLinkActive=" router-link-active" mat-button class="mat-button">
@@ -56,18 +56,18 @@
               </a>
             </li> -->
             <li>
-              <a [routerLink]="['/blog']" class="mat-button" mat-button routerLinkActive="router-link-active">
-                <span class="page-title">{{ 'Our blog' | translate }}</span>
+              <a [routerLink]="['/blog']" class='mat-button' mat-button routerLinkActive='router-link-active'>
+                <span class='page-title'>{{ 'Our blog' | translate }}</span>
               </a>
             </li>
             <li>
-              <a [routerLink]="['/faq']" class="mat-button" mat-button routerLinkActive="router-link-active">
-                <span class="page-title">{{ 'Ayuda' | translate }}</span>
+              <a [routerLink]="['/faq']" class='mat-button' mat-button routerLinkActive='router-link-active'>
+                <span class='page-title'>{{ 'Ayuda' | translate }}</span>
               </a>
             </li>
             <li>
-              <a [routerLink]="['/contact-us']" class="mat-button" mat-button routerLinkActive="router-link-active">
-                <span class="page-title">{{ 'Contact us' | translate }}</span>
+              <a [routerLink]="['/contact-us']" class='mat-button' mat-button routerLinkActive='router-link-active'>
+                <span class='page-title'>{{ 'Contact us' | translate }}</span>
               </a>
             </li>
           </ul>
@@ -97,9 +97,9 @@
     &nbsp; &copy;{{'v'+ version}}</span> -->
 </footer>
 
-<footer class="footer-two section-2 py-4" style="position: relative">
-  <div class="container">
-    <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutAlign.xs="start center">
+<footer class='footer-two section-2 py-4' style='position: relative'>
+  <div class='container'>
+    <div fxLayout='row wrap' fxLayoutAlign='center center' fxLayoutAlign.xs='start center'>
       <!--<a
         class="item-selector mx-3 my-2"
         fxLayoutAlign="start center"
@@ -118,49 +118,49 @@
         </span>
       </mat-menu>-->
       <a
-        #langMenuTrigger="matMenuTrigger"
-        [matMenuTriggerFor]="langMenu"
-        class="item-selector mx-3 my-2"
-        fxLayoutAlign="start center"
+        #langMenuTrigger='matMenuTrigger'
+        [matMenuTriggerFor]='langMenu'
+        class='item-selector mx-3 my-2'
+        fxLayoutAlign='start center'
         mat-button
       >
-        <img [src]="flag.image" width="18" />
+        <img [src]='flag.image' width='18' />
         <mat-icon>arrow_drop_down</mat-icon>
         <span>{{ flag.name }}</span>
       </a>
-      <mat-menu #langMenu="matMenu" [overlapTrigger]="false" class="app-dropdown" xPosition="before">
+      <mat-menu #langMenu='matMenu' [overlapTrigger]='false' class='app-dropdown' xPosition='before'>
         <span>
-          <button (click)="changeLang(flag)" *ngFor="let flag of flags" mat-menu-item>
-            <img [src]="flag.image" width="18" /> {{ flag.name }}
+          <button (click)='changeLang(flag)' *ngFor='let flag of flags' mat-menu-item>
+            <img [src]='flag.image' width='18' /> {{ flag.name }}
           </button>
         </span>
       </mat-menu>
       <a
         [routerLink]="['term-conditions']"
-        class="item-selector mx-3 my-2"
-        fxLayoutAlign="start center"
+        class='item-selector mx-3 my-2'
+        fxLayoutAlign='start center'
         mat-button
-        routerLinkActive=" router-link-active"
+        routerLinkActive=' router-link-active'
       >
         <span>{{ 'Términos y condiciones' | translate }}</span>
       </a>
       <a
         [routerLink]="['privacy-policy']"
-        class="item-selector mx-3 my-2"
-        fxLayoutAlign="start center"
+        class='item-selector mx-3 my-2'
+        fxLayoutAlign='start center'
         mat-button
-        routerLinkActive=" router-link-active"
+        routerLinkActive=' router-link-active'
       >
         <span>{{ 'Políticas de privacidad' | translate }}</span>
       </a>
     </div>
 
-    <div class="py-3" fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutAlign.xs="start start">
+    <div class='py-3' fxLayout='row wrap' fxLayoutAlign='center center' fxLayoutAlign.xs='start start'>
       <!--<span class="mat-body-1 footer-separator">{{ 'address' | translate }}</span> &nbsp;-->
-      <span class="mat-body-1 footer-separator">
+      <span class='mat-body-1 footer-separator'>
         Copyright {{ year }}
         © / {{ 'Todos los derechos reservados' | translate }}.
-        <span class="mat-body-2 ml-2">{{ 'v' | translate }}</span>{{version}}</span>
+        <span class='mat-body-2 ml-2'>{{ 'v' | translate }}</span>{{version}}</span>
     </div>
   </div>
 </footer>

@@ -84,8 +84,6 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
   compareItemsObservable: Observable<any[]> = of([]);
 
   public url: any;
-  tokenReferal = null;
-
   navItems: any[] = [];
   loggedInUser: IUser;
   @ViewChild('start', { static: true })
@@ -348,7 +346,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
           this.socketIoService.disconnect();
         },
         (err) => {
-          const message = this.translate.instant('Unsuccessful logout');
+          const message = this.translate.instant('User sing out unsuccessfully');
           this.showSnackbBar.showError(message, 8000);
           /*this.loggedInUserService.removeCookies();
           this.loggedInUserService.setLoggedInUser(null);

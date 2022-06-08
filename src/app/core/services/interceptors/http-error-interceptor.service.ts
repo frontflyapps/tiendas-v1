@@ -59,7 +59,7 @@ export class HttpErrorInterceptorService implements HttpInterceptor {
     } else if (err.status == 403) {
       if (this.router.url.includes('backend')) {
         localStorage.removeItem('user');
-        this.router.navigate(['my-account']);
+        this.router.navigate(['my-account']).then();
       }
       this.utilsService.errorHandle(err);
     } else if (err.status == 404) {

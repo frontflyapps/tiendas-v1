@@ -175,17 +175,57 @@
             </mat-error>
           </mat-form-field>
 
+          <!-- <mat-form-field appearance="outline">
+            <mat-label>{{'Dirección'|translate}}</mat-label>
+            <input [formControl]="form.controls['address']" matInput placeholder="{{'Dirección'|translate}}"
+                   type='text'>
+            <mat-icon class='greyIcon' matSuffix>my_location</mat-icon>
+            <mat-error *ngIf="form.controls['address'].hasError('required')">
+              {{ 'Dirección' | translate }} <strong>{{ 'is required' | translate }}</strong>
+            </mat-error>
+          </mat-form-field> -->
+          <p class="mat-body-2 my-2" style="text-transform: uppercase" title="{{ 'Dirección' | translate }}">
+            {{ 'Dirección' | translate }}
+          </p>
+          <div fxLayout="row" fxLayoutGap="10px">
+            <mat-form-field fxFlex="80" appearance="outline">
+              <mat-label>{{ 'Calle' | translate }}</mat-label>
+              <input
+                [formControl]="form.controls['street']"
+                matInput
+                placeholder="{{ 'Calle' | translate }}"
+                type="text"
+              />
+              <mat-icon class="greyIcon" matSuffix>my_location</mat-icon>
+              <mat-error *ngIf="form.controls['street'].hasError('required')">
+                {{ 'Calle' | translate }} <strong>{{ 'is required' | translate }}</strong>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field fxFlex="20" appearance="outline">
+              <mat-label>{{ 'Number' | translate }}</mat-label>
+              <input
+                [formControl]="form.controls['number']"
+                matInput
+                placeholder="{{ 'Number' | translate }}"
+                type="text"
+              />
+              <mat-icon class="greyIcon" matSuffix>my_location</mat-icon>
+              <mat-error *ngIf="form.controls['number'].hasError('required')">
+                {{ 'Number' | translate }} <strong>{{ 'is required' | translate }}</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
           <mat-form-field appearance="outline">
-            <mat-label>{{ 'Dirección' | translate }}</mat-label>
+            <mat-label>{{ 'Entre calles' | translate }}</mat-label>
             <input
-              [formControl]="form.controls['address']"
+              [formControl]="form.controls['between']"
               matInput
-              placeholder="{{ 'Dirección' | translate }}"
+              placeholder="{{ 'Entre calles' | translate }}"
               type="text"
             />
             <mat-icon class="greyIcon" matSuffix>my_location</mat-icon>
-            <mat-error *ngIf="form.controls['address'].hasError('required')">
-              {{ 'Dirección' | translate }} <strong>{{ 'is required' | translate }}</strong>
+            <mat-error *ngIf="form.controls['between'].hasError('required')">
+              {{ 'Entre' | translate }} <strong>{{ 'is required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 

@@ -1,48 +1,48 @@
-<ng-container *ngIf="banners.length > 0">
-  <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="gappx">
-    <ng-container *ngIf="banners.length === 1">
-      <div *ngFor="let item of this.banners;let i=index" class="bannerCard p-3 my-2" fxFlex="40"
-           fxFlex.lt-md="100"
-           fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="gappx">
+<ng-container *ngIf='banners.length > 0'>
+  <div fxLayout='row wrap' fxLayoutAlign='center center' fxLayoutGap='gappx'>
+    <ng-container *ngIf='banners.length === 1'>
+      <div *ngFor='let item of this.banners;let i=index' class='bannerCard p-3 my-2' fxFlex='40'
+           fxFlex.lt-md='100'
+           fxLayout='column' fxLayoutAlign='start stretch' fxLayoutGap='gappx'>
 
-        <div fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="gappx">
-          <div class="pr-3" fxFlex="50" fxFlex.lt-md="100" fxLayout="column" fxLayoutAlign="start start"
-               fxLayoutGap="gappx">
-            <h4 class="mat-title uppercase mb-0 module line-clamp" ngClass.lt-sm="mat-body-2">
+        <div fxLayout='row wrap' fxLayoutAlign='start start' fxLayoutGap='gappx'>
+          <div class='pr-3' fxFlex='50' fxFlex.lt-md='100' fxLayout='column' fxLayoutAlign='start start'
+               fxLayoutGap='gappx'>
+            <h4 class='mat-title uppercase mb-0 module line-clamp' ngClass.lt-sm='mat-body-2'>
               {{utilsService.parserLanguage(item.title, language)}}
             </h4>
             <!-- <p fxHide class="mat-body-1 module-text line-clamp-text mt-2">
               {{utilsService.parserLanguage(item.text,language)}}</p> -->
-            <a *ngIf="item.link" [href]="item.link" target="_blank">{{"See More"|translate}}</a>
+            <a *ngIf='item.link' [href]='item.link' target='_blank'>{{"See More"|translate}}</a>
           </div>
-          <div class="image-section" fxFlex="50" fxFlex.lt-md="100" fxLayout="column" fxLayoutAlign="start center"
-               fxLayoutGap="gappx">
-            <img *ngIf="item.image" [src]="urlImage + item.image">
-            <img *ngIf="!item.image" src="../../../../assets/images/noImage.jpg">
+          <div class='image-section' fxFlex='50' fxFlex.lt-md='100' fxLayout='column' fxLayoutAlign='start center'
+               fxLayoutGap='gappx'>
+            <img *ngIf='item.image' [src]='urlImage + item.image'>
+            <img *ngIf='!item.image' src='../../../../assets/images/noImage.jpg'>
           </div>
         </div>
 
       </div>
     </ng-container>
-    <ng-container *ngIf="banners.length > 1">
-      <div *ngFor="let item of this.banners;let i=index" [fxFlex]="90/banners.length" class="bannerCard p-3 my-2 mx-2"
-           fxFlex.lt-md="100"
-           fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="gappx">
+    <ng-container *ngIf='banners.length > 1'>
+      <div *ngFor='let item of this.banners;let i=index' [fxFlex]='90/banners.length' class='bannerCard p-3 my-2 mx-2'
+           fxFlex.lt-md='100'
+           fxLayout='column' fxLayoutAlign='start stretch' fxLayoutGap='gappx'>
 
-        <div fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="gappx">
-          <div class="pr-3" fxFlex="50" fxFlex.lt-md="100" fxLayout="column" fxLayoutAlign="start start"
-               fxLayoutGap="gappx">
-            <h4 class="mat-title uppercase mb-0 module line-clamp" ngClass.lt-sm="mat-body-2">
+        <div fxLayout='row wrap' fxLayoutAlign='start start' fxLayoutGap='gappx'>
+          <div class='pr-3' fxFlex='50' fxFlex.lt-md='100' fxLayout='column' fxLayoutAlign='start start'
+               fxLayoutGap='gappx'>
+            <h4 class='mat-title uppercase mb-0 module line-clamp' ngClass.lt-sm='mat-body-2'>
               {{utilsService.parserLanguage(item.title, language)}}
             </h4>
             <!-- <p fxHide class="mat-body-1 module-text line-clamp-text mt-2">
               {{utilsService.parserLanguage(item.text,language)}}</p> -->
-            <a *ngIf="item.link" [href]="item.link" target="_blank">{{"See More"|translate}}</a>
+            <a *ngIf='item.link' [href]='item.link' target='_blank'>{{"See More"|translate}}</a>
           </div>
-          <div class="image-section" fxFlex="50" fxFlex.lt-md="100" fxLayout="column" fxLayoutAlign="start center"
-               fxLayoutGap="gappx">
-            <img *ngIf="item.image" [src]="urlImage + item.image">
-            <img *ngIf="!item.image" src="../../../../assets/images/noImage.jpg">
+          <div class='image-section' fxFlex='50' fxFlex.lt-md='100' fxLayout='column' fxLayoutAlign='start center'
+               fxLayoutGap='gappx'>
+            <img *ngIf='item.image' [src]='urlImage + item.image'>
+            <img *ngIf='!item.image' src='../../../../assets/images/noImage.jpg'>
           </div>
         </div>
       </div>

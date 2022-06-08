@@ -1,28 +1,26 @@
-<div class="brands-items">
+<div class='brands-items'>
 
-  <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="gappx">
-    <button (click)="getChildCategories(this.lastCategoryId)" *ngIf="!this.isRootLevel" mat-icon-button>
+  <div fxLayout='row' fxLayoutAlign='start start' fxLayoutGap='gappx'>
+    <button (click)='getChildCategories(this.lastCategoryId)' *ngIf='!this.isRootLevel' mat-icon-button>
       <mat-icon>arrow_back</mat-icon>
     </button>
   </div>
 
-  <mat-checkbox (change)="$event ? onChangeSelection(category.id) : null"
-                (click)="$event.stopPropagation()"
-                *ngFor="let category of categories"
-                [checked]="selection.isSelected(category.id)"
-                class="example-radio-button py-1 layoutCheck" color="accent"
-                fxLayout="row"
-                fxLayoutAlign="start center">
-    <p [matTooltip]="(category.name[language])?category.name[language]:category.name['es']" class="mat-body-2 m-0"
-       style="color:#757575;font-size: 15px !important;">
+  <mat-checkbox (change)='$event ? onChangeSelection(category.id) : null' (click)='$event.stopPropagation()'
+                *ngFor='let category of categories' [checked]='selection.isSelected(category.id)'
+                class='example-radio-button py-1 layoutCheck' color='accent'
+                fxLayout='row'
+                fxLayoutAlign='start center'>
+    <p [matTooltip]="(category.name[language])?category.name[language]:category.name['es']" class='mat-body-2 m-0'
+       style='color:#757575;font-size: 15px !important;'>
       {{this.showNameCategory(category)}}</p>
 
-    <button (click)="getChildCategories(category)" class="clearChipBtn"
-            mat-icon-button style="color: #757575;background-color: #bdbdbd;">
+    <button (click)='getChildCategories(category)' class='clearChipBtn'
+            mat-icon-button style='color: #757575;background-color: #bdbdbd;'>
       <mat-icon>keyboard_arrow_right</mat-icon>
     </button>
   </mat-checkbox>
-  <p *ngIf="!categories.length" class="m-0" style="text-align: center;">
+  <p *ngIf='!categories.length' class='m-0' style='text-align: center;'>
     {{'No hay ningún elemento'|translate}}
   </p>
 

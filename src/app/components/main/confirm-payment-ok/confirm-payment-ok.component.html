@@ -1,63 +1,63 @@
-<div class="dialog-content-wrapper">
-  <mat-toolbar *ngIf="action == 'confirmed'" id="successPay" matDialogTitle>
-    <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+<div class='dialog-content-wrapper'>
+  <mat-toolbar *ngIf="action == 'confirmed'" id='successPay' matDialogTitle>
+    <mat-toolbar-row fxLayout='row' fxLayoutAlign='space-between center'>
       <mat-icon>done_all</mat-icon>
-      <span class="mat-title mb-0">{{'Pago Confirmado'|translate}}</span>
-      <button (click)="dialogRef.close()" aria-label="Close dialog" mat-icon-button>
+      <span class='mat-title mb-0'>{{'Pago Confirmado'|translate}}</span>
+      <button (click)='dialogRef.close()' aria-label='Close dialog' mat-icon-button>
         <mat-icon>close</mat-icon>
       </button>
     </mat-toolbar-row>
   </mat-toolbar>
-  <mat-toolbar *ngIf="action == 'cancelled'" id="cancelledPay" matDialogTitle>
-    <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+  <mat-toolbar *ngIf="action == 'cancelled'" id='cancelledPay' matDialogTitle>
+    <mat-toolbar-row fxLayout='row' fxLayoutAlign='space-between center'>
       <mat-icon>cancel</mat-icon>
-      <span class="mat-title mb-0">{{'Pago Cancelado'|translate}}</span>
-      <button (click)="dialogRef.close()" aria-label="Close dialog" mat-icon-button>
+      <span class='mat-title mb-0'>{{'Pago Cancelado'|translate}}</span>
+      <button (click)='dialogRef.close()' aria-label='Close dialog' mat-icon-button>
         <mat-icon>close</mat-icon>
       </button>
     </mat-toolbar-row>
   </mat-toolbar>
 
-  <div class="my-dialog-content" mat-dialog-content>
-    <div class="pyro">
-      <div class="before"></div>
-      <div class="after"></div>
+  <div class='my-dialog-content' mat-dialog-content>
+    <div class='pyro'>
+      <div class='before'></div>
+      <div class='after'></div>
     </div>
 
-    <div *ngIf="this.selectedPayment" class="container-bulling w-100" fxLayout="column" fxLayoutAlign="start stretch"
-         fxLayoutGap="gappx">
+    <div *ngIf='this.selectedPayment' class='container-bulling w-100' fxLayout='column' fxLayoutAlign='start stretch'
+         fxLayoutGap='gappx'>
 
-      <div fxLayout="row wrap " fxLayoutAlign="space-between center" fxLayoutGap="gappx">
-        <div fxFlex="33" fxFlex.lt-sm="50" fxFlex.xs="100" fxLayout="column" fxLayoutAlign="start start"
-             fxLayoutGap="gappx">
-          <span class="mb-0 mt-1 main-primary-700 mat-body-2">{{'Id de pago' | translate}}</span>
-          <span class="mb-0 mt-1 main-primary-700 mat-body-2">{{selectedPayment.order}}</span>
+      <div fxLayout='row wrap ' fxLayoutAlign='space-between center' fxLayoutGap='gappx'>
+        <div fxFlex='33' fxFlex.lt-sm='50' fxFlex.xs='100' fxLayout='column' fxLayoutAlign='start start'
+             fxLayoutGap='gappx'>
+          <span class='mb-0 mt-1 main-primary-700 mat-body-2'>{{'Id de pago' | translate}}</span>
+          <span class='mb-0 mt-1 main-primary-700 mat-body-2'>{{selectedPayment.order}}</span>
         </div>
 
-        <div fxFlex="33" fxFlex.lt-sm="50" fxFlex.xs="100" fxLayout="column" fxLayoutAlign="start start"
-             fxLayoutGap="gappx">
-          <span class="mb-0 mt-1 main-primary-700 mat-body-2">{{'fecha de creación' | translate}}</span>
-          <span class="mb-0 mt-1 main-primary-700 mat-body-2">{{selectedPayment.createdAt|date:'short'}}</span>
+        <div fxFlex='33' fxFlex.lt-sm='50' fxFlex.xs='100' fxLayout='column' fxLayoutAlign='start start'
+             fxLayoutGap='gappx'>
+          <span class='mb-0 mt-1 main-primary-700 mat-body-2'>{{'fecha de creación' | translate}}</span>
+          <span class='mb-0 mt-1 main-primary-700 mat-body-2'>{{selectedPayment.createdAt|date:'short'}}</span>
         </div>
 
-        <div *ngIf="selectedPayment.cancelledAt" fxFlex="33" fxFlex.lt-sm="50" fxFlex.xs="100" fxLayout="column"
-             fxLayoutAlign="start start"
-             fxLayoutGap="gappx">
-          <span class="mb-0 mt-1 main-primary-700 mat-body-2">{{'fecha de cancelación' | translate}}</span>
-          <span class="mb-0 mt-1 main-primary-700 mat-body-2">{{selectedPayment.cancelledAt|date:'short'}}</span>
+        <div *ngIf='selectedPayment.cancelledAt' fxFlex='33' fxFlex.lt-sm='50' fxFlex.xs='100' fxLayout='column'
+             fxLayoutAlign='start start'
+             fxLayoutGap='gappx'>
+          <span class='mb-0 mt-1 main-primary-700 mat-body-2'>{{'fecha de cancelación' | translate}}</span>
+          <span class='mb-0 mt-1 main-primary-700 mat-body-2'>{{selectedPayment.cancelledAt|date:'short'}}</span>
         </div>
 
 
       </div>
 
-      <mat-divider class="my-2"></mat-divider>
+      <mat-divider class='my-2'></mat-divider>
 
 
-      <div class="mt-1" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="gappx">
-        <div fxFlex="33" fxFlex.lt-sm="50" fxFlex.xs="100" fxLayout="column" fxLayoutAlign="start start"
-             fxLayoutGap="gappx"
-             ngClass.gt-xs="py-3" ngClass.lt-sm="py-2 border-bottom">
-          <span class="mat-caption color-grey-800">
+      <div class='mt-1' fxLayout='row wrap' fxLayoutAlign='start center' fxLayoutGap='gappx'>
+        <div fxFlex='33' fxFlex.lt-sm='50' fxFlex.xs='100' fxLayout='column' fxLayoutAlign='start start'
+             fxLayoutGap='gappx'
+             ngClass.gt-xs='py-3' ngClass.lt-sm='py-2 border-bottom'>
+          <span class='mat-caption color-grey-800'>
             {{'Country'|translate}}
           </span>
           <span>
@@ -65,11 +65,11 @@
           </span>
         </div>
 
-        <ng-container *ngIf="selectedPayment.CountryId != 59">
-          <div fxFlex="33" fxFlex.lt-sm="50" fxFlex.xs="100" fxLayout="column" fxLayoutAlign="start start"
-               fxLayoutGap="gappx"
-               ngClass.gt-xs="py-3" ngClass.lt-sm="py-2 border-bottom">
-            <span class="mat-caption color-grey-800">
+        <ng-container *ngIf='selectedPayment.CountryId != 59'>
+          <div fxFlex='33' fxFlex.lt-sm='50' fxFlex.xs='100' fxLayout='column' fxLayoutAlign='start start'
+               fxLayoutGap='gappx'
+               ngClass.gt-xs='py-3' ngClass.lt-sm='py-2 border-bottom'>
+            <span class='mat-caption color-grey-800'>
               {{'City'|translate}}
             </span>
             <span>
@@ -77,10 +77,10 @@
             </span>
           </div>
 
-          <div fxFlex="33" fxFlex.lt-sm="50" fxFlex.xs="100" fxLayout="column" fxLayoutAlign="start start"
-               fxLayoutGap="gappx"
-               ngClass.gt-xs="py-3" ngClass.lt-sm="py-2 border-bottom">
-            <span class="mat-caption color-grey-800">
+          <div fxFlex='33' fxFlex.lt-sm='50' fxFlex.xs='100' fxLayout='column' fxLayoutAlign='start start'
+               fxLayoutGap='gappx'
+               ngClass.gt-xs='py-3' ngClass.lt-sm='py-2 border-bottom'>
+            <span class='mat-caption color-grey-800'>
               {{'Region / Province / State'|translate}}
             </span>
             <span>
@@ -88,11 +88,11 @@
             </span>
           </div>
         </ng-container>
-        <ng-container *ngIf="selectedPayment.CountryId == 59">
-          <div fxFlex="33" fxFlex.lt-sm="50" fxFlex.xs="100" fxLayout="column" fxLayoutAlign="start start"
-               fxLayoutGap="gappx"
-               ngClass.gt-xs="py-3" ngClass.lt-sm="py-2 border-bottom">
-            <span class="mat-caption color-grey-800">
+        <ng-container *ngIf='selectedPayment.CountryId == 59'>
+          <div fxFlex='33' fxFlex.lt-sm='50' fxFlex.xs='100' fxLayout='column' fxLayoutAlign='start start'
+               fxLayoutGap='gappx'
+               ngClass.gt-xs='py-3' ngClass.lt-sm='py-2 border-bottom'>
+            <span class='mat-caption color-grey-800'>
               {{'Municipio'|translate}}
             </span>
             <span>
@@ -100,10 +100,10 @@
             </span>
           </div>
 
-          <div fxFlex="33" fxFlex.lt-sm="50" fxFlex.xs="100" fxLayout="column" fxLayoutAlign="start start"
-               fxLayoutGap="gappx"
-               ngClass.gt-xs="py-3" ngClass.lt-sm="py-2 border-bottom">
-            <span class="mat-caption color-grey-800">
+          <div fxFlex='33' fxFlex.lt-sm='50' fxFlex.xs='100' fxLayout='column' fxLayoutAlign='start start'
+               fxLayoutGap='gappx'
+               ngClass.gt-xs='py-3' ngClass.lt-sm='py-2 border-bottom'>
+            <span class='mat-caption color-grey-800'>
               {{'Provincia'|translate}}
             </span>
             <span>
@@ -112,30 +112,30 @@
           </div>
         </ng-container>
 
-        <div fxFlex="33" fxFlex.lt-sm="50" fxFlex.xs="100" fxLayout="column" fxLayoutAlign="start start"
-             fxLayoutGap="gappx"
-             ngClass.gt-xs="py-3" ngClass.lt-sm="py-2 border-bottom">
-          <span class="mat-caption color-grey-800">
+        <div fxFlex='33' fxFlex.lt-sm='50' fxFlex.xs='100' fxLayout='column' fxLayoutAlign='start start'
+             fxLayoutGap='gappx'
+             ngClass.gt-xs='py-3' ngClass.lt-sm='py-2 border-bottom'>
+          <span class='mat-caption color-grey-800'>
             {{'Dirección'|translate}}
           </span>
           <span>
             {{this.selectedPayment.address}}
           </span>
         </div>
-        <div fxFlex="33" fxFlex.lt-sm="50" fxFlex.xs="100" fxLayout="column" fxLayoutAlign="start start"
-             fxLayoutGap="gappx"
-             ngClass.gt-xs="py-3" ngClass.lt-sm="py-2 border-bottom">
-          <span class="mat-caption color-grey-800">
+        <div fxFlex='33' fxFlex.lt-sm='50' fxFlex.xs='100' fxLayout='column' fxLayoutAlign='start start'
+             fxLayoutGap='gappx'
+             ngClass.gt-xs='py-3' ngClass.lt-sm='py-2 border-bottom'>
+          <span class='mat-caption color-grey-800'>
             {{'Teléfono'|translate}}
           </span>
           <span>
             {{this.selectedPayment.phone}}
           </span>
         </div>
-        <div fxFlex="33" fxFlex.lt-sm="50" fxFlex.xs="100" fxLayout="column" fxLayoutAlign="start start"
-             fxLayoutGap="gappx"
-             ngClass.gt-xs="py-3" ngClass.lt-sm="py-2 border-bottom">
-          <span class="mat-caption color-grey-800">
+        <div fxFlex='33' fxFlex.lt-sm='50' fxFlex.xs='100' fxLayout='column' fxLayoutAlign='start start'
+             fxLayoutGap='gappx'
+             ngClass.gt-xs='py-3' ngClass.lt-sm='py-2 border-bottom'>
+          <span class='mat-caption color-grey-800'>
             {{'Client'|translate}}
           </span>
           <span>
@@ -146,12 +146,12 @@
 
       <mat-divider fxHide.lt-sm></mat-divider>
 
-      <div class="mt-1" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="gappx">
+      <div class='mt-1' fxLayout='row wrap' fxLayoutAlign='start center' fxLayoutGap='gappx'>
 
-        <div fxFlex="33" fxFlex.lt-sm="50" fxFlex.xs="100" fxLayout="column" fxLayoutAlign="start start"
-             fxLayoutGap="gappx"
-             ngClass.gt-xs="py-3" ngClass.lt-sm="py-2 border-bottom">
-          <span class="mat-caption color-grey-800">
+        <div fxFlex='33' fxFlex.lt-sm='50' fxFlex.xs='100' fxLayout='column' fxLayoutAlign='start start'
+             fxLayoutGap='gappx'
+             ngClass.gt-xs='py-3' ngClass.lt-sm='py-2 border-bottom'>
+          <span class='mat-caption color-grey-800'>
             {{'No. of order'|translate}}
           </span>
           <span>
@@ -159,11 +159,11 @@
           </span>
         </div>
 
-        <div fxFlex="33" fxFlex.lt-sm="50" fxFlex.xs="100" fxLayout="column" fxLayoutAlign="start start"
-             fxLayoutGap="gappx"
-             ngClass.gt-xs="py-3" ngClass.lt-sm="py-2 border-bottom">
+        <div fxFlex='33' fxFlex.lt-sm='50' fxFlex.xs='100' fxLayout='column' fxLayoutAlign='start start'
+             fxLayoutGap='gappx'
+             ngClass.gt-xs='py-3' ngClass.lt-sm='py-2 border-bottom'>
           <ng-container *ngIf="this.selectedPayment.status == 'cancelled'">
-            <span class="mat-caption color-grey-800">
+            <span class='mat-caption color-grey-800'>
               {{'Devolución'|translate}}
             </span>
             <span>
@@ -171,7 +171,7 @@
             </span>
           </ng-container>
           <ng-container *ngIf="this.selectedPayment.status != 'cancelled' ">
-            <span class="mat-caption color-grey-800">
+            <span class='mat-caption color-grey-800'>
               {{'Amount'|translate}}
             </span>
             <span>
@@ -180,13 +180,13 @@
           </ng-container>
         </div>
 
-        <div fxFlex="33" fxFlex.lt-sm="50" fxFlex.xs="100" fxLayout="column" fxLayoutAlign="start start"
-             fxLayoutGap="gappx"
-             ngClass.gt-xs="py-3" ngClass.lt-sm="py-2 border-bottom">
-          <span class="mat-caption color-grey-800">
+        <div fxFlex='33' fxFlex.lt-sm='50' fxFlex.xs='100' fxLayout='column' fxLayoutAlign='start start'
+             fxLayoutGap='gappx'
+             ngClass.gt-xs='py-3' ngClass.lt-sm='py-2 border-bottom'>
+          <span class='mat-caption color-grey-800'>
             {{'Status'|translate}}
           </span>
-          <span [class]="this.status[this.selectedPayment.status].class">
+          <span [class]='this.status[this.selectedPayment.status].class'>
             {{this.utilsService.parserLanguage(this.status[this.selectedPayment.status].status, this.language)}}
           </span>
         </div>
@@ -195,11 +195,11 @@
 
       <mat-divider fxHide.lt-sm></mat-divider>
 
-      <div class="mt-1" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="gappx">
-        <div fxFlex="33" fxFlex.lt-sm="50" fxFlex.xs="100" fxLayout="column" fxLayoutAlign="start start"
-             fxLayoutGap="gappx"
-             ngClass.gt-xs="py-3" ngClass.lt-sm="py-2 border-bottom">
-          <span class="mat-caption color-grey-800">
+      <div class='mt-1' fxLayout='row wrap' fxLayoutAlign='start center' fxLayoutGap='gappx'>
+        <div fxFlex='33' fxFlex.lt-sm='50' fxFlex.xs='100' fxLayout='column' fxLayoutAlign='start start'
+             fxLayoutGap='gappx'
+             ngClass.gt-xs='py-3' ngClass.lt-sm='py-2 border-bottom'>
+          <span class='mat-caption color-grey-800'>
             {{'TPV'|translate}}
           </span>
           <span>
@@ -207,10 +207,10 @@
           </span>
         </div>
 
-        <div fxFlex="33" fxFlex.lt-sm="50" fxFlex.xs="100" fxLayout="column" fxLayoutAlign="start start"
-             fxLayoutGap="gappx"
-             ngClass.gt-xs="py-3" ngClass.lt-sm="py-2 border-bottom">
-          <span class="mat-caption color-grey-800">
+        <div fxFlex='33' fxFlex.lt-sm='50' fxFlex.xs='100' fxLayout='column' fxLayoutAlign='start start'
+             fxLayoutGap='gappx'
+             ngClass.gt-xs='py-3' ngClass.lt-sm='py-2 border-bottom'>
+          <span class='mat-caption color-grey-800'>
             {{'Email'|translate}}
           </span>
           <span>
@@ -223,23 +223,23 @@
       <mat-divider fxHide.lt-sm></mat-divider>
 
       <ng-container *ngIf=" this.selectedPayment.status=='cancelled'">
-        <p class="mat-title my-2" ngClass.xs="mat-body-2">{{'Comentario acerca de la cancelación' |translate}}</p>
-        <blockquote class="cancelNote">
+        <p class='mat-title my-2' ngClass.xs='mat-body-2'>{{'Comentario acerca de la cancelación' |translate}}</p>
+        <blockquote class='cancelNote'>
           <p>{{selectedPayment.cancelNote}}</p>
         </blockquote>
       </ng-container>
 
-      <div class="mt-3" fxLayout="row wrap" fxLayoutAlign="end center" fxLayoutGap="gappx">
+      <div class='mt-3' fxLayout='row wrap' fxLayoutAlign='end center' fxLayoutGap='gappx'>
 
-        <button (click)="onGetVoucher(this.selectedPayment)"
+        <button (click)='onGetVoucher(this.selectedPayment)'
                 *ngIf="this.selectedPayment.status == 'confirmed' || this.selectedPayment.status == 'delivered' "
-                class="mx-2"
-                color="primary" mat-stroked-button matTooltip="{{'Obtener el vouvher de pago'|translate}}">
+                class='mx-2'
+                color='primary' mat-stroked-button matTooltip="{{'Obtener el vouvher de pago'|translate}}">
           <mat-icon>cloud_download</mat-icon>
           {{'VOUCHER'|translate}}
         </button>
 
-        <button (click)="onAccept(this.selectedPayment)" class="mx-2" color="primary" mat-flat-button>
+        <button (click)='onAccept(this.selectedPayment)' class='mx-2' color='primary' mat-flat-button>
           {{'ACEPTAR'|translate}}
         </button>
 

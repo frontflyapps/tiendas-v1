@@ -104,35 +104,12 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   shippingSelected: any;
 
   payments: any[] = [
-    {
-      id: 'transfermovil',
-      name: 'Transfermovil',
-      logo: 'assets/images/cards/transfermovil_logo.png',
-      market: 'national',
-    },
-    {
-      id: 'transfermovil',
-      name: 'Transfermovil',
-      logo: 'assets/images/cards/transfermovil_logo.png',
-      market: 'international',
-    },
+    { id: 'transfermovil', name: 'Transfermovil', logo: 'assets/images/cards/transfermovil_logo.png', market: 'national' },
     // { id: 'enzona', name: 'Enzona', logo: 'assets/images/cards/enzona.jpeg', market: 'national' },
-    // { id: 'visa', name: 'Visa', logo: 'assets/images/cards/visa_logo.png', market: 'international' },
-    // { id: 'express', name: 'American Express', logo: 'assets/images/cards/american_express_logo.png', market: 'international' },
-    // { id: 'masterCard', name: 'MasterCard', logo: 'assets/images/cards/mastercard_logo.png', market: 'international' },
-    // {
-    //   id: 'dinners-club-internacional',
-    //   name: 'Dinners Club Internacional',
-    //   logo: 'assets/images/cards/dinners.jpg',
-    //   market: 'international',
-    // },
-    // { id: 'jcb', name: 'JCB', logo: 'assets/images/cards/jcb.png', market: 'international' },
-    // { id: 'maestro', name: 'Mastercard Maestro', logo: 'assets/images/cards/maestro.jpg', market: 'international' },
-    // { id: 'electron', name: 'Visa Electrón', logo: 'assets/images/cards/electron.png', market: 'international' },
-    // { id: 'tarjeta-virtual', name: 'Tarjeta Virtual', logo: 'assets/images/cards/virtual.png', market: 'international' },
-    // { id: 'bizum', name: 'Bizum', logo: 'assets/images/cards/bizum.jpg', market: 'international' },
-    // { id: 'iupay', name: 'Iupay', logo: 'assets/images/cards/iupay.png', market: 'international' },
-    // { id: 'discover-global', name: 'Discover Global', logo: 'assets/images/cards/discover.png', market: 'international' },
+    { id: 'transfermovil', name: 'Transfermovil', logo: 'assets/images/cards/transfermovil_logo.png', market: 'international' },
+    { id: 'peopleGoTo', name: 'Visa', logo: 'assets/images/cards/visa_logo.png', market: 'international' },
+    { id: 'peopleGoTo', name: 'MasterCard', logo: 'assets/images/cards/mastercard_logo.png', market: 'international' },
+    { id: 'peopleGoTo', name: 'American Express', logo: 'assets/images/cards/american_express_logo.png', market: 'international' },
   ];
 
   nationalitiy: any[] = [
@@ -324,7 +301,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     });
 
     // this.form.controls['shippingRequired'].valueChanges.subscribe((value) => {
-    //   debugger;
+    //
     //   this.showShipping = value;
     //   if (value) {
     //     this.form.controls['ShippingBusinessId'].setValidators(Validators.required);
@@ -798,6 +775,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     if (data.paymentType == 'enzona') {
       return this.processEnzona(data);
     }
+    if (data.paymentType == 'peopleGoTo') {
+      data.paymentType = 'peopleGoTo';
+      return this.processBidaiondo(data);
+    }
     if (data.paymentType == 'visa' || data.paymentType == 'express' || data.paymentType == 'masterCard') {
       data.paymentType = 'bidaiondo';
       return this.processBidaiondo(data);
@@ -868,9 +849,18 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   processBidaiondo(bodyData) {
-    bodyData.amex = amexData[this.paymentType];
+    let paymentMethod;
+    if (bodyData.paymentType === 'peopleGoTo') {
+      bodyData.amex = null;
+      paymentMethod = this.payService.makePaymentPeopleGoTo(bodyData);
+    } else {
+      bodyData.amex = amexData[this.paymentType];
+      paymentMethod = this.payService.makePaymentBidaiondo(bodyData);
+    }
+
     console.log('AMEX', bodyData.amex);
-    this.payService.makePaymentBidaiondo(bodyData).subscribe(
+
+    paymentMethod.subscribe(
       (data: any) => {
         let dialogRef: MatDialogRef<DialogBidaiondoConfirmToPayComponent, any>;
 

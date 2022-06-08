@@ -218,7 +218,7 @@ app-main,
         -o-transition: all 250ms ease-in-out;
         transition: all 250ms ease-in-out;
         text-transform: uppercase;
-        background-color: $theme-main-accent-300;
+        background-color: $theme-main-accent;
         border-radius: 4px;
         -webkit-border-radius: 4px;
         font-weight: 500;
@@ -226,12 +226,6 @@ app-main,
         -webkit-box-shadow: none;
         box-shadow: none;
         -webkit-appearance: none;
-        .mat-icon {
-          line-height: inherit !important;
-          font-size: 27px;
-          width: 27px;
-          height: 27px;
-        }
       }
     }
 
@@ -287,10 +281,10 @@ app-main,
       width: 50px;
       height: 40px;
       border-radius: 4px;
-      padding: 10px 14px;
+      //padding: 10px 14px;
       border: none;
-      background-color: $theme-main-accent-300;
-      color: $theme-main-dark;
+      background-color: $theme-main-accent;
+      color: white;
       font-weight: 500;
 
       &:focus {

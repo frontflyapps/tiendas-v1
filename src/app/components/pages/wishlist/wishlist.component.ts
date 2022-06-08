@@ -1,6 +1,6 @@
 import { MetaService } from './../../../core/services/meta.service';
 import { Component, OnInit } from '@angular/core';
-import { Observable, of, Subject } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Product } from './../../../modals/product.model';
 import { CartService } from '../../shared/services/cart.service';
 import { WishlistService } from '../../shared/services/wishlist.service';
@@ -24,7 +24,6 @@ export class WishlistComponent implements OnInit {
     private loggedInUserService: LoggedInUserService,
     private wishlistService: WishlistService,
     private router: Router,
-    private dialog: MatDialog,
     private metaService: MetaService,
   ) {
     this.product = this.wishlistService.getProducts();

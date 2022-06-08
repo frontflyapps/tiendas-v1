@@ -1,5 +1,5 @@
-<footer class="pt-3">
-  <div fxLayout="column" fxLayoutAlign="center center" fxLayoutAlign.xs="start center">
+<footer class='pt-3'>
+  <div fxLayout='column' fxLayoutAlign='center center' fxLayoutAlign.xs='start center'>
     <!--<a
       class="item-selector mx-3 my-2"
       fxLayoutAlign="start center"
@@ -17,9 +17,9 @@
         </button>
       </span>
     </mat-menu>-->
-    <div class="col" fxLayout="row" fxLayout.xs="column">
-      <div class="col-1" fxLayout="column" fxLayoutAlign=" start">
-        <a [routerLink]="['']" class="mat-button" mat-button>
+    <div class='col' fxLayout='row' fxLayout.xs='column'>
+      <div class='col-1' fxLayout='column' fxLayoutAlign=' start'>
+        <a [routerLink]="['']" class='mat-button' mat-button>
           <span>{{ 'Inicio' | translate }}</span>
         </a>
         <a [routerLink]="['about']" class="mat-button" mat-button>
@@ -32,14 +32,14 @@
           <span>{{ 'Nuestras tiendas' | translate }}</span>
         </a>
       </div>
-      <div class="col-2" fxLayout="column" fxLayoutAlign=" start">
-        <a [routerLink]="['/faq']" class="mat-button" mat-button>
+      <div class='col-2' fxLayout='column' fxLayoutAlign=' start'>
+        <a [routerLink]="['/faq']" class='mat-button' mat-button>
           <span>{{ 'Ayuda' | translate }}</span>
         </a>
-        <a *ngIf="loggedInUser" [routerLink]="['my-orders']" class="mat-button" mat-button>
+        <a *ngIf='loggedInUser' [routerLink]="['my-orders']" class='mat-button' mat-button>
           <span>{{ 'Tus pedidos' | translate }}</span>
         </a>
-        <a [routerLink]="['privacy-policy']" fxLayoutAlign="start center" mat-button>
+        <a [routerLink]="['privacy-policy']" fxLayoutAlign='start center' mat-button>
           <span>{{ 'Políticas de privacidad' | translate }}</span>
         </a>
         <a [routerLink]="['term-conditions']" fxLayoutAlign="start center" mat-button>
@@ -94,25 +94,20 @@
 <!--        <span>{{contacts.phone || ''}}</span>-->
 <!--      </div>-->
 
-      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="4px">
+      <div *ngIf='contacts.email' fxLayout='row' fxLayoutAlign='start center' fxLayoutGap='4px'>
         <mat-icon>email</mat-icon>
-        <span>{{contacts.email || ''}}</span>
+        <span>{{ contacts.email || '' }}</span>
       </div>
 
-      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="4px">
+      <div *ngIf='contacts.address' fxLayout='row' fxLayoutAlign='start center' fxLayoutGap='4px'>
         <mat-icon>location_on</mat-icon>
-        <span>{{contacts.address || ''}}</span>
+        <span>{{ contacts.address || '' }}</span>
       </div>
     </div>
 
-    <ul class="network-icons" fxLayout="row">
-
-      <li fxLayoutAlign="center center">
-        <a
-          class="icon-redes"
-          fxLayoutAlign="center center"
-          href="https://www.facebook.com/"
-          target="_blank">
+    <ul class='network-icons' fxLayout='row'>
+      <li fxLayoutAlign='center center'>
+        <a class='icon-redes' fxLayoutAlign='center center' href='https://www.facebook.com/' target='_blank'>
           <!--          <i class="fab fa-facebook-f" style="font-size: 18px"></i>-->
           <img alt="Facebook logo"
                src="assets/images/social-media/outline/logo-facebook.svg" style="filter: invert(1);">

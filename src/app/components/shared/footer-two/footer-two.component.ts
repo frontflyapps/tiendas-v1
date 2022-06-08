@@ -1,9 +1,9 @@
 import { CurrencyService } from '../../../core/services/currency/currency.service';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { FormControl, Validators, Form, FormGroup, FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-in-user.service';
 import { Subject } from 'rxjs';
 import { ShowSnackbarService } from '../../../core/services/show-snackbar/show-snackbar.service';

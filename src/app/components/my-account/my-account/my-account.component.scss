@@ -4,6 +4,15 @@
 $topbar: $theme-main-dark;
 
 app-my-account {
+  .section-title {
+    font-size: 22px;
+  }
+
+  .section-sub-title {
+    color: #666666;
+    line-height: 15px;
+  }
+
   .mat-form-field-wrapper {
     padding-bottom: 16px;
   }
@@ -37,7 +46,7 @@ app-my-account {
   }
 
   .login-logo {
-    height: 50px;
+    height: 60px;
     // width: 100px;
     // object-fit: cover;
     // border-radius: 50%;
@@ -115,7 +124,7 @@ app-my-account {
 
   #CardLogin {
     padding: 0px !important;
-    background-color: $theme-main-dark;
+    background-color: $theme-main;
     padding-top: 8px;
     padding-bottom: 16px;
     border-radius: 8px;
@@ -131,7 +140,7 @@ app-my-account {
       margin-bottom: 16px;
       min-height: 400px;
       z-index: 64;
-      background-color: #fff !important;
+      background-color: #ffffff !important;
     }
 
     .RegisterBtn {

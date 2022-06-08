@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { MyAccountRoutingModule } from './my-account-routing.module';
 import { MyAccountComponent } from './my-account/my-account.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -15,12 +15,15 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { NgxCaptchaModule } from 'ngx-captcha';
+import { UploadFileModule } from '../shared/upload-file/upload-file.module';
+import { CapitalizeFirstDirective } from 'src/app/core/directives/capitalize-first.directive';
 
 @NgModule({
-  declarations: [MyAccountComponent, ChangePassComponent],
+  declarations: [MyAccountComponent, ChangePassComponent, CapitalizeFirstDirective],
   imports: [
     CommonModule,
     MyAccountRoutingModule,
+    UploadFileModule,
     FlexLayoutModule,
     ReactiveFormsModule,
     FormsModule,
@@ -35,5 +38,4 @@ import { NgxCaptchaModule } from 'ngx-captcha';
     NgxCaptchaModule,
   ],
 })
-export class MyAccountModule {
-}
+export class MyAccountModule {}

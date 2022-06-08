@@ -13,6 +13,25 @@
 <app-main-carousel *ngIf="!showStatic && slides.length > 0" [slides]="slides"></app-main-carousel>
 
 <div class="container mt-3">
+  <!-- BANNER TEMPORAL -->
+  <div
+    style="
+      padding: 16px;
+      background-color: darkred;
+      color: white !important;
+      font-weight: bold;
+      width: 91%;
+      white-space: normal;
+      max-width: 91% !important;
+      margin: 0 auto;
+    "
+  >
+    <h1 style="color: white !important">
+      Esta tienda online se encuentra en proceso de desarrollo, está trabajando en MODO: Prueba. No están habilitadas
+      las compras. Disculpen las molestias
+    </h1>
+  </div>
+  <!-- BANNER TEMPORAL -->
   <app-skeleton-loading-cards *ngIf="showStatic" [setConfiguration]="{ xs: 1, sm: 1, md: 1, lg: 1 }">
   </app-skeleton-loading-cards>
 </div>
@@ -45,8 +64,8 @@
               <mat-icon class="mat-icon-xlg m-0">{{ item.icon }}</mat-icon>
             </div>
             <div class="content" fxFlex="80">
-              <p class="uppercase">{{ utilsService.parserLanguage(item.title, language) }}</p>
-              <span class="text-muted m-0 mt-2">{{ utilsService.parserLanguage(item.subTitle, language) }}</span>
+              <p class="uppercase">{{ item.title | parseLang: utilsService.getLang() }}</p>
+              <span class="text-muted m-0 mt-2">{{ item.subTitle | parseLang: utilsService.getLang() }}</span>
             </div>
           </mat-card>
         </div>
@@ -182,14 +201,10 @@
   </section>
 
   <!-- ---------------------- APK Promo --------------------------- -->
-  <section id="apk-promo" style="width: 100%; position: relative">
-    <img
-      *ngIf="!applyStyle"
-      alt="APK Promo"
-      class="img-apk-promo"
-      src="assets/images/mibulevar/apk-promo/desktop2.jpg"
-    />
-    <img *ngIf="applyStyle" alt="APK Promo" class="img-apk-promo" src="assets/images/mibulevar/apk-promo/movil.jpg" />
+  <!-- <section id="apk-promo" style="width: 100%; position: relative">
+    <img *ngIf="!applyStyle" alt="APK Promo" class="img-apk-promo"
+         src="assets/images/mibulevar/apk-promo/desktop2.jpg">
+    <img *ngIf="applyStyle" alt="APK Promo" class="img-apk-promo" src="assets/images/mibulevar/apk-promo/movil.jpg">
 
     <div class="container">
       <div class="wrapper">
@@ -220,5 +235,6 @@
         </a>
       </div>
     </div>
-  </section>
+
+  </section> -->
 </div>

@@ -1,12 +1,12 @@
 import { MetaService } from '../../../../core/services/meta.service';
 import { IPagination } from '../../../../core/classes/pagination.class';
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ProductService } from '../../../shared/services/product.service';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { CurrencyService } from '../../../../core/services/currency/currency.service';
 import { LoggedInUserService } from '../../../../core/services/loggedInUser/logged-in-user.service';
-import { switchMap, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { MatPaginator } from '@angular/material/paginator';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -15,11 +15,11 @@ import { CategoriesService } from 'src/app/core/services/categories/catagories.s
 import { CartService } from '../../../shared/services/cart.service';
 import { Cart } from '../../../../modals/cart-item';
 import { LocationService } from '../../../../core/services/location/location.service';
-import { LANDING_PAGE, PRODUCT_COUNT } from '../../../../core/classes/global.const';
+import { PRODUCT_COUNT } from '../../../../core/classes/global.const';
 import { environment } from '../../../../../environments/environment';
 import { LocalStorageService } from '../../../../core/services/localStorage/localStorage.service';
-import { UtilsService } from 'src/app/core/services/utils/utils.service';
 import { TranslateService } from '@ngx-translate/core';
+import { UtilsService } from 'src/app/core/services/utils/utils.service';
 
 @Component({
   selector: 'app-product-left-sidebar',
@@ -42,6 +42,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
   public amountInitialResults = 3;
   public numberOfSearchBase = 0;
   public numberOfSearch = 0;
+  private isStarting = true;
   resetPrices = false;
   paramsSearch: any = {
     filterText: null,
@@ -64,7 +65,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
   private isFromMoreProductBtn = false;
   private globalScrollTopS = 0;
   private globalScrollTopOth = 0;
-  private initLimit = 21;
+  public initLimit = 21;
   pageSizeOptions: number[] = [this.initLimit, 42, 100];
   queryProduct: IPagination = {
     limit: this.initLimit,
@@ -88,13 +89,13 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
     private metaService: MetaService,
     private locationService: LocationService,
     public translate: TranslateService,
+    public utilsService: UtilsService,
   ) {
     this.initSubsLocation();
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
     this.route.queryParams.pipe(takeUntil(this._unsubscribeAll)).subscribe((data) => {
-      console.log('params data', data);
-
+      this.isStarting = true;
       this.paramsSearch.categoryIds = data?.categoryIds ? data.categoryIds : this.paramsSearch.categoryIds;
       this.paramsSearch.brandIds = data?.brandIds ? data.brandIds : [];
       this.paramsSearch.minPrice = data?.minPrice ? data.minPrice : 0;
@@ -151,7 +152,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
     this.metaService
       .setMeta
       // environment.meta?.mainPage?.title,
-      // environment.meta?.mainPage?.description,
+      // environment.meta?.mainPage?.descrip´tion,
       // environment.meta?.mainPage?.shareImg,
       // environment.meta?.mainPage?.keywords,
       ();
@@ -240,6 +241,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
 
   searchProducts() {
     this.loading = true;
+    this.isStarting = true;
 
     this.router
       .navigate(['/products/search'], {
@@ -252,17 +254,19 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
   }
 
   searchMoreProducts() {
-    this.loading = true;
+    // this.loading = true;
     this.isFromMoreProductBtn = true;
 
-    this.router
-      .navigate(['/products/search'], {
-        queryParams: {
-          ...this.paramsSearch,
-          ...this.queryProduct,
-        },
-      })
-      .then();
+    // this.router
+    //   .navigate(['/products/search'], {
+    //     queryParams: {
+    //       ...this.paramsSearch,
+    //       ...this.queryProduct,
+    //     },
+    //   })
+    //   .then(() => (this.loading = false));
+
+    this.search();
   }
 
   search() {
@@ -310,14 +314,21 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe(
         (data: any) => {
-          this.allProducts = [];
-          this.allProducts = data.data.slice(0, this.initLimit * (this.numberOfSearch + 1));
-          this.allProductsResponse = data.data;
-
-          setTimeout(() => {
-            document.body.scrollTop = 0; // Safari
-            document.documentElement.scrollTop = 0; // Other
-          }, 0);
+          // this.loading = true;
+          if (this.isStarting) {
+            this.allProducts = [];
+            this.allProducts = data.data.slice(0, this.initLimit * (this.numberOfSearch + 1));
+            this.allProductsResponse = data.data;
+            console.log('allProductsResponse length: ' + this.allProductsResponse.length);
+            this.isStarting = false;
+            setTimeout(() => {
+              document.body.scrollTop = 0; // Safari
+              document.documentElement.scrollTop = 0; // Other
+            }, 0);
+          } else {
+            this.allProductsResponse = this.allProductsResponse.concat(data.data);
+            this.allProducts = this.allProductsResponse.slice(0, this.initLimit * (this.numberOfSearch + 1));
+          }
 
           this.queryProduct.total = data.meta.pagination.total;
           this.loading = false;
@@ -381,17 +392,21 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
 
   onSetOrder(order) {
     this.queryProduct.order = order;
+    this.initValuesOnSearch();
     this.searchProducts();
   }
 
   goToFirstPage(event) {
+    // this.isStarting = true;
     event.preventDefault();
 
-    this.globalScrollTopS = document.body.scrollTop; // Safari
-    this.globalScrollTopOth = document.documentElement.scrollTop; // Other
+    // this.globalScrollTopS = document.body.scrollTop; // Safari
+    // this.globalScrollTopOth = document.documentElement.scrollTop; // Other
 
-    this.initValuesOnSearch();
-    this.searchMoreProducts();
+    setTimeout(() => {
+      document.body.scrollTop = 0; // Safari
+      document.documentElement.scrollTop = 0; // Other
+    }, 0);
   }
 
   seeMoreProductsBtn(event) {
@@ -401,12 +416,12 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
     this.globalScrollTopOth = document.documentElement.scrollTop; // Other
 
     this.numberOfSearch++;
-    if (this.numberOfSearch < this.amountInitialResults) {
+    if (this.numberOfSearch % 3 > 0) {
       this.allProducts = this.allProductsResponse.slice(0, this.initLimit * (this.numberOfSearch + 1));
-      this.queryProduct.offset = this.initLimit * this.numberOfSearch;
+      this.queryProduct.offset = this.initLimit * (this.numberOfSearch % 3);
+      console.log('limit', this.queryProduct.limit);
     } else {
-      this.loading = true;
-      this.numberOfSearch = this.numberOfSearchBase;
+      // this.numberOfSearch = this.numberOfSearchBase;
       this.queryProduct.page++;
       this.queryProduct.offset = this.initLimit * this.amountInitialResults * this.queryProduct.page;
       this.searchMoreProducts();

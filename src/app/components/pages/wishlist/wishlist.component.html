@@ -1,53 +1,53 @@
-<div class="container">
-  <div class="cart-wrapper sec-padding">
+<div class='container'>
+  <div class='cart-wrapper sec-padding'>
 
 
-    <div *ngIf="!wishlistItems.length" fxLayout="column" fxLayoutAlign="space-around center">
+    <div *ngIf='!wishlistItems.length' fxLayout='column' fxLayoutAlign='space-around center'>
       <mat-chip-list>
-        <mat-chip color="warn" selected="true">{{'YOU HAVE NO ITEMS IN YOUR WISHLIST' | translate}}.</mat-chip>
+        <mat-chip color='warn' selected='true'>{{'YOU HAVE NO ITEMS IN YOUR WISHLIST' | translate}}.</mat-chip>
       </mat-chip-list>
       <div>
-        <a [routerLink]="['']" class="btn-project mt-20" color="primary" mat-raised-button
-           routerLinkActive="router-link-active">
+        <a [routerLink]="['']" class='btn-project mt-20' color='primary' mat-raised-button
+           routerLinkActive='router-link-active'>
           {{'Continue shopping' | translate}}</a>
       </div>
 
     </div>
 
-    <mat-card *ngIf="wishlistItems.length" class="p-0">
+    <mat-card *ngIf='wishlistItems.length' class='p-0'>
 
-      <div class="mat-table cart-table">
-        <div class="mat-header-row">
-          <div class="mat-header-cell">{{'Product' | translate}}</div>
-          <div class="mat-header-cell">{{'Name' | translate}}</div>
-          <div class="mat-header-cell">{{'Price' | translate}}</div>
-          <div class="mat-header-cell text-center">
-            <div class="px-1">
-              <button color="warn" mat-raised-button>{{'Clear All' | translate}}</button>
+      <div class='mat-table cart-table'>
+        <div class='mat-header-row'>
+          <div class='mat-header-cell'>{{'Product' | translate}}</div>
+          <div class='mat-header-cell'>{{'Name' | translate}}</div>
+          <div class='mat-header-cell'>{{'Price' | translate}}</div>
+          <div class='mat-header-cell text-center'>
+            <div class='px-1'>
+              <button color='warn' mat-raised-button>{{'Clear All' | translate}}</button>
             </div>
           </div>
         </div>
-        <div *ngFor="let item of wishlistItems" class="mat-row">
-          <div class="mat-cell"><img *ngIf="item.images && item.images.length" [src]="item.images[0]"></div>
-          <div class="mat-cell"><a class="product-name">{{item.name}}</a></div>
-          <div class="mat-cell price">{{item.price | number : '1.2-2'}}</div>
+        <div *ngFor='let item of wishlistItems' class='mat-row'>
+          <div class='mat-cell'><img *ngIf='item.images && item.images.length' [src]='item.images[0]'></div>
+          <div class='mat-cell'><a class='product-name'>{{item.name}}</a></div>
+          <div class='mat-cell price'>{{item.price | number : '1.2-2'}}</div>
 
-          <div class="mat-cell text-center">
-            <div class="p-1">
-              <mat-icon (click)="removeItem(item)" class="close">{{'close' | translate}}</mat-icon>
+          <div class='mat-cell text-center'>
+            <div class='p-1'>
+              <mat-icon (click)='removeItem(item)' class='close'>{{'close' | translate}}</mat-icon>
             </div>
           </div>
 
         </div>
-        <div class="mat-row">
-          <div class="mat-cell"><a [routerLink]="['/product/all']" class="btn-project"
+        <div class='mat-row'>
+          <div class='mat-cell'><a [routerLink]="['/product/all']" class='btn-project'
                                    mat-raised-button
-                                   routerLinkActive="router-link-active">{{'Continue shopping' | translate}}</a></div>
-          <div class="mat-cell"></div>
-          <div class="mat-cell"></div>
+                                   routerLinkActive='router-link-active'>{{'Continue shopping' | translate}}</a></div>
+          <div class='mat-cell'></div>
+          <div class='mat-cell'></div>
 
 
-          <div class="mat-cell text-center"><a class="btn-project"
+          <div class='mat-cell text-center'><a class='btn-project'
                                                mat-raised-button>{{'Proceed To Checkout' | translate}}</a></div>
         </div>
       </div>

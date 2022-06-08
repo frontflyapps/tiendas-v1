@@ -77,7 +77,7 @@ export class UtilsService {
         `Server response failed, check your connection to the network, or contact the administrators`,
       );
     let msg = alternative;
-    if (error.errors && error.errors.length) {
+    if (error.errors && error.errors?.length) {
       msg = error.errors.map(
         (item) => (item.field ? item.field + ' : ' : '') + ' ' + (item.title || item.message + ' '),
       );
@@ -85,7 +85,7 @@ export class UtilsService {
       msg = error.error.errors.map(
         (item) => (item.field ? item.field + ' : ' : '') + ' ' + (item.title || item.message + ' '),
       );
-    } else if (error.error && error.error.length) {
+    } else if (error.error && error.error?.length) {
       msg = error.error.map(
         (item) => (item.field ? item.field + ' : ' : '') + ' ' + (item.title || item.message + ' '),
       );
@@ -121,7 +121,7 @@ export class UtilsService {
         `Server response failed, check your connection to the network, or contact the administrators`,
       );
     let msg = alternative;
-    if (error.errors && error.errors.length) {
+    if (error.errors && error.errors?.length) {
       msg = error.errors.map(
         (item) => (item.field ? item.field + ' : ' : '') + ' ' + (item.title || item.message + ' '),
       );
@@ -129,7 +129,7 @@ export class UtilsService {
       msg = error.error.errors.map(
         (item) => (item.field ? item.field + ' : ' : '') + ' ' + (item.title || item.message + ' '),
       );
-    } else if (error.error && error.error.length) {
+    } else if (error.error && error.error?.length) {
       msg = error.error.map(
         (item) => (item.field ? item.field + ' : ' : '') + ' ' + (item.title || item.message + ' '),
       );

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { MyAccountComponent } from './my-account/my-account.component';
 import { ChangePassComponent } from './change-pass/change-pass.component';
 

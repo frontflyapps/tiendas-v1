@@ -91,8 +91,9 @@ export class MyContactsComponent implements OnInit, OnDestroy {
     const locationData = this.localStorageService.getFromStorage(LOCATION_DATA);
 
     if (
-      this.localStorageService.iMostReSearch(locationData?.timespan, environment.timeToResetSession)
-      || (locationData?.allMunicipalities.length < 1 || locationData?.allProvinces.length < 1)
+      this.localStorageService.iMostReSearch(locationData?.timespan, environment.timeToResetSession) ||
+      locationData?.allMunicipalities.length < 1 ||
+      locationData?.allProvinces.length < 1
     ) {
       this.getProvinceMunicipality();
     } else {
@@ -128,9 +129,7 @@ export class MyContactsComponent implements OnInit, OnDestroy {
 
   setMunicipalitiesFromResponse(res) {
     this.allMunicipalities = res;
-    this.municipalities = this.allMunicipalities.filter(
-      (item) => item.ProvinceId == this.form.get('ProvinceId').value,
-    );
+    this.municipalities = this.allMunicipalities.filter((item) => item.ProvinceId == this.form.get('ProvinceId').value);
   }
 
   createForm(): void {
@@ -140,23 +139,23 @@ export class MyContactsComponent implements OnInit, OnDestroy {
       name: [null, [Validators.required]],
       lastName: [null, [Validators.required]],
 
-      email: [null, [
-        Validators.required,
-        Validators.email,
-        Validators.pattern(EMAIL_REGEX),
-      ]],
-      identification: [null, [
-        Validators.required,
-        Validators.pattern(IDENTITY_PASSPORT),
-      ]],
+      email: [null, [Validators.required, Validators.email, Validators.pattern(EMAIL_REGEX)]],
+      identification: [null, [Validators.required, Validators.pattern(IDENTITY_PASSPORT)]],
 
-      phone: [null, [
-        Validators.required,
-        Validators.pattern(CUBAN_PHONE_START_5),
-        Validators.minLength(8),
-        Validators.maxLength(8),
-      ]],
-      address: [null, [Validators.required]],
+      phone: [
+        null,
+        [
+          Validators.required,
+          Validators.pattern(CUBAN_PHONE_START_5),
+          Validators.minLength(8),
+          Validators.maxLength(8),
+        ],
+      ],
+      // address: [null, [Validators.required]],
+
+      street: [null, [Validators.required]],
+      number: [null, [Validators.required]],
+      between: [null, [Validators.required]],
 
       MunicipalityId: [null, [Validators.required]],
       ProvinceId: [null, [Validators.required]],
@@ -167,8 +166,9 @@ export class MyContactsComponent implements OnInit, OnDestroy {
 
   genSubxProvince() {
     console.log('entre a sobxxxxx');
-    this.form.get('ProvinceId').valueChanges
-      .pipe(debounceTime(200))
+    this.form
+      .get('ProvinceId')
+      .valueChanges.pipe(debounceTime(200))
       .subscribe((provinceIdCh) => {
         console.log('provinceIdCh', provinceIdCh);
         console.log('municipppp', this.municipalities);
@@ -195,7 +195,17 @@ export class MyContactsComponent implements OnInit, OnDestroy {
   }
 
   onSetUpdateContact(): void {
-    const data = JSON.parse(JSON.stringify(this.form.value));
+    let temp = this.form.value;
+    temp.address = {
+      street: temp.street,
+      number: temp.number,
+      between: temp.between,
+    };
+    delete temp.street;
+    delete temp.number;
+    delete temp.between;
+
+    const data = JSON.parse(JSON.stringify(temp));
 
     if (this.isEditing) {
       this.setEditingContact(data);
@@ -207,32 +217,26 @@ export class MyContactsComponent implements OnInit, OnDestroy {
       this.setCreateContact(data);
       return;
     }
-
   }
 
   setCreateContact(data) {
-    this.contactsService.create(data)
-      .subscribe((contactRes) => {
+    this.contactsService.create(data).subscribe((contactRes) => {
+      this.contactsService.allContacts.push({ ...contactRes.data });
 
-        this.contactsService.allContacts.push({ ...contactRes.data });
-
-        this.onCreateContact = false;
-
-      });
+      this.onCreateContact = false;
+    });
   }
 
   setEditingContact(data) {
-    this.contactsService.edit(data)
-      .subscribe((contactRes) => {
+    this.contactsService.edit(data).subscribe((contactRes) => {
+      const idx = this.contactsService.allContacts.findIndex((item) => item.id === data.id);
 
-        const idx = this.contactsService.allContacts.findIndex((item) => item.id === data.id);
+      if (idx >= 0) {
+        this.contactsService.allContacts[idx] = { ...contactRes.data };
+      }
 
-        if (idx >= 0) {
-          this.contactsService.allContacts[idx] = { ...contactRes.data };
-        }
-
-        this.onCreateContact = false;
-      });
+      this.onCreateContact = false;
+    });
   }
 
   onSetBack() {
@@ -257,7 +261,7 @@ export class MyContactsComponent implements OnInit, OnDestroy {
 
   removeContact(contact) {
     this.contactsService.remove(contact).then(() => {
-      const indexC = this.contactsService.allContacts.findIndex(item => item.id == contact.id);
+      const indexC = this.contactsService.allContacts.findIndex((item) => item.id == contact.id);
       this.contactsService.allContacts.splice(indexC, 1);
     });
   }

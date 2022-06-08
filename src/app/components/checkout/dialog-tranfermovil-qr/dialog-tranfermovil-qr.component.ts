@@ -1,13 +1,11 @@
-import { Component, Inject, OnInit, AfterViewInit, ViewEncapsulation, OnDestroy } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { environment } from '../../../../environments/environment';
 import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-in-user.service';
-import { ConfirmationDialogFrontComponent } from '../../shared/confirmation-dialog-front/confirmation-dialog-front.component';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { SocketIoService } from 'src/app/core/services/socket-io/socket-io.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dialog-tranfermovil-qr',

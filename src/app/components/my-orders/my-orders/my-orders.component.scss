@@ -463,6 +463,13 @@ app-my-orders {
       &:focus {
         outline: none;
       }
+
+      .mat-icon {
+        line-height: inherit !important;
+        font-size: 27px;
+        width: 27px;
+        height: 27px;
+      }
     }
   }
 }

@@ -15,11 +15,11 @@ export class LoaderInterceptorService implements HttpInterceptor {
     if (i >= 0) {
       this.requests.splice(i, 1);
     }
-    if (this.requests.length > 0) {
-      // this.ngProgress.start();
-    } else {
-      // this.ngProgress.done();
-    }
+    // if (this.requests?.length > 0) {
+    // this.ngProgress.start();
+    // } else {
+    // this.ngProgress.done();
+    // }
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -47,7 +47,9 @@ export class LoaderInterceptorService implements HttpInterceptor {
       // remove request from queue when cancelled
       return () => {
         this.removeRequest(req);
-        subscription.unsubscribe();
+        setTimeout(() => {
+          subscription.unsubscribe();
+        }, 10);
       };
     });
   }

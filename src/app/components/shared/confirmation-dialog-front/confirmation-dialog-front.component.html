@@ -2,15 +2,15 @@
 
 <div mat-dialog-content>
   <span>{{data.question}}</span>
-  <div id="textHtml"></div>
+  <div id='textHtml'></div>
 </div>
 
-<div fxLayout="row" fxLayoutAlign="space-between center" mat-dialog-actions>
+<div fxLayout='row' fxLayoutAlign='space-between center' mat-dialog-actions>
   <button fxFlex mat-button mat-dialog-close>
     {{'CANCELAR'}}
   </button>
 
-  <button (click)="onSave()" color="primary" fxFlex mat-raised-button>
+  <button (click)='onSave()' color='primary' fxFlex mat-raised-button>
     <span>{{'ACEPTAR'}}</span>
   </button>
 </div>

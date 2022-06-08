@@ -1,5 +1,20 @@
-<div [id]="'ProductCardId' + product.id" class="card-product" fxLayout="column" fxLayout.lt-md="row"
-     fxLayoutAlign="start stretch" fxLayoutAlign.lt-md="start start" style="position: relative">
+<div *ngIf='product.Business.Province' class="location-label-sm" fxShow.lt-md fxHide>
+  <span>
+    <mat-icon>room</mat-icon>&nbsp;<strong>{{
+      product.Business?.Province?.name | parseLang: utilsService.getLang()
+    }}</strong
+    >, {{ product.Business?.Municipality?.name | parseLang: utilsService.getLang() }}
+  </span>
+</div>
+<div
+  [id]="'ProductCardId' + product.id"
+  fxLayout="column"
+  fxLayoutAlign="start stretch"
+  fxLayout.lt-md="row"
+  fxLayoutAlign.lt-md="start start"
+  class="card-product"
+  style="position: relative"
+>
   <div *ngIf="inLoading" class="loading-shade" style="height: 100%">
     <mat-spinner *ngIf="inLoading" [diameter]="40"></mat-spinner>
   </div>
@@ -82,6 +97,14 @@
           <mat-icon>cached</mat-icon>
         </a> -->
     </div>
+  </div>
+  <div *ngIf='product.Business.Province' class="location-label" fxShow fxHide.lt-md>
+    <span>
+      <mat-icon>room</mat-icon>&nbsp;<strong>{{
+        product.Business?.Province?.name | parseLang: utilsService.getLang()
+      }}</strong
+      >, {{ product.Business?.Municipality?.name | parseLang: utilsService.getLang() }}
+    </span>
   </div>
 </div>
 

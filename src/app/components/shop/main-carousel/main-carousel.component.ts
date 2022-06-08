@@ -2,7 +2,7 @@ import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
-import { Component, OnInit, Input, AfterViewInit, OnDestroy } from '@angular/core';
+import { AfterViewInit, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { SwiperConfigInterface, SwiperPaginationInterface } from 'ngx-swiper-wrapper';
 import { UtilsService } from '../../../core/services/utils/utils.service';
 

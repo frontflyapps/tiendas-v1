@@ -1,15 +1,15 @@
 import { Component, HostListener, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { ShowToastrService } from '../../../core/services/show-toastr/show-toastr.service';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { UtilsService } from '../../../core/services/utils/utils.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { ShowSnackbarService } from '../../../core/services/show-snackbar/show-snackbar.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { environment } from '../../../../environments/environment';
 import { AuthenticationService } from '../../../core/services/authentication/authentication.service';
 import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-in-user.service';
-import { CUBAN_PHONE_START_5, EMAIL_REGEX, PASS_CLIENT_REGEX, USERNAME } from '../../../core/classes/regex.const';
+import { ShowSnackbarService } from '../../../core/services/show-snackbar/show-snackbar.service';
+import { ShowToastrService } from '../../../core/services/show-toastr/show-toastr.service';
+import { UtilsService } from '../../../core/services/utils/utils.service';
+import { CUBAN_PHONE_START_5, EMAIL_REGEX, PASS_CLIENT_REGEX } from '../../../core/classes/regex.const';
 
 @Component({
   selector: 'app-my-account',
@@ -37,6 +37,9 @@ export class MyAccountComponent implements OnInit {
   insertEmailPassForm: FormGroup;
   changeToNewPassForm: FormGroup;
 
+  pdfData: any[] = [];
+  selectedDocument = false;
+
   showLoginForm = true;
   showRegistrationForm = false;
   showPinForm = false;
@@ -49,6 +52,12 @@ export class MyAccountComponent implements OnInit {
   isRegisterToBecomeASeller = false;
   routeToNavigate = '/checkout';
   localDatabaseUsers = environment.localDatabaseUsers;
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.innerWidth = window.innerWidth;
+    this.applyStyle = this.innerWidth <= 600;
+  }
 
   constructor(
     public authService: AuthenticationService,
@@ -63,8 +72,8 @@ export class MyAccountComponent implements OnInit {
     public utilsService: UtilsService,
   ) {
     this.message = '';
-    this.isRegisterToPay = localStorage.getItem('isRegisterToPay') ? true : false;
-    this.isRegisterToBecomeASeller = localStorage.getItem('isRegisterToBecomeASeller') ? true : false;
+    this.isRegisterToPay = !!localStorage.getItem('isRegisterToPay');
+    this.isRegisterToBecomeASeller = !!localStorage.getItem('isRegisterToBecomeASeller');
     localStorage.removeItem('isRegisterToPay');
     localStorage.removeItem('isRegisterToBecomeASeller');
     this.routeToNavigate = this.isRegisterToPay ? '/cart' : this.isRegisterToBecomeASeller ? '/become-a-seller' : '';
@@ -77,12 +86,6 @@ export class MyAccountComponent implements OnInit {
     this.createActivateForm();
 
     this.getParamsAndInspect();
-  }
-
-  @HostListener('window:resize', ['$event'])
-  onResize(event) {
-    this.innerWidth = window.innerWidth;
-    this.applyStyle = this.innerWidth <= 600;
   }
 
   /**
@@ -163,6 +166,15 @@ export class MyAccountComponent implements OnInit {
           8000,
         );
       }
+    } else if (this.queryParams.modal == 'password' && this.queryParams.pin && this.queryParams.email) {
+      this.showRegistrationForm = false;
+      this.showPinForm = false;
+      this.showResetPassForm = false;
+      this.showLoginForm = false;
+      this.showNewPassForm = true;
+      this.inLoading = false;
+      this.changeToNewPassForm.controls['pin'].setValue(this.queryParams.pin);
+      this.insertEmailPassForm.value.email = this.queryParams.email;
     }
   }
 
@@ -400,6 +412,39 @@ export class MyAccountComponent implements OnInit {
     return this.validatePing(data);
   }
 
+  private validatePing(data) {
+    this.inLoading = true;
+    this.spinner.show();
+    this.authService.validatePing(data).subscribe(
+      (result) => {
+        this.toastr.showSucces('Registrado correctamente', '', 6000);
+        this.showRegistrationForm = false;
+        this.showPinForm = false;
+        this.showResetPassForm = false;
+        this.showActivateForm = false;
+        this.showLoginForm = true;
+        this.spinner.hide();
+        this.loggedInUserService.saveAccountCookie(result.data.Authorization);
+        this.loggedInUserService.updateUserProfile(result.data.profile);
+        this.toastr.showInfo(
+          this.translate.instant('You have successfully logged into our system'),
+          this.translate.instant('User login'),
+          10000,
+        );
+        this.inLoading = false;
+        this.router.navigate([this.routeToNavigate]);
+        return true;
+      },
+      (error) => {
+        this.utilsService.errorHandle(error);
+        this.inLoading = false;
+        this.spinner.hide();
+      },
+    );
+
+    return false;
+  }
+
   onGoBefore() {
     if (this.showRegistrationForm) {
       this.showLoginForm = true;
@@ -489,10 +534,9 @@ export class MyAccountComponent implements OnInit {
       );
   }
 
-  // ///////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////
   handleReset() {}
-
-  // ////////////////////////////////////////////////////////
 
   handleExpire() {}
 
@@ -500,41 +544,55 @@ export class MyAccountComponent implements OnInit {
 
   handleLoad() {}
 
-  private validatePing(data) {
-    this.inLoading = true;
-    this.spinner.show();
-    this.authService.validatePing(data).subscribe(
-      (result) => {
-        this.toastr.showSucces('Registrado correctamente', '', 6000);
-        this.showRegistrationForm = false;
-        this.showPinForm = false;
-        this.showResetPassForm = false;
-        this.showActivateForm = false;
-        this.showLoginForm = true;
-        this.spinner.hide();
-        this.loggedInUserService.saveAccountCookie(result.data.Authorization);
-        this.loggedInUserService.updateUserProfile(result.data.profile);
-        this.toastr.showInfo(
-          this.translate.instant('You have successfully logged into our system'),
-          this.translate.instant('User login'),
-          10000,
-        );
-        this.inLoading = false;
-        if (this.redirectToOriginPage) {
-          document.location.href = this.redirectToOriginPage;
-        } else {
-          this.router.navigate([this.routeToNavigate]).then();
-        }
-        return true;
-      },
-      (error) => {
-        this.utilsService.errorHandle(error);
-        this.inLoading = false;
-        this.spinner.hide();
-      },
-    );
+  onSelectPdf($event) {
+    this.pdfData = [];
+    $event.forEach((doc) => {
+      this.pdfData.push({
+        ...doc,
+        fkId: null,
+        fkModel: 'UserId',
+      });
+    });
+    this.validDocumentSelection();
+    //
+    // this.pdfData[index]   = {
+    //   ...$event,
+    //   fkId   : null,
+    //   fkModel: 'UserId',
+    // };
+    // console.log(this.pdfData);
+    // this.selectedDocument = true;
+  }
 
-    return false;
+  validDocumentSelection() {
+    this.selectedDocument = false;
+    this.pdfData.forEach((document) => {
+      if (document) {
+        this.selectedDocument = true;
+      }
+    });
+  }
+
+  savePdf(result) {
+    if (this.pdfData) {
+      this.pdfData.forEach((document) => {
+        if (document) {
+          let doc = { ...document };
+          doc.fkId = result.data.id;
+          // this.uploadFilesService.emitUploadStart(doc);
+        }
+      });
+    }
+  }
+
+  onAddDocument() {
+    this.pdfData.push(null);
+    this.validDocumentSelection();
+  }
+
+  onRemoveDocument(index) {
+    this.pdfData.splice(index, 1);
+    this.validDocumentSelection();
   }
 
   /////////////////////////////////////////////////////////

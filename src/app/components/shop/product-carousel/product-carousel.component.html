@@ -31,6 +31,7 @@
               />
             </a>
           </div>
+
           <div class="product-info-wrapper py-2 px-3">
             <a
               [queryParams]="{ productId: product.id, stockId: product?.Stock?.id }"
@@ -90,9 +91,16 @@
               </a>
             </div>
           </div>
-          <div *ngIf="product.type != 'physical'" class="productType">
-            {{ product.type | translate }}
+
+          <div *ngIf='product.Business?.Province' class="location-label" fxShow>
+            <span>
+              <mat-icon>room</mat-icon>&nbsp;<strong>{{
+                product.Business?.Province?.name | parseLang: utilsService.getLang()
+              }}</strong
+              >, {{ product.Business?.Municipality?.name | parseLang: utilsService.getLang() }}
+            </span>
           </div>
+
         </mat-card>
       </div>
     </div>
@@ -203,10 +211,17 @@
               </a>
             </div>
           </div>
-          <div *ngIf="product.type != 'physical'" class="productType">
-            {{ product.type | translate }}
-          </div>
-        </mat-card>
+
+          <div *ngIf='product.Business?.Province' class="location-label" fxShow>
+              <span>
+                <mat-icon>room</mat-icon>&nbsp;<strong>{{
+                  product.Business?.Province?.name | parseLang: utilsService.getLang()
+                }}</strong
+                >, {{ product.Business?.Municipality?.name | parseLang: utilsService.getLang() }}
+              </span>
+            </div>
+
+          </mat-card>
       </div>
     </div>
   </div>

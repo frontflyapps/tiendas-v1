@@ -1,55 +1,55 @@
-<div *ngIf="this.loadingSearch" class="loading-shade-full" style="background: rgba(0,0,0,0.12) !important;">
-  <mat-spinner *ngIf="this.loadingSearch" color="primary" diameter="60"></mat-spinner>
+<div *ngIf='this.loadingSearch' class='loading-shade-full' style='background: rgba(0,0,0,0.12) !important;'>
+  <mat-spinner *ngIf='this.loadingSearch' color='primary' diameter='60'></mat-spinner>
 </div>
 
-<div class="container">
-  <section class="py-4" style="background-color: #fafafa;">
-    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="gappx">
+<div class='container'>
+  <section class='py-4' style='background-color: #fafafa;'>
+    <div fxLayout='row' fxLayoutAlign='center center' fxLayoutGap='gappx'>
 
-      <span class="py-3" style="text-align: center;color: #616161; font-size: 24px;">
-        <mat-icon style="text-align: center;color: #616161; font-size: 24px;height: 24px;width: 24px;">attach_money
+      <span class='py-3' style='text-align: center;color: #616161; font-size: 24px;'>
+        <mat-icon style='text-align: center;color: #616161; font-size: 24px;height: 24px;width: 24px;'>attach_money
         </mat-icon>
         {{'CANCELACIÓN DE PAGO'|translate}}
       </span>
     </div>
 
-    <div style="height: 2px;background-color: #eeeeee;">
+    <div style='height: 2px;background-color: #eeeeee;'>
     </div>
 
-    <div *ngIf="showError" class="py-4" fxLayout="column" fxLayoutAlign="center center">
-      <div fxLayout="column" fxLayoutAlign="start center">
+    <div *ngIf='showError' class='py-4' fxLayout='column' fxLayoutAlign='center center'>
+      <div fxLayout='column' fxLayoutAlign='start center'>
 
-        <img class="mb-3" src="assets/images/logo-accent.png" style="max-height: 80px;">
+        <img class='mb-3' src='assets/images/logo-accent.png' style='max-height: 80px;'>
 
-        <h3 style="color: #666768; font-size: 24px; font-weight: 500;">{{'Ups!'|translate}}</h3>
-        <h1 class="mb-3" style="color: #B5252A; font-size: 20px; text-align: center;"><span
-          style="color: #666768;font-size: 20px;">{{"Cancelación de pago"|translate}}</span>
+        <h3 style='color: #666768; font-size: 24px; font-weight: 500;'>{{'Ups!'|translate}}</h3>
+        <h1 class='mb-3' style='color: #B5252A; font-size: 20px; text-align: center;'><span
+          style='color: #666768;font-size: 20px;'>{{"Cancelación de pago"|translate}}</span>
           &nbsp;{{'Fallida'|translate}}</h1>
 
-        <img class="mb-4 mt-4" src="assets/images/pago_fallido.png" style="max-width: 260px;">
+        <img class='mb-4 mt-4' src='assets/images/pago_fallido.png' style='max-width: 260px;'>
 
-        <a [routerLink]="['/checkout']" class="mb-3 mt-3 px-4 py-2" color="primary" mat-raised-button>
-          <mat-icon class="mr-2">arrow_back</mat-icon>
+        <a [routerLink]="['/checkout']" class='mb-3 mt-3 px-4 py-2' color='primary' mat-raised-button>
+          <mat-icon class='mr-2'>arrow_back</mat-icon>
           {{ 'Aceptar' | translate | uppercase }}
         </a>
 
       </div>
 
     </div>
-    <div *ngIf="showCancelled" class="py-4" fxLayout="column" fxLayoutAlign="center center">
-      <div fxLayout="column" fxLayoutAlign="start center">
+    <div *ngIf='showCancelled' class='py-4' fxLayout='column' fxLayoutAlign='center center'>
+      <div fxLayout='column' fxLayoutAlign='start center'>
 
-        <img class="mb-3" src="../../../../assets/images/logo-accent.png" style="max-height: 80px;">
+        <img class='mb-3' src='../../../../assets/images/logo-accent.png' style='max-height: 80px;'>
 
-        <h3 style="color: #666768; font-size: 24px; font-weight: 500;">{{'Que lástima!'|translate}}</h3>
-        <h1 class="mb-3" style="color: #B5252A; font-size: 20px;text-align: center;"><span
-          style="color: #666768;font-size: 20px;">{{"Cancelación de pago"|translate}}</span>
+        <h3 style='color: #666768; font-size: 24px; font-weight: 500;'>{{'Que lástima!'|translate}}</h3>
+        <h1 class='mb-3' style='color: #B5252A; font-size: 20px;text-align: center;'><span
+          style='color: #666768;font-size: 20px;'>{{"Cancelación de pago"|translate}}</span>
           &nbsp;{{'Completada'|translate}}</h1>
 
-        <img class="mb-3 mt-2" src="assets/images/pago_cancelado.png" style="max-width: 260px;">
+        <img class='mb-3 mt-2' src='assets/images/pago_cancelado.png' style='max-width: 260px;'>
 
-        <a [routerLink]="['/checkout']" class="mb-3 mt-3 px-4 py-2" color="primary" mat-raised-button>
-          <mat-icon class="mr-2">arrow_back</mat-icon>
+        <a [routerLink]="['/checkout']" class='mb-3 mt-3 px-4 py-2' color='primary' mat-raised-button>
+          <mat-icon class='mr-2'>arrow_back</mat-icon>
           {{ 'Aceptar' | translate | uppercase }}
         </a>
       </div>

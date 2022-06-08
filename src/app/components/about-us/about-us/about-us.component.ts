@@ -3,8 +3,8 @@ import { environment } from 'src/environments/environment';
 import { LoggedInUserService } from './../../../core/services/loggedInUser/logged-in-user.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ContactUsService } from '../../../core/services/contact-us/contact-us.service';
 import { TranslateService } from '@ngx-translate/core';
 

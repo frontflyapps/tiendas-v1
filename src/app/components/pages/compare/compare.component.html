@@ -1,71 +1,71 @@
-<div class="compare-component sec-padding">
-  <div class="container">
-    <div class="p-0">
-      <div *ngIf="!products.length" class="col-sm-12 empty-cart-cls text-center compare-arr">
+<div class='compare-component sec-padding'>
+  <div class='container'>
+    <div class='p-0'>
+      <div *ngIf='!products.length' class='col-sm-12 empty-cart-cls text-center compare-arr'>
         <!--        <img src="assets/images/backet-01.png" class="img-fluid mb-4" />-->
-        <mat-icon class="material-icons-outlined">
+        <mat-icon class='material-icons-outlined'>
           compare_arrows
         </mat-icon>
-        <h3 class="mb-5">
+        <h3 class='mb-5'>
           <strong>{{ 'Lista de comparación vacía' | translate }}</strong>
         </h3>
-        <h4 style="text-transform: none">{{ 'Explore más, preseleccione más artículos' | translate }}</h4>
+        <h4 style='text-transform: none'>{{ 'Explore más, preseleccione más artículos' | translate }}</h4>
       </div>
-      <div *ngIf="products.length" class="table-responsive">
-        <table class="table">
+      <div *ngIf='products.length' class='table-responsive'>
+        <table class='table'>
           <thead>
-          <tr class="th-compare">
+          <tr class='th-compare'>
             <td>{{ 'Action' | translate }}</td>
-            <th *ngFor="let product of products" class="item-row" style="max-width: 180px">
+            <th *ngFor='let product of products' class='item-row' style='max-width: 180px'>
               <a
-                (click)="removeItem(product)"
-                class="mx-3 color-grey-700"
+                (click)='removeItem(product)'
+                class='mx-3 color-grey-700'
                 matTooltip="{{ 'Eliminar de la lista' | translate }}"
-              ><i class="material-icons">highlight_off</i></a
+              ><i class='material-icons'>highlight_off</i></a
               >
               <a
-                (click)="addToCart(product)"
-                class="mx-3 color-grey-700"
+                (click)='addToCart(product)'
+                class='mx-3 color-grey-700'
                 matTooltip="{{ 'Añadir al carrito' | translate }}"
-              ><i class="material-icons">shopping_cart</i></a
+              ><i class='material-icons'>shopping_cart</i></a
               >
             </th>
           </tr>
           </thead>
-          <tbody id="table-compare">
+          <tbody id='table-compare'>
           <!-- Product Name -->
           <tr>
-            <th class="product-name">{{ 'Product Name' | translate }}</th>
-            <td *ngFor="let product of products" class="grid-link__title" style="max-width: 400px">
+            <th class='product-name'>{{ 'Product Name' | translate }}</th>
+            <td *ngFor='let product of products' class='grid-link__title' style='max-width: 400px'>
               <a
-                [queryParams]="{
+                [queryParams]='{
                     productId: product?.id,
                     stockId: product?.Stock?.id
-                  }"
+                  }'
                 [routerLink]="['/product']"
-                class="link-nav-a"
+                class='link-nav-a'
               >{{ product.name[language] ? product.name[language] : product.name['es'] }}</a
               >
             </td>
           </tr>
           <!-- Product Price -->
           <tr>
-            <th class="product-name">{{ 'Product Price' | translate }}</th>
-            <td *ngFor="let product of products" class="grid-link__title" style="max-width: 400px">
-              <ng-container *ngIf="product.offerValue">
-                <p style="font-size: 12px">
+            <th class='product-name'>{{ 'Product Price' | translate }}</th>
+            <td *ngFor='let product of products' class='grid-link__title' style='max-width: 400px'>
+              <ng-container *ngIf='product.offerValue'>
+                <p style='font-size: 12px'>
                   <del>{{ currencyService.getPriceLabel(product) }}</del>
-                  <span class="ml-2 px-0" style="color: #e53935; font-size: 12px"
+                  <span class='ml-2 px-0' style='color: #e53935; font-size: 12px'
                   >{{ product.offerValue
-                    }}<span *ngIf="product.isPercent" style="color: #e53935; font-size: 12px">% </span>off</span
+                    }}<span *ngIf='product.isPercent' style='color: #e53935; font-size: 12px'>% </span>off</span
                   >
                 </p>
                 <p>{{ currencyService.getOfferLabel(product) }}</p>
               </ng-container>
-              <ng-container *ngIf="!product.offerValue">
+              <ng-container *ngIf='!product.offerValue'>
                 <p>{{ currencyService.getPriceLabel(product) }}</p>
               </ng-container>
-              <p class="mat-body-2" style="font-size: 14px">
+              <p class='mat-body-2' style='font-size: 14px'>
                 {{ 'Compra a partir de ' | translate }}
                 {{ product.minSale }}
                 {{ ' unidades' | translate }}
@@ -74,50 +74,50 @@
           </tr>
           <!-- Product Images -->
           <tr>
-            <th class="product-name">{{ 'Product Image' | translate }}</th>
-            <td *ngFor="let product of products" class="item-row" style="max-width: 400px">
+            <th class='product-name'>{{ 'Product Image' | translate }}</th>
+            <td *ngFor='let product of products' class='item-row' style='max-width: 400px'>
               <img
-                *ngIf="product.Images && product.Images.length"
-                [src]="imageUrl + product.Images[0].image"
-                class="featured-image"
-                width="185"
+                *ngIf='product.Images && product.Images.length'
+                [src]='imageUrl + product.Images[0].image'
+                class='featured-image'
+                width='185'
               />
               <img
-                *ngIf="!(product.Images && product.Images.length)"
-                class="featured-image"
-                src="../../../../assets/images/noImage.jpg"
-                width="185"
+                *ngIf='!(product.Images && product.Images.length)'
+                class='featured-image'
+                src='../../../../assets/images/noImage.jpg'
+                width='185'
               />
             </td>
           </tr>
           <!-- Product Description -->
           <tr>
-            <th class="product-name">{{ 'Product Description' | translate }}</th>
-            <td *ngFor="let product of products" class="item-row" style="max-width: 400px">
+            <th class='product-name'>{{ 'Product Description' | translate }}</th>
+            <td *ngFor='let product of products' class='item-row' style='max-width: 400px'>
               <div
-                *ngIf="product.description != null"
+                *ngIf='product.description != null'
                 [id]="'ProductId' + product.id"
-                [innerHTML]="this.utilsService.publicSetDescription(product.description, language)"
-                class="InnerHtmlContent"
+                [innerHTML]='this.utilsService.publicSetDescription(product.description, language)'
+                class='InnerHtmlContent'
               ></div>
               <div
-                *ngIf="product.description == null"
+                *ngIf='product.description == null'
                 [id]="'ProductId' + product.id"
                 [innerHTML]="'No tiene descripción'"
-                class="InnerHtmlContent"
+                class='InnerHtmlContent'
               ></div>
             </td>
           </tr>
           <tr>
-            <th class="product-name">{{ 'Categoría' | translate }}</th>
-            <td *ngFor="let product of products" class="item-row" style="max-width: 400px">
+            <th class='product-name'>{{ 'Categoría' | translate }}</th>
+            <td *ngFor='let product of products' class='item-row' style='max-width: 400px'>
               {{ product.Category.name[language] ? product.Category.name[language] : product.Category.name['es'] }}
             </td>
           </tr>
           <tr>
-            <th class="product-name">{{ 'Valoración' | translate }}</th>
-            <td *ngFor="let product of products" class="item-row" style="max-width: 400px">
-              <guachos-rating [value]="product.rating"></guachos-rating>
+            <th class='product-name'>{{ 'Valoración' | translate }}</th>
+            <td *ngFor='let product of products' class='item-row' style='max-width: 400px'>
+              <guachos-rating [value]='product.rating'></guachos-rating>
             </td>
           </tr>
           <!-- Product Availability -->
