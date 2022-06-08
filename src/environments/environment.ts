@@ -33,7 +33,7 @@ export const environment = {
   url: 'http://tienda.tiendalocal.com:4308',
   urlAboutUs: 'http://tienda.tiendalocal.com:4308',
 
-  address: 'Pymes Bulevar',
+  address: 'Mi Bulevar',
   localDatabaseUsers: true,
 
   contacts: {
@@ -49,11 +49,11 @@ export const environment = {
 
   meta: {
     mainPage: {
-      title: 'Pymes Bulevar',
+      title: 'Mi Bulevar',
       description: 'Tienda online desarrollada con el framework Angular permite la modelación de negocios B2C and C2C',
       keywords: 'HTML, CSS, JavaScript, Angular, Tienda Online B2B, comercio online',
-      shareImg: 'https://www.pymesbulevar.com/assets/images/share-img.png',
-      url: 'https://www.pymesbulevar.com/',
+      shareImg: 'https://www.mibulevar.com/assets/images/share-img.png',
+      url: 'https://www.mibulevar.com/',
     },
   },
 
