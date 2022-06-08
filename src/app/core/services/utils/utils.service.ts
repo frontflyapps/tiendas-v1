@@ -157,6 +157,15 @@ export class UtilsService {
     }
   }
 
+  getLang() {
+    try {
+      let lang = JSON.parse(localStorage.getItem('language'));
+      return lang.lang || 'es';
+    } catch (error) {
+      return 'es';
+    }
+  }
+
   public isObjectEquals(x, y): boolean {
     if (x === y) {
       return true;
@@ -201,7 +210,7 @@ export class UtilsService {
 
   keyPressAlpha(event) {
     const inp = String.fromCharCode(event.keyCode);
-    if (/[a-zA-Z]/.test(inp)) {
+    if (/[a-zA-Z ]/.test(inp)) {
       return true;
     } else {
       event.preventDefault();
@@ -221,7 +230,7 @@ export class UtilsService {
 
   keyPressAlphaAndNumbers(event) {
     const inp = String.fromCharCode(event.keyCode);
-    if (/[a-zA-Z0-9]/.test(inp)) {
+    if (/[a-zA-Z0-9 ]/.test(inp)) {
       return true;
     } else {
       event.preventDefault();
@@ -269,4 +278,21 @@ export class UtilsService {
   //     return true;
   //   }
   // }
+  generateUuid(): string {
+    let tempId = '';
+
+    tempId = this.generator();
+
+    return tempId;
+  }
+
+  private generator(): string {
+    const isString = `${this.S4()}${this.S4()}-${this.S4()}-${this.S4()}-${this.S4()}-${this.S4()}${this.S4()}${this.S4()}`;
+
+    return isString;
+  }
+
+  private S4(): string {
+    return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+  }
 }

@@ -1,7 +1,16 @@
 import { ConfirmPaymentOkComponent } from './confirm-payment-ok/confirm-payment-ok.component';
 import { CookieService } from 'ngx-cookie-service';
 import { MatSidenav } from '@angular/material/sidenav';
-import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+  AfterViewChecked,
+  AfterViewInit,
+  Component,
+  HostListener,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  ViewEncapsulation,
+} from '@angular/core';
 import { Product } from '../../modals/product.model';
 import { CartItem } from '../../modals/cart-item';
 import { ProductService } from '../shared/services/product.service';
@@ -138,6 +147,19 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     });
     this.searchForm = new FormControl(null, []);
+
+    this.tour = new Shepherd.Tour({
+        useModalOverlay: false,
+        defaultStepOptions: {
+          classes: 'shadow-md bg-purple-dark',
+          scrollTo: true,
+        },
+      });
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.innerWidth = window.innerWidth;
   }
 
   ngOnInit() {
@@ -201,6 +223,14 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
     this.loggedInUserService.$languageChanged.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {
       this._language = data.lang;
     });
+
+    /**
+     * Open location dialog when app start
+     */
+    const location = JSON.parse(localStorage.getItem('location'));
+    if (!location.province || !location.municipality) {
+      this.openSetLocation();
+    }
   }
 
   setSubscriptionToCookie() {
@@ -213,13 +243,13 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
       });
   }
 
-  getFromStorage() {
+  getFromStorage(): void | boolean {
     try {
       const menuData = this.localStorageService.getFromStorage(MENU_DATA);
 
       if (!menuData || !menuData?.timespan) {
         this.getMenu();
-        return;
+        return false;
       }
 
       if (this.localStorageService.iMostReSearch(menuData?.timespan, environment.timeToResearchMenuData)) {
@@ -342,25 +372,25 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
       panelClass: 'app-confirm-create-business',
       maxWidth: '100vw',
       maxHeight: '100%',
-      width: '70em',
-      height: 'auto',
+      // width: '70em',
+      // height: 'auto',
       disableClose: true,
       data: {},
     });
     dialogRef.afterClosed().subscribe((result) => {
-      // if (result) {
-      //   this.goToDigitalPlatformTransfermovil();
-      // }
+      if (result) {
+        // this.router.navigate(['/become-a-seller']).then();
+      }
     });
   }
 
-  goToDigitalPlatformTransfermovil() {
-    this.confirmCreateBusinessService
-      .etecsaSignUp()
-      .subscribe(dataResponse => {
-        console.log('dataResponse', dataResponse);
-      });
-  }
+  // goToDigitalPlatformTransfermovil() {
+  //   this.confirmCreateBusinessService
+  //     .etecsaSignUp()
+  //     .subscribe(dataResponse => {
+  //       console.log('dataResponse', dataResponse);
+  //     });
+  // }
 
   // ///////////////////////////////////////////////////////
   _listenToSocketIO() {
@@ -446,26 +476,17 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  private getMenu() {
-    this.categoryService.getMenu()
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((data) => {
-        const _response: any = {};
-        _response.menu = JSON.parse(JSON.stringify(data.data));
-        _response.timespan = new Date().getTime();
-        this.localStorageService.setOnStorage(MENU_DATA, _response);
-
-        this.setCategories(_response.menu);
-      });
-  }
-
   openSetLocation() {
     const dialogRef = this.dialog.open(DialogSetLocationComponent, {
       panelClass: 'app-dialog-set-location',
       maxWidth: '100vw',
       maxHeight: '100vh',
       width: '35rem',
-      data: {},
+      data: {
+        provinceData: this.province,
+        municipalityData: this.municipality,
+        businessData: this.business,
+      },
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
@@ -489,17 +510,103 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
   setLocationData(locationOnLocalStorage) {
     this.municipality = locationOnLocalStorage.municipality;
     this.province = locationOnLocalStorage.province;
+    this.business = locationOnLocalStorage.business;
   }
 
   initSubsLocation() {
-    this.locationService
-      .location$
-      .pipe(
-        distinctUntilChanged(),
-        takeUntil(this._unsubscribeAll))
+    this.locationService.location$
+      .pipe(distinctUntilChanged(), takeUntil(this._unsubscribeAll))
       .subscribe((newLocation) => {
         this.setLocationData(newLocation);
         localStorage.setItem(LOCATION, JSON.stringify(newLocation));
       });
+  }
+
+  private getMenu() {
+    this.categoryService
+      .getMenu()
+      .subscribe((data) => {
+        console.log('-> data private getMenu()', data);
+
+        let _response: any = {};
+        _response['menu'] = JSON.parse(JSON.stringify(data.data));
+        _response['timespan'] = new Date().getTime();
+
+        this.localStorageService.setOnStorage(MENU_DATA, _response);
+
+        this.setCategories(_response.menu);
+      });
+  }
+
+  ngAfterViewInit() {
+    if (innerWidth >= 960) {
+      this.addAttention('.info-location');
+    } else {
+      this.addAttention('.mobile-location');
+    }
+  }
+
+  public addAttention(attentionClass: string) {
+    const dialog = this.dialog;
+    const location = JSON.parse(localStorage.getItem('location'));
+    let locationServ = location.locationService;
+
+    this.tour.addStep({
+      id: 'example-step',
+      text: `Los primeros resultados de búsqueda serán los productos de tiendas más cercanas a:<br><br><strong>${location?.province?.name}</strong> &nbsp; ${location?.municipality ? location?.municipality.name : ''}.`,
+      attachTo: {
+        element: attentionClass,
+        on: 'bottom',
+      },
+      classes: 'example-step-extra-class',
+      buttons: [
+        {
+          text: 'Olvidar',
+          classes: 'forgot-button',
+          action() {
+            // Dismiss the tour when the forgot button is clicked
+            localStorage.setItem('location-attention', 'yes');
+            return this.cancel();
+          },
+        },
+        {
+          text: 'Cambiar',
+          action() {
+            return this.hide();
+          },
+        },
+        {
+          text: 'Aceptar',
+          classes: 'accept-button',
+          action: this.tour.complete
+        },
+      ],
+      when: {
+        hide: function () {
+          const dialogRef = dialog.open(DialogSetLocationComponent, {
+            panelClass: 'app-dialog-set-location',
+            maxWidth: '100vw',
+            maxHeight: '100vh',
+            width: '35rem',
+            data: {
+              provinceData: location.province,
+              municipalityData: location.municipality,
+              businessData: location.business,
+            },
+          });
+          dialogRef.afterClosed().subscribe((result) => {
+            if (result) {
+              locationServ.updateLocation(result);
+            }
+          });
+        },
+
+      },
+    });
+
+    // Initiate the tour
+    if (!localStorage.getItem('location-attention') && location.province != null) {
+      this.tour.start();
+    }
   }
 }

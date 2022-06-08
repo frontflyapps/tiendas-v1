@@ -2,7 +2,6 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { GuachosImagePickerModule } from 'guachos-image-picker';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -39,6 +38,8 @@ import { DialogSetLocationComponent } from './dialog-set-location/dialog-set-loc
 import { MatSelectModule } from '@angular/material/select';
 import { MyContactsComponent } from './my-contacts/my-contacts.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { GuachosImagePickerModule } from 'guachos-image-picker';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [
@@ -74,7 +75,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatDatepickerModule,
     MatNativeDateModule,
     MatToolbarModule,
-    GuachosImagePickerModule,
     MatTooltipModule,
     FlexLayoutModule,
     MatButtonModule,
@@ -82,6 +82,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     FooterModule,
     MatSelectModule,
     MatProgressSpinnerModule,
+    MatAutocompleteModule,
+    GuachosImagePickerModule,
   ],
   providers: [SidebarMenuService, PreviousRouteService, ConfirmCreateBusinessService],
 })
