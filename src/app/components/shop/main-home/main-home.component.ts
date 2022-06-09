@@ -244,6 +244,8 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     this.bigBanner2 = data.promotions.filter((promotion) => promotion.type === 'bigBannerPromo2');
     this.loadingServices = false;
 
+    this.getDataProducts();
+
     this.loadingPopular = false;
     this.loadingFeatured = false;
     this.loadingAllProduct = false;
