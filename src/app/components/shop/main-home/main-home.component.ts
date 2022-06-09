@@ -115,6 +115,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     private httpClient: HttpClient,
     private metaService: MetaService,
     public productDataService: ProductDataService,
+    private productService: ProductService,
     private globalStateOfCookieService: GlobalStateOfCookieService,
   ) {
     this._unsubscribeAll = new Subject<any>();
@@ -136,15 +137,6 @@ export class MainHomeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.globalStateOfCookieService.getCookieState() ? this.initComponent() : this.setSubscriptionToCookie();
-
-    // this.getBestSellers()
-    //   .then((data: any) => {
-    //     this.bestSellersProducts = data.data;
-    //     this.loadingBestSellers = false;
-    //   })
-    //   .catch((e) => {
-    //     this.loadingBestSellers = false;
-    //   });
   }
 
   initComponent() {
@@ -155,6 +147,10 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     this.loadingBestSellers = true;
 
     this.getPFDFromStorage();
+
+    this.productService.updatedProducts$.subscribe(response => {
+      this.getDataProducts();
+    });
 
     this.loggedInUserService.$languageChanged.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {
       this.language = data.lang;
@@ -171,6 +167,38 @@ export class MainHomeComponent implements OnInit, OnDestroy {
         this.initComponent();
       }
     });
+  }
+
+  getProducts() {
+    this.productService.getProduct.next();
+  }
+
+  setValuesFromResponse(response) {
+    this.productDataService.popularProducts = UtilsService.getAnArrayFromIdsAndArray(response.products, response.rating);
+    this.productDataService.featuredProducts = UtilsService.getAnArrayFromIdsAndArray(response.products, response.isFeatured);
+    this.productDataService.bestSellerProducts = UtilsService.getAnArrayFromIdsAndArray(response.products, response.bestSell);
+    this.productDataService.allProducts = UtilsService.getAnArrayFromIdsAndArray(response.products, response.lastCreated);
+  }
+
+  getDataProducts() {
+    try {
+      const pfd = this.localStorageService.getFromStorage(FRONT_PRODUCT_DATA);
+      if (!pfd) {
+        this.getProducts();
+        return;
+      }
+
+      if (this.localStorageService.iMostReSearch(pfd?.timespan, environment.timeToResearchProductData)) {
+        this.getProducts();
+      } else {
+        this.setValuesFromResponse(pfd);
+      }
+    } catch (e) {
+    }
+    this.allProducts = this.productDataService.allProducts;
+    this.popularProducts = this.productDataService.popularProducts;
+    this.featuredProducts = this.productDataService.featuredProducts;
+    this.bestSellersProducts = this.productDataService.bestSellerProducts;
   }
 
   getPFDFromStorage() {
@@ -215,11 +243,6 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     this.bigBanner1 = data.promotions.filter((promotion) => promotion.type === 'bigBannerPromo1');
     this.bigBanner2 = data.promotions.filter((promotion) => promotion.type === 'bigBannerPromo2');
     this.loadingServices = false;
-
-    this.allProducts = this.productDataService.allProducts;
-    this.popularProducts = this.productDataService.popularProducts;
-    this.featuredProducts = this.productDataService.featuredProducts;
-    this.bestSellersProducts = this.productDataService.bestSellerProducts;
 
     this.loadingPopular = false;
     this.loadingFeatured = false;
