@@ -99,7 +99,7 @@ export class ProductComponent implements OnInit, OnDestroy {
           });
       }
     } else {
-        this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect)
+      this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
     }
   }
 

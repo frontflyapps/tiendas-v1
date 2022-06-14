@@ -225,7 +225,7 @@
               </div>
               <mat-error *ngIf="fromPassRegister.controls['password'].hasError('pattern')">
                 {{
-                'La contraseña debe contener 8 dígitos y al menos una mayúscula, una minúscula, un número y un caracter especial.'
+                'La contraseña debe contener 8 dígitos y al menos una mayúscula, una minúscula, un número y un caracter especial (.!@#$&*~^)'
                 | translate
                 }}
               </mat-error>

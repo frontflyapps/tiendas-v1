@@ -1,7 +1,6 @@
 import { UtilsService } from 'src/app/core/services/utils/utils.service';
-import { takeUntil } from 'rxjs/operators';
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { NavigationService } from '../../../core/services/navigation/navigation.service';
+import { filter, map, takeUntil } from 'rxjs/operators';
+import { Component, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
 import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-in-user.service';
 import { Subject } from 'rxjs';
 import { CartService } from '../../shared/services/cart.service';
@@ -9,6 +8,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { IPagination } from 'src/app/core/classes/pagination.class';
 import { MyOrdersService } from '../../my-orders/service/my-orders.service';
 import { GlobalStateOfCookieService } from '../../../core/services/request-cookie-secure/global-state-of-cookie.service';
+import { CategoryMenuNavService } from '../../../core/services/category-menu-nav.service';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-menu',
@@ -16,7 +17,6 @@ import { GlobalStateOfCookieService } from '../../../core/services/request-cooki
   styleUrls: ['./menu.component.scss'],
 })
 export class MenuComponent implements OnInit, OnDestroy {
-  navItems: any[] = [];
   loggedInUser: any = null;
   _unsubscribeAll: Subject<any>;
   shoppingCartItems: any[] = [];
@@ -29,25 +29,40 @@ export class MenuComponent implements OnInit, OnDestroy {
     order: '-createdAt',
     total: 0,
   };
+  searchUrlParams;
 
   constructor(
-    public navigationService: NavigationService,
     private cartService: CartService,
     private loggedInUserService: LoggedInUserService,
     public utilsSer: UtilsService,
     public translate: TranslateService,
     private ordersService: MyOrdersService,
     private globalStateOfCookieService: GlobalStateOfCookieService,
+    private categoryMenuServ: CategoryMenuNavService,
+    private activatedRute: ActivatedRoute,private router: Router
   ) {
-    this.navItems = navigationService.getNavItems();
+
+    this.router.events.pipe(
+      // identify navigation end
+      filter((event) => (
+        event instanceof NavigationEnd && event.url.includes('products/search')
+        )
+      ),
+      // now query the activated route
+      map(() => this.activatedRute),
+    ).subscribe((route: ActivatedRoute) => {
+      this.searchUrlParams = route.snapshot.queryParams ? route.snapshot.queryParams : '';
+      this.getCategoriesForMenu();
+    });
+
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
     this._unsubscribeAll = new Subject();
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
   }
 
-  @Input() set _categories(value) {
-    this.categories = [...value];
-  }
+  // @Input() set _categories(value) {
+  //   this.categories = value;
+  // }
 
   ngOnInit() {
     this.globalStateOfCookieService.getCookieState()
@@ -59,6 +74,9 @@ export class MenuComponent implements OnInit, OnDestroy {
     if (this.loggedInUser) {
       this.getOrdersPayment();
     }
+
+   this.getCategoriesForMenu();
+
     this.loggedInUserService.$loggedInUserUpdated.pipe(takeUntil(this._unsubscribeAll)).subscribe(() => {
       this.loggedInUser = this.loggedInUserService.getLoggedInUser();
       if (!this.loggedInUser) {
@@ -84,6 +102,17 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.loggedInUserService.$languageChanged.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {
       this.language = data.lang;
     });
+  }
+
+  getCategoriesForMenu(){
+    this.categoryMenuServ.menuCategories$.subscribe((data) => {
+      if (this.searchUrlParams) {
+        this.categories = this.categoryMenuServ.updateCategories(data, parseInt(this.searchUrlParams.CategoryId));
+      } else {
+        this.categories = this.categoryMenuServ.updateCategories(data);
+      }
+    });
+    this.categoryMenuServ.setCategories(this.categories)
   }
 
   setSubscriptionToCookie() {
@@ -123,4 +152,5 @@ export class MenuComponent implements OnInit, OnDestroy {
         this.ordersPayment = value.data;
       });
   }
+
 }

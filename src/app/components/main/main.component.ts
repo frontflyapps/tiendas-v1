@@ -47,6 +47,7 @@ import { LocalStorageService } from '../../core/services/localStorage/localStora
 import { GlobalStateOfCookieService } from '../../core/services/request-cookie-secure/global-state-of-cookie.service';
 import Shepherd from 'shepherd.js';
 import { compile } from 'sass';
+import { CategoryMenuNavService } from '../../core/services/category-menu-nav.service';
 
 @Component({
   selector: 'app-main',
@@ -127,6 +128,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
     private confirmCreateBusinessService: ConfirmCreateBusinessService,
     private locationService: LocationService,
     private globalStateOfCookieService: GlobalStateOfCookieService,
+    private categoryMenuServ: CategoryMenuNavService
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
@@ -216,17 +218,16 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
       this._listenToSocketIO();
     }
 
-    this.getFromStorage();
+    // this.getFromStorage();
+    this.getMenu();
 
     this.loggedInUserService.$languageChanged.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {
       this._language = data.lang;
     });
 
-    /**
-     * Open location dialog when app start
-     */
+    // Open location dialog when app start
     const location = JSON.parse(localStorage.getItem('location'));
-    if (!location.province || !location.municipality) {
+    if (!location.province) {
       this.openSetLocation();
     }
   }
@@ -253,15 +254,22 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
       if (this.localStorageService.iMostReSearch(menuData?.timespan, environment.timeToResearchMenuData)) {
         this.getMenu();
       } else {
-        this.setCategories(menuData.menu);
+        this.saveCategories(menuData.menu);
       }
     } catch (e) {
       this.getMenu();
     }
   }
 
-  setCategories(menuData) {
-    this.categories = menuData;
+  /**
+   * Saving categories received from API
+   * @param menuData
+   */
+  saveCategories(menuData) {
+    this.categories = menuData.map(object => {
+      return {...object, active: false};
+    });
+    this.categoryMenuServ.setCategories(this.categories);
   }
 
   onSearch() {
@@ -526,13 +534,13 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
       .subscribe((data) => {
         console.log('-> data private getMenu()', data);
 
-        let _response: any = {};
-        _response['menu'] = JSON.parse(JSON.stringify(data.data));
-        _response['timespan'] = new Date().getTime();
+        // let _response: any = {};
+        // _response['menu'] = JSON.parse(JSON.stringify(data.data));
+        // _response['timespan'] = new Date().getTime();
+        //
+        // this.localStorageService.setOnStorage(MENU_DATA, _response);
 
-        this.localStorageService.setOnStorage(MENU_DATA, _response);
-
-        this.setCategories(_response.menu);
+        this.saveCategories(data.data);
       });
   }
 
@@ -547,11 +555,11 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
   public addAttention(attentionClass: string) {
     const dialog = this.dialog;
     const location = JSON.parse(localStorage.getItem('location'));
-    let locationServ = location.locationService;
+    let locationServ = this.locationService;
 
     this.tour.addStep({
       id: 'example-step',
-      text: `Los primeros resultados de búsqueda serán los productos de tiendas más cercanas a:<br><br><strong>${location?.province?.name}</strong> &nbsp; ${location?.municipality ? location?.municipality.name : ''}.`,
+      text: `Los primeros resultados de búsqueda serán los productos de tiendas más cercanas a:<br><br><strong>${location?.province?.name}</strong> &nbsp; ${location?.municipality ? location?.municipality.name : ''}`,
       attachTo: {
         element: attentionClass,
         on: 'bottom',

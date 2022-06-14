@@ -4,10 +4,12 @@
     <!--    <a [routerLink]="['']" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="router-link-active"-->
     <!--       class="itemCategory"-->
     <!--       mat-button>{{ 'Inicio' | translate }}</a>-->
-    <a [routerLink]="['/shops-list']" class="itemCategory" mat-button routerLinkActive="router-link-active">{{
+
+<!--    [routerLinkActiveOptions]="{exact:true}"-->
+    <a [routerLink]="['/shops-list']" class="itemCategory" mat-button routerLinkActive="router-link-active" [routerLinkActiveOptions]="{exact:true}">{{
       'Nuestras tiendas' | translate
       }}</a>
-    <a [routerLink]="['/products/search']" class="itemCategory" mat-button routerLinkActive="router-link-active">{{
+    <a [routerLink]="['/products/search']" class="itemCategory" mat-button routerLinkActive="router-link-active" [routerLinkActiveOptions]="{exact:true}">{{
       'Todos los productos' | translate
       }}</a>
     <!--    <a [routerLink]="['/pages/compare']" routerLinkActive="router-link-active" class="itemCategory" mat-button>{{-->
@@ -39,9 +41,10 @@
 
     <!--    <a [routerLink]="['/products/search']" routerLinkActive="router-link-active"-->
     <a
-      *ngFor="let category of categories"
+      *ngFor="let category of categories; let i = index"
       [queryParams]="{ CategoryId: category.id }"
       [routerLink]="['/products/search']"
+      [ngClass]="category.active ? 'router-link-active' : ''"
       class="itemCategory"
       mat-button
       >{{ category.name | parseLang: utilsSer.getLang() }}</a

@@ -226,6 +226,12 @@ app-main,
         -webkit-box-shadow: none;
         box-shadow: none;
         -webkit-appearance: none;
+        .mat-icon {
+          line-height: inherit !important;
+          font-size: 27px;
+          width: 27px;
+          height: 27px;
+        }
       }
     }
 

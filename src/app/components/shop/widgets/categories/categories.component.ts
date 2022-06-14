@@ -55,7 +55,8 @@ export class CategoriesComponent implements OnInit, OnDestroy {
       this.language = data.lang;
     });
 
-    this.getCatFromStorage();
+    this.getCategories();
+    // this.getCatFromStorage();
   }
 
   getCatFromStorage() {

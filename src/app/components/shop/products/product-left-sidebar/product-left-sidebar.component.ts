@@ -32,6 +32,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
   public page: any;
   public viewType = 'grid';
   public viewCol = 100;
+  public noResults: boolean;
 
   public itemsOnCart = 0;
   public theCart: Cart;
@@ -96,7 +97,8 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
     this.route.queryParams.pipe(takeUntil(this._unsubscribeAll)).subscribe((data) => {
       this.isStarting = true;
-      this.paramsSearch.categoryIds = data?.categoryIds ? data.categoryIds : this.paramsSearch.categoryIds;
+      // this.paramsSearch.categoryIds = data?.categoryIds ? data.categoryIds : this.paramsSearch.categoryIds;
+      this.paramsSearch.categoryIds = data?.categoryIds ? data.categoryIds : [];
       this.paramsSearch.brandIds = data?.brandIds ? data.brandIds : [];
       this.paramsSearch.minPrice = data?.minPrice ? data.minPrice : 0;
       this.paramsSearch.maxPrice = data?.maxPrice ? data.maxPrice : null;
@@ -108,7 +110,6 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
       this.queryProduct.total = data?.total ? data.total : 0;
       this.queryProduct.page = data?.page ? data.page : 0;
       this.queryProduct.order = data?.order ? data.order : '-id';
-
       if (data.CategoryId) {
         this.paramsSearch.categoryIds = [data.CategoryId];
         this.paramsSearch.minPrice = 0;
@@ -149,13 +150,6 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
       this.search();
     });
 
-    this.metaService
-      .setMeta
-      // environment.meta?.mainPage?.title,
-      // environment.meta?.mainPage?.descrip´tion,
-      // environment.meta?.mainPage?.shareImg,
-      // environment.meta?.mainPage?.keywords,
-      ();
   }
 
   ngOnInit() {
@@ -319,6 +313,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
             this.allProducts = [];
             this.allProducts = data.data.slice(0, this.initLimit * (this.numberOfSearch + 1));
             this.allProductsResponse = data.data;
+            this.noResults = data.info;
             console.log('allProductsResponse length: ' + this.allProductsResponse.length);
             this.isStarting = false;
             setTimeout(() => {

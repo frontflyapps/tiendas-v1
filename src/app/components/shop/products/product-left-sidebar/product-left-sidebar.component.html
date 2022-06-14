@@ -102,7 +102,14 @@
           </ng-container>
         </div>
       </div>
-      <div class='all-products' fxFlex='75' fxFlex.lt-md='100' id='topSearchBar'>
+      <div class="all-products" fxFlex="75" fxFlex.lt-md="100" id="topSearchBar">
+        <ng-container *ngIf='noResults && allProductsResponse.length'>
+          <div class='my-5' fxLayout='column' fxLayoutAlign='center center'>
+            <h3 class='mb-2' style='text-align: center'>{{ 'No se encontraron resultados para la ubicación seleccionada' }}</h3>
+            <h2>{{ 'Resultados sugeridos' }}</h2>
+          </div>
+        </ng-container>
+
         <!-- <div fxLayout="row" ngClass.lt-md="mt-3" fxHide.lt-md fxLayoutAlign="space-between center"
           class="filter-row mat-elevation-z1 text-muted">
           <div>
