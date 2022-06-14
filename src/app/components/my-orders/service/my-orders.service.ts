@@ -11,7 +11,7 @@ export class MyOrdersService {
   urlPayment = environment.apiUrl + 'payment';
   urlPaymentId = environment.apiUrl + 'payment/:id';
   httpOptions = {};
-  public $orderItemsUpdated: Subject<any> = new Subject();
+  public $orderItemsUpdated: Subject<any> = new Subject();F
 
   constructor(private httpClient: HttpClient) {
   }

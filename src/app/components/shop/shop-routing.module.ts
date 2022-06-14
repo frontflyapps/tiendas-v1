@@ -11,9 +11,6 @@ const routes: Routes = [
     component: MainHomeComponent,
   },
   { path: 'two', component: MainHomeComponent },
-  // { path: 'three', component: HomeThreeComponent },
-  // { path: 'four', component: HomeFourComponent },
-  // { path: 'five', component: HomeFiveComponent },
   { path: 'products/search', component: ProductLeftSidebarComponent },
   { path: 'product', component: ProductDetailsComponent },
 ];
