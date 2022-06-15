@@ -183,7 +183,9 @@ export class MyContactsComponent implements OnInit, OnDestroy {
     this.form.get('email').setValue(contact?.email || null);
     this.form.get('identification').setValue(contact?.identification || null);
     this.form.get('phone').setValue(contact?.phone || null);
-    this.form.get('address').setValue(contact?.address || null);
+    this.form.get('street').setValue(contact?.address.street || null);
+    this.form.get('number').setValue(contact?.address.number || null);
+    this.form.get('between').setValue(contact?.address.between || null);
     this.form.get('MunicipalityId').setValue(contact?.MunicipalityId || null);
     this.form.get('ProvinceId').setValue(contact?.ProvinceId || null);
   }
@@ -249,6 +251,7 @@ export class MyContactsComponent implements OnInit, OnDestroy {
   }
 
   editContact(contact) {
+    console.log('hello editor', contact);
     this.isEditing = true;
 
     this.createForm();
