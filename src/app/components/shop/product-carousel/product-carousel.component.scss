@@ -61,6 +61,20 @@
       //  }
       //}
     }
+    .location-label {
+      position: absolute;
+      top: -6px;
+      left: -6px;
+      background-color: $theme-main-accent;
+      color: white;
+      border-radius: 4px;
+      span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2px 8px;
+      }
+    }
   }
 }
 
