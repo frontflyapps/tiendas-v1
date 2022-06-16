@@ -13,7 +13,7 @@ import { LOCATION_DATA } from '../../../core/classes/global.const';
 import { environment } from '../../../../environments/environment';
 import { ContactsService } from '../../../core/services/contacts/contacts.service';
 import { Subject } from 'rxjs';
-import { debounceTime, takeUntil } from 'rxjs/operators';
+import { debounceTime, takeUntil, tap } from 'rxjs/operators';
 import { CUBAN_PHONE_START_5, EMAIL_REGEX, IDENTITY_PASSPORT } from '../../../core/classes/regex.const';
 
 @Component({
@@ -166,17 +166,10 @@ export class MyContactsComponent implements OnInit, OnDestroy {
   }
 
   onMarkAsFeaturedContact(contact) {
-    if (contact.selected) {
-      contact.selected = false;
-      this.contactsService.edit(contact).subscribe((contactRes) => {
-        // this.getContacts();
-      });
-    } else {
-      contact.selected = true;
-      this.contactsService.edit(contact).subscribe((contactRes) => {
-        // this.getContacts();
-      });
-    }
+    contact.selected = !contact.selected;
+    this.setEditingContactDefault(contact);
+    // this.contactsService.getContacts();
+    console.log(this.contactsService.allContacts);
   }
 
   genSubxProvince() {
@@ -252,6 +245,23 @@ export class MyContactsComponent implements OnInit, OnDestroy {
       if (idx >= 0) {
         this.contactsService.allContacts[idx] = { ...contactRes.data };
       }
+
+      this.onCreateContact = false;
+    });
+  }
+
+  setEditingContactDefault(data) {
+    this.contactsService.edit(data).subscribe((contactRes) => {
+      const idx = this.contactsService.allContacts.findIndex((item) => item.id === data.id);
+      let index = 0;
+      this.contactsService.allContacts.forEach(() => {
+        if(idx === index) {
+          this.contactsService.allContacts[idx] = contactRes.data;
+        } else {
+          this.contactsService.allContacts[index].selected = !contactRes.data.selected;
+        }
+        index ++;
+      });
 
       this.onCreateContact = false;
     });

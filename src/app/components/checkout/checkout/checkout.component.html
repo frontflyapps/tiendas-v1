@@ -59,18 +59,18 @@
               >
                 <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="gappx">
                   <div fxLayoutAlign="start center">
-                    <img
+                    <img fxHide.xs
                       [src]="imageUrl + shipping?.Business?.logo"
                       onerror="this.onerror=null;this.src='assets/images/noImage.jpg';"
                       style="height: 32px; width: 32px; border-radius: 50%; object-fit: cover; margin-left: 8px"
                     />
 
                     <div fxLayout='column'>
-                     <span class="ml-2 mat-caption" fxHide.xs style="color: black">
+                     <span class="ml-2 mat-caption" style="color: black">
                       {{ shipping.shippingItems[0]?.Shipping?.Province?.name }}, {{ shipping.shippingItems[0]?.Shipping?.Municipality?.name }}
                     </span>
                       <div fxLayout='row'>
-                    <span class="ml-2 mat-caption" fxHide.xs style="color: black">
+                    <span class="ml-2 mat-caption" style="color: black">
                       {{ 'Entrega a través de ' | translate }}
                     </span>
                         <span class="ml-2 mat-caption" style="color: black"> ({{ shipping?.Business?.name }}) </span>
@@ -130,7 +130,7 @@
                 <ng-container *ngFor="let contact of contactsService.allContacts">
                   <button (click)="onSelectContact(contact)" mat-menu-item>
                     <mat-icon *ngIf='!contact.selected'>person_outline</mat-icon>
-                    <mat-icon *ngIf='contact.selected'>star</mat-icon>
+                    <mat-icon *ngIf='contact.selected' matTooltip="{{ 'Contacto predeterminado' | translate }}">star</mat-icon>
                     <span>{{ contact.name }}&nbsp;{{ contact.lastName }}</span>
                   </button>
                 </ng-container>
