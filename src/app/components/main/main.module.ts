@@ -40,6 +40,7 @@ import { MyContactsComponent } from './my-contacts/my-contacts.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { GuachosImagePickerModule } from 'guachos-image-picker';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [
@@ -75,6 +76,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatDatepickerModule,
     MatNativeDateModule,
     MatToolbarModule,
+    MatSlideToggleModule,
     MatTooltipModule,
     FlexLayoutModule,
     MatButtonModule,

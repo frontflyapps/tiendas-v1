@@ -135,6 +135,7 @@ export class MyContactsComponent implements OnInit, OnDestroy {
   createForm(): void {
     this.form = this.fb.group({
       id: [null],
+      selected: [false],
 
       name: [null, [Validators.required]],
       lastName: [null, [Validators.required]],
@@ -164,6 +165,20 @@ export class MyContactsComponent implements OnInit, OnDestroy {
     // this.form.markAllAsTouched();
   }
 
+  onMarkAsFeaturedContact(contact) {
+    if (contact.selected) {
+      contact.selected = false;
+      this.contactsService.edit(contact).subscribe((contactRes) => {
+        // this.getContacts();
+      });
+    } else {
+      contact.selected = true;
+      this.contactsService.edit(contact).subscribe((contactRes) => {
+        // this.getContacts();
+      });
+    }
+  }
+
   genSubxProvince() {
     console.log('entre a sobxxxxx');
     this.form
@@ -178,6 +193,7 @@ export class MyContactsComponent implements OnInit, OnDestroy {
 
   fillFormByContact(contact) {
     this.form.get('id').setValue(contact?.id || null);
+    this.form.get('selected').setValue(contact?.selected || null);
     this.form.get('name').setValue(contact?.name || null);
     this.form.get('lastName').setValue(contact?.lastName || null);
     this.form.get('email').setValue(contact?.email || null);

@@ -169,6 +169,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   fields: any;
   shippingIsRequired = false;
 
+  defaultContact: any;
+
   constructor(
     public cartService: CartService,
     public productService: ProductService,
@@ -193,6 +195,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
+    this.setObsContact();
+    this.getContacts();
+
 
     this.activateRoute.queryParams.subscribe((data) => {
       this.cartId = data.cartId;
@@ -200,7 +205,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       this.cartItemIds =
         this.cartItemIds && this.cartItemIds.constructor != Array ? [this.cartItemIds] : this.cartItemIds;
       this.processToCart();
-      this.buildForm();
+      // this.buildForm();
     });
 
     this.metaService.setMeta(
@@ -209,8 +214,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       environment.meta?.mainPage?.shareImg,
       environment.meta?.mainPage?.keywords,
     );
-
-    this.setObsContact();
   }
 
   public compareById(val1, val2) {
@@ -227,7 +230,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.getContacts();
+    this.buildForm();
+    // this.getContacts();
 
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
     this.rate = 1;
@@ -407,16 +411,14 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       .then((data) => {
         this.cart = data.Cart;
         this.buyProducts = data.CartItems || [];
-        /** Check if is required shipping by business **/
+        // Check if is required shipping by business
         this.shippingIsRequired = data.Cart.Business.shippingRequired;
         if (this.shippingIsRequired) {
           this.form.controls['shippingRequired'].setValidators(Validators.required);
           this.form.controls['ShippingBusinessId'].setValidators(Validators.required);
           this.form.controls['shippingRequired'].updateValueAndValidity();
         }
-        /**
-         * Check if the Pick-Up-Place label has to be displayed
-         **/
+        // Check if the Pick-Up-Place label has to be displayed
         if (data.CartItems.filter((item) => item.Product.type === 'physical').length > 0) {
           this.hasPickUpPlace = true;
         } else {
@@ -496,8 +498,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     }, 0);
   }
 
-  onSubmit(): void {}
-
   ngOnDestroy() {
     this._unsubscribeAll.next(true);
     this._unsubscribeAll.complete();
@@ -513,35 +513,30 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   buildForm() {
-    this.selectedDataPay = this.loggedInUserService._getDataFromStorage('payData');
+    console.log(this.defaultContact, 'default contact from buildform');
+    // this.selectedDataPay = this.loggedInUserService._getDataFromStorage('payData');
     this.form = this.fb.group({
-      name: [this.selectedDataPay?.name || null, [Validators.required]],
-      lastName: [this.selectedDataPay?.lastName || null, [Validators.required]],
-      address: [this.selectedDataPay?.address || null, [Validators.required]],
-      // address: this.fb.group({
-      //   street: [this.selectedDataPay?.address.street || null, [Validators.required]],
-      //   number: [this.selectedDataPay?.address.number || null, [Validators.required]],
-      //   between: [this.selectedDataPay?.address.between || null, [Validators.required]]
-      //   }
-      // ),
-      address2: [this.selectedDataPay?.address2 || null, []],
-      city: [this.selectedDataPay?.city || null, [Validators.required]],
-      regionProvinceState: [this.selectedDataPay?.regionProvinceState || null, [Validators.required]],
-      CountryId: [this.selectedDataPay?.CountryId || 59, [Validators.required]],
-      ProvinceId: [this.selectedDataPay?.ProvinceId || null, [Validators.required]],
-      MunicipalityId: [this.selectedDataPay?.MunicipalityId || null, [Validators.required]],
-      isForCuban: [this.selectedDataPay?.isForCuban || true, [Validators.required]],
-      dni: [
-        this.selectedDataPay?.dni || null,
-        [
-          Validators.required,
-          Validators.minLength(this.CI_Length),
-        ],
-      ],
-      email: [this.selectedDataPay?.email || null, [Validators.required, Validators.pattern(EMAIL_REGEX)]],
-      phone: [this.selectedDataPay?.phone || null, []],
-      info: [this.selectedDataPay?.info || null, []],
-      paymentType: [this.selectedDataPay?.paymentType || PASARELA_BASE, [Validators.required]],
+      name: [null, [Validators.required]],
+      lastName: [null, [Validators.required]],
+
+      // address: [this.selectedDataPay?.address || null, [Validators.required]],
+      address : this.fb.group({
+        street: [null, [Validators.required]],
+        number: [null, [Validators.required]],
+        between: [null, [Validators.required]],
+      }),
+      address2: [null, []],
+      city: [null, [Validators.required]],
+      regionProvinceState: [null, [Validators.required]],
+      CountryId: [ 59, [Validators.required]],
+      ProvinceId: [null, [Validators.required]],
+      MunicipalityId: [null, [Validators.required]],
+      isForCuban: [true, [Validators.required]],
+      dni: [null, [Validators.required, Validators.minLength(this.CI_Length)]],
+      email: [null, [Validators.required, Validators.pattern(EMAIL_REGEX)]],
+      phone: [null, []],
+      info: [null, []],
+      paymentType: [ PASARELA_BASE, [Validators.required]],
       ShippingBusinessId: [null, []],
       currency: [null, [Validators.required]],
       shippingRequired: [null, []],
@@ -583,7 +578,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       let dataCartId = { cartId: this.cartId };
       this.inLoading = true;
       this.cartService.getShippingCart(dataCartId).subscribe((item) => {
-        console.log('getShippingCart', item);
         this.shippingData = item.shippings;
         this.canBeDelivery = item.canBeDelivery;
         this.inLoading = false;
@@ -632,7 +626,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       this.form.get('phone').updateValueAndValidity();
       this.form.get('paymentType').setValue('transfermovil');
     } else {
-      /*Para extrangeros la cosa*/
+      /*Para extranjeros la cosa*/
       this.onlyCubanPeople = false;
       this.form.get('paymentType').setValue('visa');
       this.form.get('phone').setValidators([]);
@@ -658,9 +652,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   ///////////////////////////////
   fetchData() {
-    /**
-     * Getting shippings
-     */
+    // Getting shipping
     let dataCartId = { cartId: this.cartId };
     this.inLoading = true;
     this.cartService.getShippingCart(dataCartId).subscribe(
@@ -674,9 +666,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       },
     );
 
-    /**
-     * Getting custom fields by cartId
-     */
+    // Getting custom fields by cartId
     this.configurationService.getCustomFields(dataCartId).subscribe((data) => {
       this.customFields = data.data;
       if (this.customFields?.length > 0) {
@@ -689,9 +679,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       }
     });
 
-    /**
-     * Getting location data
-     */
+    // Getting location data
     this.regionService.getAllCountries(this.queryCountries).subscribe(
       (data) => {
         this.allCountries = data.data.filter((item) => item.name.es != undefined);
@@ -757,6 +745,11 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       this.form.get('ShippingBusinessId').setValue(this.form.get('ShippingBusinessId').value.BusinessId);
     }
     const data = { ...this.form.value };
+    // data.address = {
+    //   street: data.street,
+    //   number: data.number,
+    //   between: data.between
+    // }
     data.phone = '53' + data.phone;
 
     this.paymentType = JSON.parse(JSON.stringify(data.paymentType));
@@ -766,7 +759,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     // data.currency = this.marketCard === MarketEnum.INTERNATIONAL ? CoinEnum.USD : CoinEnum.CUP;
     data.description = data.description || `Pago realizado por el cliente ${data.name} ${data.lastName}`;
     data.urlClient = environment.url;
-    this.loggedInUserService._setDataToStorage('payData', JSON.stringify(this.form.value));
+    // this.loggedInUserService._setDataToStorage('payData', JSON.stringify(this.form.value));
     data.CartItemIds = this.buyProducts.map((item) => item.id);
     data.CartId = +this.cart.id;
     if (data.paymentType == 'transfermovil') {
@@ -889,6 +882,12 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   setObsContact() {
     this.contactsService.allContacts$.pipe(takeUntil(this._unsubscribeAll)).subscribe((response) => {
       this.contactsService.allContacts = response.data;
+      this.defaultContact = response.data.filter(item => item.selected);
+      // Fill form with default contact
+      if (this.defaultContact) {
+        this.form.patchValue(this.defaultContact[0]);
+        this.form.get('dni').setValue(this.defaultContact[0].identification);
+      }
     });
   }
 
@@ -923,6 +922,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.form.get('ProvinceId').setValue(contact?.ProvinceId);
     this.form.get('MunicipalityId').setValue(contact?.MunicipalityId);
     this.form.get('address').setValue(contact?.address);
+    // this.form.get('street').setValue(contact?.address.street);
+    // this.form.get('number').setValue(contact?.address.number);
+    // this.form.get('between').setValue(contact?.address.between);
     this.form.get('dni').setValue(contact?.identification);
     this.form.get('phone').setValue(contact?.phone);
 
@@ -1080,7 +1082,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     if (this.form.get('shippingRequired').value === null) {
       this.form.get('shippingRequired').setValue(false);
     }
-    this.saveReceiverData(this.form.value);
+    // this.saveReceiverData(this.form.value);
     this.showInfoDataToPay = false;
     this.showPayment = true;
     this.scrollTopDocument();

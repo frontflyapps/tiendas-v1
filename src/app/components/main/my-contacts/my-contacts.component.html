@@ -30,7 +30,23 @@
               fxLayoutAlign="star center"
               fxLayoutGap="1rem"
             >
-              <span class="contact-title" fxFlex="grow"> {{ contact?.name }}&nbsp;{{ contact?.lastName }} </span>
+              <button
+                (click)="onMarkAsFeaturedContact(contact)"
+                *ngIf="!contact.selected"
+                mat-icon-button
+                matTooltip="{{ 'Marcar este contacto como predetermindo' | translate }}"
+              >
+                <mat-icon class="color-grey-700">star_border</mat-icon>
+              </button>
+              <button
+                (click)="onMarkAsFeaturedContact(contact)"
+                *ngIf="contact.selected"
+                mat-icon-button
+                matTooltip="{{ 'Desmarcar este contacto como predetermindo' | translate }}"
+              >
+                <mat-icon style="color: #ffeb3b !important">star</mat-icon>
+              </button>
+              <span class="contact-title" fxFlex="grow">{{ contact?.name }}&nbsp;{{ contact?.lastName }} </span>
 
               <div
                 (click)="editContact(contact)"
@@ -70,6 +86,9 @@
     <ng-container *ngIf="onCreateContact">
       <div [formGroup]="form" fxFlex="100">
         <div fxFlex="100" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="gappx">
+
+          <mat-slide-toggle class='mt-3 mb-3' [formControl]="form.controls['selected']">{{'Contacto por defecto'}}</mat-slide-toggle>
+
           <mat-form-field appearance="outline">
             <mat-label>{{ 'Name' | translate }}</mat-label>
             <input
