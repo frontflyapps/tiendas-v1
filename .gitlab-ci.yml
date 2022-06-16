@@ -4,7 +4,7 @@ cache:
   paths:
     - node_modules
 
-deploy_CePortal:
+deploy_MibulevarPortal:
   only:
     - tienda-online-b2b-mibulevar
   when: always
