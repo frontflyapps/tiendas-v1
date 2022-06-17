@@ -2,8 +2,8 @@ import { MetaService } from 'src/app/core/services/meta.service';
 import { ShowToastrService } from '../../../core/services/show-toastr/show-toastr.service';
 import { IPagination } from '../../../core/classes/pagination.class';
 import { AfterViewInit, Component, HostListener, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { Subject } from 'rxjs';
-import { debounceTime, takeUntil } from 'rxjs/operators';
+import { forkJoin, Subject } from 'rxjs';
+import { debounceTime, switchMap, takeUntil } from 'rxjs/operators';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { environment } from '../../../../environments/environment';
@@ -18,6 +18,7 @@ import { CurrencyService } from '../../../core/services/currency/currency.servic
 import { HttpClient } from '@angular/common/http';
 import { CancelOrderComponent } from '../cancel-order/cancel-order.component';
 import { EditOrderComponent } from '../edit-order/edit-order.component';
+
 
 @Component({
   selector: 'app-my-orders',
@@ -276,22 +277,23 @@ export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onSelectOrder(item) {
     this.loadingSelectedItem = true;
-    this.ordersService.getPayment(item).subscribe(
-      (data) => {
+    this.ordersService.getPayment(item).pipe(
+      switchMap((data:any) => {
         this.selectedOrder = data.data;
         this.canCancel = this.selectedOrder.PaymentItems.some((ele: any) => ele.type === 'physical');
-        this.showOrderDetails = true;
-        this.loadingSelectedItem = false;
-        if (this.isHandset) {
-          setTimeout(() => {
-            this.sidenav.toggle().then();
-          }, 250);
-        }
-      },
-      (e) => {
-        this.loadingSelectedItem = false;
-      },
-    );
+        return this.ordersService.getBusinessConfig(this.selectedOrder.BusinessId);
+      })
+    ).subscribe((resp) => {
+      this.selectedOrder.canEditPersonPayment = resp.data[0].canEditPersonPayment;
+      this.showOrderDetails = true;
+      this.loadingSelectedItem = false;
+      if (this.isHandset) {
+        setTimeout(() => {
+          this.sidenav.toggle().then();
+        }, 250);
+      }
+    });
+
   }
 
   processTransactionData(data) {

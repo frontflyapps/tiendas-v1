@@ -175,19 +175,59 @@
         </div>
       </ng-container>
 
-      <mat-form-field appearance='outline' class='w-100'>
-        <mat-label>{{ 'Street address' | translate }}</mat-label>
-        <textarea
-          [formControl]="this.form.controls['address']"
-          matInput
-          placeholder="{{ 'Street address or your location' | translate }}"
-          required
-          rows='2'
-        ></textarea>
-        <mat-error *ngIf="form.controls['address'].hasError('required')">
-          {{ 'Address' | translate }} <strong>{{ 'is required' | translate }}</strong>
-        </mat-error>
-      </mat-form-field>
+<!--      <mat-form-field appearance='outline' class='w-100'>-->
+<!--        <mat-label>{{ 'Street address' | translate }}</mat-label>-->
+<!--        <textarea-->
+<!--          [formControl]="this.form.controls['address']"-->
+<!--          matInput-->
+<!--          placeholder="{{ 'Street address or your location' | translate }}"-->
+<!--          required-->
+<!--          rows='2'-->
+<!--        ></textarea>-->
+<!--        <mat-error *ngIf="form.controls['address'].hasError('required')">-->
+<!--          {{ 'Address' | translate }} <strong>{{ 'is required' | translate }}</strong>-->
+<!--        </mat-error>-->
+<!--      </mat-form-field>-->
+      <div formGroupName='address'>
+        <div fxLayout="row" fxLayoutGap="10px">
+          <mat-form-field fxFlex="80" appearance="outline">
+            <mat-label>{{ 'Calle' | translate }}</mat-label>
+            <input
+              formControlName="street"
+              matInput
+              placeholder="{{ 'Calle' | translate }}"
+              type="text"
+            />
+            <mat-error *ngIf="form.controls['address'].get('street').hasError('required')">
+              {{ 'Calle' | translate }} <strong>{{ 'is required' | translate }}</strong>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field fxFlex="20" appearance="outline">
+            <mat-label>{{ 'Number' | translate }}</mat-label>
+            <input
+              formControlName="number"
+              matInput
+              placeholder="{{ 'Number' | translate }}"
+              type="text"
+            />
+            <mat-error *ngIf="form.controls['address'].get('number').hasError('required')">
+              {{ 'Number' | translate }} <strong>{{ 'is required' | translate }}</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <mat-form-field appearance="outline" class='w-100'>
+          <mat-label>{{ 'Entre calles' | translate }}</mat-label>
+          <input
+            formControlName="between"
+            matInput
+            placeholder="{{ 'Entre calles' | translate }}"
+            type="text"
+          />
+          <mat-error *ngIf="form.controls['address'].get('between').hasError('required')">
+            {{ 'Entre' | translate }} <strong>{{ 'is required' | translate }}</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
 
       <mat-form-field appearance='outline' class='w-100'>
         <mat-label>{{ 'Add another address' | translate }}</mat-label>

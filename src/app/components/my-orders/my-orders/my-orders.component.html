@@ -648,7 +648,7 @@
 
                   <button
                     (click)="onEditOrder(this.selectedOrder)"
-                    *ngIf="this.selectedOrder.status == 'confirmed'"
+                    *ngIf="this.selectedOrder.status == 'confirmed' && this.selectedOrder.canEditPersonPayment"
                     class="mx-2"
                     color="primary"
                     fxFlex=" 30"

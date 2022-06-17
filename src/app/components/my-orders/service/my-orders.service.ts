@@ -11,7 +11,8 @@ export class MyOrdersService {
   urlPayment = environment.apiUrl + 'payment';
   urlPaymentId = environment.apiUrl + 'payment/:id';
   httpOptions = {};
-  public $orderItemsUpdated: Subject<any> = new Subject();F
+  public $orderItemsUpdated: Subject<any> = new Subject();
+   urlConfig = environment.apiUrl + 'business/config';
 
   constructor(private httpClient: HttpClient) {
   }
@@ -72,5 +73,10 @@ export class MyOrdersService {
     return this.httpClient.patch<any>(this.urlPaymentId.replace(':id', data.id), data, this.httpOptions);
   }
 
+  getBusinessConfig(businessId: number) {
+    let httpParams = new HttpParams();
+    httpParams = httpParams.append('businessId', businessId);
+    return this.httpClient.get<any>(this.urlConfig, { params: httpParams });
+  }
 
 }
