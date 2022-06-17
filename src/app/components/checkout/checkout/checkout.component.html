@@ -442,30 +442,45 @@
                   }}</strong>
                 </mat-error>
               </mat-form-field>
-<!--              <ng-container *ngIf='customFields?.length >0 && fields'>-->
-<!--                <p class="mat-body-2 my-2" style="text-transform: uppercase">-->
-<!--                  {{ "Datos especiales" | translate }}-->
-<!--                  <mat-icon-->
-<!--                    class="iconHelp"-->
-<!--                    matTooltip="{{-->
-<!--                    'Datos especiales que solicita el negocio.' | translate-->
-<!--                  }}"-->
-<!--                    style="cursor: pointer"-->
-<!--                  >help-->
-<!--                  </mat-icon>-->
-<!--                </p>-->
-<!--                <mat-form-field *ngFor='let element of fields' appearance='outline'>-->
-<!--                  <mat-label>{{ element?.name }}</mat-label>-->
-<!--                  <input-->
-<!--                    [formControl]="this.form.controls[element?.name]"-->
-<!--                    matInput-->
-<!--                    placeholder="{{ element?.name }}"-->
-<!--                  />-->
-<!--                  <mat-error *ngIf="form.controls[element?.name].hasError('required')">-->
-<!--                    {{ element?.name }} <strong>{{ 'is required' | translate }}</strong>-->
-<!--                  </mat-error>-->
-<!--                </mat-form-field>-->
-<!--              </ng-container>-->
+              <ng-container *ngIf='customFields?.length >0 && fields'>
+                <p class="mat-body-2 my-2" style="text-transform: uppercase">
+                  {{ "Datos especiales" | translate }}
+                  <mat-icon
+                    class="iconHelp"
+                    matTooltip="{{
+                    'Datos especiales que solicita el negocio.' | translate
+                  }}"
+                    style="cursor: pointer"
+                  >help
+                  </mat-icon>
+                </p>
+
+                <mat-form-field formGroupName='data' *ngFor='let element of fields' appearance='outline'>
+                   <mat-label>{{ element?.name }}</mat-label>
+                   <input
+                     formControlName="{{element.name}}"
+                     matInput
+                     placeholder="{{ element?.name }}"
+                   />
+                   <mat-error *ngIf="form.controls['data'].get(element?.name).hasError('required')">
+                     {{ element?.name }} <strong>{{ 'is required' | translate }}</strong>
+                   </mat-error>
+                  <mat-error *ngIf="form.controls['data'].get(element?.name).hasError('pattern')">
+                    {{ element?.name }} <strong>{{ 'is invalid' | translate }}</strong>
+                  </mat-error>
+                </mat-form-field>
+<!--                  <mat-form-field *ngFor='let element of fields' appearance='outline'>-->
+<!--                    <mat-label>{{ element?.name }}</mat-label>-->
+<!--                    <input-->
+<!--                      [formControl]="this.form.controls[element?.name]"-->
+<!--                      matInput-->
+<!--                      placeholder="{{ element?.name }}"-->
+<!--                    />-->
+<!--                    <mat-error *ngIf="form.controls[element?.name].hasError('required')">-->
+<!--                      {{ element?.name }} <strong>{{ 'is required' | translate }}</strong>-->
+<!--                    </mat-error>-->
+<!--                  </mat-form-field>-->
+              </ng-container>
             </div>
           </div>
 

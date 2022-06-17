@@ -670,11 +670,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.configurationService.getCustomFields(dataCartId).subscribe((data) => {
       this.customFields = data.data;
       if (this.customFields?.length > 0) {
-        for (var val of this.customFields) {
+        for (let val of this.customFields) {
           this.fields = val.data;
-          this.fields.forEach((item) => {
-            this.form.addControl(item.name, new FormControl('', item.required ? Validators.required : []));
-          });
+          this.form.addControl('data', new FormGroup(this.addingControls(this.fields)))
         }
       }
     });
@@ -706,6 +704,28 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         (item) => item.ProvinceId == this.form.get('ProvinceId').value,
       );
     });
+  }
+
+
+  addingControls(fields: any) {
+    let controls = {};
+    fields.forEach((item) => {
+      if (item.type === 'INTEGER') {
+        controls[item.name] = new FormControl(
+          '', item.required ?
+            [Validators.required, Validators.pattern('^[0-9]*$')] :
+            [Validators.pattern('^[0-9]*$')]
+        );
+      }
+      if (item.type === 'STRING') {
+        controls[item.name] = new FormControl(
+          '', item.required ?
+            [Validators.required, Validators.pattern('[A-Za-z]')] :
+            [ Validators.pattern('[A-Za-z]')]
+        );
+      }
+    });
+    return controls;
   }
 
   getTotalPricePerItemCurrency(item: CartItem) {
