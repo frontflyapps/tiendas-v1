@@ -92,15 +92,14 @@
             </div>
           </div>
 
-          <div *ngIf='product.Business?.Province' class="location-label" fxShow>
+          <div *ngIf='product.Business?.Province' class="location-label">
             <span>
               <mat-icon>room</mat-icon>&nbsp;<strong>{{
-                product.Business?.Province?.name | parseLang: utilsService.getLang()
+                product.Business?.Province?.name
               }}</strong
-              >, {{ product.Business?.Municipality?.name | parseLang: utilsService.getLang() }}
+              >, {{ product.Business?.Municipality?.name }}
             </span>
           </div>
-
         </mat-card>
       </div>
     </div>
@@ -199,28 +198,18 @@
               <mat-icon>shopping_cart</mat-icon>
             </button>
 
-            <div class="icons" fxLayout="column">
-              <!-- <a (click)="addToWishlist(product)">
-                    <mat-icon class="mat-icon-lg mat-icon material-icons mr-10">favorite_border</mat-icon>
-                  </a> -->
-              <!--<a (click)="openProductDialog(product)">
-                <mat-icon>info</mat-icon>
-              </a>-->
-              <a (click)="addToCompare(product)">
-                <mat-icon>compare_arrows</mat-icon>
-              </a>
+              <div class="icons" fxLayout="column">
+                <!-- <a (click)="addToWishlist(product)">
+                      <mat-icon class="mat-icon-lg mat-icon material-icons mr-10">favorite_border</mat-icon>
+                    </a> -->
+                <!--<a (click)="openProductDialog(product)">
+                  <mat-icon>info</mat-icon>
+                </a>-->
+                <a (click)="addToCompare(product)">
+                  <mat-icon>compare_arrows</mat-icon>
+                </a>
+              </div>
             </div>
-          </div>
-
-          <div *ngIf='product.Business?.Province' class="location-label" fxShow>
-              <span>
-                <mat-icon>room</mat-icon>&nbsp;<strong>{{
-                  product.Business?.Province?.name | parseLang: utilsService.getLang()
-                }}</strong
-                >, {{ product.Business?.Municipality?.name | parseLang: utilsService.getLang() }}
-              </span>
-            </div>
-
           </mat-card>
       </div>
     </div>
