@@ -116,10 +116,6 @@ export class CartService implements OnDestroy {
 
   // Add to cart
   public async addToCart(product: any, quantity: number, goToPay?: boolean) {
-    // if (this.loggedInUser && this.loggedInUserService.isMessengerUser()) {
-    //   return alert(this.translate.instant('You can not make this action'));
-    // }
-
     let message, status;
     const productName = product.name[this.language] ? product.name[this.language] : product.name['es'];
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
