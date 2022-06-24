@@ -61,6 +61,7 @@
     "ngx-cookie-service": "^10.0.1",
     "ngx-daterangepicker-material": "^3.0.4",
     "ngx-image-zoom": "^0.6.0",
+    "ngx-material-timepicker": "^5.5.3",
     "ngx-pagination": "^5.0.0",
     "ngx-sharebuttons": "^8.0.5",
     "ngx-skeleton-loader": "^2.4.3",
