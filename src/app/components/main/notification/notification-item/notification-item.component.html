@@ -130,8 +130,8 @@
         <div class='mb-2' fxLayout='row' fxLayoutAlign='start center'>
           <div fxFlex='100' fxLayout='column' fxLayoutAlign='start start' style='margin-top: 2px;'>
             <span class='mat-caption grey-700'>{{'Estado'|translate}}</span>
-            <span [class]='this.status[this.order.status].class'>
-              {{this.utilsService.parserLanguage(this.status[this.order.status].status, this.language)}}
+            <span [class]='this.status[this.order?.status]?.class'>
+              {{this.utilsService.parserLanguage(this.status[this.order?.status]?.status, this.language)}}
             </span>
           </div>
         </div>
