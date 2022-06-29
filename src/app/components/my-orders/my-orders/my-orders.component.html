@@ -64,7 +64,8 @@
                         </div>
 
                         <p class="mat-body-1 color-grey-700" style="font-size: 14px">
-                          {{ item.address }}
+<!--                          {{ item.address }}-->
+                          {{ item.address.street }}{{ item.address.number }}{{ item.address.between }}
                         </p>
 
                         <p *ngIf="item.CountryId != 59" class="mat-body-1 color-grey-700" style="font-size: 14px">
@@ -423,7 +424,7 @@
                       {{ 'Dirección' | translate }}
                     </span>
                     <span>
-                      {{ this.selectedOrder.address }}
+                      {{ this.selectedOrder.address.street }}{{ this.selectedOrder.address.number }}{{ this.selectedOrder.address.between }}
                     </span>
                   </div>
                   <div
