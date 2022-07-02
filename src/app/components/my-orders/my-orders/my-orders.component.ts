@@ -284,7 +284,7 @@ export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
         return this.ordersService.getBusinessConfig(this.selectedOrder.BusinessId);
       })
     ).subscribe((resp) => {
-      this.selectedOrder.canEditPersonPayment = resp.data[0].canEditPersonPayment;
+      this.selectedOrder.canEditPersonPayment = resp.data.length ? resp.data[0].canEditPersonPayment : true;
       this.showOrderDetails = true;
       this.loadingSelectedItem = false;
       if (this.isHandset) {
