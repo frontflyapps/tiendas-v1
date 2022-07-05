@@ -60,6 +60,7 @@
                 <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="gappx">
                   <div fxLayoutAlign="start center">
                     <img fxHide.xs
+                      alt = "logo"
                       [src]="imageUrl + shipping?.Business?.logo"
                       onerror="this.onerror=null;this.src='assets/images/noImage.jpg';"
                       style="height: 32px; width: 32px; border-radius: 50%; object-fit: cover; margin-left: 8px"
@@ -262,7 +263,7 @@
               </mat-error>
             </ng-container>
 
-            <!-- SOLO PARA EXTRANGEROS -->
+            <!-- SOLO PARA EXTRANJEROS -->
             <ng-container *ngIf="!onlyCubanPeople">
               <p class="mat-body-2 my-2" style="text-transform: uppercase">
                 {{ "Customer's location data" | translate }}
@@ -325,19 +326,6 @@
               </div>
             </ng-container>
 
-<!--            <mat-form-field appearance="outline" class="w-100">-->
-<!--              <mat-label>{{ 'Street address' | translate }}</mat-label>-->
-<!--              <textarea-->
-<!--                [formControl]="this.form.controls['address']"-->
-<!--                matInput-->
-<!--                placeholder="{{ 'Street address or your location' | translate }}"-->
-<!--                required-->
-<!--                rows="2"-->
-<!--              ></textarea>-->
-<!--              <mat-error *ngIf="form.controls['address'].hasError('required')">-->
-<!--                {{ 'Address' | translate }} <strong>{{ 'is required' | translate }}</strong>-->
-<!--              </mat-error>-->
-<!--            </mat-form-field>-->
             <div formGroupName='address'>
               <div fxLayout="row" fxLayoutGap="10px">
                 <mat-form-field fxFlex="80" appearance="outline">
@@ -379,12 +367,6 @@
               </mat-form-field>
             </div>
 
-            <!-- <mat-form-field fxFlex="100" fxFlex.gt-md="48" fxFlex.md="48" appearance="outline">
-              <mat-label>{{'More info about your address'|translate}}</mat-label>
-              <input matInput placeholder="{{'Apartment, suite, unit, building, floor'|translate}}"
-                [formControl]="this.form.controls['address2']">
-            </mat-form-field> -->
-
             <div fxLayout="row wrap" fxLayoutAlign="space-between center">
               <mat-form-field appearance="outline" fxFlex="100" fxFlex.gt-md="48" fxFlex.md="48" id="CI">
                 <mat-label>{{ 'Identity card' | translate }}</mat-label>
@@ -403,9 +385,6 @@
                 <mat-error *ngIf="form.controls['dni'].hasError('minlength')">
                   {{ 'Longitud mínima' | translate }} <strong>{{ CI_Length }} {{ 'caracteres' | translate }}</strong>
                 </mat-error>
-                <!--                <mat-error *ngIf="form.controls['dni'].hasError('maxlength')">-->
-                <!--                  {{ 'Longitud mínima' | translate }} <strong>{{ '11 caracteres' | translate }}</strong>-->
-                <!--                </mat-error>-->
               </mat-form-field>
 
               <mat-form-field appearance="outline" fxFlex="100" fxFlex.gt-md="48" fxFlex.md="48" id="phone-checkout">
@@ -442,6 +421,7 @@
                   }}</strong>
                 </mat-error>
               </mat-form-field>
+
               <ng-container *ngIf='customFields?.length >0 && fields'>
                 <p class="mat-body-2 my-2" style="text-transform: uppercase">
                   {{ "Datos especiales" | translate }}
