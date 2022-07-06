@@ -532,7 +532,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       ProvinceId: [null, [Validators.required]],
       MunicipalityId: [null, [Validators.required]],
       isForCuban: [true, [Validators.required]],
-      dni: [null, [Validators.required, Validators.minLength(this.CI_Length)]],
+      dni: [null, [Validators.required, Validators.minLength(this.CI_Length), Validators.maxLength(this.CI_Length)]],
       email: [null, [Validators.required, Validators.pattern(EMAIL_REGEX)]],
       phone: [null, []],
       info: [null, []],
@@ -681,7 +681,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.regionService.getAllCountries(this.queryCountries).subscribe(
       (data) => {
         this.allCountries = data.data.filter((item) => item.name.es != undefined);
-        this.allCountries = this.allCountries.sort(function (a, b) {
+        this.allCountries.sort(function (a, b) {
           if (a.name['es'] > b.name['es']) {
             return 1;
           } else if (a.name['es'] < b.name['es']) {
@@ -907,6 +907,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       if (this.defaultContact) {
         this.form.patchValue(this.defaultContact[0]);
         this.form.get('dni').setValue(this.defaultContact[0].identification);
+        this.form.markAllAsTouched();
       }
     });
   }
@@ -934,21 +935,19 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   onSelectContact(contact) {
-    console.log(contact)
     this.form.get('name').setValue(contact?.name);
     this.form.get('lastName').setValue(contact?.lastName);
     this.form.get('email').setValue(contact?.email);
     this.form.get('CountryId').setValue(59);
     this.form.get('ProvinceId').setValue(contact?.ProvinceId);
     this.form.get('MunicipalityId').setValue(contact?.MunicipalityId);
-    this.form.get('address').setValue(contact?.address);
-    // this.form.get('street').setValue(contact?.address.street);
-    // this.form.get('number').setValue(contact?.address.number);
-    // this.form.get('between').setValue(contact?.address.between);
+    this.form.get('address').get('street').setValue(contact?.address.street);
+    this.form.get('address').get('number').setValue(contact?.address.number);
+    this.form.get('address').get('between').setValue(contact?.address.between);
     this.form.get('dni').setValue(contact?.identification);
     this.form.get('phone').setValue(contact?.phone);
 
-    this.form.updateValueAndValidity();
+    this.form.markAllAsTouched();
   }
 
   onSelectProvinceByContactBtn(provinceId) {

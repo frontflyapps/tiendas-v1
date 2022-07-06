@@ -136,13 +136,10 @@ export class MyContactsComponent implements OnInit, OnDestroy {
     this.form = this.fb.group({
       id: [null],
       selected: [false],
-
       name: [null, [Validators.required]],
       lastName: [null, [Validators.required]],
-
-      email: [null, [Validators.required, Validators.email, Validators.pattern(EMAIL_REGEX)]],
-      identification: [null, [Validators.required, Validators.pattern(IDENTITY_PASSPORT)]],
-
+      email: [null, [Validators.required, Validators.pattern(EMAIL_REGEX)]],
+      identification: [null, [Validators.required, Validators.pattern(IDENTITY_PASSPORT), Validators.minLength(11), Validators.maxLength(11)]],
       phone: [
         null,
         [
@@ -152,12 +149,9 @@ export class MyContactsComponent implements OnInit, OnDestroy {
           Validators.maxLength(8),
         ],
       ],
-      // address: [null, [Validators.required]],
-
       street: [null, [Validators.required]],
       number: [null, [Validators.required]],
       between: [null, [Validators.required]],
-
       MunicipalityId: [null, [Validators.required]],
       ProvinceId: [null, [Validators.required]],
     });

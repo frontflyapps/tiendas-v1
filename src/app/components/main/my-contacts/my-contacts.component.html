@@ -157,10 +157,13 @@
               />
               <mat-icon class="greyIcon" matSuffix>fact_check</mat-icon>
               <mat-error *ngIf="form.controls['identification'].hasError('required')">
-                {{ 'identification' | translate }} <strong>{{ 'is required' | translate }}</strong>
+                {{ 'Identification' | translate }} <strong>{{ 'is required' | translate }}</strong>
               </mat-error>
               <mat-error *ngIf="form.controls['identification'].hasError('pattern')">
-                {{ 'identification' | translate }} <strong>{{ 'incorrecto' | translate }}</strong>
+                {{ 'Identification' | translate }} <strong>{{ 'incorrecto' | translate }}</strong>
+              </mat-error>
+              <mat-error *ngIf="form.controls['identification'].hasError('minlength') || form.controls['identification'].hasError('maxlength')">
+                {{ 'Identification' | translate }} <strong>{{ 'must have 11 characters' | translate }}</strong>
               </mat-error>
             </mat-form-field>
           </div>
