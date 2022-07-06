@@ -35,6 +35,7 @@ import { DetailsShippingComponent } from './details-shipping/details-shipping.co
 import { MatTableModule } from '@angular/material/table';
 import { DialogTranfermovilQrComponent } from './dialog-tranfermovil-qr/dialog-tranfermovil-qr.component';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatStepperModule } from '@angular/material/stepper';
 
 @NgModule({
   imports: [
@@ -62,6 +63,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
     NgxSkeletonLoaderModule,
     MatMenuModule,
     MatDialogModule,
+    MatStepperModule,
     ConfirmationDialogFrontModule,
     MatExpansionModule,
   ],

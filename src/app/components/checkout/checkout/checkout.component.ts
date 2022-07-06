@@ -102,6 +102,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   amount: number;
 
   shippingSelected: any;
+  shippingSearchValue: any;
 
   payments: any[] = [
     { id: 'transfermovil', name: 'Transfermovil', logo: 'assets/images/cards/transfermovil_logo.png', market: 'national' },
@@ -1090,7 +1091,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   /**
    * ========== ON GO TO PAY =================
    */
-
   onGoToInfoDataToPay() {
     this.showInfoDataToPay = true;
     this.showPayment = false;
@@ -1101,7 +1101,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     if (this.form.get('shippingRequired').value === null) {
       this.form.get('shippingRequired').setValue(false);
     }
-    // this.saveReceiverData(this.form.value);
     this.showInfoDataToPay = false;
     this.showPayment = true;
     this.scrollTopDocument();
@@ -1112,36 +1111,12 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     document.documentElement.scrollTop = 0;
   }
 
-  /**
-   * Save Contact Data on localStorage and create
-   * @params: contact info
-   */
-  saveReceiverData(data) {
-    let receiverData: any = {
-      name: data.name,
-      lastName: data.lastName,
-      email: data.email,
-      phone: data.phone,
-      identification: data.dni,
-      address: data.address,
-      ProvinceId: data.ProvinceId,
-      MunicipalityId: data.MunicipalityId,
-    };
-    localStorage.setItem('payData', JSON.stringify(receiverData));
-    this.contactsService.create(receiverData).subscribe(
-      (contactRes) => {
-        if (contactRes.data) {
-          this.contactsService.allContacts.push({ ...contactRes.data });
-        }
-      },
-      (error) => {
-        console.error(error);
-      },
-    );
-  }
-
   private applyResolution() {
     const innerWidth = window.innerWidth;
     this.applyStyle = innerWidth <= 600;
+  }
+
+  onSearchBusinessShipping(){
+    console.log(this.shippingSearchValue);
   }
 }

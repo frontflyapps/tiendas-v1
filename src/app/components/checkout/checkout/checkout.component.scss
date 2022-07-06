@@ -124,6 +124,13 @@ li {
     }
   }
 
+  .shippingList-box {
+    position: relative;
+    height: 380px;
+    overflow: hidden;
+    overflow-y: scroll;
+  }
+
   .mainOrder-wrapper {
     position: relative;
     min-width: 600px !important;
