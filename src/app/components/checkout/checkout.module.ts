@@ -36,6 +36,8 @@ import { MatTableModule } from '@angular/material/table';
 import { DialogTranfermovilQrComponent } from './dialog-tranfermovil-qr/dialog-tranfermovil-qr.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatStepperModule } from '@angular/material/stepper';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { MatDatepicker, MatDatepickerModule } from '@angular/material/datepicker';
 
 @NgModule({
   imports: [
@@ -64,6 +66,8 @@ import { MatStepperModule } from '@angular/material/stepper';
     MatMenuModule,
     MatDialogModule,
     MatStepperModule,
+    NgxMaterialTimepickerModule,
+    MatDatepickerModule,
     ConfirmationDialogFrontModule,
     MatExpansionModule,
   ],

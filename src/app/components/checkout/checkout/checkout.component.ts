@@ -42,6 +42,8 @@ import { CurrencyCheckoutPipe } from 'src/app/core/pipes/currency-checkout.pipe'
 import { CUBAN_PHONE_START_5, EMAIL_REGEX } from '../../../core/classes/regex.const';
 import { ContactsService, IContactBody } from '../../../core/services/contacts/contacts.service';
 import { MyContactsComponent } from '../../main/my-contacts/my-contacts.component';
+import * as moment from 'moment';
+import { NgxMaterialTimepickerTheme } from 'ngx-material-timepicker';
 
 export const PASARELA_BASE = 'transfermovil';
 
@@ -126,6 +128,22 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   selectedDataPay: any = null;
   loadingCart = true;
   hasPickUpPlace = false;
+  minDate = moment()
+    .add(3,'d') //replace 2 with number of days you want to add
+    .toDate(); //convert it to a Javascript Date Object if you like
+  minHour = '9:00';
+  maxHour = '21:00';
+  timePickerTheme: NgxMaterialTimepickerTheme = {
+    container: {
+      buttonColor: '#1e4286'
+    },
+    dial: {
+      dialBackgroundColor: '#1e4286',
+    },
+    clockFace: {
+      clockHandColor: '#1e4286',
+    }
+  };
 
   queryCountries: IPagination = {
     limit: 1000,
@@ -723,6 +741,13 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           '', item.required ?
             [Validators.required, Validators.pattern('[A-Za-z]')] :
             [ Validators.pattern('[A-Za-z]')]
+        );
+      }
+      if (item.type === 'DATE' || item.type === 'TIME') {
+        controls[item.name] = new FormControl(
+          '', item.required ?
+            [Validators.required] :
+            []
         );
       }
     });

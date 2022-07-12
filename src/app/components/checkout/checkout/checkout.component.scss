@@ -12,6 +12,20 @@
   }
 }
 
+.time-icon-style {
+  ::ng-deep svg {
+    path {
+      fill: #686a68 !important;
+    }
+  }
+}
+
+::ng-deep .ngx-material-timepicker-toggle {
+    padding: 0px !important;
+}
+
+
+
 .container-checkout {
   max-width: 1300px;
   margin: 0 auto;
