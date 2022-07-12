@@ -457,7 +457,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   getShippingSelectedPrice() {
-    return this.shippingSelected.totalPrice;
+    return this.shippingSelected?.totalPrice;
   }
 
   public getTotalWithShippingIncludedCurrency(): any {
