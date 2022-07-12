@@ -97,7 +97,7 @@
     top: -6px;
     left: -6px;
     background-color: $theme-main-accent;
-    color: white;
+    color: $theme-main;
     border-radius: 4px;
     span {
       display: flex;
@@ -113,7 +113,7 @@
   border-bottom: none;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
-  color: white;
+  color: $theme-main;
   background-color: $theme-main-accent;
   span {
     display: flex;

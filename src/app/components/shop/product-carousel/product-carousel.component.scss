@@ -154,8 +154,8 @@
   position: absolute;
   top: -6px;
   left: -6px;
-  background-color: #f58429;
-  color: white;
+  background-color: $theme-main-accent;
+  color: $theme-main;
   border-radius: 4px;
   span {
     display: flex;

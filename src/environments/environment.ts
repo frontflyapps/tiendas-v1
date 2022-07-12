@@ -9,11 +9,11 @@ export const environment = {
   // apiUrl: 'http://192.168.1.20:7777/v1/',
   // imageUrl: 'http://192.168.1.20:7777/v1/',
 
-  apiUrl: 'https://apitienda.guajiritos.com/v1/',
-  imageUrl: 'https://apitienda.guajiritos.com/v1/',
+  // apiUrl: 'https://apitienda.guajiritos.com/v1/',
+  // imageUrl: 'https://apitienda.guajiritos.com/v1/',
 
-  // apiUrl: 'http://apitienda.tiendalocal.com:8999/v1/',
-  // imageUrl: 'http://apitienda.tiendalocal.com:8999/v1/',
+  apiUrl: 'http://apitienda.tiendalocal.com:8999/v1/',
+  imageUrl: 'http://apitienda.tiendalocal.com:8999/v1/',
 
   // apiUrl: 'https://api.pymesbulevar.com/v1/',
   // imageUrl: 'https://api.pymesbulevar.com/v1/',
