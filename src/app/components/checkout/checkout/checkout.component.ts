@@ -905,9 +905,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       this.contactsService.allContacts = response.data;
       this.defaultContact = response.data.filter(item => item.selected);
       // Fill form with default contact
-      if (this.defaultContact) {
+      if (this.defaultContact.length) {
         this.form.patchValue(this.defaultContact[0]);
-        this.form.get('dni').setValue(this.defaultContact[0].identification);
+        this.form.get('dni').setValue(this.defaultContact[0]?.identification);
         this.form.markAllAsTouched();
       }
     });
