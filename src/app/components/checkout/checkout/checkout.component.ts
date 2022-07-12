@@ -739,8 +739,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       if (item.type === 'STRING') {
         controls[item.name] = new FormControl(
           '', item.required ?
-            [Validators.required, Validators.pattern('[A-Za-z]')] :
-            [ Validators.pattern('[A-Za-z]')]
+            [Validators.required, Validators.pattern('^[a-zA-Z]+$')] :
+            [ Validators.pattern('^[a-zA-Z]+$')]
         );
       }
       if (item.type === 'DATE' || item.type === 'TIME') {
