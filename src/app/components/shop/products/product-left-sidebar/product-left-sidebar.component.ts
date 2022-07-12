@@ -250,8 +250,8 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
           ...this.paramsSearch,
           ...this.queryProduct,
         },
-      })
-      .then();
+      }).then();
+    this.router.onSameUrlNavigation = "reload";
   }
 
   searchMoreProducts() {
@@ -528,6 +528,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
 
   // ============= LOCATION ==================================
   initSubsLocation() {
+    debugger;
     this.locationService.location$.subscribe((newLocation) => {
       this.setLocationData(newLocation);
       this.searchProducts();
