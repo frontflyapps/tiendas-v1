@@ -117,6 +117,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
       this.queryProduct.total = data?.total ? data.total : 0;
       this.queryProduct.page = data?.page ? data.page : 0;
       this.queryProduct.order = data?.order ? data.order : '-id';
+
       if (data.CategoryId) {
         this.paramsSearch.categoryIds = [data.CategoryId];
         this.paramsSearch.minPrice = 0;
@@ -251,7 +252,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
           ...this.queryProduct,
         },
       }).then();
-    this.router.onSameUrlNavigation = "reload";
+    // this.router.onSameUrlNavigation = "reload";
   }
 
   searchMoreProducts() {
@@ -310,6 +311,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
       ProvinceId: this.province?.id || null,
       MunicipalityId: this.municipality?.id || null,
     };
+    debugger;
     this.productService
       .searchProduct(body)
       .pipe(takeUntil(this._unsubscribeAll))
@@ -452,7 +454,8 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
     this.queryProduct.limit = this.initLimit;
     this.queryProduct.offset = 0;
     this.queryProduct.total = 0;
-    this.allProducts = [];
+
+    // this.allProducts = [];
     setTimeout(() => {
       this.searchProducts();
     }, 250);
@@ -475,7 +478,8 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
     this.queryProduct.limit = this.initLimit;
     this.queryProduct.offset = 0;
     this.queryProduct.total = 0;
-    this.allProducts = [];
+
+    // this.allProducts = [];
     this.initValuesOnSearch();
     // this.paginator.firstPage();
     setTimeout(() => {
@@ -489,7 +493,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
     this.queryProduct.limit = this.initLimit;
     this.queryProduct.offset = 0;
     this.queryProduct.total = 0;
-    this.allProducts = [];
+    // this.allProducts = [];
     this.initValuesOnSearch();
     // this.paginator.firstPage();
     setTimeout(() => {
@@ -528,10 +532,15 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
 
   // ============= LOCATION ==================================
   initSubsLocation() {
-    debugger;
+    let nowLocation = JSON.parse(localStorage.getItem('location'));
     this.locationService.location$.subscribe((newLocation) => {
       this.setLocationData(newLocation);
-      this.searchProducts();
+      if ( newLocation ) {
+        if ( nowLocation.province !== newLocation.province || nowLocation.municipality !== newLocation.municipality ) {
+          this.allProducts = [];
+          this.searchProducts();
+        }
+      }
     });
   }
 

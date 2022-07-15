@@ -152,7 +152,6 @@ export class ProductService {
 
   public searchProduct(data?: any): Observable<any> {
     return this.httpClient.post<any>(environment.apiUrl + 'search', data);
-    // return this.products();
   }
 
   public getCountProduct(): Observable<any> {
