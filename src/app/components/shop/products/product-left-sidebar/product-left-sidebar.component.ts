@@ -311,7 +311,6 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
       ProvinceId: this.province?.id || null,
       MunicipalityId: this.municipality?.id || null,
     };
-    debugger;
     this.productService
       .searchProduct(body)
       .pipe(takeUntil(this._unsubscribeAll))
