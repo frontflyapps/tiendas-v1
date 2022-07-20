@@ -192,9 +192,11 @@
                 <mat-label>{{ 'Email' | translate }}</mat-label>
                 <input
                   [formControl]="this.form.controls['email']"
+                  (keypress)="utilsService.keyLettersNumberForEmail($event)"
                   matInput
                   placeholder="{{ 'Mail for order confirmation and customer contact ' | translate }}"
                   required
+                  type="email"
                 />
                 <mat-error *ngIf="form.controls['email'].hasError('required')">
                   {{ 'Email' | translate }} <strong>{{ 'is required' | translate }}</strong>
@@ -335,6 +337,7 @@
                       formControlName="street"
                       matInput
                       placeholder="{{ 'Calle' | translate }}"
+                      required
                       type="text"
                     />
                     <mat-error *ngIf="this.form.controls['address']?.get('street')?.hasError('required')">
@@ -347,6 +350,7 @@
                       formControlName="number"
                       matInput
                       placeholder="{{ 'Número' | translate }}"
+                      required
                       type="text"
                     />
                     <mat-error *ngIf="form.controls['address']?.get('number')?.hasError('required')">
@@ -360,6 +364,7 @@
                     formControlName="between"
                     matInput
                     placeholder="{{ 'Entre calles' | translate }}"
+                    required
                     type="text"
                   />
                   <mat-error *ngIf="form.controls['address']?.get('between')?.hasError('required')">
@@ -389,13 +394,14 @@
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" fxFlex="100" fxFlex.gt-md="48" fxFlex.md="48" id="phone-checkout">
-                  <mat-label>{{ 'Phone' | translate }} *</mat-label>
+                  <mat-label>{{ 'Phone' | translate }}</mat-label>
                   <span class="mr-2" matPrefix>+ 53</span>
                   <input
                     (keypress)="utilsService.keyPressNumbers($event)"
                     [formControl]="this.form.controls['phone']"
                     matInput
                     placeholder="{{ 'Phone' | translate }}"
+                    required
                   />
                   <mat-hint *ngIf="!form.get('phone').value">
                     {{ 'Escriba un teléfono móvil cubano, Ex: 51234567' | translate }}

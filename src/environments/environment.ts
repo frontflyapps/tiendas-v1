@@ -6,20 +6,11 @@ const packageJson = require('../../package.json');
 export const environment = {
   production: false,
 
-  // apiUrl: 'http://192.168.1.20:7777/v1/',
-  // imageUrl: 'http://192.168.1.20:7777/v1/',
+  // apiUrl: 'https://api.mibulevar.com/v1/',
+  // imageUrl: 'https://api.mibulevar.com/v1/',
 
-  apiUrl: 'https://api.mibulevar.com/v1/',
-  imageUrl: 'https://api.mibulevar.com/v1/',
-
-  // apiUrl: 'http://apitienda.tiendalocal.com:8999/v1/',
-  // imageUrl: 'http://apitienda.tiendalocal.com:8999/v1/',
-
-  // apiUrl: 'https://api.pymesbulevar.com/v1/',
-  // imageUrl: 'https://api.pymesbulevar.com/v1/',
-
-  // apiUrl: 'https://apitienda.marinasmarlin.com/v1/',
-  // imageUrl: 'https://apitienda.marinasmarlin.com/v1/',
+  apiUrl: 'http://apitienda.mibulevar.com:8999/v1/',
+  imageUrl: 'http://apitienda.mibulevar.com:8999/v1/',
 
   defaultLanguage: 'es',
   currencyInternational: 'USD',

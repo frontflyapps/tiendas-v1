@@ -10,6 +10,14 @@
       padding: 0 2px 16px;
     }
   }
+
+  ::ng-deep .mat-placeholder-required {
+    font-size: 18px;
+    font-weight: 500;
+    color: red;
+    text-align: end;
+    line-height: 2px;
+  }
 }
 
 .time-icon-style {
