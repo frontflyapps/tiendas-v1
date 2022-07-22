@@ -9,6 +9,9 @@ export const environment = {
   // apiUrl: 'https://api.mibulevar.com/v1/',
   // imageUrl: 'https://api.mibulevar.com/v1/',
 
+  // apiUrl: 'http://apitienda.guajiritos.com/v1/',
+  // imageUrl: 'http://apitienda.guajiritos.com/v1/',
+
   apiUrl: 'http://apitienda.mibulevar.com:8999/v1/',
   imageUrl: 'http://apitienda.mibulevar.com:8999/v1/',
 

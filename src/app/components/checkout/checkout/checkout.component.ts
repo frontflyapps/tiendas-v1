@@ -489,7 +489,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   public getTotalWithShippingIncluded(): any {
     let total = this.getTotalAmout() as Number;
-    let ShippingBusinessId = this.form.get('ShippingBusinessId').value;
+    // let ShippingBusinessId = this.form.get('ShippingBusinessId').value;
+    let ShippingBusinessId = this.shippingSelected;
     if (ShippingBusinessId) {
       let ShippingByBusiness = this.shippingData?.find((i) => (
         i.BusinessId === ShippingBusinessId.BusinessId &&
@@ -831,6 +832,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         if (data && data.data) {
           // this.finalPrice = this.getTotalAmout() as number;
           const price = this.getTotalWithShippingIncluded();
+          console.log(price, 'el precio total');
           const currency = this.marketCard === MarketEnum.INTERNATIONAL ? CoinEnum.USD : CoinEnum.CUP;
           // const currency = this.marketCard === CoinEnum.USD;
           let dialogRef: MatDialogRef<DialogTranfermovilQrComponent, any>;
