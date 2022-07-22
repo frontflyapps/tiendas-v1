@@ -18,6 +18,9 @@
     text-align: end;
     line-height: 2px;
   }
+  ::ng-deep .mat-horizontal-content-container {
+    width: 100%;
+  }
 }
 
 .time-icon-style {
