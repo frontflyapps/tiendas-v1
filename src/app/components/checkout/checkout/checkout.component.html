@@ -470,7 +470,7 @@
                      <ng-container *ngSwitchDefault>
                        <mat-form-field formGroupName='data' appearance='outline'>
                           <mat-label>{{ element?.name }}</mat-label>
-                          <input matInput formControlName="{{element?.name}}" placeholder="{{ element?.name }}"/>
+                          <input matInput formControlName="{{element?.name}}" placeholder="{{ element?.name }}" [required]='isRequiredField(element?.name)'/>
                           <mat-error *ngIf="form.controls['data']?.get(element?.name)?.hasError('required')">
                            {{ element?.name }} <strong>{{ 'is required' | translate }}</strong>
                          </mat-error>

@@ -577,6 +577,15 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.subsToTransfermovilChange();
   }
 
+  isRequiredField(field: string) {
+    const response = this.fields.filter(item => item.name === field && item.required);
+    if (response.length) {
+      return true;
+    } else {
+      return;
+    }
+  }
+
   subsToTransfermovilChange() {
     this.form.get('paymentType').valueChanges.subscribe((change) => {
       if (change === 'transfermovil') {
@@ -740,8 +749,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       if (item.type === 'STRING') {
         controls[item.name] = new FormControl(
           '', item.required ?
-            [Validators.required, Validators.pattern('^[a-zA-Z0-9_.-]*$')] :
-            [ Validators.pattern('^[a-zA-Z0-9_.-]*$')]
+            [Validators.required, Validators.pattern('^[a-zA-Z0-9 _.-]*$')] :
+            [ Validators.pattern('^[a-zA-Z0-9 _.-]*$')]
         );
       }
       if (item.type === 'DATE' || item.type === 'TIME') {
