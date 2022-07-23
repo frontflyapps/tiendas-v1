@@ -127,8 +127,10 @@ export class CartComponent implements OnInit, OnDestroy {
   // Increase Product Quantity
   public increment(product: any, quantity: number = 1) {
     this.inLoading = true;
+    let productToIncrease = product.Product;
+    productToIncrease.Stock = product.Stock;
     this.cartService
-      .addToCart(product, quantity)
+      .addToCart(productToIncrease, quantity)
       .then((data) => {
         this.inLoading = false;
       })
@@ -139,8 +141,10 @@ export class CartComponent implements OnInit, OnDestroy {
 
   // Decrease Product Quantity
   public decrement(product: any, quantity: number = -1) {
+    let productToDecrease = product.Product;
+    productToDecrease.Stock = product.Stock;
     this.cartService
-      .addToCart(product, quantity)
+      .addToCart(productToDecrease, quantity)
       .then((data) => {
         this.inLoading = false;
       })

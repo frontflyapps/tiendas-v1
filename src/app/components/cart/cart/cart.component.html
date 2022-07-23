@@ -80,7 +80,7 @@
 
                 <div *ngIf="item?.Product?.type == 'physical'" fxLayout="row" fxLayoutAlign="center start">
                   <div class="addQuantity">
-                    <button (click)="decrement(item?.Product)"
+                    <button (click)="decrement(item)"
                             [disabled]="item?.Product?.minSale >= item?.quantity"
                             class="leftBtn"
                             matTooltip="Remove">
@@ -93,7 +93,7 @@
                            class="inputBtn"
                            type="text" />
 
-                    <button (click)="increment(item?.Product)"
+                    <button (click)="increment(item)"
                             [disabled]="item?.Product?.maxSale <= item?.quantity"
                             class="rightBtn"
                             matTooltip="Add">
