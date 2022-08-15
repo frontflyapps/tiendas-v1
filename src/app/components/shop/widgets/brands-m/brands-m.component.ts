@@ -46,18 +46,13 @@ export class BrandsMComponent implements OnInit, OnDestroy {
       this.categories = value;
       this.getBrands(value);
     }
-    // if (value.length > 0) {
-    //   // this.selection.clear();
-    //   value.map((id) => {
-    //     this.selection.select(+id);
-    //   });
-    // }
   }
 
   ngOnInit() {
     this.loggedInUserService.$languageChanged.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {
       this.language = data.lang;
     });
+    this.getBrands(this.categories);
   }
 
   getBrands(categories) {
