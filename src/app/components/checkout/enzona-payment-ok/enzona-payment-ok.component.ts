@@ -5,7 +5,7 @@ import { CartService } from './../../shared/services/cart.service';
 import { PayService } from './../../../core/services/pay/pay.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-enzona-payment-ok',
@@ -19,7 +19,7 @@ export class EnzonaPaymentOkComponent implements OnInit {
   transaction_uuid: any = null;
   PayerID: any = null;
   loadingSearch = false;
-  form: FormGroup;
+  form: UntypedFormGroup;
   ifSuccess = false;
   showError = false;
   payMentResult: any = null;
@@ -27,7 +27,7 @@ export class EnzonaPaymentOkComponent implements OnInit {
   language: any;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private route: ActivatedRoute,
     private showToastr: ShowToastrService,
     public utilsService: UtilsService,

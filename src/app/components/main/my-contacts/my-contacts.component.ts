@@ -1,6 +1,6 @@
 import { Component, HostListener, Inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-in-user.service';
 import { ShowSnackbarService } from '../../../core/services/show-snackbar/show-snackbar.service';
 import { AuthenticationService } from '../../../core/services/authentication/authentication.service';
@@ -26,7 +26,7 @@ export class MyContactsComponent implements OnInit, OnDestroy {
   innerWidth: any;
   applyStyle = false;
   loggedInUser: any;
-  form: FormGroup;
+  form: UntypedFormGroup;
 
   isLoading = false;
 
@@ -43,7 +43,7 @@ export class MyContactsComponent implements OnInit, OnDestroy {
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<MyContactsComponent>,
     private loggedInUserService: LoggedInUserService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     public spinner: NgxSpinnerService,
     public utilsService: UtilsService,
     private authService: AuthenticationService,

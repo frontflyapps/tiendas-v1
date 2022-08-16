@@ -1,5 +1,5 @@
 import { Component, HostListener, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -22,7 +22,7 @@ export class EditOrderComponent implements OnInit {
   allMunicipalities: any[] = [];
   municipalities: any[] = [];
   order: any;
-  form: FormGroup;
+  form: UntypedFormGroup;
   onlyCubanPeople = true;
   queryCountries: IPagination = {
     limit: 1000,
@@ -41,7 +41,7 @@ export class EditOrderComponent implements OnInit {
     public loggedInUserService: LoggedInUserService,
     public utilsService: UtilsService,
     private regionService: RegionsService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     public utilsFront: UtilsService,
     private ordersService: MyOrdersService,
     public dialogRef: MatDialogRef<EditOrderComponent>,

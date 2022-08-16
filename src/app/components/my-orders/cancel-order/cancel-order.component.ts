@@ -6,7 +6,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { PayService } from 'src/app/core/services/pay/pay.service';
 import { MatTableDataSource } from '@angular/material/table';
 import * as moment from 'moment';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-cancel-order',
@@ -15,7 +15,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class CancelOrderComponent implements OnInit {
   order: any;
-  form: FormGroup;
+  form: UntypedFormGroup;
   cancellationText =
     'Usted desea cancelar un pago en nuestra plataforma, la devolucion será de acorde a nuestros términos y condiciones';
   cancellationType = 'REQUESTED_BY_CLIENT';
@@ -37,7 +37,7 @@ export class CancelOrderComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private showToastr: ShowToastrService,
     private payService: PayService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     public utilsFront: UtilsService,
     private dialog: MatDialog,
     public dialogRef: MatDialogRef<CancelOrderComponent>,

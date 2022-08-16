@@ -1,6 +1,6 @@
 import { MetaService } from 'src/app/core/services/meta.service';
 import { ShowToastrService } from '../../../../core/services/show-toastr/show-toastr.service';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { CartService } from '../../../shared/services/cart.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Product } from '../../../../modals/product.model';
@@ -42,7 +42,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   language: any;
   _unsubscribeAll: Subject<any>;
   loggedInUser: any = null;
-  reviewForm: FormGroup;
+  reviewForm: UntypedFormGroup;
   loadingReviews = false;
   allReviews = [];
   showZoom = false;
@@ -61,7 +61,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   public allProductsOnMenu = [];
   public allProductsOnMenuToShow: Observable<any[]>;
 
-  searchProductControl = new FormControl();
+  searchProductControl = new UntypedFormControl();
 
   url = environment.apiUrl + 'landing-page';
 
@@ -108,7 +108,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     private cartService: CartService,
     private showToastr: ShowToastrService,
     public _sanitizer: DomSanitizer,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private metaService: MetaService,
     private _bottomSheet: MatBottomSheet,
     private localStorageService: LocalStorageService,

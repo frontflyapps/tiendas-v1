@@ -5,9 +5,9 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { PayService } from '../../../core/services/pay/pay.service';
 import {
   AbstractControl,
-  FormBuilder,
-  FormControl,
-  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
   ValidationErrors,
   ValidatorFn,
   Validators,
@@ -124,7 +124,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   _unsubscribeAll: Subject<any>;
   imageUrl = environment.imageUrl;
   loggedInUser: any = null;
-  form: FormGroup;
+  form: UntypedFormGroup;
   selectedDataPay: any = null;
   loadingCart = true;
   hasPickUpPlace = false;
@@ -194,7 +194,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     public cartService: CartService,
     public productService: ProductService,
     public currencyService: CurrencyService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private regionService: RegionsService,
     public utilsService: UtilsService,
     private payService: PayService,
@@ -701,7 +701,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       if (this.customFields?.length > 0) {
         for (let val of this.customFields) {
           this.fields = val.data;
-          this.form.addControl('data', new FormGroup(this.addingControls(this.fields)))
+          this.form.addControl('data', new UntypedFormGroup(this.addingControls(this.fields)))
         }
       }
     });
@@ -740,21 +740,21 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     let controls = {};
     fields.forEach((item) => {
       if (item.type === 'INTEGER') {
-        controls[item.name] = new FormControl(
+        controls[item.name] = new UntypedFormControl(
           '', item.required ?
             [Validators.required, Validators.pattern('^[0-9]*$')] :
             [Validators.pattern('^[0-9]*$')]
         );
       }
       if (item.type === 'STRING') {
-        controls[item.name] = new FormControl(
+        controls[item.name] = new UntypedFormControl(
           '', item.required ?
             [Validators.required, Validators.pattern('^[a-zA-Z0-9 _.-]*$')] :
             [ Validators.pattern('^[a-zA-Z0-9 _.-]*$')]
         );
       }
       if (item.type === 'DATE' || item.type === 'TIME') {
-        controls[item.name] = new FormControl(
+        controls[item.name] = new UntypedFormControl(
           '', item.required ?
             [Validators.required] :
             []

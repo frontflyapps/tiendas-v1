@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ShowToastrService } from '../../../core/services/show-toastr/show-toastr.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { LoggedInUserService } from 'src/app/core/services/loggedInUser/logged-in-user.service';
 
@@ -14,13 +14,13 @@ import { LoggedInUserService } from 'src/app/core/services/loggedInUser/logged-i
   styleUrls: ['./contact-us.component.scss'],
 })
 export class ContactUsComponent implements OnInit {
-  form: FormGroup;
+  form: UntypedFormGroup;
   loggedUser: any;
   apiUrl = environment.apiUrl;
 
   constructor(
     private loggedUserServ: LoggedInUserService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private spinner: NgxSpinnerService,
     private showToastr: ShowToastrService,
     private http: HttpClient,

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CurrencyService } from './../../../../core/services/currency/currency.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -11,14 +11,14 @@ import { ActivatedRoute } from '@angular/router';
 export class PriceComponent implements OnInit {
   public priceFrom: number = 1;
   public priceTo: number = null;
-  priceForm: FormGroup;
+  priceForm: UntypedFormGroup;
   // Using Output EventEmitter
   @Output() priceFilters = new EventEmitter();
   // define min, max and range
   public min = 100;
   public max = 2000;
 
-  constructor(public currencyService: CurrencyService, private fb: FormBuilder, private route: ActivatedRoute) {
+  constructor(public currencyService: CurrencyService, private fb: UntypedFormBuilder, private route: ActivatedRoute) {
   }
 
   @Input() set reset(value) {

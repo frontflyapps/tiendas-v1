@@ -1,6 +1,6 @@
 import { Component, HostListener, OnInit, ViewEncapsulation } from '@angular/core';
 
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { ShowToastrService } from '../../../core/services/show-toastr/show-toastr.service';
@@ -24,14 +24,14 @@ export class ChangePassComponent implements OnInit {
   configuration: any = {};
   message: string;
   inLoading = false;
-  form: FormGroup;
-  fromPass: FormGroup;
+  form: UntypedFormGroup;
+  fromPass: UntypedFormGroup;
   language = null;
 
   constructor(
     public authService: AuthenticationService,
     private showToastr: ShowToastrService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private translate: TranslateService,
     private spinner: NgxSpinnerService,
     private utilsService: UtilsService,
@@ -94,7 +94,7 @@ export class ChangePassComponent implements OnInit {
     );
   }
 
-  matchValidator(group: FormGroup) {
+  matchValidator(group: UntypedFormGroup) {
     const pass = group.controls['password'].value;
     const repeat = group.controls['repeat'].value;
     if (pass === repeat) {

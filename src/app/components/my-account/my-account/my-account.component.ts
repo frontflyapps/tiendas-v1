@@ -1,5 +1,5 @@
 import { Component, HostListener, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -28,14 +28,14 @@ export class MyAccountComponent implements OnInit {
   paramsToRedirect: any;
   urlToRedirect: any;
   inLoading = false;
-  loginForm: FormGroup;
-  formPass: FormGroup;
-  fromPassRegister: FormGroup;
-  pinForm: FormGroup;
-  activateForm: FormGroup;
-  registrationForm: FormGroup;
-  insertEmailPassForm: FormGroup;
-  changeToNewPassForm: FormGroup;
+  loginForm: UntypedFormGroup;
+  formPass: UntypedFormGroup;
+  fromPassRegister: UntypedFormGroup;
+  pinForm: UntypedFormGroup;
+  activateForm: UntypedFormGroup;
+  registrationForm: UntypedFormGroup;
+  insertEmailPassForm: UntypedFormGroup;
+  changeToNewPassForm: UntypedFormGroup;
 
   pdfData: any[] = [];
   selectedDocument = false;
@@ -62,7 +62,7 @@ export class MyAccountComponent implements OnInit {
   constructor(
     public authService: AuthenticationService,
     private toastr: ShowToastrService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private translate: TranslateService,
     private spinner: NgxSpinnerService,
     private router: Router,
@@ -308,7 +308,7 @@ export class MyAccountComponent implements OnInit {
     return true;
   }
 
-  matchValidator(group: FormGroup) {
+  matchValidator(group: UntypedFormGroup) {
     const pass = group.controls['password'].value;
     const repeat = group.controls['repeat'].value;
     if (pass === repeat) {

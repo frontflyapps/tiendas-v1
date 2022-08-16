@@ -3,7 +3,7 @@ import { BusinessService } from '../../shared/services/business.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { environment } from '../../../../environments/environment';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-shops-list',
@@ -12,7 +12,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 })
 export class ShopsListComponent implements OnInit, OnDestroy {
   apiURL = environment.apiUrl;
-  businessName: FormControl;
+  businessName: UntypedFormControl;
   _unsubscribeAll: Subject<any>;
   allBusiness: any;
   initialPage = 9
@@ -25,8 +25,8 @@ export class ShopsListComponent implements OnInit, OnDestroy {
   };
   pageSizeOptions: number[] = [this.initialPage, 25, 100, 1000];
 
-  constructor(private businessService: BusinessService, private fb: FormBuilder) {
-    this.businessName = new FormControl(null, []);
+  constructor(private businessService: BusinessService, private fb: UntypedFormBuilder) {
+    this.businessName = new UntypedFormControl(null, []);
     this._unsubscribeAll = new Subject<any>();
   }
 

@@ -1,7 +1,7 @@
 import { CurrencyService } from '../../../core/services/currency/currency.service';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-in-user.service';
@@ -19,7 +19,7 @@ import { environment } from '../../../../environments/environment';
 export class FooterTwoComponent implements OnInit, OnDestroy {
   loggedInUser: any = null;
   _unsubscribeAll: Subject<any> = new Subject();
-  form: FormGroup;
+  form: UntypedFormGroup;
   subscribeState = false;
   version = environment.versions.app;
   urlAboutUs = environment.urlAboutUs;
@@ -39,7 +39,7 @@ export class FooterTwoComponent implements OnInit, OnDestroy {
     private showSnackbar: ShowSnackbarService,
     private httpClient: HttpClient,
     private utilsService: UtilsService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private router: Router,
     private translate: TranslateService,
     private currencyService: CurrencyService,

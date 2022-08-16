@@ -27,7 +27,7 @@ import { ShowSnackbarService } from '../../core/services/show-snackbar/show-snac
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { CurrencyService } from '../../core/services/currency/currency.service';
 import { environment } from '../../../environments/environment';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { SocketIoService } from '../../core/services/socket-io/socket-io.service';
 import { NotificationsService } from './notification/notifications.service';
 import { MyOrdersService } from '../my-orders/service/my-orders.service';
@@ -89,7 +89,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
   loggedInUser: IUser;
   @ViewChild('start', { static: true })
   public sidenav: MatSidenav;
-  searchForm: FormControl;
+  searchForm: UntypedFormControl;
   categories: any[] = [];
   _language = 'es';
 
@@ -146,7 +146,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
         this.sidenav.close().then();
       }
     });
-    this.searchForm = new FormControl(null, []);
+    this.searchForm = new UntypedFormControl(null, []);
 
     this.tour = new Shepherd.Tour({
         useModalOverlay: false,

@@ -144,7 +144,6 @@
       }
     }
   },
-  "defaultProject": "tienda-angular-b2b",
   "schematics": {
     "@schematics/angular:component": {
       "style": "scss"

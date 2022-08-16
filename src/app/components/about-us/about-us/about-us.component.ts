@@ -3,7 +3,7 @@ import { environment } from 'src/environments/environment';
 import { LoggedInUserService } from './../../../core/services/loggedInUser/logged-in-user.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ContactUsService } from '../../../core/services/contact-us/contact-us.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -14,7 +14,7 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./about-us.component.scss'],
 })
 export class AboutUsComponent implements OnInit, OnDestroy {
-  contactUsForm: FormGroup;
+  contactUsForm: UntypedFormGroup;
   loggedInUser = null;
   _unsubscribeAll: Subject<any>;
   aboutUs: any;
@@ -22,7 +22,7 @@ export class AboutUsComponent implements OnInit, OnDestroy {
   imageUrl = environment.apiUrl;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private contactUsService: ContactUsService,
     private translate: TranslateService,
     private loggedInUserService: LoggedInUserService,

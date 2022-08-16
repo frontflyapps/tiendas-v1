@@ -1,7 +1,7 @@
 import { CompressImageService } from '../../../core/services/image/compress-image.service';
 import { Component, HostListener, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-in-user.service';
 import { environment } from '../../../../environments/environment';
 import { ShowSnackbarService } from '../../../core/services/show-snackbar/show-snackbar.service';
@@ -22,8 +22,8 @@ export class EditProfileComponent implements OnInit {
   applyStyle = false;
   loggedInUser: any;
   passwordType = 'password';
-  form: FormGroup;
-  formPass: FormGroup;
+  form: UntypedFormGroup;
+  formPass: UntypedFormGroup;
   defaultImage: '../../../../assets/images/avatars/profile2.png';
   isChangePass = false;
 
@@ -45,7 +45,7 @@ export class EditProfileComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<EditProfileComponent>,
     private loggedInUserService: LoggedInUserService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     public spinner: NgxSpinnerService,
     public utilsService: UtilsService,
     private authService: AuthenticationService,
@@ -93,7 +93,7 @@ export class EditProfileComponent implements OnInit {
     });
   }
 
-  matchValidator(group: FormGroup) {
+  matchValidator(group: UntypedFormGroup) {
     const pass = group.controls['password'].value;
     const repeat = group.controls['repeat'].value;
     if (pass === repeat && pass && repeat && pass !== '') {
