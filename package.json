@@ -50,7 +50,6 @@
     "jspdf": "^2.0.0",
     "moment": "^2.27.0",
     "ng2-pdf-viewer": "^6.3.2",
-    "ngx-captcha": "^8.0.1",
     "ngx-color-picker": "^10.0.1",
     "ngx-cookie-service": "^10.0.1",
     "ngx-daterangepicker-material": "^3.0.4",
