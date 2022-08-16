@@ -58,7 +58,6 @@
     "ngx-sharebuttons": "^8.0.5",
     "ngx-skeleton-loader": "^2.4.3",
     "ngx-spinner": "^10.0.1",
-    "ngx-swiper-wrapper": "^9.0.1",
     "ngx-toastr": "^13.0.0",
     "resize-observer": "^1.0.0",
     "rxjs": "^6.6.2",
