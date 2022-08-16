@@ -11,32 +11,30 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PreviousRouteService } from '../../core/services/previous-route/previous-route.service';
 
 @NgModule({
-  declarations: [OrderByPipe],
-  imports: [
-    ReactiveFormsModule,
-    FormsModule,
-    CommonModule,
-    RouterModule,
-    MatButtonModule,
-    MatDialogModule,
-    MatIconModule,
-    FlexLayoutModule,
-    TranslateModule,
-  ],
-  exports: [
-    ReactiveFormsModule,
-    FormsModule,
-    CommonModule,
-    RouterModule,
-    MatButtonModule,
-    MatDialogModule,
-    MatIconModule,
-    FlexLayoutModule,
-    TranslateModule,
-  ],
-  entryComponents: [],
-
-  providers: [PreviousRouteService],
+    declarations: [OrderByPipe],
+    imports: [
+        ReactiveFormsModule,
+        FormsModule,
+        CommonModule,
+        RouterModule,
+        MatButtonModule,
+        MatDialogModule,
+        MatIconModule,
+        FlexLayoutModule,
+        TranslateModule,
+    ],
+    exports: [
+        ReactiveFormsModule,
+        FormsModule,
+        CommonModule,
+        RouterModule,
+        MatButtonModule,
+        MatDialogModule,
+        MatIconModule,
+        FlexLayoutModule,
+        TranslateModule,
+    ],
+    providers: [PreviousRouteService]
 })
 export class SharedModule {
 }
