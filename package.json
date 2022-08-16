@@ -47,7 +47,6 @@
     "file-saver": "^2.0.2",
     "font-awesome": "^4.7.0",
     "google-translate-open-api": "^1.3.5",
-    "guachos-cu-form-load-file": "^1.0.20",
     "guachos-image-picker": "1.0.16",
     "guachos-rating": "0.0.5",
     "jspdf": "^2.0.0",
