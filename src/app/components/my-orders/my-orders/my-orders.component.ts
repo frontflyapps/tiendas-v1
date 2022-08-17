@@ -19,7 +19,6 @@ import { HttpClient } from '@angular/common/http';
 import { CancelOrderComponent } from '../cancel-order/cancel-order.component';
 import { EditOrderComponent } from '../edit-order/edit-order.component';
 
-
 @Component({
   selector: 'app-my-orders',
   templateUrl: './my-orders.component.html',
@@ -224,7 +223,7 @@ export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this._unsubscribeAll.next();
+    this._unsubscribeAll.next('');
     this._unsubscribeAll.complete();
   }
 
@@ -277,23 +276,25 @@ export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onSelectOrder(item) {
     this.loadingSelectedItem = true;
-    this.ordersService.getPayment(item).pipe(
-      switchMap((data:any) => {
-        this.selectedOrder = data.data;
-        this.canCancel = this.selectedOrder.PaymentItems.some((ele: any) => ele.type === 'physical');
-        return this.ordersService.getBusinessConfig(this.selectedOrder.BusinessId);
-      })
-    ).subscribe((resp) => {
-      this.selectedOrder.canEditPersonPayment = resp.data.length ? resp.data[0].canEditPersonPayment : true;
-      this.showOrderDetails = true;
-      this.loadingSelectedItem = false;
-      if (this.isHandset) {
-        setTimeout(() => {
-          this.sidenav.toggle().then();
-        }, 250);
-      }
-    });
-
+    this.ordersService
+      .getPayment(item)
+      .pipe(
+        switchMap((data: any) => {
+          this.selectedOrder = data.data;
+          this.canCancel = this.selectedOrder.PaymentItems.some((ele: any) => ele.type === 'physical');
+          return this.ordersService.getBusinessConfig(this.selectedOrder.BusinessId);
+        }),
+      )
+      .subscribe((resp) => {
+        this.selectedOrder.canEditPersonPayment = resp.data.length ? resp.data[0].canEditPersonPayment : true;
+        this.showOrderDetails = true;
+        this.loadingSelectedItem = false;
+        if (this.isHandset) {
+          setTimeout(() => {
+            this.sidenav.toggle().then();
+          }, 250);
+        }
+      });
   }
 
   processTransactionData(data) {
@@ -355,7 +356,7 @@ export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
             // document.location.reload();
           }, 250);
         }
-        this.ordersService.$orderItemsUpdated.next();
+        this.ordersService.$orderItemsUpdated.next('');
         this.onSelectOrder(order);
         this.onSearch();
       }
@@ -371,7 +372,7 @@ export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
     this.httpClient
       .get(urlDownload, httpOptions)
       .toPromise()
-      .then((data) => {
+      .then((data: any) => {
         const downloadURL = window.URL.createObjectURL(data);
         const link = document.createElement('a');
         link.href = downloadURL;

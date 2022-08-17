@@ -35,23 +35,20 @@ export class PopularProductsComponent implements OnInit, OnDestroy {
     private localStorageService: LocalStorageService,
     public currencyService: CurrencyService,
     public loggedInUserService: LoggedInUserService,
-    private globalStateOfCookieService: GlobalStateOfCookieService
+    private globalStateOfCookieService: GlobalStateOfCookieService,
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
   }
 
   ngOnInit() {
-    this.globalStateOfCookieService.getCookieState()
-      ? this.initComponent()
-      : this.setSubscriptionToCookie();
+    this.globalStateOfCookieService.getCookieState() ? this.initComponent() : this.setSubscriptionToCookie();
   }
 
   initComponent() {
     this.loggedInUserService.$languageChanged.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {
       this.language = data.lang;
     });
-
 
     this.setServiceGetProduct();
     this.getPFDFromStorage();
@@ -62,26 +59,21 @@ export class PopularProductsComponent implements OnInit, OnDestroy {
   }
 
   setSubscriptionToCookie() {
-    this.globalStateOfCookieService.stateOfCookie$
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((thereIsCookie) => {
-        if (thereIsCookie) {
-          this.initComponent();
-        }
-      });
+    this.globalStateOfCookieService.stateOfCookie$.pipe(takeUntil(this._unsubscribeAll)).subscribe((thereIsCookie) => {
+      if (thereIsCookie) {
+        this.initComponent();
+      }
+    });
   }
 
   setServiceGetProduct() {
-    this.productService.productsData$
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((response) => {
-          this.setValuesFromResponse(response);
-        },
-      );
+    this.productService.productsData$.pipe(takeUntil(this._unsubscribeAll)).subscribe((response) => {
+      this.setValuesFromResponse(response);
+    });
   }
 
   getProducts() {
-    this.productService.getProduct.next();
+    this.productService.getProduct.next('');
   }
 
   getPFDFromStorage() {

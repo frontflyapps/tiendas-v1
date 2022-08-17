@@ -25,7 +25,7 @@ export class SidebarMenuService implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this._unsubscribeAll.next();
+    this._unsubscribeAll.next('');
     this._unsubscribeAll.complete();
   }
 

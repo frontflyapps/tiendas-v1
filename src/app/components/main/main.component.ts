@@ -128,7 +128,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
     private confirmCreateBusinessService: ConfirmCreateBusinessService,
     private locationService: LocationService,
     private globalStateOfCookieService: GlobalStateOfCookieService,
-    private categoryMenuServ: CategoryMenuNavService
+    private categoryMenuServ: CategoryMenuNavService,
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
@@ -149,12 +149,12 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
     this.searchForm = new UntypedFormControl(null, []);
 
     this.tour = new Shepherd.Tour({
-        useModalOverlay: false,
-        defaultStepOptions: {
-          classes: 'shadow-md bg-purple-dark',
-          scrollTo: true,
-        },
-      });
+      useModalOverlay: false,
+      defaultStepOptions: {
+        classes: 'shadow-md bg-purple-dark',
+        scrollTo: true,
+      },
+    });
   }
 
   @HostListener('window:resize', ['$event'])
@@ -163,9 +163,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit() {
-    this.globalStateOfCookieService.getCookieState()
-      ? this.initComponent()
-      : this.setSubscriptionToCookie();
+    this.globalStateOfCookieService.getCookieState() ? this.initComponent() : this.setSubscriptionToCookie();
   }
 
   initComponent() {
@@ -233,13 +231,11 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   setSubscriptionToCookie() {
-    this.globalStateOfCookieService.stateOfCookie$
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((thereIsCookie) => {
-        if (thereIsCookie) {
-          this.initComponent();
-        }
-      });
+    this.globalStateOfCookieService.stateOfCookie$.pipe(takeUntil(this._unsubscribeAll)).subscribe((thereIsCookie) => {
+      if (thereIsCookie) {
+        this.initComponent();
+      }
+    });
   }
 
   getFromStorage(): void | boolean {
@@ -266,8 +262,8 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
    * @param menuData
    */
   saveCategories(menuData) {
-    this.categories = menuData.map(object => {
-      return {...object, active: false};
+    this.categories = menuData.map((object) => {
+      return { ...object, active: false };
     });
     this.categoryMenuServ.setCategories(this.categories);
   }
@@ -284,7 +280,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnDestroy(): void {
     if (this._unsubscribeAll) {
-      this._unsubscribeAll.next();
+      this._unsubscribeAll.next('');
       this._unsubscribeAll.complete();
       this._unsubscribeAll.unsubscribe();
     }
@@ -407,8 +403,8 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
         if (data?.tpv !== 'enzona') {
           this.showPaymentSuccess(data.Payment.id);
         }
-        this.orderSevice.$orderItemsUpdated.next();
-        this.cartService.$paymentUpdate.next();
+        this.orderSevice.$orderItemsUpdated.next('');
+        this.cartService.$paymentUpdate.next('');
       });
 
     this.socketIoService
@@ -417,8 +413,8 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
       .subscribe((data) => {
         this.showPaymentCancellSuccess(data.Payment.id);
         console.log('payment-cancelled');
-        this.cartService.$paymentUpdate.next();
-        this.orderService.$orderItemsUpdated.next();
+        this.cartService.$paymentUpdate.next('');
+        this.orderService.$orderItemsUpdated.next('');
       });
 
     this.socketIoService
@@ -529,19 +525,17 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private getMenu() {
-    this.categoryService
-      .getMenu()
-      .subscribe((data) => {
-        console.log('-> data private getMenu()', data);
+    this.categoryService.getMenu().subscribe((data) => {
+      console.log('-> data private getMenu()', data);
 
-        // let _response: any = {};
-        // _response['menu'] = JSON.parse(JSON.stringify(data.data));
-        // _response['timespan'] = new Date().getTime();
-        //
-        // this.localStorageService.setOnStorage(MENU_DATA, _response);
+      // let _response: any = {};
+      // _response['menu'] = JSON.parse(JSON.stringify(data.data));
+      // _response['timespan'] = new Date().getTime();
+      //
+      // this.localStorageService.setOnStorage(MENU_DATA, _response);
 
-        this.saveCategories(data.data);
-      });
+      this.saveCategories(data.data);
+    });
   }
 
   ngAfterViewInit() {
@@ -559,7 +553,9 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.tour.addStep({
       id: 'example-step',
-      text: `Los primeros resultados de búsqueda serán los productos de tiendas más cercanas a:<br><br><strong>${location?.province?.name}</strong> &nbsp; ${location?.municipality ? location?.municipality.name : ''}`,
+      text: `Los primeros resultados de búsqueda serán los productos de tiendas más cercanas a:<br><br><strong>${
+        location?.province?.name
+      }</strong> &nbsp; ${location?.municipality ? location?.municipality.name : ''}`,
       attachTo: {
         element: attentionClass,
         on: 'bottom',
@@ -584,7 +580,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
         {
           text: 'Aceptar',
           classes: 'accept-button',
-          action: this.tour.complete
+          action: this.tour.complete,
         },
       ],
       when: {
@@ -606,7 +602,6 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
             }
           });
         },
-
       },
     });
 

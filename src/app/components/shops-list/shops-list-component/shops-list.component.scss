@@ -1,7 +1,6 @@
-@use "sass:math";
+@use 'sass:math';
 @import '../../../../assets/scss/mixins/breakpoints';
 @import '../../../../assets/scss/theme/variables';
-
 
 $arrow-color: $theme-main;
 $arrow-size: 1em;
@@ -34,10 +33,9 @@ $arrow-border: 0.1em;
     object-position: center;
     background-color: white;
   }
-
 }
 
-.noMargin{
+.noMargin {
   margin-right: 0;
 }
 
@@ -106,8 +104,9 @@ $arrow-border: 0.1em;
       position: relative;
       display: block;
 
-      &:after, &:before {
-        content: "";
+      &:after,
+      &:before {
+        content: '';
         display: block;
         position: absolute;
         transition: all 0.5s ease-in-out;
@@ -118,9 +117,10 @@ $arrow-border: 0.1em;
         width: $arrow-size;
         height: $arrow-size;
         transform-origin: 50% 50%;
-        transform:  translate(0, -($arrow-size / 2)) rotate(45deg);
+        // transform: translate(0, -($arrow-size / 2)) rotate(45deg);
+        transform: translate(0, -(math.div($arrow-size, 2))) rotate(45deg);
         box-shadow: inset -#{$arrow-border} $arrow-border 0 0 $arrow-color;
-        border-radius: 0 $arrow-size*0.15 0 0;
+        border-radius: 0 $arrow-size * 0.15 0 0;
       }
 
       &:after {
@@ -128,10 +128,9 @@ $arrow-border: 0.1em;
         right: 1em;
         width: $arrow-size * 3.3;
         height: $arrow-border;
-        transform:  translate(0, -($arrow-border / 2));
+        transform: translate(0, -(math.div($arrow-border, 2)));
         background-color: $arrow-color;
       }
-
     }
 
     p {

@@ -107,9 +107,19 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   shippingSearchValue: any;
 
   payments: any[] = [
-    { id: 'transfermovil', name: 'Transfermovil', logo: 'assets/images/cards/transfermovil_logo.png', market: 'national' },
+    {
+      id: 'transfermovil',
+      name: 'Transfermovil',
+      logo: 'assets/images/cards/transfermovil_logo.png',
+      market: 'national',
+    },
     // { id: 'enzona', name: 'Enzona', logo: 'assets/images/cards/enzona.jpeg', market: 'national' },
-    { id: 'transfermovil', name: 'Transfermovil', logo: 'assets/images/cards/transfermovil_logo.png', market: 'international' },
+    {
+      id: 'transfermovil',
+      name: 'Transfermovil',
+      logo: 'assets/images/cards/transfermovil_logo.png',
+      market: 'international',
+    },
     // { id: 'peopleGoTo', name: 'Visa', logo: 'assets/images/cards/visa_logo.png', market: 'international' },
     // { id: 'peopleGoTo', name: 'MasterCard', logo: 'assets/images/cards/mastercard_logo.png', market: 'international' },
     // { id: 'peopleGoTo', name: 'American Express', logo: 'assets/images/cards/american_express_logo.png', market: 'international' },
@@ -129,20 +139,20 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   loadingCart = true;
   hasPickUpPlace = false;
   minDate = moment()
-    .add(3,'d') //replace 2 with number of days you want to add
+    .add(3, 'd') //replace 2 with number of days you want to add
     .toDate(); //convert it to a Javascript Date Object if you like
   minHour = '9:00';
   maxHour = '21:00';
   timePickerTheme: NgxMaterialTimepickerTheme = {
     container: {
-      buttonColor: '#1e4286'
+      buttonColor: '#1e4286',
     },
     dial: {
       dialBackgroundColor: '#1e4286',
     },
     clockFace: {
       clockHandColor: '#1e4286',
-    }
+    },
   };
 
   queryCountries: IPagination = {
@@ -216,7 +226,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
     this.setObsContact();
     this.getContacts();
-
 
     this.activateRoute.queryParams.subscribe((data) => {
       this.cartId = data.cartId;
@@ -492,10 +501,11 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     // let ShippingBusinessId = this.form.get('ShippingBusinessId').value;
     let ShippingBusinessId = this.shippingSelected;
     if (ShippingBusinessId) {
-      let ShippingByBusiness = this.shippingData?.find((i) => (
-        i.BusinessId === ShippingBusinessId.BusinessId &&
-        i.shippingItems[0].Shipping?.ProvinceId === this.form.get('ProvinceId').value &&
-        i.shippingItems[0].Shipping?.MunicipalityId === this.form.get('MunicipalityId').value )
+      let ShippingByBusiness = this.shippingData?.find(
+        (i) =>
+          i.BusinessId === ShippingBusinessId.BusinessId &&
+          i.shippingItems[0].Shipping?.ProvinceId === this.form.get('ProvinceId').value &&
+          i.shippingItems[0].Shipping?.MunicipalityId === this.form.get('MunicipalityId').value,
       );
       return total + (ShippingByBusiness?.totalPrice || 0.0);
     } else {
@@ -540,7 +550,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       lastName: [null, [Validators.required]],
 
       // address: [this.selectedDataPay?.address || null, [Validators.required]],
-      address : this.fb.group({
+      address: this.fb.group({
         street: [null, [Validators.required]],
         number: [null, [Validators.required]],
         between: [null, [Validators.required]],
@@ -548,7 +558,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       address2: [null, []],
       city: [null, [Validators.required]],
       regionProvinceState: [null, [Validators.required]],
-      CountryId: [ 59, [Validators.required]],
+      CountryId: [59, [Validators.required]],
       ProvinceId: [null, [Validators.required]],
       MunicipalityId: [null, [Validators.required]],
       isForCuban: [true, [Validators.required]],
@@ -556,7 +566,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       email: [null, [Validators.required, Validators.pattern(EMAIL_REGEX)]],
       phone: [null, []],
       info: [null, []],
-      paymentType: [ PASARELA_BASE, [Validators.required]],
+      paymentType: [PASARELA_BASE, [Validators.required]],
       ShippingBusinessId: [null, []],
       currency: [null, [Validators.required]],
       shippingRequired: [null, []],
@@ -578,7 +588,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   isRequiredField(field: string) {
-    const response = this.fields.filter(item => item.name === field && item.required);
+    const response = this.fields.filter((item) => item.name === field && item.required);
     if (response.length) {
       return true;
     } else {
@@ -606,11 +616,13 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     if (this.shippingData.length === 0) {
       let dataCartId = { cartId: this.cartId };
       this.inLoading = true;
-      this.cartService.getShippingCart(dataCartId).subscribe((item) => {
-        this.shippingData = item.shippings;
-        this.canBeDelivery = item.canBeDelivery;
-        this.inLoading = false;
-      },(error) => {
+      this.cartService.getShippingCart(dataCartId).subscribe(
+        (item) => {
+          this.shippingData = item.shippings;
+          this.canBeDelivery = item.canBeDelivery;
+          this.inLoading = false;
+        },
+        (error) => {
           this.inLoading = false;
         },
       );
@@ -701,7 +713,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       if (this.customFields?.length > 0) {
         for (let val of this.customFields) {
           this.fields = val.data;
-          this.form.addControl('data', new UntypedFormGroup(this.addingControls(this.fields)))
+          this.form.addControl('data', new UntypedFormGroup(this.addingControls(this.fields)));
         }
       }
     });
@@ -735,30 +747,25 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     });
   }
 
-
   addingControls(fields: any) {
     let controls = {};
     fields.forEach((item) => {
       if (item.type === 'INTEGER') {
         controls[item.name] = new UntypedFormControl(
-          '', item.required ?
-            [Validators.required, Validators.pattern('^[0-9]*$')] :
-            [Validators.pattern('^[0-9]*$')]
+          '',
+          item.required ? [Validators.required, Validators.pattern('^[0-9]*$')] : [Validators.pattern('^[0-9]*$')],
         );
       }
       if (item.type === 'STRING') {
         controls[item.name] = new UntypedFormControl(
-          '', item.required ?
-            [Validators.required, Validators.pattern('^[a-zA-Z0-9 _.-]*$')] :
-            [ Validators.pattern('^[a-zA-Z0-9 _.-]*$')]
+          '',
+          item.required
+            ? [Validators.required, Validators.pattern('^[a-zA-Z0-9 _.-]*$')]
+            : [Validators.pattern('^[a-zA-Z0-9 _.-]*$')],
         );
       }
       if (item.type === 'DATE' || item.type === 'TIME') {
-        controls[item.name] = new UntypedFormControl(
-          '', item.required ?
-            [Validators.required] :
-            []
-        );
+        controls[item.name] = new UntypedFormControl('', item.required ? [Validators.required] : []);
       }
     });
     return controls;
@@ -939,7 +946,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   setObsContact() {
     this.contactsService.allContacts$.pipe(takeUntil(this._unsubscribeAll)).subscribe((response) => {
       this.contactsService.allContacts = response.data;
-      this.defaultContact = response.data.filter(item => item.selected);
+      this.defaultContact = response.data.filter((item) => item.selected);
       // Fill form with default contact
       if (this.defaultContact.length) {
         this.form.patchValue(this.defaultContact[0]);
@@ -950,7 +957,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   getContacts() {
-    this.contactsService.getContact.next();
+    this.contactsService.getContact.next('');
   }
 
   // ///////////////////////////////////////////////
@@ -1111,7 +1118,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       .listen('payment-confirmed')
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((data) => {
-        this.orderService.$orderItemsUpdated.next();
+        this.orderService.$orderItemsUpdated.next('');
         this.getCartData();
       });
 
@@ -1152,7 +1159,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.applyStyle = innerWidth <= 600;
   }
 
-  onSearchBusinessShipping(){
+  onSearchBusinessShipping() {
     console.log(this.shippingSearchValue);
   }
 }

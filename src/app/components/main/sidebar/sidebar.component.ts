@@ -4,9 +4,9 @@ import { Router } from '@angular/router';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-// import { NgProgress } from 'ngx-progressbar';
 import { SidebarMenuService } from './sidebar-menu.service';
 import { PreviousRouteService } from '../../../core/services/previous-route/previous-route.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-sidebar',
@@ -32,10 +32,10 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   constructor(
     public navService: SidebarMenuService,
-    // public ngProgress: NgProgress,
     public previousRouteService: PreviousRouteService,
     public loggedInUserService: LoggedInUserService,
     public router: Router,
+    public translate: TranslateService,
   ) {
     this.ariaExpanded = this.expanded;
     if (this.depth === undefined) {
@@ -59,7 +59,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this._unsubscribeAll.next();
+    this._unsubscribeAll.next('');
     this._unsubscribeAll.complete();
   }
 

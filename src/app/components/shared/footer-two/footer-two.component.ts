@@ -93,7 +93,7 @@ export class FooterTwoComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this._unsubscribeAll.next();
+    this._unsubscribeAll.next('');
     this._unsubscribeAll.complete();
   }
 
@@ -108,37 +108,33 @@ export class FooterTwoComponent implements OnInit, OnDestroy {
       );
       this.router.navigate(['/my-account']);
     } else {
-      this.httpClient
-        .post<any>(environment.apiUrl + 'subscribe', { email: data.email })
-        .subscribe(
-          () => {
-            this.loggedInUserService.setNewProfile({ isSubscribed: 1 });
-            this.showSnackbar.showSucces(
-              this.translateService.instant(
-                'You have successfully subscribed to our newsletter, your email will receive announcements of new blog posts and new products that go on sale',
-              ),
-              8000,
-            );
-          },
-          (error) => this.utilsService.errorHandle2(error),
-        );
-    }
-  }
-
-  onUnSubscribePublications() {
-    const data = this.form.value;
-    this.httpClient
-      .patch<any>(environment.apiUrl + 'subscribe', { email: data.email })
-      .subscribe(
+      this.httpClient.post<any>(environment.apiUrl + 'subscribe', { email: data.email }).subscribe(
         () => {
-          this.loggedInUserService.setNewProfile({ isSubscribed: 0 });
+          this.loggedInUserService.setNewProfile({ isSubscribed: 1 });
           this.showSnackbar.showSucces(
-            this.translateService.instant('You have successfully unsubscribe to our newsletter'),
+            this.translateService.instant(
+              'You have successfully subscribed to our newsletter, your email will receive announcements of new blog posts and new products that go on sale',
+            ),
             8000,
           );
         },
         (error) => this.utilsService.errorHandle2(error),
       );
+    }
+  }
+
+  onUnSubscribePublications() {
+    const data = this.form.value;
+    this.httpClient.patch<any>(environment.apiUrl + 'subscribe', { email: data.email }).subscribe(
+      () => {
+        this.loggedInUserService.setNewProfile({ isSubscribed: 0 });
+        this.showSnackbar.showSucces(
+          this.translateService.instant('You have successfully unsubscribe to our newsletter'),
+          8000,
+        );
+      },
+      (error) => this.utilsService.errorHandle2(error),
+    );
   }
 
   public changeCurrency(currency) {

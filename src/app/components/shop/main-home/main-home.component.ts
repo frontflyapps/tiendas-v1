@@ -148,7 +148,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
 
     this.getPFDFromStorage();
 
-    this.productService.updatedProducts$.subscribe(response => {
+    this.productService.updatedProducts$.subscribe((response) => {
       this.getDataProducts();
     });
 
@@ -170,14 +170,26 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   }
 
   getProducts() {
-    this.productService.getProduct.next();
+    this.productService.getProduct.next('');
   }
 
   setValuesFromResponse(response) {
-    this.productDataService.popularProducts = UtilsService.getAnArrayFromIdsAndArray(response.products, response.rating);
-    this.productDataService.featuredProducts = UtilsService.getAnArrayFromIdsAndArray(response.products, response.isFeatured);
-    this.productDataService.bestSellerProducts = UtilsService.getAnArrayFromIdsAndArray(response.products, response.bestSell);
-    this.productDataService.allProducts = UtilsService.getAnArrayFromIdsAndArray(response.products, response.lastCreated);
+    this.productDataService.popularProducts = UtilsService.getAnArrayFromIdsAndArray(
+      response.products,
+      response.rating,
+    );
+    this.productDataService.featuredProducts = UtilsService.getAnArrayFromIdsAndArray(
+      response.products,
+      response.isFeatured,
+    );
+    this.productDataService.bestSellerProducts = UtilsService.getAnArrayFromIdsAndArray(
+      response.products,
+      response.bestSell,
+    );
+    this.productDataService.allProducts = UtilsService.getAnArrayFromIdsAndArray(
+      response.products,
+      response.lastCreated,
+    );
   }
 
   getDataProducts() {
@@ -193,8 +205,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
       } else {
         this.setValuesFromResponse(pfd);
       }
-    } catch (e) {
-    }
+    } catch (e) {}
     this.allProducts = this.productDataService.allProducts;
     this.popularProducts = this.productDataService.popularProducts;
     this.featuredProducts = this.productDataService.featuredProducts;

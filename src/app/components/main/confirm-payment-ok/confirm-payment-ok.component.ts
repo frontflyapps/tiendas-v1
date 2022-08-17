@@ -123,8 +123,7 @@ export class ConfirmPaymentOkComponent implements OnInit {
     }
   }
 
-  ngOnDestroy(): void {
-  }
+  ngOnDestroy(): void {}
 
   onGetVoucher(payment): void {
     const urlDownload = environment.apiUrl + 'payment/' + payment.id + '/voucher';
@@ -135,7 +134,7 @@ export class ConfirmPaymentOkComponent implements OnInit {
     this.httpClient
       .get(urlDownload, httpOptions)
       .toPromise()
-      .then((data) => {
+      .then((data: any) => {
         const downloadURL = window.URL.createObjectURL(data);
         const link = document.createElement('a');
         link.href = downloadURL;

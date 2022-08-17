@@ -1,6 +1,13 @@
 import { Component, Inject, HostListener, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { AbstractControl, UntypedFormBuilder, FormControl, UntypedFormGroup, ValidatorFn, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  UntypedFormBuilder,
+  FormControl,
+  UntypedFormGroup,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import { LocationService } from '../../../core/services/location/location.service';
 import { debounceTime, filter, map, startWith, takeUntil } from 'rxjs/operators';
 import { Observable, Subject, Subscription } from 'rxjs';
@@ -41,7 +48,7 @@ export class DialogSetLocationComponent implements OnInit, OnDestroy {
     public dialogRef: MatDialogRef<DialogSetLocationComponent>,
     private fb: UntypedFormBuilder,
     private locationService: LocationService,
-    public translate: TranslateService
+    public translate: TranslateService,
   ) {
     this.storageLocation = data;
     this.getProvinces();
@@ -186,7 +193,7 @@ export class DialogSetLocationComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this._unsubscribeAll) {
-      this._unsubscribeAll.next();
+      this._unsubscribeAll.next('');
       this._unsubscribeAll.complete();
       this._unsubscribeAll.unsubscribe();
     }

@@ -40,7 +40,7 @@ export class ContactsService {
   }
 
   getContacts() {
-    this.getContact.next();
+    this.getContact.next('');
   }
 
   get(): Observable<any> {
@@ -52,10 +52,16 @@ export class ContactsService {
   }
 
   edit(data: IContactBody) {
-    return this.httpClient.patch<any>(this.urlId.replace(':contactId', JSON.stringify(data.id)), data, this.httpOptions);
+    return this.httpClient.patch<any>(
+      this.urlId.replace(':contactId', JSON.stringify(data.id)),
+      data,
+      this.httpOptions,
+    );
   }
 
   remove(data: IContactBody): Promise<any> {
-    return this.httpClient.delete<any>(this.urlId.replace(':contactId', JSON.stringify(data.id)), this.httpOptions).toPromise();
+    return this.httpClient
+      .delete<any>(this.urlId.replace(':contactId', JSON.stringify(data.id)), this.httpOptions)
+      .toPromise();
   }
 }

@@ -2,8 +2,6 @@ import { Component, HostListener, Inject, OnDestroy, OnInit, ViewEncapsulation }
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-in-user.service';
-import { ShowSnackbarService } from '../../../core/services/show-snackbar/show-snackbar.service';
-import { AuthenticationService } from '../../../core/services/authentication/authentication.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { UtilsService } from '../../../core/services/utils/utils.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -13,7 +11,7 @@ import { LOCATION_DATA } from '../../../core/classes/global.const';
 import { environment } from '../../../../environments/environment';
 import { ContactsService } from '../../../core/services/contacts/contacts.service';
 import { Subject } from 'rxjs';
-import { debounceTime, takeUntil, tap } from 'rxjs/operators';
+import { debounceTime, takeUntil } from 'rxjs/operators';
 import { CUBAN_PHONE_START_5, EMAIL_REGEX, IDENTITY_PASSPORT } from '../../../core/classes/regex.const';
 
 @Component({
@@ -46,9 +44,7 @@ export class MyContactsComponent implements OnInit, OnDestroy {
     private fb: UntypedFormBuilder,
     public spinner: NgxSpinnerService,
     public utilsService: UtilsService,
-    private authService: AuthenticationService,
-    private translate: TranslateService,
-    private showSnackbar: ShowSnackbarService,
+    public translate: TranslateService,
     private regionService: RegionsService,
     private localStorageService: LocalStorageService,
     public contactsService: ContactsService,
@@ -58,7 +54,7 @@ export class MyContactsComponent implements OnInit, OnDestroy {
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event): void {
+  onResize(): void {
     this.innerWidth = window.innerWidth;
     this.applyStyle = this.innerWidth <= 600;
   }
@@ -84,7 +80,7 @@ export class MyContactsComponent implements OnInit, OnDestroy {
 
   getContacts() {
     this.isLoading = true;
-    this.contactsService.getContact.next();
+    this.contactsService.getContact.next('');
   }
 
   getProvinceMunicipalityFromLocal() {
@@ -104,15 +100,10 @@ export class MyContactsComponent implements OnInit, OnDestroy {
 
   getProvinceMunicipality() {
     this.regionService.getProvinces().subscribe((data) => {
-      // this.allProvinces = data.data;
       this.setProvincesFromResponse(data.data);
     });
     this.regionService.getMunicipalities().subscribe((data) => {
       this.setMunicipalitiesFromResponse(data.data);
-      // this.allMunicipalities = data.data;
-      // this.municipalities = this.allMunicipalities.filter(
-      //   (item) => item.ProvinceId == this.form.get('ProvinceId').value,
-      // );
 
       const locationData = {
         allProvinces: this.allProvinces,
@@ -139,7 +130,15 @@ export class MyContactsComponent implements OnInit, OnDestroy {
       name: [null, [Validators.required]],
       lastName: [null, [Validators.required]],
       email: [null, [Validators.required, Validators.pattern(EMAIL_REGEX)]],
-      identification: [null, [Validators.required, Validators.pattern(IDENTITY_PASSPORT), Validators.minLength(11), Validators.maxLength(11)]],
+      identification: [
+        null,
+        [
+          Validators.required,
+          Validators.pattern(IDENTITY_PASSPORT),
+          Validators.minLength(11),
+          Validators.maxLength(11),
+        ],
+      ],
       phone: [
         null,
         [
@@ -155,14 +154,11 @@ export class MyContactsComponent implements OnInit, OnDestroy {
       MunicipalityId: [null, [Validators.required]],
       ProvinceId: [null, [Validators.required]],
     });
-
-    // this.form.markAllAsTouched();
   }
 
   onMarkAsFeaturedContact(contact) {
     contact.selected = !contact.selected;
     this.setEditingContactDefault(contact);
-    // this.contactsService.getContacts();
     console.log(this.contactsService.allContacts);
   }
 
@@ -249,12 +245,12 @@ export class MyContactsComponent implements OnInit, OnDestroy {
       const idx = this.contactsService.allContacts.findIndex((item) => item.id === data.id);
       let index = 0;
       this.contactsService.allContacts.forEach(() => {
-        if(idx === index) {
+        if (idx === index) {
           this.contactsService.allContacts[idx] = contactRes.data;
         } else {
           this.contactsService.allContacts[index].selected = !contactRes.data.selected;
         }
-        index ++;
+        index++;
       });
 
       this.onCreateContact = false;

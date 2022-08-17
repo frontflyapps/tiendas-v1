@@ -63,7 +63,7 @@ export class MyAccountComponent implements OnInit {
     public authService: AuthenticationService,
     private toastr: ShowToastrService,
     private fb: UntypedFormBuilder,
-    private translate: TranslateService,
+    public translate: TranslateService,
     private spinner: NgxSpinnerService,
     private router: Router,
     private route: ActivatedRoute,
@@ -265,9 +265,11 @@ export class MyAccountComponent implements OnInit {
             /** URL with params **/
             if (this.paramsToRedirect) {
               let tempParams = JSON.parse(this.paramsToRedirect);
-              this.router.navigate([this.redirectToOriginPage], {
-                queryParams: { ...tempParams.params },
-              }).then();
+              this.router
+                .navigate([this.redirectToOriginPage], {
+                  queryParams: { ...tempParams.params },
+                })
+                .then();
             } else {
               this.router.navigate([this.redirectToOriginPage]).then();
             }

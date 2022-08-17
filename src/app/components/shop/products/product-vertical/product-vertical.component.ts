@@ -84,7 +84,7 @@ export class ProductVerticalComponent implements OnInit, OnDestroy {
   }
 
   getProducts() {
-    this.productService.getProduct.next();
+    this.productService.getProduct.next('');
   }
 
   getPFDFromStorage() {
