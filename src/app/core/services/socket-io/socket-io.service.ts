@@ -1,6 +1,6 @@
 import { environment } from './../../../../environments/environment';
 import { Injectable } from '@angular/core';
-import * as io from 'socket.io-client';
+import { io } from 'socket.io-client';
 import { Observable } from 'rxjs';
 import { LoggedInUserService } from '../loggedInUser/logged-in-user.service';
 
@@ -10,7 +10,8 @@ import { LoggedInUserService } from '../loggedInUser/logged-in-user.service';
 export class SocketIoService {
   loggedInUser: any;
   private url = environment.apiUrl + 'connect';
-  private socket: SocketIOClient.Socket;
+  // private socket: SocketIOClient.Socket;
+  private socket = io();
 
   constructor(private loggedInUserService: LoggedInUserService) {
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
