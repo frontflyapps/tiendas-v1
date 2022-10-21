@@ -10,10 +10,10 @@ import { environment } from '../../../../environments/environment';
 export class BusinessService {
   url = environment.apiUrl + 'business';
   urlId = environment.apiUrl + 'business/:businessId';
+
   httpOptions = {};
 
-  constructor(private httpClient: HttpClient) {
-  }
+  constructor(private httpClient: HttpClient) {}
 
   createBussines(body: any): Observable<any> {
     return this.httpClient.post<any>(this.url, body);

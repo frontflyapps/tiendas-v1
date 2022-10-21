@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -283,6 +284,7 @@ export class NavigationService {
       display: true,
     },
   ];
+  constructor(private router: Router) {}
 
   public getNavItems() {
     return this.navItems;
@@ -290,5 +292,14 @@ export class NavigationService {
 
   public getNavBackend() {
     return JSON.parse(JSON.stringify(this.navBackend));
+  }
+
+  public navigateToMyAccount() {
+    const config = JSON.parse(localStorage.getItem('business-config'));
+    if (config && config.signUpType == 'tcp') {
+      this.router.navigate(['/my-account-tcp']);
+      return;
+    }
+    this.router.navigate(['/my-account']);
   }
 }

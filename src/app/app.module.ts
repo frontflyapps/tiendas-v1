@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { LOCALE_ID, NgModule } from '@angular/core';
+import { APP_INITIALIZER, LOCALE_ID, NgModule } from '@angular/core';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -17,6 +17,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { CuDownloadListModule } from 'guachos-cu-down-list';
 import { MatDialogModule } from '@angular/material/dialog';
 import localeEs from '@angular/common/locales/es';
+import { AppService } from './app.service';
+import { lastValueFrom, switchMap } from 'rxjs';
 
 registerLocaleData(localeEs, 'es');
 
@@ -58,9 +60,22 @@ registerLocaleData(localeEs, 'es');
       provide: LOCALE_ID,
       useValue: 'es',
     },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeAppConfig,
+      deps: [AppService],
+      multi: true,
+    },
     CurrencyPipe,
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {
+export class AppModule {}
+
+export function initializeAppConfig(appInitService: AppService) {
+  return () => {
+    lastValueFrom(appInitService.requestCookie().pipe(switchMap(() => appInitService.getBusinessConfig()))).then(
+      (data) => localStorage.setItem('business-config', JSON.stringify(data)),
+    );
+  };
 }

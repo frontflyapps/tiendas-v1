@@ -14,12 +14,14 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-// import { NgxCaptchaModule } from 'ngx-captcha';
 import { UploadFileModule } from '../shared/upload-file/upload-file.module';
 import { CapitalizeFirstDirective } from 'src/app/core/directives/capitalize-first.directive';
+import { MyAccountTcpComponent } from './my-account-tcp/my-account-tcp.component';
+import { MyAccountResolver } from './my-account.resolver';
 
 @NgModule({
-  declarations: [MyAccountComponent, ChangePassComponent, CapitalizeFirstDirective],
+  declarations: [MyAccountComponent, MyAccountTcpComponent, ChangePassComponent, CapitalizeFirstDirective],
+  providers: [MyAccountResolver],
   imports: [
     CommonModule,
     MyAccountRoutingModule,
@@ -35,7 +37,6 @@ import { CapitalizeFirstDirective } from 'src/app/core/directives/capitalize-fir
     MatIconModule,
     MatDividerModule,
     MatAutocompleteModule,
-    // NgxCaptchaModule,
   ],
 })
 export class MyAccountModule {}

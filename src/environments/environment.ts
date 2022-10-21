@@ -6,14 +6,14 @@ const packageJson = require('../../package.json');
 export const environment = {
   production: false,
 
-  apiUrl: 'https://api.mibulevar.com/v1/',
-  imageUrl: 'https://api.mibulevar.com/v1/',
+  // apiUrl: 'https://api.mibulevar.com/v1/',
+  // imageUrl: 'https://api.mibulevar.com/v1/',
 
   // apiUrl: 'http://apitienda.guajiritos.com/v1/',
   // imageUrl: 'http://apitienda.guajiritos.com/v1/',
 
-  // apiUrl: 'http://apitienda.mibulevar.com:8999/v1/',
-  // imageUrl: 'http://apitienda.mibulevar.com:8999/v1/',
+  apiUrl: 'http://apitienda.tiendalocal.com:8998/v1/',
+  imageUrl: 'http://apitienda.tiendalocal.com:8998/v1/',
 
   defaultLanguage: 'es',
   currencyInternational: 'USD',

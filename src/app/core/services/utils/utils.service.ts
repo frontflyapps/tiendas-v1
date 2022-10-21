@@ -20,7 +20,11 @@ export class UtilsService {
     private translateService: TranslateService,
     private showSnackbar: ShowSnackbarService,
     private httpClient: HttpClient,
-  ) {
+  ) {}
+
+  getAppConfig() {
+    let httpOptions = {};
+    return this.httpClient.get<any>(environment.apiUrl + 'business-config', httpOptions);
   }
 
   /**
@@ -31,16 +35,11 @@ export class UtilsService {
    * Return Array of product
    */
   static getAnArrayFromIdsAndArray(arrayBase: any[], arrayIds: any[]): any[] {
-    if (
-      !Array.isArray(arrayBase) || !Array.isArray(arrayIds)
-    ) {
+    if (!Array.isArray(arrayBase) || !Array.isArray(arrayIds)) {
       return [];
     }
 
-    return arrayIds.map((itemId) =>
-      arrayBase.find((itemProduct) =>
-        itemProduct.id === itemId),
-    );
+    return arrayIds.map((itemId) => arrayBase.find((itemProduct) => itemProduct.id === itemId));
   }
 
   public getUrlImages(): string {
@@ -74,8 +73,8 @@ export class UtilsService {
         ? this.translateService.instant('Error ') + action + ' ' + nomenclator
         : this.translateService.instant('Error ') + action
       : this.translateService.instant(
-        `Server response failed, check your connection to the network, or contact the administrators`,
-      );
+          `Server response failed, check your connection to the network, or contact the administrators`,
+        );
     let msg = alternative;
     if (error.errors && error.errors?.length) {
       msg = error.errors.map(
@@ -118,8 +117,8 @@ export class UtilsService {
         ? this.translateService.instant('Error ') + action + ' ' + nomenclator
         : this.translateService.instant('Error ') + action
       : this.translateService.instant(
-        `Server response failed, check your connection to the network, or contact the administrators`,
-      );
+          `Server response failed, check your connection to the network, or contact the administrators`,
+        );
     let msg = alternative;
     if (error.errors && error.errors?.length) {
       msg = error.errors.map(
