@@ -43,14 +43,14 @@ export class NotificationsService {
     this.loggedInUserService.$loggedInUserUpdated.pipe(takeUntil(this._unsubscribeAll)).subscribe((data) => {
       this.loggedInUser = this.loggedInUserService.getLoggedInUser();
       if (this.loggedInUser) {
-        this._listenToSocketIO();
+        // this._listenToSocketIO();
         this.getInitialNotifications();
       }
     });
 
     if (this.loggedInUser) {
       this.getInitialNotifications();
-      this._listenToSocketIO();
+      // this._listenToSocketIO();
     }
   }
 

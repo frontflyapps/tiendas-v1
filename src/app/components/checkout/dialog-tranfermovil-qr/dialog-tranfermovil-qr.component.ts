@@ -34,7 +34,7 @@ export class DialogTranfermovilQrComponent implements OnInit, OnDestroy {
     this.loggedInUserService.$loggedInUserUpdated.pipe(takeUntil(this._unsubscribeAll)).subscribe((data) => {
       this.loggedInUser = this.loggedInUserService.getLoggedInUser();
       if (this.loggedInUser) {
-        this._listenToSocketIO();
+        // this._listenToSocketIO();
       }
     });
 
@@ -63,7 +63,7 @@ export class DialogTranfermovilQrComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
     if (this.loggedInUser) {
-      this._listenToSocketIO();
+      // this._listenToSocketIO();
     }
   }
 

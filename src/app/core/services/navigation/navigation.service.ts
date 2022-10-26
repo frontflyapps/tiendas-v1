@@ -294,12 +294,23 @@ export class NavigationService {
     return JSON.parse(JSON.stringify(this.navBackend));
   }
 
-  public navigateToMyAccount() {
+  public navigateToMyAccount(param?) {
+    debugger;
     const config = JSON.parse(localStorage.getItem('business-config'));
+
     if (config && config.signUpType == 'tcp') {
+      if (param) {
+        this.router.navigate(['/my-account-tcp'], { queryParams: { modal: param } });
+        return;
+      }
       this.router.navigate(['/my-account-tcp']);
       return;
     }
+    if (param) {
+      this.router.navigate(['/my-account'], { queryParams: { modal: param } });
+      return;
+    }
     this.router.navigate(['/my-account']);
+    return;
   }
 }

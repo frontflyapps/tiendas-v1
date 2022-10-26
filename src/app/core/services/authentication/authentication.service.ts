@@ -19,8 +19,7 @@ export class AuthenticationService {
   // -----------------------URL UPDATE PERSON------------------------ //
   urlProfile = environment.apiUrl + 'profile';
 
-  constructor(private httpClient: HttpClient, private loggedInUserService: LoggedInUserService) {
-  }
+  constructor(private httpClient: HttpClient, private loggedInUserService: LoggedInUserService) {}
 
   login(user: string, password: string) {
     const base64EncodedPw = btoa(user + ':' + password);
@@ -49,6 +48,13 @@ export class AuthenticationService {
   }
 
   singUp(body): Observable<any> {
+    if (body.file) {
+      let formData = new FormData();
+      for (let key in body) {
+        formData.append(key, body[key]);
+      }
+      return this.httpClient.post<any>(this.urlSingUp, formData);
+    }
     return this.httpClient.post<any>(this.urlSingUp, body);
   }
 

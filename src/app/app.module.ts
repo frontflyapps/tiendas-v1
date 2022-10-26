@@ -75,7 +75,7 @@ export class AppModule {}
 export function initializeAppConfig(appInitService: AppService) {
   return () => {
     lastValueFrom(appInitService.requestCookie().pipe(switchMap(() => appInitService.getBusinessConfig()))).then(
-      (data) => localStorage.setItem('business-config', JSON.stringify(data)),
+      (data) => localStorage.setItem('business-config', JSON.stringify(data.data)),
     );
   };
 }

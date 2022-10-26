@@ -34,6 +34,7 @@ export class MyAccountComponent implements OnInit {
   pinForm: UntypedFormGroup;
   activateForm: UntypedFormGroup;
   registrationForm: UntypedFormGroup;
+  regTcpForm: UntypedFormGroup;
   insertEmailPassForm: UntypedFormGroup;
   changeToNewPassForm: UntypedFormGroup;
 
@@ -52,6 +53,7 @@ export class MyAccountComponent implements OnInit {
   isRegisterToBecomeASeller = false;
   routeToNavigate = '/checkout';
   localDatabaseUsers = environment.localDatabaseUsers;
+  businessConfig;
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -74,6 +76,7 @@ export class MyAccountComponent implements OnInit {
     this.message = '';
     this.isRegisterToPay = !!localStorage.getItem('isRegisterToPay');
     this.isRegisterToBecomeASeller = !!localStorage.getItem('isRegisterToBecomeASeller');
+    this.businessConfig = JSON.parse(localStorage.getItem('business-config'));
     localStorage.removeItem('isRegisterToPay');
     localStorage.removeItem('isRegisterToBecomeASeller');
     this.routeToNavigate = this.isRegisterToPay ? '/cart' : this.isRegisterToBecomeASeller ? '/become-a-seller' : '';
@@ -194,20 +197,53 @@ export class MyAccountComponent implements OnInit {
       { validator: this.matchValidator.bind(this) },
     );
 
-    this.registrationForm = this.fb.group({
-      name: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
-      lastname: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
-      // username: [null, [
-      //   Validators.required,
-      //   Validators.pattern(USERNAME),
-      // ]],
-      phone: [null, [Validators.pattern(CUBAN_PHONE_START_5), Validators.minLength(8), Validators.maxLength(8)]],
-      address: [null, []],
-      email: [null, [Validators.required, Validators.email, Validators.pattern(EMAIL_REGEX)]],
-      // recaptcha: ['', Validators.required],
-      passwords: this.fromPassRegister,
-    });
+    this.initRegistrationForm(this.businessConfig.signUpType);
     // this.registrationForm.markAllAsTouched();
+  }
+
+  initRegistrationForm(signupType: string) {
+    if (signupType === 'normal') {
+      this.registrationForm = this.fb.group({
+        name: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
+        lastname: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
+        phone: [null, [Validators.pattern(CUBAN_PHONE_START_5), Validators.minLength(8), Validators.maxLength(8)]],
+        address: [null, []],
+        email: [null, [Validators.required, Validators.email, Validators.pattern(EMAIL_REGEX)]],
+        passwords: this.fromPassRegister,
+      });
+      return;
+    }
+    this.regTcpForm = this.fb.group({
+      name: [null, [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
+      lastname: [null, [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
+      ci: [
+        null,
+        [Validators.required, Validators.minLength(11), Validators.maxLength(11), Validators.pattern('^[0-9]*$')],
+      ],
+      ciONAT: [
+        null,
+        [Validators.required, Validators.minLength(11), Validators.maxLength(11), Validators.pattern('^[0-9]*$')],
+      ],
+      licenceTCP: [
+        null,
+        [Validators.required, Validators.minLength(11), Validators.maxLength(11), Validators.pattern('^[0-9]*$')],
+      ],
+      activity: [null, [Validators.required]],
+      phoneCel: [null, [Validators.pattern(CUBAN_PHONE_START_5), Validators.minLength(8), Validators.maxLength(8)]],
+      phone: [null, [Validators.minLength(8), Validators.maxLength(8)]],
+      address: [null, [Validators.required]],
+      email: [null, [Validators.required, Validators.email, Validators.pattern(EMAIL_REGEX)]],
+      passwords: this.fromPassRegister,
+      bankAccountCard26: [
+        null,
+        [Validators.required, Validators.minLength(16), Validators.maxLength(16), Validators.pattern('^[0-9]*$')],
+      ],
+      bankNameCard26: [null, [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
+      bankOfficeCard26: [
+        null,
+        [Validators.required, Validators.minLength(4), Validators.maxLength(4), Validators.pattern('^[0-9]*$')],
+      ],
+    });
   }
 
   createValidationForm() {
@@ -372,8 +408,8 @@ export class MyAccountComponent implements OnInit {
     this.showResetPassForm = false;
     this.showRegistrationForm = true;
 
-    this.authService.singUp(data).subscribe(
-      (result) => {
+    this.authService.singUp(data).subscribe({
+      next: (result) => {
         this.toastr.showInfo(
           this.translate.instant(
             `You have successfully registered, verify your email to complete the account validation`,
@@ -389,12 +425,56 @@ export class MyAccountComponent implements OnInit {
         this.spinner.hide();
         return true;
       },
-      (error) => {
+      error: (error) => {
         this.spinner.hide();
         this.utilsService.errorHandle(error);
         this.inLoading = false;
       },
-    );
+    });
+
+    return false;
+  }
+  onSignUpTCP() {
+    const data = this.regTcpForm.value;
+    data.password = data.passwords.password;
+    data.lastName = data.lastname;
+    data.role = 'Client';
+    if (this.pdfData.length) data.file = this.pdfData[0].file.data;
+    let token = localStorage.getItem('token');
+    if (token != undefined) {
+      data.token = token;
+    }
+    this.spinner.show();
+    this.inLoading = true;
+    this.showPinForm = false;
+    this.showLoginForm = false;
+    this.showResetPassForm = false;
+    this.showRegistrationForm = true;
+
+    this.authService.singUp(data).subscribe({
+      next: (result) => {
+        this.toastr.showInfo(
+          this.translate.instant(
+            `You have successfully registered, verify your email to complete the account validation`,
+          ),
+          '',
+          10000,
+        );
+        this.inLoading = false;
+        this.showPinForm = true;
+        this.showRegistrationForm = false;
+        this.showLoginForm = false;
+        this.showResetPassForm = false;
+        this.router.navigate(['']).then();
+        this.spinner.hide();
+        return true;
+      },
+      error: (error) => {
+        this.spinner.hide();
+        this.utilsService.errorHandle(error);
+        this.inLoading = false;
+      },
+    });
 
     return false;
   }

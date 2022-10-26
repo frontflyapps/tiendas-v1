@@ -199,7 +199,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
         localStorage.setItem('language', JSON.stringify(defaultLanguage));
       }
       if (this.loggedInUser) {
-        this._listenToSocketIO();
+        // this._listenToSocketIO();
       }
     });
     // //////////////////////////////////
@@ -213,7 +213,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
     // }
     // ///////////////////////////////////////////////////////////////////////////////////
     if (this.loggedInUser) {
-      this._listenToSocketIO();
+      // this._listenToSocketIO();
     }
 
     // this.getFromStorage();

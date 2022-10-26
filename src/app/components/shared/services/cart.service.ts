@@ -670,8 +670,8 @@ export class CartService implements OnDestroy {
     return this.httpClient.get<any>(this.url).toPromise();
   }
 
-  getCartData(body): Promise<any> {
-    return this.httpClient.post<any>(this.url + '/checkout-data', body).toPromise();
+  getCartData(body): Observable<any> {
+    return this.httpClient.post<any>(this.url + '/checkout-data', body);
   }
 
   getCartNoLogged(): Cart[] {
@@ -751,7 +751,7 @@ export class CartService implements OnDestroy {
             .navigate(['/my-account'], {
               queryParams: {
                 redirectToOriginPage: url,
-                paramsToRedirect: JSON.stringify(params)
+                paramsToRedirect: JSON.stringify(params),
               },
             })
             .then();
@@ -764,7 +764,6 @@ export class CartService implements OnDestroy {
             })
             .then();
         }
-
       }
     });
   }

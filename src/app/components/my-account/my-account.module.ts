@@ -16,12 +16,9 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { UploadFileModule } from '../shared/upload-file/upload-file.module';
 import { CapitalizeFirstDirective } from 'src/app/core/directives/capitalize-first.directive';
-import { MyAccountTcpComponent } from './my-account-tcp/my-account-tcp.component';
-import { MyAccountResolver } from './my-account.resolver';
 
 @NgModule({
-  declarations: [MyAccountComponent, MyAccountTcpComponent, ChangePassComponent, CapitalizeFirstDirective],
-  providers: [MyAccountResolver],
+  declarations: [MyAccountComponent, ChangePassComponent, CapitalizeFirstDirective],
   imports: [
     CommonModule,
     MyAccountRoutingModule,

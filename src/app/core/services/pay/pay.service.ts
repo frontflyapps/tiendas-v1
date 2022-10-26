@@ -11,13 +11,17 @@ export class PayService {
   urlPaymentTransfermovil = environment.apiUrl + 'payment/transfermovil';
   urlPaymentEnzona = environment.apiUrl + 'payment/enzona';
   urlPaymentBidaiondo = environment.apiUrl + 'payment/bidaiondo';
+  urlBidaiondoCards = environment.apiUrl + 'payment/bidaiondo/get-card';
   urlPaymentPeopleGoTo = environment.apiUrl + 'payment/peoplegoto';
   urlPaymentBidaiondoNew = 'https://apibidpay.guajitech.com/v1/to-bidaiondo-redirect';
   ///////////////////////////////////////////////////////////////////////////
   urlPaySucces = environment.apiUrl + 'pay-success';
   urlPayCancelled = environment.apiUrl + 'pay-cancelled';
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient) {}
+
+  getBidaiondoCards(): Observable<any> {
+    return this.httpClient.get(this.urlBidaiondoCards);
   }
 
   makePaymentTransfermovil(data): Observable<any> {

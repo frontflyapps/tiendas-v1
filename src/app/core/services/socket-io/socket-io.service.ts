@@ -11,18 +11,18 @@ export class SocketIoService {
   loggedInUser: any;
   private url = environment.apiUrl + 'connect';
   // private socket: SocketIOClient.Socket;
-  private socket = io();
+  private socket;
 
   constructor(private loggedInUserService: LoggedInUserService) {
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
 
     if (this.loggedInUser) {
-      this._initSocket(this.loggedInUserService.getTokenCookie());
+      // this._initSocket(this.loggedInUserService.getTokenCookie());
     }
 
     this.loggedInUserService.$loggedInUserUpdated.subscribe(() => {
       this.loggedInUser = this.loggedInUserService.getLoggedInUser();
-      this._initSocket(this.loggedInUserService.getTokenCookie());
+      // this._initSocket(this.loggedInUserService.getTokenCookie());
     });
   }
 
@@ -32,6 +32,7 @@ export class SocketIoService {
 
   // HANDLER
   listen(eventname): Observable<any> {
+    // this.socket.io();
     return new Observable((observer) => {
       this.socket.on(eventname, (data) => {
         observer.next(data);
