@@ -56,6 +56,11 @@ import { FooterProductCardModule } from '../shared/footer-product-card/footer-pr
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ConfirmationDialogFrontModule } from '../shared/confirmation-dialog-front/confirmation-dialog-front.module';
 import { ShareModule } from 'ngx-sharebuttons';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { ReceiverFormComponent } from '../checkout/reciever-form/receiver-form.component';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [
@@ -81,6 +86,7 @@ import { ShareModule } from 'ngx-sharebuttons';
     BlogSectionComponent,
     BannersFourComponent,
     SocialMediaComponent,
+    ReceiverFormComponent,
   ],
   imports: [
     CommonModule,
@@ -109,10 +115,13 @@ import { ShareModule } from 'ngx-sharebuttons';
     MatTabsModule,
     MatCardModule,
     MatButtonModule,
-    // ShareModule,
+    MatDatepickerModule,
+    MatMenuModule,
+    MatSelectModule,
     ShareButtonModule,
     ShareIconsModule,
     MatBottomSheetModule,
+    NgxMaterialTimepickerModule,
     NgxImageZoomModule,
     ConfirmationDialogFrontModule,
     FooterProductCardModule,

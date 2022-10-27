@@ -1,0 +1,412 @@
+<div class='container-checkout checkout sec-padding my-5'>
+  <div class='billing-details' fxFlex="100"
+       fxFlex.gt-md="50"
+       fxFlex.md="50"
+       ngClass.gt-sm="pr-5"
+       ngClass.sm="pr-2"
+       ngClass.xs="pr-0">
+    <div class="header-title">
+      <h3 class="grey-800" ngClass.gt-sm="h2" ngClass.xs="h4">{{ 'Billing Details' | translate }}</h3>
+    </div>
+
+    <div [formGroup]="form" fxLayout="row wrap" fxLayoutAlign="start start">
+      <div fxFlex="100" fxLayout="column" fxLayoutAlign="start stretch" ngClass.sm="mt-2" ngClass.xs="mt-2">
+        <div
+          fxLayout="row"
+          fxLayout.xs="column"
+          fxLayoutAlign="space-between center"
+          fxLayoutAlign.xs="start end"
+          fxLayoutGap="0.5rem"
+        >
+          <p
+            class="mat-body-2 my-2"
+            style="text-transform: uppercase"
+            title="{{ 'Información del cliente que obtendrá los productos' | translate }}"
+          >
+            {{ 'Datos personales del destinatario' | translate }}
+            <mat-icon
+              class="iconHelp"
+              matTooltip="{{ 'Información del cliente que obtendrá los productos' | translate }}"
+              style="cursor: pointer"
+            >help
+            </mat-icon>
+          </p>
+
+          <button
+            [matMenuTriggerFor]="menuContacts"
+            aria-label="Example icon-button with a menu"
+            color="primary"
+            mat-stroked-button
+            ngClass.xs="mb-3"
+          >
+            <mat-icon>book</mat-icon>
+            {{ 'Contactos guardados' | translate }}
+          </button>
+          <mat-menu #menuContacts="matMenu">
+            <ng-container *ngFor="let contact of contactsService.allContacts">
+              <button (click)="onSelectContact(contact)" mat-menu-item>
+                <mat-icon *ngIf='!contact.selected'>person_outline</mat-icon>
+                <mat-icon *ngIf='contact.selected' matTooltip="{{ 'Contacto predeterminado' | translate }}">star</mat-icon>
+                <span>{{ contact.name }}&nbsp;{{ contact.lastName }}</span>
+              </button>
+            </ng-container>
+            <button (click)="onAddContact()" mat-menu-item style="border-top: 4px solid #e7e4e4">
+              <mat-icon>playlist_add</mat-icon>
+              <span>{{ 'Agregar / Editar' | translate }}</span>
+            </button>
+          </mat-menu>
+        </div>
+
+        <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+          <mat-form-field appearance="outline" fxFlex="100" fxFlex.gt-md="48" fxFlex.md="48">
+            <mat-label>{{ 'Name' | translate }}</mat-label>
+            <input
+              [formControl]="this.form.controls['name']"
+              matInput
+              placeholder="{{ 'Name' | translate }}"
+              required
+              (keypress)="utilsService.keyPressAlpha($event)"
+            />
+            <mat-error *ngIf="form.controls['name'].hasError('required')">
+              {{ 'Name' | translate }} <strong>{{ 'is required' | translate }}</strong>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline" fxFlex="100" fxFlex.gt-md="48" fxFlex.md="48">
+            <mat-label>{{ 'Lastname' | translate }}</mat-label>
+            <input
+              [formControl]="this.form.controls['lastName']"
+              matInput
+              placeholder="{{ 'Lastname' | translate }}"
+              required
+              (keypress)="utilsService.keyPressAlpha($event)"
+            />
+            <mat-error *ngIf="form.controls['lastName'].hasError('required')">
+              {{ 'Lastname' | translate }} <strong>{{ 'is required' | translate }}</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'Email' | translate }}</mat-label>
+          <input
+            [formControl]="this.form.controls['email']"
+            (keypress)="utilsService.keyLettersNumberForEmail($event)"
+            matInput
+            placeholder="{{ 'Mail for order confirmation and customer contact ' | translate }}"
+            required
+            type="email"
+          />
+          <mat-error *ngIf="form.controls['email'].hasError('required')">
+            {{ 'Email' | translate }} <strong>{{ 'is required' | translate }}</strong>
+          </mat-error>
+          <mat-error *ngIf="form.controls['email'].hasError('pattern')">
+            {{ 'Email' | translate }} <strong>{{ 'incorrect' | translate }}</strong>
+          </mat-error>
+        </mat-form-field>
+
+        <p
+          class="mat-body-2 my-2"
+          style="text-transform: uppercase"
+          title="{{ 'Datos adicionales del cliente que obtendrá los productos' | translate }}"
+        >
+          {{ 'Datos del destinatario' | translate }}
+          <mat-icon
+            class="iconHelp"
+            matTooltip="{{ 'Datos adicionales del cliente que obtendrá los productos' | translate }}"
+            style="cursor: pointer"
+          >help
+          </mat-icon>
+        </p>
+
+        <!-- SOLO PARA CUBANOS -->
+        <ng-container *ngIf="onlyCubanPeople">
+          <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+            <mat-form-field appearance="outline" fxFlex="48" fxFlex.lt-md="100">
+              <mat-label>{{ 'Provincia' | translate }}</mat-label>
+              <mat-select
+                (selectionChange)="onSelectProvince($event.value)"
+                [compareWith]="compareById"
+                [formControl]="form.controls['ProvinceId']"
+                placeholder="{{ 'Nombre de la provincia' | translate }}"
+                required
+                type="text"
+              >
+                <mat-option *ngFor="let province of allProvinces" [value]="province.id">
+                  {{ province.name }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="form.controls['ProvinceId'].hasError('required')">
+                {{ 'Provincia' | translate }} <strong>{{ 'is required' | translate }}</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" fxFlex="48" fxFlex.lt-md="100">
+              <mat-label>{{ 'Municipio' | translate }}</mat-label>
+              <mat-select
+                (selectionChange)="form.controls['ShippingBusinessId'].setValue(null)"
+                [compareWith]="compareById"
+                [formControl]="form.controls['MunicipalityId']"
+                placeholder="{{ 'Nombre del Municipio' | translate }}"
+                required
+                type="text"
+              >
+                <mat-option *ngFor="let municipio of municipalities" [value]="municipio.id">
+                  {{ municipio.name }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="form.controls['MunicipalityId'].hasError('required')">
+                {{ 'Municipio' | translate }} <strong>{{ 'is required' | translate }}</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <mat-error *ngIf="form.controls['ProvinceId'].hasError('forbiddenProvince')">
+            {{ '**Esta localización no coincide con la del envío seleccionado.**' | translate }}
+          </mat-error>
+        </ng-container>
+
+        <!-- SOLO PARA EXTRANJEROS -->
+<!--        <ng-container *ngIf="!onlyCubanPeople">-->
+<!--          <p class="mat-body-2 my-2" style="text-transform: uppercase">-->
+<!--            {{ "Customer's location data" | translate }}-->
+<!--            <mat-icon-->
+<!--              class="iconHelp"-->
+<!--              matTooltip="{{-->
+<!--                    'Country, city, region and more information about the shipping location' | translate-->
+<!--                  }}"-->
+<!--              style="cursor: pointer"-->
+<!--            >help-->
+<!--            </mat-icon>-->
+<!--          </p>-->
+
+<!--          <mat-form-field appearance="outline">-->
+<!--            <mat-label>{{ 'Country' | translate }}</mat-label>-->
+<!--            <mat-select-->
+<!--              [compareWith]="compareById"-->
+<!--              [formControl]="form.controls['CountryId']"-->
+<!--              placeholder="{{ 'Country name' | translate }}"-->
+<!--              required-->
+<!--              type="text"-->
+<!--            >-->
+<!--              <mat-option *ngFor="let country of allCountries" [value]="country.id">-->
+<!--                {{ utilsService.parserLanguage(country.name, language) }}-->
+<!--              </mat-option>-->
+<!--            </mat-select>-->
+<!--            <mat-error *ngIf="form.controls['CountryId'].hasError('required')">-->
+<!--              {{ 'Country' | translate }} <strong>{{ 'is required' | translate }}</strong>-->
+<!--            </mat-error>-->
+<!--          </mat-form-field>-->
+
+<!--          <div fxLayout="row wrap" fxLayoutAlign="space-between center">-->
+<!--            <mat-form-field appearance="outline" fxFlex="48" fxFlex.lt-md="100">-->
+<!--              <mat-label>{{ 'City' | translate }}</mat-label>-->
+<!--              <input-->
+<!--                [formControl]="this.form.controls['city']"-->
+<!--                matInput-->
+<!--                placeholder="{{ 'City' | translate }}"-->
+<!--                required-->
+<!--                type="text"-->
+<!--              />-->
+<!--              <mat-error *ngIf="form.controls['city'].hasError('required')">-->
+<!--                {{ 'City' | translate }} <strong>{{ 'is required' | translate }}</strong>-->
+<!--              </mat-error>-->
+<!--            </mat-form-field>-->
+
+<!--            <mat-form-field appearance="outline" fxFlex="48" fxFlex.lt-md="100">-->
+<!--              <mat-label>{{ 'State / Province / Region' | translate }}</mat-label>-->
+<!--              <input-->
+<!--                [formControl]="this.form.controls['regionProvinceState']"-->
+<!--                matInput-->
+<!--                placeholder="{{ 'State / Province / Region' | translate }}"-->
+<!--                required-->
+<!--                type="text"-->
+<!--              />-->
+<!--              <mat-error *ngIf="form.controls['regionProvinceState'].hasError('required')">-->
+<!--                {{ 'State / Province / Region' | translate }} <strong>{{ 'is required' | translate }}</strong>-->
+<!--              </mat-error>-->
+<!--            </mat-form-field>-->
+<!--          </div>-->
+<!--        </ng-container>-->
+
+        <div formGroupName='address'>
+          <div fxLayout="row" fxLayoutGap="10px">
+            <mat-form-field fxFlex="80" appearance="outline">
+              <mat-label>{{ 'Calle' | translate }}</mat-label>
+              <input
+                formControlName="street"
+                matInput
+                placeholder="{{ 'Calle' | translate }}"
+                required
+                type="text"
+              />
+              <mat-error *ngIf="this.form.controls['address']?.get('street')?.hasError('required')">
+                {{ 'Calle' | translate }} <strong>{{ 'is required' | translate }}</strong>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field fxFlex="20" appearance="outline">
+              <mat-label>{{ 'Número' | translate }}</mat-label>
+              <input
+                formControlName="number"
+                matInput
+                placeholder="{{ 'Número' | translate }}"
+                required
+                type="text"
+              />
+              <mat-error *ngIf="form.controls['address']?.get('number')?.hasError('required')">
+                {{ 'Número' | translate }} <strong>{{ 'is required' | translate }}</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'Entre calles' | translate }}</mat-label>
+            <input
+              formControlName="between"
+              matInput
+              placeholder="{{ 'Entre calles' | translate }}"
+              required
+              type="text"
+            />
+            <mat-error *ngIf="form.controls['address']?.get('between')?.hasError('required')">
+              {{ 'Entre' | translate }} <strong>{{ 'is required' | translate }}</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+          <mat-form-field appearance="outline" fxFlex="100" fxFlex.gt-md="48" fxFlex.md="48" id="CI">
+            <mat-label>{{ 'Identity card' | translate }}</mat-label>
+            <input
+              (keypress)="utilsService.keyPressAlphaAndNumbers($event)"
+              [formControl]="this.form.controls['dni']"
+              matInput
+              placeholder="{{ 'Identity card' | translate }}"
+              required
+              type="text"
+            />
+            <mat-hint>{{ 'Asegúrese de escribirlo correctamente' }}</mat-hint>
+            <mat-error *ngIf="form.controls['dni'].hasError('required')">
+              {{ 'Identity card' | translate }} <strong>{{ 'is required' | translate }}</strong>
+            </mat-error>
+            <mat-error *ngIf="form.controls['dni'].hasError('minlength')">
+              {{ 'Longitud mínima' | translate }} <strong>{{ CI_Length }} {{ 'caracteres' | translate }}</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" fxFlex="100" fxFlex.gt-md="48" fxFlex.md="48" id="phone-checkout">
+            <mat-label>{{ 'Phone' | translate }}</mat-label>
+            <span class="mr-2" matPrefix>+ 53</span>
+            <input
+              (keypress)="utilsService.keyPressNumbers($event)"
+              [formControl]="this.form.controls['phone']"
+              matInput
+              placeholder="{{ 'Phone' | translate }}"
+              required
+            />
+            <mat-hint *ngIf="!form.get('phone').value">
+              {{ 'Escriba un teléfono móvil cubano, Ex: 51234567' | translate }}
+            </mat-hint>
+            <mat-hint *ngIf="form.get('phone').value && form.get('phone').valid">
+              {{ 'Número válido' | translate }}
+            </mat-hint>
+            <mat-error *ngIf="form.controls['phone'].hasError('required')">
+              {{ 'Phone' | translate }} <strong>{{ 'is required' | translate }}</strong>
+            </mat-error>
+            <mat-error
+              *ngIf="
+                    (form.controls['phone'].hasError('minlength') || form.controls['phone'].hasError('maxlength')) &&
+                    !form.controls['phone'].hasError('pattern')
+                  "
+            >
+              {{ 'Longitud del número' | translate }}&nbsp;<strong>{{
+              '8 caracteres, Ex: 51234567' | translate
+              }}</strong>
+            </mat-error>
+            <mat-error *ngIf="form.controls['phone'].hasError('pattern')">
+              {{ 'El número' | translate }}&nbsp;<strong>{{
+              'debe empezar con 5, Ex: 51234567' | translate
+              }}</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <!--CUSTOM FIELDS-->
+          <ng-container *ngIf='customFields?.length >0 && fields'>
+            <p class="mat-body-2 my-2" style="text-transform: uppercase">
+              {{ "Datos especiales" | translate }}
+              <mat-icon
+                class="iconHelp"
+                matTooltip="{{
+                    'Datos especiales que solicita el negocio.' | translate
+                  }}"
+                style="cursor: pointer"
+              >help
+              </mat-icon>
+            </p>
+
+            <ng-container *ngFor='let element of fields'>
+              <ng-container [ngSwitch]="element.type">
+                <ng-container *ngSwitchCase="'DATE'">
+                  <mat-form-field formGroupName='data' appearance='outline'>
+                    <mat-label>{{ element?.name }}</mat-label>
+                    <input matInput [matDatepicker]="picker" [min]='minDate' formControlName="{{element?.name}}">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error *ngIf="form.controls['data']?.get(element?.name)?.hasError('required')">
+                      {{ element?.name }} <strong>{{ 'is required' | translate }}</strong>
+                    </mat-error>
+                  </mat-form-field>
+                </ng-container>
+                <ng-container *ngSwitchCase="'TIME'">
+                  <mat-form-field formGroupName='data' appearance='outline' class='time-icon-style'>
+                    <mat-label>{{ element?.name }}</mat-label>
+                    <input matInput [ngxTimepicker]="toggleTimepicker" [min]='minHour' [max]='maxHour'  [format]="24"  formControlName="{{element?.name}}" readonly>
+                    <ngx-material-timepicker-toggle matSuffix [for]="toggleTimepicker"></ngx-material-timepicker-toggle>
+                    <ngx-material-timepicker #toggleTimepicker [theme]='timePickerTheme'></ngx-material-timepicker>
+                    <mat-error *ngIf="form.controls['data']?.get(element?.name)?.hasError('required')">
+                      {{ element?.name }} <strong>{{ 'is required' | translate }}</strong>
+                    </mat-error>
+                  </mat-form-field>
+                </ng-container>
+                <ng-container *ngSwitchDefault>
+                  <mat-form-field formGroupName='data' appearance='outline'>
+                    <mat-label>{{ element?.name }}</mat-label>
+                    <input matInput formControlName="{{element?.name}}" placeholder="{{ element?.name }}" [required]='isRequiredField(element?.name)'/>
+                    <mat-error *ngIf="form.controls['data']?.get(element?.name)?.hasError('required')">
+                      {{ element?.name }} <strong>{{ 'is required' | translate }}</strong>
+                    </mat-error>
+                    <mat-error *ngIf="form.controls['data']?.get(element?.name)?.hasError('pattern')">
+                      {{ element?.name }} <strong>{{ 'is invalid' | translate }}</strong>
+                    </mat-error>
+                  </mat-form-field>
+                </ng-container>
+              </ng-container>
+            </ng-container>
+          </ng-container>
+          <!----------------->
+        </div>
+      </div>
+
+      <div class="add-info">
+        <h3 class="grey-800" ngClass.gt-sm="h2" ngClass.xs="h4">{{ 'Aditional information' | translate }}</h3>
+      </div>
+      <div class="mt-1" fxFlex="100" fxFlex.gt-sm="100" ngClass.sm="mt-1" ngClass.xs="mt-1">
+        <mat-form-field appearance="outline" class="w-100">
+              <textarea
+                [formControl]="this.form.controls['info']"
+                matInput
+                placeholder="{{ 'Some information about your address or something important' | translate }}"
+                rows="2"
+              ></textarea>
+        </mat-form-field>
+      </div>
+
+      <div class="actions-buttons" fxFlex="grow" fxLayout="row" fxLayoutAlign="space-between start">
+        <button mat-stroked-button matStepperPrevious>{{ 'Atrás' | translate }}</button>
+        <button (click)="onGoToPayment()" [disabled]="form.invalid" color="primary" mat-raised-button>
+          {{ 'Continuar' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+

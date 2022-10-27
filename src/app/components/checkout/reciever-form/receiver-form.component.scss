@@ -1,0 +1,28 @@
+.container-checkout {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 15px;
+
+  .actions-buttons {
+    button {
+      width: 150px;
+      height: 40px;
+    }
+  }
+}
+.billing-details {
+  min-width: 600px !important;
+  margin: 0 auto;
+
+  @media (max-width: 600px) {
+    min-width: 320px !important;
+  }
+
+  .mat-form-field {
+    width: 100%;
+  }
+
+  .add-info {
+    margin-top: 15px;
+  }
+}

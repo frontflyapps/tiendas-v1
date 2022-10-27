@@ -4,11 +4,16 @@ import { CheckoutComponent } from './checkout/checkout.component';
 
 import { ProcessingPaymentErrorComponent } from './processing-payment-error/processing-payment-error.component';
 import { EnzonaPaymentOkComponent } from './enzona-payment-ok/enzona-payment-ok.component';
+import { ReceiverFormComponent } from './reciever-form/receiver-form.component';
 
 const routes: Routes = [
   {
     path: '',
     component: CheckoutComponent,
+  },
+  {
+    path: 'product-on-request',
+    component: ReceiverFormComponent,
   },
   {
     path: 'enzona-payment-ok',
@@ -24,5 +29,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class CheckoutRoutingModule {
-}
+export class CheckoutRoutingModule {}
