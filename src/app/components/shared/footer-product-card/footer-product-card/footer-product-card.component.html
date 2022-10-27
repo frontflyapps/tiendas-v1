@@ -4,48 +4,56 @@
   <!--      <h4 class="widget-title">{{ 'Featured Products' | translate }}</h4>-->
   <!--    </div>-->
   <ul class="product-list footer-product-card">
-    <li *ngFor="let product of Products"
-        [queryParams]="{
-                  productId: product?.id,
-                  stockId: product?.Stock?.id
-                }"
-        [routerLink]="['/product']"
-        class="list-product" fxLayout="row">
+    <li
+      *ngFor="let product of Products"
+      [queryParams]="{
+        productId: product?.id,
+        stockId: product?.Stock?.id
+      }"
+      [routerLink]="['/product']"
+      class="list-product"
+      fxLayout="row"
+    >
       <div class="media-image">
-        <a [queryParams]="{
-                  productId: product?.id,
-                  stockId: product?.Stock?.id
-                }"
-           [routerLink]="['/product']">
+        <a
+          [queryParams]="{
+            productId: product?.id,
+            stockId: product?.Stock?.id
+          }"
+          [routerLink]="['/product']"
+        >
           <img
             *ngIf="product.Images && product.Images.length"
             [alt]="product.name[language] ? product.name[language] : product.name['es']"
             [src]="imageUrl + product.Images[0].image"
             class="small"
             lazyImg
+            onerror="this.onerror=null;this.src='assets/images/noImage.jpg';"
+          />
 
-            onerror="this.onerror=null;this.src='assets/images/noImage.jpg';" />
-
-          <img *ngIf="!(product.Images && product.Images.length)"
-               alt="No image"
-               class="small"
-               lazyImg
-
-               src="assets/images/noImage.jpg" />
+          <img
+            *ngIf="!(product.Images && product.Images.length)"
+            alt="No image"
+            class="small"
+            lazyImg
+            src="assets/images/noImage.jpg"
+          />
         </a>
       </div>
       <div class="media-body">
-        <a [queryParams]="{
-                  productId: product?.id,
-                  stockId: product?.Stock?.id
-                }"
-           [routerLink]="['/product']">
-                <span class="module line-clamp">{{
-                  product.name[language] ? product.name[language] : product.name['es']
-                  }}</span>
+        <a
+          [queryParams]="{
+            productId: product?.id,
+            stockId: product?.Stock?.id
+          }"
+          [routerLink]="['/product']"
+        >
+          <span class="module line-clamp">{{
+            product.name[language] ? product.name[language] : product.name['es']
+          }}</span>
         </a>
-        <div class='mt-2'>
-          <guachos-rating [config]='{ readOnly: true }' [value]='product.rating'></guachos-rating>
+        <div class="mt-2">
+          <guachos-rating [config]="{ readOnly: true }" [value]="product.rating"></guachos-rating>
         </div>
         <div class="price">
           <ng-container *ngIf="product.offerValue">
@@ -70,15 +78,17 @@
         <!--          <p class="price">{{ product.price | currency: currencyService.getCurrency().code }}</p>-->
       </div>
 
-      <button (click)="$event.stopPropagation(); cartService.addToCartOnCard(product)"
-              class="btnAddCart"
-              mat-mini-fab
-              matTooltip="{{ 'Añadir al carrito' | translate }}"
-              style="z-index: 10">
+      <button
+        appDebounceClick
+        (debounceClick)="addToCart(product)"
+        class="btnAddCart"
+        mat-mini-fab
+        matTooltip="{{ 'Añadir al carrito' | translate }}"
+        style="z-index: 10"
+      >
         <mat-icon>shopping_cart</mat-icon>
       </button>
     </li>
   </ul>
   <!--  </div>-->
 </ng-container>
-

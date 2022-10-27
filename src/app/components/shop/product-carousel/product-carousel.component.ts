@@ -5,7 +5,7 @@ import { Product } from '../../../modals/product.model';
 import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductDialogComponent } from '../products/product-dialog/product-dialog.component';
 import { CartService } from '../../shared/services/cart.service';
 import { ProductService } from '../../shared/services/product.service';
@@ -41,9 +41,13 @@ export class ProductCarouselComponent implements OnInit, AfterViewInit, OnDestro
   imageUrl = environment.imageUrl;
   isHandset = false;
 
+  pathToRedirect: any;
+  paramsToUrlRedirect: any;
+
   constructor(
     private dialog: MatDialog,
     private router: Router,
+    private route: ActivatedRoute,
     private breakpointObserver: BreakpointObserver,
     private productService: ProductService,
     private wishlistService: WishlistService,
@@ -54,6 +58,12 @@ export class ProductCarouselComponent implements OnInit, AfterViewInit, OnDestro
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
+
+    this.pathToRedirect = this.route.snapshot.routeConfig.path;
+    this.route.queryParamMap.subscribe((params) => {
+      this.paramsToUrlRedirect = { ...params };
+      console.log(this.paramsToUrlRedirect);
+    });
   }
 
   ngOnInit() {
@@ -120,6 +130,16 @@ export class ProductCarouselComponent implements OnInit, AfterViewInit, OnDestro
         }
       });
     });
+  }
+
+  // Add to cart
+  public async onAddToCart(product: any, quantity: number = 1) {
+    this.inLoading = true;
+    const loggedIn = await this.cartService.addToCartOnProductCard(product, quantity);
+    this.inLoading = false;
+    if (!loggedIn) {
+      this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
+    }
   }
 
   // Add to wishlist

@@ -47,6 +47,12 @@ registerLocaleData(localeEs, 'es');
   ],
   providers: [
     {
+      provide: APP_INITIALIZER,
+      useFactory: initializeAppConfig,
+      deps: [AppService],
+      multi: true,
+    },
+    {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,
       multi: true,
@@ -59,12 +65,6 @@ registerLocaleData(localeEs, 'es');
     {
       provide: LOCALE_ID,
       useValue: 'es',
-    },
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initializeAppConfig,
-      deps: [AppService],
-      multi: true,
     },
     CurrencyPipe,
   ],

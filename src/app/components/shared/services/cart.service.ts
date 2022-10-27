@@ -4,7 +4,7 @@ import { environment } from '../../../../environments/environment';
 import { Injectable, OnDestroy } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { takeUntil } from 'rxjs/operators';
-import { BehaviorSubject, Observable, Subject, Subscriber } from 'rxjs';
+import { Observable, Subscriber, Subject, BehaviorSubject } from 'rxjs';
 import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-in-user.service';
 import { UtilsService } from '../../../core/services/utils/utils.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -26,6 +26,7 @@ export class CartService implements OnDestroy {
   url = environment.apiUrl + 'cart';
   urlCheckoutData = environment.apiUrl + 'checkout';
   urlShipping = environment.apiUrl + 'cart/shipping';
+  urlOnRequestProduct = environment.apiUrl + 'cart-request';
 
   public cartExpiredTime = '';
   public dateCreatedAtCart = '';
@@ -114,166 +115,116 @@ export class CartService implements OnDestroy {
     });
   }
 
-  // Add to cart
+  /**
+   * General Add to Cart
+   *
+   * @param product Product to buy
+   * @param quantity Quantity to add
+   * @param goToPay
+   */
   public async addToCart(product: any, quantity: number, goToPay?: boolean) {
-    let message, status;
     const productName = product.name[this.language] ? product.name[this.language] : product.name['es'];
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
 
-    if (product.type != 'physical' && product.type != 'digital') {
-      if (this._isInCart(product)) {
-        message =
-          this.translate.instant('The product ') + productName + this.translate.instant(' it is already in the cart.');
-        status = 'error';
-        this.snackBar.open(message, '×', { panelClass: [status], verticalPosition: 'top', duration: 5000 });
+    if (this.isCanStock(product, quantity)) {
+      let dataToPost = {
+        ProductId: product.id,
+        quantity: quantity,
+        StockId: product?.Stock?.id,
+        goToPay: goToPay || false,
+      };
+      if (product.type == 'service') {
+        delete dataToPost.StockId;
+      }
+      if (product.type == 'onRequest') {
+        if (await this.checkIfUserWantToRequestProduct()) {
+          let productId = product.id;
+          this.router
+            .navigate(['checkout/product-on-request'], { queryParams: { productId: product.id.toString() } })
+            .then();
+          // this.router.navigate(['checkout/product-on-request']).then();
+          return;
+        }
         return;
       }
-      if (this.loggedInUser) {
-        return this.postCart({ ProductId: product.id, quantity: quantity, goToPay: goToPay || false })
-          .then((data) => {
-            this.carts = data.data;
-            message =
-              this.translate.instant('The product ') +
-              '  ' +
-              productName +
-              '  ' +
-              this.translate.instant(' has been added to cart.');
-            status = 'success';
-            this.snackBar.open(message, '×', { panelClass: ['succes'], verticalPosition: 'top', duration: 5000 });
-            this.loggedInUserService._setDataToStorage('cartItem', JSON.stringify(this.carts));
-            this.$cartItemsUpdated.next(this.carts);
-            return this.carts;
-          })
-          .catch((err) => {
-            console.warn(err);
-          });
-      } else {
-        this.carts = this.loggedInUserService._getDataFromStorage('cartItem') || [];
-        let cart = this._getSimpleCart(product.BusinessId);
-        cart = cart ? cart : this._newSimpleCart(product, product.Business);
-        if (!this.isSameMarket(cart, product)) {
-          this.showToastr.showError(
-            'Usted solo puede tener en su carrito elementos con la misma moneda a pagar',
-            'Error',
-            5000,
-          );
-          return;
-        }
-
-        const shoppingCartItems = cart.CartItems;
-        const index = shoppingCartItems.findIndex((item) => item.ProductId == product.id);
-        if (index > -1) {
-          if (quantity != -1) {
-            shoppingCartItems[index].quantity++;
-          } else {
-            shoppingCartItems[index].quantity--;
-          }
-          if (shoppingCartItems[index].quantity <= 0) {
-            shoppingCartItems.splice(index, 1);
-            cart.totalPrice = Math.max(0, cart.totalPrice);
-          }
-        } else {
-          shoppingCartItems.push({
-            ProductId: product.id,
-            Product: product,
-            quantity: quantity,
-            StockId: product?.Stock?.id,
-          });
-        }
-        cart.CartItems = [...shoppingCartItems];
-        cart.totalPrice = this._calcTotalPrice(cart);
-        message =
-          this.translate.instant('The product ') +
-          ' ' +
-          productName +
-          '  ' +
-          this.translate.instant(' has been added to cart.');
-        status = 'success';
-        this.snackBar.open(message, '×', { panelClass: ['succes'], verticalPosition: 'top', duration: 5000 });
-        this._setSimpleCart(cart);
-        this.loggedInUserService._setDataToStorage('cartItem', JSON.stringify(this.carts));
-        this.$cartItemsUpdated.next(this.carts);
-        return this.carts;
-      }
-    } else if (this.isCanStock(product, quantity)) {
-      if (this.loggedInUser) {
-        // if (this._isInCart(product) && quantity != -1) {
-        //   quantity = 1;
-        // }
-        return this.postCart({
-          ProductId: product.id,
-          quantity: quantity,
-          StockId: product?.Stock?.id,
-          goToPay: goToPay || false,
-        })
-          .then((data) => {
-            this.carts = data.data;
-            message =
-              this.translate.instant('The product ') +
-              '  ' +
-              productName +
-              '  ' +
-              this.translate.instant(' has been added to cart.');
-            status = 'success';
-            this.snackBar.open(message, '×', { panelClass: ['succes'], verticalPosition: 'top', duration: 5000 });
-            this.loggedInUserService._setDataToStorage('cartItem', JSON.stringify(this.carts));
-            this.$cartItemsUpdated.next(this.carts);
-            return this.carts;
-          })
-          .catch((err) => {
-            console.warn(err);
-          });
-      } else {
-        this.carts = this.loggedInUserService._getDataFromStorage('cartItem') || [];
-        let cart = this._getSimpleCart(product.BusinessId);
-        cart = cart ? cart : this._newSimpleCart(product, product.Business);
-        if (!this.isSameMarket(cart, product)) {
-          this.showToastr.showError(
-            'Usted solo puede tener en su carrito elementos con la misma moneda a pagar',
-            'Error',
-            5000,
-          );
-          return;
-        }
-
-        const shoppingCartItems = cart.CartItems;
-        const index = shoppingCartItems.findIndex((item) => item.ProductId == product.id);
-        if (index > -1) {
-          shoppingCartItems[index].quantity += quantity;
-          // if (quantity != -1)
-          //   shoppingCartItems[index].quantity++;
-          // else {
-          //   shoppingCartItems[index].quantity--;
-          // }
-
-          if (shoppingCartItems[index].quantity <= 0) {
-            shoppingCartItems.splice(index, 1);
-            cart.totalPrice = Math.max(0, cart.totalPrice);
-          }
-        } else {
-          shoppingCartItems.push({
-            ProductId: product.id,
-            Product: product,
-            quantity: quantity,
-            StockId: product?.Stock?.id,
-          });
-        }
-        cart.CartItems = [...shoppingCartItems];
-        cart.totalPrice = this._calcTotalPrice(cart);
-        message =
-          this.translate.instant('The product ') +
-          ' ' +
-          productName +
-          '  ' +
-          this.translate.instant(' has been added to cart.');
-        status = 'success';
-        this.snackBar.open(message, '×', { panelClass: ['succes'], verticalPosition: 'top', duration: 5000 });
-        this._setSimpleCart(cart);
-        this.loggedInUserService._setDataToStorage('cartItem', JSON.stringify(this.carts));
-        this.$cartItemsUpdated.next(this.carts);
-        return this.carts;
-      }
+      return await this.postProductToCart(productName, dataToPost);
     }
+  }
+
+  /**
+   * POST data to API for insert to shopping cart
+   *
+   * @param productName Product name
+   * @param dataForPost Data to send
+   * @private
+   */
+  private postProductToCart(productName, dataForPost) {
+    let message;
+    return this.postCart(dataForPost)
+      .then((data) => {
+        this.carts = data.data;
+        message =
+          this.translate.instant('The product ') +
+          '  ' +
+          productName +
+          '  ' +
+          this.translate.instant(' has been added to cart.');
+        status = 'success';
+        this.snackBar.open(message, '×', { panelClass: ['succes'], verticalPosition: 'top', duration: 5000 });
+        this.loggedInUserService._setDataToStorage('cartItem', JSON.stringify(this.carts));
+        this.$cartItemsUpdated.next(this.carts);
+        return this.carts;
+      })
+      .catch((err) => {
+        console.warn(err);
+      });
+  }
+
+  /**
+   * Add to cart on Product Card
+   *
+   * @param product Product to add
+   * @param quantity Quantity to add (quantity = 1);
+   * @returns boolean, Can add to cart or not
+   */
+  public async addToCartOnProductCard(product: any, quantity: number) {
+    if (this.loggedInUserService.getLoggedInUser()) {
+      if (product.minSale > 1) {
+        const dialogRef = this.dialog.open(ConfirmationDialogFrontComponent, {
+          width: '10cm',
+          maxWidth: '100vw',
+          data: {
+            question: `Este producto posee un restricción de una mínima cantidad de ${product.minSale} unidades para poder adquirirlo, desea añadirlo al carrito?`,
+          },
+        });
+        await dialogRef.afterClosed().toPromise();
+        await this.addToCart(product, product.minSale);
+        return true;
+      }
+      await this.addToCart(product, quantity);
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Navigate to checkout with product id to request
+   * @param productIdToAdd Product id to request
+   * @private
+   */
+  private async checkIfUserWantToRequestProduct() {
+    const dialogRef = this.dialog.open(ConfirmationDialogFrontComponent, {
+      width: '10cm',
+      maxWidth: '100vw',
+      data: {
+        question: `Este producto debe ser solicitado para poder adquirirlo. ¿ Desea añadirlo al carrito ?`,
+      },
+    });
+    let wantsToContinue = await dialogRef.afterClosed().toPromise();
+    if (wantsToContinue) {
+      return true;
+    }
+    return false;
   }
 
   // //////////////FUNCIONES PARA MANEJAR EL ARREGLO DE CARRITOS//////////////////////
@@ -320,10 +271,6 @@ export class CartService implements OnDestroy {
   // //////////////////////////////////////////////////////////////////
 
   public async addToCartQuickly(product: any, quantity: number) {
-    // if (this.loggedInUser && this.loggedInUserService.isMessengerUser()) {
-    //   return alert(this.translate.instant('You can not make this action'));
-    // }
-
     let message, status;
     const hasItem = false;
     const productName = product.name[this.language] ? product.name[this.language] : product.name['es'];
@@ -471,6 +418,13 @@ export class CartService implements OnDestroy {
     }
   }
 
+  /**
+   * Check if some product is inside the shopping cart
+   *
+   * @param product Product to check
+   * @returns boolean
+   *
+   */
   _isInCart(product): boolean {
     this.carts = this.loggedInUserService._getDataFromStorage('cartItem') || [];
     const cart = this._getSimpleCart(product.BusinessId);
@@ -511,11 +465,15 @@ export class CartService implements OnDestroy {
     return true;
   }
 
-  // Calculate Product stock Counts
-  public isCanStock(product: any, quantity): CartItem | Boolean {
+  /**
+   * Check if the product is available
+   * @param product Product to check
+   * @param quantity  Quantity to add
+   * @return boolean
+   */
+  public isCanStock(product: any, quantity): Boolean {
     try {
       if (this.loggedInUser) {
-        // validacion no se ha desde el front sino desde el api
         return true;
       }
       this.carts = this.loggedInUserService._getDataFromStorage('cartItem') || [];
@@ -551,7 +509,6 @@ export class CartService implements OnDestroy {
           limit +
           ' ' +
           this.translate.instant(' items.');
-        // this.toastrService.error('You can not add more items than available. In stock '+ stock +' items.');
         this.snackBar.open(message, '×', {
           panelClass: 'error',
           verticalPosition: 'top',
@@ -694,43 +651,6 @@ export class CartService implements OnDestroy {
     return this.httpClient.get(this.urlCheckoutData, { params: httpParams });
   }
 
-  // Add to cart
-  public addToCartOnCard(product: any, quantity: number = 1) {
-    // this.inLoading = true;
-    if (this.loggedInUserService.getLoggedInUser()) {
-      if (product.minSale > 1) {
-        const dialogRef = this.dialog.open(ConfirmationDialogFrontComponent, {
-          width: '10cm',
-          maxWidth: '100vw',
-          data: {
-            question: `Este producto posee un restricción de mínima cantidad de unidades para poder adquirirlo, desea añadirlo al carrito?`,
-          },
-        });
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result) {
-            this.addToCartQuickly(product, product.minSale)
-              .then((data) => {
-                // this.inLoading = false;
-              })
-              .catch((error) => {
-                // this.inLoading = false;
-              });
-          }
-        });
-      } else {
-        this.addToCartQuickly(product, product.minSale)
-          .then((data) => {
-            // this.inLoading = false;
-          })
-          .catch((error) => {
-            // this.inLoading = false;
-          });
-      }
-    } else {
-      this.redirectToLoginWithOrigin(this.router.routerState.snapshot.url);
-    }
-  }
-
   public redirectToLoginWithOrigin(url: string, params?: any) {
     const dialogRef = this.dialog.open(ConfirmationDialogFrontComponent, {
       width: '550px',
@@ -805,5 +725,9 @@ export class CartService implements OnDestroy {
 
   private isSameMarket(cart, product) {
     return cart.market === product.market;
+  }
+
+  public postBuyRequest(body: any) {
+    return this.httpClient.post(this.urlOnRequestProduct, body);
   }
 }
