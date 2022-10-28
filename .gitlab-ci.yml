@@ -10,7 +10,7 @@ deploy_MibulevarPortal:
   when: always
   script:
     - yarn install
-    - yarn add typescript@4.3.5 -s
+    - yarn add typescript@4.6.2 -s
     - npm run build --prod
     - curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
     - unzip awscli-bundle.zip
