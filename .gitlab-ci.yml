@@ -10,11 +10,11 @@ deploy_MibulevarPortal:
   when: always
   script:
     - yarn install
-      - yarn add typescript@4.3.5 -s
-      - npm run build --prod
-      - curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
-      - unzip awscli-bundle.zip
-      - ./awscli-bundle/install -b ~/bin/aws
-      - export PATH=~/bin:$PATH
-      - aws s3 sync --acl public-read --metadata-directive REPLACE --cache-control max-age=0,public dist/tienda-angular-b2b s3://tiendamibulevar.guajiritos.com --delete
-      - aws cloudfront create-invalidation --distribution-id E18KHQZMCSYZES --paths "/*"
+    - yarn add typescript@4.3.5 -s
+    - npm run build --prod
+    - curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
+    - unzip awscli-bundle.zip
+    - ./awscli-bundle/install -b ~/bin/aws
+    - export PATH=~/bin:$PATH
+    - aws s3 sync --acl public-read --metadata-directive REPLACE --cache-control max-age=0,public dist/tienda-angular-b2b s3://tiendamibulevar.guajiritos.com --delete
+    - aws cloudfront create-invalidation --distribution-id E18KHQZMCSYZES --paths "/*"
