@@ -1,13 +1,13 @@
 <div class='contact-us'>
-  <h1>{{'Quejas y sugerencias'|translate}}</h1>
+  <h1>{{'Contáctenos'|translate}}</h1>
   <h3>{{'Comparta con nosotros sus inquietudes, trabajamos para ofrecerle un servicio de la mejor calidad'|translate}}</h3>
   <br>
   <br>
   <div [formGroup]='this.form' fxLayout='row wrap' fxLayoutAlign='space-between start' fxLayoutGap='gappx'>
     <div class='form' fxFlex='30' fxFlex.lt-sm='100'>
       <label>{{'Nombre'|translate}}*</label>
-      <mat-form-field appearance='fill'>
-        <input formControlName='name' matInput placeholder="{{'escriba su Nombre'|translate}}" required type='text'>
+      <mat-form-field appearance='outline'>
+        <input formControlName='name' matInput placeholder="{{'Escriba su Nombre'|translate}}" required type='text'>
         <mat-error *ngIf="this.form.get('name').hasError('required')">
           {{'Este campo es requerido'|translate}}
         </mat-error>
@@ -15,27 +15,33 @@
     </div>
     <div class='form' fxFlex='30' fxFlex.lt-sm='100'>
       <label>{{'Teléfono'|translate}}</label>
-      <mat-form-field appearance='fill'>
-        <input formControlName='phone' matInput placeholder="{{'escriba su Teléfono'|translate}}" type='text'>
+      <mat-form-field appearance='outline'>
+        <input formControlName='phone' matInput placeholder="{{'Escriba su Teléfono'|translate}}" type='text'>
+        <mat-error *ngIf="this.form.get('phone').hasError('maxlength')">
+          {{'Este campo debe tener un máximo de 9 dígitos'|translate}}
+        </mat-error>
+        <mat-error *ngIf="this.form.get('phone').hasError('minlength')">
+          {{'Este campo debe tener un mínimo de 8 dígitos'|translate}}
+        </mat-error>
       </mat-form-field>
     </div>
     <div class='form' fxFlex='30' fxFlex.lt-sm='100'>
       <label>{{'Correo'|translate}}*</label>
-      <mat-form-field appearance='fill'>
-        <input formControlName='email' matInput placeholder="{{'escriba su Correo'|translate}}" required type='text'>
+      <mat-form-field appearance='outline'>
+        <input formControlName='email' matInput placeholder="{{'Escriba su Correo'|translate}}" required type='text'>
         <mat-error *ngIf="this.form.get('email').hasError('required')">
           {{'Este campo es requerido'|translate}}
         </mat-error>
-        <mat-error *ngIf="this.form.get('email').hasError('email')">
-          {{'El email debe ser válido'|translate}}
+        <mat-error *ngIf="this.form.get('email').hasError('pattern')">
+          {{'Este email no es válido'|translate}}
         </mat-error>
       </mat-form-field>
     </div>
 
     <div class='form mt-3' fxFlex='100' fxFlex.lt-sm='100'>
       <label>{{'Asunto'|translate}}*</label>
-      <mat-form-field appearance='fill'>
-        <input formControlName='topic' matInput placeholder="{{'escriba un breve Asunto'|translate}}" required
+      <mat-form-field appearance='outline'>
+        <input formControlName='topic' matInput placeholder="{{'Escriba un breve Asunto'|translate}}" required
                type='text'>
         <mat-error *ngIf="this.form.get('topic').hasError('required')">
           {{'Este campo es requerido'|translate}}
@@ -45,8 +51,8 @@
 
     <div class='form mt-3' fxFlex='100' fxFlex.lt-sm='100'>
       <label>{{'Mensaje'|translate}}*</label>
-      <mat-form-field appearance='fill'>
-        <textarea formControlName='message' matInput placeholder="{{'escriba su mensaje'|translate}}" required
+      <mat-form-field appearance='outline'>
+        <textarea formControlName='message' matInput placeholder="{{'Escriba su mensaje'|translate}}" required
                   rows='4'></textarea>
         <mat-error *ngIf="this.form.get('message').hasError('required')">
           {{'Este campo es requerido'|translate}}

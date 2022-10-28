@@ -18,7 +18,16 @@ export class PayService {
   urlPaySucces = environment.apiUrl + 'pay-success';
   urlPayCancelled = environment.apiUrl + 'pay-cancelled';
 
-  constructor(private httpClient: HttpClient) {}
+  paymentUrls = {
+    transfermovil: environment.apiUrl + 'payment/transfermovil/:id/cancel',
+    bidaiondo: environment.apiUrl + 'payment/bidaiondo/:id/cancel',
+    peoplegoto: environment.apiUrl + 'payment/peopleGoTo/:id/cancel',
+    cash: environment.apiUrl + 'payment/cash/:id/cancel'
+  };
+
+  constructor(private httpClient: HttpClient) {
+  }
+
 
   getBidaiondoCards(): Observable<any> {
     return this.httpClient.get(this.urlBidaiondoCards);
@@ -61,6 +70,10 @@ export class PayService {
 
   cancelPaymentTranfermovil(data): Observable<any> {
     return this.httpClient.post<any>(this.urlPaymentTransfermovil + `/${data.id}/cancel`, data);
+  }
+
+  cancelOrder(paymentType, data): Observable<any> {
+    return this.httpClient.post<any>(this.paymentUrls[paymentType].replace(':id', data.id), data);
   }
 
   cancelPaymentEnzona(data): Observable<any> {

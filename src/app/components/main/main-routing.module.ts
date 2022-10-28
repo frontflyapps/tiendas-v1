@@ -60,6 +60,13 @@ const routes: Routes = [
           import('../../components/terms-conditions/terms-conditions.module').then((m) => m.TermsConditionsModule),
       },
       {
+        path: 'consumer-protection',
+        loadChildren: () =>
+          import('../../components/consumer-protection/consumer-protection.module').then(
+            (m) => m.ConsumerProtectionModule,
+          ),
+      },
+      {
         path: 'contact-us',
         loadChildren: () => import('../../components/contact-us/contact-us.module').then((m) => m.ContactUsModule),
       },

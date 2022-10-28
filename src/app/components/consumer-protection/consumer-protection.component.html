@@ -1,0 +1,14 @@
+<!--=== Image Block ===-->
+
+<section class="p-3" style="border-bottom: 1px solid #eee">
+  <div class="container-Term">
+    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="gappx">
+      <a class="color-grey-800" [routerLink]="['']">
+        <mat-icon> arrow_back </mat-icon>
+      </a>
+
+      <h1 class="mat-title mb-0 color-grey-800 uppercase ml-2">{{ 'PROTECCIÓN AL CONSUMIDOR' | translate }}</h1>
+    </div>
+  </div>
+</section>
+<div class="ck-content container-Term py-4" [innerHTML]="text | parseLang: language | safeHtml"></div>

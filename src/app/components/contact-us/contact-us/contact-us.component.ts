@@ -7,6 +7,10 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { LoggedInUserService } from 'src/app/core/services/loggedInUser/logged-in-user.service';
+import { CUBAN_PHONE_START_5 } from '../../../core/classes/regex.const';
+
+const EMAIL_REGEX =
+  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 @Component({
   selector: 'app-contact-us',
@@ -38,8 +42,8 @@ export class ContactUsComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.fb.group({
       name: [this.loggedUser?.name, [Validators.required]],
-      phone: [this.loggedUser?.phone, [Validators.pattern(/^(\+|[0-9])([0-9]{5,})([0-9])$/)]],
-      email: [this.loggedUser?.email, [Validators.required, Validators.email]],
+      phone: [this.loggedUser?.phone, [ Validators.minLength(8), Validators.maxLength(9)]],
+      email: [this.loggedUser?.email, [Validators.required, Validators.pattern(EMAIL_REGEX)]],
       topic: ['', [Validators.required]],
       message: ['', [Validators.required]],
     });

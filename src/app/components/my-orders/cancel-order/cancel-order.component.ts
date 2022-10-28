@@ -77,63 +77,82 @@ export class CancelOrderComponent implements OnInit {
     const cancelNote = this.form?.value?.cancelNote;
     let body = { id: this.order.id, cancelNote: cancelNote };
 
-    if (this.order.paymentType == 'transfermovil') {
-      this.payService.cancelPaymentTranfermovil(body).subscribe(
-        (val) => {
-          this.loadData = false;
-          this.spinner.hide();
-          this.showToastr.showSucces(
-            `Su reserva esta en proceso de cancelacion en Transfermovil. Le notificaremos la respuesta.`,
-            'Ok',
-            8000,
-          );
+    this.payService.cancelOrder(this.order.paymentType, body).subscribe(
+      (val) => {
+        this.loadData = false;
+        this.spinner.hide();
+        this.showToastr.showSucces(
+          `Su reserva esta en proceso de cancelacion. Le notificaremos la respuesta.`,
+          'Ok',
+          8000,
+        );
+        this.dialogRef.close(true);
+      },
+      (error: any) => {
+        this.loadData = false;
+        this.spinner.hide();
+        if (error.status == 403 || error.status == 401) {
           this.dialogRef.close(true);
-        },
-        (error: any) => {
-          this.loadData = false;
-          this.spinner.hide();
-          if (error.status == 403 || error.status == 401) {
-            this.dialogRef.close(true);
-          }
-        },
-      );
-    } else if (this.order.paymentType == 'enzona') {
-      this.payService.cancelPaymentEnzona(body).subscribe(
-        (val) => {
-          this.loadData = false;
-          this.spinner.hide();
-          this.showToastr.showSucces(
-            `Su reserva se ha cancelado correctamente y la devolución fue realizada a través de Enzona`,
-            'Ok',
-            8000,
-          );
-          this.dialogRef.close(true);
-        },
-        (error: any) => {
-          this.loadData = false;
-          this.spinner.hide();
-          if (error.status == 403 || error.status == 401) {
-            this.dialogRef.close(true);
-          }
-        },
-      );
-    } else if (this.order.paymentType == 'bidaiondo') {
-      this.payService.cancelPaymentBidaiondo(body).subscribe(
-        (data) => {
-          this.loadData = false;
-          this.spinner.hide();
-          this.showToastr.showInfo(data.data);
-          this.dialogRef.close(true);
-        },
-        (error: any) => {
-          this.loadData = false;
-          this.spinner.hide();
-          if (error.status == 403 || error.status == 401) {
-            this.dialogRef.close(true);
-          }
-        },
-      );
-    }
+        }
+      },
+    );
+    // if (this.order.paymentType == 'transfermovil') {
+    //   this.payService.cancelPaymentTranfermovil(body).subscribe(
+    //     (val) => {
+    //       this.loadData = false;
+    //       this.spinner.hide();
+    //       this.showToastr.showSucces(
+    //         `Su reserva esta en proceso de cancelacion en Transfermovil. Le notificaremos la respuesta.`,
+    //         'Ok',
+    //         8000,
+    //       );
+    //       this.dialogRef.close(true);
+    //     },
+    //     (error: any) => {
+    //       this.loadData = false;
+    //       this.spinner.hide();
+    //       if (error.status == 403 || error.status == 401) {
+    //         this.dialogRef.close(true);
+    //       }
+    //     },
+    //   );
+    // } else if (this.order.paymentType == 'enzona') {
+    //   this.payService.cancelPaymentEnzona(body).subscribe(
+    //     (val) => {
+    //       this.loadData = false;
+    //       this.spinner.hide();
+    //       this.showToastr.showSucces(
+    //         `Su reserva se ha cancelado correctamente y la devolución fue realizada a través de Enzona`,
+    //         'Ok',
+    //         8000,
+    //       );
+    //       this.dialogRef.close(true);
+    //     },
+    //     (error: any) => {
+    //       this.loadData = false;
+    //       this.spinner.hide();
+    //       if (error.status == 403 || error.status == 401) {
+    //         this.dialogRef.close(true);
+    //       }
+    //     },
+    //   );
+    // } else if (this.order.paymentType == 'bidaiondo') {
+    //   this.payService.cancelPaymentBidaiondo(body).subscribe(
+    //     (data) => {
+    //       this.loadData = false;
+    //       this.spinner.hide();
+    //       this.showToastr.showInfo(data.data);
+    //       this.dialogRef.close(true);
+    //     },
+    //     (error: any) => {
+    //       this.loadData = false;
+    //       this.spinner.hide();
+    //       if (error.status == 403 || error.status == 401) {
+    //         this.dialogRef.close(true);
+    //       }
+    //     },
+    //   );
+    // }
   }
 
   private getHourPaymentRules() {

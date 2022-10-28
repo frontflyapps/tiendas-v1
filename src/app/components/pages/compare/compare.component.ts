@@ -24,6 +24,10 @@ export class CompareComponent implements OnInit {
   _unsubscribeAll: Subject<any>;
   imageUrl = environment.imageUrl;
 
+  ratingConfig = {
+    readOnly: true
+  }
+
   constructor(
     private productService: ProductService,
     private cartService: CartService,

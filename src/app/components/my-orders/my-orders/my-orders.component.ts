@@ -39,6 +39,7 @@ export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
   language: any;
 
   allOrders: any[] = [];
+  allPurchaseRequisitions: any[] = [];
   arrayImages: any[] = [];
   mainImage = null;
   changeImage = false;
@@ -132,6 +133,7 @@ export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
   canCancel: boolean;
 
   loadingSearch = true;
+  loadingSearchRequest = true;
   loadingSelectedItem = false;
 
   param: any = {
