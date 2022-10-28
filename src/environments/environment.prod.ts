@@ -1,10 +1,10 @@
 const packageJson = require('../../package.json');
-
+export const PASARELA_BASE = 'peoplegoto';
 export const environment = {
   production: true,
 
-  apiUrl: 'https://api.mibulevar.com/v1/',
-  imageUrl: 'https://api.mibulevar.com/v1/',
+  apiUrl: 'https://apitienda.guajiritos.com/v1/',
+  imageUrl: 'https://apitienda.guajiritos.com/v1/',
 
   defaultLanguage: 'es',
   currencyInternational: 'USD',
