@@ -56,7 +56,7 @@
       {{(product?.shortDescription[language])?product?.shortDescription[language]:product?.shortDescription['es']}}</p> -->
 
     <div class="price mt-2" fxLayout="row" fxLayoutAlign="space-between start">
-      <button (click)="$event.stopPropagation();addToCart(product)" class="btnAddCart" mat-mini-fab
+      <button (click)="$event.stopPropagation();onAddToCart(product)" class="btnAddCart" mat-mini-fab
               matTooltip="{{ 'Añadir al carrito' | translate }}"
               style="z-index: 10">
         <mat-icon>shopping_cart</mat-icon>

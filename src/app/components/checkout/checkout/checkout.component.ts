@@ -211,8 +211,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   loadingCart = true;
   hasPickUpPlace = false;
   minDate = moment()
-    .add(3, 'd') //replace 2 with number of days you want to add
-    .toDate(); //convert it to a Javascript Date Object if you like
+    .add(3, 'd') // replace 2 with number of days you want to add
+    .toDate(); // convert it to a Javascript Date Object if you like
   minHour = '9:00';
   maxHour = '21:00';
   timePickerTheme: NgxMaterialTimepickerTheme = {
@@ -549,72 +549,59 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     });
   }
 
-  public getCartData() {
-    this.loadingCart = true;
-    this.shippingData = [];
-    this.cartService
-      .getCartData({ cartId: this.cartId, cartItemIds: this.cartItemIds })
-      .then((data) => {
-        this.cart = data.Cart;
-        this.buyProducts = data.CartItems || [];
-        // Obtain data for fixed shipping value
-        this.buyWithDiscount = data.discount.priceWithDiscount ? data.discount : null;
-        this.fixShippingBusiness = data.Cart.BusinessId;
-        // Check if is required shipping by business
-        this.shippingIsRequired = data.Cart.Business.shippingRequired;
-        if (this.shippingIsRequired) {
-          this.form.controls['shippingRequired'].setValidators(Validators.required);
-          this.form.controls['ShippingBusinessId'].setValidators(Validators.required);
-          this.form.controls['shippingRequired'].updateValueAndValidity();
-        }
-        // Check if the Pick-Up-Place label has to be displayed
-        if (data.CartItems.filter((item) => item.Product.type === 'physical').length > 0) {
-          this.hasPickUpPlace = true;
-        } else {
-          this.hasPickUpPlace = false;
-        }
-        if (this.cart.market === 'national') this.form.controls['currency'].setValue('CUP');
-
-          this.dataSource = new MatTableDataSource(this.buyProducts);
-          this.marketCard =
-            this.buyProducts && this.buyProducts.length > 0 ? this.buyProducts[0].Product.market : MarketEnum.NATIONAL;
-          if (this.buyProducts && this.buyProducts.length > 0) {
-            this.onRecalculateShipping();
-          } else {
-            this.shippingData = [];
-          }
-
-          this.form.get('paymentType').setValue(this.payments[0].id);
-          if (this.cart.market === MarketEnum.NATIONAL) {
-            this.form.get('currency').setValue(CoinEnum.CUP);
-          }
-          if (this.cart.market === MarketEnum.INTERNATIONAL) {
-            this.form.get('currency').setValue(CoinEnum.USD);
-          }
-
-          this.form.updateValueAndValidity();
-
-          setTimeout(() => {
-            this.loadingCart = false;
-          }, 250);
-        })
-        .catch(() => {
-          this.loadingCart = false;
-        });
-    }
-  }
-
-  detailsShipping() {
-    this.dialog.open(DetailsShippingComponent, {
-      panelClass: 'app-details-shipping',
-      maxWidth: '100vw',
-      maxHeight: '100vh',
-      data: {
-        element: this.shippingData,
-        market: this.marketCard,
-      },
-    });
-  }
+  // public getCartData() {
+  //   this.loadingCart = true;
+  //   this.shippingData = [];
+  //   lastValueFrom(this.cartService
+  //     .getCartData({ cartId: this.cartId, cartItemIds: this.cartItemIds }))
+  //     .then((data) => {
+  //       this.cart = data.Cart;
+  //       this.buyProducts = data.CartItems || [];
+  //       // Obtain data for fixed shipping value
+  //       this.buyWithDiscount = data.discount.priceWithDiscount ? data.discount : null;
+  //       this.fixShippingBusiness = data.Cart.BusinessId;
+  //       // Check if is required shipping by business
+  //       this.shippingIsRequired = data.Cart.Business.shippingRequired;
+  //       if (this.shippingIsRequired) {
+  //         this.form.controls['shippingRequired'].setValidators(Validators.required);
+  //         this.form.controls['ShippingBusinessId'].setValidators(Validators.required);
+  //         this.form.controls['shippingRequired'].updateValueAndValidity();
+  //       }
+  //       // Check if the Pick-Up-Place label has to be displayed
+  //       if (data.CartItems.filter((item) => item.Product.type === 'physical').length > 0) {
+  //         this.hasPickUpPlace = true;
+  //       } else {
+  //         this.hasPickUpPlace = false;
+  //       }
+  //       if (this.cart.market === 'national') this.form.controls['currency'].setValue('CUP');
+  //
+  //         this.dataSource = new MatTableDataSource(this.buyProducts);
+  //         this.marketCard =
+  //           this.buyProducts && this.buyProducts.length > 0 ? this.buyProducts[0].Product.market : MarketEnum.NATIONAL;
+  //         if (this.buyProducts && this.buyProducts.length > 0) {
+  //           this.onRecalculateShipping();
+  //         } else {
+  //           this.shippingData = [];
+  //         }
+  //
+  //         this.form.get('paymentType').setValue(this.payments[0].id);
+  //         if (this.cart.market === MarketEnum.NATIONAL) {
+  //           this.form.get('currency').setValue(CoinEnum.CUP);
+  //         }
+  //         if (this.cart.market === MarketEnum.INTERNATIONAL) {
+  //           this.form.get('currency').setValue(CoinEnum.USD);
+  //         }
+  //
+  //         this.form.updateValueAndValidity();
+  //
+  //         setTimeout(() => {
+  //           this.loadingCart = false;
+  //         }, 250);
+  //       })
+  //       .catch(() => {
+  //         this.loadingCart = false;
+  //       });
+  //   }
 
   public async getCartData() {
     this.loadingCart = true;
@@ -682,6 +669,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   public getTotalAmout(): any {
     if (this.buyWithDiscount?.discount) {
+      // tslint:disable-next-line:radix
       return parseInt(this.buyWithDiscount?.priceWithDiscount);
     }
 
@@ -986,7 +974,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     data.phone = '53' + data.phone;
 
     this.paymentType = JSON.parse(JSON.stringify(data.paymentType));
-    if (!data.shippingRequired) delete data.ShippingBusinessId;
+    if (!data.shippingRequired) { delete data.ShippingBusinessId; }
     data.description = data.description || `Pago realizado por el cliente ${data.name} ${data.lastName}`;
     data.urlClient = environment.url;
     data.CartItemIds = this.buyProducts.map((item) => item.id);

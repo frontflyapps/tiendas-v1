@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 export class CopyTermsService {
   urlTerms = environment.apiUrl + 'term-conditions';
   urlCopy = environment.apiUrl + 'copy-right';
+  urlConsumerProtection = environment.apiUrl + 'consumer-protection';
 
   constructor(private httpClient: HttpClient) {
   }
@@ -19,5 +20,8 @@ export class CopyTermsService {
 
   public getCopyRight(): Observable<any> {
     return this.httpClient.get(this.urlCopy) as Observable<any>;
+  }
+  public getConsumerProtection(): Observable<any> {
+    return this.httpClient.get(this.urlConsumerProtection) as Observable<any>;
   }
 }
