@@ -276,6 +276,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   defaultContact: any;
   businessConfig = JSON.parse(localStorage.getItem('business-config'));
+  noGateway = true;
 
   constructor(
     public cartService: CartService,
@@ -303,7 +304,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
-    this.getEnabledBidaiondoCards();
+
     this.setObsContact();
     this.getContacts();
     this.getAvalilablePaymentType();
@@ -343,8 +344,20 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       }
     });
     this.payments = auxPayments;
-    this.getEnabledBidaiondoCards();
+
+    // this.getEnabledBidaiondoCards();
+
+    if (Object.entries(this.businessConfig.gateways).length > 0) {
+      this.noGateway = false;
+      if (this.businessConfig.gateways.find((item) => item === "bidaiondo")) {
+        console.log('entro');
+        this.getEnabledBidaiondoCards();
+      }
+    } else {
+      this.noGateway = true;
+    }
     console.log(this.payments);
+    console.log(this.noGateway);
   }
 
   public getEnabledBidaiondoCards() {
@@ -549,67 +562,70 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     });
   }
 
-  // public getCartData() {
-  //   this.loadingCart = true;
-  //   this.shippingData = [];
-  //   lastValueFrom(this.cartService
-  //     .getCartData({ cartId: this.cartId, cartItemIds: this.cartItemIds }))
-  //     .then((data) => {
-  //       this.cart = data.Cart;
-  //       this.buyProducts = data.CartItems || [];
-  //       // Obtain data for fixed shipping value
-  //       this.buyWithDiscount = data.discount.priceWithDiscount ? data.discount : null;
-  //       this.fixShippingBusiness = data.Cart.BusinessId;
-  //       // Check if is required shipping by business
-  //       this.shippingIsRequired = data.Cart.Business.shippingRequired;
-  //       if (this.shippingIsRequired) {
-  //         this.form.controls['shippingRequired'].setValidators(Validators.required);
-  //         this.form.controls['ShippingBusinessId'].setValidators(Validators.required);
-  //         this.form.controls['shippingRequired'].updateValueAndValidity();
-  //       }
-  //       // Check if the Pick-Up-Place label has to be displayed
-  //       if (data.CartItems.filter((item) => item.Product.type === 'physical').length > 0) {
-  //         this.hasPickUpPlace = true;
-  //       } else {
-  //         this.hasPickUpPlace = false;
-  //       }
-  //       if (this.cart.market === 'national') this.form.controls['currency'].setValue('CUP');
-  //
-  //         this.dataSource = new MatTableDataSource(this.buyProducts);
-  //         this.marketCard =
-  //           this.buyProducts && this.buyProducts.length > 0 ? this.buyProducts[0].Product.market : MarketEnum.NATIONAL;
-  //         if (this.buyProducts && this.buyProducts.length > 0) {
-  //           this.onRecalculateShipping();
-  //         } else {
-  //           this.shippingData = [];
-  //         }
-  //
-  //         this.form.get('paymentType').setValue(this.payments[0].id);
-  //         if (this.cart.market === MarketEnum.NATIONAL) {
-  //           this.form.get('currency').setValue(CoinEnum.CUP);
-  //         }
-  //         if (this.cart.market === MarketEnum.INTERNATIONAL) {
-  //           this.form.get('currency').setValue(CoinEnum.USD);
-  //         }
-  //
-  //         this.form.updateValueAndValidity();
-  //
-  //         setTimeout(() => {
-  //           this.loadingCart = false;
-  //         }, 250);
-  //       })
-  //       .catch(() => {
-  //         this.loadingCart = false;
-  //       });
-  //   }
-
-  public async getCartData() {
+  public getCartData() {
     this.loadingCart = true;
     this.shippingData = [];
-    const cartSource$ = this.cartService.getCartData({ cartId: this.cartId, cartItemIds: this.cartItemIds });
+    lastValueFrom(this.cartService
+      .getCartData({ cartId: this.cartId, cartItemIds: this.cartItemIds }))
+      .then((data) => {
+        this.cart = data.Cart;
+        this.buyProducts = data.CartItems || [];
+        // Obtain data for fixed shipping value
+        this.buyWithDiscount = data.discount.priceWithDiscount ? data.discount : null;
+        this.fixShippingBusiness = data.Cart.BusinessId;
+        // Check if is required shipping by business
+        this.shippingIsRequired = data.Cart.Business.shippingRequired;
+        if (this.shippingIsRequired) {
+          this.form.controls['shippingRequired'].setValidators(Validators.required);
+          this.form.controls['ShippingBusinessId'].setValidators(Validators.required);
+          this.form.controls['shippingRequired'].updateValueAndValidity();
+        }
+        // Check if the Pick-Up-Place label has to be displayed
+        if (data.CartItems.filter((item) => item.Product.type === 'physical').length > 0) {
+          this.hasPickUpPlace = true;
+        } else {
+          this.hasPickUpPlace = false;
+        }
+        if (this.cart.market === 'national') this.form.controls['currency'].setValue('CUP');
 
-    return lastValueFrom(cartSource$);
-  }
+          this.dataSource = new MatTableDataSource(this.buyProducts);
+          this.marketCard =
+            this.buyProducts && this.buyProducts.length > 0 ? this.buyProducts[0].Product.market : MarketEnum.NATIONAL;
+          if (this.buyProducts && this.buyProducts.length > 0) {
+            this.onRecalculateShipping();
+          } else {
+            this.shippingData = [];
+          }
+
+          this.form.get('paymentType').setValue(this.payments[0].id);
+          if (this.cart.market === MarketEnum.NATIONAL) {
+            this.form.get('currency').setValue(CoinEnum.CUP);
+          }
+          if (this.cart.market === MarketEnum.INTERNATIONAL) {
+            this.form.get('currency').setValue(CoinEnum.USD);
+          }
+
+          this.form.updateValueAndValidity();
+
+          setTimeout(() => {
+            this.loadingCart = false;
+          }, 250);
+        })
+        .catch(() => {
+          this.loadingCart = false;
+        });
+    }
+
+  // public async getCartData() {
+  //   this.loadingCart = true;
+  //   this.shippingData = [];
+  //   // const cartSource$ = this.cartService.getCartData({ cartId: this.cartId, cartItemIds: this.cartItemIds });
+  //   this.cartService.getCartData({ cartId: this.cartId, cartItemIds: this.cartItemIds }).subscribe((data) => {
+  //     this.cart = data.Cart;
+  //   });
+  //
+  //   // return lastValueFrom(cartSource$);
+  // }
 
   getShippingSelectedPrice() {
     return this.shippingSelected?.totalPrice;
@@ -702,7 +718,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         between: [null, [Validators.required]],
       }),
       address2: [null, []],
-      city: [null, [Validators.required]],
+      city: [null,[]],
       regionProvinceState: [null, [Validators.required]],
       CountryId: [59, [Validators.required]],
       ProvinceId: [null, [Validators.required]],
@@ -714,7 +730,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       info: [null, []],
       paymentType: [null, [Validators.required]],
       ShippingBusinessId: [null, []],
-      currency: [null, [Validators.required]],
+      currency: [null, []],
       shippingRequired: [null, []],
     });
     this.onlyCubanPeople = this.form.get('isForCuban').value;
@@ -802,6 +818,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
             this.fixedShipping = dataShipping.shippings;
           }
           this.canBeDelivery = dataShipping.canBeDelivery;
+          console.log('canBeDelivery' + this.canBeDelivery);
           this.inLoading = false;
         },
         error: (error) => {
@@ -811,40 +828,14 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     }
   }
 
-  onSelectNationality(data) {
-    if (data == true) {
-      /*Para cubanos la cosa tranfermovil*/
-      this.onlyCubanPeople = true;
-      this.form.get('CountryId').setValue(59);
-      this.form.get('zipCode').setValue(10400);
-      this.form
-        .get('phone')
-        .setValidators([
-          Validators.required,
-          Validators.pattern(CUBAN_PHONE_START_5),
-          Validators.minLength(8),
-          Validators.maxLength(8),
-        ]);
-      this.form.get('phone').updateValueAndValidity();
-      this.form.get('paymentType').setValue('transfermovil');
-    } else {
-      /*Para extranjeros la cosa*/
-      this.onlyCubanPeople = false;
-      this.form.get('paymentType').setValue('visa');
-      this.form.get('phone').setValidators([]);
-      this.form.get('phone').updateValueAndValidity();
-    }
-    this.updateValidatorsForChangeNationality(data);
-  }
-
   updateValidatorsForChangeNationality(isForCuban) {
     if (isForCuban) {
-      this.form.get('city').disable();
+      // this.form.get('city').disable();
       this.form.get('regionProvinceState').disable();
       this.form.get('ProvinceId').enable();
       this.form.get('MunicipalityId').enable();
     } else {
-      this.form.get('city').enable();
+      // this.form.get('city').enable();
       this.form.get('regionProvinceState').enable();
       this.form.get('ProvinceId').disable();
       this.form.get('MunicipalityId').disable();
@@ -932,26 +923,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     return controls;
   }
 
-  getTotalPricePerItemCurrency(item: CartItem) {
-    const value = this.getTotalPricePerItem(item);
-    return this.currencyCheckoutPipe.transform({
-      currency: this.form.get('currency').value,
-      value: value,
-      rate: this.rate,
-    });
-  }
-
   public getTotalPricePerItem(item: CartItem) {
     let price = this.cartService.getPriceofProduct(item.Product, item.quantity);
     return price * item.quantity;
-  }
-
-  filterCities(val) {
-    val = val.trim().toLowerCase();
-    return this.selectedCities.filter(function (item) {
-      let nameCity = item.name.trim().toLowerCase();
-      return nameCity.includes(val);
-    });
   }
 
   ////////////////////////////////////////////////
@@ -968,6 +942,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
     if (this.form.get('ShippingBusinessId').value && typeof this.form.get('ShippingBusinessId').value === 'object') {
       this.form.get('ShippingBusinessId').setValue(this.form.get('ShippingBusinessId').value.BusinessId);
+      console.log('ShippingBusinessId' + this.form.get('ShippingBusinessId').value);
     }
 
     const data = { ...this.form.value };
@@ -1148,6 +1123,14 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.form.get('address').get('between').setValue(contact?.address.between);
     this.form.get('dni').setValue(contact?.identification);
     this.form.get('phone').setValue(contact?.phone);
+    this.form.get('paymentType').setValue(this.businessConfig.gateways);
+
+    console.log('businessConfig' + this.businessConfig);
+
+    console.log('form' + this.form);
+    console.log('valid' + this.form.valid);
+
+    // this.form.get('get').setValue()
 
     this.form.markAllAsTouched();
   }

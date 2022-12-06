@@ -111,6 +111,9 @@
           <ng-template #noShipping>
             <p class="tex-align-center p-4">{{ 'No hay envio para estos productos' }}</p>
           </ng-template>
+<!--          <ng-container >-->
+            <p *ngIf='noGateway' class="tex-align-center p-4">{{ 'Este negocio no tiene método de pago permitido' }}</p>
+<!--          </ng-container>-->
           <!---------------------->
           <div class="actions-buttons" fxFlex="grow" fxLayout="row" fxLayoutAlign="space-between start">
             <button [routerLink]="['/products/search']" mat-stroked-button matStepperPrevious>
@@ -121,7 +124,7 @@
               color="primary"
               mat-raised-button
               matStepperNext
-              [disabled]="shippingIsRequired && !form.get('ShippingBusinessId').value"
+              [disabled]="noGateway && !form.get('ShippingBusinessId').value"
             >
               {{ 'Continuar' | translate }}
             </button>
@@ -596,6 +599,8 @@
                     fxLayoutGap="10px grid"
                   >
                     <ng-container *ngFor="let pay of payments">
+
+                      {{this.onlyCubanPeople}} *** {{cart?.market}} *** {{pay?.market}} //////////
                       <ng-container
                         *ngIf="this.onlyCubanPeople && cart?.market === 'national' && pay?.market === 'national'"
                       >
@@ -647,38 +652,40 @@
             <!-- ============================================ -->
             <!-- SELECTOR DE MONEDAS -->
             <!-- ============================================ -->
-            <!--        <ng-container *ngIf="!loadingPayment-->
-            <!--                && (form.controls['paymentType'].value === 'visa'-->
-            <!--                || form.controls['paymentType'].value === 'express'-->
-            <!--                || form.controls['paymentType'].value === 'masterCard'-->
-            <!--                || form.controls['paymentType'].value === 'dinners-club-internacional'-->
-            <!--                || form.controls['paymentType'].value === 'jcb'-->
-            <!--                || form.controls['paymentType'].value === 'maestro'-->
-            <!--                || form.controls['paymentType'].value === 'electron'-->
-            <!--                || form.controls['paymentType'].value === 'tarjeta-virtual'-->
-            <!--                || form.controls['paymentType'].value === 'bizum'-->
-            <!--                || form.controls['paymentType'].value === 'iupay'-->
-            <!--                || form.controls['paymentType'].value === 'discover-global')">-->
-            <!--        <ng-container *ngIf="!loadingPayment">-->
-            <!--          <p class="mat-body-2 my-2" style="text-transform: uppercase">-->
-            <!--            {{ 'Selecciones moneda para realizar su pago' | translate }}-->
-            <!--          </p>-->
-            <!--          <div fxLayout="row wrap">-->
-            <!--            <mat-form-field fxFlex="50" fxFlex.lt-md="100" appearance="outline">-->
-            <!--              <mat-label>{{ 'Currency' | translate }}</mat-label>-->
-            <!--              <mat-select [formControl]="form.controls['currency']" placeholder="{{ 'Currency' | translate }}">-->
-            <!--                <ng-container *ngFor="let currency of currencies">-->
-            <!--                  <mat-option *ngIf="!((currency === 'EUR') && (form.get('paymentType').value === 'transfermovil'))"-->
-            <!--                              [value]="currency">-->
-            <!--                      <span class="mat-body-2">-->
-            <!--                        {{ currency }}-->
-            <!--                      </span>-->
-            <!--                  </mat-option>-->
-            <!--                </ng-container>-->
-            <!--              </mat-select>-->
-            <!--            </mat-form-field>-->
-            <!--          </div>-->
-            <!--        </ng-container>-->
+                    <ng-container *ngIf="!loadingPayment
+                            && (form.controls['paymentType'].value === 'visa'
+                            || form.controls['paymentType'].value === 'express'
+                            || form.controls['paymentType'].value === 'masterCard'
+                            || form.controls['paymentType'].value === 'dinners-club-internacional'
+                            || form.controls['paymentType'].value === 'jcb'
+                            || form.controls['paymentType'].value === 'maestro'
+                            || form.controls['paymentType'].value === 'electron'
+                            || form.controls['paymentType'].value === 'tarjeta-virtual'
+                            || form.controls['paymentType'].value === 'bizum'
+                            || form.controls['paymentType'].value === 'iupay'
+                            || form.controls['paymentType'].value === 'discover-global')">
+                    <ng-container *ngIf="!loadingPayment">
+                      <p class="mat-body-2 my-2" style="text-transform: uppercase">
+                        {{ 'Selecciones moneda para realizar su pago' | translate }}
+                      </p>
+                      <div fxLayout="row wrap">
+                        <mat-form-field fxFlex="50" fxFlex.lt-md="100" appearance="outline">
+                          <mat-label>{{ 'Currency' | translate }}</mat-label>
+                          <mat-select [formControl]="form.controls['currency']" placeholder="{{ 'Currency' | translate }}">
+                            <ng-container *ngFor="let currency of currencies">
+                              <mat-option *ngIf="!((currency === 'EUR') && (form.get('paymentType').value === 'transfermovil'))"
+                                          [value]="currency">
+                                  <span class="mat-body-2">
+                                    {{ currency }}
+                                  </span>
+                              </mat-option>
+                            </ng-container>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                    </ng-container>
+                    </ng-container>
+
             <!-- =================================================================== -->
 
             <div *ngIf="!loadingPayment" class="main-order">

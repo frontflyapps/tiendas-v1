@@ -12,11 +12,14 @@ export const environment = {
   // apiUrl: 'https://api.mibulevar.com/v1/',
   // imageUrl: 'https://api.mibulevar.com/v1/',
 
-  // apiUrl: 'http://apitienda.guajiritos.com/v1/',
-  // imageUrl: 'http://apitienda.guajiritos.com/v1/',
+  // apiUrl: 'https://apitienda.guajiritos.com/v1/',
+  // imageUrl: 'https://apitienda.guajiritos.com/v1/',
 
-  apiUrl: 'http://apitienda.tiendalocal.com:8998/v1/',
-  imageUrl: 'http://apitienda.tiendalocal.com:8998/v1/',
+  apiUrl: 'http://apitienda.guajiritos.com/v1/',
+  imageUrl: 'http://apitienda.guajiritos.com/v1/',
+
+  // apiUrl: 'http://apitienda.tiendalocal.com:8998/v1/',
+  // imageUrl: 'http://apitienda.tiendalocal.com:8998/v1/',
 
   defaultLanguage: 'es',
   currencyInternational: 'USD',
@@ -27,8 +30,11 @@ export const environment = {
   timeToResearchMenuData: 10000, // Time to research products (ms)
   timeToResearchCategoriesData: 10000, // Time to research categories (ms)
 
-  url: 'http://tienda.tiendalocal.com:4308',
-  urlAboutUs: 'http://tienda.tiendalocal.com:4308',
+  // url: 'http://tienda.tiendalocal.com:4308',
+  // urlAboutUs: 'http://tienda.tiendalocal.com:4308',
+
+  url: 'http://tienda.guajiritos.com:4308/',
+  urlAboutUs: 'http://tienda.guajiritos.com:4308/',
 
   address: 'Mi Bulevar',
   localDatabaseUsers: true,
