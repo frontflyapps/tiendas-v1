@@ -210,6 +210,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     this.popularProducts = this.productDataService.popularProducts;
     this.featuredProducts = this.productDataService.featuredProducts;
     this.bestSellersProducts = this.productDataService.bestSellerProducts;
+    console.log(this.bestSellersProducts);
   }
 
   getPFDFromStorage() {
