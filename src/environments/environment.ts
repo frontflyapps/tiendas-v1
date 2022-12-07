@@ -36,7 +36,7 @@ export const environment = {
   url: 'http://tienda.guajiritos.com:4308/',
   urlAboutUs: 'http://tienda.guajiritos.com:4308/',
 
-  address: 'Mi Bulevar',
+  address: 'Tienda Guajiritos',
   localDatabaseUsers: true,
 
   contacts: {
@@ -55,11 +55,11 @@ export const environment = {
 
   meta: {
     mainPage: {
-      title: 'Mi Bulevar',
+      title: 'Tienda Guajiritos',
       description: 'Tienda online desarrollada con el framework Angular permite la modelación de negocios B2C and C2C',
       keywords: 'HTML, CSS, JavaScript, Angular, Tienda Online B2B, comercio online',
-      shareImg: 'https://www.mibulevar.com/assets/images/share-img.png',
-      url: 'https://www.mibulevar.com/',
+      shareImg: 'https://www.guajiritos.com/assets/images/share-img.png',
+      url: 'https://www.guajiritos.com/',
     },
   },
 

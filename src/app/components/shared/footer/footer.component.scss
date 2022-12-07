@@ -10,8 +10,12 @@
 }
 
 .image-footer {
-  width: 250px;
-  max-width: 360px;
+  //width: 100px;
+  //max-width: 100px;
+}
+
+.footer-logo{
+  width: 300px !important;
 }
 .etecsa-footer {
   width: 250px;
@@ -65,7 +69,7 @@ span {
 footer {
   div {
     .img-footer {
-      width: 185px;
+      width: 300px;
       max-width: 90vw !important;
     }
   }

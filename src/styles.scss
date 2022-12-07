@@ -27,35 +27,35 @@ $custom-typography: mat-typography-config(
 @include mat-core($custom-typography);
 
 $primary-color: (
-  50: #e6e4f2,
-  100: #c1bbde,
-  200: #988dc9,
-  300: #6f5fb3,
-  400: #503da2,
-  500: #311b92,
-  600: #2c188a,
-  700: #25147f,
-  800: #1f1075,
-  900: #130863,
-  A100: #9e95ff,
-  A200: #6f62ff,
-  A400: #412fff,
-  A700: #2915ff,
+  50 : #e6e6e6,
+  100 : #c2c2c2,
+  200 : #999999,
+  300 : #707070,
+  400 : #515151,
+  500 : #323232,
+  600 : #2d2d2d,
+  700 : #262626,
+  800 : #1f1f1f,
+  900 : #131313,
+  A100 : #ef6c6c,
+  A200 : #ea3e3e,
+  A400 : #f50000,
+  A700 : #db0000,
   contrast: (
-    50: #000000,
-    100: #000000,
-    200: #000000,
-    300: #ffffff,
-    400: #ffffff,
-    500: #ffffff,
-    600: #ffffff,
-    700: #ffffff,
-    800: #ffffff,
-    900: #ffffff,
-    A100: #000000,
-    A200: #ffffff,
-    A400: #ffffff,
-    A700: #ffffff,
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #ffffff,
+    400 : #ffffff,
+    500 : #ffffff,
+    600 : #ffffff,
+    700 : #ffffff,
+    800 : #ffffff,
+    900 : #ffffff,
+    A100 : #000000,
+    A200 : #ffffff,
+    A400 : #ffffff,
+    A700 : #ffffff,
   ),
 );
 
@@ -92,7 +92,7 @@ $accent-color: (
   ),
 );
 
-$primary: mat-palette($primary-color, 800, 700, 600);
+$primary: mat-palette($primary-color, 900, 700, 600);
 $accent: mat-palette($accent-color, 400, 700, 900);
 $warn: mat-palette($mat-red);
 
