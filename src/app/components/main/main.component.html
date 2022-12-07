@@ -247,7 +247,7 @@
         <!-- NOTIFICATIONS -->
         <a *ngIf='loggedInUser' class='px-3' fxLayoutAlign='start center' style='color: white'>
           <button (click)='notificationBar.toggle()' mat-icon-button>
-            <mat-icon [matBadge]='notificationsService.getUnreadNotifications()' matBadgeColor='warn'
+            <mat-icon [matBadge]='notificationsService.getUnreadNotifications()' matBadgeColor='accent'
             >notifications
             </mat-icon>
           </button>
@@ -364,7 +364,7 @@
 
           <a *ngIf='loggedInUser' fxLayoutAlign='start center' style='color: white'>
             <button (click)='notificationBar.toggle()' mat-icon-button>
-              <mat-icon [matBadge]='notificationsService.getUnreadNotifications()' matBadgeColor='warn'
+              <mat-icon [matBadge]='notificationsService.getUnreadNotifications()' matBadgeColor='accent'
               >notifications
               </mat-icon>
             </button>
