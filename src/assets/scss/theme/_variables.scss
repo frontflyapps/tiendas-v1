@@ -1,9 +1,8 @@
-$menu-hover: #4DABF6;
-$menu-hover-text: white; // text color, on hover on the menu
 
 $footer-color: #131313;
 $footer-bottom-color: #131313;
 
+$menu-hover-text: white; // text color, on hover on the menu
 //colors
 $theme-main: #323232;
 $theme-main-400: #323232;
@@ -14,6 +13,7 @@ $theme-main-accent-400: #3dc998;
 $theme-main-accent-300: #5fd3aa;
 $theme-main-accent-100: #bbecdb;
 
+$menu-hover: $theme-main-accent;
 $theme-main-dark: #131313;
 $theme-main-dark-2: #303030;
 $theme-main-dark-3: #282828;

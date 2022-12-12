@@ -21,7 +21,9 @@
   <div class="image-layout" fxFlex.lt-md="35" fxLayoutAlign="center center">
     <a [queryParams]="{
         productId: product?.id,
-        stockId: product?.Stock?.id
+        stockId: product?.Stock?.id,
+                name: product?.name?.es,
+                sharedImage: product?.sharedImage
       }" [routerLink]="['/product']" class="product-link" fxFlex="row" fxLayoutAlign="center center">
       <img *ngIf="product.Images && product.Images.length" [src]="imageUrl + product.Images[0].image"
            alt="MiBulevar shop" class="image"
@@ -42,7 +44,9 @@
     <div class="title">
       <a [queryParams]="{
           productId: product?.id,
-          stockId: product?.Stock?.id
+          stockId: product?.Stock?.id,
+                name: product?.name?.es,
+                sharedImage: product?.sharedImage
         }" [routerLink]="['/product']"
          class="link-nav-a">{{ product.name[language] ? product.name[language] : product.name['es'] }}</a>
     </div>

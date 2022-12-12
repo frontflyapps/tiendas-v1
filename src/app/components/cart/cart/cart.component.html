@@ -47,7 +47,9 @@
               />
             </div>
             <div class="mat-cell">
-              <a [queryParams]="{ productId: item?.Product?.id, stockId: item?.Product?.Stock?.id }"
+              <a [queryParams]="{ productId: item?.Product?.id, stockId: item?.Product?.Stock?.id,
+                name: item?.name?.es,
+                sharedImage: item?.sharedImage }"
                  [routerLink]="['/product']"
                  class="link-nav-a line-clamp"
               >{{ item.Product.name[language] ? item.Product.name[language] : item.Product.name['es'] }}</a>

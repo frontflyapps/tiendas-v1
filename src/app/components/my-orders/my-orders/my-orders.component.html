@@ -192,7 +192,9 @@
                       <a
                         [queryParams]="{
                           productId: paymentItem?.ProductId,
-                          stockId: paymentItem?.StockId
+                          stockId: paymentItem?.StockId,
+                name: paymentItem?.name?.es,
+                sharedImage: paymentItem?.sharedImage
                         }"
                         [routerLink]="['/product']"
                         class="product-link"

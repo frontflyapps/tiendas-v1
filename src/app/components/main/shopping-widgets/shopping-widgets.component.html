@@ -48,7 +48,9 @@
             </div>
             <div class='desc'>
 
-              <a [queryParams]='{ productId: item?.Product?.id, stockId: item?.Stock?.id }'
+              <a [queryParams]='{ productId: item?.Product?.id, stockId: item?.Stock?.id,
+                name: item?.name?.es,
+                sharedImage: item?.sharedImage }'
                  [routerLink]="['/product']"
                  class='link-nav-a'>
                 <p class='name'>

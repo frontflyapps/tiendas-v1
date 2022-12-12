@@ -6,7 +6,9 @@
     <mat-list class="reviews">
       <mat-list-item *ngFor="let product of popularProducts.slice(0,3)" class="content">
         <div class="media">
-          <a [queryParams]="{ productId: product.id, stockId: product?.Stock?.id }"
+          <a [queryParams]="{ productId: product.id, stockId: product?.Stock?.id,
+                name: product?.name?.es,
+                sharedImage: product?.sharedImage }"
              [routerLink]="['/product']"
              style="width: 100%; height: 100%">
             <img *ngIf="product.Images && product.Images.length"
@@ -24,11 +26,15 @@
           </a>
         </div>
         <div class="info" style="text-align: left !important">
-          <a [queryParams]="{ productId: product.id, stockId: product?.Stock?.id }"
+          <a [queryParams]="{ productId: product.id, stockId: product?.Stock?.id,
+                name: product?.name?.es,
+                sharedImage: product?.sharedImage }"
              [routerLink]="['/product']"
              class="title">
             <h5 class="m-0">
-              <a [queryParams]="{ productId: product.id, stockId: product?.Stock?.id }"
+              <a [queryParams]="{ productId: product.id, stockId: product?.Stock?.id,
+                name: product?.name?.es,
+                sharedImage: product?.sharedImage }"
                  [routerLink]="['/product']"
                  class="link-nav-a"
               >{{ product.name[language] ? product.name[language] : product.name['es'] }}</a>
