@@ -58,15 +58,15 @@
             <div class="price">
               <ng-container *ngIf="product.offerValue">
                 <p class="deletePrice m-0">
-                  <del>{{ currencyService.getPriceLabel(product) }}</del>
+                  <del>{{ product | parsePriceProduct }}</del>
                 </p>
                 <p class="mat-body-2 m-0" matTooltip="{{ 'Existe una oferta asociada a este producto' | translate }}">
-                  {{ currencyService.getOfferLabel(product) }}
+                  {{ product | parsePriceProduct: 'offert' }}
                 </p>
               </ng-container>
               <ng-container *ngIf="!product.offerValue">
                 <p class="mat-body-2 m-0">
-                  {{ currencyService.getPriceLabel(product) }}
+                  {{ product | parsePriceProduct }}
                 </p>
                 <p class="mat-body-2 m-0" style="font-size: 15px">
                   {{ 'Desde ' | translate }}
@@ -173,15 +173,15 @@
             <div class="price">
               <ng-container *ngIf="product.offerValue">
                 <p class="deletePrice m-0">
-                  <del>{{ currencyService.getPriceLabel(product) }}</del>
+                  <del>{{ product | parsePriceProduct }}</del>
                 </p>
                 <p class="mat-body-2 m-0" matTooltip="{{ 'Existe una oferta asociada a este producto' | translate }}">
-                  {{ currencyService.getOfferLabel(product) }}
+                  {{ product | parsePriceProduct: 'offert' }}
                 </p>
               </ng-container>
               <ng-container *ngIf="!product.offerValue">
                 <p class="mat-body-2 m-0">
-                  {{ currencyService.getPriceLabel(product) }}
+                  {{ product | parsePriceProduct }}
                 </p>
                 <p class="mat-body-2 m-0" style="font-size: 15px">
                   {{ 'Desde ' | translate }}
@@ -281,15 +281,15 @@
           <div class="price">
             <ng-container *ngIf="product.offerValue">
               <p class="deletePrice m-0">
-                <del>{{ currencyService.getPriceLabel(product) }}</del>
+                <del>{{ product | parsePriceProduct }}</del>
               </p>
               <p class="mat-body-2 m-0" matTooltip="{{ 'Existe una oferta asociada a este producto' | translate }}">
-                {{ currencyService.getOfferLabel(product) }}
+                {{ product | parsePriceProduct: 'offert' }}
               </p>
             </ng-container>
             <ng-container *ngIf="!product.offerValue">
               <p class="mat-body-2 m-0">
-                {{ currencyService.getPriceLabel(product) }}
+                {{ product | parsePriceProduct }}
               </p>
               <p class="mat-body-2 m-0" style="font-size: 15px">
                 {{ 'Desde ' | translate }}
