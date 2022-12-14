@@ -531,14 +531,15 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
 
   // ============= LOCATION ==================================
   initSubsLocation() {
-    let nowLocation = JSON.parse(localStorage.getItem('location'));
     this.locationService.location$.subscribe((newLocation) => {
+      let nowLocation = JSON.parse(localStorage.getItem('location'));
       this.setLocationData(newLocation);
       if ( newLocation ) {
-        if ( nowLocation.province !== newLocation.province || nowLocation.municipality !== newLocation.municipality ) {
+        if ( nowLocation.province?.id !== newLocation.province?.id || nowLocation.municipality?.id !== newLocation.municipality?.id ) {
           this.allProducts = [];
           this.searchProducts();
         }
+
       }
     });
   }
