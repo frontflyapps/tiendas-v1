@@ -3,8 +3,8 @@ export const PASARELA_BASE = 'peoplegoto';
 export const environment = {
   production: true,
 
-  apiUrl: 'https://apitienda.guajiritos.com/v1/',
-  imageUrl: 'https://apitienda.guajiritos.com/v1/',
+  apiUrl: 'https://api.guajiritos.com/v1/',
+  imageUrl: 'https://api.guajiritos.com/v1/',
 
   defaultLanguage: 'es',
   currencyInternational: 'USD',
@@ -37,7 +37,7 @@ export const environment = {
       title: 'Tienda Guajiritos',
       description: 'Tienda online desarrollada con el framework Angular permite la modelación de negocios B2C and C2C',
       keywords: 'HTML, CSS, JavaScript, Angular, Tienda Online B2B, Sin Cola, comercio online',
-      shareImg: 'https://www.guajiritos.com/assets/images/share-img.png',
+      shareImg: 'https://www.guajiritos.com/assets/icons/icon-384x384.png',
       url: 'https://www.guajiritos.com/',
     },
   },
