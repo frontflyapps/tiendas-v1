@@ -12,6 +12,7 @@ import { EncryptDecryptService } from './core/services/encrypt-decrypt.service';
 import { AuthenticationService } from './core/services/authentication/authentication.service';
 import { LocalStorageService } from './core/services/localStorage/localStorage.service';
 import { RequestCookieSecureService } from './core/services/request-cookie-secure/request-cookie-secure.service';
+import { SplashScreenService } from './core/services/splash-screen/splash-screen.service';
 
 @Component({
   selector: 'app-root',
@@ -39,6 +40,7 @@ export class AppComponent {
     private authService: AuthenticationService,
     private encryptDecryptService: EncryptDecryptService,
     private localStorageService: LocalStorageService,
+    private splashService: SplashScreenService,
   ) {
     this.rq.requestCookiesSecure();
 

@@ -74,7 +74,7 @@ export class SplashScreenService {
    */
   private _init(): void {
     // Get the splash screen element
-    this.splashScreenEl = this._document.body.querySelector('#fuse-splash-screen');
+    this.splashScreenEl = this._document.body.querySelector('#splash-screen');
 
     // If the splash screen element exists...
     if (this.splashScreenEl) {
