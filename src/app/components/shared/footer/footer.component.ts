@@ -23,6 +23,7 @@ export class FooterComponent implements OnInit {
   public version = environment.versions.app;
 
   public contacts: IFooterContacts = environment.contacts;
+  public logo = environment.logoWhite;
 
   loggedInUser: IUser;
 

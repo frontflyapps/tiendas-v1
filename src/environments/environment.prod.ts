@@ -8,6 +8,9 @@ export const environment = {
 
   defaultLanguage: 'es',
   currencyInternational: 'USD',
+  logo: 'assets/images/guajiritos/guajiritos-Logo-blanco.png',
+  logoWhite: 'assets/images/guajiritos/guajiritos-Logo-blanco.png',
+  logoFooter: 'assets/images/guajiritos/guajiritos-Logo-blanco.png',
 
   timeToResetSession: 14400000, // (4hrs) Time to reset the session (ms)
   timeToResearchProductData: 300000, // (5min) Time to research products (ms)

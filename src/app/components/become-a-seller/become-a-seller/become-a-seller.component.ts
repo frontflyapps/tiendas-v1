@@ -15,6 +15,7 @@ import { Subject } from 'rxjs';
 import { validate } from 'codelyzer/walkerFactory/walkerFn';
 import { UtilsService } from '../../../core/services/utils/utils.service';
 import { BankService } from '../../../core/services/bank/bank.service';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-become-a-seller',
@@ -27,6 +28,7 @@ export class BecomeASellerComponent implements OnInit {
   locationForm: FormGroup;
   sellerForm: FormGroup;
   firstStep: any;
+  logo = environment.logoWhite;
   secondStep: any;
   thirdStep: any;
   allProvinces: any[] = [];

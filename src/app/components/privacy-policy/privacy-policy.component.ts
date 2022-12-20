@@ -22,7 +22,7 @@ export class PrivacyPolicyComponent implements OnInit {
       this.language = data.lang;
     });
     this.privService.getCopyRight().subscribe((data: any) => {
-      this.text = data?.data[0].text;
+      this.text = data?.data[0]?.text;
     });
   }
 
