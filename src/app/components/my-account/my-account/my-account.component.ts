@@ -22,6 +22,7 @@ export class MyAccountComponent implements OnInit {
   passType = 'password';
   passType2 = 'password';
   applyStyle = false;
+  public logo = environment.logoWhite;
   configuration: any = {};
   message: string;
   redirectToOriginPage: string;
@@ -197,7 +198,7 @@ export class MyAccountComponent implements OnInit {
       { validator: this.matchValidator.bind(this) },
     );
 
-    this.initRegistrationForm(this.businessConfig.signUpType);
+    this.initRegistrationForm(this.businessConfig?.signUpType);
     // this.registrationForm.markAllAsTouched();
   }
 

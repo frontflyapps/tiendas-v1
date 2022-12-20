@@ -15,14 +15,17 @@ export const environment = {
   // apiUrl: 'https://apitienda.guajiritos.com/v1/',
   // imageUrl: 'https://apitienda.guajiritos.com/v1/',
 
-  // apiUrl: 'https://apitienda.guajiritos.com/v1/',
-  // imageUrl: 'https://apitienda.guajiritos.com/v1/',
+  apiUrl: 'https://apitienda.guajiritos.com/v1/',
+  imageUrl: 'https://apitienda.guajiritos.com/v1/',
 
-  apiUrl: 'http://apitienda.tiendalocal.com:8998/v1/',
-  imageUrl: 'http://apitienda.tiendalocal.com:8998/v1/',
+  // apiUrl: 'http://apitienda.tiendalocal.com:8998/v1/',
+  // imageUrl: 'http://apitienda.tiendalocal.com:8998/v1/',
 
   defaultLanguage: 'es',
   currencyInternational: 'USD',
+  logo: 'assets/images/guajiritos/guajiritos-Logo-blanco.png',
+  logoWhite: 'assets/images/guajiritos/guajiritos-Logo-blanco.png',
+  logoFooter: 'assets/images/guajiritos/guajiritos-Logo-blanco.png',
 
   timeToResetSession: 14400000, // Time to reset the session (ms)
   timeToResearchProductData: 10000, // Time to research products (ms)

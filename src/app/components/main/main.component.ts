@@ -63,6 +63,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public currencies: any[];
   public currency: any;
+  public logo= environment.logoWhite;
   urlImage: any = environment.imageUrl;
 
   public province: any = null;

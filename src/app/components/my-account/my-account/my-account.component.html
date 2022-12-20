@@ -6,7 +6,7 @@
       </div> -->
 
       <div fxLayout="column" fxLayoutAlign="center start" class="py-2 mt-2">
-        <img *ngIf="!showRegistrationForm" src="assets/images/guajiritos/guajiritos-Logo-blanco.png" class="login-logo mx-auto" />
+        <img *ngIf="!showRegistrationForm" [src]="logo" class="login-logo mx-auto" />
       </div>
 
       <div class="mat-elevation-z8" fxLayout="column" fxLayoutAlign="start stretch" id="CardBodyLoggin">
@@ -147,7 +147,7 @@
 
         <!-- =========================================================================== -->
         <!-- REGISTRATION -->
-        <ng-container *ngIf="businessConfig.signUpType == 'normal'; else tcpRegitretion">
+        <ng-container *ngIf="businessConfig?.signUpType == 'normal'; else tcpRegitretion">
           <div *ngIf="showRegistrationForm" class="FormLayout" fxLayout="column" fxLayoutAlign="start stretch">
             <form class="example-full-width">
               <div class="pt-3" fxLayout="column" fxLayoutAlign="space-around stretch">
@@ -830,7 +830,7 @@
                   color="primary"
                   mat-raised-button
                 >
-                  <span class="uppercase color-white">{{ 'Senda' | translate }}</span>
+                  <span class="uppercase color-white">{{ 'Send' | translate }}</span>
                 </button>
               </div>
             </div>
