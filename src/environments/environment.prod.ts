@@ -3,8 +3,8 @@ export const PASARELA_BASE = 'peoplegoto';
 export const environment = {
   production: true,
 
-  apiUrl: 'https://api.guajiritos.com/v1/',
-  imageUrl: 'https://api.guajiritos.com/v1/',
+  apiUrl: 'https://api.mibulevar.com/v1/',
+  imageUrl: 'https://api.mibulevar.com/v1/',
 
   defaultLanguage: 'es',
   currencyInternational: 'USD',
@@ -18,30 +18,30 @@ export const environment = {
   timeToResearchMenuData: 300000, // (30min) Time to research menu (ms)
   timeToResearchCategoriesData: 600000, // (10min) Time to research categories (ms)
 
-  url: 'https://www.guajiritos.com',
-  urlAboutUs: 'https://www.guajiritos.com',
+  url: 'https://www.mibulevar.com',
+  urlAboutUs: 'https://www.mibulevar.com',
 
-  address: 'Tienda Guajiritos',
+  address: 'MiBulevar | Transfermóvil',
   localDatabaseUsers: true,
 
   contacts: {
-    email: 'cto@guajiritos.cu',
-    address: 'Zulueta #658, e/ Gloria y Apodaca',
+    email: 'bulevar@etecsa.cu',
+    address: 'Centro de Negocios Miramar, Edificio Barcelona oficina 201, Miramar, Playa.',
   },
 
-  adminService: 'https://admin.guajiritos.com/',
-  mainDomain: '.guajiritos.com',
+  adminService: 'https://admin.mibulevar.com/',
+  mainDomain: '.mibulevar.com',
 
   tokenBusiness:
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7IkJ1c2luZXNzSWQiOjEsImlkIjoxLCJkYXRlIjoiMjAyMS0wOS0xM1QwMTo0NToxOC4wMDBaIiwibmFtZSI6IlRpZW5kYSIsImVtYWlsIjoidGllbmRhQGxvY2FsaG9zdC5jb20ifSwiaWF0IjoxNjMxNDk3NTkxfQ.FF5-276rI9SJmtebVo0spV8Y2wdOZPok7LlUxtTDwh0',
 
   meta: {
     mainPage: {
-      title: 'Tienda Guajiritos',
+      title: 'MiBulevar | Transfermóvil',
       description: 'Tienda online desarrollada con el framework Angular permite la modelación de negocios B2C and C2C',
       keywords: 'HTML, CSS, JavaScript, Angular, Tienda Online B2B, Sin Cola, comercio online',
-      shareImg: 'https://www.guajiritos.com/assets/icons/icon-384x384.png',
-      url: 'https://www.guajiritos.com/',
+      shareImg: 'https://www.mibulevar.com/assets/images/share-img.jpg',
+      url: 'https://www.mibulevar.com/',
     },
   },
 

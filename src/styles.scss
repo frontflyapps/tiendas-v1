@@ -1,3 +1,13 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* You can add global styles to this file, and also import other style files */
+body {
+  @media only screen and (min-width: 756px) and (max-width: 1600px) {
+    zoom: 85%;
+    -webkit-zoom: 85%;
+  }
+}
+
 @import '../node_modules/swiper/css/swiper.min.css';
 // @import "../node_modules/@angular/material/prebuilt-themes/indigo-pink.css";
 @import './assets/scss/helpers/helpers';
@@ -18,7 +28,7 @@ body {
 }
 
 // ---------------Material Themin -----------------///
-@import '@angular/material/theming';
+@import '~@angular/material/theming';
 @include mat-core();
 $custom-typography: mat-typography-config(
   $font-family: 'Poppins',
@@ -27,73 +37,74 @@ $custom-typography: mat-typography-config(
 @include mat-core($custom-typography);
 
 $primary-color: (
-  50 : #e6e6e6,
-  100 : #c2c2c2,
-  200 : #999999,
-  300 : #707070,
-  400 : #515151,
-  500 : #323232,
-  600 : #2d2d2d,
-  700 : #262626,
-  800 : #1f1f1f,
-  900 : #131313,
-  A100 : #ef6c6c,
-  A200 : #ea3e3e,
-  A400 : #f50000,
-  A700 : #db0000,
+  50: #e6e4f2,
+  100: #c1bbde,
+  200: #988dc9,
+  300: #6f5fb3,
+  400: #503da2,
+  500: #311b92,
+  600: #2c188a,
+  700: #25147f,
+  800: #1f1075,
+  900: #130863,
+  A100: #9e95ff,
+  A200: #6f62ff,
+  A400: #412fff,
+  A700: #2915ff,
   contrast: (
-    50 : #000000,
-    100 : #000000,
-    200 : #000000,
-    300 : #ffffff,
-    400 : #ffffff,
-    500 : #ffffff,
-    600 : #ffffff,
-    700 : #ffffff,
-    800 : #ffffff,
-    900 : #ffffff,
-    A100 : #000000,
-    A200 : #ffffff,
-    A400 : #ffffff,
-    A700 : #ffffff,
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #ffffff,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #ffffff,
+    A400: #ffffff,
+    A700: #ffffff,
   ),
 );
 
 $accent-color: (
-  50 : #e4f7f0,
-  100 : #bbecdb,
-  200 : #8de0c3,
-  300 : #5fd3aa,
-  400 : #3dc998,
-  500 : #1bc086,
-  600 : #18ba7e,
-  700 : #14b273,
-  800 : #10aa69,
-  900 : #089c56,
-  A100 : #c9ffe3,
-  A200 : #96ffc8,
-  A400 : #63ffad,
-  A700 : #49ffa0,
+  50: #fef3e4,
+  100: #fde1bc,
+  200: #fdce91,
+  300: #fcba69,
+  400: #fbab50,
+  500: #fb9d3d,
+  600: #f6923a,
+  700: #ef8336,
+  800: #e87532,
+  900: #de5d2b,
+  A100 : #ff8f7a,
+  A200 : #ff6547,
+  A400 : #ff3a14,
+  A700 : #fa2800,
   contrast: (
-    50 : #000000,
-    100 : #000000,
-    200 : #000000,
-    300 : #000000,
-    400 : #000000,
-    500 : #000000,
-    600 : #000000,
-    700 : #ffffff,
-    800 : #ffffff,
-    900 : #ffffff,
-    A100 : #000000,
-    A200 : #000000,
-    A400 : #000000,
-    A700 : #000000,
+    50: $black-87-opacity,
+    100: $black-87-opacity,
+    200: $black-87-opacity,
+    300: $black-87-opacity,
+    400: $black-87-opacity,
+    500: $black-87-opacity,
+    600: $white,
+    700: $black-87-opacity,
+    800: $white-87-opacity,
+    900: $white-87-opacity,
+    A100: $black-87-opacity,
+    A200: $black-87-opacity,
+    A400: $black-87-opacity,
+    A700: $black-87-opacity,
   ),
+
 );
 
-$primary: mat-palette($primary-color, 900, 700, 600);
-$accent: mat-palette($accent-color, 500, 700, 900);
+$primary: mat-palette($primary-color, 800, 700, 600);
+$accent: mat-palette($accent-color, 400, 700, 900);
 $warn: mat-palette($mat-red);
 
 // Create the theme object (a Sass map containing all of the palettes).
