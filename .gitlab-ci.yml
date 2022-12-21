@@ -28,7 +28,7 @@ install:
     - export PATH=~/bin:$PATH
   script:
     - yarn install
-    - yarn add typescript@4.2.3 -s
+    - yarn add typescript@4.6.2 -s
     - npm run build --prod
     - aws s3 sync --acl public-read --metadata-directive REPLACE --cache-control max-age=0,public dist/tienda-angular-b2b s3://cloudfront-tienda.guajitech.com --delete
     - aws cloudfront create-invalidation --distribution-id E3RTEPLSNH8HOK --paths "/*"
