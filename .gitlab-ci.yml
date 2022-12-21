@@ -31,7 +31,7 @@ install:
     - yarn add typescript@4.2.3 -s
     - npm run build --prod
     - aws s3 sync --acl public-read --metadata-directive REPLACE --cache-control max-age=0,public dist/tienda-angular-b2b s3://cloudfront-tienda.guajiritos.com --delete
-    - aws cloudfront create-invalidation --distribution-id E1T4TH50PESHXC --paths "/*"
+    - aws cloudfront create-invalidation --distribution-id E1I5HAWV5MYHSL --paths "/*"
     - echo "DEPLOYED SUCCESSFULLY"
 
 success:
