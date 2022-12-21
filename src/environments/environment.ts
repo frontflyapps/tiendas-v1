@@ -15,8 +15,8 @@ export const environment = {
   // apiUrl: 'https://apitienda.guajiritos.com/v1/',
   // imageUrl: 'https://apitienda.guajiritos.com/v1/',
 
-  apiUrl: 'https://apitienda.guajiritos.com/v1/',
-  imageUrl: 'https://apitienda.guajiritos.com/v1/',
+  apiUrl: 'https://api.guajiritos.com/v1/',
+  imageUrl: 'https://api.guajiritos.com/v1/',
 
   // apiUrl: 'http://apitienda.tiendalocal.com:8998/v1/',
   // imageUrl: 'http://apitienda.tiendalocal.com:8998/v1/',
