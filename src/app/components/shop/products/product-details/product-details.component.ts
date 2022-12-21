@@ -159,6 +159,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     this.getRelatedProducts();
     // this.getFeaturedProducts();
     // ////////////////////META///////////////////
+    console.log(this.mainImage?.image);
     this.metaService.setMeta(
       this.product.name[this.language],
       this.product.shortDescription[this.language],
