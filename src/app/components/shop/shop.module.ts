@@ -61,6 +61,7 @@ import { ReceiverFormComponent } from '../checkout/reciever-form/receiver-form.c
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { Meta } from '@angular/platform-browser';
 
 @NgModule({
   declarations: [
@@ -132,6 +133,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
       provide: MatPaginatorIntl,
       useClass: MatPaginatorI18nService,
     },
+    Meta,
   ],
 })
 export class ShopModule {}

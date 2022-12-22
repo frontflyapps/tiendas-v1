@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Meta } from '@angular/platform-browser';
 import { APP_INITIALIZER, LOCALE_ID, NgModule } from '@angular/core';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
@@ -67,6 +67,7 @@ registerLocaleData(localeEs, 'es');
       useValue: 'es',
     },
     CurrencyPipe,
+    Meta,
   ],
   bootstrap: [AppComponent],
 })

@@ -14,7 +14,7 @@ import { Observable, Subject } from 'rxjs';
 import { LoggedInUserService } from '../../../../core/services/loggedInUser/logged-in-user.service';
 import { CurrencyService } from '../../../../core/services/currency/currency.service';
 import { debounceTime, map, startWith, takeUntil } from 'rxjs/operators';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, Meta } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
 import { Cart } from 'src/app/modals/cart-item';
 import { BiconService } from 'src/app/core/services/bicon/bicon.service';
@@ -109,11 +109,12 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     private showToastr: ShowToastrService,
     public _sanitizer: DomSanitizer,
     private fb: UntypedFormBuilder,
-    private metaService: MetaService,
+    // private metaService: MetaService,
     private _bottomSheet: MatBottomSheet,
     private localStorageService: LocalStorageService,
     private httpClient: HttpClient,
     public productDataService: ProductDataService,
+    private meta: Meta,
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
@@ -160,12 +161,16 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     // this.getFeaturedProducts();
     // ////////////////////META///////////////////
     console.log(this.mainImage?.image);
-    this.metaService.setMeta(
-      this.product.name[this.language],
-      this.product.shortDescription[this.language],
-      this.mainImage?.image,
-      environment.meta?.mainPage?.keywords,
-    );
+    // this.metaService.setMeta(
+    //   this.product.name[this.language],
+    //   this.product.shortDescription[this.language],
+    //   this.mainImage?.image,
+    //   environment.meta?.mainPage?.keywords,
+    // );
+    console.log(this.product?.name?.es);
+    let tags = this.meta.getTags('keywords');
+    console.log(tags);
+    this.meta.addTag({property: 'og:site_name', content: this.product?.name?.es});
 
     // //////////////////////////////////////////
   }
