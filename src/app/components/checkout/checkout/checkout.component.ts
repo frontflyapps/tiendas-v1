@@ -320,12 +320,12 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       this.processToCart();
     });
 
-    this.metaService.setMeta(
-      environment.meta?.mainPage?.title,
-      environment.meta?.mainPage?.description,
-      environment.meta?.mainPage?.shareImg,
-      environment.meta?.mainPage?.keywords,
-    );
+    // this.metaService.setMeta(
+    //   environment.meta?.mainPage?.title,
+    //   environment.meta?.mainPage?.description,
+    //   environment.meta?.mainPage?.shareImg,
+    //   environment.meta?.mainPage?.keywords,
+    // );
   }
 
   public async getAvalilablePaymentType() {

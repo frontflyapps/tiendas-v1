@@ -15,12 +15,12 @@ export class FaqComponent implements OnInit {
   lang = 'es';
 
   constructor(private http: HttpClient, private translate: TranslateService, private metaService: MetaService) {
-    this.metaService.setMeta(
-      environment.meta?.mainPage?.title,
-      environment.meta?.mainPage?.description,
-      environment.meta?.mainPage?.shareImg,
-      environment.meta?.mainPage?.keywords,
-    );
+    // this.metaService.setMeta(
+    //   environment.meta?.mainPage?.title,
+    //   environment.meta?.mainPage?.description,
+    //   environment.meta?.mainPage?.shareImg,
+    //   environment.meta?.mainPage?.keywords,
+    // );
   }
 
   ngOnInit() {
