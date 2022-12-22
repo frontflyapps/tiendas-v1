@@ -122,6 +122,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
 
     this.route.queryParams.subscribe((query) => {
       const productId = query.productId;
+      console.log(window.location.href);
       const stockId = query.stockId;
       this.productsService.productIdDetails = productId;
       this.isLoading = true;
@@ -160,30 +161,20 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     this.getRelatedProducts();
     // this.getFeaturedProducts();
     // ////////////////////META///////////////////
-    console.log(this.mainImage?.image);
-    // this.metaService.setMeta(
-    //   this.product.name[this.language],
-    //   this.product.shortDescription[this.language],
-    //   this.mainImage?.image,
-    //   environment.meta?.mainPage?.keywords,
-    // );
-    console.log(this.product?.name?.es);
-    let tags = this.meta.getTags('keywords');
-    console.log(tags);
     this.meta.updateTag({name: 'title', content: this.product?.name?.es});
     this.meta.updateTag({name: 'description', content: this.product?.description?.es});
     this.meta.updateTag({name: 'keywords', content: this.product?.Business?.name});
 
-    this.meta.updateTag({property: 'og:url', content: environment.meta.mainPage.url});
+    this.meta.updateTag({property: 'og:url', content: window.location.href});
     this.meta.updateTag({property: 'og:site_name', content: this.product?.name?.es});
     this.meta.updateTag({property: 'og:image', itemprop: 'image primaryImageOfPage', content: this.product?.sharedImage});
 
-    this.meta.updateTag({property: 'twitter:domain', content: environment.meta.mainPage.url});
-    this.meta.updateTag({property: 'twitter:title', itemprop: 'name', content: this.product?.name?.es});
-    this.meta.updateTag({property: 'og:title', itemprop: 'name', content: this.product?.name?.es});
-    this.meta.updateTag({property: 'twitter:description', content: this.product?.Business?.name});
-    this.meta.updateTag({property: 'og:description', itemprop: 'description', content: this.product?.Business?.name});
-    this.meta.updateTag({property: 'twitter:image', itemprop: 'image primaryImageOfPage', content: this.product?.sharedImage});
+    this.meta.updateTag({name: 'twitter:domain', content: window.location.href});
+    this.meta.updateTag({name: 'twitter:title', itemprop: 'name', content: this.product?.name?.es});
+    this.meta.updateTag({name: 'og:title', itemprop: 'name', content: this.product?.name?.es});
+    this.meta.updateTag({name: 'twitter:description', content: this.product?.Business?.name});
+    this.meta.updateTag({name: 'og:description', itemprop: 'description', content: this.product?.Business?.name});
+    this.meta.updateTag({name: 'twitter:image', itemprop: 'image primaryImageOfPage', content: this.product?.sharedImage});
 
     // //////////////////////////////////////////
   }
