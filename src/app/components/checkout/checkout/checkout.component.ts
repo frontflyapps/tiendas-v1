@@ -44,6 +44,7 @@ import { ContactsService, IContactBody } from '../../../core/services/contacts/c
 import { MyContactsComponent } from '../../main/my-contacts/my-contacts.component';
 import * as moment from 'moment';
 import { NgxMaterialTimepickerTheme } from 'ngx-material-timepicker';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 export const amexData = {
   express: 1, // American Express
@@ -298,6 +299,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     private currencyCheckoutPipe: CurrencyCheckoutPipe,
     private metaService: MetaService,
     public contactsService: ContactsService,
+    private spinner: NgxSpinnerService,
   ) {
     console.log(this.businessConfig);
 
@@ -346,15 +348,19 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.payments = auxPayments;
 
     // this.getEnabledBidaiondoCards();
-
-    if (Object.entries(this.businessConfig.gateways).length > 0) {
-      this.noGateway = false;
-      if (this.businessConfig.gateways.find((item) => item === "bidaiondo")) {
-        console.log('entro');
-        this.getEnabledBidaiondoCards();
+    if (this.businessConfig) {
+      if (Object.entries(this.businessConfig?.gateways).length > 0) {
+        this.noGateway = false;
+        this.spinner.show();
+        if (this.businessConfig.gateways.find((item) => item === "bidaiondo")) {
+          console.log('entro');
+          this.getEnabledBidaiondoCards();
+          this.spinner.hide();
+        }
+      } else {
+        this.noGateway = true;
+        this.spinner.hide();
       }
-    } else {
-      this.noGateway = true;
     }
     console.log(this.payments);
     console.log(this.noGateway);
@@ -658,7 +664,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       this.fixedShipping &&
       this.fixedShipping.fixShipingg &&
       this.fixedShipping.totalPrice >= 0 &&
-      this.fixedShipping.provinces.includes(this.form.get('ProvinceId').value)
+      this.fixedShipping?.provinces.includes(this.form.get('ProvinceId').value)
     ) {
       return total + (this.fixedShipping?.totalPrice || 0.0);
     }
@@ -955,7 +961,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     data.CartItemIds = this.buyProducts.map((item) => item.id);
     data.CartId = +this.cart.id;
 
-    if (!this.fixedShipping.provinces.includes(this.form.get('ProvinceId').value)) {
+    if (!this.fixedShipping?.provinces.includes(this.form.get('ProvinceId').value)) {
       data.shippingRequired = false;
     }
 

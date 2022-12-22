@@ -599,8 +599,6 @@
                     fxLayoutGap="10px grid"
                   >
                     <ng-container *ngFor="let pay of payments">
-
-                      {{this.onlyCubanPeople}} *** {{cart?.market}} *** {{pay?.market}} //////////
                       <ng-container
                         *ngIf="this.onlyCubanPeople && cart?.market === 'national' && pay?.market === 'national'"
                       >
