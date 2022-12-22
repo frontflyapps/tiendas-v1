@@ -13,6 +13,7 @@ import { AuthenticationService } from './core/services/authentication/authentica
 import { LocalStorageService } from './core/services/localStorage/localStorage.service';
 import { RequestCookieSecureService } from './core/services/request-cookie-secure/request-cookie-secure.service';
 import { SplashScreenService } from './core/services/splash-screen/splash-screen.service';
+import { Meta } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -40,8 +41,10 @@ export class AppComponent {
     private authService: AuthenticationService,
     private encryptDecryptService: EncryptDecryptService,
     private localStorageService: LocalStorageService,
+    private meta: Meta,
     private splashService: SplashScreenService,
   ) {
+    this.metaAdd();
     this.rq.requestCookiesSecure();
 
     this.localStorageService.setVersion();
@@ -64,6 +67,18 @@ export class AppComponent {
 
   public onProgress(event) {
     // this.uploadFilesService.emitUploadProgress(event);
+  }
+
+  public metaAdd() {
+    this.meta.updateTag({name: 'title', content: 'Tienda Guajiritos'});
+    this.meta.updateTag({name: 'keywords', content: 'HTML, CSS, JavaScript, Angular, Tienda Online B2B, comercio online'});
+    this.meta.updateTag({property: 'og:url', content: 'https://guajiritos.com/'});
+    this.meta.updateTag({property: 'og:site_name', content: 'Tienda Guajiritos'});
+    this.meta.updateTag({property: 'og:image', itemprop: 'image primaryImageOfPage', content: 'https://tienda.guajiritos.com/assets/images/share-img.png'});
+    this.meta.updateTag({property: 'twitter:domain', content: 'https://guajiritos.com/'});
+    this.meta.updateTag({property: 'twitter:title', content: 'Tienda Guajiritos'});
+    this.meta.updateTag({property: 'twitter:description', content: 'Tienda online B2C.'});
+    this.meta.updateTag({property: 'twitter:image', content: 'https://tienda.guajiritos.com/assets/images/share-img.png'});
   }
 
   public onCancelFile(event) {

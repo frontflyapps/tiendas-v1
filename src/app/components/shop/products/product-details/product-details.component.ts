@@ -171,14 +171,19 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     let tags = this.meta.getTags('keywords');
     console.log(tags);
     this.meta.updateTag({name: 'title', content: this.product?.name?.es});
-    this.meta.updateTag({name: 'keywords', content: this.product?.name?.es});
-    this.meta.updateTag({property: 'og:url', content: 'https://guajiritos.com/'});
+    this.meta.updateTag({name: 'description', content: this.product?.description?.es});
+    this.meta.updateTag({name: 'keywords', content: this.product?.Business?.name});
+
+    this.meta.updateTag({property: 'og:url', content: environment.meta.mainPage.url});
     this.meta.updateTag({property: 'og:site_name', content: this.product?.name?.es});
     this.meta.updateTag({property: 'og:image', itemprop: 'image primaryImageOfPage', content: this.product?.sharedImage});
-    this.meta.updateTag({property: 'twitter:domain', content: 'https://guajiritos.com/'});
-    this.meta.updateTag({property: 'twitter:title', content: this.product?.name?.es});
-    this.meta.updateTag({property: 'twitter:description', content: this.product?.sharedImage});
-    this.meta.updateTag({property: 'twitter:image', content: this.product?.sharedImage});
+
+    this.meta.updateTag({property: 'twitter:domain', content: environment.meta.mainPage.url});
+    this.meta.updateTag({property: 'twitter:title', itemprop: 'name', content: this.product?.name?.es});
+    this.meta.updateTag({property: 'og:title', itemprop: 'name', content: this.product?.name?.es});
+    this.meta.updateTag({property: 'twitter:description', content: this.product?.Business?.name});
+    this.meta.updateTag({property: 'og:description', itemprop: 'description', content: this.product?.Business?.name});
+    this.meta.updateTag({property: 'twitter:image', itemprop: 'image primaryImageOfPage', content: this.product?.sharedImage});
 
     // //////////////////////////////////////////
   }

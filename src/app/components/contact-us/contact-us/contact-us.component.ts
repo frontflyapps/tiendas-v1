@@ -31,12 +31,12 @@ export class ContactUsComponent implements OnInit {
     private metaService: MetaService,
   ) {
     this.loggedUser = this.loggedUserServ.getLoggedInUser();
-    this.metaService.setMeta(
-      'Contáctenos',
-      environment.meta?.mainPage?.description,
-      environment.meta?.mainPage?.shareImg,
-      environment.meta?.mainPage?.keywords,
-    );
+    // this.metaService.setMeta(
+    //   'Contáctenos',
+    //   environment.meta?.mainPage?.description,
+    //   environment.meta?.mainPage?.shareImg,
+    //   environment.meta?.mainPage?.keywords,
+    // );
   }
 
   ngOnInit(): void {

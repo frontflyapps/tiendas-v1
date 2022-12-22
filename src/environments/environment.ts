@@ -62,7 +62,7 @@ export const environment = {
       description: 'Tienda online desarrollada con el framework Angular permite la modelación de negocios B2C and C2C',
       keywords: 'HTML, CSS, JavaScript, Angular, Tienda Online B2B, comercio online',
       shareImg: 'https://www.guajiritos.com/assets/images/share-img.png',
-      url: 'https://www.guajiritos.com/',
+      url: 'https://www.tienda.guajiritos.com/',
     },
   },
 

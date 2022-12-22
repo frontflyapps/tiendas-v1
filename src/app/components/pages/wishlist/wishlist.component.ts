@@ -30,12 +30,12 @@ export class WishlistComponent implements OnInit {
     this.product.subscribe((products) => {
       this.wishlistItems = products;
     });
-    this.metaService.setMeta(
-      'Lista de Deseos',
-      environment.meta?.mainPage?.description,
-      environment.meta?.mainPage?.shareImg,
-      environment.meta?.mainPage?.keywords,
-    );
+    // this.metaService.setMeta(
+    //   'Lista de Deseos',
+    //   environment.meta?.mainPage?.description,
+    //   environment.meta?.mainPage?.shareImg,
+    //   environment.meta?.mainPage?.keywords,
+    // );
   }
 
   ngOnInit() {}

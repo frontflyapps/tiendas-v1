@@ -135,7 +135,7 @@
   <!-- Todos excepto vista movil -->
   <div [class.py-2]='!loggedInUser' class='home-header' fxHide.lt-md>
     <div class='container-header' fxLayout='row wrap' fxLayoutAlign='space-between center'>
-      <img alt='logo' class='Logo-img' fxHide.lt-md fxShow
+      <img alt='logo' class='Logo-img' fxHide.lt-md fxShow (click)='metaAdd()'
            routerLink='/' [src]="logo" />
       <button (click)='start.toggle()' fxHide fxShow.lt-md mat-icon-button>
         <mat-icon>menu</mat-icon>
@@ -439,5 +439,5 @@
   <router-outlet></router-outlet>
 
   <!--  <app-footer-two *ngIf="!url.includes('my-account')"></app-footer-two>-->
-  <app-footer *ngIf="!url.includes('my-account')"></app-footer>
+  <app-footer *ngIf="!url?.includes('my-account')"></app-footer>
 </mat-sidenav-container>

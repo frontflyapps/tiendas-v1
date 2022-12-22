@@ -18,8 +18,8 @@ export const environment = {
   timeToResearchMenuData: 300000, // (30min) Time to research menu (ms)
   timeToResearchCategoriesData: 600000, // (10min) Time to research categories (ms)
 
-  url: 'https://www.guajiritos.com',
-  urlAboutUs: 'https://www.guajiritos.com',
+  url: 'https://tienda.guajiritos.com',
+  urlAboutUs: 'https://tienda.guajiritos.com',
 
   address: 'Tienda Guajiritos',
   localDatabaseUsers: true,
@@ -30,7 +30,7 @@ export const environment = {
   },
 
   adminService: 'https://admin.guajiritos.com/',
-  mainDomain: '.guajiritos.com',
+  mainDomain: '.tienda.guajiritos.com',
 
   tokenBusiness:
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7IkJ1c2luZXNzSWQiOjEsImlkIjoxLCJkYXRlIjoiMjAyMS0wOS0xM1QwMTo0NToxOC4wMDBaIiwibmFtZSI6IlRpZW5kYSIsImVtYWlsIjoidGllbmRhQGxvY2FsaG9zdC5jb20ifSwiaWF0IjoxNjMxNDk3NTkxfQ.FF5-276rI9SJmtebVo0spV8Y2wdOZPok7LlUxtTDwh0',
@@ -41,7 +41,7 @@ export const environment = {
       description: 'Tienda online desarrollada con el framework Angular permite la modelación de negocios B2C and C2C',
       keywords: 'HTML, CSS, JavaScript, Angular, Tienda Online B2B, Sin Cola, comercio online',
       shareImg: 'https://www.guajiritos.com/assets/icons/icon-384x384.png',
-      url: 'https://www.guajiritos.com/',
+      url: 'https://www.tienda.guajiritos.com/',
     },
   },
 

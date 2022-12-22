@@ -93,12 +93,12 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
     public translate: TranslateService,
     public utilsService: UtilsService,
   ) {
-    this.metaService.setMeta(
-      'Todos los productos',
-      'Encuentra lo que buscas',
-      environment.meta?.mainPage.shareImg,
-      environment.meta?.mainPage?.keywords,
-    );
+    // this.metaService.setMeta(
+    //   'Todos los productos',
+    //   'Encuentra lo que buscas',
+    //   environment.meta?.mainPage.shareImg,
+    //   environment.meta?.mainPage?.keywords,
+    // );
     this.initSubsLocation();
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
