@@ -170,7 +170,15 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     console.log(this.product?.name?.es);
     let tags = this.meta.getTags('keywords');
     console.log(tags);
-    this.meta.addTag({property: 'og:site_name', content: this.product?.name?.es});
+    this.meta.updateTag({name: 'title', content: this.product?.name?.es});
+    this.meta.updateTag({name: 'keywords', content: this.product?.name?.es});
+    this.meta.updateTag({property: 'og:url', content: 'https://guajiritos.com/'});
+    this.meta.updateTag({property: 'og:site_name', content: this.product?.name?.es});
+    this.meta.updateTag({property: 'og:image', itemprop: 'image primaryImageOfPage', content: this.product?.sharedImage});
+    this.meta.updateTag({property: 'twitter:domain', content: 'https://guajiritos.com/'});
+    this.meta.updateTag({property: 'twitter:title', content: this.product?.name?.es});
+    this.meta.updateTag({property: 'twitter:description', content: this.product?.sharedImage});
+    this.meta.updateTag({property: 'twitter:image', content: this.product?.sharedImage});
 
     // //////////////////////////////////////////
   }
