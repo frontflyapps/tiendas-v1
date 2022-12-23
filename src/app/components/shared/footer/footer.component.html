@@ -89,10 +89,10 @@
          fxLayoutAlign="start center" fxLayoutAlign.xs="start"
          fxLayoutGap="1rem" fxLayoutGap.xs="10px"
          id="footer-contacts">
-<!--      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="4px">-->
-<!--        <mat-icon>phone</mat-icon>-->
-<!--        <span>{{contacts.phone || ''}}</span>-->
-<!--      </div>-->
+      <div *ngIf='contacts.phone' fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="4px">
+        <mat-icon>phone</mat-icon>
+        <span>{{contacts.phone || ''}}</span>
+      </div>
 
       <div *ngIf='contacts.email' fxLayout='row' fxLayoutAlign='start center' fxLayoutGap='4px'>
         <mat-icon>email</mat-icon>
