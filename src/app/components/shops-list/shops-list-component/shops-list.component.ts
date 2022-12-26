@@ -38,6 +38,7 @@ export class ShopsListComponent implements OnInit, OnDestroy {
     this.businessService.getAllBussiness(this.query, params).pipe(takeUntil(this._unsubscribeAll)).subscribe((data) => {
       this.query.total = data.meta.pagination.total;
       this.allBusiness = data.data;
+      console.log(this.allBusiness);
     })
   }
 
@@ -46,6 +47,12 @@ export class ShopsListComponent implements OnInit, OnDestroy {
       name: this.businessName.value
     };
     this.fetchBusiness(params);
+  }
+
+  onShop(business){
+    if (business.url){
+
+    }
   }
 
   ngOnDestroy() {
