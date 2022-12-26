@@ -15,12 +15,23 @@
 
   <div fxLayout='row wrap' fxLayoutAlign='center center' class='pt-5'>
     <ng-container *ngFor='let business of allBusiness;let i=index'>
-      <a [href]='business.url' target="_blank">
+      <a *ngIf='business.url' [href]='business?.url' target="_blank">
         <div class='shop-card' [ngClass.gt-xs]="{'mr-5': (i != 2 || i != 5 || i != 8)}">
           <div class='card-content'>
             <img class='mb-3' style='object-fit: contain' [src]='apiURL + business.logo' lazyImg  onerror="this.onerror=null;this.src='assets/images/noImage.jpg';">
-            <h2 class='mb-3 link line-clamp2'>{{ business.name }}<span class="arrow-right"></span></h2>
+            <h2 class='mb-3 link line-clamp2'>{{ business.name }}</h2>
             <p class='line-clamp8'>{{ business.description }}</p>
+            <button style='margin-top: 1rem' mat-stroked-button>Ir a tienda</button>
+          </div>
+        </div>
+      </a>
+      <a *ngIf='!business.url' target="_blank">
+        <div class='shop-card' [ngClass.gt-xs]="{'mr-5': (i != 2 || i != 5 || i != 8)}">
+          <div class='card-content'>
+            <img class='mb-3' style='object-fit: contain' [src]='apiURL + business.logo' lazyImg  onerror="this.onerror=null;this.src='assets/images/noImage.jpg';">
+            <h2 class='mb-3 link line-clamp2'>{{ business.name }}</h2>
+            <p class='line-clamp8'>{{ business.description }}</p>
+            <p style='margin-top: 1rem'>Tienda en construcción</p>
           </div>
         </div>
       </a>
