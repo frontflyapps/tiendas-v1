@@ -19,6 +19,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import localeEs from '@angular/common/locales/es';
 import { AppService } from './app.service';
 import { lastValueFrom, switchMap } from 'rxjs';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 registerLocaleData(localeEs, 'es');
 
@@ -44,6 +46,13 @@ registerLocaleData(localeEs, 'es');
         deps: [HttpClient],
       },
     }),
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
+
   ],
   providers: [
     {
