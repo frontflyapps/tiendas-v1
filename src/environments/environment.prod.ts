@@ -4,7 +4,7 @@ export const environment = {
   production: true,
 
   apiUrl: 'https://api.guajiritos.com/v1/',
-  imageUrl: 'https://api.guajiritos.com/v1/',
+  imageUrl: 'https://cdn.guajiritos.com/',
 
   defaultLanguage: 'es',
   currencyInternational: 'USD',
