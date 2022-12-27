@@ -14,6 +14,8 @@ import { Observable, Subject, Subscription } from 'rxjs';
 import { BusinessService } from 'src/app/core/services/business/business.service';
 import { Console } from 'console';
 import { TranslateService } from '@ngx-translate/core';
+import { environment } from '../../../../environments/environment';
+import { DisplayOption, RestrictionFilter } from 'guachos-general-autocomplete/utils/interfaces/interfaces';
 
 @Component({
   selector: 'app-dialog-set-location',
@@ -26,6 +28,10 @@ export class DialogSetLocationComponent implements OnInit, OnDestroy {
 
   innerWidth: any;
   applyStyle = false;
+  urlProvince = environment.apiUrl + 'province';
+  urlProvinceId = this.urlProvince + '/:id';
+  urlMunicipality = environment.apiUrl + 'municipality';
+  urlMunicipalityId = this.urlMunicipality + '/:id';
   public locationForm: UntypedFormGroup;
   storageLocation: any;
   // public province: FormControl = new FormControl(null, [Validators.required]);
@@ -39,6 +45,17 @@ export class DialogSetLocationComponent implements OnInit, OnDestroy {
   filteredMunicipalities: Observable<string[]>;
   private dataResult: any = {};
 
+  public displayOptions: DisplayOption = {
+    firthLabel: [
+      {
+        type: 'path',
+        path: ['name']
+      }
+    ]
+  };
+  public eventDisplayRestrictions: RestrictionFilter[];
+
+
   compare(f1: any, f2: any) {
     return f1?.name === f2?.name;
   }
@@ -51,7 +68,7 @@ export class DialogSetLocationComponent implements OnInit, OnDestroy {
     public translate: TranslateService,
   ) {
     this.storageLocation = data;
-    this.getProvinces();
+    // this.getProvinces();
 
     // this.initSubsLocation();
 
@@ -71,8 +88,16 @@ export class DialogSetLocationComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.initForm();
-    this.subsForm();
+    // this.subsForm();
     this.onResize('event');
+    this.locationForm.get('province').valueChanges.subscribe((item) => {
+      if (item) {
+        this.onSelectProvince(item);
+      }
+    });
+    // this.locationForm.get('municipality').valueChanges.subscribe((item) => {
+    //   console.log(this.locationForm.value);
+    // });
     // this.getProvinces();
   }
 
@@ -98,16 +123,16 @@ export class DialogSetLocationComponent implements OnInit, OnDestroy {
     //   this.getBusiness(null, this.locationForm.get('province').value.id);
     // }
     /*--------------------------*/
-    this.filteredProvinces = this.locationForm.get('province').valueChanges.pipe(
-      startWith(''),
-      debounceTime(250),
-      map((name) => (name ? this._filterProvinces(name) : this.allProvinces?.slice())),
-    );
-    this.filteredMunicipalities = this.locationForm.get('municipality').valueChanges.pipe(
-      startWith(''),
-      debounceTime(250),
-      map((name) => (name ? this._filterMunicipalities(name) : this.allMunicipalityByProvince?.slice())),
-    );
+    // this.filteredProvinces = this.locationForm.get('province').valueChanges.pipe(
+    //   startWith(''),
+    //   debounceTime(250),
+    //   map((name) => (name ? this._filterProvinces(name) : this.allProvinces?.slice())),
+    // );
+    // this.filteredMunicipalities = this.locationForm.get('municipality').valueChanges.pipe(
+    //   startWith(''),
+    //   debounceTime(250),
+    //   map((name) => (name ? this._filterMunicipalities(name) : this.allMunicipalityByProvince?.slice())),
+    // );
   }
 
   private static valueSelected(): ValidatorFn {
@@ -169,12 +194,12 @@ export class DialogSetLocationComponent implements OnInit, OnDestroy {
   // }
 
   subsForm() {
-    this.locationForm.get('province').valueChanges.subscribe((value) => {
-      if (value?.id) {
-        this.getProvincesById(value?.id);
-        // this.getBusiness(null, value?.id);
-      }
-    });
+    // this.locationForm.get('province').valueChanges.subscribe((value) => {
+    //   if (value?.id) {
+    //     this.getProvincesById(value?.id);
+    //     // this.getBusiness(null, value?.id);
+    //   }
+    // });
     // this.locationForm.get('municipality').valueChanges.subscribe((value) => {
     //   if (value?.id) this.getBusiness(value?.id, null);
     // });
@@ -209,6 +234,16 @@ export class DialogSetLocationComponent implements OnInit, OnDestroy {
     this.locationService.getProvinceById(id).subscribe((responseData) => {
       this.allMunicipalityByProvince = responseData.data.Municipalities;
     });
+  }
+
+  onSelectProvince(event){
+    this.eventDisplayRestrictions = [
+      {
+        value: event?.id,
+        filter: 'filter[$and][ProvinceId]',
+      },
+    ];
+    console.log(this.eventDisplayRestrictions);
   }
 
   // private getMunicipalityById(id) {

@@ -4262,6 +4262,13 @@ guachos-cu-down-list@^1.0.34:
   dependencies:
     tslib "^1.10.0"
 
+guachos-general-autocomplete@^0.0.48:
+  version "0.0.48"
+  resolved "https://registry.yarnpkg.com/guachos-general-autocomplete/-/guachos-general-autocomplete-0.0.48.tgz#b4036f28328e3d7a2a71f4d9e55816efa81ce259"
+  integrity sha512-CMzpfjubWWcauc76Ip24LLwCYtmJ2ajW4XKICyPf9JhE2hoZrIciWt/k4SIiffh4ro/ClMmG41ynQ0mALcDiCg==
+  dependencies:
+    tslib "^2.3.0"
+
 guachos-image-picker@^1.0.16:
   version "1.0.16"
   resolved "https://registry.yarnpkg.com/guachos-image-picker/-/guachos-image-picker-1.0.16.tgz#cccc21f2fb2f19981811dcc3b165742e3e2473a0"
@@ -5525,10 +5532,10 @@ ngx-material-timepicker@^5.5.3:
     luxon "1.24.0"
     tslib "^1.9.0"
 
-ngx-pagination@^6.0.2:
-  version "6.0.2"
-  resolved "https://registry.yarnpkg.com/ngx-pagination/-/ngx-pagination-6.0.2.tgz#8a633a254c093ff0b058f94192447d6c788b6d0b"
-  integrity sha512-7N4FA244ls7h/977EqvcDXuyB/U5rPJI+FD0Zj9orrXb+kX2SOX0WP+yQw50Gm/Dy9aPOE91FkgoYzGyRSPY0A==
+ngx-pagination@^6.0.3:
+  version "6.0.3"
+  resolved "https://registry.yarnpkg.com/ngx-pagination/-/ngx-pagination-6.0.3.tgz#083f77a5c9c3ebf5800fb57a280da71aacc10a18"
+  integrity sha512-lONjTQ7hFPh1SyhwDrRd5ZwM4NMGQ7bNR6vLrs6mrU0Z8Q1zCcWbf/pvyp4DOlGyd9uyZxRy2wUsSZLeIPjbAw==
   dependencies:
     tslib "^2.3.0"
 
