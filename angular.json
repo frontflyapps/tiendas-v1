@@ -42,7 +42,7 @@
             "tsConfig": "src/tsconfig.app.json",
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": ["src/styles.scss", "node_modules/shepherd.js/dist/css/shepherd.css"],
-            "scripts": []
+            "scripts": [],
           },
           "configurations": {
             "production": {
@@ -65,7 +65,9 @@
                   "type": "initial",
                   "maximumWarning": "1mb"
                 }
-              ]
+              ],
+              "serviceWorker": true,
+              "ngswConfigPath": "ngsw-config.json"
             },
             "development": {
               "buildOptimizer": false,
