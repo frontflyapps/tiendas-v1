@@ -11,7 +11,7 @@ import { ShowSnackbarService } from '../show-snackbar/show-snackbar.service';
   providedIn: 'root',
 })
 export class UtilsService {
-  urlImage = environment.apiUrl;
+  urlImage = environment.imageUrl;
   showErrorState = false;
 
   constructor(
@@ -43,7 +43,7 @@ export class UtilsService {
   }
 
   public getUrlImages(): string {
-    return environment.apiUrl;
+    return environment.imageUrl;
   }
 
   public getSafeImage(url: string) {
