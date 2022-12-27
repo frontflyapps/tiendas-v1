@@ -232,11 +232,11 @@ export class DialogSetLocationComponent implements OnInit, OnDestroy {
   // }
 
   public municipalityChange() {
-    // this.locationForm.get('business').setValue(null);
+    this.locationForm.get('business')?.setValue(null);
   }
   public provinceChange() {
     this.locationForm.get('municipality').setValue(null);
-    // this.locationForm.get('business').setValue(null);
+    this.locationForm.get('business')?.setValue(null);
   }
   clearProvince() {
     this.locationForm.get('province').setValue(null);
