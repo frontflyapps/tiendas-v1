@@ -19,7 +19,7 @@ import { MatDialog } from '@angular/material/dialog';
 export class FooterProductCardComponent implements OnDestroy {
   _unsubscribeAll: Subject<any> = new Subject<any>();
 
-  public imageUrl = environment.apiUrl;
+  public imageUrl = environment.imageUrl;
   loggedInUser: any = null;
   pathToRedirect: any;
   paramsToUrlRedirect: any;

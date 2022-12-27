@@ -16,7 +16,7 @@ import { BlogService } from '../../../core/services/blog/blog.service';
 export class BlogDetailsComponent implements OnInit, OnDestroy {
   selectedArticle = undefined;
   showData = false;
-  imageUrl: any = environment.apiUrl;
+  imageUrl: any = environment.imageUrl;
   language = 'es';
   _unsubscribeAll: Subject<any> = new Subject();
 
