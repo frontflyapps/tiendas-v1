@@ -14,7 +14,7 @@ export class BannersFourComponent implements OnInit, OnDestroy {
   banners: any[] = [];
   _unsubscribeAll: Subject<any>;
   language = null;
-  urlImage = environment.apiUrl;
+  urlImage = environment.imageUrl;
 
   constructor(private loggedInUserService: LoggedInUserService, public utilsService: UtilsService) {
     this._unsubscribeAll = new Subject<any>();

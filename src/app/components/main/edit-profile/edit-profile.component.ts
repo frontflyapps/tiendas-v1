@@ -53,7 +53,7 @@ export class EditProfileComponent implements OnInit {
     private showSnackbar: ShowSnackbarService,
     private compressImage: CompressImageService,
   ) {
-    this.urlImage = environment.apiUrl;
+    this.urlImage = environment.imageUrl;
     this.dialogRef.disableClose = true;
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
   }
