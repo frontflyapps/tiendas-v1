@@ -19,7 +19,7 @@ export class AboutUsComponent implements OnInit, OnDestroy {
   _unsubscribeAll: Subject<any>;
   aboutUs: any;
   language = 'es';
-  imageUrl = environment.apiUrl;
+  imageUrl = environment.imageUrl;
 
   constructor(
     private fb: UntypedFormBuilder,
