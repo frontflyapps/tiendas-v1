@@ -130,7 +130,7 @@
             </button>
           </div>
         </mat-step>
-        <mat-step>
+        <mat-step disabled='form.invalid'>
           <ng-template matStepLabel>{{ 'Destinatario' | translate }}</ng-template>
 
           <div *ngIf="!loadingPayment" class="header-title">
