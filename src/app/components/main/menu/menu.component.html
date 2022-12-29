@@ -6,7 +6,7 @@
     <!--       mat-button>{{ 'Inicio' | translate }}</a>-->
 
 <!--    [routerLinkActiveOptions]="{exact:true}"-->
-    <a [routerLink]="['/shops-list']" class="itemCategory" mat-button routerLinkActive="router-link-active" [routerLinkActiveOptions]="{exact:true}">{{
+    <a [routerLink]="['/shops-list']" *ngIf='bussinessConfig?.canShowOurBussiness' class="itemCategory" mat-button routerLinkActive="router-link-active" [routerLinkActiveOptions]="{exact:true}">{{
       'Nuestras tiendas' | translate
       }}</a>
     <a [routerLink]="['/products/search']" class="itemCategory" mat-button routerLinkActive="router-link-active" [routerLinkActiveOptions]="{exact:true}">{{

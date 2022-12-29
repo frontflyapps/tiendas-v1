@@ -4,6 +4,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { UntypedFormBuilder, UntypedFormControl, FormGroup } from '@angular/forms';
+import { AppService } from '../../../app.service';
 
 @Component({
   selector: 'app-shops-list',
@@ -11,9 +12,11 @@ import { UntypedFormBuilder, UntypedFormControl, FormGroup } from '@angular/form
   styleUrls: ['./shops-list.component.scss']
 })
 export class ShopsListComponent implements OnInit, OnDestroy {
-  apiURL = environment.apiUrl;
+  apiURL = environment.imageUrl;
   businessName: UntypedFormControl;
+  bannerDefault = 'assets/images/mibulevar/banner_MiBulevar.png';
   _unsubscribeAll: Subject<any>;
+  bussinessConfig;
   allBusiness: any;
   initialPage = 9
   query = {
@@ -25,9 +28,12 @@ export class ShopsListComponent implements OnInit, OnDestroy {
   };
   pageSizeOptions: number[] = [this.initialPage, 25, 100, 1000];
 
-  constructor(private businessService: BusinessService, private fb: UntypedFormBuilder) {
+  constructor(private businessService: BusinessService, private fb: UntypedFormBuilder, private appService: AppService) {
     this.businessName = new UntypedFormControl(null, []);
     this._unsubscribeAll = new Subject<any>();
+    appService.getBusinessConfig().subscribe((item) => {
+      this.bussinessConfig = item.data;
+    });
   }
 
   ngOnInit(): void {
