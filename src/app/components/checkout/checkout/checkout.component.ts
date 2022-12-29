@@ -245,7 +245,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   onlyCubanPeople = true;
   finalPrice = 1080;
   shippingData: any[] = [];
-  canBeDelivery = true;
+  canBeDelivery = false;
   delivery = false;
   marketCard: string;
   showShipping = false;
@@ -348,7 +348,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.payments = auxPayments;
 
     // this.getEnabledBidaiondoCards();
-    if (this.businessConfig) {
+    if (this.businessConfig?.gateways) {
       if (Object.entries(this.businessConfig?.gateways).length > 0) {
         this.noGateway = false;
         this.spinner.show();
@@ -361,6 +361,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         this.noGateway = true;
         this.spinner.hide();
       }
+      this.spinner.hide();
     }
     console.log(this.payments);
     console.log(this.noGateway);

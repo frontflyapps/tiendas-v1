@@ -112,9 +112,16 @@ export class DialogSetLocationComponent implements OnInit, OnDestroy {
         [DialogSetLocationComponent.valueSelected()],
       ],
     });
+
     /*--Cuanto se esta editando--*/
     if (this.locationForm.get('province').value) {
       this.getProvincesById(this.locationForm.get('province').value.id);
+      this.eventDisplayRestrictions = [
+        {
+          value: this.locationForm.get('province').value?.id,
+          filter: 'filter[$and][ProvinceId]',
+        },
+      ];
     }
     // if (this.locationForm.get('municipality').value) {
     //   this.getBusiness(this.locationForm.get('municipality').value.id, null);
@@ -243,7 +250,6 @@ export class DialogSetLocationComponent implements OnInit, OnDestroy {
         filter: 'filter[$and][ProvinceId]',
       },
     ];
-    console.log(this.eventDisplayRestrictions);
   }
 
   // private getMunicipalityById(id) {

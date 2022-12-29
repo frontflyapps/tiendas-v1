@@ -4283,6 +4283,13 @@ guachos-rating@0.0.5:
   dependencies:
     tslib "^2.0.0"
 
+guachos-simple-pagination@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/guachos-simple-pagination/-/guachos-simple-pagination-1.0.3.tgz#41051e7dd83bb0bf05aae5ca4c647f3390a998af"
+  integrity sha512-aBWL0O/mQa17KHSntn5ZxP9il20QaORtLbW7HKBjQJSD1n1w9izk1Wg9P4LDAJIMUWdXxFJ/1Ogp+IqZI4Fesw==
+  dependencies:
+    tslib "^2.1.0"
+
 handle-thing@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/handle-thing/-/handle-thing-2.0.1.tgz#857f79ce359580c340d43081cc648970d0bb234e"

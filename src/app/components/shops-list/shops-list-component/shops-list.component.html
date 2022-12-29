@@ -1,5 +1,6 @@
 <div class='list-header'>
-  <img class='banner-shop-img' src='assets/images/mibulevar/banner_MiBulevar.png'>
+  <img fxHide.xs fxHide.sm class='banner-shop-img' [src]='bussinessConfig?.imageBanner1 ? bussinessConfig?.imageBanner1 : bannerDefault'>
+  <img fxShow.xs fxShow.sm fxHide class='banner-shop-img' [src]='bussinessConfig?.imageBanner1Xs ? bussinessConfig?.imageBanner1Xs : bannerDefault'>
 </div>
 <div class='container mt-5'>
   <div class='search-shops' fxLayout='column' fxLayoutAlign='center center'>

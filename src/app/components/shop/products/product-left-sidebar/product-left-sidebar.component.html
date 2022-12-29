@@ -235,17 +235,25 @@
 
         <div *ngIf="!loading && allProducts.length > 0" class="mt-4 mb-4 see-more-btn" fxLayout="row" fxLayoutAlign="center center"
           fxLayoutGap="1rem">
-          <button (click)="goToFirstPage($event)" *ngIf="numberOfSearch > 0  &&
-            allProductsResponse.length > initLimit" mat-stroked-button>
-            {{ 'Ir al principio' | translate }}
-          </button>
-          <!-- *ngIf="!(allProductsResponse.length < queryProduct.limit)" -->
-          <button *ngIf="
-              numberOfSearch + 1 < amountInitialResults ||
-              !(allProductsResponse.length < queryProduct.limit && numberOfSearch + 1 == amountInitialResults)
-            " (click)="seeMoreProductsBtn($event)" color="primary" mat-flat-button>
-            {{ 'Ver más productos' | translate }}
-          </button>
+<!--          <button (click)="goToFirstPage($event)" *ngIf="numberOfSearch > 0  &&-->
+<!--            allProductsResponse.length > initLimit" mat-stroked-button>-->
+<!--            {{ 'Ir al principio' | translate }}-->
+<!--          </button>-->
+<!--          &lt;!&ndash; *ngIf="!(allProductsResponse.length < queryProduct.limit)" &ndash;&gt;-->
+<!--          <button *ngIf="-->
+<!--              numberOfSearch + 1 < amountInitialResults ||-->
+<!--              !(allProductsResponse.length < queryProduct.limit && numberOfSearch + 1 == amountInitialResults)-->
+<!--            " (click)="seeMoreProductsBtn($event)" color="primary" mat-flat-button>-->
+<!--            {{ 'Ver más productos' | translate }}-->
+<!--          </button>-->
+
+          <guachos-simple-pagination [current]="queryProduct?.page + 1"
+                                     [total]="getCountPage(queryProduct?.total)"
+                                     [lang]="'es'"
+                                     (goTo)="newSearchMethod($event)"
+                                     (next)="newSearchMethod($event + 1)"
+                                     (previous)="newSearchMethod($event - 1)"
+                                     ></guachos-simple-pagination>
         </div>
 
         <!--        <div fxLayout="row wrap">-->

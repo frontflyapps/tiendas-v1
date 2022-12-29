@@ -15,17 +15,19 @@ export const environment = {
   // apiUrl: 'https://apitienda.guajiritos.com/v1/',
   // imageUrl: 'https://apitienda.guajiritos.com/v1/',
 
-  apiUrl: 'https://api.guajiritos.com/v1/',
+  apiUrl: 'https://apitienda.guajiritos.com/v1/',
   imageUrl: 'https://cdn.guajiritos.com/',
 
   // apiUrl: 'http://apitienda.tiendalocal.com:8999/v1/',
-  // imageUrl: 'http://apitienda.tiendalocal.com:8999/v1/',
+  // imageUrl: 'https://cdn.guajiritos.com/',
 
   defaultLanguage: 'es',
   currencyInternational: 'USD',
   logo: 'assets/images/guajiritos/guajiritos-Logo-blanco.png',
   logoWhite: 'assets/images/guajiritos/guajiritos-Logo-blanco.png',
   logoFooter: 'assets/images/guajiritos/guajiritos-Logo-blanco.png',
+
+  limitSearch : 21,
 
   timeToResetSession: 14400000, // Time to reset the session (ms)
   timeToResearchProductData: 10000, // Time to research products (ms)
@@ -51,10 +53,8 @@ export const environment = {
   adminService: 'http://admintienda.tiendalocal.com/',
   mainDomain: '.tiendalocal.com',
 
-  // tokenBusiness:
-  //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7IkJ1c2luZXNzSWQiOjEsImlkIjoxLCJkYXRlIjoiMjAyMi0wMS0zMVQwNDo1NDowMC4wMDBaIiwibmFtZSI6IlRpZW5kYSIsImVtYWlsIjoidGllbmRhQGxvY2FsaG9zdC5jb20ifSwiaWF0IjoxNjQzNjQ2Njg3fQ.-pIQscQih10E1-UbtTlyiV3mj_uaxilPMpvLLN-GzSo',
   tokenBusiness:
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7IkJ1c2luZXNzSWQiOjEsImlkIjoxLCJkYXRlIjoiMjAyMi0wMS0zMVQwNDo1NDowMC4wMDBaIiwibmFtZSI6IlRpZW5kYSIsImVtYWlsIjoidGllbmRhQGxvY2FsaG9zdC5jb20ifSwiaWF0IjoxNjQzNjQ2Njg3fQ.-pIQscQih10E1-UbtTlyiV3mj_uaxilPMpvLLN-GzSo',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7IkJ1c2luZXNzSWQiOjEsImlkIjoxLCJkYXRlIjoiMjAyMS0wOS0xM1QwMTo0NToxOC4wMDBaIiwibmFtZSI6IlRpZW5kYSIsImVtYWlsIjoidGllbmRhQGxvY2FsaG9zdC5jb20ifSwiaWF0IjoxNjMxNDk3NTkxfQ.FF5-276rI9SJmtebVo0spV8Y2wdOZPok7LlUxtTDwh0',
 
   meta: {
     mainPage: {

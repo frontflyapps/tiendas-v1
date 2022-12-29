@@ -62,6 +62,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { Meta } from '@angular/platform-browser';
+import { GuachosSimplePaginationModule } from 'guachos-simple-pagination';
 
 @NgModule({
   declarations: [
@@ -127,6 +128,7 @@ import { Meta } from '@angular/platform-browser';
     ConfirmationDialogFrontModule,
     FooterProductCardModule,
     MatAutocompleteModule,
+    GuachosSimplePaginationModule,
   ],
   providers: [
     {
