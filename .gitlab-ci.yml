@@ -11,7 +11,7 @@ install:
     DOCKER_TLS_CERTDIR: ""
   tags:
     - Gitlab-Runner
-  image: 
+  image:
     name: nikolaik/python-nodejs:python3.8-nodejs14
     entrypoint: [""]
   services:

@@ -4,13 +4,16 @@ export const environment = {
   production: true,
 
   apiUrl: 'https://api.pymesbulevar.com/v1/',
-  imageUrl: 'https://api.pymesbulevar.com/v1/',
+  imageUrl: 'https://cdn.ddonatofood.com/v1/',
 
   defaultLanguage: 'es',
   currencyInternational: 'USD',
   logo: 'assets/images/polimita/polimita-logo.png',
   logoWhite: 'assets/images/polimita/polimita-logo.png',
   logoFooter: 'assets/images/polimita/polimita-logo.png',
+
+  limitSearch : 21,
+
 
   timeToResetSession: 14400000, // (4hrs) Time to reset the session (ms)
   timeToResearchProductData: 300000, // (5min) Time to research products (ms)

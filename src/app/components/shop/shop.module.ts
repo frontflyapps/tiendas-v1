@@ -61,6 +61,8 @@ import { ReceiverFormComponent } from '../checkout/reciever-form/receiver-form.c
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { Meta } from '@angular/platform-browser';
+import { GuachosSimplePaginationModule } from 'guachos-simple-pagination';
 
 @NgModule({
   declarations: [
@@ -126,12 +128,14 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     ConfirmationDialogFrontModule,
     FooterProductCardModule,
     MatAutocompleteModule,
+    GuachosSimplePaginationModule,
   ],
   providers: [
     {
       provide: MatPaginatorIntl,
       useClass: MatPaginatorI18nService,
     },
+    Meta,
   ],
 })
 export class ShopModule {}

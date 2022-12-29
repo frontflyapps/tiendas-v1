@@ -16,16 +16,19 @@ export const environment = {
   // imageUrl: 'https://apitienda.guajiritos.com/v1/',
 
   apiUrl: 'https://api.guajiritos.com/v1/',
-  imageUrl: 'https://api.guajiritos.com/v1/',
+  imageUrl: 'https://cdn.guajiritos.com/',
 
-  // apiUrl: 'http://apitienda.tiendalocal.com:8998/v1/',
-  // imageUrl: 'http://apitienda.tiendalocal.com:8998/v1/',
+  // apiUrl: 'http://apitienda.tiendalocal.com:8999/v1/',
+  // imageUrl: 'http://apitienda.tiendalocal.com:8999/v1/',
 
   defaultLanguage: 'es',
   currencyInternational: 'USD',
   logo: 'assets/images/polimita/polimita-logo.png',
   logoWhite: 'assets/images/polimita/polimita-logo.png',
   logoFooter: 'assets/images/polimita/polimita-logo.png',
+
+  limitSearch : 21,
+
 
   timeToResetSession: 14400000, // Time to reset the session (ms)
   timeToResearchProductData: 10000, // Time to research products (ms)

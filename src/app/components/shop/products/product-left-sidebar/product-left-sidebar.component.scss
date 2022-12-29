@@ -1,11 +1,51 @@
 @import '../../../../../assets/scss/theme/variables';
 
-:host {
+:host ::ng-deep{
   .see-more-btn {
     button {
       padding: 10px 24px;
     }
   }
+  guachos-simple-pagination{
+    .current{
+      background-color: $theme-main !important;
+      color: white;
+    }
+    [aria-disabled="true"]{
+      color: #9c9c9c !important;
+    }
+    [aria-disabled="false"]{
+      //color: #9c9c9c !important;
+      background-color: $theme-main-100;
+    }
+    a{
+      font-weight: 700;
+      max-width: 30px !important;
+    }
+    a.see-more-btn{
+      padding: 10px 12px !important;
+    }
+    a:hover{
+      background-color: $theme-main-300 !important;
+      color: white !important;
+      font-weight: 800
+    }
+    a.more:hover{
+      color: $theme-main !important;
+      background-color: white !important;
+      font-weight: 700
+    }
+    button:hover:enabled{
+      background-color: $theme-main !important;
+      color: white !important;
+    }
+    button{
+      color: white !important;
+      font-weight: 700;
+      padding: 10px 12px !important;
+    }
+  }
+
 }
 
 .sticky-proceed-pay {

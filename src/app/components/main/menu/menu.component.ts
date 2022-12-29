@@ -10,6 +10,7 @@ import { MyOrdersService } from '../../my-orders/service/my-orders.service';
 import { GlobalStateOfCookieService } from '../../../core/services/request-cookie-secure/global-state-of-cookie.service';
 import { CategoryMenuNavService } from '../../../core/services/category-menu-nav.service';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { AppService } from '../../../app.service';
 
 @Component({
   selector: 'app-menu',
@@ -30,6 +31,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     total: 0,
   };
   searchUrlParams;
+  bussinessConfig;
 
   constructor(
     private cartService: CartService,
@@ -37,6 +39,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     public utilsSer: UtilsService,
     public translate: TranslateService,
     private ordersService: MyOrdersService,
+    private appService: AppService,
     private globalStateOfCookieService: GlobalStateOfCookieService,
     private categoryMenuServ: CategoryMenuNavService,
     private activatedRute: ActivatedRoute,private router: Router
@@ -54,7 +57,10 @@ export class MenuComponent implements OnInit, OnDestroy {
       this.searchUrlParams = route.snapshot.queryParams ? route.snapshot.queryParams : '';
       this.getCategoriesForMenu();
     });
-
+    appService.getBusinessConfig().subscribe((item) => {
+      this.bussinessConfig = item.data;
+      console.log(this.bussinessConfig);
+    });
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
     this._unsubscribeAll = new Subject();
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
