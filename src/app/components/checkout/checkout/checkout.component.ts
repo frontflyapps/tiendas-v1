@@ -45,6 +45,7 @@ import { MyContactsComponent } from '../../main/my-contacts/my-contacts.componen
 import * as moment from 'moment';
 import { NgxMaterialTimepickerTheme } from 'ngx-material-timepicker';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { DialogPgtConfirmToPayComponent } from '../dialog-pgt-confirm-to-pay/dialog-pgt-confirm-to-pay.component';
 
 export const amexData = {
   express: 1, // American Express
@@ -1050,36 +1051,60 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       bodyData.amex = null;
       paymentMethod = this.payService.makePaymentPeopleGoTo(bodyData);
       bodyData.currency = 'EUR';
+      paymentMethod.subscribe(
+        (data: any) => {
+          let dialogRef: MatDialogRef<DialogPgtConfirmToPayComponent, any>;
+
+          dialogRef = this.dialog.open(DialogPgtConfirmToPayComponent, {
+            width: '15cm',
+            maxWidth: '100vw',
+            data: {
+              form: data.data.form,
+            },
+          });
+
+          dialogRef.afterClosed().subscribe((result) => {
+            if (result) {
+              window.location.reload();
+            }
+            this.loadingPayment = false;
+          });
+        },
+        (error) => {
+          this.loadingPayment = false;
+        },
+      );
     } else {
       bodyData.amex = amexData[this.paymentType];
       paymentMethod = this.payService.makePaymentBidaiondo(bodyData);
+
+      console.log('AMEX', bodyData.amex);
+
+      paymentMethod.subscribe(
+        (data: any) => {
+          let dialogRef: MatDialogRef<DialogBidaiondoConfirmToPayComponent, any>;
+
+          dialogRef = this.dialog.open(DialogBidaiondoConfirmToPayComponent, {
+            width: '15cm',
+            maxWidth: '100vw',
+            data: {
+              form: data.data.form,
+            },
+          });
+
+          dialogRef.afterClosed().subscribe((result) => {
+            if (result) {
+              window.location.reload();
+            }
+            this.loadingPayment = false;
+          });
+        },
+        (error) => {
+          this.loadingPayment = false;
+        },
+      );
     }
 
-    console.log('AMEX', bodyData.amex);
-
-    paymentMethod.subscribe(
-      (data: any) => {
-        let dialogRef: MatDialogRef<DialogBidaiondoConfirmToPayComponent, any>;
-
-        dialogRef = this.dialog.open(DialogBidaiondoConfirmToPayComponent, {
-          width: '15cm',
-          maxWidth: '100vw',
-          data: {
-            form: data.data.form,
-          },
-        });
-
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result) {
-            window.location.reload();
-          }
-          this.loadingPayment = false;
-        });
-      },
-      (error) => {
-        this.loadingPayment = false;
-      },
-    );
   }
 
   // CONTACTS

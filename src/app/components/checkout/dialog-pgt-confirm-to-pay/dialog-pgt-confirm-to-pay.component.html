@@ -1,0 +1,30 @@
+<mat-dialog-content>
+  <blockquote>
+    <p>
+      {{
+      'Usted dejará nuestro sistema y navegará hacia la pasarela de pago, marque CONFIRMAR para proseguir. Para usuarios en Cuba es obligatorio el uso de VPN para acceder a la pasarela.'
+        | translate
+      }}
+    </p>
+  </blockquote>
+</mat-dialog-content>
+
+<mat-dialog-actions align='end'>
+  <button class='mr-3' mat-button mat-dialog-close>{{ 'Cancelar' | translate }}</button>
+  <!--  <form ngNoForm method="post" target="_self" action="https://www.administracomercios.com/index.php">-->
+<!--  <form action="https://apibidpay.guajitech.com/v1/to-bidaiondo-redirect" method="post" ngNoForm target="_self">-->
+      <form action='https://apibidpay.peoplegoto.com/v1/to-pgt-redirect' method='post' ngNoForm target='_self'>
+    <div id='inputsHiddenBid'></div>
+    <button
+      aria-label='Confirm'
+      color='primary'
+      id='bid-btn-submit'
+      mat-dialog-close
+      mat-flat-button
+      type='submit'
+      value='Enviar'
+    >
+      {{ 'CONFIRMAR' | translate }}
+    </button>
+  </form>
+</mat-dialog-actions>

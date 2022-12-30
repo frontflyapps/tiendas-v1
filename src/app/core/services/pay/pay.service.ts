@@ -14,6 +14,7 @@ export class PayService {
   urlBidaiondoCards = environment.apiUrl + 'payment/bidaiondo/get-card';
   urlPaymentPeopleGoTo = environment.apiUrl + 'payment/peoplegoto';
   urlPaymentBidaiondoNew = 'https://apibidpay.guajitech.com/v1/to-bidaiondo-redirect';
+  urlPaymentPeopleGoToNew = 'https://apibidpay.peoplegoto.com/v1/to-pgt-redirect';
   ///////////////////////////////////////////////////////////////////////////
   urlPaySucces = environment.apiUrl + 'pay-success';
   urlPayCancelled = environment.apiUrl + 'pay-cancelled';
@@ -45,9 +46,9 @@ export class PayService {
     return this.httpClient.post<any>(this.urlPaymentBidaiondo, data).pipe(timeout(60000));
   }
 
-  // makePaymentBidaiondoNew(data): Observable<any> {
-  //   return this.httpClient.post<any>(this.urlPaymentBidaiondoNew, data).pipe(timeout(60000));
-  // }
+  makePaymentBidaiondoNew(data): Observable<any> {
+    return this.httpClient.post<any>(this.urlPaymentBidaiondoNew, data).pipe(timeout(60000));
+  }
 
   setCompleteTranferPayment(data): Observable<any> {
     return this.httpClient.post<any>(this.urlPaymentEnzona + '-continue', data);
@@ -59,7 +60,7 @@ export class PayService {
 
   /*******************PeopleGoTo******************/
   makePaymentPeopleGoTo(data): Observable<any> {
-    return this.httpClient.post<any>(this.urlPaymentPeopleGoTo, data).pipe(timeout(60000));
+    return this.httpClient.post<any>(this.urlPaymentPeopleGoToNew, data).pipe(timeout(60000));
   }
 
   cancelPaymentPeopleGoTo(data): Observable<any> {
