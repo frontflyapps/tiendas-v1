@@ -58,9 +58,9 @@ export class PayService {
     return this.httpClient.post<any>(this.urlPaymentBidaiondo + `/${data.id}/cancel`, data);
   }
 
-  /*******************PeopleGoTo******************/
+  /*******************PeopleGoTo*****************/
   makePaymentPeopleGoTo(data): Observable<any> {
-    return this.httpClient.post<any>(this.urlPaymentPeopleGoToNew, data).pipe(timeout(60000));
+    return this.httpClient.post<any>(this.urlPaymentPeopleGoTo, data).pipe(timeout(60000));
   }
 
   cancelPaymentPeopleGoTo(data): Observable<any> {
