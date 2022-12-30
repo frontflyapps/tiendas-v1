@@ -12,11 +12,14 @@ export const environment = {
   // apiUrl: 'https://api.mibulevar.com/v1/',
   // imageUrl: 'https://api.mibulevar.com/v1/',
 
+  apiUrl: 'https://api.pymesbulevar.com/v1/',
+  imageUrl: 'https://cdn.pymesbulevar.com/',
+
   // apiUrl: 'https://apitienda.guajiritos.com/v1/',
   // imageUrl: 'https://apitienda.guajiritos.com/v1/',
-
-  apiUrl: 'https://apitienda.guajiritos.com/v1/',
-  imageUrl: 'https://cdn.guajiritos.com/',
+  //
+  // apiUrl: 'https://apitienda.guajiritos.com/v1/',
+  // imageUrl: 'https://cdn.guajiritos.com/',
 
   // apiUrl: 'http://apitienda.tiendalocal.com:8999/v1/',
   // imageUrl: 'https://cdn.guajiritos.com/',
@@ -53,8 +56,14 @@ export const environment = {
   adminService: 'http://admintienda.tiendalocal.com/',
   mainDomain: '.tiendalocal.com',
 
+  // Guajiritos
+  // tokenBusiness:
+  //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7IkJ1c2luZXNzSWQiOjEsImlkIjoxLCJkYXRlIjoiMjAyMS0wOS0xM1QwMTo0NToxOC4wMDBaIiwibmFtZSI6IlRpZW5kYSIsImVtYWlsIjoidGllbmRhQGxvY2FsaG9zdC5jb20ifSwiaWF0IjoxNjMxNDk3NTkxfQ.FF5-276rI9SJmtebVo0spV8Y2wdOZPok7LlUxtTDwh0',
+
+  // Pymesbulevar
   tokenBusiness:
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7IkJ1c2luZXNzSWQiOjEsImlkIjoxLCJkYXRlIjoiMjAyMS0wOS0xM1QwMTo0NToxOC4wMDBaIiwibmFtZSI6IlRpZW5kYSIsImVtYWlsIjoidGllbmRhQGxvY2FsaG9zdC5jb20ifSwiaWF0IjoxNjMxNDk3NTkxfQ.FF5-276rI9SJmtebVo0spV8Y2wdOZPok7LlUxtTDwh0',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7IkJ1c2luZXNzSWQiOjEsImlkIjoxLCJkYXRlIjoiMjAyMi0wMS0zMVQwNDo1NDowMC4wMDBaIiwibmFtZSI6IlRpZW5kYSIsImVtYWlsIjoidGllbmRhQGxvY2FsaG9zdC5jb20ifSwiaWF0IjoxNjQzNjQ2Njg3fQ.-pIQscQih10E1-UbtTlyiV3mj_uaxilPMpvLLN-GzSo',
+
 
   meta: {
     mainPage: {

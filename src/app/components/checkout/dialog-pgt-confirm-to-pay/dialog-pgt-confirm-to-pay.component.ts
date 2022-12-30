@@ -7,20 +7,21 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./dialog-pgt-confirm-to-pay.component.scss']
 })
 export class DialogPgtConfirmToPayComponent implements AfterViewInit {
-  templateInputs;
+  templateInputs!: HTMLElement;
 
   constructor(
     public dialogRef: MatDialogRef<DialogPgtConfirmToPayComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) {
   }
 
-  ngAfterViewInit() {
-    this.templateInputs = document.getElementById('inputsHiddenBid');
+  ngAfterViewInit(): void {
+    this.templateInputs = document.getElementById('inputsHiddenBid')!;
     this.templateInputs.innerHTML = this.data.form;
   }
 
-  close() {
+  close(): void {
     this.dialogRef.close();
   }
 }
+
