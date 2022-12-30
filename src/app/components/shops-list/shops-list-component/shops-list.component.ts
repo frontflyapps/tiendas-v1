@@ -14,7 +14,7 @@ import { AppService } from '../../../app.service';
 export class ShopsListComponent implements OnInit, OnDestroy {
   apiURL = environment.imageUrl;
   businessName: UntypedFormControl;
-  bannerDefault = '';
+  bannerDefault = 'assets/images/mibulevar/banner_MiBulevar.png';
   _unsubscribeAll: Subject<any>;
   bussinessConfig;
   allBusiness: any;
