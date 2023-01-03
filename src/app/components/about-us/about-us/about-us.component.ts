@@ -19,7 +19,7 @@ export class AboutUsComponent implements OnInit, OnDestroy {
   _unsubscribeAll: Subject<any>;
   aboutUs: any;
   language = 'es';
-  imageUrl = environment.apiUrl;
+  imageUrl = environment.imageUrl;
 
   constructor(
     private fb: UntypedFormBuilder,
@@ -30,12 +30,12 @@ export class AboutUsComponent implements OnInit, OnDestroy {
   ) {
     this._unsubscribeAll = new Subject();
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
-    this.metaService.setMeta(
-      'Quienes somos?',
-      environment.meta?.mainPage?.description,
-      environment.meta?.mainPage?.shareImg,
-      environment.meta?.mainPage?.keywords,
-    );
+    // this.metaService.setMeta(
+    //   'Quienes somos?',
+    //   environment.meta?.mainPage?.description,
+    //   environment.meta?.mainPage?.shareImg,
+    //   environment.meta?.mainPage?.keywords,
+    // );
   }
 
   ngOnInit() {
@@ -46,7 +46,7 @@ export class AboutUsComponent implements OnInit, OnDestroy {
     this.contactUsService.getAboutUs().subscribe((data) => {
       this.aboutUs = data;
       if (this.aboutUs.image) {
-        this.metaService.setMeta(null, null, this.imageUrl + this.aboutUs.image, null);
+        // this.metaService.setMeta(null, null, this.imageUrl + this.aboutUs.image, null);
       }
     });
   }

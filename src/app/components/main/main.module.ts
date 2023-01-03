@@ -41,6 +41,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { GuachosImagePickerModule } from 'guachos-image-picker';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { GuachosGeneralAutocompleteModule } from 'guachos-general-autocomplete';
 
 @NgModule({
   declarations: [
@@ -86,6 +87,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MatProgressSpinnerModule,
     MatAutocompleteModule,
     GuachosImagePickerModule,
+    GuachosGeneralAutocompleteModule,
   ],
   providers: [SidebarMenuService, PreviousRouteService, ConfirmCreateBusinessService],
 })

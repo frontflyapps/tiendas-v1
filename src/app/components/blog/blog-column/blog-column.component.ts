@@ -25,7 +25,7 @@ import { BlogService } from '../../../core/services/blog/blog.service';
 })
 export class BlogColumnComponent implements OnInit, OnDestroy {
   loadingSearch = false;
-  imageUrl: any = environment.apiUrl;
+  imageUrl: any = environment.imageUrl;
   searchText = null;
   tags: any[] = [];
   isEmptyArray = false;

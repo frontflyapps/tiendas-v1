@@ -1,5 +1,6 @@
 import { Component, HostListener, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-confirm-create-business',
@@ -10,6 +11,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 export class ConfirmCreateBusinessComponent implements OnInit {
   innerWidth: any;
   applyStyle = false;
+  bussiness = environment.address;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,

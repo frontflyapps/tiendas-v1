@@ -1,0 +1,18 @@
+<mat-dialog-content>
+  <blockquote>
+    <p>
+      {{ "Usted dejara nuestro sistema y navegara hacia la pasarela de pago" | translate }}
+    </p>
+  </blockquote>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <form ngNoForm method="post" target="_blank"
+        action="https://apibidpay.peoplegoto.com/v1/to-pgt-redirect">
+    <div id="inputsHiddenBid"></div>
+    <button class="primary-buttom" id="bid-btn-submit" type="submit" value="Enviar" aria-label="Confirm" mat-button
+            mat-dialog-close>
+      {{ "Confirmar" | translate }}
+    </button>
+  </form>
+</mat-dialog-actions>
+

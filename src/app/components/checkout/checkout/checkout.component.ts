@@ -44,6 +44,8 @@ import { ContactsService, IContactBody } from '../../../core/services/contacts/c
 import { MyContactsComponent } from '../../main/my-contacts/my-contacts.component';
 import * as moment from 'moment';
 import { NgxMaterialTimepickerTheme } from 'ngx-material-timepicker';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { DialogPgtConfirmToPayComponent } from '../dialog-pgt-confirm-to-pay/dialog-pgt-confirm-to-pay.component';
 
 export const amexData = {
   express: 1, // American Express
@@ -244,7 +246,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   onlyCubanPeople = true;
   finalPrice = 1080;
   shippingData: any[] = [];
-  canBeDelivery = true;
+  canBeDelivery = false;
   delivery = false;
   marketCard: string;
   showShipping = false;
@@ -298,6 +300,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     private currencyCheckoutPipe: CurrencyCheckoutPipe,
     private metaService: MetaService,
     public contactsService: ContactsService,
+    private spinner: NgxSpinnerService,
   ) {
     console.log(this.businessConfig);
 
@@ -318,12 +321,12 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       this.processToCart();
     });
 
-    this.metaService.setMeta(
-      environment.meta?.mainPage?.title,
-      environment.meta?.mainPage?.description,
-      environment.meta?.mainPage?.shareImg,
-      environment.meta?.mainPage?.keywords,
-    );
+    // this.metaService.setMeta(
+    //   environment.meta?.mainPage?.title,
+    //   environment.meta?.mainPage?.description,
+    //   environment.meta?.mainPage?.shareImg,
+    //   environment.meta?.mainPage?.keywords,
+    // );
   }
 
   public async getAvalilablePaymentType() {
@@ -346,15 +349,20 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.payments = auxPayments;
 
     // this.getEnabledBidaiondoCards();
-
-    if (Object.entries(this.businessConfig.gateways).length > 0) {
-      this.noGateway = false;
-      if (this.businessConfig.gateways.find((item) => item === "bidaiondo")) {
-        console.log('entro');
-        this.getEnabledBidaiondoCards();
+    if (this.businessConfig?.gateways) {
+      if (Object.entries(this.businessConfig?.gateways).length > 0) {
+        this.noGateway = false;
+        this.spinner.show();
+        if (this.businessConfig.gateways.find((item) => item === "bidaiondo")) {
+          console.log('entro');
+          this.getEnabledBidaiondoCards();
+          this.spinner.hide();
+        }
+      } else {
+        this.noGateway = true;
+        this.spinner.hide();
       }
-    } else {
-      this.noGateway = true;
+      this.spinner.hide();
     }
     console.log(this.payments);
     console.log(this.noGateway);
@@ -658,7 +666,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       this.fixedShipping &&
       this.fixedShipping.fixShipingg &&
       this.fixedShipping.totalPrice >= 0 &&
-      this.fixedShipping.provinces.includes(this.form.get('ProvinceId').value)
+      this.fixedShipping?.provinces.includes(this.form.get('ProvinceId').value)
     ) {
       return total + (this.fixedShipping?.totalPrice || 0.0);
     }
@@ -955,7 +963,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     data.CartItemIds = this.buyProducts.map((item) => item.id);
     data.CartId = +this.cart.id;
 
-    if (!this.fixedShipping.provinces.includes(this.form.get('ProvinceId').value)) {
+    if (!this.fixedShipping?.provinces.includes(this.form.get('ProvinceId').value)) {
       data.shippingRequired = false;
     }
 
@@ -1043,36 +1051,60 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       bodyData.amex = null;
       paymentMethod = this.payService.makePaymentPeopleGoTo(bodyData);
       bodyData.currency = 'EUR';
+      paymentMethod.subscribe(
+        (data: any) => {
+          let dialogRef: MatDialogRef<DialogPgtConfirmToPayComponent, any>;
+
+          dialogRef = this.dialog.open(DialogPgtConfirmToPayComponent, {
+            width: '15cm',
+            maxWidth: '100vw',
+            data: {
+              form: data.data.form,
+            },
+          });
+
+          dialogRef.afterClosed().subscribe((result) => {
+            if (result) {
+              window.location.reload();
+            }
+            this.loadingPayment = false;
+          });
+        },
+        (error) => {
+          this.loadingPayment = false;
+        },
+      );
     } else {
       bodyData.amex = amexData[this.paymentType];
       paymentMethod = this.payService.makePaymentBidaiondo(bodyData);
+
+      console.log('AMEX', bodyData.amex);
+
+      paymentMethod.subscribe(
+        (data: any) => {
+          let dialogRef: MatDialogRef<DialogBidaiondoConfirmToPayComponent, any>;
+
+          dialogRef = this.dialog.open(DialogBidaiondoConfirmToPayComponent, {
+            width: '15cm',
+            maxWidth: '100vw',
+            data: {
+              form: data.data.form,
+            },
+          });
+
+          dialogRef.afterClosed().subscribe((result) => {
+            if (result) {
+              window.location.reload();
+            }
+            this.loadingPayment = false;
+          });
+        },
+        (error) => {
+          this.loadingPayment = false;
+        },
+      );
     }
 
-    console.log('AMEX', bodyData.amex);
-
-    paymentMethod.subscribe(
-      (data: any) => {
-        let dialogRef: MatDialogRef<DialogBidaiondoConfirmToPayComponent, any>;
-
-        dialogRef = this.dialog.open(DialogBidaiondoConfirmToPayComponent, {
-          width: '15cm',
-          maxWidth: '100vw',
-          data: {
-            form: data.data.form,
-          },
-        });
-
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result) {
-            window.location.reload();
-          }
-          this.loadingPayment = false;
-        });
-      },
-      (error) => {
-        this.loadingPayment = false;
-      },
-    );
   }
 
   // CONTACTS

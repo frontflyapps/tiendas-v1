@@ -112,7 +112,7 @@
             <p class="tex-align-center p-4">{{ 'No hay envio para estos productos' }}</p>
           </ng-template>
 <!--          <ng-container >-->
-            <p *ngIf='noGateway' class="tex-align-center p-4">{{ 'Este negocio no tiene método de pago permitido' }}</p>
+            <h1 *ngIf='noGateway' class="tex-align-center p-4 color-red-500">{{ 'Este negocio no tiene método de pago permitido' }}</h1>
 <!--          </ng-container>-->
           <!---------------------->
           <div class="actions-buttons" fxFlex="grow" fxLayout="row" fxLayoutAlign="space-between start">
@@ -130,7 +130,7 @@
             </button>
           </div>
         </mat-step>
-        <mat-step>
+        <mat-step disabled='form.invalid'>
           <ng-template matStepLabel>{{ 'Destinatario' | translate }}</ng-template>
 
           <div *ngIf="!loadingPayment" class="header-title">
@@ -549,6 +549,7 @@
                 ></textarea>
               </mat-form-field>
             </div>
+            <h1 *ngIf='noGateway' class="tex-align-center p-4 color-red-500">{{ 'Este negocio no tiene método de pago permitido' }}</h1>
 
             <div class="actions-buttons" fxFlex="grow" fxLayout="row" fxLayoutAlign="space-between start">
               <button mat-stroked-button matStepperPrevious>{{ 'Atrás' | translate }}</button>
@@ -599,8 +600,6 @@
                     fxLayoutGap="10px grid"
                   >
                     <ng-container *ngFor="let pay of payments">
-
-                      {{this.onlyCubanPeople}} *** {{cart?.market}} *** {{pay?.market}} //////////
                       <ng-container
                         *ngIf="this.onlyCubanPeople && cart?.market === 'national' && pay?.market === 'national'"
                       >

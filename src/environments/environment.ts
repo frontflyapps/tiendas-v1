@@ -16,16 +16,18 @@ export const environment = {
   // imageUrl: 'https://apitienda.guajiritos.com/v1/',
 
   apiUrl: 'https://api.guajiritos.com/v1/',
-  imageUrl: 'https://api.guajiritos.com/v1/',
+  imageUrl: 'https://cdn.guajiritos.com/',
 
-  // apiUrl: 'http://apitienda.tiendalocal.com:8998/v1/',
-  // imageUrl: 'http://apitienda.tiendalocal.com:8998/v1/',
+  // apiUrl: 'http://apitienda.tiendalocal.com:8999/v1/',
+  // imageUrl: 'http://apitienda.tiendalocal.com:8999/v1/',
 
   defaultLanguage: 'es',
   currencyInternational: 'USD',
   logo: 'assets/images/guajiritos/guajiritos-Logo-blanco.png',
   logoWhite: 'assets/images/guajiritos/guajiritos-Logo-blanco.png',
   logoFooter: 'assets/images/guajiritos/guajiritos-Logo-blanco.png',
+
+  limitSearch : 21,
 
   timeToResetSession: 14400000, // Time to reset the session (ms)
   timeToResearchProductData: 10000, // Time to research products (ms)
@@ -51,8 +53,6 @@ export const environment = {
   adminService: 'http://admintienda.tiendalocal.com/',
   mainDomain: '.tiendalocal.com',
 
-  // tokenBusiness:
-  //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7IkJ1c2luZXNzSWQiOjEsImlkIjoxLCJkYXRlIjoiMjAyMi0wMS0zMVQwNDo1NDowMC4wMDBaIiwibmFtZSI6IlRpZW5kYSIsImVtYWlsIjoidGllbmRhQGxvY2FsaG9zdC5jb20ifSwiaWF0IjoxNjQzNjQ2Njg3fQ.-pIQscQih10E1-UbtTlyiV3mj_uaxilPMpvLLN-GzSo',
   tokenBusiness:
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7IkJ1c2luZXNzSWQiOjEsImlkIjoxLCJkYXRlIjoiMjAyMi0wMS0zMVQwNDo1NDowMC4wMDBaIiwibmFtZSI6IlRpZW5kYSIsImVtYWlsIjoidGllbmRhQGxvY2FsaG9zdC5jb20ifSwiaWF0IjoxNjQzNjQ2Njg3fQ.-pIQscQih10E1-UbtTlyiV3mj_uaxilPMpvLLN-GzSo',
 
@@ -62,7 +62,7 @@ export const environment = {
       description: 'Tienda online desarrollada con el framework Angular permite la modelación de negocios B2C and C2C',
       keywords: 'HTML, CSS, JavaScript, Angular, Tienda Online B2B, comercio online',
       shareImg: 'https://www.guajiritos.com/assets/images/share-img.png',
-      url: 'https://www.guajiritos.com/',
+      url: 'https://www.tienda.guajiritos.com/',
     },
   },
 

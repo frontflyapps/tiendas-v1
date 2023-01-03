@@ -38,6 +38,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatStepperModule } from '@angular/material/stepper';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { MatDatepicker, MatDatepickerModule } from '@angular/material/datepicker';
+import { DialogPgtConfirmToPayComponent } from './dialog-pgt-confirm-to-pay/dialog-pgt-confirm-to-pay.component';
 
 @NgModule({
     imports: [
@@ -80,6 +81,7 @@ import { MatDatepicker, MatDatepickerModule } from '@angular/material/datepicker
         DetailsShippingComponent,
         DialogTranfermovilQrComponent,
         DialogBidaiondoConfirmToPayComponent,
+        DialogPgtConfirmToPayComponent,
     ],
     providers: [TaxesShippingService]
 })

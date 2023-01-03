@@ -13,7 +13,7 @@
 
 <mat-toolbar id='successPay' matDialogTitle>
   <mat-toolbar-row fxLayout='row' fxLayoutAlign='space-between center'>
-    <span class='mat-title mb-0'>{{'¡Bienvenido a Pymes Bulevar!' | translate}}</span>
+    <span class='mat-title mb-0'>{{'¡Bienvenido a ' | translate}}{{bussiness}}!</span>
     <button (click)='dialogRef.close(false)' aria-label='Close dialog' mat-icon-button>
       <mat-icon>close</mat-icon>
     </button>
