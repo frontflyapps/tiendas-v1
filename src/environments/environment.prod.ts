@@ -4,7 +4,7 @@ export const environment = {
   production: true,
 
   apiUrl: 'https://api.pymesbulevar.com/v1/',
-  imageUrl: 'https://cdn.ddonatofood.com/v1/',
+  imageUrl: 'https://cdn.lapolimita.com/',
 
   defaultLanguage: 'es',
   currencyInternational: 'USD',
