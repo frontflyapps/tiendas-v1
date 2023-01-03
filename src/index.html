@@ -39,6 +39,7 @@
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-B3BB1Z2GL3"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" ></script>
     <script>
       window.dataLayer = window.dataLayer || [];
 
@@ -49,6 +50,17 @@
       gtag('js', new Date());
 
       gtag('config', 'G-B3BB1Z2GL3');
+    </script>
+
+    <script src="https://soporte.guajiritos.com/assets/chat/chat.min.js" ></script>
+    <script>
+      $(function() {
+        new ZammadChat({
+          background: '#353848',
+          fontSize: '12px',
+          chatId: 1
+        });
+      });
     </script>
 
     <!-- Google and Material FONTS -->
