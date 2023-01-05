@@ -16,9 +16,9 @@ export class ShopsListComponent implements OnInit, OnDestroy {
   businessName: UntypedFormControl;
   bannerDefault = 'assets/images/mibulevar/banner_MiBulevar.png';
   _unsubscribeAll: Subject<any>;
-  bussinessConfig;
+  businessConfig = JSON.parse(localStorage.getItem('business-config'));
   allBusiness: any;
-  initialPage = 9
+  initialPage = 9;
   query = {
     total: 0,
     limit: this.initialPage,
@@ -31,9 +31,6 @@ export class ShopsListComponent implements OnInit, OnDestroy {
   constructor(private businessService: BusinessService, private fb: UntypedFormBuilder, private appService: AppService) {
     this.businessName = new UntypedFormControl(null, []);
     this._unsubscribeAll = new Subject<any>();
-    appService.getBusinessConfig().subscribe((item) => {
-      this.bussinessConfig = item.data;
-    });
   }
 
   ngOnInit(): void {

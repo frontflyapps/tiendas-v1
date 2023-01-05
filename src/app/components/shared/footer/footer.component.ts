@@ -5,6 +5,7 @@ import { EditProfileComponent } from '../../main/edit-profile/edit-profile.compo
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-in-user.service';
 import { IUser } from '../../../core/classes/user.class';
+import { AppService } from '../../../app.service';
 
 export interface IFooterContacts {
   phone: string;
@@ -21,6 +22,7 @@ export interface IFooterContacts {
 export class FooterComponent implements OnInit {
   language: string;
   currency: string;
+  businessConfig = JSON.parse(localStorage.getItem('business-config'));
   public version = environment.versions.app;
 
   public contacts: IFooterContacts = environment.contacts;
@@ -50,6 +52,7 @@ export class FooterComponent implements OnInit {
     // private loggedInUserService: LoggedInUserService,
     public dialog: MatDialog,
     public loggedInUserService: LoggedInUserService,
+    private appService: AppService,
     public translate: TranslateService,
   ) {
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
