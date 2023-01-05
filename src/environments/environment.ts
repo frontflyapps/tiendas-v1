@@ -45,9 +45,9 @@ export const environment = {
   localDatabaseUsers: true,
 
   contacts: {
-    phone: '',
-    email: '',
-    address: '',
+    phone: '(+53) 5 9999999',
+    email: 'cto@guajiritos.cu',
+    address: 'Zulueta #658, e/ Gloria y Apodaca',
   },
 
   adminService: 'http://admintienda.tiendalocal.com/',

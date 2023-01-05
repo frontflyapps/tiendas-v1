@@ -65,7 +65,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public currencies: any[];
   public currency: any;
-  public logo= environment.logoWhite;
+  public logo = environment.logoWhite;
   urlImage: any = environment.imageUrl;
 
   public province: any = null;
@@ -95,7 +95,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
   searchForm: UntypedFormControl;
   categories: any[] = [];
   _language = 'es';
-  bussinessConfig;
+  businessConfig = JSON.parse(localStorage.getItem('business-config'));
 
   tour = new Shepherd.Tour({
     useModalOverlay: false,
@@ -132,17 +132,12 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
     public utilsService: UtilsService,
     private confirmCreateBusinessService: ConfirmCreateBusinessService,
     private locationService: LocationService,
-    private appService: AppService,
     private globalStateOfCookieService: GlobalStateOfCookieService,
     private categoryMenuServ: CategoryMenuNavService,
   ) {
     this.metaAdd();
     this._unsubscribeAll = new Subject<any>();
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
-    this.appService.getBusinessConfig().subscribe((item) => {
-      this.bussinessConfig = item.data;
-      console.log(this.bussinessConfig);
-    });
     this.navItems = this.navigationService.getNavItems();
 
     this.cartService.$cartItemsUpdated.pipe(takeUntil(this._unsubscribeAll)).subscribe((cart) => {

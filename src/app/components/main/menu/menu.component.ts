@@ -23,6 +23,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   shoppingCartItems: any[] = [];
   language;
   ordersPayment: any[] = [];
+  businessConfig = JSON.parse(localStorage.getItem('business-config'));
   categories: any[] = [];
   query: IPagination = {
     limit: 20,
@@ -39,10 +40,10 @@ export class MenuComponent implements OnInit, OnDestroy {
     public utilsSer: UtilsService,
     public translate: TranslateService,
     private ordersService: MyOrdersService,
-    private appService: AppService,
     private globalStateOfCookieService: GlobalStateOfCookieService,
     private categoryMenuServ: CategoryMenuNavService,
-    private activatedRute: ActivatedRoute,private router: Router
+    private activatedRute: ActivatedRoute,
+    private router: Router
   ) {
 
     this.router.events.pipe(
@@ -56,10 +57,6 @@ export class MenuComponent implements OnInit, OnDestroy {
     ).subscribe((route: ActivatedRoute) => {
       this.searchUrlParams = route.snapshot.queryParams ? route.snapshot.queryParams : '';
       this.getCategoriesForMenu();
-    });
-    appService.getBusinessConfig().subscribe((item) => {
-      this.bussinessConfig = item.data;
-      console.log(this.bussinessConfig);
     });
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
     this._unsubscribeAll = new Subject();
@@ -118,7 +115,7 @@ export class MenuComponent implements OnInit, OnDestroy {
         this.categories = this.categoryMenuServ.updateCategories(data);
       }
     });
-    this.categoryMenuServ.setCategories(this.categories)
+    this.categoryMenuServ.setCategories(this.categories);
   }
 
   setSubscriptionToCookie() {
