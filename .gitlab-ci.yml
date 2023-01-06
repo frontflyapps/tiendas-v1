@@ -27,8 +27,8 @@ install:
     - ./awscli-bundle/install -b ~/bin/aws
     - export PATH=~/bin:$PATH
   script:
-    - yarn install
-    - yarn add typescript@4.6.2 -s
+    - npm install
+    - npm install -g typescript@4.6.2
     - npm run build --prod
     - aws s3 sync --acl public-read --metadata-directive REPLACE --cache-control max-age=0,public dist/tienda-angular-b2b s3://cloudfront-tienda.guajiritos.com --delete
     - aws cloudfront create-invalidation --distribution-id E1I5HAWV5MYHSL --paths "/*"
