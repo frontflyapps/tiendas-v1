@@ -10,6 +10,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { UtilsService } from '../../../core/services/utils/utils.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ImagePickerConf } from 'guachos-image-picker';
+import { IDENTITY_PASSPORT } from '../../../core/classes/regex.const';
 
 @Component({
   selector: 'app-edit-profile',
@@ -90,6 +91,10 @@ export class EditProfileComponent implements OnInit {
       ],
       birthday: [this.loggedInUser && this.loggedInUser.birthday ? this.loggedInUser.birthday : null],
       description: [this.loggedInUser && this.loggedInUser.description ? this.loggedInUser.description : null],
+      ci: [this.loggedInUser && this.loggedInUser.ci ? this.loggedInUser.ci : null,
+            [Validators.pattern(IDENTITY_PASSPORT),
+            Validators.minLength(11),
+            Validators.maxLength(11)]]
     });
   }
 

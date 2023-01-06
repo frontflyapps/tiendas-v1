@@ -42,6 +42,7 @@ import { GuachosImagePickerModule } from 'guachos-image-picker';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { GuachosGeneralAutocompleteModule } from 'guachos-general-autocomplete';
+import { GuachosImageModule } from '../shared/guachos-image/guachos-image.module';
 
 @NgModule({
   declarations: [
@@ -88,6 +89,7 @@ import { GuachosGeneralAutocompleteModule } from 'guachos-general-autocomplete';
     MatAutocompleteModule,
     GuachosImagePickerModule,
     GuachosGeneralAutocompleteModule,
+    GuachosImageModule
   ],
   providers: [SidebarMenuService, PreviousRouteService, ConfirmCreateBusinessService],
 })

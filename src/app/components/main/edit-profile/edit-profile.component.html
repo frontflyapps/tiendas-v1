@@ -11,10 +11,10 @@
   <div class='my-dialog-content' mat-dialog-content>
     <div class='imagePickerRow' fxLayout='row' fxLayoutAlign='center center' fxLayoutGap='gappx'>
 
-      <guachos-image-picker ($imageChanged)='onImageChange($event)'
-                            [_config]='imagePickerConf'
-                            [_imageSrc]='loggedInUser.avatar ? urlImage + loggedInUser.avatar : null'>
-      </guachos-image-picker>
+      <app-guachos-image [create]='!loggedInUser.avatar'
+                         [imageSrc]='urlImage + loggedInUser.avatar'
+                         [config]='imagePickerConf'
+                         (imageChanged)='onImageChange($event)'></app-guachos-image>
 
     </div>
 
@@ -75,6 +75,25 @@
             {{ 'phone' | translate }} <strong>{{ 'is required' | translate }}</strong>
           </mat-error>
         </mat-form-field>
+        <mat-form-field appearance='outline'>
+          <mat-label>{{ 'Documento de identidad' | translate }}</mat-label>
+          <input [formControl]="form.controls['ci']"
+                 matInput
+                 placeholder="{{ 'Phone' | translate }}"
+                 type='tel'
+                 (keypress)="utilsService.keyPressAlphaAndNumbersModIdentity($event)"/>
+          <mat-icon class='greyIcon' matSuffix>contact_page</mat-icon>
+          <mat-hint>{{ 'Formato de documento de identidad de 11 dígitos mínimo' | translate }}</mat-hint>
+          <mat-error *ngIf="form.controls['ci'].hasError('required')">
+            {{ 'phone' | translate }} <strong>{{ 'is required' | translate }}</strong>
+          </mat-error>
+          <mat-error *ngIf="form.controls['ci'].hasError('pattern')">
+            {{ 'Identification' | translate }} <strong>{{ 'incorrecto' | translate }}</strong>
+          </mat-error>
+          <mat-error *ngIf="form.controls['ci'].hasError('minlength') || form.controls['ci'].hasError('maxlength')">
+            {{ 'Identification' | translate }} <strong>{{ 'must have 11 characters' | translate }}</strong>
+          </mat-error>
+        </mat-form-field>
         <!-- <mat-form-field appearance="outline">
           <mat-label>{{'Dirección'|translate}}</mat-label>
           <input [formControl]="form.controls['address']" matInput placeholder="{{'Dirección'|translate}}" type='text'>
@@ -93,7 +112,7 @@
         </mat-form-field>
 
 
-        <!-- <mat-slide-toggle color="primary" (change)="onSelectSliderChange($event)" [checked]="isChangePass">
+         <mat-slide-toggle color="primary" (change)="onSelectSliderChange($event)" [checked]="isChangePass">
           {{'Change password'|translate}}</mat-slide-toggle>
 
         <div *ngIf="isChangePass" fxLayout="column" class="p-2 mt-2 PassSection" fxLayoutAlign="start stretch">

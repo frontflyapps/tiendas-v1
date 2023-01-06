@@ -19,8 +19,12 @@
               {{ 'Logo del negocio' | translate }}*
             </p>
 
-            <guachos-image-picker [_imageSrc]='imageBusiness' ($imageChanged)='onImageChange($event)'
-                                  [_config]='imagePickerConf'></guachos-image-picker>
+<!--            <guachos-image-picker [_imageSrc]='imageBusiness' ($imageChanged)='onImageChange($event)'-->
+<!--                                  [_config]='imagePickerConf'></guachos-image-picker>-->
+            <app-guachos-image [create]='!imageBusiness'
+                               [imageSrc]='imageBusiness'
+                               [config]='imagePickerConf'
+                               (imageChanged)='onImageChange($event)'></app-guachos-image>
 
             <!-- NOMBRE DEL NEGOCIO -->
             <p class='mat-body-2 uppercase mt-2 mb-1'>
