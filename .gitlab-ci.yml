@@ -5,7 +5,7 @@ stages:
 install:
   stage: install
   only:
-    - staging
+    - prod-LaPolimita
   variables:
     DOCKER_DRIVER: overlay2
     DOCKER_TLS_CERTDIR: ""
@@ -30,8 +30,8 @@ install:
     - npm install
     - npm install -g typescript@4.6.2
     - npm run build --prod
-    - aws s3 sync --acl public-read --metadata-directive REPLACE --cache-control max-age=0,public dist/tienda-angular-b2b s3://cloudfront-tienda.guajiritos.com --delete
-    - aws cloudfront create-invalidation --distribution-id E1I5HAWV5MYHSL --paths "/*"
+    - aws s3 sync --acl public-read --metadata-directive REPLACE --cache-control max-age=0,public dist/tienda-angular-b2b s3://cloudfront-www.lapolimita.com --delete
+    - aws cloudfront create-invalidation --distribution-id EGU3AFJGO16ZP --paths "/*"
     - echo "DEPLOYED SUCCESSFULLY"
 
 success:

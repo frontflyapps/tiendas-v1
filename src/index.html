@@ -1,68 +1,76 @@
 <!DOCTYPE html>
 <html lang="es">
-
-<head>
+  <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="Tienda online desarrollada con el framework Angular, permite la modelación de negocios B2C and B2C" />
+    <meta
+      name="description"
+      content="Tienda online desarrollada con el framework Angular, permite la modelación de negocios B2C and B2C"
+    />
     <meta name="keywords" content="HTML, CSS, JavaScript, Angular, Tienda Online B2B, comercio online" />
     <meta name='title' content='Tienda Guajiritos'>
-    <title>Tienda Guajiritos</title>
+    <title>La Polimita | Tienda Online</title>
     <base href="/" />
 
 
 
     <!-- Share WhatsApp, Twitter and Facebook by DmN -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://tienda.guajiritos.com/" />
-    <meta property="og:site_name" content="Tienda Guajiritos" />
-    <meta property="og:image" itemprop="image primaryImageOfPage" content="https://tienda.guajiritos.com/assets/images/share-img.png" />
+    <meta property="og:url" content="https://lapolimita.com/" />
+    <meta property="og:site_name" content="La Polimita" />
+    <meta
+      property="og:image"
+      itemprop="image primaryImageOfPage"
+      content="https://www.lapolimita.com/assets/images/share-img.png"
+    />
 
     <meta property="article:publisher" content="https://www.facebook.com/guajiritos">
 
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:domain" content="tienda.guajiritos.com" />
-    <meta name="twitter:title" property="og:title" itemprop="name" content="Tienda Guajiritos" />
+    <meta name="twitter:domain" content="lapolimita.com" />
+    <meta name="twitter:title" property="og:title" itemprop="name" content="La Polimita" />
     <meta name="twitter:description" property="og:description" itemprop="description" content="Tienda online B2C." />
-    <meta name="twitter:image" content="https://tienda.guajiritos.com/assets/images/share-img.png" />
+    <meta property="og:image" itemprop="image primaryImageOfPage"
+          content="https://www.lapolimita.com/assets/images/share-img.png"/>
 
     <!--    Meta for navigators-->
-    <meta name="apple-mobile-web-app-status-bar-style" content="#131313">
-    <meta name="theme-color" content="#131313">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#921C2E">
+    <meta name="theme-color" content="#921C2E">
     <link rel="apple-touch-icon" href="touch-icon-iphone.png">
 
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-B3BB1Z2GL3"></script>
     <script>
-        window.dataLayer = window.dataLayer || [];
+      window.dataLayer = window.dataLayer || [];
 
-        function gtag() {
-            dataLayer.push(arguments);
-        }
+      function gtag() {
+        dataLayer.push(arguments);
+      }
 
-        gtag('js', new Date());
+      gtag('js', new Date());
 
-        gtag('config', 'G-B3BB1Z2GL3');
+      gtag('config', 'G-B3BB1Z2GL3');
     </script>
+
     <!-- Google and Material FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <script defer>
-        // Load Font
-        let fontPoppins = document.createElement('link');
-        fontPoppins.href =
-            'https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap';
-        fontPoppins.rel = 'stylesheet';
-        fontPoppins.async = true;
-        document.getElementsByTagName('script')[0].parentNode.appendChild(fontPoppins); // Font Poppins
+      // Load Font
+      let fontPoppins = document.createElement('link');
+      fontPoppins.href =
+        'https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap';
+      fontPoppins.rel = 'stylesheet';
+      fontPoppins.async = true;
+      document.getElementsByTagName('script')[0].parentNode.appendChild(fontPoppins); // Font Poppins
 
-        // Icons Material
-        let fontMaterial = document.createElement('link');
-        fontMaterial.href = 'https://fonts.googleapis.com/icon?family=Material+Icons';
-        fontMaterial.rel = 'stylesheet';
-        fontMaterial.async = true;
-        document.getElementsByTagName('script')[0].parentNode.appendChild(fontMaterial);
+      // Icons Material
+      let fontMaterial = document.createElement('link');
+      fontMaterial.href = 'https://fonts.googleapis.com/icon?family=Material+Icons';
+      fontMaterial.rel = 'stylesheet';
+      fontMaterial.async = true;
+      document.getElementsByTagName('script')[0].parentNode.appendChild(fontMaterial);
     </script>
 
     <!-- Synchronous CSS -->
@@ -72,34 +80,21 @@
     <!--  </noscript>-->
 
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
-</head>
+  </head>
 
-<body id="body" class="theme-dark mat-typography">
-    <splash-screen id="splash-screen">
-        <div class="progress-container">
-            <img src="./assets/images/guajiritos/guajiritos-Logo-blanco.png" alt="not_found_main_logo" />
-            <div class="progress">
-                <div class="progress-bar">
-                    <div class="progress-shadow"></div>
-                </div>
-            </div>
-        </div>
-    </splash-screen>
+  <body id="BodyIdAPP" class="mat-typography">
     <app-root></app-root>
-    <noscript>Please enable JavaScript to continue using this application.
-  </noscript>
-</body>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://soporte.guajiritos.com/assets/chat/chat.min.js"></script>
-<script>
+  </body>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://soporte.guajiritos.com/assets/chat/chat.min.js"></script>
+  <script>
     $(function() {
-        new ZammadChat({
-            background: '#131313',
-            fontSize: '12px',
-            chatId: 1,
-            debug: true
-        });
+      new ZammadChat({
+        background: '#921C2E',
+        fontSize: '12px',
+        chatId: 14,
+        debug: true
+      });
     });
-</script>
-
+  </script>
 </html>

@@ -1,25 +1,26 @@
-
-$footer-color: #131313;
-$footer-bottom-color: #131313;
-
+$menu-hover: #921C2E; // hover on the menu
 $menu-hover-text: white; // text color, on hover on the menu
-//colors
-$theme-main: #323232;
-$theme-main-400: #323232;
-$theme-main-300: #707070;
-$theme-main-100: #c2c2c2;
-$theme-main-accent: #1bc086;
-$theme-main-accent-400: #3dc998;
-$theme-main-accent-300: #5fd3aa;
-$theme-main-accent-100: #bbecdb;
 
-$menu-hover: $theme-main-accent;
-$theme-main-dark: #131313;
-$theme-main-dark-2: #303030;
-$theme-main-dark-3: #282828;
+$search-btn-hover-text: white; // text color, on hover on button search navbar
+
+$footer-color: #162943; // footer background color
+
+//colors
+$theme-main: #921C2E; // main bar
+$theme-main-400: #162943; // sub main bar
+$theme-main-300: #b3606d;
+$theme-main-100: #ccd7e4;
+$theme-main-accent: #162943; // sub main bar
+$theme-main-accent-400: #39495f;
+$theme-main-accent-300: #5c697b;
+$theme-main-accent-100: #b9bfc7;
+
+$theme-main-dark: #921C2E;
+$theme-main-dark-2: #7f1423;
+$theme-main-dark-3: #630912;
 $theme-main-red: #f33927;
 $white: #ffffff;
-$white-dark: #E6E6E6;
+$white-dark: #e6e6e6;
 $black: #000000;
 $dark-font: #222222;
 $grey-dark: #2d2a25;

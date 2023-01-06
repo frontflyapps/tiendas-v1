@@ -23,9 +23,9 @@ export const environment = {
 
   defaultLanguage: 'es',
   currencyInternational: 'USD',
-  logo: 'assets/images/guajiritos/guajiritos-Logo-blanco.png',
-  logoWhite: 'assets/images/guajiritos/guajiritos-Logo-blanco.png',
-  logoFooter: 'assets/images/guajiritos/guajiritos-Logo-blanco.png',
+  logo: 'assets/images/polimita/polimita-logo.png',
+  logoWhite: 'assets/images/polimita/polimita-logo.png',
+  logoFooter: 'assets/images/polimita/polimita-logo.png',
 
   limitSearch : 21,
 
@@ -45,9 +45,9 @@ export const environment = {
   localDatabaseUsers: true,
 
   contacts: {
-    phone: '(+53) 5 9999999',
-    email: 'cto@guajiritos.cu',
-    address: 'Zulueta #658, e/ Gloria y Apodaca',
+    phone: '23422181 / 59878320',
+    email: 'venta@grupobrizg.com',
+    address: 'Bayamo, Granma. Cuba',
   },
 
   adminService: 'http://admintienda.tiendalocal.com/',

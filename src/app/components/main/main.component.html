@@ -370,6 +370,24 @@
 
         <div class='userWidgets m-0 p-0' fxLayoutAlign='start center'>
 
+          <div fxFlex="75" fxLayout="row" fxLayoutAlign="end center">
+            <div class="widget-text mx-2">
+              <a #langMenuTrigger="matMenuTrigger" [matMenuTriggerFor]="langMenu" mat-icon-button
+                 matTooltip="{{ 'Change language' | translate }}">
+                <img [src]="flag?.image" height="24" width="24" />
+                <span class="flag-menu-title" fxShow="false" fxShow.gt-sm></span>
+                <mat-icon class="mat-icon-sm caret cur-icon">arrow_drop_down</mat-icon>
+              </a>
+              <mat-menu #langMenu="matMenu" [overlapTrigger]="false" class="app-dropdown" xPosition="before">
+                <span>
+                  <button (click)="changeLang(flag)" *ngFor="let flag of flags" mat-menu-item>
+                    <img [src]="flag.image" width="18" /> {{ flag?.name }}
+                  </button>
+                </span>
+              </mat-menu>
+            </div>
+          </div>
+
           <a *ngIf='!loggedInUser'
              [routerLink]="['/my-account']"
              class='px-3'

@@ -27,20 +27,53 @@ $custom-typography: mat-typography-config(
 @include mat-core($custom-typography);
 
 $primary-color: (
-  50 : #e6e6e6,
-  100 : #c2c2c2,
-  200 : #999999,
-  300 : #707070,
-  400 : #515151,
-  500 : #323232,
-  600 : #2d2d2d,
-  700 : #262626,
-  800 : #1f1f1f,
-  900 : #131313,
-  A100 : #ef6c6c,
-  A200 : #ea3e3e,
-  A400 : #f50000,
-  A700 : #db0000,
+  50 : #f2e4e6,
+  100 : #debbc0,
+  200 : #c98e97,
+  300 : #b3606d,
+  400 : #a23e4d,
+  500 : #921c2e,
+  600 : #8a1929,
+  700 : #7f1423,
+  800 : #75111d,
+  900 : #630912,
+  A100 : #ff969c,
+  A200 : #ff636c,
+  A400 : #ff303d,
+  A700 : #ff1625,
+  contrast: (
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #ffffff,
+    400 : #ffffff,
+    500 : #ffffff,
+    600 : #ffffff,
+    700 : #ffffff,
+    800 : #ffffff,
+    900 : #ffffff,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #ffffff,
+    A700 : #ffffff,
+  ),
+);
+
+$accent-color: (
+  50 : #e3e5e8,
+  100 : #b9bfc7,
+  200 : #8b94a1,
+  300 : #5c697b,
+  400 : #39495f,
+  500 : #162943,
+  600 : #13243d,
+  700 : #101f34,
+  800 : #0c192c,
+  900 : #060f1e,
+  A100 : #5c8eff,
+  A200 : #296aff,
+  A400 : #004bf5,
+  A700 : #0043db,
   contrast: (
     50 : #000000,
     100 : #000000,
@@ -56,44 +89,11 @@ $primary-color: (
     A200 : #ffffff,
     A400 : #ffffff,
     A700 : #ffffff,
-  ),
+  )
 );
 
-$accent-color: (
-  50 : #e4f7f0,
-  100 : #bbecdb,
-  200 : #8de0c3,
-  300 : #5fd3aa,
-  400 : #3dc998,
-  500 : #1bc086,
-  600 : #18ba7e,
-  700 : #14b273,
-  800 : #10aa69,
-  900 : #089c56,
-  A100 : #c9ffe3,
-  A200 : #96ffc8,
-  A400 : #63ffad,
-  A700 : #49ffa0,
-  contrast: (
-    50 : #000000,
-    100 : #000000,
-    200 : #000000,
-    300 : #000000,
-    400 : #000000,
-    500 : #000000,
-    600 : #000000,
-    700 : #ffffff,
-    800 : #ffffff,
-    900 : #ffffff,
-    A100 : #000000,
-    A200 : #000000,
-    A400 : #000000,
-    A700 : #000000,
-  ),
-);
-
-$primary: mat-palette($primary-color, 900, 700, 600);
-$accent: mat-palette($accent-color, 500, 700, 900);
+$primary: mat-palette($primary-color, 800, 700, 600);
+$accent: mat-palette($accent-color, 500, 600, 900);
 $warn: mat-palette($mat-red);
 
 // Create the theme object (a Sass map containing all of the palettes).
@@ -430,6 +430,7 @@ blockquote {
   text-decoration: none;
   color: inherit;
   height: 100%;
+  width: 100%;
 }
 
 p,

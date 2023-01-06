@@ -726,7 +726,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         between: [null, [Validators.required]],
       }),
       address2: [null, []],
-      city: [null,[]],
+      city: [null, []],
       regionProvinceState: [null, [Validators.required]],
       CountryId: [59, [Validators.required]],
       ProvinceId: [null, [Validators.required]],
@@ -741,6 +741,15 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       currency: [null, []],
       shippingRequired: [null, []],
     });
+    if (!this.canBeDelivery) {
+      this.form.controls['address'].get('street').setValidators([]);
+      this.form.controls['address'].get('number').setValidators([]);
+      this.form.controls['address'].get('between').setValidators([]);
+      this.form.get('regionProvinceState').setValidators([]);
+      this.form.get('CountryId').setValidators([]);
+      this.form.get('ProvinceId').setValidators([]);
+      this.form.get('MunicipalityId').setValidators([]);
+    }
     this.onlyCubanPeople = this.form.get('isForCuban').value;
     if (this.onlyCubanPeople) {
       this.form
@@ -764,6 +773,22 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     } else {
       return;
     }
+  }
+
+  fillLoggedInfo() {
+    console.log(this.loggedInUser);
+    this.form.get('name').setValue(this.loggedInUser?.name);
+    this.form.get('lastName').setValue(this.loggedInUser?.lastName);
+    this.form.get('phone').setValue(this.loggedInUser?.phone);
+    this.form.get('dni').setValue(this.loggedInUser?.ci);
+    this.form.get('email').setValue(this.loggedInUser?.email);
+    this.form.get('regionProvinceState').setValue(null);
+    this.form.controls['address'].get('street').setValue(null);
+    this.form.controls['address'].get('number').setValue(null);
+    this.form.controls['address'].get('between').setValue(null);
+    this.form.get('CountryId').setValue(null);
+    this.form.get('ProvinceId').setValue(null);
+    this.form.get('MunicipalityId').setValue(null);
   }
 
   subsToTransfermovilChange() {
