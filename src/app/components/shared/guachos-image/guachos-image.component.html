@@ -1,0 +1,11 @@
+<div fxLayout='row' fxLayout.xs='column' fxLayout.sm='column' *ngIf='!create'>
+  <img *ngIf='!editing' [src]='imageSrc' [style]='config' fxLayoutAlign='start start'>
+  <div fxLayout='column' fxLayoutAlign='center center' fxLayoutAlign='start start'>
+    <button mat-raised-button *ngIf='!editing' (click)='onEdit(isEdit)' mat-icon-button><mat-icon>edit</mat-icon></button>
+<!--    <button mat-raised-button *ngIf='isEdit' (click)='onDelete($event)' mat-icon-button><mat-icon>delete</mat-icon></button>-->
+  </div>
+
+</div>
+
+<guachos-image-picker *ngIf='editing || create' ($imageChanged)="onImageChange($event)" [_config]="config">
+</guachos-image-picker>
