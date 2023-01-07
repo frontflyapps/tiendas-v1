@@ -7,7 +7,7 @@ const packageJson = require('../../package.json');
 export const PASARELA_BASE = 'peoplegoto';
 
 export const environment = {
-  production: false,
+  production: true,
 
   // apiUrl: 'https://api.mibulevar.com/v1/',
   // imageUrl: 'https://api.mibulevar.com/v1/',
@@ -23,9 +23,9 @@ export const environment = {
 
   defaultLanguage: 'es',
   currencyInternational: 'USD',
-  logo: 'assets/images/polimita/polimita-logo.png',
-  logoWhite: 'assets/images/polimita/polimita-logo.png',
-  logoFooter: 'assets/images/polimita/polimita-logo.png',
+  logo: 'assets/images/guajiritos/guajiritos-Logo-blanco.png',
+  logoWhite: 'assets/images/guajiritos/guajiritos-Logo-blanco.png',
+  logoFooter: 'assets/images/guajiritos/guajiritos-Logo-blanco.png',
 
   limitSearch : 21,
 
@@ -45,23 +45,23 @@ export const environment = {
   localDatabaseUsers: true,
 
   contacts: {
-    phone: '23422181 / 59878320',
-    email: 'venta@grupobrizg.com',
-    address: 'Bayamo, Granma. Cuba',
+    phone: '',
+    email: '',
+    address: '',
   },
 
   adminService: 'http://admintienda.tiendalocal.com/',
   mainDomain: '.tiendalocal.com',
 
   tokenBusiness:
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7IkJ1c2luZXNzSWQiOjEsImlkIjoxLCJkYXRlIjoiMjAyMi0wMS0zMVQwNDo1NDowMC4wMDBaIiwibmFtZSI6IlRpZW5kYSIsImVtYWlsIjoidGllbmRhQGxvY2FsaG9zdC5jb20ifSwiaWF0IjoxNjQzNjQ2Njg3fQ.-pIQscQih10E1-UbtTlyiV3mj_uaxilPMpvLLN-GzSo',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7IkJ1c2luZXNzSWQiOjEsImlkIjoxLCJkYXRlIjoiMjAyMS0wOS0xM1QwMTo0NToxOC4wMDBaIiwibmFtZSI6IlRpZW5kYSIsImVtYWlsIjoidGllbmRhQGxvY2FsaG9zdC5jb20ifSwiaWF0IjoxNjMxNDk3NTkxfQ.FF5-276rI9SJmtebVo0spV8Y2wdOZPok7LlUxtTDwh0',
 
   meta: {
     mainPage: {
       title: 'Tienda Guajiritos',
       description: 'Tienda online desarrollada con el framework Angular permite la modelación de negocios B2C and C2C',
       keywords: 'HTML, CSS, JavaScript, Angular, Tienda Online B2B, comercio online',
-      shareImg: 'https://www.guajiritos.com/assets/images/share-img.png',
+      shareImg: 'https://guajiritos.com/assets/images/share-img.png',
       url: 'https://www.tienda.guajiritos.com/',
     },
   },
