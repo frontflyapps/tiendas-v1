@@ -25,7 +25,7 @@ export class FooterComponent implements OnInit {
   businessConfig = JSON.parse(localStorage.getItem('business-config'));
   public version = environment.versions.app;
 
-  public contacts: IFooterContacts = environment.contacts;
+  public contacts: IFooterContacts;
   public logo = environment.logoFooter;
 
   loggedInUser: IUser;
