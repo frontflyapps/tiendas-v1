@@ -92,7 +92,7 @@
 
             <div *ngIf='businessConfig?.contactsFooter.email' fxLayout='row' fxLayoutAlign='start center' fxLayoutGap='4px'>
                 <mat-icon>email</mat-icon>
-                <a [href]='businessConfig?.contactsFooter?.email'>{{ businessConfig?.contactsFooter?.email }}</a>
+                <a class='email-text' [href]='businessConfig?.contactsFooter?.email'>{{ businessConfig?.contactsFooter?.email }}</a>
             </div>
 
             <div *ngIf='businessConfig?.contactsFooter.address' fxLayout='row' fxLayoutAlign='start center' fxLayoutGap='4px'>
