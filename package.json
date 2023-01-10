@@ -1,6 +1,6 @@
 {
   "name": "tienda-angular-b2b",
-  "version": "1.0.1",
+  "version": "1.0.6",
   "type": "module",
   "scripts": {
     "ng": "ng",
@@ -54,6 +54,8 @@
     "guachos-general-autocomplete": "^0.0.48",
     "guachos-image-picker": "^1.0.16",
     "guachos-rating": "0.0.5",
+    "guachos-simple-pagination": "^1.0.3",
+    "js-cookie": "^3.0.1",
     "jspdf": "^2.5.1",
     "moment": "^2.29.4",
     "ng2-pdf-viewer": "^9.1.0",
@@ -87,7 +89,7 @@
     "@types/jasmine": "4.0.3",
     "@types/jasminewd2": "2.0.10",
     "@types/node": "18.7.6",
-    "codelyzer": "6.0.2",
+    "codelyzer": "^6.0.2",
     "jasmine-core": "4.3.0",
     "jasmine-spec-reporter": "7.0.0",
     "karma": "6.4.0",

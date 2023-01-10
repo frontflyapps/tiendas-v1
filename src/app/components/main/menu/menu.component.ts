@@ -10,6 +10,7 @@ import { MyOrdersService } from '../../my-orders/service/my-orders.service';
 import { GlobalStateOfCookieService } from '../../../core/services/request-cookie-secure/global-state-of-cookie.service';
 import { CategoryMenuNavService } from '../../../core/services/category-menu-nav.service';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { AppService } from '../../../app.service';
 
 @Component({
   selector: 'app-menu',
@@ -22,6 +23,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   shoppingCartItems: any[] = [];
   language;
   ordersPayment: any[] = [];
+  businessConfig = JSON.parse(localStorage.getItem('business-config'));
   categories: any[] = [];
   query: IPagination = {
     limit: 20,
@@ -30,6 +32,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     total: 0,
   };
   searchUrlParams;
+  bussinessConfig;
 
   constructor(
     private cartService: CartService,
@@ -39,7 +42,8 @@ export class MenuComponent implements OnInit, OnDestroy {
     private ordersService: MyOrdersService,
     private globalStateOfCookieService: GlobalStateOfCookieService,
     private categoryMenuServ: CategoryMenuNavService,
-    private activatedRute: ActivatedRoute,private router: Router
+    private activatedRute: ActivatedRoute,
+    private router: Router
   ) {
 
     this.router.events.pipe(
@@ -54,7 +58,6 @@ export class MenuComponent implements OnInit, OnDestroy {
       this.searchUrlParams = route.snapshot.queryParams ? route.snapshot.queryParams : '';
       this.getCategoriesForMenu();
     });
-
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
     this._unsubscribeAll = new Subject();
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
@@ -112,7 +115,7 @@ export class MenuComponent implements OnInit, OnDestroy {
         this.categories = this.categoryMenuServ.updateCategories(data);
       }
     });
-    this.categoryMenuServ.setCategories(this.categories)
+    this.categoryMenuServ.setCategories(this.categories);
   }
 
   setSubscriptionToCookie() {

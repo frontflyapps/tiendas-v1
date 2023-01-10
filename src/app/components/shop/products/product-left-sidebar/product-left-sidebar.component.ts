@@ -43,6 +43,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
   public municipality: any = null;
   public amountInitialResults = 3;
   public numberOfSearchBase = 0;
+  public totalPages =0;
   public numberOfSearch = 0;
   private isStarting = true;
   resetPrices = false;
@@ -67,12 +68,12 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
   private isFromMoreProductBtn = false;
   private globalScrollTopS = 0;
   private globalScrollTopOth = 0;
-  public initLimit = 21;
+  public initLimit = environment.limitSearch;
   pageSizeOptions: number[] = [this.initLimit, 42, 100];
   queryProduct: IPagination = {
     limit: this.initLimit,
     offset: 0,
-    page: 0,
+    page: 1,
     total: 0,
     order: '-rating',
   };
@@ -93,12 +94,12 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
     public translate: TranslateService,
     public utilsService: UtilsService,
   ) {
-    this.metaService.setMeta(
-      'Todos los productos',
-      'Encuentra lo que buscas',
-      environment.meta?.mainPage.shareImg,
-      environment.meta?.mainPage?.keywords,
-    );
+    // this.metaService.setMeta(
+    //   'Todos los productos',
+    //   'Encuentra lo que buscas',
+    //   environment.meta?.mainPage.shareImg,
+    //   environment.meta?.mainPage?.keywords,
+    // );
     this.initSubsLocation();
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
@@ -112,10 +113,10 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
 
       this.productId = this.productService.productIdDetails ? this.productService.productIdDetails : null;
 
-      this.queryProduct.limit = data?.limit ? data.limit : this.initLimit * this.amountInitialResults;
+      this.queryProduct.limit = data?.limit ? data.limit : this.initLimit;
       this.queryProduct.offset = data?.offset ? data.offset : 0;
       this.queryProduct.total = data?.total ? data.total : 0;
-      this.queryProduct.page = data?.page ? data.page : 0;
+      this.queryProduct.page = data?.page ? data.page : 1;
       this.queryProduct.order = data?.order ? data.order : '-id';
 
       if (data.CategoryId) {
@@ -124,10 +125,10 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
         this.paramsSearch.maxPrice = null;
         this.resetPrices = !this.resetPrices;
 
-        this.queryProduct.limit = this.initLimit * this.amountInitialResults;
+        this.queryProduct.limit = this.initLimit;
         this.queryProduct.offset = 0;
         this.queryProduct.total = 0;
-        this.queryProduct.page = 0;
+        this.queryProduct.page = 1;
       }
       if (this.paramsSearch.filterText != data.filterText) {
         this.paramsSearch.filterText = data.filterText;
@@ -135,10 +136,10 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
         this.paramsSearch.maxPrice = null;
         this.resetPrices = !this.resetPrices;
 
-        this.queryProduct.limit = this.initLimit * this.amountInitialResults;
+        this.queryProduct.limit = this.initLimit;
         this.queryProduct.offset = 0;
         this.queryProduct.total = 0;
-        this.queryProduct.page = 0;
+        this.queryProduct.page = 1;
         this.paramsSearch.categoryIds = [];
       }
 
@@ -155,7 +156,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
         this.loading = true;
       }
 
-      this.search();
+      this.newSearchMethod(this.queryProduct.page);
     });
 
   }
@@ -220,9 +221,9 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
   }
 
   initValuesOnSearch() {
-    this.queryProduct.limit = +(this.initLimit * this.amountInitialResults);
+    this.queryProduct.limit = environment.limitSearch;
     this.queryProduct.offset = 0;
-    this.queryProduct.page = 0;
+    this.queryProduct.page = 1;
     this.numberOfSearch = this.numberOfSearchBase;
   }
 
@@ -248,11 +249,12 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
     this.router
       .navigate(['/products/search'], {
         queryParams: {
+          resfreshId: Math.random(),
           ...this.paramsSearch,
           ...this.queryProduct,
         },
       }).then();
-    // this.router.onSameUrlNavigation = "reload";
+    // this.router.onSameUrlNavigation = 'reload';
   }
 
   searchMoreProducts() {
@@ -412,6 +414,86 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
     }, 0);
   }
 
+  getCountPage(total) {
+      return total % 21 ? Math.ceil(total / 21) : (total / 21 > 0 ? total / 21 : 1);
+  }
+  newSearchMethod(page) {
+    let currentPage = page > 0 ? page - 1 : page;
+    this.queryProduct.page = currentPage;
+    this.queryProduct.offset = currentPage * this.initLimit;
+    // this.searchMoreProducts();
+    let brandIds: number[] = null;
+    let categoryIds: number[] = null;
+
+    if (this.paramsSearch.categoryIds) {
+      if (Array.isArray(this.paramsSearch.categoryIds)) {
+        if (this.paramsSearch.categoryIds.length > 0) {
+          categoryIds = this.paramsSearch.categoryIds.map((i) => Number(i));
+        }
+      } else {
+        categoryIds = [this.paramsSearch.categoryIds];
+      }
+    }
+
+    // if (Array.isArray(this.paramsSearch.brandIds) && this.paramsSearch.brandIds.length > 0) {
+    if (this.paramsSearch.categoryIds) {
+      if (Array.isArray(this.paramsSearch.brandIds)) {
+        if (this.paramsSearch.brandIds.length > 0) {
+          brandIds = this.paramsSearch.brandIds.map((i) => Number(i));
+        }
+      } else {
+        brandIds = [this.paramsSearch.brandIds];
+      }
+    }
+
+    const body: any = {
+      limit: 21,
+      offset: this.queryProduct?.offset ? +this.queryProduct?.offset : 0,
+      page: this.queryProduct?.page ? +this.queryProduct?.page : 0,
+      total: this.queryProduct?.total ? +this.queryProduct?.total : 0,
+      order: this.queryProduct?.order ? this.queryProduct?.order : null,
+      BrandIds: brandIds,
+      CategoryIds: categoryIds,
+      maxPrice: this.paramsSearch?.maxPrice ? +this.paramsSearch?.maxPrice : 0,
+      minPrice: this.paramsSearch?.minPrice ? +this.paramsSearch?.minPrice : 0,
+      rating: this.paramsSearch?.rating ? +this.paramsSearch?.rating : null,
+      text: this.paramsSearch?.filterText ? this.paramsSearch?.filterText : null,
+      ProvinceId: this.province?.id || null,
+      MunicipalityId: this.municipality?.id || null,
+    };
+    this.productService
+      .searchProduct(body)
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(
+        (data: any) => {
+          // this.loading = true;
+
+            this.allProducts = data.data;
+            this.totalPages = data.meta.total / 21;
+            if (data.meta.total % 21) {
+              this.totalPages++;
+            }
+            // this.allProducts = data.data.slice(0, this.initLimit * (this.numberOfSearch + 1));
+            // this.allProductsResponse = data.data;
+            // this.noResults = data.info;
+            // console.log('allProductsResponse length: ' + this.allProductsResponse.length);
+            // this.isStarting = false;
+            setTimeout(() => {
+              document.body.scrollTop = 0; // Safari
+              document.documentElement.scrollTop = 0; // Other
+            }, 0);
+
+
+          this.queryProduct.total = data.meta.pagination.total;
+          this.loading = false;
+          this.gotToProductId();
+        },
+        () => {
+          this.loading = false;
+        },
+      );
+  }
+
   seeMoreProductsBtn(event) {
     event.preventDefault();
 
@@ -421,7 +503,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
     this.numberOfSearch++;
     if (this.numberOfSearch % 3 > 0) {
       this.allProducts = this.allProductsResponse.slice(0, this.initLimit * (this.numberOfSearch + 1));
-      this.queryProduct.offset = this.initLimit * (this.numberOfSearch % 3);
+      this.queryProduct.offset = this.initLimit;
       console.log('limit', this.queryProduct.limit);
     } else {
       // this.numberOfSearch = this.numberOfSearchBase;
@@ -535,8 +617,11 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
       let nowLocation = JSON.parse(localStorage.getItem('location'));
       this.setLocationData(newLocation);
       if ( newLocation ) {
-        if ( nowLocation.province?.id !== newLocation.province?.id || nowLocation.municipality?.id !== newLocation.municipality?.id ) {
+        // console.log(nowLocation?.province?.id !== newLocation.province?.id);
+        // console.log(nowLocation?.municipality?.id !== newLocation.municipality?.id);
+        if ( nowLocation?.province?.id !== newLocation.province?.id || nowLocation?.municipality?.id !== newLocation.municipality?.id ) {
           this.allProducts = [];
+          // console.log('entro');
           this.searchProducts();
         }
 

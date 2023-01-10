@@ -6,7 +6,7 @@
 }
 
 .footer-bottom-color {
-  background-color: $theme-main-dark;
+  background-color: $theme-main;
 }
 
 .image-footer {
@@ -16,6 +16,9 @@
 
 .footer-logo{
   width: 300px !important;
+}
+.img-footer{
+  width: auto !important;
 }
 .etecsa-footer {
   width: 250px;
@@ -69,7 +72,7 @@ span {
 footer {
   div {
     .img-footer {
-      width: 300px;
+      width: 150px;
       max-width: 90vw !important;
     }
   }
@@ -106,4 +109,10 @@ footer {
       font-size: 14px;
     }
   }
+}
+.email-text{
+  color: white !important;
+}
+.email-text{
+  color: white !important;
 }

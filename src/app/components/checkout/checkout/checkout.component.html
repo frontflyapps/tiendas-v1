@@ -112,7 +112,7 @@
             <p class="tex-align-center p-4">{{ 'No hay envio para estos productos' }}</p>
           </ng-template>
 <!--          <ng-container >-->
-            <p *ngIf='noGateway' class="tex-align-center p-4">{{ 'Este negocio no tiene método de pago permitido' }}</p>
+            <h1 *ngIf='noGateway' class="tex-align-center p-4 color-red-500">{{ 'Este negocio no tiene método de pago permitido' }}</h1>
 <!--          </ng-container>-->
           <!---------------------->
           <div class="actions-buttons" fxFlex="grow" fxLayout="row" fxLayoutAlign="space-between start">
@@ -130,7 +130,7 @@
             </button>
           </div>
         </mat-step>
-        <mat-step>
+        <mat-step disabled='form.invalid'>
           <ng-template matStepLabel>{{ 'Destinatario' | translate }}</ng-template>
 
           <div *ngIf="!loadingPayment" class="header-title">
@@ -160,31 +160,47 @@
                   </mat-icon>
                 </p>
 
-                <button
-                  [matMenuTriggerFor]="menuContacts"
-                  aria-label="Example icon-button with a menu"
-                  color="primary"
-                  mat-stroked-button
-                  ngClass.xs="mb-3"
-                >
-                  <mat-icon>book</mat-icon>
-                  {{ 'Contactos guardados' | translate }}
-                </button>
-                <mat-menu #menuContacts="matMenu">
-                  <ng-container *ngFor="let contact of contactsService.allContacts">
-                    <button (click)="onSelectContact(contact)" mat-menu-item>
-                      <mat-icon *ngIf="!contact.selected">person_outline</mat-icon>
-                      <mat-icon *ngIf="contact.selected" matTooltip="{{ 'Contacto predeterminado' | translate }}"
-                        >star</mat-icon
-                      >
-                      <span>{{ contact.name }}&nbsp;{{ contact.lastName }}</span>
-                    </button>
-                  </ng-container>
-                  <button (click)="onAddContact()" mat-menu-item style="border-top: 4px solid #e7e4e4">
-                    <mat-icon>playlist_add</mat-icon>
-                    <span>{{ 'Agregar / Editar' | translate }}</span>
+                <div fxLayout='column' fxLayout.xs='row' fxLayout.sm='row'>
+                  <button
+                    aria-label="Example icon-button with a menu"
+                    color="primary"
+                    mat-stroked-button
+                    class='mb-3'
+                    ngClass.xs="mb-3"
+                    (click)='fillLoggedInfo()'
+                  >
+                    <mat-icon>book</mat-icon>
+                    {{ 'Llenar con mis datos' | translate }}
                   </button>
-                </mat-menu>
+
+                  <button
+                    [matMenuTriggerFor]="menuContacts"
+                    aria-label="Example icon-button with a menu"
+                    color="primary"
+                    mat-stroked-button
+                    ngClass.xs="mb-3"
+                  >
+                    <mat-icon>book</mat-icon>
+                    {{ 'Contactos guardados' | translate }}
+                  </button>
+                  <mat-menu #menuContacts="matMenu">
+                    <ng-container *ngFor="let contact of contactsService.allContacts">
+                      <button (click)="onSelectContact(contact)" mat-menu-item>
+                        <mat-icon *ngIf="!contact.selected">person_outline</mat-icon>
+                        <mat-icon *ngIf="contact.selected" matTooltip="{{ 'Contacto predeterminado' | translate }}"
+                        >star</mat-icon
+                        >
+                        <span>{{ contact.name }}&nbsp;{{ contact.lastName }}</span>
+                      </button>
+                    </ng-container>
+                    <button (click)="onAddContact()" mat-menu-item style="border-top: 4px solid #e7e4e4">
+                      <mat-icon>playlist_add</mat-icon>
+                      <span>{{ 'Agregar / Editar' | translate }}</span>
+                    </button>
+                  </mat-menu>
+                </div>
+
+
               </div>
 
               <div fxLayout="row wrap" fxLayoutAlign="space-between center">
@@ -237,11 +253,13 @@
               <p
                 class="mat-body-2 my-2"
                 style="text-transform: uppercase"
+                *ngIf='canBeDelivery'
                 title="{{ 'Datos adicionales del cliente que obtendrá los productos' | translate }}"
               >
                 {{ 'Datos del destinatario' | translate }}
                 <mat-icon
                   class="iconHelp"
+                  *ngIf='canBeDelivery'
                   matTooltip="{{ 'Datos adicionales del cliente que obtendrá los productos' | translate }}"
                   style="cursor: pointer"
                   >help
@@ -249,7 +267,7 @@
               </p>
 
               <!-- SOLO PARA CUBANOS -->
-              <ng-container *ngIf="onlyCubanPeople">
+              <ng-container *ngIf="onlyCubanPeople && canBeDelivery">
                 <div fxLayout="row wrap" fxLayoutAlign="space-between center">
                   <mat-form-field appearance="outline" fxFlex="48" fxFlex.lt-md="100">
                     <mat-label>{{ 'Provincia' | translate }}</mat-label>
@@ -295,7 +313,7 @@
               </ng-container>
 
               <!-- SOLO PARA EXTRANJEROS -->
-              <ng-container *ngIf="!onlyCubanPeople">
+              <ng-container *ngIf="!onlyCubanPeople && canBeDelivery">
                 <p class="mat-body-2 my-2" style="text-transform: uppercase">
                   {{ "Customer's location data" | translate }}
                   <mat-icon
@@ -357,7 +375,7 @@
                 </div>
               </ng-container>
 
-              <div formGroupName="address">
+              <div formGroupName="address" *ngIf='canBeDelivery'>
                 <div fxLayout="row" fxLayoutGap="10px">
                   <mat-form-field fxFlex="80" appearance="outline">
                     <mat-label>{{ 'Calle' | translate }}</mat-label>
@@ -549,6 +567,7 @@
                 ></textarea>
               </mat-form-field>
             </div>
+            <h1 *ngIf='noGateway' class="tex-align-center p-4 color-red-500">{{ 'Este negocio no tiene método de pago permitido' }}</h1>
 
             <div class="actions-buttons" fxFlex="grow" fxLayout="row" fxLayoutAlign="space-between start">
               <button mat-stroked-button matStepperPrevious>{{ 'Atrás' | translate }}</button>
@@ -599,8 +618,6 @@
                     fxLayoutGap="10px grid"
                   >
                     <ng-container *ngFor="let pay of payments">
-
-                      {{this.onlyCubanPeople}} *** {{cart?.market}} *** {{pay?.market}} //////////
                       <ng-container
                         *ngIf="this.onlyCubanPeople && cart?.market === 'national' && pay?.market === 'national'"
                       >

@@ -1,0 +1,26 @@
+Despues de instalar PWA en la aplicacion.
+
+------------------------------
+Requerimiento principal:
+- Importar UpdateControllerModule en el app.module.ts
+
+- Establecer en el archivo service-worker-update.service.ts, en la variable NOTIFICATION_VISIBLE, si la notificacion sera visible o no
+
+------------------------------
+Cosas a tener en cuenta:
+
+- Dentro del main.ts verificar q se llama al service worker en el then de la promesa platformBrowserDynamic.bootstrapModule:
+
+platformBrowserDynamic()
+  .bootstrapModule(AppModule)
+  .then(() => {
+    if ('serviceWorker' in navigator && environment.production) {
+      navigator.serviceWorker.register('ngsw-worker.js').then();
+    }
+  })
+  .catch((err) => console.log(err));
+
+------------------------------
+- El servicio necesita de los siguientes modulos:
+js-cookie (libreria de Cookies, instalar de npm, si no necesita limpiar cookies quitar la linea 3 y 73 del servicios ServiceWorkerUpdateService, y no necesita instalar el package)
+

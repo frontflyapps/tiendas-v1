@@ -1,98 +1,38 @@
 stages:
   - install
-  - deploy
   - notify
-  
-.build_job: &build_job
+
+install:
   stage: install
+  only:
+    - staging
   variables:
     DOCKER_DRIVER: overlay2
     DOCKER_TLS_CERTDIR: ""
-  image: 
-    name: docker:latest
+  tags:
+    - Gitlab-Runner
+  image:
+    name: nikolaik/python-nodejs:python3.8-nodejs14
     entrypoint: [""]
   services:
-    - docker:dind
-  tags:
-    - Gitlab-Runner
+    - nikolaik/python-nodejs:python3.8-nodejs14
+  cache:
+   paths:
+    - node_modules
   before_script:
     - DOCKER_HOST='/var/run/docker.sock'; if [ ! -S "$DOCKER_HOST" ]; then DOCKER_HOST='tcp://docker:2375'; export DOCKER_HOST=$DOCKER_HOST;fi; echo $DOCKER_HOST
-    - apk add --no-cache curl jq py3-pip
-    - pip install awscli
-    - eval $(aws ecr get-login --no-include-email --region us-east-1)
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client git -y )'
+    - curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
+    - unzip awscli-bundle.zip
+    - ./awscli-bundle/install -b ~/bin/aws
+    - export PATH=~/bin:$PATH
   script:
-    - docker build -f Dockerfile -t tiendav1-front .
-    - docker tag tiendav1-front:latest $AWS_ECR/tiendav1-front:$VERSION_TAG
-    - docker push $AWS_ECR/tiendav1-front:$VERSION_TAG
+    - npm install
+    - npm install -g typescript@4.6.2
+    - npm run build --prod
+    - aws s3 sync --acl public-read --metadata-directive REPLACE --cache-control max-age=0,public dist/tienda-angular-b2b s3://cloudfront-tienda.guajiritos.com --delete
+    - aws cloudfront create-invalidation --distribution-id E1I5HAWV5MYHSL --paths "/*"
     - echo "DEPLOYED SUCCESSFULLY"
-
-build_dev:
-  only:
-    - dev
-  environment:
-    name: DEV
-  <<: *build_job
-
-build_staging:
-  only:
-    - staging
-    - feature/cicd
-  environment:
-    name: STAGING
-  <<: *build_job
-
-build_prod:
-  only:
-    - support/cliente
-  environment:
-    name: PROD
-  <<: *build_job
-
-deploy_dev:
-  only:
-    - dev
-  stage: deploy
-  before_script:
-    - apk add --no-cache bash python3 py3-pip
-    - pip3 install --upgrade pip
-    - pip3 install --no-cache-dir awscli
-  environment:
-    name: DEV
-  tags:
-    - Gitlab-Runner
-  script:
-    - echo $DEPLOYED | bash
-
-deploy_staging:
-  only:
-    - staging
-    - feature/cicd
-  stage: deploy
-  before_script:
-    - apk add --no-cache bash python3 py3-pip
-    - pip3 install --upgrade pip
-    - pip3 install --no-cache-dir awscli
-  environment:
-    name: STAGING
-  tags:
-    - Gitlab-Runner
-  script:
-    - echo $DEPLOYED | bash
-
-deploy_prod:
-  only:
-    - support/cliente
-  stage: deploy
-  before_script:
-    - apk add --no-cache bash python3 py3-pip
-    - pip3 install --upgrade pip
-    - pip3 install --no-cache-dir awscli
-  environment:
-    name: PROD
-  tags:
-    - Gitlab-Runner
-  script:
-    - echo $DEPLOYED | bash
 
 success:
   image: alpine:latest
@@ -113,5 +53,3 @@ failure:
     - chmod +x send.sh
     - /bin/ash ./send.sh failure $WEBHOOK_URL
   when: on_failure
-
-

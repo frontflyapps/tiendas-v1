@@ -48,6 +48,8 @@ import { GlobalStateOfCookieService } from '../../core/services/request-cookie-s
 import Shepherd from 'shepherd.js';
 import { compile } from 'sass';
 import { CategoryMenuNavService } from '../../core/services/category-menu-nav.service';
+import { Meta } from '@angular/platform-browser';
+import { AppService } from '../../app.service';
 
 @Component({
   selector: 'app-main',
@@ -63,7 +65,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public currencies: any[];
   public currency: any;
-  public logo= environment.logoWhite;
+  public logo = environment.logoWhite;
   urlImage: any = environment.imageUrl;
 
   public province: any = null;
@@ -93,6 +95,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
   searchForm: UntypedFormControl;
   categories: any[] = [];
   _language = 'es';
+  businessConfig = JSON.parse(localStorage.getItem('business-config'));
 
   tour = new Shepherd.Tour({
     useModalOverlay: false,
@@ -125,12 +128,14 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
     private categoryService: CategoriesService,
     private orderSevice: MyOrdersService,
     private orderService: MyOrdersService,
+    private meta: Meta,
     public utilsService: UtilsService,
     private confirmCreateBusinessService: ConfirmCreateBusinessService,
     private locationService: LocationService,
     private globalStateOfCookieService: GlobalStateOfCookieService,
     private categoryMenuServ: CategoryMenuNavService,
   ) {
+    this.metaAdd();
     this._unsubscribeAll = new Subject<any>();
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
     this.navItems = this.navigationService.getNavItems();
@@ -165,6 +170,23 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit() {
     this.globalStateOfCookieService.getCookieState() ? this.initComponent() : this.setSubscriptionToCookie();
+  }
+
+  public metaAdd() {
+    this.meta.updateTag({name: 'title', content: environment.meta.mainPage.title});
+    this.meta.updateTag({name: 'description', content: environment.meta.mainPage.description});
+    this.meta.updateTag({name: 'keywords', content: environment.meta.mainPage.keywords});
+
+    this.meta.updateTag({property: 'og:url', content: environment.meta.mainPage.url});
+    this.meta.updateTag({property: 'og:site_name', content: environment.meta.mainPage.title});
+    this.meta.updateTag({property: 'og:image', itemprop: 'image primaryImageOfPage', content: environment.meta.mainPage.shareImg});
+
+    this.meta.updateTag({property: 'twitter:domain', content: environment.meta.mainPage.url});
+    this.meta.updateTag({property: 'twitter:title', content: environment.meta.mainPage.title});
+    this.meta.updateTag({property: 'og:title', itemprop: 'name', content: environment.meta.mainPage.title});
+    this.meta.updateTag({property: 'twitter:description', content: environment.meta.mainPage.description});
+    this.meta.updateTag({property: 'og:description', itemprop: 'description', content: environment.meta.mainPage.description});
+    this.meta.updateTag({property: 'twitter:image', content: environment.meta.mainPage.shareImg});
   }
 
   initComponent() {
@@ -488,7 +510,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
       data: {
         provinceData: this.province,
         municipalityData: this.municipality,
-        businessData: this.business,
+        // businessData: this.business,
       },
     });
     dialogRef.afterClosed().subscribe((result) => {

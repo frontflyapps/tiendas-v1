@@ -135,7 +135,7 @@
   <!-- Todos excepto vista movil -->
   <div [class.py-2]='!loggedInUser' class='home-header' fxHide.lt-md>
     <div class='container-header' fxLayout='row wrap' fxLayoutAlign='space-between center'>
-      <img alt='logo' class='Logo-img' fxHide.lt-md fxShow
+      <img alt='logo' class='Logo-img' fxHide.lt-md fxShow (click)='metaAdd()'
            routerLink='/' [src]="logo" />
       <button (click)='start.toggle()' fxHide fxShow.lt-md mat-icon-button>
         <mat-icon>menu</mat-icon>
@@ -199,6 +199,26 @@
            fxLayoutAlign='end center'
            fxLayoutAlign.xs='start center'
            ngClass.xs='w-100'>
+
+        <div fxFlex="75" fxLayout="row" fxLayoutAlign="end center">
+          <div class="widget-text mx-2">
+            <a #langMenuTrigger="matMenuTrigger" [matMenuTriggerFor]="langMenu" mat-icon-button
+               matTooltip="{{ 'Change language' | translate }}">
+              <img [src]="flag?.image" height="24" width="24" />
+              <span class="flag-menu-title" fxShow="false" fxShow.gt-sm></span>
+              <mat-icon class="mat-icon-sm caret cur-icon">arrow_drop_down</mat-icon>
+            </a>
+            <mat-menu #langMenu="matMenu" [overlapTrigger]="false" class="app-dropdown" xPosition="before">
+                <span>
+                  <button (click)="changeLang(flag)" *ngFor="let flag of flags" mat-menu-item>
+                    <img [src]="flag.image" width="18" /> {{ flag?.name }}
+                  </button>
+                </span>
+            </mat-menu>
+          </div>
+        </div>
+
+
 
         <a [routerLink]="['/pages/compare']"
            class='px-3'
@@ -350,6 +370,24 @@
 
         <div class='userWidgets m-0 p-0' fxLayoutAlign='start center'>
 
+          <div fxFlex="75" fxLayout="row" fxLayoutAlign="end center">
+            <div class="widget-text mx-2">
+              <a #langMenuTrigger="matMenuTrigger" [matMenuTriggerFor]="langMenu" mat-icon-button
+                 matTooltip="{{ 'Change language' | translate }}">
+                <img [src]="flag?.image" height="24" width="24" />
+                <span class="flag-menu-title" fxShow="false" fxShow.gt-sm></span>
+                <mat-icon class="mat-icon-sm caret cur-icon">arrow_drop_down</mat-icon>
+              </a>
+              <mat-menu #langMenu="matMenu" [overlapTrigger]="false" class="app-dropdown" xPosition="before">
+                <span>
+                  <button (click)="changeLang(flag)" *ngFor="let flag of flags" mat-menu-item>
+                    <img [src]="flag.image" width="18" /> {{ flag?.name }}
+                  </button>
+                </span>
+              </mat-menu>
+            </div>
+          </div>
+
           <a *ngIf='!loggedInUser'
              [routerLink]="['/my-account']"
              class='px-3'
@@ -397,7 +435,8 @@
         <!--           routerLinkActive="router-link-active"-->
         <!--           class="itemCategory"-->
         <!--           mat-button>{{ 'Inicio' | translate }}</a>-->
-        <a [routerLink]="['/shops-list']" class='itemCategory' mat-button routerLinkActive='router-link-active'>
+
+        <a [routerLink]="['/shops-list']" *ngIf='businessConfig?.canShowOurBussiness' class='itemCategory' mat-button routerLinkActive='router-link-active'>
           {{ 'Nuestras tiendas' | translate }}</a>
         <a [routerLink]="['/products/search']" class='itemCategory' mat-button routerLinkActive='router-link-active'>
           {{ 'Todos los productos' | translate }}</a>
@@ -439,5 +478,5 @@
   <router-outlet></router-outlet>
 
   <!--  <app-footer-two *ngIf="!url.includes('my-account')"></app-footer-two>-->
-  <app-footer *ngIf="!url.includes('my-account')"></app-footer>
+  <app-footer *ngIf="!url?.includes('my-account')"></app-footer>
 </mat-sidenav-container>

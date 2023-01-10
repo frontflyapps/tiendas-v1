@@ -1,0 +1,16 @@
+<div mat-dialog-content>
+  <div class="p-3" fxLayout="column" fxLayoutAlign="center center">
+    <span class="mb-2">
+      {{'Nueva versión del sistema detectada. Se cargará nuevamente la página.'|translate}}
+    </span>
+
+    <!--    <span fxLayout="row" class="mb-2">-->
+    <!--      {{'La próxima versión será superior a'|translate}}:&nbsp;-->
+    <!--      <strong>v{{version}}</strong>-->
+    <!--    </span>-->
+
+    <button (click)="onClose()" color="primary" mat-button>
+      {{ "Aceptar" | translate | uppercase}}
+    </button>
+  </div>
+</div>
