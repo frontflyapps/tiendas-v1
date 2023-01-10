@@ -404,7 +404,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        // this.router.navigate(['/become-a-seller']).then();
+        this.router.navigate(['/become-a-seller']).then();
       }
     });
   }
