@@ -4,20 +4,17 @@ import { ActivatedRoute } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { PayService } from '../../../core/services/pay/pay.service';
 import {
-  AbstractControl,
   UntypedFormBuilder,
   UntypedFormControl,
   UntypedFormGroup,
-  ValidationErrors,
-  ValidatorFn,
   Validators,
 } from '@angular/forms';
-import { ChangeDetectorRef, Component, HostListener, OnDestroy, OnInit } from '@angular/core';
-import { lastValueFrom, Observable, of, Subject } from 'rxjs';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { lastValueFrom, Subject } from 'rxjs';
 import { Cart, CartItem, IBusiness } from '../../../modals/cart-item';
-import { environment, PASARELA_BASE } from '../../../../environments/environment';
+import { environment } from '../../../../environments/environment';
 import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-in-user.service';
-import { catchError, debounce, debounceTime, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { CurrencyService } from '../../../core/services/currency/currency.service';
 import { IPagination } from '../../../core/classes/pagination.class';
 import { UtilsService } from '../../../core/services/utils/utils.service';
@@ -27,7 +24,6 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { SocketIoService } from 'src/app/core/services/socket-io/socket-io.service';
 import { DialogEnzonaConfirmToPayComponent } from '../dialog-enzona-confirm-to-pay/dialog-enzona-confirm-to-pay.component';
 import { ConfirmationDialogFrontComponent } from '../../shared/confirmation-dialog-front/confirmation-dialog-front.component';
-import { DetailsShippingComponent } from '../details-shipping/details-shipping.component';
 import { DialogTranfermovilQrComponent } from '../dialog-tranfermovil-qr/dialog-tranfermovil-qr.component';
 import { RegionsService } from '../../../core/services/regions/regions.service';
 import { TaxesShippingService } from '../../../core/services/taxes-shipping/taxes-shipping.service';
@@ -40,12 +36,13 @@ import { DialogBidaiondoConfirmToPayComponent } from '../dialog-bidaiondo-confir
 import { ConfigurationService } from '../../../core/services/configuration/configuration.service';
 import { CurrencyCheckoutPipe } from 'src/app/core/pipes/currency-checkout.pipe';
 import { CUBAN_PHONE_START_5, EMAIL_REGEX } from '../../../core/classes/regex.const';
-import { ContactsService, IContactBody } from '../../../core/services/contacts/contacts.service';
+import { ContactsService } from '../../../core/services/contacts/contacts.service';
 import { MyContactsComponent } from '../../main/my-contacts/my-contacts.component';
 import * as moment from 'moment';
 import { NgxMaterialTimepickerTheme } from 'ngx-material-timepicker';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DialogPgtConfirmToPayComponent } from '../dialog-pgt-confirm-to-pay/dialog-pgt-confirm-to-pay.component';
+import { AppService } from '../../../app.service';
 
 export const amexData = {
   express: 1, // American Express
@@ -82,31 +79,23 @@ export const amexData = {
 })
 export class CheckoutComponent implements OnInit, OnDestroy {
   public CI_Length = 11;
-
-  public cartItems: Observable<CartItem[]> = of([]);
   public buyProducts: CartItem[] = [];
   public cart: Cart;
+  public loading = false;
   public cartId = undefined;
   public cartItemIds: any[] = undefined;
   public theBusiness: IBusiness;
 
   public showInfoDataToPay = true;
   public showPayment = false;
-
   inLoading = false;
-  selectedCities: any[] = [];
-  filteredCities: any[] = [];
   loadingPayment = false;
   launchTM = undefined;
   currencies = ['USD', 'EUR'];
   dataSource: MatTableDataSource<any>;
-  displayedColumns: string[] = ['product', 'quantity', 'price', 'action'];
   amount: number;
 
   shippingSelected: any;
-  shippingSearchValue: any;
-
-  paymentsBidaiondo: any[] = [];
   bidaiondoCards: any[] = [
     'visa',
     'express',
@@ -129,7 +118,11 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       logo: 'assets/images/cards/transfermovil_logo.png',
       market: 'national',
     },
-    // { id: 'enzona', name: 'Enzona', logo: 'assets/images/cards/enzona.jpeg', market: 'national' },
+    {
+      id: 'enzona',
+      name: 'Enzona',
+      logo: 'assets/images/cards/enzona.jpeg',
+      market: 'national' },
     {
       id: 'transfermovil',
       enabled: false,
@@ -198,12 +191,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       market: 'international',
     },
   ];
-
-  nationalitiy: any[] = [
-    { id: true, name: 'Sí' },
-    { id: false, name: 'No' },
-  ];
-
   language: any;
   _unsubscribeAll: Subject<any>;
   imageUrl = environment.imageUrl;
@@ -277,11 +264,12 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   fixedShipping: any;
 
   defaultContact: any;
-  businessConfig = JSON.parse(localStorage.getItem('business-config'));
+  businessConfig;
   noGateway = true;
 
   constructor(
     public cartService: CartService,
+    public appService: AppService,
     public productService: ProductService,
     public currencyService: CurrencyService,
     private fb: UntypedFormBuilder,
@@ -302,15 +290,13 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     public contactsService: ContactsService,
     private spinner: NgxSpinnerService,
   ) {
-    console.log(this.businessConfig);
-
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
 
-    this.setObsContact();
+    // this.setObsContact();
     this.getContacts();
-    this.getAvalilablePaymentType();
+    // this.getAvalilablePaymentType();
     this.buildForm();
 
     this.activateRoute.queryParams.subscribe((data) => {
@@ -320,19 +306,25 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         this.cartItemIds && this.cartItemIds.constructor != Array ? [this.cartItemIds] : this.cartItemIds;
       this.processToCart();
     });
-
-    // this.metaService.setMeta(
-    //   environment.meta?.mainPage?.title,
-    //   environment.meta?.mainPage?.description,
-    //   environment.meta?.mainPage?.shareImg,
-    //   environment.meta?.mainPage?.keywords,
-    // );
+  }
+  public getBusinessConfig(id) {
+    this.appService.getBusinessConfigId(id).subscribe((item) => {
+      this.loading = true;
+      this.businessConfig = item.data;
+      console.log('businessConfig' + JSON.parse(JSON.stringify(item)));
+      this.getAvalilablePaymentType();
+      if (this.businessConfig.gateways?.length == 0) {
+        this.noGateway = true;
+      } else {
+        this.noGateway = false;
+      }
+    });
   }
 
-  public async getAvalilablePaymentType() {
+  public getAvalilablePaymentType() {
     let auxPayments = [];
     let searchBidaindoCards: boolean;
-    const enabledGates = this.businessConfig.gateways;
+    const enabledGates = this.businessConfig?.gateways;
     this.payments.forEach((item, index) => {
       if (Array.isArray(enabledGates) && enabledGates.includes(item.id)) {
         auxPayments.push(this.payments[index]);
@@ -348,13 +340,14 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     });
     this.payments = auxPayments;
 
-    // this.getEnabledBidaiondoCards();
     if (this.businessConfig?.gateways) {
-      if (Object.entries(this.businessConfig?.gateways).length > 0) {
+      if (this.businessConfig?.gateways.length > 0) {
         this.noGateway = false;
+        console.log('gateways' + this.businessConfig)
+        this.form.get('paymentType').setValue(this.businessConfig.gateways);
+        // this.noGateway = false;
         this.spinner.show();
-        if (this.businessConfig.gateways.find((item) => item === "bidaiondo")) {
-          console.log('entro');
+        if (this.businessConfig.gateways.find((item) => item === 'bidaiondo')) {
           this.getEnabledBidaiondoCards();
           this.spinner.hide();
         }
@@ -364,8 +357,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       }
       this.spinner.hide();
     }
-    console.log(this.payments);
-    console.log(this.noGateway);
   }
 
   public getEnabledBidaiondoCards() {
@@ -379,16 +370,13 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         }
         this.payments = paymentsCards;
       },
-      error: (error) => {},
+      error: (error) => {
+      },
     });
   }
 
   public compareById(val1, val2) {
     return val1 && val2 && val1 == val2;
-  }
-
-  public displayCity(city?: any): any {
-    return city && city.name ? city.name : undefined;
   }
 
   @HostListener('window:resize', ['$event'])
@@ -397,8 +385,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // this.buildForm();
-    // this.getContacts();
 
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
     this.rate = 1;
@@ -409,7 +395,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.loggedInUserService.$loggedInUserUpdated.pipe(takeUntil(this._unsubscribeAll)).subscribe((data) => {
       this.loggedInUser = this.loggedInUserService.getLoggedInUser();
       if (this.loggedInUser) {
-        // this._listenToSocketIO();
       }
     });
     this.fetchData();
@@ -417,19 +402,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     /**
      * Subscriptions for cart update
      */
-    this.cartService.$cartItemsUpdated.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {
-      if (data.length > 0) {
-        this.theBusiness = data[0].Business;
-        this.processToCart();
-      }
-    });
 
-    if (this.loggedInUser) {
-      // this._listenToSocketIO();
-    }
 
     this.form.controls['currency'].valueChanges.subscribe((data) => {
-      // this.calculateShippingRequired();
       if (this.currencyInternational === data) {
         this.rate = 1;
       } else {
@@ -445,7 +420,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         }
         this.configurationService.getCurrencys(this.query, params).subscribe((response) => {
           if (response.data) {
-            this.rate = response.data[0].rate;
+            this.rate = response.data[0]?.rate;
           } else {
             this.rate = 1;
           }
@@ -469,7 +444,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         data != this.shippingSelected.shippingItems[0].Shipping.ProvinceId
       ) {
         this.form.controls['ProvinceId'].setErrors({ forbiddenProvince: { value: data } });
-        // this.shippingSelected = null;
       }
     });
 
@@ -480,20 +454,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.form.valueChanges.subscribe((data) => {
       console.log(this.form);
     });
-
-    // this.form.controls['shippingRequired'].valueChanges.subscribe((value) => {
-    //
-    //   this.showShipping = value;
-    //   if (value) {
-    //     this.form.controls['ShippingBusinessId'].setValidators(Validators.required);
-    //     this.onRecalculateShipping();
-    //   } else {
-    //     this.form.controls['ShippingBusinessId'].setValidators(null);
-    //     this.shippingData = [];
-    //     // this.canBeDelivery = false;
-    //   }
-    //   this.form.controls['ShippingBusinessId'].updateValueAndValidity();
-    // });
 
     this.form.controls['ShippingBusinessId'].valueChanges.subscribe((value) => {
       this.getTotalWithShippingIncluded();
@@ -552,32 +512,24 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         data: {},
       });
 
-      dialogRef.afterClosed().subscribe((result) => {});
+      dialogRef.afterClosed().subscribe((result) => {
+      });
     } else {
       this.getCartData();
     }
   }
 
-  detailsShipping() {
-    this.dialog.open(DetailsShippingComponent, {
-      panelClass: 'app-details-shipping',
-      maxWidth: '100vw',
-      maxHeight: '100vh',
-      data: {
-        element: this.shippingData,
-        market: this.marketCard,
-      },
-    });
-  }
-
   public getCartData() {
     this.loadingCart = true;
     this.shippingData = [];
-    lastValueFrom(this.cartService
-      .getCartData({ cartId: this.cartId, cartItemIds: this.cartItemIds }))
-      .then((data) => {
+    this.cartService.getCartData({ cartId: this.cartId, cartItemIds: this.cartItemIds }).subscribe({
+      next: (data) => {
         this.cart = data.Cart;
+        this.getBusinessConfig(this.cart.BusinessId);
         this.buyProducts = data.CartItems || [];
+        // Obtain data for fixed shipping value
+        this.buyWithDiscount = data.discount.priceWithDiscount ? data.discount : null;
+        this.fixShippingBusiness = data.Cart.BusinessId;
         // Obtain data for fixed shipping value
         this.buyWithDiscount = data.discount.priceWithDiscount ? data.discount : null;
         this.fixShippingBusiness = data.Cart.BusinessId;
@@ -594,45 +546,103 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         } else {
           this.hasPickUpPlace = false;
         }
-        if (this.cart.market === 'national') this.form.controls['currency'].setValue('CUP');
-
-          this.dataSource = new MatTableDataSource(this.buyProducts);
-          this.marketCard =
-            this.buyProducts && this.buyProducts.length > 0 ? this.buyProducts[0].Product.market : MarketEnum.NATIONAL;
-          if (this.buyProducts && this.buyProducts.length > 0) {
-            this.onRecalculateShipping();
-          } else {
-            this.shippingData = [];
+        console.log('hasPickUpPlace' + this.hasPickUpPlace);
+        console.log('showShipping' + this.showShipping);
+        if (this.cart.market === 'national') {
+          this.form.controls['currency'].setValue('CUP');
+        }
+        this.dataSource = new MatTableDataSource(this.buyProducts);
+        this.marketCard =
+          this.buyProducts && this.buyProducts.length > 0 ? this.buyProducts[0].Product.market : MarketEnum.NATIONAL;
+        if (this.buyProducts && this.buyProducts.length > 0) {
+          this.onRecalculateShipping();
+        } else {
+          this.shippingData = [];
+        }
+        console.log(this.buyProducts);
+        // this.form.get('paymentType').setValue(this.payments[0].id);
+        if (this.cart.market === MarketEnum.NATIONAL) {
+          this.form.get('currency').setValue(CoinEnum.CUP);
+        }
+        if (this.cart.market === MarketEnum.INTERNATIONAL) {
+          this.form.get('currency').setValue(CoinEnum.USD);
+        }
+        this.cartService.$cartItemsUpdated.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {
+          if (data.length > 0) {
+            this.theBusiness = data[0].Business;
+            console.log(this.theBusiness);
+            // this.processToCart();
           }
-
-          this.form.get('paymentType').setValue(this.payments[0].id);
-          if (this.cart.market === MarketEnum.NATIONAL) {
-            this.form.get('currency').setValue(CoinEnum.CUP);
-          }
-          if (this.cart.market === MarketEnum.INTERNATIONAL) {
-            this.form.get('currency').setValue(CoinEnum.USD);
-          }
-
-          this.form.updateValueAndValidity();
-
-          setTimeout(() => {
-            this.loadingCart = false;
-          }, 250);
-        })
-        .catch(() => {
-          this.loadingCart = false;
         });
-    }
+        setTimeout(() => {
+          this.loadingCart = false;
+          }, 250);
+        this.form.updateValueAndValidity();
+      },
+      error: (err) => {
+        this.loadingCart = false;
+        console.log(err);
+      }
+      }
+    );
+  }
 
-  // public async getCartData() {
+  // public getCartData() {
   //   this.loadingCart = true;
   //   this.shippingData = [];
-  //   // const cartSource$ = this.cartService.getCartData({ cartId: this.cartId, cartItemIds: this.cartItemIds });
-  //   this.cartService.getCartData({ cartId: this.cartId, cartItemIds: this.cartItemIds }).subscribe((data) => {
-  //     this.cart = data.Cart;
-  //   });
+  //   lastValueFrom(this.cartService
+  //     .getCartData({ cartId: this.cartId, cartItemIds: this.cartItemIds }))
+  //     .then((data) => {
+  //       this.cart = data.Cart;
+  //       console.log(this.cart);
+  //       this.getBusinessConfig(this.cart.BusinessId);
+  //       this.buyProducts = data.CartItems || [];
+  //       // Obtain data for fixed shipping value
+  //       this.buyWithDiscount = data.discount.priceWithDiscount ? data.discount : null;
+  //       this.fixShippingBusiness = data.Cart.BusinessId;
+  //       // Check if is required shipping by business
+  //       this.shippingIsRequired = data.Cart.Business.shippingRequired;
+  //       if (this.shippingIsRequired) {
+  //         this.form.controls['shippingRequired'].setValidators(Validators.required);
+  //         this.form.controls['ShippingBusinessId'].setValidators(Validators.required);
+  //         this.form.controls['shippingRequired'].updateValueAndValidity();
+  //       }
+  //       // Check if the Pick-Up-Place label has to be displayed
+  //       if (data.CartItems.filter((item) => item.Product.type === 'physical').length > 0) {
+  //         this.hasPickUpPlace = true;
+  //       } else {
+  //         this.hasPickUpPlace = false;
+  //       }
+  //       if (this.cart.market === 'national') {
+  //         this.form.controls['currency'].setValue('CUP');
+  //       }
   //
-  //   // return lastValueFrom(cartSource$);
+  //       this.dataSource = new MatTableDataSource(this.buyProducts);
+  //       this.marketCard =
+  //         this.buyProducts && this.buyProducts.length > 0 ? this.buyProducts[0].Product.market : MarketEnum.NATIONAL;
+  //       if (this.buyProducts && this.buyProducts.length > 0) {
+  //         this.onRecalculateShipping();
+  //       } else {
+  //         this.shippingData = [];
+  //       }
+  //
+  //       this.form.get('paymentType').setValue(this.payments[0].id);
+  //       if (this.cart.market === MarketEnum.NATIONAL) {
+  //         this.form.get('currency').setValue(CoinEnum.CUP);
+  //       }
+  //       if (this.cart.market === MarketEnum.INTERNATIONAL) {
+  //         this.form.get('currency').setValue(CoinEnum.USD);
+  //       }
+  //
+  //       this.form.updateValueAndValidity();
+  //
+  //       setTimeout(() => {
+  //         this.loadingCart = false;
+  //       }, 250);
+  //     })
+  //     .catch(() => {
+  //       this.loadingCart = false;
+  //     });
   // }
 
   getShippingSelectedPrice() {
@@ -776,12 +786,13 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   fillLoggedInfo() {
-    console.log(this.loggedInUser);
+    // console.log('businessConfig' + JSON.parse(this.businessConfig.gateways));
     this.form.get('name').setValue(this.loggedInUser?.name);
     this.form.get('lastName').setValue(this.loggedInUser?.lastName);
     this.form.get('phone').setValue(this.loggedInUser?.phone);
     this.form.get('dni').setValue(this.loggedInUser?.ci);
     this.form.get('email').setValue(this.loggedInUser?.email);
+    this.form.get('paymentType').setValue(this.businessConfig.gateways);
     this.form.get('regionProvinceState').setValue(null);
     this.form.controls['address'].get('street').setValue(null);
     this.form.controls['address'].get('number').setValue(null);
@@ -789,6 +800,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.form.get('CountryId').setValue(null);
     this.form.get('ProvinceId').setValue(null);
     this.form.get('MunicipalityId').setValue(null);
+    console.log('form' + this.form.value);
   }
 
   subsToTransfermovilChange() {
@@ -851,7 +863,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
             this.fixedShipping = dataShipping.shippings;
           }
           this.canBeDelivery = dataShipping.canBeDelivery;
-          console.log('canBeDelivery' + this.canBeDelivery);
           this.inLoading = false;
         },
         error: (error) => {
@@ -907,7 +918,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.regionService.getAllCountries(this.queryCountries).subscribe({
       next: (data) => {
         this.allCountries = data.data.filter((item) => item.name.es != undefined);
-        this.allCountries.sort(function (a, b) {
+        this.allCountries.sort(function(a, b) {
           if (a.name['es'] > b.name['es']) {
             return 1;
           } else if (a.name['es'] < b.name['es']) {
@@ -961,28 +972,21 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     return price * item.quantity;
   }
 
-  ////////////////////////////////////////////////
-  autocompleteValidator(control: AbstractControl): { [key: string]: boolean } | null {
-    if (!control || !control.value || !control.value.id) {
-      return { InvalidValue: true };
-    }
-    return null;
-  }
-
   onPayOrder() {
     this.scrollTopDocument();
     this.loadingPayment = true;
 
     if (this.form.get('ShippingBusinessId').value && typeof this.form.get('ShippingBusinessId').value === 'object') {
       this.form.get('ShippingBusinessId').setValue(this.form.get('ShippingBusinessId').value.BusinessId);
-      console.log('ShippingBusinessId' + this.form.get('ShippingBusinessId').value);
     }
 
     const data = { ...this.form.value };
     data.phone = '53' + data.phone;
 
     this.paymentType = JSON.parse(JSON.stringify(data.paymentType));
-    if (!data.shippingRequired) { delete data.ShippingBusinessId; }
+    if (!data.shippingRequired) {
+      delete data.ShippingBusinessId;
+    }
     data.description = data.description || `Pago realizado por el cliente ${data.name} ${data.lastName}`;
     data.urlClient = environment.url;
     data.CartItemIds = this.buyProducts.map((item) => item.id);
@@ -1198,146 +1202,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     }, 0);
   }
 
-  // //////// Utils /////////////////
-  _getAddress(user, storagePayData) {
-    if (storagePayData) {
-      return storagePayData.address;
-    }
-    // if (user && user.address) {
-    //   return user.address;
-    // }
-    return null;
-  }
-
-  _getCity(user, storagePayData) {
-    if (storagePayData) {
-      return storagePayData.city;
-    }
-    if (user && user.City) {
-      return user.City.name;
-    }
-    return null;
-  }
-
-  _getCountry(user, storagePayData) {
-    if (storagePayData) {
-      return storagePayData.CountryId;
-    }
-    if (storagePayData && storagePayData.isForCuban) {
-      return 59;
-    }
-    if (user && user.CountryId) {
-      return user.CountryId;
-    }
-    return 59;
-  }
-
-  _getRegion(user, storagePayData) {
-    if (storagePayData) {
-      return storagePayData.regionProvinceState;
-    }
-    if (user && user.regionProvinceState) {
-      return user.regionProvinceState;
-    }
-    return null;
-  }
-
-  _getPhone(user, storagePayData) {
-    if (storagePayData) {
-      return this.getOnly8DigitsPhone(storagePayData.phone);
-    }
-    if (user && user.phone) {
-      return this.getOnly8DigitsPhone(user.phone);
-    }
-    return null;
-  }
-
-  getOnly8DigitsPhone(phone) {
-    if (phone.length === 10 && phone.startsWith('53')) {
-      phone = phone.slice(2);
-    }
-    return phone;
-  }
-
-  _getEmail(user, storagePayData) {
-    if (storagePayData) {
-      return storagePayData.email;
-    }
-    if (user && user.email) {
-      return user.email;
-    }
-    return null;
-  }
-
-  _getProvince(user, storagePayData) {
-    if (storagePayData) {
-      return storagePayData.ProvinceId;
-    }
-    if (user && user.ProvinceId) {
-      return user.ProvinceId;
-    }
-    return null;
-  }
-
-  _getMunicipality(user, storagePayData) {
-    if (storagePayData) {
-      return storagePayData.MunicipalityId;
-    }
-    if (user && user.MunicipalityId) {
-      return user.MunicipalityId;
-    }
-    return null;
-  }
-
-  onCancelarTranfermovilPayment() {
-    const dialogRef = this.dialog.open(ConfirmationDialogFrontComponent, {
-      width: '550px',
-      data: {
-        title: 'Cancelar la confirmación con transfermovil',
-        textHtml: `
-        <h4 style="text-transform:none !important; line-height:1.6rem !important;">
-          ¿Desea cancelar la confirmación con transfermóvil?
-        </h4>
-       `,
-      },
-    });
-
-    dialogRef.afterClosed().subscribe(async (result) => {
-      if (result) {
-        this.qrTransfermovilImage = undefined;
-        this.loadingPayment = false;
-        window.location.reload();
-      }
-    });
-  }
-
-  _listenToSocketIO() {
-    this.socketIoService
-      .listen('payment-confirmed')
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((data) => {
-        this.orderService.$orderItemsUpdated.next('');
-        // this.getCartData();
-      });
-
-    this.socketIoService
-      .listen('payment-error')
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((data) => {
-        this.loadingPayment = false;
-        this.showToastr.showError(data.message, 'Error', 4000);
-      });
-  }
-
   /**
    * ========== ON GO TO PAY =================
    */
-  onGoToInfoDataToPay() {
-    this.showInfoDataToPay = true;
-    this.showPayment = false;
-    this.scrollTopDocument();
-  }
-
   onGoToPayment() {
     if (this.form.get('shippingRequired').value === null) {
       this.form.get('shippingRequired').setValue(false);
@@ -1348,7 +1215,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(ConfirmationDialogFrontComponent, {
       data: {
         title: 'Confirmación',
-        textHtml: `<p style="font-size:18px">¿Estás seguro que el destinario de la compra es <strong>${name} ${lastName}</strong>?</p>`,
+        textHtml: `<p style='font-size:18px'>¿Estás seguro que el destinario de la compra es <strong>${name} ${lastName}</strong>?</p>`,
       },
     });
     dialogRef.afterClosed().subscribe((result) => {
@@ -1366,9 +1233,5 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   private applyResolution() {
     const innerWidth = window.innerWidth;
     this.applyStyle = innerWidth <= 600;
-  }
-
-  onSearchBusinessShipping() {
-    console.log(this.shippingSearchValue);
   }
 }

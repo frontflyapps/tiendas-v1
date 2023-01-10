@@ -1,8 +1,10 @@
 <!-- <div *ngIf="this.loadingSearch" class="loading-shade-full">
   <mat-spinner *ngIf="this.loadingSearch" diameter="60" color="primary"></mat-spinner>
 </div> -->
-
-<div class="container-checkout" ngClass.lt-md="px-2">
+<div *ngIf="!loading" fxLayout='row' fxLayoutAlign='center center' style='height: 80vh'>
+  <mat-spinner *ngIf="!loading" diameter="60" color="primary"></mat-spinner>
+</div>
+<div class="container-checkout" ngClass.lt-md="px-2" *ngIf='loading'>
   <div class="checkout sec-padding">
     <div
       *ngIf="loadingPayment"
@@ -27,7 +29,7 @@
       ngClass.xs="pr-0"
     >
       <mat-horizontal-stepper #stepper [linear]="'true'" labelPosition="bottom" class="billing-details">
-        <mat-step *ngIf="businessConfig.shippingType == 'normal'">
+        <mat-step *ngIf="businessConfig?.shippingType == 'normal'">
           <ng-template matStepLabel>{{ 'Envío' | translate }}</ng-template>
           <!--------- SHIPPING DETAILS ----------->
           <ng-container *ngIf="canBeDelivery; else noShipping">
@@ -574,7 +576,7 @@
               <button
                 id="buttonSecondStep"
                 (click)="onGoToPayment()"
-                [disabled]="form.invalid"
+                [disabled]="noGateway || form.invalid"
                 color="primary"
                 mat-raised-button
                 matStepperNext
@@ -732,7 +734,7 @@
                   </li>
                 </ul>
                 <!------------------FIXED SHIPPING------------------>
-                <ng-container *ngIf="businessConfig.shippingType == 'fixed'">
+                <ng-container *ngIf="businessConfig?.shippingType == 'fixed'">
                   <div
                     fxLayout="row"
                     class="w-100"
