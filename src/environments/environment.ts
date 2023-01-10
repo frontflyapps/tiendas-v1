@@ -7,7 +7,7 @@ const packageJson = require('../../package.json');
 export const PASARELA_BASE = 'peoplegoto';
 
 export const environment = {
-  production: true,
+  production: false,
 
   // apiUrl: 'https://api.mibulevar.com/v1/',
   // imageUrl: 'https://api.mibulevar.com/v1/',
@@ -15,8 +15,11 @@ export const environment = {
   // apiUrl: 'https://apitienda.guajiritos.com/v1/',
   // imageUrl: 'https://apitienda.guajiritos.com/v1/',
 
-  apiUrl: 'https://api.guajiritos.com/v1/',
-  imageUrl: 'https://cdn.guajiritos.com/',
+  // apiUrl: 'https://api.guajiritos.com/v1/',
+  // imageUrl: 'https://cdn.guajiritos.com/',
+
+  apiUrl: 'https://api.pymesbulevar.com/v1/',
+  imageUrl: 'https://cdn.pymesbulevar.com/',
 
   // apiUrl: 'http://apitienda.tiendalocal.com:8999/v1/',
   // imageUrl: 'http://apitienda.tiendalocal.com:8999/v1/',
