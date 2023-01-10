@@ -92,7 +92,7 @@
 
             <div *ngIf='businessConfig?.contactsFooter.email' fxLayout='row' fxLayoutAlign='start center' fxLayoutGap='4px'>
                 <mat-icon>email</mat-icon>
-                <a [href]='businessConfig?.contactsFooter?.email'>{{ businessConfig?.contactsFooter?.email }}</a>
+                <a class='email-text' href="mailto:{{businessConfig?.contactsFooter.email}}">{{ businessConfig?.contactsFooter?.email }}</a>
             </div>
 
             <div *ngIf='businessConfig?.contactsFooter.address' fxLayout='row' fxLayoutAlign='start center' fxLayoutGap='4px'>
@@ -107,7 +107,7 @@
                                                         businessConfig?.contactsFooter?.socialNetworks?.youtube ||
                                                         businessConfig?.contactsFooter?.socialNetworks?.instagram'>
             <li fxLayoutAlign='center center' *ngIf='businessConfig?.contactsFooter?.socialNetworks?.facebook'>
-                <a class='icon-redes' fxLayoutAlign='center center' [href]='businessConfig?.contactsFooter?.socialNetworks?.facebook.value' target='_blank'>
+                <a class='icon-redes' fxLayoutAlign='center center' [href]='businessConfig?.contactsFooter?.socialNetworks?.facebook' target='_blank'>
                     <!--          <i class="fab fa-facebook-f" style="font-size: 18px"></i>-->
                     <img alt="Facebook logo" src="assets/images/social-media/outline/logo-facebook.svg" style="filter: invert(1);">
                 </a>
