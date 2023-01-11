@@ -39,7 +39,7 @@ success:
   stage: notify
   script:
     - apk add --update git curl
-    - wget https://raw.githubusercontent.com/DiscordHooks/gitlab-ci-discord-webhook/master/send.sh
+    - wget https://raw.githubusercontent.com/armandofcom/gitlab-ci-discord-webhook/master/send.sh
     - chmod +x send.sh
     - /bin/ash ./send.sh success $WEBHOOK_URL
   when: on_success
@@ -49,7 +49,7 @@ failure:
   stage: notify
   script:
     - apk add --update git curl
-    - wget https://raw.githubusercontent.com/DiscordHooks/gitlab-ci-discord-webhook/master/send.sh
+    - wget https://raw.githubusercontent.com/armandofcom/gitlab-ci-discord-webhook/master/send.sh
     - chmod +x send.sh
     - /bin/ash ./send.sh failure $WEBHOOK_URL
   when: on_failure
