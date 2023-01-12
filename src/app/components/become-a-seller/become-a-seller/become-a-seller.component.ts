@@ -2,7 +2,7 @@ import { ShowToastrService } from '../../../core/services/show-toastr/show-toast
 import { NgxSpinnerService } from 'ngx-spinner';
 import { LoggedInUserService } from 'src/app/core/services/loggedInUser/logged-in-user.service';
 import { Component, HostListener, Inject, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { RegionsService } from '../../../core/services/regions/regions.service';
@@ -10,9 +10,7 @@ import { BusinessService } from '../../../core/services/business/business.servic
 import { ImagePickerConf } from 'guachos-image-picker';
 import { CUBAN_PHONE_START_5, EMAIL_REGEX } from '../../../core/classes/regex.const';
 import { DOCUMENT } from '@angular/common';
-import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { validate } from 'codelyzer/walkerFactory/walkerFn';
 import { UtilsService } from '../../../core/services/utils/utils.service';
 import { BankService } from '../../../core/services/bank/bank.service';
 import { environment } from '../../../../environments/environment';
@@ -88,11 +86,11 @@ export class BecomeASellerComponent implements OnInit {
     private showToastr: ShowToastrService,
     private translate: TranslateService,
     private router: Router,
-    @Inject(DOCUMENT) private document: Document
+    @Inject(DOCUMENT) private document: Document,
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
-    if(localStorage.getItem('bs_image')) {
+    if (localStorage.getItem('bs_image')) {
       this.imageBusiness = localStorage.getItem('bs_image');
     }
     this.firstStep = JSON.parse(localStorage.getItem('bs_step_one'));
@@ -105,7 +103,7 @@ export class BecomeASellerComponent implements OnInit {
     if ((document.body.scrollTop > 64 ||
       document.documentElement.scrollTop > 64) && window.innerWidth > 937) {
       document.getElementById('questions-bar').classList.add('fixed-bar');
-    }else{
+    } else {
       document.getElementById('questions-bar').classList.remove('fixed-bar');
     }
   }
@@ -120,7 +118,7 @@ export class BecomeASellerComponent implements OnInit {
 
   buildForm() {
     this.basicForm = this.fb.group({
-      name: [this.firstStep ? this.firstStep.name : null , [Validators.required]],
+      name: [this.firstStep ? this.firstStep.name : null, [Validators.required]],
       description: [this.firstStep ? this.firstStep.description : null],
 
       socialObject: [this.firstStep ? this.firstStep.socialObject : null, [Validators.required]],
@@ -131,14 +129,14 @@ export class BecomeASellerComponent implements OnInit {
 
       cellphone: [this.firstStep ? this.firstStep.cellphone : null, [Validators.required, Validators.pattern(CUBAN_PHONE_START_5)]],
       telephone: [this.firstStep ? this.firstStep.telephone : null, []],
-      email: [this.firstStep ? this.firstStep.email : null, [Validators.required,Validators.pattern(EMAIL_REGEX)]],
+      email: [this.firstStep ? this.firstStep.email : null, [Validators.required, Validators.pattern(EMAIL_REGEX)]],
 
       managerName: [this.firstStep ? this.firstStep.managerName : null, [Validators.required]],
       managerLastName: [this.firstStep ? this.firstStep.managerLastName : null, [Validators.required]],
       managerCharge: [this.firstStep ? this.firstStep.managerCharge : null, [Validators.required]],
       managerIdentification: [this.firstStep ? this.firstStep.managerIdentification : null, [Validators.required]],
       managerPhone: [this.firstStep ? this.firstStep.managerPhone : null, [Validators.required]],
-      managerEmail: [this.firstStep ? this.firstStep.managerEmail : null, [Validators.required,Validators.pattern(EMAIL_REGEX)]],
+      managerEmail: [this.firstStep ? this.firstStep.managerEmail : null, [Validators.required, Validators.pattern(EMAIL_REGEX)]],
       // managerCharacter: [this.firstStep ? this.firstStep.managerCharacter : null, [Validators.required]],
       // managerDesignation: [this.firstStep ? this.firstStep.managerDesignation : null],
       // managerDate: [this.firstStep ? this.firstStep.managerDate : null, [Validators.required]],
@@ -230,9 +228,9 @@ export class BecomeASellerComponent implements OnInit {
       business: { ...this.basicForm.value, ...this.locationForm.value },
       owner: { ...this.sellerForm.value },
     };
-    //data.business.card = data.owner.card;
+    // data.business.card = data.owner.card;
     data.business.logo = this.imageBusiness;
-    //delete data.owner.card;
+    // delete data.owner.card;
     data.business.CupBankId = this.basicForm.controls['CupBankId'].value.id;
     data.business.UsdBankId = this.basicForm.controls['UsdBankId'].value.id;
 

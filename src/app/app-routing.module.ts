@@ -7,13 +7,13 @@ const appRoutes: Routes = [
     path: '',
     loadChildren: () => import('./components/main/main.module').then((m) => m.MainModule),
   },
-  // {
-  //   path: 'become-a-seller',
-  //   loadChildren: () =>
-  //     import('./components/become-a-seller/become-a-seller.module').then((m) => m.BecomeASellerModule),
-  //   canActivate: [BecomeASellerGuard],
-  //   canLoad: [BecomeASellerGuard],
-  // },
+  {
+    path: 'become-a-seller',
+    loadChildren: () =>
+      import('./components/become-a-seller/become-a-seller.module').then((m) => m.BecomeASellerModule),
+    canActivate: [BecomeASellerGuard],
+    canLoad: [BecomeASellerGuard],
+  },
   {
     path: 'error',
     loadChildren: () => import('./components/error/error.module').then((m) => m.ErrorModule),
@@ -35,4 +35,5 @@ const appRoutes: Routes = [
   ],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule {
+}

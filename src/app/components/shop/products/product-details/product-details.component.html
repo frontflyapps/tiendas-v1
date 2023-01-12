@@ -521,6 +521,15 @@
         <div style="width: 100%">
           <h4 class="mat-body-2 uppercase">{{ 'Comprando en' | translate }}</h4>
           <a class="list-compare-link no-decoration" fxLayout="row" fxLayoutAlign="start center">
+            <img
+              style="height: 32px; width: 32px; border-radius: 50%; object-fit: cover"
+              [src]="imageUrl + product?.Business?.logo"
+              onerror="this.onerror=null;this.src='assets/images/noImage.jpg';"
+            />
+
+            <span class="ml-2">{{ product?.Business?.name }}</span>
+          </a>
+          <a class="list-compare-link no-decoration" fxLayout="row" fxLayoutAlign="start center">
             <mat-icon class="mr-2"> location_on</mat-icon>
             <div fxLayout="column">
               <div>{{ product?.Business?.address }}.</div>
@@ -532,15 +541,7 @@
               </div>
             </div>
           </a>
-          <a class="list-compare-link no-decoration" fxLayout="row" fxLayoutAlign="start center">
-            <img
-              style="height: 32px; width: 32px; border-radius: 50%; object-fit: cover"
-              [src]="imageUrl + product?.Business?.logo"
-              onerror="this.onerror=null;this.src='assets/images/noImage.jpg';"
-            />
 
-            <span class="ml-2">{{ product?.Business?.name }}</span>
-          </a>
           <a class="list-compare-link" fxLayout="row" fxLayoutAlign="start center">
             <mat-icon class="mr-2"> phone</mat-icon>
             {{ product?.Business?.cellphone }}

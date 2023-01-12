@@ -9,8 +9,6 @@ if (environment.production) {
     window.console.log = () => {
     };
   }
-
-  enableProdMode();
 }
 
 platformBrowserDynamic().bootstrapModule(AppModule)

@@ -35,7 +35,9 @@ export class BecomeASellerGuard implements CanActivate, CanLoad {
   }
 
   canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean {
+    console.log(this.loggedInUserService.getLoggedInUser());
     if (this.loggedInUserService.getLoggedInUser()) {
+      console.log('entra aqui');
       return true;
     } else {
       localStorage.setItem('isRegisterToBecomeASeller', 'true');

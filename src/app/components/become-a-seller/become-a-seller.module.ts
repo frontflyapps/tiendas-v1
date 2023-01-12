@@ -45,9 +45,9 @@ import { GuachosImageModule } from '../shared/guachos-image/guachos-image.module
     MatNativeDateModule,
     MatDividerModule,
     GuachosImagePickerModule,
-    GuachosImageModule
+    GuachosImageModule,
   ],
-  providers:[BankService]
+  providers: [BankService],
 })
 export class BecomeASellerModule {
 }

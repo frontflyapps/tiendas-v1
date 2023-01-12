@@ -9,6 +9,8 @@ import { environment } from 'src/environments/environment';
 export class AppService {
   urlCookie = environment.apiUrl + 'auth/cookies';
   urlBusinessConfig = environment.apiUrl + 'business-config';
+  urlBusinessConfigId = environment.apiUrl + 'business-config/:id';
+  httpOptions = {};
 
   constructor(private httpClient: HttpClient) {}
 
@@ -18,5 +20,8 @@ export class AppService {
 
   getBusinessConfig(): Observable<any> {
     return this.httpClient.get<any>(this.urlBusinessConfig);
+  }
+  getBusinessConfigId(data): Observable<any> {
+    return this.httpClient.get<any>(this.urlBusinessConfigId.replace(':id', data), this.httpOptions);
   }
 }

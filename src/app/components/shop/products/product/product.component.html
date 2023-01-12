@@ -26,11 +26,11 @@
                 sharedImage: product?.sharedImage
       }" [routerLink]="['/product']" class="product-link" fxFlex="row" fxLayoutAlign="center center">
       <img *ngIf="product.Images && product.Images.length" [src]="imageUrl + product.Images[0].image"
-           alt="MiBulevar shop" class="image"
+           alt="{{product?.name?.es}}" class="image"
            lazyImg
 
            onerror="this.onerror=null;this.src='../../../../assets/images/noImage.jpg';" />
-      <img *ngIf="!(product.Images && product.Images.length)" alt="MiBulevar shop" class="image" lazy
+      <img *ngIf="!(product.Images && product.Images.length)" alt="{{product?.name?.es}}" class="image" lazy
             src="assets/images/noImage.jpg" />
     </a>
   </div>
