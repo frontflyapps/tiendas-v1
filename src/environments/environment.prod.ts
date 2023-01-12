@@ -4,7 +4,7 @@ export const environment = {
   production: true,
 
   apiUrl: 'https://apitienda.guajitech.com/v1/',
-  imageUrl: 'https://cdn.guajitech.com/',
+  imageUrl: 'https://cdntienda.guajitech.com/',
 
   defaultLanguage: 'es',
   currencyInternational: 'USD',
