@@ -3,8 +3,8 @@ export const PASARELA_BASE = 'peoplegoto';
 export const environment = {
   production: true,
 
-  apiUrl: 'https://apitienda.guajitech.com/v1/',
-  imageUrl: 'https://cdntienda.guajitech.com/',
+  apiUrl: 'https://apitienda.guajiritos.com/v1/',
+  imageUrl: 'https://cdntienda.guajiritos.com/',
 
   defaultLanguage: 'es',
   currencyInternational: 'USD',
