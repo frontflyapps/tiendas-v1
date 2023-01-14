@@ -3,7 +3,7 @@ export const PASARELA_BASE = 'peoplegoto';
 export const environment = {
   production: true,
 
-  apiUrl: 'https://apitienda.guajiritos.com/v1/',
+  apiUrl: 'https://api.guajiritos.com/v1/',
   imageUrl: 'https://cdntienda.guajiritos.com/',
 
   defaultLanguage: 'es',
@@ -21,8 +21,8 @@ export const environment = {
   timeToResearchMenuData: 300000, // (30min) Time to research menu (ms)
   timeToResearchCategoriesData: 600000, // (10min) Time to research categories (ms)
 
-  url: 'https://tienda.guajitech.com',
-  urlAboutUs: 'https://tienda.guajitech.com',
+  url: 'https://tienda.guajiritos.com',
+  urlAboutUs: 'https://tienda.guajiritos.com',
 
   address: 'Tienda GuajiTech DEV',
   localDatabaseUsers: true,
@@ -33,8 +33,8 @@ export const environment = {
     address: '',
   },
 
-  adminService: 'https://admintienda.guajitech.com/',
-  mainDomain: '.tienda.guajitech.com',
+  adminService: 'https://admintienda.guajiritos.com/',
+  mainDomain: '.tienda.guajiritos.com',
 
   tokenBusiness:
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7IkJ1c2luZXNzSWQiOjEsImlkIjoxLCJkYXRlIjoiMjAyMS0wOS0xM1QwMTo0NToxOC4wMDBaIiwibmFtZSI6IlRpZW5kYSIsImVtYWlsIjoidGllbmRhQGxvY2FsaG9zdC5jb20ifSwiaWF0IjoxNjMxNDk3NTkxfQ.FF5-276rI9SJmtebVo0spV8Y2wdOZPok7LlUxtTDwh0',
@@ -44,8 +44,8 @@ export const environment = {
       title: 'Tienda Guajitech DEV',
       description: 'Tienda online desarrollada con el framework Angular permite la modelación de negocios B2C and C2C',
       keywords: 'HTML, CSS, JavaScript, Angular, Tienda Online B2B, comercio online',
-      shareImg: 'https://tienda.guajitech.com/assets/images/share-img.png',
-      url: 'https://tienda.guajitech.com/',
+      shareImg: 'https://tienda.guajiritos.com/assets/images/share-img.png',
+      url: 'https://tienda.guajiritos.com/',
     },
   },
 
