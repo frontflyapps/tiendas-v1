@@ -174,10 +174,11 @@
                         </button>
                         <input
                           [min]="product.minSale"
+                          [max]="product.maxSale"
+                          (keyup)="checkMinMaxValues($event, product)"
+                          [(ngModel)]="counter"
                           class="inputBtn"
                           matTooltip="{{ 'Cantidad de unidades a adquirir' | translate }}"
-                          name="quantity"
-                          readonly="true"
                           type="text"
                           value="{{ counter }}"
                         />
@@ -544,11 +545,11 @@
 
           <a class="list-compare-link" fxLayout="row" fxLayoutAlign="start center">
             <mat-icon class="mr-2"> phone</mat-icon>
-            {{ product?.Business?.cellphone }}
+            <a href="tel:{{ product?.Business?.cellphone }}">{{ product?.Business?.cellphone }}</a>
           </a>
           <a class="list-compare-link" fxLayout="row" fxLayoutAlign="start center">
             <mat-icon class="mr-2"> mail</mat-icon>
-            {{ product?.Business?.email }}
+            <a class='email-text' href="mailto:{{product?.Business?.email}}">{{ product?.Business?.email }}</a>
           </a>
           <mat-divider class="my-2"></mat-divider>
         </div>
