@@ -22,7 +22,7 @@ export const environment = {
   // imageUrl: 'https://cdn.pymesbulevar.com/',
 
   apiUrl: 'http://apitienda.tiendalocal.com:8999/v1/',
-  imageUrl: 'http://cdntienda.guajiritos.com/',
+  imageUrl: 'http://cdn.guajiritos.com/',
 
   defaultLanguage: 'es',
   currencyInternational: 'USD',
