@@ -143,6 +143,22 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     });
   }
 
+  checkMinMaxValues(event, product): boolean {
+    console.log(event);
+    console.log(product);
+    const currentAmountOnInput = +event.target.value;
+    if ((currentAmountOnInput < product?.minSale) || (currentAmountOnInput > product?.maxSale)) {
+      this.showToastr.showInfo(
+        `Este producto tiene un mínimo de cantidad a vender de ${product?.minSale} y un máximo de ${product?.maxSale}`,
+        'Atención',
+        5000,
+      );
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   initStateView() {
     this.indexTab = 0;
     this.allReviews = [];
