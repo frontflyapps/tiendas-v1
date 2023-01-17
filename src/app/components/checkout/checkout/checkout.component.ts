@@ -825,8 +825,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       this.inLoading = true;
       this.cartService.getShippingCart(dataCartId).subscribe({
         next: (item) => {
-          this.shippingData = item.shippings;
-          this.canBeDelivery = item.canBeDelivery;
+          this.shippingData = item?.shippings;
+          this.canBeDelivery = item?.canBeDelivery;
           this.inLoading = false;
         },
         error: (error) => {
