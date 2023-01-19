@@ -260,9 +260,12 @@ export class MyAccountComponent implements OnInit {
   }
 
   createActivateForm() {
-    this.activateForm = this.fb.group({
-      email: [null, [Validators.required, Validators.email]],
-      pin: [null, [Validators.required]],
+    this.route.queryParams.subscribe((data) => {
+      console.log(data);
+      this.activateForm = this.fb.group({
+        email: [data ? data?.email : null, [Validators.required, Validators.email]],
+        pin: [data ? data?.pin : null, [Validators.required]],
+      });
     });
   }
 

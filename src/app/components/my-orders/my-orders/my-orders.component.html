@@ -65,33 +65,33 @@
 
                         <p class="mat-body-1 color-grey-700" style="font-size: 14px">
 <!--                          {{ item.address }}-->
-                          {{ item.address.street }}{{ item.address.number }}{{ item.address.between }}
+                          {{ item?.address?.street }}{{ item?.address?.number }}{{ item?.address?.between }}
                         </p>
 
                         <p *ngIf="item.CountryId != 59" class="mat-body-1 color-grey-700" style="font-size: 14px">
                           {{
-                          item.city +
+                          item?.city +
                           ', ' +
-                          item.regionProvinceState +
+                          item?.regionProvinceState +
                           ', ' +
-                          utilsService.parserLanguage(item.Country.name, language)
+                          utilsService.parserLanguage(item?.Country?.name, language)
                           }}
                         </p>
 
                         <p *ngIf="item.CountryId == 59" class="mat-body-1 color-grey-700" style="font-size: 14px">
                           {{
-                          item.Municipality?.name +
+                          item?.Municipality?.name +
                           ', ' +
-                          item.Province?.name +
+                          item?.Province?.name +
                           ', ' +
-                          utilsService.parserLanguage(item.Country.name, language)
+                          utilsService.parserLanguage(item?.Country?.name, language)
                           }}
                         </p>
 
                         <p class="mt-2" ngClass.gt-sm="mat-body-2" ngClass.lt-md="mat-caption">
                           {{ 'Order: ' | translate }}
 
-                          {{ item.order || '9523594C' }}
+                          {{ item?.order || '9523594C' }}
                         </p>
                       </div>
                       <div

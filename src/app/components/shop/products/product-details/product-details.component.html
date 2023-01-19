@@ -75,7 +75,7 @@
               <div *ngIf="product.offerValue">
                 <h4 class="mb-10">
                   <del>{{ product | parsePriceProduct }}</del>
-                  <span>{{ product.offerValue }}<span *ngIf="product.isPercent" class="mx-0 px-0">% </span></span>
+                  <span><span class="mx-0 px-0">-</span><span *ngIf="product.isPercent" class="mx-0 px-0">{{ product.offerValue }}% </span><span *ngIf="!product.isPercent" class="mx-0 px-0">${{ product.offerValue }}</span></span>
                 </h4>
                 <h3 class="price mb-10">{{ product | parsePriceProduct: 'offert' }}</h3>
               </div>
