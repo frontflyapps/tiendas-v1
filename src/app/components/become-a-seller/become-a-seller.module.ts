@@ -21,6 +21,7 @@ import { GuachosImagePickerModule } from 'guachos-image-picker';
 import { BankService } from '../../core/services/bank/bank.service';
 import { MatDivider, MatDividerModule } from '@angular/material/divider';
 import { GuachosImageModule } from '../shared/guachos-image/guachos-image.module';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 // import { GoogleMapsModule } from '@angular/google-maps';
 @NgModule({
@@ -46,6 +47,7 @@ import { GuachosImageModule } from '../shared/guachos-image/guachos-image.module
     MatDividerModule,
     GuachosImagePickerModule,
     GuachosImageModule,
+    MatCheckboxModule,
   ],
   providers: [BankService],
 })

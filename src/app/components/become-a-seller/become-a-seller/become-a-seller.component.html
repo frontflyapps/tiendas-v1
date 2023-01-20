@@ -14,6 +14,7 @@
       <mat-horizontal-stepper #stepper [linear]="'true'" color='accent' labelPosition='bottom'>
         <mat-step [stepControl]='basicForm'>
           <ng-template matStepLabel>{{ 'Información de su Negocio' | translate }}</ng-template>
+
           <div [formGroup]='basicForm' fxLayout='column' fxLayoutAlign='start stretch' fxLayoutGap='16px'>
             <p class='mat-body-2 uppercase mb-1'>
               {{ 'Logo del negocio' | translate }}*
@@ -614,6 +615,10 @@
             </mat-error>
           </mat-form-field>
 
+          <mat-checkbox class='mb-4 mt-2' [formControl]="checkboxForm.controls['checked']">
+            {{'Al seleccionar esta opción usted acepta nuestos ' | translate}} <a href="/term-conditions"><strong>{{'Términos y condiciones' | translate}}</strong></a>
+          </mat-checkbox>
+
           <!-- <p class="mat-body-2 uppercase mb-1">
             {{ 'Número de tarjeta banco' | translate }}
           </p>
@@ -644,7 +649,7 @@
             <button class='uppercase' mat-button matStepperPrevious>{{ 'Anterior' | translate }}</button>
             <button
               (click)='onCreateBusiness()'
-              [disabled]='sellerForm.invalid'
+              [disabled]='(sellerForm.invalid) || !(checkboxForm.get("checked").value)'
               class='uppercase'
               color='primary'
               mat-raised-button
