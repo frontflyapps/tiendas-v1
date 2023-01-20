@@ -22,7 +22,11 @@ export class TermsConditionsComponent implements OnInit {
       this.language = data.lang;
     });
     this.termService.getTermsConditions().subscribe((data: any) => {
-      this.text = data?.data[0].text;
+      data?.data.map((item) => {
+        if (item.status === 'enabled') {
+          this.text = item.text;
+        }
+      });
     });
   }
 

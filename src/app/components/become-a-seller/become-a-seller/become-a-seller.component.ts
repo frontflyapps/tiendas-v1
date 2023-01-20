@@ -25,6 +25,7 @@ export class BecomeASellerComponent implements OnInit {
   basicForm: FormGroup;
   locationForm: FormGroup;
   sellerForm: FormGroup;
+  checkboxForm: FormGroup;
   firstStep: any;
   logo = environment.logoWhite;
   secondStep: any;
@@ -114,6 +115,9 @@ export class BecomeASellerComponent implements OnInit {
     this.basicForm.valueChanges.subscribe((data) => {
       this.isBasicInfoChanged = true;
     });
+    this.checkboxForm.valueChanges.subscribe((item) => {
+      console.log(this.checkboxForm.value);
+    });
   }
 
   buildForm() {
@@ -170,6 +174,9 @@ export class BecomeASellerComponent implements OnInit {
       ci: [this.thirdStep ? this.thirdStep.ci : null, [Validators.required, Validators.minLength(11), Validators.maxLength(11)]],
     });
 
+    this.checkboxForm = this.fb.group({
+      checked: [false, [Validators.required]]
+    });
     this.basicForm.controls['cupBankBranch'].valueChanges.subscribe((data) => {
       console.log(this.basicForm);
     });
