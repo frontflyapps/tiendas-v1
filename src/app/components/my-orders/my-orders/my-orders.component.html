@@ -213,7 +213,7 @@
 
                     <div fxFlex="100" fxFlex.gt-md="50">
                       <h2 class="mat-title mb-0">
-                        {{ utilsService.parserLanguage(paymentItem.Product.name, language) }}
+                        {{ utilsService.parserLanguage(paymentItem?.Product?.name, language) }}
                       </h2>
                       <div class="my-2">
                         <guachos-rating
@@ -222,13 +222,13 @@
                         ></guachos-rating>
                       </div>
                       <h3 class="price">
-                        {{ paymentItem.price | currency: selectedOrder.currency }}
+                        {{ paymentItem?.price | currency: selectedOrder.currency }}
                         <span class="color-grey-600" style="width: 28px; font-size: 17px; margin-top: -5px"
-                        >{{ 'x' + paymentItem.quantity }}
+                        >{{ 'x' + paymentItem?.quantity }}
                         </span>
                       </h3>
                       <p class="description mb-2">
-                        {{ utilsService.parserLanguage(paymentItem.Product.shortDescription, language) }}
+                        {{ utilsService.parserLanguage(paymentItem?.Product?.shortDescription, language) }}
                       </p>
 
                       <!-- *ngIf="this.selectedOrder.status == 'confirmed' || this.selectedOrder.status == 'delivered' " -->
@@ -333,7 +333,7 @@
                       {{ 'Country' | translate }}
                     </span>
                     <span>
-                      {{ utilsService.parserLanguage(selectedOrder.Country.name, language) }}
+                      {{ utilsService.parserLanguage(selectedOrder?.Country?.name, language) }}
                     </span>
                   </div>
 
@@ -389,7 +389,7 @@
                         {{ 'Municipio' | translate }}
                       </span>
                       <span>
-                        {{ this.selectedOrder.Municipality?.name }}
+                        {{ this.selectedOrder?.Municipality?.name }}
                       </span>
                     </div>
 
@@ -407,7 +407,7 @@
                         {{ 'Provincia' | translate }}
                       </span>
                       <span>
-                        {{ this.selectedOrder.Province?.name }}
+                        {{ this.selectedOrder?.Province?.name }}
                       </span>
                     </div>
                   </ng-container>
@@ -460,7 +460,7 @@
                       {{ 'Client' | translate }}
                     </span>
                     <span>
-                      {{ this.selectedOrder.name + ' ' + (this.selectedOrder.lastname || '') }}
+                      {{ this.selectedOrder?.name + ' ' + (this.selectedOrder?.lastname || '') }}
                     </span>
                   </div>
                 </div>
