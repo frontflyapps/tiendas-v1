@@ -239,7 +239,7 @@ export class DialogSetLocationComponent implements OnInit, OnDestroy {
 
   private getProvincesById(id) {
     this.locationService.getProvinceById(id).subscribe((responseData) => {
-      this.allMunicipalityByProvince = responseData.data.Municipalities;
+      this.allMunicipalityByProvince = responseData.data?.Municipalities;
     });
   }
 

@@ -5,14 +5,14 @@
       <mat-list-item>
         <mat-icon> person</mat-icon>
         &nbsp;
-        <span class="mat-body-2" style="font-size: 19px"> {{ 'Hola' | translate }}, </span>
+        <span class="mat-body-2" style="font-size: 19px"> {{ '¡Hola' | translate }}, </span>
         &nbsp;
         <span *ngIf="loggedInUser" class="mat-body-2" style="font-size: 19px">
-          {{ loggedInUser.name }}
+          {{ loggedInUser.name }}!
         </span>
 
         <a *ngIf="!loggedInUser" class="mat-body-2" href="/my-account" style="font-size: 19px">
-          {{ 'Inicia Sesión' | translate }}
+          {{ 'Inicia Sesión' | translate }}!
         </a>
 
         <span (click)="start.toggle()" class="sidebar-close-btn">
@@ -29,7 +29,7 @@
 <!--              <mat-icon class="mr-3">card_membership</mat-icon>-->
 <!--              <span class="mat-body-2" style="font-size: 15px">{{ 'Crea tu negocio' | translate }}</span>-->
 <!--            </a>-->
-      <div (click)='createYourBusiness()' class='link-nav-a'>
+      <div (click)='createYourBusiness()' class='link-nav-a' *ngIf='businessConfig?.BusinessId === 1'>
         <mat-icon class='mr-3'>card_membership</mat-icon>
         <span class='mat-body-2' style='font-size: 15px'>{{ 'Crea tu negocio' | translate }}</span>
       </div>
@@ -95,7 +95,8 @@
          *ngIf='loggedInUser && (loggedInUserService.isAdminOrOwnerUser() || loggedInUserService.isMessengerUser())'
          class='link-nav-a'
          mat-list-item>
-        {{ 'Ir a la administración' | translate }}
+        <mat-icon>edit</mat-icon>
+        <span class='ml-3'>{{ 'Ir a la administración' | translate }}</span>
       </a>
 
       <a (click)='onLogout()' *ngIf='loggedInUser' class='link-nav-a' mat-list-item>
@@ -179,7 +180,7 @@
               <span></span>
               <span></span> -->
               <div class="nl-province">{{ 'Comprar en...' | translate }}</div>
-              <div class="nl-municipality">{{ 'Escoger tienda' | translate }}</div>
+              <div class="nl-municipality">{{ 'Escoger ubicación' | translate }}</div>
             </div>
           </div>
 

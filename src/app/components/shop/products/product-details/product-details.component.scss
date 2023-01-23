@@ -1,6 +1,14 @@
 @import "../../../../../assets/scss/theme/variables";
 @import "../../../../../assets/scss/mixins/breakpoints";
 
+.icon-common{
+  width: 40px;
+}
+.icon-common-bicon{
+  width: 70px;
+  height: 40px;
+  line-height: 40px !important;
+}
 .container-product-details {
   max-width: 1360px;
   margin: 0 auto;
