@@ -83,17 +83,16 @@
   <ng-container *ngIf="countProducts == 0 && !loadingAllProduct">
     <h3 class="mat-title py-4" style="text-align: center">{{ 'No hay ningún producto disponible' | translate }}</h3>
   </ng-container>
-
-  <!-- ---------------------- Best Seller Items -------------------- -->
-  <section *ngIf="bestSellersProducts.length">
+  <!-- ---------------------- Featured Items ----------------------- -->
+  <section *ngIf="featuredProducts.length > 0">
     <div class="container">
       <div class="products sec-padding">
         <div class="products-four">
-          <h3 style="color: initial">{{ 'Productos más vendidos' | translate }}</h3>
-          <app-product-carousel *ngIf="!loadingBestSellers" [btnColor]="'accent'" [products]="bestSellersProducts">
+          <h3 style="color: initial">{{ 'Productos destacados' | translate }}</h3>
+          <app-product-carousel *ngIf="!loadingFeatured" [btnColor]="'accent'" [products]="featuredProducts">
           </app-product-carousel>
-          <div *ngIf="loadingBestSellers" class="my-3">
-            <app-skeleton-loading-cards *ngIf="loadingBestSellers" [setConfiguration]="{ xs: 1, sm: 2, md: 3, lg: 4 }">
+          <div *ngIf="loadingFeatured" class="my-3">
+            <app-skeleton-loading-cards *ngIf="loadingFeatured" [setConfiguration]="{ xs: 1, sm: 2, md: 3, lg: 4 }">
             </app-skeleton-loading-cards>
           </div>
         </div>
@@ -145,16 +144,16 @@
     </div>
   </section>
 
-  <!-- ---------------------- Featured Items ----------------------- -->
-  <section *ngIf="featuredProducts.length > 0">
+  <!-- ---------------------- Best Seller Items -------------------- -->
+  <section *ngIf="bestSellersProducts.length">
     <div class="container">
       <div class="products sec-padding">
         <div class="products-four">
-          <h3 style="color: initial">{{ 'Productos destacados' | translate }}</h3>
-          <app-product-carousel *ngIf="!loadingFeatured" [btnColor]="'accent'" [products]="featuredProducts">
+          <h3 style="color: initial">{{ 'Productos más vendidos' | translate }}</h3>
+          <app-product-carousel *ngIf="!loadingBestSellers" [btnColor]="'accent'" [products]="bestSellersProducts">
           </app-product-carousel>
-          <div *ngIf="loadingFeatured" class="my-3">
-            <app-skeleton-loading-cards *ngIf="loadingFeatured" [setConfiguration]="{ xs: 1, sm: 2, md: 3, lg: 4 }">
+          <div *ngIf="loadingBestSellers" class="my-3">
+            <app-skeleton-loading-cards *ngIf="loadingBestSellers" [setConfiguration]="{ xs: 1, sm: 2, md: 3, lg: 4 }">
             </app-skeleton-loading-cards>
           </div>
         </div>
