@@ -528,12 +528,12 @@
               onerror="this.onerror=null;this.src='assets/images/noImage.jpg';"
             />
 
-            <span class="ml-2">{{ product?.Business?.name }}</span>
+            <span class="ml-2">{{ product?.Business?.name | parseLang: utilsService.getLang()}}</span>
           </a>
           <a class="list-compare-link no-decoration" fxLayout="row" fxLayoutAlign="start center">
-            <mat-icon class="mr-2"> location_on</mat-icon>
+            <mat-icon class="mr-2 icon-common"> location_on</mat-icon>
             <div fxLayout="column">
-              <div>{{ product?.Business?.address }}.</div>
+              <div>{{ product?.Business?.address | parseLang: utilsService.getLang() }}.</div>
               <div>
                 <strong>
                   {{ product?.Business?.Province?.name | parseLang: utilsService.getLang() }},
@@ -544,11 +544,11 @@
           </a>
 
           <a class="list-compare-link" fxLayout="row" fxLayoutAlign="start center">
-            <mat-icon class="mr-2"> phone</mat-icon>
+            <mat-icon class="mr-2 icon-common"> phone</mat-icon>
             <a href="tel:{{ product?.Business?.cellphone }}">{{ product?.Business?.cellphone }}</a>
           </a>
           <a class="list-compare-link" fxLayout="row" fxLayoutAlign="start center">
-            <mat-icon class="mr-2"> mail</mat-icon>
+            <mat-icon class="mr-2 icon-common"> mail</mat-icon>
             <a class='email-text' href="mailto:{{product?.Business?.email}}">{{ product?.Business?.email }}</a>
           </a>
           <mat-divider class="my-2"></mat-divider>
