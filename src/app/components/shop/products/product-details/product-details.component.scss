@@ -2,7 +2,12 @@
 @import "../../../../../assets/scss/mixins/breakpoints";
 
 .icon-common{
-  width: 30px;
+  width: 40px;
+}
+.icon-common-bicon{
+  width: 70px;
+  height: 40px;
+  line-height: 40px !important;
 }
 .container-product-details {
   max-width: 1360px;
