@@ -248,7 +248,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
 
     // Open location dialog when app start
     const location = JSON.parse(localStorage.getItem('location'));
-    if (!location.province) {
+    if (!location?.province) {
       this.openSetLocation();
     }
   }
@@ -614,9 +614,9 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
             maxHeight: '100vh',
             width: '35rem',
             data: {
-              provinceData: location.province,
-              municipalityData: location.municipality,
-              businessData: location.business,
+              provinceData: location?.province,
+              municipalityData: location?.municipality,
+              businessData: location?.business,
             },
           });
           dialogRef.afterClosed().subscribe((result) => {
@@ -629,7 +629,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
     });
 
     // Initiate the tour
-    if (!localStorage.getItem('location-attention') && location.province != null) {
+    if (!localStorage.getItem('location-attention') && location?.province != null) {
       this.tour.start();
     }
   }
