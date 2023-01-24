@@ -29,7 +29,7 @@ export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
   _unsubscribeAll: Subject<any>;
   formSearch: UntypedFormControl = new UntypedFormControl([null]);
   isHandset = false;
-  urlImage = environment.apiUrl;
+  urlImage = environment.imageUrl;
   innerWidth;
   applyStyle = false;
   selectedOrder = null;
