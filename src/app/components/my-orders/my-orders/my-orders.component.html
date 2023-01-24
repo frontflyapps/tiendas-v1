@@ -63,12 +63,11 @@
                           </span>
                         </div>
 
-                        <p class="mat-body-1 color-grey-700" style="font-size: 14px">
-<!--                          {{ item.address }}-->
+                        <p class="mat-body-1 color-grey-700" style="font-size: 14px" *ngIf="item.address">
                           {{ item?.address?.street }}{{ item?.address?.number }}{{ item?.address?.between }}
                         </p>
 
-                        <p *ngIf="item.CountryId != 59" class="mat-body-1 color-grey-700" style="font-size: 14px">
+                        <p *ngIf="item.CountryId != 59 && item.Municipality && item.Province" class="mat-body-1 color-grey-700" style="font-size: 14px">
                           {{
                           item?.city +
                           ', ' +
@@ -77,8 +76,7 @@
                           utilsService.parserLanguage(item?.Country?.name, language)
                           }}
                         </p>
-
-                        <p *ngIf="item.CountryId == 59" class="mat-body-1 color-grey-700" style="font-size: 14px">
+                        <p *ngIf="item.CountryId == 59 && item.Municipality && item.Province" class="mat-body-1 color-grey-700" style="font-size: 14px">
                           {{
                           item?.Municipality?.name +
                           ', ' +
