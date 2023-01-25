@@ -220,7 +220,7 @@
                         ></guachos-rating>
                       </div>
                       <h3 class="price">
-                        {{ paymentItem?.price | currency: selectedOrder.currency }}
+                        {{ paymentItem?.price | currency: selectedOrder.productCurrency }}
                         <span class="color-grey-600" style="width: 28px; font-size: 17px; margin-top: -5px"
                         >{{ 'x' + paymentItem?.quantity }}
                         </span>
