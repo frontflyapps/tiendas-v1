@@ -189,10 +189,10 @@
                       />
                       <a
                         [queryParams]="{
-                          productId: paymentItem?.ProductId,
-                          stockId: paymentItem?.StockId,
-                name: paymentItem?.name?.es,
-                sharedImage: paymentItem?.sharedImage
+                          productId: paymentItem?.Product?.Stocks[0]?.uuid,
+                          stockId: paymentItem?.Product?.Stocks[0]?.uuid,
+                          name: paymentItem?.name?.es,
+                          sharedImage: paymentItem?.sharedImage
                         }"
                         [routerLink]="['/product']"
                         class="product-link"
