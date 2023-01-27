@@ -158,7 +158,6 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
 
       this.newSearchMethod(this.queryProduct.page);
     });
-
   }
 
   ngOnInit() {
@@ -324,7 +323,6 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
             this.allProducts = data.data.slice(0, this.initLimit * (this.numberOfSearch + 1));
             this.allProductsResponse = data.data;
             this.noResults = data.info;
-            console.log('allProductsResponse length: ' + this.allProductsResponse.length);
             this.isStarting = false;
             setTimeout(() => {
               document.body.scrollTop = 0; // Safari
@@ -415,7 +413,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
   }
 
   getCountPage(total) {
-      return total % 21 ? Math.ceil(total / 21) : (total / 21 > 0 ? total / 21 : 1);
+      return total % this.initLimit ? Math.ceil(total / this.initLimit) : (total / this.initLimit > 0 ? total / this.initLimit : 1);
   }
   newSearchMethod(page) {
     let currentPage = page > 0 ? page - 1 : page;
@@ -447,7 +445,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
     }
 
     const body: any = {
-      limit: 21,
+      limit: this.initLimit,
       offset: this.queryProduct?.offset ? +this.queryProduct?.offset : 0,
       page: this.queryProduct?.page ? +this.queryProduct?.page : 0,
       total: this.queryProduct?.total ? +this.queryProduct?.total : 0,
@@ -469,15 +467,10 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
           // this.loading = true;
 
             this.allProducts = data.data;
-            this.totalPages = data.meta.total / 21;
-            if (data.meta.total % 21) {
+            this.totalPages = data.meta.total / this.initLimit;
+            if (data.meta.total % this.initLimit) {
               this.totalPages++;
             }
-            // this.allProducts = data.data.slice(0, this.initLimit * (this.numberOfSearch + 1));
-            // this.allProductsResponse = data.data;
-            // this.noResults = data.info;
-            // console.log('allProductsResponse length: ' + this.allProductsResponse.length);
-            // this.isStarting = false;
             setTimeout(() => {
               document.body.scrollTop = 0; // Safari
               document.documentElement.scrollTop = 0; // Other
@@ -504,7 +497,6 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
     if (this.numberOfSearch % 3 > 0) {
       this.allProducts = this.allProductsResponse.slice(0, this.initLimit * (this.numberOfSearch + 1));
       this.queryProduct.offset = this.initLimit;
-      console.log('limit', this.queryProduct.limit);
     } else {
       // this.numberOfSearch = this.numberOfSearchBase;
       this.queryProduct.page++;
@@ -617,11 +609,8 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
       let nowLocation = JSON.parse(localStorage.getItem('location'));
       this.setLocationData(newLocation);
       if ( newLocation ) {
-        // console.log(nowLocation?.province?.id !== newLocation.province?.id);
-        // console.log(nowLocation?.municipality?.id !== newLocation.municipality?.id);
         if ( nowLocation?.province?.id !== newLocation.province?.id || nowLocation?.municipality?.id !== newLocation.municipality?.id ) {
           this.allProducts = [];
-          // console.log('entro');
           this.searchProducts();
         }
 
