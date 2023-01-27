@@ -115,9 +115,6 @@ export class BecomeASellerComponent implements OnInit {
     this.basicForm.valueChanges.subscribe((data) => {
       this.isBasicInfoChanged = true;
     });
-    this.checkboxForm.valueChanges.subscribe((item) => {
-      console.log(this.checkboxForm.value);
-    });
   }
 
   buildForm() {
@@ -176,9 +173,6 @@ export class BecomeASellerComponent implements OnInit {
 
     this.checkboxForm = this.fb.group({
       checked: [false, [Validators.required]]
-    });
-    this.basicForm.controls['cupBankBranch'].valueChanges.subscribe((data) => {
-      console.log(this.basicForm);
     });
   }
 
@@ -261,9 +255,5 @@ export class BecomeASellerComponent implements OnInit {
         this.spinner.hide();
       },
     );
-  }
-
-  temp() {
-    console.log('step 1111111', this.basicForm.value);
   }
 }

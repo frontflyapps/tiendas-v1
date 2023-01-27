@@ -24,25 +24,25 @@ import { DisplayOption, RestrictionFilter } from 'guachos-general-autocomplete/u
   encapsulation: ViewEncapsulation.None,
 })
 export class DialogSetLocationComponent implements OnInit, OnDestroy {
-  _unsubscribeAll: Subject<any>;
 
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public dialogRef: MatDialogRef<DialogSetLocationComponent>,
+    private fb: UntypedFormBuilder,
+    private locationService: LocationService,
+    public translate: TranslateService,
+  ) {
+    this.storageLocation = data;
+  }
+  _unsubscribeAll: Subject<any>;
   innerWidth: any;
   applyStyle = false;
   urlProvince = environment.apiUrl + 'province';
-  urlProvinceId = this.urlProvince + '/:id';
   urlMunicipality = environment.apiUrl + 'municipality';
-  urlMunicipalityId = this.urlMunicipality + '/:id';
   public locationForm: UntypedFormGroup;
   storageLocation: any;
-  // public province: FormControl = new FormControl(null, [Validators.required]);
-  // public municipality: FormControl = new FormControl(null, []);
-  // public business: FormControl = new FormControl(null, []);
   public allProvinces: any[];
   public allMunicipalityByProvince: any[];
-  public allBusiness: any[];
-  filteredOptions: Observable<string[]>;
-  filteredProvinces: Observable<string[]>;
-  filteredMunicipalities: Observable<string[]>;
   private dataResult: any = {};
 
   public displayOptions: DisplayOption = {
@@ -54,30 +54,19 @@ export class DialogSetLocationComponent implements OnInit, OnDestroy {
     ]
   };
   public eventDisplayRestrictions: RestrictionFilter[];
+  private static valueSelected(): ValidatorFn {
+    return (c: AbstractControl): { [key: string]: boolean } | null => {
+      if (typeof c === 'object' && c.value?.id) {
+        return null;
+      } else {
+        return { match: true };
+      }
+    };
+  }
 
 
   compare(f1: any, f2: any) {
     return f1?.name === f2?.name;
-  }
-
-  constructor(
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    public dialogRef: MatDialogRef<DialogSetLocationComponent>,
-    private fb: UntypedFormBuilder,
-    private locationService: LocationService,
-    public translate: TranslateService,
-  ) {
-    this.storageLocation = data;
-    // this.getProvinces();
-
-    // this.initSubsLocation();
-
-    // this.filteredOptions = this.locationForm.get('business').valueChanges.pipe(
-    //   startWith(''),
-    //   debounceTime(250),
-    //   map((name) => (name ? this._filterCountriesCode(name) : this.allBusiness?.slice())),
-    // );
-    // this.initLocation();
   }
 
   @HostListener('window:resize', ['$event'])
@@ -95,10 +84,6 @@ export class DialogSetLocationComponent implements OnInit, OnDestroy {
         this.onSelectProvince(item);
       }
     });
-    // this.locationForm.get('municipality').valueChanges.subscribe((item) => {
-    //   console.log(this.locationForm.value);
-    // });
-    // this.getProvinces();
   }
 
   private initForm() {
@@ -123,93 +108,6 @@ export class DialogSetLocationComponent implements OnInit, OnDestroy {
         },
       ];
     }
-    // if (this.locationForm.get('municipality').value) {
-    //   this.getBusiness(this.locationForm.get('municipality').value.id, null);
-    // }
-    // if (!this.locationForm.get('municipality').value && this.locationForm.get('province').value) {
-    //   this.getBusiness(null, this.locationForm.get('province').value.id);
-    // }
-    /*--------------------------*/
-    // this.filteredProvinces = this.locationForm.get('province').valueChanges.pipe(
-    //   startWith(''),
-    //   debounceTime(250),
-    //   map((name) => (name ? this._filterProvinces(name) : this.allProvinces?.slice())),
-    // );
-    // this.filteredMunicipalities = this.locationForm.get('municipality').valueChanges.pipe(
-    //   startWith(''),
-    //   debounceTime(250),
-    //   map((name) => (name ? this._filterMunicipalities(name) : this.allMunicipalityByProvince?.slice())),
-    // );
-  }
-
-  private static valueSelected(): ValidatorFn {
-    return (c: AbstractControl): { [key: string]: boolean } | null => {
-      if (typeof c === 'object' && c.value?.id) {
-        return null;
-      } else {
-        return { match: true };
-      }
-    };
-  }
-
-  private _filterProvinces(province: string): any[] {
-    if (typeof province === 'string') {
-      const filterValue = province.toLowerCase();
-      return this.allProvinces.filter((province: any) => province.name.toLowerCase().includes(filterValue));
-    }
-  }
-
-  private _filterMunicipalities(municipality: string): any[] {
-    if (typeof municipality === 'string') {
-      const filterValue = municipality.toLowerCase();
-      return this.allMunicipalityByProvince.filter((municipality: any) =>
-        municipality.name.toLowerCase().includes(filterValue),
-      );
-    }
-  }
-
-  private _filterBusiness(business: string): any[] {
-    if (typeof business === 'string') {
-      const filterValue = business.toLowerCase();
-      return this.allBusiness.filter((business: any) => business.name.toLowerCase().includes(filterValue));
-    }
-  }
-
-  public displayFn(ele: any): string {
-    return ele?.name ? ele.name : '';
-  }
-
-  // initLocation() {
-  //   if (this.storageLocation) {
-  //     this.locationForm.get('province').setValue(this.storageLocation.provinceData);
-  //     this.locationForm.get('municipality').setValue(this.storageLocation.municiplity);
-  //     this.locationForm.get('business').setValue(this.storageLocation.businessData);
-  //   }
-  // }
-
-  // initSubsLocation() {
-  //   this.locationService.location$.subscribe((newLocation) => {
-  //     this.setLocationData(newLocation);
-  //   });
-  // }
-
-  // setLocationData(locationOnLocalStorage) {
-  //   this.province.setValue(locationOnLocalStorage.province);
-  //   this.municipality.setValue(locationOnLocalStorage.municipality);
-  //   this.business.setValue(locationOnLocalStorage.business);
-  //   console.log(this.municipality.value, this.province.value, this.business.value);
-  // }
-
-  subsForm() {
-    // this.locationForm.get('province').valueChanges.subscribe((value) => {
-    //   if (value?.id) {
-    //     this.getProvincesById(value?.id);
-    //     // this.getBusiness(null, value?.id);
-    //   }
-    // });
-    // this.locationForm.get('municipality').valueChanges.subscribe((value) => {
-    //   if (value?.id) this.getBusiness(value?.id, null);
-    // });
   }
 
   public setDataResponse() {
@@ -219,22 +117,12 @@ export class DialogSetLocationComponent implements OnInit, OnDestroy {
     return this.dataResult;
   }
 
-  onClose() {
-    this.dialogRef.close(this.setDataResponse());
-  }
-
   ngOnDestroy(): void {
     if (this._unsubscribeAll) {
       this._unsubscribeAll.next('');
       this._unsubscribeAll.complete();
       this._unsubscribeAll.unsubscribe();
     }
-  }
-
-  private getProvinces() {
-    this.locationService.getProvince().subscribe((responseData) => {
-      this.allProvinces = responseData.data;
-    });
   }
 
   private getProvincesById(id) {
@@ -250,45 +138,5 @@ export class DialogSetLocationComponent implements OnInit, OnDestroy {
         filter: 'filter[$and][ProvinceId]',
       },
     ];
-  }
-
-  // private getMunicipalityById(id) {
-  //   this.locationService.getMunicipalityId(id).subscribe((responseData) => {
-  //     this.allMunicipalityByProvince = responseData.data;
-  //   });
-  // }
-
-  // private getBusiness(municipalityId: number, provinceId: number) {
-  //   let params = { municipalityId: null, provinceId: null };
-  //   this.allBusiness = [];
-  //   if (municipalityId) {
-  //     params.municipalityId = municipalityId;
-  //   }
-  //   if (provinceId) {
-  //     params.provinceId = provinceId;
-  //   }
-  //   this.businessService.getAllPublicBusiness(params).subscribe((responseData) => {
-  //     this.allBusiness = responseData.data;
-  //   });
-  // }
-
-  public municipalityChange() {
-    this.locationForm.get('business')?.setValue(null);
-  }
-  public provinceChange() {
-    this.locationForm.get('municipality').setValue(null);
-    this.locationForm.get('business')?.setValue(null);
-  }
-  clearProvince() {
-    this.locationForm.get('province').setValue(null);
-    this.locationForm.get('municipality').setValue(null);
-    // this.locationForm.get('business').setValue(null);
-  }
-  clearMunicipality() {
-    this.locationForm.get('municipality').setValue(null);
-    // this.locationForm.get('business').setValue(null);
-  }
-  clearBusiness() {
-    // this.locationForm.get('business').setValue(null);
   }
 }
