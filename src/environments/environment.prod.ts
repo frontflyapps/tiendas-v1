@@ -12,7 +12,7 @@ export const environment = {
   logoWhite: 'assets/images/guajiritos/guajiritos-Logo-blanco.png',
   logoFooter: 'assets/images/guajiritos/guajiritos-Logo-blanco.png',
 
-  limitSearch : 30,
+  limitSearch : 42,
 
 
   timeToResetSession: 14400000, // (4hrs) Time to reset the session (ms)
