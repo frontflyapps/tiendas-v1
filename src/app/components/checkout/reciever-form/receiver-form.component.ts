@@ -141,7 +141,6 @@ export class ReceiverFormComponent implements OnInit, OnDestroy {
         this.form.patchValue(this.defaultContact[0]);
         this.form.get('dni').setValue(this.defaultContact[0]?.identification);
         this.form.markAllAsTouched();
-        console.log(this.form);
       }
     });
   }
