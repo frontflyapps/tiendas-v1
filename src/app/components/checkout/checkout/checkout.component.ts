@@ -790,8 +790,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   subsToTransfermovilChange() {
     this.form.get('paymentType').valueChanges.subscribe((change) => {
-      if (change === 'transfermovil') {
+      if (change === 'transfermovil' && this.cart.market === 'international') {
         this.form.get('currency').setValue('USD');
+      } else if (change === 'transfermovil' && this.cart.market === 'national') {
+        this.form.get('currency').setValue('CUP');
       }
     });
   }
