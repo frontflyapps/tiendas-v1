@@ -105,7 +105,8 @@
                                                         businessConfig?.contactsFooter?.socialNetworks?.twitter ||
                                                         businessConfig?.contactsFooter?.socialNetworks?.linkedin ||
                                                         businessConfig?.contactsFooter?.socialNetworks?.youtube ||
-                                                        businessConfig?.contactsFooter?.socialNetworks?.instagram'>
+                                                        businessConfig?.contactsFooter?.socialNetworks?.instagram ||
+                                                        businessConfig?.contactsFooter?.socialNetworks?.telegram'>
             <li fxLayoutAlign='center center' *ngIf='businessConfig?.contactsFooter?.socialNetworks?.facebook'>
                 <a class='icon-redes' fxLayoutAlign='center center' [href]='businessConfig?.contactsFooter?.socialNetworks?.facebook' target='_blank'>
                     <!--          <i class="fab fa-facebook-f" style="font-size: 18px"></i>-->
@@ -138,6 +139,13 @@
                 <a class="icon-redes" fxLayoutAlign="center center" [href]="businessConfig?.contactsFooter?.socialNetworks?.instagram" target="_blank">
                     <!--          <i class="fab fa-instagram" style="font-size: 18px"></i>-->
                     <img alt="Facebook logo" src="assets/images/social-media/outline/logo-instagram.svg" style="filter: invert(1);">
+                </a>
+            </li>
+
+            <li fxLayoutAlign="center center" *ngIf='businessConfig?.contactsFooter?.socialNetworks?.telegram'>
+                <a class="icon-redes" fxLayoutAlign="center center" [href]="businessConfig?.contactsFooter?.socialNetworks?.telegram" target="_blank">
+                              <i class="fab fa-facebook" style="font-size: 18px"></i>
+<!--                    <img alt="Facebook logo" src="assets/images/social-media/outline/logo-instagram.svg" style="filter: invert(1);">-->
                 </a>
             </li>
 
