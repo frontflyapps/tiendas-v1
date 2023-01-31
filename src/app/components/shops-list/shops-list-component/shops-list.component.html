@@ -1,6 +1,7 @@
 <div class='list-header'>
 <!--  <img fxHide.xs fxHide.sm class='banner-shop-img' [src]='bannerDefault'>-->
-  <img fxShow.xs fxShow.sm  class='banner-shop-img' [src]='businessConfig?.imageBanner1 ? apiURL + businessConfig?.imageBanner1 : bannerDefault'>
+  <img fxShow.xs fxShow.sm  class='banner-shop-img' fxHide.xs fxHide.sm [src]='businessConfig?.imageBanner1 ? apiURL + businessConfig?.imageBanner1 : bannerDefault'>
+  <img fxShow.xs fxShow.sm  class='banner-shop-img' fxHide fxShow.xs fxShow.sm [src]='businessConfig?.imageBanner1Xs ? apiURL + businessConfig?.imageBanner1Xs : bannerDefault'>
 </div>
 <div class='container mt-5'>
   <div class='search-shops' fxLayout='column' fxLayoutAlign='center center'>
