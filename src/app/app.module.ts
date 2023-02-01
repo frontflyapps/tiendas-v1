@@ -21,6 +21,7 @@ import { AppService } from './app.service';
 import { lastValueFrom, switchMap } from 'rxjs';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { UpdateControllerModule } from './components/shared/updates-controller/update-controller.module';
 
 registerLocaleData(localeEs, 'es');
 
@@ -29,6 +30,7 @@ registerLocaleData(localeEs, 'es');
   imports: [
     NgxSpinnerModule,
     BrowserModule,
+    UpdateControllerModule,
     HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
