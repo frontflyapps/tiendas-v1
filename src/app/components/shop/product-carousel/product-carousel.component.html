@@ -54,24 +54,38 @@
             </a>
 
             <div class="price">
-              <ng-container *ngIf="product.offerValue">
-                <p class="deletePrice m-0">
-                  <del>{{ product | parsePriceProduct }}</del>
-                </p>
-                <p class="mat-body-2 m-0" matTooltip="{{ 'Existe una oferta asociada a este producto' | translate }}">
-                  {{ product | parsePriceProduct: 'offert' }}
-                </p>
-              </ng-container>
-              <ng-container *ngIf="!product.offerValue">
-                <p class="mat-body-2 m-0">
-                  {{ product | parsePriceProduct }}
-                </p>
-                <p class="mat-body-2 m-0" style="font-size: 15px">
-                  {{ 'Desde ' | translate }}
-                  {{ product.minSale }}
-                  {{ ' unidad' | translate }}
-                </p>
-              </ng-container>
+              <a
+                [queryParams]="{ productId: product.id, stockId: product?.Stock?.id,
+                name: product?.name?.es,
+                sharedImage: product?.sharedImage }"
+                [routerLink]="['/product']"
+                class="product-link"
+              >
+                <ng-container *ngIf="product.offerValue">
+                  <p class="deletePrice m-0">
+                    <del>{{ product | parsePriceProduct }}</del>
+                    <span class='offer ml-2'>
+                    <span class="mx-0 px-0">-</span>
+                    <span *ngIf="product.isPercent" class="mx-0 px-0">{{ product.offerValue }}% </span>
+                    <span *ngIf="!product.isPercent" class="mx-0 px-0">${{ product.offerValue }}</span>
+                  </span>
+                  </p>
+                  <p class="mat-body-2 m-0" matTooltip="{{ 'Existe una oferta asociada a este producto' | translate }}">
+                    {{ product | parsePriceProduct: 'offert' }}
+                  </p>
+                </ng-container>
+                <ng-container *ngIf="!product.offerValue">
+                  <p class="mat-body-2 m-0">
+                    {{ product | parsePriceProduct }}
+                  </p>
+                  <p class="mat-body-2 m-0" style="font-size: 15px">
+                    {{ 'Desde ' | translate }}
+                    {{ product.minSale }}
+                    {{ ' unidad' | translate }}
+                  </p>
+                </ng-container>
+              </a>
+
             </div>
             <button
               (click)="onAddToCart(product)"
@@ -173,6 +187,11 @@
               <ng-container *ngIf="product.offerValue">
                 <p class="deletePrice">
                   <del>{{ product | parsePriceProduct }}</del>
+                  <span class='offer ml-2'>
+                    <span class="mx-0 px-0">-</span>
+                    <span *ngIf="product.isPercent" class="mx-0 px-0">{{ product.offerValue }}% </span>
+                    <span *ngIf="!product.isPercent" class="mx-0 px-0">${{ product.offerValue }}</span>
+                  </span>
                 </p>
                 <p class="mat-body-2" matTooltip="{{ 'Existe una oferta asociada a este producto' | translate }}">
                   {{ product | parsePriceProduct: 'offert' }}
