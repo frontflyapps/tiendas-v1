@@ -57,7 +57,7 @@ export const environment = {
   mainDomain: '.tiendalocal.com',
 
   tokenBusiness:
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7IkJ1c2luZXNzSWQiOjEsImlkIjoxLCJkYXRlIjoiMjAyMS0wOS0xM1QwMTo0NToxOC4wMDBaIiwibmFtZSI6IlRpZW5kYSIsImVtYWlsIjoidGllbmRhQGxvY2FsaG9zdC5jb20ifSwiaWF0IjoxNjMxNDk3NTkxfQ.FF5-276rI9SJmtebVo0spV8Y2wdOZPok7LlUxtTDwh0',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7IkJ1c2luZXNzSWQiOjY2LCJpZCI6NjYsImRhdGUiOiIyMDIzLTAxLTI2VDE3OjI3OjU2LjE1N1oiLCJuYW1lIjoiQkMgU3VtaW5pc3Ryb3MgSW5kdXN0cmlhbGVzIFNSTCIsImVtYWlsIjoiYmNzdW1pbmQyMDIyQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NzQ3NTQwNzZ9.5O9K559cBl_Cxk_Fdl_28V9kC99kf3x0oCbhQ5Dm38g',
 
   meta: {
     mainPage: {
