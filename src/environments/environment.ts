@@ -26,9 +26,9 @@ export const environment = {
 
   defaultLanguage: 'es',
   currencyInternational: 'USD',
-  logo: 'assets/images/guajiritos/guajiritos-Logo-blanco.png',
-  logoWhite: 'assets/images/guajiritos/guajiritos-Logo-blanco.png',
-  logoFooter: 'assets/images/guajiritos/guajiritos-Logo-blanco.png',
+  logo: 'assets/images/logo.png',
+  logoWhite: 'assets/images/logo2.png',
+  logoFooter: 'assets/images/Logo Originales_Mesa de trabajo 1 copia 3.svg',
 
   limitSearch : 42,
 
