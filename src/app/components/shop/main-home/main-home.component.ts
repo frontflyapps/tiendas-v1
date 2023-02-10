@@ -46,6 +46,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   allProducts: IProductCard[] = [];
   banners: any[] = [];
   loadingPopular = false;
+  businessConfig = JSON.parse(localStorage.getItem('business-config'));
   loadingFeatured = false;
   loadingAllProduct = false;
   loadingServices = true;

@@ -43,6 +43,7 @@ import { NgxMaterialTimepickerTheme } from 'ngx-material-timepicker';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DialogPgtConfirmToPayComponent } from '../dialog-pgt-confirm-to-pay/dialog-pgt-confirm-to-pay.component';
 import { AppService } from '../../../app.service';
+import { DialogAuthorizeConfirmToPayComponent } from '../dialog-authorize-confirm-to-pay/dialog-authorize-confirm-to-pay.component';
 
 export const amexData = {
   express: 1, // American Express
@@ -132,6 +133,13 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     },
     {
       id: 'peoplegoto',
+      enabled: false,
+      name: 'Visa',
+      logo: 'assets/images/cards/peopleGoTo.png',
+      market: 'international',
+    },
+    {
+      id: 'authorize',
       enabled: false,
       name: 'Visa',
       logo: 'assets/images/cards/peopleGoTo.png',
@@ -426,7 +434,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     });
 
     this.form.controls['paymentType'].valueChanges.pipe(takeUntil(this._unsubscribeAll)).subscribe((data) => {
-      if (data && data == 'peoplegoto') {
+      if (data && (data == 'peoplegoto' || data == 'authorize')) {
         this.form.controls['currency'].setValue(CoinEnum.EUR);
       }
     });
@@ -997,6 +1005,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       data.paymentType = 'bidaiondo';
       return this.processBidaiondo(data);
     }
+    if (data.paymentType == 'authorize') {
+      data.paymentType = 'authorize';
+      return this.processBidaiondo(data);
+    }
   }
 
   // /////////////////////////////////////////////
@@ -1070,6 +1082,32 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           let dialogRef: MatDialogRef<DialogPgtConfirmToPayComponent, any>;
 
           dialogRef = this.dialog.open(DialogPgtConfirmToPayComponent, {
+            width: '15cm',
+            maxWidth: '100vw',
+            data: {
+              form: data.data.form,
+            },
+          });
+
+          dialogRef.afterClosed().subscribe((result) => {
+            if (result) {
+              window.location.reload();
+            }
+            this.loadingPayment = false;
+          });
+        },
+        (error) => {
+          this.loadingPayment = false;
+        },
+      );
+    } else if (bodyData.paymentType === 'authorize') {
+      paymentMethod = this.payService.makePaymentPeopleGoTo(bodyData);
+      bodyData.currency = 'EUR';
+      paymentMethod.subscribe(
+        (data: any) => {
+          let dialogRef: MatDialogRef<DialogAuthorizeConfirmToPayComponent, any>;
+
+          dialogRef = this.dialog.open(DialogAuthorizeConfirmToPayComponent, {
             width: '15cm',
             maxWidth: '100vw',
             data: {

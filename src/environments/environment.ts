@@ -15,20 +15,20 @@ export const environment = {
   // apiUrl: 'https://apitienda.guajiritos.com/v1/',
   // imageUrl: 'https://apitienda.guajiritos.com/v1/',
 
-  apiUrl: 'https://api.guajiritos.com/v1/',
-  imageUrl: 'https://cdntienda.guajiritos.com/',
+  // apiUrl: 'https://api.guajiritos.com/v1/',
+  // imageUrl: 'https://cdntienda.guajiritos.com/',
 
   // apiUrl: 'https://api.pymesbulevar.com/v1/',
   // imageUrl: 'https://cdn.pymesbulevar.com/',
 
-  // apiUrl: 'http://apitienda.tiendalocal.com:8999/v1/',
-  // imageUrl: 'http://cdntienda.guajiritos.com/',
+  apiUrl: 'http://apitienda.tiendalocal.com:8999/v1/',
+  imageUrl: 'http://cdntienda.guajiritos.com/',
 
   defaultLanguage: 'es',
   currencyInternational: 'USD',
-  logo: 'assets/images/logo.png',
-  logoWhite: 'assets/images/logo2.png',
-  logoFooter: 'assets/images/Logo Originales_Mesa de trabajo 1 copia 3.svg',
+  logo: 'assets/images/guajiritos/guajiritos-Logo-blanco.png',
+  logoWhite: 'assets/images/guajiritos/guajiritos-Logo-blanco.png',
+  logoFooter: 'assets/images/guajiritos/guajiritos-Logo-blanco.png',
 
   limitSearch : 42,
 
@@ -57,7 +57,7 @@ export const environment = {
   mainDomain: '.tiendalocal.com',
 
   tokenBusiness:
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7IkJ1c2luZXNzSWQiOjY2LCJpZCI6NjYsImRhdGUiOiIyMDIzLTAxLTI2VDE3OjI3OjU2LjE1N1oiLCJuYW1lIjoiQkMgU3VtaW5pc3Ryb3MgSW5kdXN0cmlhbGVzIFNSTCIsImVtYWlsIjoiYmNzdW1pbmQyMDIyQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NzQ3NTQwNzZ9.5O9K559cBl_Cxk_Fdl_28V9kC99kf3x0oCbhQ5Dm38g',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7IkJ1c2luZXNzSWQiOjEsImlkIjoxLCJkYXRlIjoiMjAyMS0wOS0xM1QwMTo0NToxOC4wMDBaIiwibmFtZSI6IlRpZW5kYSIsImVtYWlsIjoidGllbmRhQGxvY2FsaG9zdC5jb20ifSwiaWF0IjoxNjMxNDk3NTkxfQ.FF5-276rI9SJmtebVo0spV8Y2wdOZPok7LlUxtTDwh0',
 
   meta: {
     mainPage: {
