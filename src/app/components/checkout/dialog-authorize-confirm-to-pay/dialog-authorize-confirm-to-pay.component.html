@@ -6,10 +6,14 @@
   </blockquote>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <form ngNoForm method="post" target="_blank"
-        [action]="data.form.data.url">
+  <form ngNoForm
+        method="post"
+        target="_blank"
+        [action]="data.form.data.url"
+        id="formAuthorizeNetTestPage"
+        name="formAuthorizeNetTestPage">
     <div id="inputsHiddenBid"></div>
-    <input type='hidden' [value]='data.form.data.token'>
+    <input type='hidden' name='token' [value]='data.form.data.token'>
     <button class="primary-buttom" id="bid-btn-submit" type="submit" value="Enviar" aria-label="Confirm" mat-button
             mat-dialog-close>
       {{ "Confirmar" | translate }}

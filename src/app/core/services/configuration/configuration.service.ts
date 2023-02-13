@@ -7,8 +7,8 @@ import { environment } from '../../../../environments/environment';
   providedIn: 'root',
 })
 export class ConfigurationService {
-  url = environment.apiUrl + 'currency';
-  urlBusinessStructure = environment.apiUrl + 'business-structure';
+  url = environment.apiUrl + 'currency-front';
+  urlBusinessStructure = environment.apiUrl + 'business-structure-front';
   httpOptions = {};
 
   constructor(private httpClient: HttpClient) {

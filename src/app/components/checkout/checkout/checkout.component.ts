@@ -818,9 +818,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     if (this.shippingData.length === 0) {
       let dataCartId = { cartId: this.cartId };
       this.inLoading = true;
-      this.cartService.getShippingCart(dataCartId).subscribe({
+      this.cartService.getShippingCart(dataCartId, ).subscribe({
         next: (item) => {
           this.shippingData = item?.shippings;
+          console.log(item);
           this.canBeDelivery = item?.canBeDelivery;
           this.inLoading = false;
         },
@@ -1103,6 +1104,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         },
       );
     } else if (bodyData.paymentType === 'authorize') {
+      bodyData.urlRedirectSuccesfully = environment.url + 'my-orders';
+      bodyData.urlRedirectCancel = environment.url + 'my-orders';
       paymentMethod = this.payService.makePaymentAuthorize(bodyData);
       bodyData.currency = 'EUR';
       paymentMethod.subscribe(

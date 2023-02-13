@@ -1,5 +1,5 @@
 import { Cart, CartItem } from '../../../modals/cart-item';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { Injectable, OnDestroy } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -639,8 +639,14 @@ export class CartService implements OnDestroy {
     return this.httpClient.post<any>(this.url + '/delete', data).toPromise();
   }
 
-  getShippingCart(cartId: any): Observable<any> {
-    return this.httpClient.post<any>(this.urlShipping, cartId);
+  getShippingCart(cartId: any, businessId?: any): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        BusinessId: businessId,
+      }),
+    };
+    console.log('aaaaaaaaaaaaaaaaaa');
+    return this.httpClient.post<any>(this.urlShipping, cartId, httpOptions);
   }
 
   getCheckoutData(params?): Observable<any> {
