@@ -141,8 +141,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     {
       id: 'authorize',
       enabled: false,
-      name: 'Visa',
-      logo: 'assets/images/cards/peopleGoTo.png',
+      name: 'Authorize',
+      logo: 'assets/images/cards/authorizenet.png',
       market: 'international',
     },
     { id: 'visa', name: 'Visa', amex: 2, logo: 'assets/images/cards/visa_logo.png', market: 'international' },
@@ -976,6 +976,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     }
 
     const data = { ...this.form.value };
+    console.log(data);
     data.phone = '53' + data.phone;
 
     this.paymentType = JSON.parse(JSON.stringify(data.paymentType));
@@ -1079,6 +1080,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       bodyData.currency = 'EUR';
       paymentMethod.subscribe(
         (data: any) => {
+          console.log(data);
           let dialogRef: MatDialogRef<DialogPgtConfirmToPayComponent, any>;
 
           dialogRef = this.dialog.open(DialogPgtConfirmToPayComponent, {
@@ -1101,17 +1103,18 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         },
       );
     } else if (bodyData.paymentType === 'authorize') {
-      paymentMethod = this.payService.makePaymentPeopleGoTo(bodyData);
+      paymentMethod = this.payService.makePaymentAuthorize(bodyData);
       bodyData.currency = 'EUR';
       paymentMethod.subscribe(
         (data: any) => {
+          console.log(data);
           let dialogRef: MatDialogRef<DialogAuthorizeConfirmToPayComponent, any>;
 
           dialogRef = this.dialog.open(DialogAuthorizeConfirmToPayComponent, {
             width: '15cm',
             maxWidth: '100vw',
             data: {
-              form: data.data.form,
+              form: data,
             },
           });
 

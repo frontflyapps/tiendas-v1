@@ -11,6 +11,7 @@ export class PayService {
   urlPaymentTransfermovil = environment.apiUrl + 'payment/transfermovil';
   urlPaymentEnzona = environment.apiUrl + 'payment/enzona';
   urlPaymentBidaiondo = environment.apiUrl + 'payment/bidaiondo';
+  urlPaymentAuthorize = environment.apiUrl + 'payment/authorize';
   urlBidaiondoCards = environment.apiUrl + 'payment/bidaiondo/get-card';
   urlPaymentPeopleGoTo = environment.apiUrl + 'payment/peoplegoto';
   urlPaymentBidaiondoNew = 'https://apibidpay.guajitech.com/v1/to-bidaiondo-redirect';
@@ -44,6 +45,10 @@ export class PayService {
 
   makePaymentBidaiondo(data): Observable<any> {
     return this.httpClient.post<any>(this.urlPaymentBidaiondo, data).pipe(timeout(60000));
+  }
+
+  makePaymentAuthorize(data): Observable<any> {
+    return this.httpClient.post<any>(this.urlPaymentAuthorize, data).pipe(timeout(60000));
   }
 
   makePaymentBidaiondoNew(data): Observable<any> {
