@@ -107,26 +107,26 @@
               <mat-form-field fxFlex.gt-sm='48' appearance='outline' class='form-field-width'>
                 <mat-label>{{'Nombre'|translate}}</mat-label>
                 <input
-                  [formControl]="ownerForm.controls['ownerName']"
+                  [formControl]="ownerForm.controls['name']"
                   (keypress)='utilsService.keyPressAlpha($event)'
                   matInput
                   placeholder="{{ 'Nombre del representante' | translate }}"
                   type='text'
                 />
-                <mat-error *ngIf="ownerForm.controls['ownerName'].hasError('required')">
+                <mat-error *ngIf="ownerForm.controls['name'].hasError('required')">
                   {{ 'Nombre' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
                 </mat-error>
               </mat-form-field>
               <mat-form-field fxFlex.gt-sm='48' appearance='outline' class='form-field-width'>
                 <mat-label>{{'Apellidos'|translate}}</mat-label>
                 <input
-                  [formControl]="ownerForm.controls['ownerLastName']"
+                  [formControl]="ownerForm.controls['lastName']"
                   (keypress)='utilsService.keyPressAlpha($event)'
                   matInput
                   placeholder="{{ 'Apellidos del representante' | translate }}"
                   type='text'
                 />
-                <mat-error *ngIf="ownerForm.controls['ownerLastName'].hasError('required')">
+                <mat-error *ngIf="ownerForm.controls['lastName'].hasError('required')">
                   {{ 'Apellidos' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
                 </mat-error>
               </mat-form-field>
@@ -136,13 +136,13 @@
               <mat-form-field fxFlex.gt-sm='48' appearance='outline' class='form-field-width'>
                 <mat-label>{{'Número de identificación' |translate}}</mat-label>
                 <input
-                  [formControl]="ownerForm.controls['ownerCi']"
+                  [formControl]="ownerForm.controls['ci']"
                   (keypress)='utilsService.keyPressNumbers($event)'
                   matInput
                   placeholder="{{ 'Número de identificación del representante' | translate }}"
                   type='text'
                 />
-                <mat-error *ngIf="ownerForm.controls['ownerCi'].hasError('required')">
+                <mat-error *ngIf="ownerForm.controls['ci'].hasError('required')">
                   {{ 'Número de identificación' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
                 </mat-error>
               </mat-form-field>
@@ -150,13 +150,13 @@
               <mat-form-field fxFlex.gt-sm='48' appearance='outline' class='form-field-width'>
                 <mat-label>{{'Cargo' |translate}}</mat-label>
                 <input
-                  [formControl]="ownerForm.controls['ownerCharge']"
+                  [formControl]="ownerForm.controls['charge']"
                   (keypress)='utilsService.keyPressAlpha($event)'
                   matInput
                   placeholder="{{ 'Cargo del representante' | translate }}"
                   type='text'
                 />
-                <mat-error *ngIf="ownerForm.controls['ownerCharge'].hasError('required')">
+                <mat-error *ngIf="ownerForm.controls['charge'].hasError('required')">
                   {{ 'Cargo' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
                 </mat-error>
               </mat-form-field>
@@ -166,28 +166,29 @@
               <mat-form-field fxFlex.gt-sm='48' appearance='outline' class='form-field-width'>
                 <mat-label>{{'Teléfono' |translate}}</mat-label>
                 <input
-                  [formControl]="ownerForm.controls['ownerPhone']"
+                  [formControl]="ownerForm.controls['phone']"
                   (keypress)='utilsService.keyPressNumbers($event)'
                   matInput
                   placeholder="{{ 'Teléfono del representante' | translate }}"
                   type='text'
                 />
-                <mat-error *ngIf="ownerForm.controls['ownerPhone'].hasError('required')">
+                <mat-error *ngIf="ownerForm.controls['phone'].hasError('required')">
                   {{ 'Teléfono del representante' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
                 </mat-error>
               </mat-form-field>
               <mat-form-field fxFlex.gt-sm='48' appearance='outline' class='form-field-width'>
-                <mat-label>{{'Correo' |translate}}</mat-label>
+                <mat-label>{{'Correo del representante' |translate}}</mat-label>
                 <input
-                  [formControl]="ownerForm.controls['ownerEmail']"
+                  [formControl]="ownerForm.get('email')"
                   matInput
-                  placeholder="{{ 'Correo del representante' | translate }}"
+                  required
+                  placeholder='ej: example@gmail.com'
                   type='text'
                 />
-                <mat-error *ngIf="ownerForm.controls['ownerEmail'].hasError('required')">
+                <mat-error *ngIf="ownerForm.controls['email'].hasError('required')">
                   {{ 'Correo del representante' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
                 </mat-error>
-                <mat-error *ngIf="ownerForm.controls['ownerEmail'].hasError('pattern')">
+                <mat-error *ngIf="ownerForm.controls['email'].hasError('pattern')">
                   {{ 'Correo del representante' | translate }} <strong>{{ 'es inválido' | translate }}</strong>
                 </mat-error>
               </mat-form-field>

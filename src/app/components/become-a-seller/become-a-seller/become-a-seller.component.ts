@@ -96,6 +96,7 @@ export class BecomeASellerComponent implements OnInit {
     }
     this.firstStep = JSON.parse(localStorage.getItem('bs_step_one'));
     this.ownerInfo = JSON.parse(localStorage.getItem('ownerInfo'));
+    console.log(this.ownerInfo);
   }
 
   @HostListener('window:scroll', [])
@@ -137,13 +138,15 @@ export class BecomeASellerComponent implements OnInit {
     });
 
     this.ownerForm = this.fb.group({
-      ownerName: [this.ownerInfo?.ownerName, [Validators.required]],
-      ownerLastName: [this.ownerInfo?.ownerLastName, [Validators.required]],
-      ownerCharge: [this.ownerInfo ? this.ownerInfo.ownerCharge : null, [Validators.required]],
-      ownerPhone: [this.ownerInfo ? this.ownerInfo.ownerPhone : null, [Validators.required]],
-      ownerEmail: [this.ownerInfo ? this.ownerInfo.ownerEmail : null, [Validators.required], Validators.pattern(EMAIL_REGEX)],
-      ownerCi: [this.ownerInfo ? this.ownerInfo.ownerCi : null, [Validators.required, Validators.minLength(11), Validators.maxLength(11)]],
+      name: [this.ownerInfo?.name, [Validators.required]],
+      lastName: [this.ownerInfo?.lastName, [Validators.required]],
+      charge: [this.ownerInfo ? this.ownerInfo.charge : null, [Validators.required]],
+      phone: [this.ownerInfo ? this.ownerInfo.phone : null, [Validators.required]],
+      email: [this.ownerInfo ? this.ownerInfo.email : null, [Validators.required], Validators.pattern(EMAIL_REGEX)],
+      ci: [this.ownerInfo ? this.ownerInfo.ci : null, [Validators.required, Validators.minLength(11), Validators.maxLength(11)]],
     });
+
+    console.log(this.ownerForm.value);
 
     this.checkboxForm = this.fb.group({
       checked: [false, [Validators.required]]
@@ -195,6 +198,7 @@ export class BecomeASellerComponent implements OnInit {
   onCreateBusiness() {
     this.saveInfo();
     this.spinner.show();
+    console.log(this.ownerInfo);
     let data = {
       business: { ...this.basicForm.value },
       owner: { ...this.ownerForm.value },
