@@ -129,7 +129,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
       this.productsService.getProductById(productId, stockId).subscribe(
         (data) => {
           this.product = data.data;
-          this.getProductsByBusiness(this.product.BusinessId);
+          this.getProductsByBusiness(this.product?.BusinessId);
           this.initStateView();
           this.isLoading = false;
         },

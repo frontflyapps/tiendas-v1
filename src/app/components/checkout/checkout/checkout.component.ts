@@ -43,6 +43,7 @@ import { NgxMaterialTimepickerTheme } from 'ngx-material-timepicker';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DialogPgtConfirmToPayComponent } from '../dialog-pgt-confirm-to-pay/dialog-pgt-confirm-to-pay.component';
 import { AppService } from '../../../app.service';
+import { DialogAuthorizeConfirmToPayComponent } from '../dialog-authorize-confirm-to-pay/dialog-authorize-confirm-to-pay.component';
 
 export const amexData = {
   express: 1, // American Express
@@ -135,6 +136,13 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       enabled: false,
       name: 'Visa',
       logo: 'assets/images/cards/peopleGoTo.png',
+      market: 'international',
+    },
+    {
+      id: 'authorize',
+      enabled: false,
+      name: 'Authorize',
+      logo: 'assets/images/cards/authorizenet.png',
       market: 'international',
     },
     { id: 'visa', name: 'Visa', amex: 2, logo: 'assets/images/cards/visa_logo.png', market: 'international' },
@@ -426,7 +434,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     });
 
     this.form.controls['paymentType'].valueChanges.pipe(takeUntil(this._unsubscribeAll)).subscribe((data) => {
-      if (data && data == 'peoplegoto') {
+      if (data && (data == 'peoplegoto' || data == 'authorize')) {
         this.form.controls['currency'].setValue(CoinEnum.EUR);
       }
     });
@@ -810,9 +818,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     if (this.shippingData.length === 0) {
       let dataCartId = { cartId: this.cartId };
       this.inLoading = true;
-      this.cartService.getShippingCart(dataCartId).subscribe({
+      this.cartService.getShippingCart(dataCartId, ).subscribe({
         next: (item) => {
           this.shippingData = item?.shippings;
+          console.log(item);
           this.canBeDelivery = item?.canBeDelivery;
           this.inLoading = false;
         },
@@ -968,6 +977,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     }
 
     const data = { ...this.form.value };
+    console.log(data);
     data.phone = '53' + data.phone;
 
     this.paymentType = JSON.parse(JSON.stringify(data.paymentType));
@@ -995,6 +1005,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     }
     if (data.paymentType == 'visa' || data.paymentType == 'express' || data.paymentType == 'masterCard') {
       data.paymentType = 'bidaiondo';
+      return this.processBidaiondo(data);
+    }
+    if (data.paymentType == 'authorize') {
+      data.paymentType = 'authorize';
       return this.processBidaiondo(data);
     }
   }
@@ -1067,6 +1081,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       bodyData.currency = 'EUR';
       paymentMethod.subscribe(
         (data: any) => {
+          console.log(data);
           let dialogRef: MatDialogRef<DialogPgtConfirmToPayComponent, any>;
 
           dialogRef = this.dialog.open(DialogPgtConfirmToPayComponent, {
@@ -1074,6 +1089,35 @@ export class CheckoutComponent implements OnInit, OnDestroy {
             maxWidth: '100vw',
             data: {
               form: data.data.form,
+            },
+          });
+
+          dialogRef.afterClosed().subscribe((result) => {
+            if (result) {
+              window.location.reload();
+            }
+            this.loadingPayment = false;
+          });
+        },
+        (error) => {
+          this.loadingPayment = false;
+        },
+      );
+    } else if (bodyData.paymentType === 'authorize') {
+      bodyData.urlRedirectSuccesfully = environment.url + 'my-orders';
+      bodyData.urlRedirectCancel = environment.url + 'my-orders';
+      paymentMethod = this.payService.makePaymentAuthorize(bodyData);
+      bodyData.currency = 'EUR';
+      paymentMethod.subscribe(
+        (data: any) => {
+          console.log(data);
+          let dialogRef: MatDialogRef<DialogAuthorizeConfirmToPayComponent, any>;
+
+          dialogRef = this.dialog.open(DialogAuthorizeConfirmToPayComponent, {
+            width: '15cm',
+            maxWidth: '100vw',
+            data: {
+              form: data,
             },
           });
 

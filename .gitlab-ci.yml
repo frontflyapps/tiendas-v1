@@ -32,6 +32,7 @@ install:
     - npm run build --prod
     - aws s3 sync --acl public-read --metadata-directive REPLACE --cache-control max-age=0,public dist/tienda-angular-b2b s3://cloudfront-tienda.guajiritos.com --delete
     - aws cloudfront create-invalidation --distribution-id E1I5HAWV5MYHSL --paths "/*"
+    - curl -X POST "https://api.cloudflare.com/client/v4/zones/d6223db33adb6e5b2ab9931da750258d/purge_cache" -H "X-Auth-Email:guajiritossrl@gmail.com" -H "X-Auth-Key:96ea36c8747ec2f985b68d6c1682d24ab5dd3" -H "Content-Type:application/json" --data '{"purge_everything":true}'
     - echo "DEPLOYED SUCCESSFULLY"
 
 success:

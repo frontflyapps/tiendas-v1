@@ -37,7 +37,11 @@
             <div *ngIf="product.offerValue">
               <h4 class="mb-10">
                 <del>{{ currencyService.getPriceLabel(product) }}</del>
-                <span>{{ product.offerValue }}<span *ngIf="product.isPercent" class="mx-0 px-0">% </span>off</span>
+                <span class='offer ml-2'>
+                    <span class="mx-0 px-0">-</span>
+                    <span *ngIf="product.isPercent" class="mx-0 px-0">{{ product.offerValue }}% </span>
+                    <span *ngIf="!product.isPercent" class="mx-0 px-0">${{ product.offerValue }}</span>
+                  </span>
               </h4>
               <h3 class="price mb-10">{{ currencyService.getOfferLabel(product) }}</h3>
             </div>

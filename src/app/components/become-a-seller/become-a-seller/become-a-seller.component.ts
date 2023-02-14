@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import { RegionsService } from '../../../core/services/regions/regions.service';
 import { BusinessService } from '../../../core/services/business/business.service';
 import { ImagePickerConf } from 'guachos-image-picker';
-import { CUBAN_PHONE_START_5, EMAIL_REGEX } from '../../../core/classes/regex.const';
+import { CUBAN_PHONE_START_5, EMAIL_REGEX, NIT } from '../../../core/classes/regex.const';
 import { DOCUMENT } from '@angular/common';
 import { Subject } from 'rxjs';
 import { UtilsService } from '../../../core/services/utils/utils.service';
@@ -23,10 +23,10 @@ import { environment } from '../../../../environments/environment';
 export class BecomeASellerComponent implements OnInit {
   form: FormGroup;
   basicForm: FormGroup;
-  locationForm: FormGroup;
-  sellerForm: FormGroup;
+  ownerForm: FormGroup;
   checkboxForm: FormGroup;
   firstStep: any;
+  ownerInfo: any;
   logo = environment.logoWhite;
   secondStep: any;
   thirdStep: any;
@@ -95,8 +95,7 @@ export class BecomeASellerComponent implements OnInit {
       this.imageBusiness = localStorage.getItem('bs_image');
     }
     this.firstStep = JSON.parse(localStorage.getItem('bs_step_one'));
-    this.secondStep = JSON.parse(localStorage.getItem('bs_step_two'));
-    this.thirdStep = JSON.parse(localStorage.getItem('bs_step_three'));
+    this.ownerInfo = JSON.parse(localStorage.getItem('ownerInfo'));
   }
 
   @HostListener('window:scroll', [])
@@ -122,53 +121,28 @@ export class BecomeASellerComponent implements OnInit {
       name: [this.firstStep ? this.firstStep.name : null, [Validators.required]],
       description: [this.firstStep ? this.firstStep.description : null],
 
-      socialObject: [this.firstStep ? this.firstStep.socialObject : null, [Validators.required]],
       selfEmployed: [this.firstStep ? this.firstStep.selfEmployed : null, [Validators.required]],
-      reeup: [this.firstStep ? this.firstStep.reeup : null],
-      nit: [this.firstStep ? this.firstStep.nit : null],
-      commercialRegister: [this.firstStep ? this.firstStep.commercialRegister : null],
+      nit: [this.firstStep ? this.firstStep.nit : null, [Validators.pattern(NIT)]],
 
       cellphone: [this.firstStep ? this.firstStep.cellphone : null, [Validators.required, Validators.pattern(CUBAN_PHONE_START_5)]],
       telephone: [this.firstStep ? this.firstStep.telephone : null, []],
       email: [this.firstStep ? this.firstStep.email : null, [Validators.required, Validators.pattern(EMAIL_REGEX)]],
-
-      managerName: [this.firstStep ? this.firstStep.managerName : null, [Validators.required]],
-      managerLastName: [this.firstStep ? this.firstStep.managerLastName : null, [Validators.required]],
-      managerCharge: [this.firstStep ? this.firstStep.managerCharge : null, [Validators.required]],
-      managerIdentification: [this.firstStep ? this.firstStep.managerIdentification : null, [Validators.required]],
-      managerPhone: [this.firstStep ? this.firstStep.managerPhone : null, [Validators.required]],
-      managerEmail: [this.firstStep ? this.firstStep.managerEmail : null, [Validators.required, Validators.pattern(EMAIL_REGEX)]],
-      // managerCharacter: [this.firstStep ? this.firstStep.managerCharacter : null, [Validators.required]],
-      // managerDesignation: [this.firstStep ? this.firstStep.managerDesignation : null],
-      // managerDate: [this.firstStep ? this.firstStep.managerDate : null, [Validators.required]],
-      // managerDictatedBy: [this.firstStep ? this.firstStep.managerDictatedBy : null],
-
-      bankLicense: [this.firstStep ? this.firstStep.bankLicense : null, [Validators.required]],
-      bankCommercialRegister: [this.firstStep ? this.firstStep.bankCommercialRegister : null, [Validators.required]],
-
-      card26: [this.firstStep ? this.firstStep.card26 : null],
-      UsdBankId: [this.firstStep ? this.firstStep.UsdBankId : null],
-      usdBankBranch: [this.firstStep ? this.firstStep.usdBankBranch : null, [Validators.maxLength(4)]],
-
-      cupCard: [this.firstStep ? this.firstStep.cupCard : null],
-      CupBankId: [this.firstStep ? this.firstStep.CupBankId : null],
-      cupBankBranch: [this.firstStep ? this.firstStep.cupBankBranch : null, [Validators.maxLength(4)]],
+      CountryId: [this.firstStep ? this.firstStep.CountryId : 59, [Validators.required]],
+      //locationForm
+      ProvinceId: [this.firstStep ? this.firstStep.ProvinceId : null, [Validators.required]],
+      MunicipalityId: [this.firstStep ? this.firstStep.MunicipalityId : null, [Validators.required]],
+      address: [this.firstStep ? this.firstStep.address : null, [Validators.required]],
+      longitude: [this.firstStep ? this.firstStep.longitude : null, []],
+      latitude: [this.firstStep ? this.firstStep.latitude : null, []],
     });
 
-    this.locationForm = this.fb.group({
-      CountryId: [this.secondStep ? this.secondStep.CountryId : 59, [Validators.required]],
-      ProvinceId: [this.secondStep ? this.secondStep.ProvinceId : null, [Validators.required]],
-      MunicipalityId: [this.secondStep ? this.secondStep.MunicipalityId : null, [Validators.required]],
-      address: [this.secondStep ? this.secondStep.address : null, [Validators.required]],
-      longitude: [this.secondStep ? this.secondStep.longitude : null, []],
-      latitude: [this.secondStep ? this.secondStep.latitude : null, []],
-    });
-
-    this.sellerForm = this.fb.group({
-      name: [this.loggedInUser?.name, [Validators.required]],
-      lastName: [this.loggedInUser?.lastName, [Validators.required]],
-      birthday: [this.thirdStep ? this.thirdStep.birthday : null, [Validators.required]],
-      ci: [this.thirdStep ? this.thirdStep.ci : null, [Validators.required, Validators.minLength(11), Validators.maxLength(11)]],
+    this.ownerForm = this.fb.group({
+      ownerName: [this.ownerInfo?.ownerName, [Validators.required]],
+      ownerLastName: [this.ownerInfo?.ownerLastName, [Validators.required]],
+      ownerCharge: [this.ownerInfo ? this.ownerInfo.ownerCharge : null, [Validators.required]],
+      ownerPhone: [this.ownerInfo ? this.ownerInfo.ownerPhone : null, [Validators.required]],
+      ownerEmail: [this.ownerInfo ? this.ownerInfo.ownerEmail : null, [Validators.required], Validators.pattern(EMAIL_REGEX)],
+      ownerCi: [this.ownerInfo ? this.ownerInfo.ownerCi : null, [Validators.required, Validators.minLength(11), Validators.maxLength(11)]],
     });
 
     this.checkboxForm = this.fb.group({
@@ -187,7 +161,7 @@ export class BecomeASellerComponent implements OnInit {
 
   onSelectProvince(provinceId) {
     this.municipalities = this.allMunicipalities.filter((item) => item.ProvinceId == provinceId);
-    this.locationForm.get('MunicipalityId').setValue(null);
+    this.basicForm.get('MunicipalityId').setValue(null);
   }
 
   fetchDaTa() {
@@ -197,7 +171,7 @@ export class BecomeASellerComponent implements OnInit {
     this.regionService.getMunicipalities().subscribe((data) => {
       this.allMunicipalities = data.data;
       this.municipalities = this.allMunicipalities.filter(
-        (item) => item.ProvinceId == this.locationForm.get('ProvinceId').value,
+        (item) => item.ProvinceId == this.basicForm.get('ProvinceId').value,
       );
     });
     this.bankService.getAllBank().subscribe((data) => {
@@ -212,28 +186,22 @@ export class BecomeASellerComponent implements OnInit {
   //   });
   // }
 
-  saveStepOne() {
+  saveInfo() {
     localStorage.setItem('bs_image', this.imageBusiness);
     localStorage.setItem('bs_step_one', JSON.stringify(this.basicForm.value));
-  }
-
-  saveStepTwo() {
-    localStorage.setItem('bs_image', this.imageBusiness);
-    localStorage.setItem('bs_step_one', JSON.stringify(this.basicForm.value));
-    localStorage.setItem('bs_step_two', JSON.stringify(this.locationForm.value));
+    localStorage.setItem('ownerInfo', JSON.stringify(this.basicForm.value));
   }
 
   onCreateBusiness() {
+    this.saveInfo();
     this.spinner.show();
     let data = {
-      business: { ...this.basicForm.value, ...this.locationForm.value },
-      owner: { ...this.sellerForm.value },
+      business: { ...this.basicForm.value },
+      owner: { ...this.ownerForm.value },
     };
     // data.business.card = data.owner.card;
     data.business.logo = this.imageBusiness;
     // delete data.owner.card;
-    data.business.CupBankId = this.basicForm.controls['CupBankId'].value.id;
-    data.business.UsdBankId = this.basicForm.controls['UsdBankId'].value.id;
 
     this.businessService.createBussines(data).subscribe(
       () => {
