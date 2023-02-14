@@ -105,6 +105,7 @@ export class TaxesShippingService {
   }
 
   getShippinginCheckout(body: any): Observable<any> {
+    console.log('aaaaaaaaaaaaaaaaaa');
     return this.httpClient.post<any>(this.urlShipping + '/checkout-data', body);
   }
 
