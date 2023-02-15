@@ -2,38 +2,35 @@ stages:
   - install
   - notify
 
-install:
+.build_job: &build_job
   stage: install
-  only:
-    - staging
   variables:
     DOCKER_DRIVER: overlay2
     DOCKER_TLS_CERTDIR: ""
-  tags:
-    - Gitlab-Runner
-  image:
-    name: nikolaik/python-nodejs:python3.8-nodejs14
+  image: 
+    name: docker:latest
     entrypoint: [""]
   services:
-    - nikolaik/python-nodejs:python3.8-nodejs14
-  cache:
-   paths:
-    - node_modules
+    - docker:dind
+  tags:
+    - Gitlab-Runner
   before_script:
     - DOCKER_HOST='/var/run/docker.sock'; if [ ! -S "$DOCKER_HOST" ]; then DOCKER_HOST='tcp://docker:2375'; export DOCKER_HOST=$DOCKER_HOST;fi; echo $DOCKER_HOST
-    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client git -y )'
-    - curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
-    - unzip awscli-bundle.zip
-    - ./awscli-bundle/install -b ~/bin/aws
-    - export PATH=~/bin:$PATH
+    - apk add --no-cache curl jq py3-pip
+    - pip install awscli
+    - eval $(aws ecr get-login --no-include-email --region us-east-1)
   script:
-    - npm install
-    - npm install -g typescript@4.6.2
-    - npm run build --prod
-    - aws s3 sync --acl public-read --metadata-directive REPLACE --cache-control max-age=0,public dist/tienda-angular-b2b s3://cloudfront-tienda.guajiritos.com --delete
-    - aws cloudfront create-invalidation --distribution-id E1I5HAWV5MYHSL --paths "/*"
-    - curl -X POST "https://api.cloudflare.com/client/v4/zones/d6223db33adb6e5b2ab9931da750258d/purge_cache" -H "X-Auth-Email:guajiritossrl@gmail.com" -H "X-Auth-Key:96ea36c8747ec2f985b68d6c1682d24ab5dd3" -H "Content-Type:application/json" --data '{"purge_everything":true}'
+    - docker build -f Dockerfile -t tiendav1-front .
+    - docker tag tiendav1-front:latest $AWS_ECR/tiendav1-front:$VERSION_TAG
+    - docker push $AWS_ECR/tiendav1-front:$VERSION_TAG
     - echo "DEPLOYED SUCCESSFULLY"
+
+build_prod:
+  only:
+    - production-mibulevar
+  environment:
+    name: MIBULEVAR
+  <<: *build_job
 
 success:
   image: alpine:latest
