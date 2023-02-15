@@ -15,7 +15,7 @@ export const environment = {
   // apiUrl: 'https://apitienda.guajiritos.com/v1/',
   // imageUrl: 'https://apitienda.guajiritos.com/v1/',
 
-  apiUrl: 'https://api.guajiritos.com/v1/',
+  apiUrl: 'https://127.0.0.1:8997/v1/',
   imageUrl: 'https://cdntienda.guajiritos.com/',
 
   // apiUrl: 'https://api.pymesbulevar.com/v1/',
