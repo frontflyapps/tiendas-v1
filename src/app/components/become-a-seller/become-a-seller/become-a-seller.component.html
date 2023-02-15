@@ -11,15 +11,15 @@
 <div class='w-100 mt-3' fxLayout='row wrap' fxLayoutAlign='start start' fxLayoutGap='gappx'>
   <div class='stepperForm' fxFlex.gt-sm='70' fxFlex.lt-md='100' fxLayout='column' fxLayoutAlign='start stretch'>
     <div class='container-stepper'>
-      <mat-horizontal-stepper #stepper [linear]="'true'" color='accent' labelPosition='bottom'>
-        <mat-step [stepControl]='basicForm'>
-          <ng-template matStepLabel>{{ 'Información de su Negocio' | translate }}</ng-template>
+<!--      <mat-horizontal-stepper #stepper [linear]="'true'" color='accent' labelPosition='bottom'>-->
+<!--        <mat-step>-->
+          <ng-template>{{ 'Información de su Negocio' | translate }}</ng-template>
 
-          <div [formGroup]='basicForm' fxLayout='column' fxLayoutAlign='start stretch' fxLayoutGap='16px'>
+          <div fxLayout='column' fxLayoutAlign='start stretch' fxLayoutGap='16px'>
             <p class='mat-body-2 uppercase mb-1'>
               {{ 'Logo del negocio' | translate }}*
             </p>
-            <app-guachos-image [create]='!imageBusiness'
+            <app-guachos-image [create]='!imageSelected'
                                [imageSrc]='imageBusiness'
                                [config]='imagePickerConf'
                                (imageChanged)='onImageChange($event)'></app-guachos-image>
@@ -32,7 +32,7 @@
             <mat-form-field appearance='outline' class='form-field-width'>
                 <mat-label>{{'Nombre del negocio'|translate}}</mat-label>
                 <input
-                  [formControl]="basicForm.controls['name']"
+                  [formControl]="basicForm.get('name')"
                   (keypress)='utilsService.keyPressAlphaAndNumbers($event)'
                   matInput
                   placeholder="{{ 'Mi Negocio' | translate }}"
@@ -54,7 +54,7 @@
 
                 <mat-form-field appearance='outline'>
                   <mat-label>{{'Forma de gestión'}}</mat-label>
-                  <mat-select [formControl]="basicForm.controls['selfEmployed']">
+                  <mat-select [formControl]="basicForm.controls['selfEmployed']" (selectionChange)='selectSelfEmployed($event.value)'>
                     <mat-option *ngFor='let form of managementForm' [value]='form.value'>
                       {{form.viewValue}}
                     </mat-option>
@@ -95,103 +95,164 @@
                 </mat-form-field>
               </div>
             </div>
+            <div fxLayout='row' *ngIf="basicForm.controls['selfEmployed'].value === false">
+              <div fxLayout='column' fxFlex.gt-sm='48'>
+                <p class='mat-body-2 uppercase mb-1 mt-3'>
+                  {{ 'Registro  de Empresas Estatales y Unidades Presupuestadas' | translate }}
+                </p>
+
+                <mat-form-field appearance='outline' class='form-field-width'>
+                  <mat-label>{{'REUUP'|translate}}</mat-label>
+                  <input
+                    [formControl]="basicForm.controls['reuup']"
+                    matInput
+                    placeholder="{{ 'REUUP' | translate }}"
+                    type='text'
+                    maxlength='11'
+                    minlength='11'
+                  />
+                  <mat-error *ngIf="basicForm.controls['reuup'].hasError('required')">
+                    {{ 'REUUP' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
+                  </mat-error>
+                  <mat-error *ngIf="basicForm.controls['reuup'].hasError('pattern')">
+                    {{ 'REUUP ' | translate }} <strong>{{ 'incorrect' | translate }}</strong>{{ ', debe ser un número de 11 dígitos' | translate}}
+                  </mat-error>
+                  <mat-hint *ngIf="!basicForm.controls['reuup'].value">
+                    {{ 'El REUUP debe ser un número de 11 dígitos' | translate }}
+                  </mat-hint>
+                  <mat-hint class='form-valid' *ngIf="basicForm.controls['reuup'].value && basicForm.controls['reuup'].valid">
+                    {{ 'REUUP válido' | translate }}
+                  </mat-hint>
+                </mat-form-field>
+              </div>
+            </div>
+
+            </div>
 
             <mat-divider class='mt-3 mb-3'></mat-divider>
 
-            <!-- REPRESENTANTE -->
-            <p class='mat-body-2 uppercase mb-1'>
-                {{ 'Representante legal del Negocio' | translate }}
-              </p>
+          <!-- REPRESENTANTE -->
+      <div fxLayout='row' fxLayoutAlign='start center' fxLayoutGap='1rem'>
+        <p class='mat-body-2 uppercase mb-1'>
+          {{ 'Representante legal del Negocio' | translate }}
+        </p>
+        <button
+          aria-label="LLenar con mis datos"
+          color="primary"
+          mat-stroked-button
+          class='mb-3'
+          ngClass.xs="mb-3"
+          (click)='fillLoggedInfo()'
+        >
+          <mat-icon>edit_square</mat-icon>
+          {{ 'Llenar con mis datos' | translate }}
+        </button>
+      </div>
 
-            <div fxLayout='row wrap' fxLayoutAlign.gt-sm='space-between'>
-              <mat-form-field fxFlex.gt-sm='48' appearance='outline' class='form-field-width'>
-                <mat-label>{{'Nombre'|translate}}</mat-label>
-                <input
-                  [formControl]="ownerForm.controls['ownerName']"
-                  (keypress)='utilsService.keyPressAlpha($event)'
-                  matInput
-                  placeholder="{{ 'Nombre del representante' | translate }}"
-                  type='text'
-                />
-                <mat-error *ngIf="ownerForm.controls['ownerName'].hasError('required')">
-                  {{ 'Nombre' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
-                </mat-error>
-              </mat-form-field>
-              <mat-form-field fxFlex.gt-sm='48' appearance='outline' class='form-field-width'>
-                <mat-label>{{'Apellidos'|translate}}</mat-label>
-                <input
-                  [formControl]="ownerForm.controls['ownerLastName']"
-                  (keypress)='utilsService.keyPressAlpha($event)'
-                  matInput
-                  placeholder="{{ 'Apellidos del representante' | translate }}"
-                  type='text'
-                />
-                <mat-error *ngIf="ownerForm.controls['ownerLastName'].hasError('required')">
-                  {{ 'Apellidos' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
-                </mat-error>
-              </mat-form-field>
-            </div>
 
-            <div fxLayout='row wrap' fxLayoutAlign.gt-sm='space-between'>
-              <mat-form-field fxFlex.gt-sm='48' appearance='outline' class='form-field-width'>
-                <mat-label>{{'Número de identificación' |translate}}</mat-label>
-                <input
-                  [formControl]="ownerForm.controls['ownerCi']"
-                  (keypress)='utilsService.keyPressNumbers($event)'
-                  matInput
-                  placeholder="{{ 'Número de identificación del representante' | translate }}"
-                  type='text'
-                />
-                <mat-error *ngIf="ownerForm.controls['ownerCi'].hasError('required')">
-                  {{ 'Número de identificación' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
-                </mat-error>
-              </mat-form-field>
+          <div fxLayout='row wrap' fxLayoutAlign.gt-sm='space-between'>
+            <mat-form-field fxFlex.gt-sm='48' appearance='outline' class='form-field-width'>
+              <mat-label>{{'Nombre'|translate}}</mat-label>
+              <input
+                [formControl]="basicForm.get('owner').get('name')"
+                (keypress)='utilsService.keyPressAlpha($event)'
+                matInput
+                placeholder="{{ 'Nombre del representante' | translate }}"
+                type='text'
+              />
+              <mat-error *ngIf="basicForm.get('owner').get('name').hasError('required')">
+                {{ 'Nombre' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field fxFlex.gt-sm='48' appearance='outline' class='form-field-width'>
+              <mat-label>{{'Apellidos'|translate}}</mat-label>
+              <input
+                [formControl]="basicForm.get('owner').get('lastName')"
+                (keypress)='utilsService.keyPressAlpha($event)'
+                matInput
+                placeholder="{{ 'Apellidos del representante' | translate }}"
+                type='text'
+              />
+              <mat-error *ngIf="basicForm.get('owner').get('lastName').hasError('required')">
+                {{ 'Apellidos' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
 
-              <mat-form-field fxFlex.gt-sm='48' appearance='outline' class='form-field-width'>
-                <mat-label>{{'Cargo' |translate}}</mat-label>
-                <input
-                  [formControl]="ownerForm.controls['ownerCharge']"
-                  (keypress)='utilsService.keyPressAlpha($event)'
-                  matInput
-                  placeholder="{{ 'Cargo del representante' | translate }}"
-                  type='text'
-                />
-                <mat-error *ngIf="ownerForm.controls['ownerCharge'].hasError('required')">
-                  {{ 'Cargo' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
-                </mat-error>
-              </mat-form-field>
-            </div>
+          <div fxLayout='row wrap' fxLayoutAlign.gt-sm='space-between'>
+            <mat-form-field fxFlex.gt-sm='48' appearance='outline' class='form-field-width'>
+              <mat-label>{{'Número de identificación' |translate}}</mat-label>
+              <input
+                [formControl]="basicForm.get('owner').get('ci')"
+                (keypress)='utilsService.keyPressNumbers($event)'
+                matInput
+                placeholder="{{ 'Número de identificación del representante' | translate }}"
+                type='text'
+              />
+              <mat-error *ngIf="basicForm.get('owner').get('ci').hasError('required')">
+                {{ 'Número de identificación' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
+              </mat-error>
+              <mat-hint class='form-valid' *ngIf="basicForm.get('owner').get('ci').value && basicForm.get('owner').get('ci').valid">
+                {{ 'Número de identificación válido' | translate }}
+              </mat-hint>
+            </mat-form-field>
 
-            <div fxLayout='row wrap' fxLayoutAlign.gt-sm='space-between'>
-              <mat-form-field fxFlex.gt-sm='48' appearance='outline' class='form-field-width'>
-                <mat-label>{{'Teléfono' |translate}}</mat-label>
-                <input
-                  [formControl]="ownerForm.controls['ownerPhone']"
-                  (keypress)='utilsService.keyPressNumbers($event)'
-                  matInput
-                  placeholder="{{ 'Teléfono del representante' | translate }}"
-                  type='text'
-                />
-                <mat-error *ngIf="ownerForm.controls['ownerPhone'].hasError('required')">
-                  {{ 'Teléfono del representante' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
-                </mat-error>
-              </mat-form-field>
-              <mat-form-field fxFlex.gt-sm='48' appearance='outline' class='form-field-width'>
-                <mat-label>{{'Correo' |translate}}</mat-label>
-                <input
-                  [formControl]="ownerForm.controls['ownerEmail']"
-                  matInput
-                  placeholder="{{ 'Correo del representante' | translate }}"
-                  type='text'
-                />
-                <mat-error *ngIf="ownerForm.controls['ownerEmail'].hasError('required')">
-                  {{ 'Correo del representante' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
-                </mat-error>
-                <mat-error *ngIf="ownerForm.controls['ownerEmail'].hasError('pattern')">
-                  {{ 'Correo del representante' | translate }} <strong>{{ 'es inválido' | translate }}</strong>
-                </mat-error>
-              </mat-form-field>
-            </div>
+            <mat-form-field fxFlex.gt-sm='48' appearance='outline' class='form-field-width'>
+              <mat-label>{{'Cargo' |translate}}</mat-label>
+              <input
+                [formControl]="basicForm.get('owner').get('charge')"
+                (keypress)='utilsService.keyPressAlpha($event)'
+                matInput
+                placeholder="{{ 'Cargo del representante' | translate }}"
+                type='text'
+              />
+              <mat-error *ngIf="basicForm.get('owner').get('charge').hasError('required')">
+                {{ 'Cargo' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div fxLayout='row wrap' fxLayoutAlign.gt-sm='space-between'>
+            <mat-form-field fxFlex.gt-sm='48' appearance='outline' class='form-field-width'>
+              <mat-label>{{'Teléfono' |translate}}</mat-label>
+              <input
+                [formControl]="basicForm.get('owner').get('phone')"
+                (keypress)='utilsService.keyPressNumbers($event)'
+                matInput
+                placeholder="{{ 'Teléfono del representante' | translate }}"
+                type='text'
+              />
+              <mat-error *ngIf="basicForm.get('owner').get('phone').hasError('required')">
+                {{ 'Teléfono del representante' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
+              </mat-error>
+              <mat-error *ngIf="basicForm.get('owner').get('phone').hasError('pattern')">
+                {{'Teléfono celular debe tener '|translate}} <strong>{{ '8'|translate }}</strong>{{' dígitos o más'|translate}}
+              </mat-error>
+              <mat-hint class='form-valid' *ngIf="basicForm.get('owner').get('phone').value && basicForm.get('owner').get('phone').valid">
+                {{ 'Teléfono del representante válido' | translate }}
+              </mat-hint>
+            </mat-form-field>
+            <mat-form-field fxFlex.gt-sm='48' appearance='outline' class='form-field-width'>
+              <mat-label>{{'Correo del representante' |translate}}</mat-label>
+              <input
+                [formControl]="basicForm.get('owner').get('email')"
+                matInput
+                required
+                placeholder='ej: example@gmail.com'
+                type='text'
+              />
+              <mat-error *ngIf="basicForm.get('owner').get('email').hasError('required')">
+                {{ 'Correo del representante' | translate }} <strong>{{ 'es requerido' | translate }}</strong>
+              </mat-error>
+              <mat-error *ngIf="basicForm.get('owner').get('email').hasError('pattern')">
+                {{ 'Correo del representante' | translate }} <strong>{{ 'es inválido' | translate }}</strong>
+              </mat-error>
+              <mat-hint class='form-valid' *ngIf="basicForm.get('owner').get('email').value && basicForm.get('owner').get('email').valid">
+                {{ 'Correo del representante válido' | translate }}
+              </mat-hint>
+            </mat-form-field>
+
+          </div>
 
             <mat-divider class='mt-3 mb-3'></mat-divider>
 
@@ -217,13 +278,19 @@
                       [formControl]="basicForm.controls['cellphone']"
                       (keypress)='utilsService.keyPressNumbers($event)'
                       matInput
-                      placeholder='ej: 53 5262 1645'
+                      placeholder='ej: 52621645'
                       type='tel'
                     />
                     <mat-icon class='greyIcon' matSuffix>smartphone</mat-icon>
                     <mat-error *ngIf="basicForm.controls['cellphone'].hasError('required')">
-                      {{'Telefono celular'|translate}} <strong>{{ 'es requerido'|translate }}</strong>
+                      {{'Teléfono celular'|translate}} <strong>{{ 'es requerido'|translate }}</strong>
                     </mat-error>
+                    <mat-error *ngIf="basicForm.controls['cellphone'].hasError('pattern')">
+                      {{'Teléfono celular debe tener '|translate}} <strong>{{ '8'|translate }}</strong>{{' dígitos o más'|translate}}
+                    </mat-error>
+                    <mat-hint class='form-valid' *ngIf="basicForm.get('cellphone').value && basicForm.get('cellphone').valid">
+                      {{ 'Teléfono celular de la empresa válido' | translate }}
+                    </mat-hint>
                   </mat-form-field>
 
                   <mat-form-field fxFlex.gt-sm='32' appearance='outline' class='form-field-width'>
@@ -236,10 +303,16 @@
                       type='tel'
                     />
                     <mat-icon class='greyIcon' matSuffix>phone</mat-icon>
+                    <mat-hint class='form-valid' *ngIf="basicForm.get('telephone').value && basicForm.get('telephone').valid">
+                      {{ 'Teléfono fijo de la empresa válido' | translate }}
+                    </mat-hint>
+                    <mat-error *ngIf="basicForm.controls['telephone'].hasError('pattern')">
+                      {{'Teléfono fijo debe tener '|translate}} <strong>{{ '8'|translate }}</strong>{{' dígitos o más'|translate}}
+                    </mat-error>
                   </mat-form-field>
 
                   <mat-form-field fxFlex.gt-sm='32' appearance='outline' class='form-field-width'>
-                    <mat-label>{{'Email'|translate}}</mat-label>
+                    <mat-label>{{'Correo de la empresa'|translate}}</mat-label>
                     <input
                       [formControl]="basicForm.controls['email']"
                       matInput
@@ -249,21 +322,22 @@
                     />
                     <mat-icon class='greyIcon' matSuffix>mail</mat-icon>
                     <mat-error *ngIf="basicForm.controls['email'].hasError('required')">
-                      {{ 'Email' }} <strong>{{ 'es requerido' }}</strong>
+                      {{ 'Correo de la empresa' }} <strong>{{ 'es requerido' }}</strong>
                     </mat-error>
                     <mat-error *ngIf="basicForm.controls['email'].hasError('pattern')">
-                      {{ 'Email' }} <strong>{{ 'es inválido' }}</strong>
+                      {{ 'Correo de la empresa' }} <strong>{{ 'es inválido' }}</strong>
                     </mat-error>
+                    <mat-hint class='form-valid' *ngIf="basicForm.get('email').value && basicForm.get('email').valid">
+                      {{ 'Correo de la empresa es válido' | translate }}
+                    </mat-hint>
                   </mat-form-field>
                 </div>
 
               </div>
             </ng-container>
 
-          </div>
-
           <div>
-            <ng-template matStepLabel>{{ 'Localización' | translate }}</ng-template>
+            <ng-template>{{ 'Localización' | translate }}</ng-template>
 
             <div class='form-field-width' fxLayout='row wrap' fxLayoutAlign='space-between center'>
               <div fxFlex='49' fxFlex.lt-md='100' fxLayout='column' fxLayoutAlign='start start' fxLayoutGap='gappx'>
@@ -336,26 +410,25 @@
               </mat-error>
             </mat-form-field>
 
-            <mat-checkbox class='mb-4 mt-2' [formControl]="checkboxForm.controls['checked']">
+            <mat-checkbox class='mb-4 mt-2' [formControl]="basicForm.controls['checked']">
               {{'Al seleccionar esta opción usted acepta nuestos ' | translate}} <a href="/term-conditions"><strong>{{'Términos y condiciones' | translate}}</strong></a>
             </mat-checkbox>
           </div>
           <div>
-            <button class='uppercase' mat-button matStepperPrevious>{{ 'Anterior' | translate }}</button>
+            <button class='uppercase' mat-button>{{ 'Anterior' | translate }}</button>
             <button
               (click)='onCreateBusiness()'
-              [disabled]='(basicForm.invalid || !(checkboxForm.get("checked").value))'
+              [disabled]='(basicForm.invalid || !(basicForm.get("checked").value))'
               class='uppercase'
               color='primary'
               mat-raised-button
-              matStepperNext
             >
               {{ 'Enviar' | translate }}
             </button>
           </div>
-        </mat-step>
+<!--        </mat-step>-->
 
-      </mat-horizontal-stepper>
+<!--      </mat-horizontal-stepper>-->
     </div>
   </div>
   <div id='questions-bar' class='questions' fxFlex fxLayout='column' fxLayoutAlign='start stretch'>
