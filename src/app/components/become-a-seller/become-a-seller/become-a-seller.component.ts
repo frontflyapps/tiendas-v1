@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import { RegionsService } from '../../../core/services/regions/regions.service';
 import { BusinessService } from '../../../core/services/business/business.service';
 import { ImagePickerConf } from 'guachos-image-picker';
-import { CUBAN_PHONE_START_5, EMAIL_REGEX, NIT } from '../../../core/classes/regex.const';
+import { CUBAN_PHONE_START_5, EMAIL_REGEX, NIT, PHONE } from '../../../core/classes/regex.const';
 import { DOCUMENT } from '@angular/common';
 import { Subject } from 'rxjs';
 import { UtilsService } from '../../../core/services/utils/utils.service';
@@ -57,20 +57,24 @@ export class BecomeASellerComponent implements OnInit {
   };
   imageBusinessChange = false;
   imageBusiness = undefined;
+  imageSelected = false;
   loggedInUser = undefined;
 
   _unsubscribeAll: Subject<any>;
 
   managementForm: {
     viewValue: string;
+    id: string;
     value: boolean;
   }[] = [
     {
       viewValue: 'Estatal (Empresa, Pymes, Mixta, CNA, CPA, CCS, PDL)',
+      id: 'estatal',
       value: false,
     },
     {
       viewValue: 'No estatal (Pymes, TCP, CCS, PDL)',
+      id: 'pymes',
       value: true,
     },
   ];
@@ -93,9 +97,16 @@ export class BecomeASellerComponent implements OnInit {
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
     if (localStorage.getItem('bs_image')) {
       this.imageBusiness = localStorage.getItem('bs_image');
+      if (this.imageSelected !== undefined) {
+
+      }
     }
     this.firstStep = JSON.parse(localStorage.getItem('bs_step_one'));
     this.ownerInfo = JSON.parse(localStorage.getItem('ownerInfo'));
+
+    this.buildForm();
+    this.fetchDaTa();
+    console.log(this.ownerInfo);
   }
 
   @HostListener('window:scroll', [])
@@ -109,8 +120,6 @@ export class BecomeASellerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.fetchDaTa();
-    this.buildForm();
     this.basicForm.valueChanges.subscribe((data) => {
       this.isBasicInfoChanged = true;
     });
@@ -123,36 +132,39 @@ export class BecomeASellerComponent implements OnInit {
 
       selfEmployed: [this.firstStep ? this.firstStep.selfEmployed : null, [Validators.required]],
       nit: [this.firstStep ? this.firstStep.nit : null, [Validators.pattern(NIT)]],
+      reuup: [this.firstStep ? this.firstStep?.reuup : null, [Validators.pattern(NIT)]],
 
-      cellphone: [this.firstStep ? this.firstStep.cellphone : null, [Validators.required, Validators.pattern(CUBAN_PHONE_START_5)]],
-      telephone: [this.firstStep ? this.firstStep.telephone : null, []],
+      cellphone: [this.firstStep ? this.firstStep.cellphone : null, [Validators.required, Validators.pattern(PHONE)]],
+      telephone: [this.firstStep ? this.firstStep.telephone : null, [Validators.pattern(PHONE)]],
       email: [this.firstStep ? this.firstStep.email : null, [Validators.required, Validators.pattern(EMAIL_REGEX)]],
       CountryId: [this.firstStep ? this.firstStep.CountryId : 59, [Validators.required]],
-      //locationForm
+
+      // OwnerInfo
+      owner: this.fb.group({
+        name: [this.ownerInfo?.name, [Validators.required]],
+        lastName: [this.ownerInfo?.lastName, [Validators.required]],
+        charge: [this.ownerInfo ? this.ownerInfo.charge : null, [Validators.required]],
+        phone: [this.ownerInfo ? this.ownerInfo.phone : null, [Validators.required, Validators.pattern(PHONE)]],
+        email: [this.ownerInfo ? this.ownerInfo.email : null, [Validators.required, Validators.pattern(EMAIL_REGEX)]],
+        ci: [this.ownerInfo ? this.ownerInfo.ci : null, [Validators.required, Validators.minLength(11), Validators.maxLength(11)]],
+      }),
+
+      // locationForm
       ProvinceId: [this.firstStep ? this.firstStep.ProvinceId : null, [Validators.required]],
       MunicipalityId: [this.firstStep ? this.firstStep.MunicipalityId : null, [Validators.required]],
       address: [this.firstStep ? this.firstStep.address : null, [Validators.required]],
       longitude: [this.firstStep ? this.firstStep.longitude : null, []],
       latitude: [this.firstStep ? this.firstStep.latitude : null, []],
-    });
-
-    this.ownerForm = this.fb.group({
-      ownerName: [this.ownerInfo?.ownerName, [Validators.required]],
-      ownerLastName: [this.ownerInfo?.ownerLastName, [Validators.required]],
-      ownerCharge: [this.ownerInfo ? this.ownerInfo.ownerCharge : null, [Validators.required]],
-      ownerPhone: [this.ownerInfo ? this.ownerInfo.ownerPhone : null, [Validators.required]],
-      ownerEmail: [this.ownerInfo ? this.ownerInfo.ownerEmail : null, [Validators.required], Validators.pattern(EMAIL_REGEX)],
-      ownerCi: [this.ownerInfo ? this.ownerInfo.ownerCi : null, [Validators.required, Validators.minLength(11), Validators.maxLength(11)]],
-    });
-
-    this.checkboxForm = this.fb.group({
       checked: [false, [Validators.required]]
     });
+
+    console.log(this.basicForm.value);
   }
 
   onImageChange(dataUri) {
     this.imageBusinessChange = true;
     this.imageBusiness = dataUri;
+    this.imageSelected = true;
   }
 
   compare(f1: any, f2: any) {
@@ -177,6 +189,7 @@ export class BecomeASellerComponent implements OnInit {
     this.bankService.getAllBank().subscribe((data) => {
       this.allBanks = [...data.data];
     });
+
   }
 
   // getBranchsByBank(id: any) {
@@ -186,18 +199,32 @@ export class BecomeASellerComponent implements OnInit {
   //   });
   // }
 
+  selectSelfEmployed(event) {
+    console.log(event);
+  }
+
   saveInfo() {
     localStorage.setItem('bs_image', this.imageBusiness);
     localStorage.setItem('bs_step_one', JSON.stringify(this.basicForm.value));
-    localStorage.setItem('ownerInfo', JSON.stringify(this.basicForm.value));
+    localStorage.setItem('ownerInfo', JSON.stringify(this.basicForm.get('owner').value));
+  }
+
+  fillLoggedInfo() {
+    this.basicForm.get('owner').get('name').setValue(this.loggedInUser?.name);
+    this.basicForm.get('owner').get('lastName').setValue(this.loggedInUser?.lastName);
+    this.basicForm.get('owner').get('phone').setValue(this.loggedInUser?.phone);
+    this.basicForm.get('owner').get('ci').setValue(this.loggedInUser?.ci);
+    this.basicForm.get('owner').get('email').setValue(this.loggedInUser?.email);
+    this.basicForm.get('owner').get('charge').setValue(null);
   }
 
   onCreateBusiness() {
     this.saveInfo();
     this.spinner.show();
+    console.log(this.ownerInfo);
     let data = {
       business: { ...this.basicForm.value },
-      owner: { ...this.ownerForm.value },
+      owner: { ...this.basicForm.get('owner').value },
     };
     // data.business.card = data.owner.card;
     data.business.logo = this.imageBusiness;
