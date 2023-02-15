@@ -26,6 +26,9 @@ export const environment = {
 
   defaultLanguage: 'es',
   currencyInternational: 'USD',
+
+  limitSearch: 42,
+
   logo: 'assets/images/guajiritos/guajiritos-Logo-blanco.png',
   logoWhite: 'assets/images/logo-navbar.svg',
   logoFooter: 'assets/images/logo-navbar.svg',
