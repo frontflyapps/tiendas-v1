@@ -27,7 +27,7 @@ stages:
 
 build_prod:
   only:
-    - production-mibulevar
+    - prod-Mibulevar
   environment:
     name: MIBULEVAR
   <<: *build_job
