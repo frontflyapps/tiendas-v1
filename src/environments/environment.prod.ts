@@ -21,8 +21,8 @@ export const environment = {
   timeToResearchMenuData: 300000, // (30min) Time to research menu (ms)
   timeToResearchCategoriesData: 600000, // (10min) Time to research categories (ms)
 
-  url: 'https://www.mibulevar.com',
-  urlAboutUs: 'https://www.mibulevar.com',
+  url: 'https://www.mibulevar.com/',
+  urlAboutUs: 'https://www.mibulevar.com/',
 
   address: 'MiBulevar | Transfermóvil',
   localDatabaseUsers: true,
