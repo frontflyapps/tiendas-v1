@@ -21,8 +21,8 @@ export const environment = {
   timeToResearchMenuData: 300000, // (30min) Time to research menu (ms)
   timeToResearchCategoriesData: 600000, // (10min) Time to research categories (ms)
 
-  url: 'https://tienda.guajiritos.com',
-  urlAboutUs: 'https://tienda.guajiritos.com',
+  url: 'https://tienda.guajiritos.com/',
+  urlAboutUs: 'https://tienda.guajiritos.com/',
 
   address: 'Tienda GuajiTech DEV',
   localDatabaseUsers: true,
