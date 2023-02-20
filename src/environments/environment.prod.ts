@@ -14,6 +14,8 @@ export const environment = {
 
   limitSearch : 42,
 
+  showPoweredBy: true,
+
 
   timeToResetSession: 14400000, // (4hrs) Time to reset the session (ms)
   timeToResearchProductData: 300000, // (5min) Time to research products (ms)

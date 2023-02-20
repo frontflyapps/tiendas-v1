@@ -32,6 +32,8 @@ export const environment = {
 
   limitSearch : 42,
 
+  showPoweredBy: true,
+
   timeToResetSession: 14400000, // Time to reset the session (ms)
   timeToResearchProductData: 10000, // Time to research products (ms)
   timeToResearchLandingPageData: 10000, // Time to research products (ms)
