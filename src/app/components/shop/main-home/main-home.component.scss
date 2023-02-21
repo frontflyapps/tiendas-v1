@@ -36,10 +36,10 @@
 
 .loading-shade-main {
   position: absolute;
-  //top: 0;
-  //left: 0;
-  //bottom: 56px;
-  //right: 0;
+  top: 0;
+  left: 0;
+  bottom: 56px;
+  right: 0;
   background: rgba(0, 0, 0, 0.15) !important;
   z-index: 1024;
   display: flex;
@@ -76,6 +76,7 @@
 
 .container-product{
   border: 1px solid #e8e8e8;
+  position: relative;
   border-radius: 8px;
 }
 
