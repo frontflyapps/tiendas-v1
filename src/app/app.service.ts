@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -11,6 +11,8 @@ export class AppService {
   urlBusinessConfig = environment.apiUrl + 'business-config';
   urlBusinessConfigId = environment.apiUrl + 'business-config/:id';
   httpOptions = {};
+
+  $businessConfig = new Subject<any>();
 
   constructor(private httpClient: HttpClient) {}
 

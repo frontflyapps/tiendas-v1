@@ -52,8 +52,8 @@ registerLocaleData(localeEs, 'es');
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable
       // or after 30 seconds (whichever comes first).
-      registrationStrategy: 'registerWhenStable:30000'
-    })
+      registrationStrategy: 'registerWhenStable:30000',
+    }),
 
   ],
   providers: [
@@ -82,12 +82,16 @@ registerLocaleData(localeEs, 'es');
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+}
 
 export function initializeAppConfig(appInitService: AppService) {
   return () => {
     lastValueFrom(appInitService.requestCookie().pipe(switchMap(() => appInitService.getBusinessConfig()))).then(
-      (data) => localStorage.setItem('business-config', JSON.stringify(data.data)),
+      (data) => {
+        localStorage.setItem('business-config', JSON.stringify(data.data));
+        appInitService.$businessConfig.next(data.data);
+      },
     );
   };
 }
