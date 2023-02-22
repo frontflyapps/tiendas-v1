@@ -84,6 +84,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   public cart: Cart;
   public loading = false;
   public cartId = undefined;
+  public BusinessId = undefined;
   public cartItemIds: any[] = undefined;
   public theBusiness: IBusiness;
 
@@ -309,6 +310,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
     this.activateRoute.queryParams.subscribe((data) => {
       this.cartId = data.cartId;
+      this.BusinessId = data.BusinessId;
       this.cartItemIds = data.cartIds;
       this.cartItemIds =
         this.cartItemIds && this.cartItemIds.constructor != Array ? [this.cartItemIds] : this.cartItemIds;
@@ -317,8 +319,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
   public getBusinessConfig(id) {
     this.appService.getBusinessConfigId(id).subscribe((item) => {
-      this.loading = true;
+      // this.loading = true;
       this.businessConfig = item.data;
+      this.form.get('shippingType').setValue(this.businessConfig.shippingType);
       this.getAvalilablePaymentType();
       if (this.businessConfig.gateways?.length == 0) {
         this.noGateway = true;
@@ -522,24 +525,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   public getCartData() {
     this.loadingCart = true;
-    this.shippingData = [];
     this.cartService.getCartData({ cartId: this.cartId, cartItemIds: this.cartItemIds }).subscribe({
       next: (data) => {
         this.cart = data.Cart;
-        console.log(this.cart);
-        let arr: any[] = [];
-        this.cart.currenciesGateway.forEach(item => {
-          arr.push(item.split('-')[0]);
-          arr.forEach(elem => {
-            console.log(elem === item.split('-')[0]);
-            if (elem === item.split('-')[0]) {
-              arr.pop();
-              console.log('aaaa');
-            }
-          });
-        });
-        console.log(arr);
-        this.getBusinessConfig(this.cart.BusinessId);
+        this.getBusinessConfig(this.cart?.BusinessId);
         this.buyProducts = data.CartItems || [];
         // Obtain data for fixed shipping value
         this.buyWithDiscount = data.discount.priceWithDiscount ? data.discount : null;
@@ -697,6 +686,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       info: [null, []],
       paymentType: [null, [Validators.required]],
       ShippingBusinessId: [null, []],
+      shippingType: [this.businessConfig ? this.businessConfig?.shippingType : null],
       currency: [null, []],
       shippingRequired: [null, []],
     });
@@ -773,9 +763,13 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     if (this.shippingData.length === 0) {
       let dataCartId = { cartId: this.cartId };
       this.inLoading = true;
-      this.cartService.getShippingCart(dataCartId, ).subscribe({
+      this.loading = false;
+      this.cartService.getShippingCart(dataCartId, this.BusinessId).subscribe({
         next: (item) => {
           this.shippingData = item?.shippings;
+          this.fixedShipping = item;
+          console.log(this.fixedShipping);
+          this.loading = true;
           console.log(item);
           this.canBeDelivery = item?.canBeDelivery;
           this.inLoading = false;
@@ -810,6 +804,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         next: (dataShipping) => {
           if (Array.isArray(dataShipping.shippings)) {
             this.shippingData = dataShipping.shippings;
+            this.fixedShipping = dataShipping.shippings;
+            console.log(this.fixedShipping);
           } else {
             this.fixedShipping = dataShipping.shippings;
           }
@@ -843,16 +839,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     // Get Shipping
     let dataCartId = { cartId: this.cartId };
     this.inLoading = true;
-    this.cartService.getShippingCart(dataCartId).subscribe({
-      next: (item) => {
-        this.shippingData = item.shippings;
-        this.canBeDelivery = item.canBeDelivery;
-        this.inLoading = false;
-      },
-      error: (error) => {
-        this.inLoading = false;
-      },
-    });
 
     // Get Custom Fields By CartId
     this.configurationService.getCustomFields(dataCartId).subscribe((data) => {

@@ -1,4 +1,5 @@
 @import '../../../../assets/scss/theme/variables';
+@import '../../../../assets/scss/mixins/breakpoints';
 
 .blog-section {
 
@@ -19,6 +20,75 @@
 
 .card-promo{
   width: 100%;
+}
+
+.product-img {
+  height: 320px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background-color: #fafafa;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.loading-shade-main {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 56px;
+  right: 0;
+  background: rgba(0, 0, 0, 0.15) !important;
+  z-index: 1024;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.productImage{
+  width: 170px;
+  max-width: 166px;
+  height: 170px;
+  max-height: 166px;
+}
+.btnAddCart {
+  background-color: white;
+  color: grey;
+  border: 1px solid grey;
+  box-shadow: none;
+  transition: all 0.3s ease;
+
+  mat-icon {
+    color: grey;
+  }
+
+  &:hover {
+    background-color: $theme-main;
+    transition: all 0.3s ease;
+
+    mat-icon {
+      color: #fff;
+    }
+  }
+}
+
+.container-product{
+  border: 1px solid #e8e8e8;
+  position: relative;
+  border-radius: 8px;
+}
+
+.line-clampTitle {
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  line-height: 1.2rem;
+  height: 3.3rem;
+  min-height: 2.2rem;
+  width: 150px;
+  overflow: hidden;
 }
 
 /**

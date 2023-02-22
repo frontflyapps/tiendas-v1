@@ -27,6 +27,7 @@ export class FooterComponent implements OnInit {
 
   public contacts: IFooterContacts;
   public logo = environment.logoFooter;
+  showPoweredBy = environment.showPoweredBy;
 
   loggedInUser: IUser;
 

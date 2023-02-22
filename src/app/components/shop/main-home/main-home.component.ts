@@ -12,6 +12,14 @@ import { FRONT_PRODUCT_DATA, LANDING_PAGE, PRODUCT_COUNT } from '../../../core/c
 import { LocalStorageService } from '../../../core/services/localStorage/localStorage.service';
 import { ProductDataService, ProductService } from '../../shared/services/product.service';
 import { GlobalStateOfCookieService } from '../../../core/services/request-cookie-secure/global-state-of-cookie.service';
+import { AppService } from '../../../app.service';
+import { CartService } from '../../shared/services/cart.service';
+import { ActivatedRoute } from '@angular/router';
+
+export interface ProductInterface {
+  name: string;
+  value: any[];
+}
 
 @Component({
   selector: 'app-main-home',
@@ -32,6 +40,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   language: any;
   _unsubscribeAll: Subject<any>;
   loggedInUser: any = null;
+  inLoading = false;
 
   public slides = [{ title: 'Huge sale', subTitle: 'Up to 70%', image: 'assets/images/carousel/bg-slide.jpg' }];
 
@@ -46,13 +55,16 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   allProducts: IProductCard[] = [];
   banners: any[] = [];
   loadingPopular = false;
-  businessConfig = JSON.parse(localStorage.getItem('business-config'));
+  businessConfig;
   loadingFeatured = false;
   loadingAllProduct = false;
   loadingServices = true;
   loadingBestSellers = true;
   showOnlyTwoProducts = false;
   countProducts = 0;
+
+  pathToRedirect: any;
+  paramsToUrlRedirect: any;
 
   queryPopular: IPagination = {
     limit: 8,
@@ -101,6 +113,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
 
   imageUrl = environment.imageUrl;
   url = environment.apiUrl + 'landing-page';
+  arrayProducts: ProductInterface[] = [];
 
   bigBanner1 = null;
   bigBanner2 = null;
@@ -114,14 +127,24 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     private loggedInUserService: LoggedInUserService,
     private localStorageService: LocalStorageService,
     private httpClient: HttpClient,
+    private appService: AppService,
     private metaService: MetaService,
     public productDataService: ProductDataService,
+    public cartService: CartService,
+    private route: ActivatedRoute,
     private productService: ProductService,
     private globalStateOfCookieService: GlobalStateOfCookieService,
   ) {
     this._unsubscribeAll = new Subject<any>();
+    this.businessConfig = this.localStorageService.getFromStorage('business-config');
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
+
+    this.pathToRedirect = this.route.snapshot.routeConfig.path;
+    this.route.queryParamMap.subscribe((params) => {
+      this.paramsToUrlRedirect = { ...params };
+      console.log(this.paramsToUrlRedirect);
+    });
     // this.metaService.setMeta(
     //   environment.meta?.mainPage?.title,
     //   environment.meta?.mainPage?.description,
@@ -138,6 +161,50 @@ export class MainHomeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.globalStateOfCookieService.getCookieState() ? this.initComponent() : this.setSubscriptionToCookie();
+    this.frontProduct();
+  }
+
+  frontProduct() {
+    // if (this.businessConfig) {
+
+    this.productService.updatedProducts$.subscribe((response) => {
+      if (this.businessConfig?.frontDataProduct === 'normal') {
+        this.getDataProducts();
+      } else if (this.businessConfig?.frontDataProduct === 'category') {
+        this.getCategoriesProducts();
+      } else {
+        this.getCategoriesProducts();
+      }
+    });
+
+    // if (this.businessConfig?.frontDataProduct === 'normal') {
+    //   this.productService.updatedProducts$.subscribe((response) => {
+    //     this.getDataProducts();
+    //   });
+    // } else if (this.businessConfig?.frontDataProduct === 'category') {
+    //   this.productService.updatedProducts$.subscribe((response) => {
+    //     this.getCategoriesProducts();
+    //   });
+    // } else {
+    //   this.productService.updatedProducts$.subscribe((response) => {
+    //     this.getCategoriesProducts();
+    //   });
+    // }
+    // } else {
+    //   this.appService.getBusinessConfig().subscribe(item => {
+    //     if (item) {
+    //       console.log(item);
+    //       this.businessConfig = item.data;
+    //       if (this.businessConfig?.frontDataProduct === 'normal') {
+    //         this.productService.updatedProducts$.subscribe((response) => {
+    //           this.getDataProducts();
+    //         });
+    //       } else if (this.businessConfig?.frontDataProduct === 'category') {
+    //         this.getCategoriesProducts();
+    //       }
+    //     }
+    //   });
+    // }
   }
 
   initComponent() {
@@ -148,8 +215,9 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     this.loadingBestSellers = true;
 
     this.getPFDFromStorage();
-
-    this.productService.updatedProducts$.subscribe((response) => {
+    this.appService.$businessConfig.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {
+      this.businessConfig = data;
+      console.log('************', this.businessConfig);
       this.getDataProducts();
     });
 
@@ -168,6 +236,32 @@ export class MainHomeComponent implements OnInit, OnDestroy {
         this.initComponent();
       }
     });
+  }
+
+  getCategoriesProducts() {
+    const pfd = this.localStorageService.getFromStorage(FRONT_PRODUCT_DATA);
+    if (pfd) {
+      Object.entries(pfd?.categories).forEach(item => {
+        // @ts-ignore
+        const arr: any[] = item[1].map((itemId) => pfd.products.find((itemProduct) => itemProduct.id === itemId));
+        this.arrayProducts.push(
+          {
+            name: item[0],
+            value: arr,
+          });
+        console.log(this.arrayProducts);
+      });
+    }
+
+  }
+
+  public async onAddToCart(product: any, quantity: number = 1) {
+    this.inLoading = true;
+    const loggedIn = await this.cartService.addToCartOnProductCard(product, quantity);
+    this.inLoading = false;
+    if (!loggedIn) {
+      this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
+    }
   }
 
   getProducts() {
@@ -211,8 +305,24 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     this.popularProducts = this.productDataService.popularProducts;
     this.featuredProducts = this.productDataService.featuredProducts;
     this.bestSellersProducts = this.productDataService.bestSellerProducts;
-    console.log(this.bestSellersProducts);
   }
+  //
+  // getDataProductsTest() {
+  //   try {
+  //     const pfd = this.localStorageService.getFromStorage(FRONT_PRODUCT_DATA);
+  //     if (!pfd) {
+  //       this.getProducts();
+  //       return;
+  //     }
+  //     this.setValuesFromResponse(pfd);
+  //   } catch (e) {
+  //   }
+  //   this.allProducts = this.productDataService.allProducts;
+  //   this.popularProducts = this.productDataService.popularProducts;
+  //   this.featuredProducts = this.productDataService.featuredProducts;
+  //   this.bestSellersProducts = this.productDataService.bestSellerProducts;
+  // }
+
   getPFDFromStorage() {
     try {
       const lp = this.localStorageService.getFromStorage(FRONT_PRODUCT_DATA);
