@@ -4,6 +4,14 @@
 *  Checkout page styles
 ****************************************/
 
+#Piedra:hover{
+  overflow: hidden;
+  .fa-hand-fist {
+    visibility: visible !important;
+    transform: translate(70px);
+  }
+}
+
 :host {
   .payment-method-expansion-panel {
     ::ng-deep .mat-expansion-panel-body {

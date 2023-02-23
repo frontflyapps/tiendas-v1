@@ -87,8 +87,9 @@ export class CartService implements OnDestroy {
 
   public goToCheckout(cart: Cart, cartITems?) {
     let cartId = cart.id;
+    let BusinessId = cart.BusinessId;
     let cartIds = cartITems ? cartITems.map((i) => i.id) : cart.CartItems.map((i) => i.id);
-    this.router.navigate(['/checkout'], { queryParams: { cartId, cartIds } }).then();
+    this.router.navigate(['/checkout'], { queryParams: { cartId, cartIds, BusinessId } }).then();
   }
 
   public getShoppingCars(): CartItem[] {

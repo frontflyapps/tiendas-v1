@@ -84,6 +84,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   public cart: Cart;
   public loading = false;
   public cartId = undefined;
+  public BusinessId = undefined;
   public cartItemIds: any[] = undefined;
   public theBusiness: IBusiness;
 
@@ -309,6 +310,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
     this.activateRoute.queryParams.subscribe((data) => {
       this.cartId = data.cartId;
+      this.BusinessId = data.BusinessId;
       this.cartItemIds = data.cartIds;
       this.cartItemIds =
         this.cartItemIds && this.cartItemIds.constructor != Array ? [this.cartItemIds] : this.cartItemIds;
@@ -317,8 +319,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
   public getBusinessConfig(id) {
     this.appService.getBusinessConfigId(id).subscribe((item) => {
-      this.loading = true;
+      // this.loading = true;
       this.businessConfig = item.data;
+      this.form.get('shippingType').setValue(this.businessConfig.shippingType);
       this.getAvalilablePaymentType();
       if (this.businessConfig.gateways?.length == 0) {
         this.noGateway = true;
@@ -470,6 +473,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     } else {
       this.form.get('ShippingBusinessId').setValue(null);
       this.form.get('ShippingBusinessId').clearValidators();
+      console.log('entro');
       this.shippingData = [];
     }
     this.form.get('ShippingBusinessId').updateValueAndValidity();
@@ -500,6 +504,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     if (this.showShipping) {
       this.onRecalculateShipping();
     } else {
+      console.log('entro');
       this.shippingData = [];
     }
   }
@@ -522,11 +527,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   public getCartData() {
     this.loadingCart = true;
-    this.shippingData = [];
     this.cartService.getCartData({ cartId: this.cartId, cartItemIds: this.cartItemIds }).subscribe({
       next: (data) => {
         this.cart = data.Cart;
-        this.getBusinessConfig(this.cart.BusinessId);
+        this.getBusinessConfig(this.cart?.BusinessId);
         this.buyProducts = data.CartItems || [];
         // Obtain data for fixed shipping value
         this.buyWithDiscount = data.discount.priceWithDiscount ? data.discount : null;
@@ -556,6 +560,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         if (this.buyProducts && this.buyProducts.length > 0) {
           this.onRecalculateShipping();
         } else {
+          console.log('entro');
           this.shippingData = [];
         }
         if (this.cart.market === MarketEnum.NATIONAL) {
@@ -580,64 +585,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       }
     );
   }
-
-  // public getCartData() {
-  //   this.loadingCart = true;
-  //   this.shippingData = [];
-  //   lastValueFrom(this.cartService
-  //     .getCartData({ cartId: this.cartId, cartItemIds: this.cartItemIds }))
-  //     .then((data) => {
-  //       this.cart = data.Cart;
-  //       console.log(this.cart);
-  //       this.getBusinessConfig(this.cart.BusinessId);
-  //       this.buyProducts = data.CartItems || [];
-  //       // Obtain data for fixed shipping value
-  //       this.buyWithDiscount = data.discount.priceWithDiscount ? data.discount : null;
-  //       this.fixShippingBusiness = data.Cart.BusinessId;
-  //       // Check if is required shipping by business
-  //       this.shippingIsRequired = data.Cart.Business.shippingRequired;
-  //       if (this.shippingIsRequired) {
-  //         this.form.controls['shippingRequired'].setValidators(Validators.required);
-  //         this.form.controls['ShippingBusinessId'].setValidators(Validators.required);
-  //         this.form.controls['shippingRequired'].updateValueAndValidity();
-  //       }
-  //       // Check if the Pick-Up-Place label has to be displayed
-  //       if (data.CartItems.filter((item) => item.Product.type === 'physical').length > 0) {
-  //         this.hasPickUpPlace = true;
-  //       } else {
-  //         this.hasPickUpPlace = false;
-  //       }
-  //       if (this.cart.market === 'national') {
-  //         this.form.controls['currency'].setValue('CUP');
-  //       }
-  //
-  //       this.dataSource = new MatTableDataSource(this.buyProducts);
-  //       this.marketCard =
-  //         this.buyProducts && this.buyProducts.length > 0 ? this.buyProducts[0].Product.market : MarketEnum.NATIONAL;
-  //       if (this.buyProducts && this.buyProducts.length > 0) {
-  //         this.onRecalculateShipping();
-  //       } else {
-  //         this.shippingData = [];
-  //       }
-  //
-  //       this.form.get('paymentType').setValue(this.payments[0].id);
-  //       if (this.cart.market === MarketEnum.NATIONAL) {
-  //         this.form.get('currency').setValue(CoinEnum.CUP);
-  //       }
-  //       if (this.cart.market === MarketEnum.INTERNATIONAL) {
-  //         this.form.get('currency').setValue(CoinEnum.USD);
-  //       }
-  //
-  //       this.form.updateValueAndValidity();
-  //
-  //       setTimeout(() => {
-  //         this.loadingCart = false;
-  //       }, 250);
-  //     })
-  //     .catch(() => {
-  //       this.loadingCart = false;
-  //     });
-  // }
 
   getShippingSelectedPrice() {
     return this.shippingSelected?.totalPrice;
@@ -742,6 +689,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       info: [null, []],
       paymentType: [null, [Validators.required]],
       ShippingBusinessId: [null, []],
+      shippingType: [this.businessConfig ? this.businessConfig?.shippingType : null],
       currency: [null, []],
       shippingRequired: [null, []],
     });
@@ -817,10 +765,15 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   onRecalculateShipping() {
     if (this.shippingData.length === 0) {
       let dataCartId = { cartId: this.cartId };
+      console.log('asdasdasd');
       this.inLoading = true;
-      this.cartService.getShippingCart(dataCartId, ).subscribe({
+      this.loading = false;
+      this.cartService.getShippingCart(dataCartId, this.BusinessId).subscribe({
         next: (item) => {
           this.shippingData = item?.shippings;
+          this.fixedShipping = item;
+          console.log(this.fixedShipping);
+          this.loading = true;
           console.log(item);
           this.canBeDelivery = item?.canBeDelivery;
           this.inLoading = false;
@@ -855,10 +808,13 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         next: (dataShipping) => {
           if (Array.isArray(dataShipping.shippings)) {
             this.shippingData = dataShipping.shippings;
+            this.fixedShipping = dataShipping.shippings;
+            console.log(this.fixedShipping);
           } else {
             this.fixedShipping = dataShipping.shippings;
           }
           this.canBeDelivery = dataShipping.canBeDelivery;
+          console.log(dataShipping);
           this.inLoading = false;
         },
         error: (error) => {
@@ -888,16 +844,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     // Get Shipping
     let dataCartId = { cartId: this.cartId };
     this.inLoading = true;
-    this.cartService.getShippingCart(dataCartId).subscribe({
-      next: (item) => {
-        this.shippingData = item.shippings;
-        this.canBeDelivery = item.canBeDelivery;
-        this.inLoading = false;
-      },
-      error: (error) => {
-        this.inLoading = false;
-      },
-    });
 
     // Get Custom Fields By CartId
     this.configurationService.getCustomFields(dataCartId).subscribe((data) => {
@@ -1178,7 +1124,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   getContacts() {
-    this.contactsService.getContact.next('');
+    this.contactsService.getContact.subscribe(item => {
+      console.log(item);
+    });
   }
 
   // ///////////////////////////////////////////////

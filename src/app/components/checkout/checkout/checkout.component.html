@@ -29,7 +29,7 @@
       ngClass.xs="pr-0"
     >
       <mat-horizontal-stepper #stepper [linear]="'true'" labelPosition="bottom" class="billing-details">
-        <mat-step *ngIf="businessConfig?.shippingType == 'normal'">
+        <mat-step *ngIf="businessConfig?.shippingType == 'normal' || businessConfig?.shippingType == 'fixed'">
           <ng-template matStepLabel>{{ 'Envío' | translate }}</ng-template>
           <!--------- SHIPPING DETAILS ----------->
           <ng-container *ngIf="canBeDelivery; else noShipping">
@@ -733,58 +733,6 @@
                     </span>
                   </li>
                 </ul>
-                <!------------------FIXED SHIPPING------------------>
-                <ng-container *ngIf="businessConfig?.shippingType == 'fixed'">
-                  <div
-                    fxLayout="row"
-                    class="w-100"
-                    fxLayout.xs="column"
-                    ngClass.gt-xs="pt-1"
-                    fxLayoutAlign="space-between center"
-                    fxLayoutAlign.xs="start"
-                  >
-                    <div fxLayout fxLayoutAlign="start center">
-                      <mat-checkbox
-                        ngClass.xs="mb-2"
-                        fxFlexOrder.xs="1"
-                        style="margin-bottom: 12px"
-                        (change)="onFixedHomeDelivery($event)"
-                        [formControl]="form.get('shippingRequired')"
-                      >
-                        <span class="mat-body-2">{{ 'Home delivery' | translate }}</span>
-                      </mat-checkbox>
-                    </div>
-                    <ng-container
-                      *ngIf="
-                        canBeDelivery &&
-                        form.get('shippingRequired').value &&
-                        this.fixedShipping?.fixShipingg &&
-                        this.fixedShipping?.totalPrice >= 0 &&
-                        fixedShipping?.provinces?.includes(this.form.get('ProvinceId').value)
-                      "
-                    >
-                      <span class="my-2" style="font-size: 16px; font-weight: 500; color: #f44336">
-                        {{ '*El costo del envío es de' | translate }}&nbsp;{{
-                          getFixedShippingPrice(this.fixedShipping?.totalPrice)
-                            | currencyMarket: form.controls['currency'].value
-                        }}
-                      </span>
-                    </ng-container>
-                    <ng-container
-                      *ngIf="
-                        form.get('shippingRequired').value &&
-                        (this.fixedShipping?.totalPrice < 0 ||
-                          !canBeDelivery ||
-                          !fixedShipping?.provinces?.includes(this.form.get('ProvinceId').value))
-                      "
-                    >
-                      <span class="my-2" style="font-size: 16px; font-weight: 500; color: #f44336">
-                        {{ '*Estos productos no pueden ser enviados a la localización proporcionada' | translate }}
-                      </span>
-                    </ng-container>
-                  </div>
-                </ng-container>
-                <!-------------------------------------------------->
                 <div
                   *ngIf="!loadingCart"
                   class="mb-3 pb-3"
