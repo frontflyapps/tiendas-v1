@@ -296,14 +296,11 @@ export class MainHomeComponent implements OnInit, OnDestroy {
       }
 
       if (this.localStorageService.iMostReSearch(pfd?.timespan, environment.timeToResearchProductData)) {
-        console.log('********11111111**');
         this.getProducts();
       } else {
-        console.log('********222222**');
         this.setValuesFromResponse(pfd);
       }
-    } catch (e) {
-    }
+    } catch (e) {}
     this.allProducts = this.productDataService.allProducts;
     this.popularProducts = this.productDataService.popularProducts;
     this.featuredProducts = this.productDataService.featuredProducts;
