@@ -344,20 +344,21 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     let searchBidaindoCards: boolean;
     let enabledGates;
     if (this.cart.currenciesGateway) {
-      this.onMarket = true;
-      console.log(this.cart.currenciesGateway);
-      console.log(objectKeys(this.cart.currenciesGateway));
-      if (this.cart.currenciesGateway.transfermovil.currency.length > 0) {
-        this.multiTransfermovil = true;
-      } else {this.multiTransfermovil = false;}
-      objectKeys(this.cart.currenciesGateway).forEach(item => {
-        this.arrPayments.push(item);
-      });
-      enabledGates = this.arrPayments;
-    } else {
-      this.onMarket = false;
-      enabledGates = this.businessConfig?.gateways;
+      if (objectKeys(this.cart.currenciesGateway).length > 0) {
+        this.onMarket = true;
+        if (this.cart.currenciesGateway?.transfermovil?.currency.length > 0) {
+          this.multiTransfermovil = true;
+        } else {this.multiTransfermovil = false;}
+        objectKeys(this.cart.currenciesGateway).forEach(item => {
+          this.arrPayments.push(item);
+        });
+        enabledGates = this.arrPayments;
+      } else {
+        this.onMarket = false;
+        enabledGates = this.businessConfig?.gateways;
+      }
     }
+
 
     this.payments.forEach((item, index) => {
       if (Array.isArray(enabledGates) && enabledGates.includes(item.id)) {
@@ -587,10 +588,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         } else {
           this.shippingData = [];
         }
-        if (this.cart.market === MarketEnum.NATIONAL && this.onMarket) {
+        if (this.cart.market === MarketEnum.NATIONAL && !this.onMarket) {
           this.form.get('currency').setValue(CoinEnum.CUP);
         }
-        if (this.cart.market === MarketEnum.INTERNATIONAL && this.onMarket) {
+        if (this.cart.market === MarketEnum.INTERNATIONAL && !this.onMarket) {
           this.form.get('currency').setValue(CoinEnum.USD);
         }
         this.cartService.$cartItemsUpdated.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {
@@ -952,6 +953,14 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     data.phone = '53' + data.phone;
 
     this.paymentType = JSON.parse(JSON.stringify(data.paymentType));
+    if (this.onMarket) {
+    } else {
+      if (this.cart.market === 'national') {
+        data.currency = 'CUP';
+      } else {
+        data.currency = 'USD';
+      }
+    }
     if (!data.shippingRequired) {
       delete data.ShippingBusinessId;
     }
@@ -959,10 +968,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     data.urlClient = environment.url;
     data.CartItemIds = this.buyProducts.map((item) => item.id);
     data.CartId = +this.cart.id;
-
-    if (!this.fixedShipping?.provinces.includes(this.form.get('ProvinceId').value)) {
-      data.shippingRequired = false;
-    }
 
     if (data.paymentType == 'transfermovil') {
       return this.processTransfermovil(data);

@@ -32,7 +32,7 @@
         <mat-step *ngIf="businessConfig?.shippingType == 'normal' || businessConfig?.shippingType == 'fixed'">
           <ng-template matStepLabel>{{ 'Envío' | translate }}</ng-template>
           <!--------- SHIPPING DETAILS ----------->
-          <ng-container *ngIf="canBeDelivery && showAddress; else noShipping">
+          <ng-container *ngIf="canBeDelivery; else noShipping">
             <h3 class="grey-800">{{ 'Shipping Details' | translate }}</h3>
 
             <div fxLayout fxLayoutAlign="start center">
@@ -255,13 +255,13 @@
               <p
                 class="mat-body-2 my-2"
                 style="text-transform: uppercase"
-                *ngIf='canBeDelivery && showAddress'
+                *ngIf='canBeDelivery || showAddress'
                 title="{{ 'Datos adicionales del cliente que obtendrá los productos' | translate }}"
               >
                 {{ 'Datos del destinatario' | translate }}
                 <mat-icon
                   class="iconHelp"
-                  *ngIf='canBeDelivery && showAddress'
+                  *ngIf='canBeDelivery || showAddress'
                   matTooltip="{{ 'Datos adicionales del cliente que obtendrá los productos' | translate }}"
                   style="cursor: pointer"
                   >help
@@ -269,7 +269,7 @@
               </p>
 
               <!-- SOLO PARA CUBANOS -->
-              <ng-container *ngIf="onlyCubanPeople && canBeDelivery && showAddress">
+              <ng-container *ngIf="onlyCubanPeople && (canBeDelivery || showAddress)">
                 <div fxLayout="row wrap" fxLayoutAlign="space-between center">
                   <mat-form-field appearance="outline" fxFlex="48" fxFlex.lt-md="100">
                     <mat-label>{{ 'Provincia' | translate }}</mat-label>
@@ -315,7 +315,7 @@
               </ng-container>
 
               <!-- SOLO PARA EXTRANJEROS -->
-              <ng-container *ngIf="!onlyCubanPeople && canBeDelivery && showAddress">
+              <ng-container *ngIf="!onlyCubanPeople && (canBeDelivery || showAddress)">
                 <p class="mat-body-2 my-2" style="text-transform: uppercase">
                   {{ "Customer's location data" | translate }}
                   <mat-icon
