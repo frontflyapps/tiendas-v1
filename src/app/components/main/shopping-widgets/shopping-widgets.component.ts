@@ -56,7 +56,7 @@ export class ShoppingWidgetsComponent implements OnInit, OnDestroy {
 
         this.cartService.setCartInPaying(data[0].status);
 
-        this.getCartTime();
+        // this.getCartTime();
       }
 
       if (Array.isArray(data) && data.length == 0) {
@@ -81,28 +81,29 @@ export class ShoppingWidgetsComponent implements OnInit, OnDestroy {
       this.fillShoppingCart();
     });
 
-    if (this.loggedInUser) {
-      this.cartService.getCart().then((data) => {
-        this.shoppingCarts = data.data;
-
-        if (Array.isArray(data.data) && data.data.length > 0) {
-          this.cartService.dateCreatedAtCart = data.data[0].createdAt;
-
-          this.cartService.setCartInPaying(data.data[0].status);
-
-          this.getCartTime();
-        }
-
-        this.globalFacadeService.updateCartState(data.data || []);
-        this.globalFacadeService.updateBusinessState(data.data[0]?.Business || {});
-        this.shoppingCartItems = this.cartService.getShoppingCars();
-      });
-    } else {
-      this.shoppingCarts = this.cartService.getCartNoLogged();
-      this.globalFacadeService.updateCartState(this.shoppingCarts || []);
-      this.globalFacadeService.updateBusinessState(this.shoppingCarts[0]?.Business || {});
-      this.shoppingCartItems = this.cartService.getShoppingCars();
-    }
+    // if (this.loggedInUser) {
+    //   this.cartService.getCart().then((data) => {
+    //     console.log('entro2');
+    //     this.shoppingCarts = data.data;
+    //
+    //     if (Array.isArray(data.data) && data.data.length > 0) {
+    //       this.cartService.dateCreatedAtCart = data.data[0].createdAt;
+    //
+    //       this.cartService.setCartInPaying(data.data[0].status);
+    //
+    //       this.getCartTime();
+    //     }
+    //
+    //     this.globalFacadeService.updateCartState(data.data || []);
+    //     this.globalFacadeService.updateBusinessState(data.data[0]?.Business || {});
+    //     this.shoppingCartItems = this.cartService.getShoppingCars();
+    //   });
+    // } else {
+    //   this.shoppingCarts = this.cartService.getCartNoLogged();
+    //   this.globalFacadeService.updateCartState(this.shoppingCarts || []);
+    //   this.globalFacadeService.updateBusinessState(this.shoppingCarts[0]?.Business || {});
+    //   this.shoppingCartItems = this.cartService.getShoppingCars();
+    // }
   }
 
   getCartTime() {
@@ -149,18 +150,18 @@ export class ShoppingWidgetsComponent implements OnInit, OnDestroy {
   }
 
   private fillShoppingCart() {
-    if (this.loggedInUser) {
-      this.cartService.getCart().then((data) => {
-        this.shoppingCarts = data.data;
-        this.globalFacadeService.updateCartState(data.data || []);
-        this.globalFacadeService.updateBusinessState(data.data[0]?.Business || {});
-        this.shoppingCartItems = this.cartService.getShoppingCars();
-      });
-    } else {
-      this.shoppingCarts = [];
-      this.globalFacadeService.updateCartState(this.shoppingCarts || []);
-      this.globalFacadeService.updateBusinessState(this.shoppingCarts[0]?.Business || {});
-      this.shoppingCartItems = this.cartService.getShoppingCars();
-    }
+  //   if (this.loggedInUser) {
+  //     this.cartService.getCart().then((data) => {
+  //       this.shoppingCarts = data.data;
+  //       this.globalFacadeService.updateCartState(data.data || []);
+  //       this.globalFacadeService.updateBusinessState(data.data[0]?.Business || {});
+  //       this.shoppingCartItems = this.cartService.getShoppingCars();
+  //     });
+  //   } else {
+  //     this.shoppingCarts = [];
+  //     this.globalFacadeService.updateCartState(this.shoppingCarts || []);
+  //     this.globalFacadeService.updateBusinessState(this.shoppingCarts[0]?.Business || {});
+  //     this.shoppingCartItems = this.cartService.getShoppingCars();
+  //   }
   }
 }
