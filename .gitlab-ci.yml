@@ -21,8 +21,8 @@ stages:
     - eval $(aws ecr get-login --no-include-email --region us-east-1)
   script:
     - docker build -f Dockerfile -t tiendav1-front .
-    - docker tag tiendav1-front:latest $AWS_ECR/tiendav1-front:$VERSION_TAG
-    - docker push $AWS_ECR/tiendav1-front:$VERSION_TAG
+    - docker tag tiendav1-front:latest $AWS_ECR/tiendav1-front:production-mibulevar
+    - docker push $AWS_ECR/tiendav1-front:production-mibulevar
     - echo "DEPLOYED SUCCESSFULLY"
 
 build_prod:

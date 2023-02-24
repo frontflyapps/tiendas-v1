@@ -3,8 +3,8 @@ export const PASARELA_BASE = 'peoplegoto';
 export const environment = {
   production: true,
 
-  apiUrl: 'http://127.0.0.1:8997/v1/',
-  imageUrl: 'http://127.0.0.1:8997/v1/',
+  apiUrl: 'https://api.mibulevar.com/v1/',
+  imageUrl: 'https://cdn.mibulevar.com/',
 
   defaultLanguage: 'es',
   currencyInternational: 'USD',
