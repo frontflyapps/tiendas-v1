@@ -23,6 +23,8 @@ stages:
     - docker build -f Dockerfile -t tiendav1-front .
     - docker tag tiendav1-front:latest $AWS_ECR/tiendav1-front:production-mibulevar
     - docker push $AWS_ECR/tiendav1-front:production-mibulevar
+    - docker save $AWS_ECR/tiendav1-front:production-mibulevar | gzip >tiendav1-front.tar.gz
+    - aws s3 cp tiendav1-front.tar.gz s3://downloadclientes/tiendav1/mibulevar/
     - echo "DEPLOYED SUCCESSFULLY"
 
 build_prod:
