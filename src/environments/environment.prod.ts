@@ -9,9 +9,9 @@ export const environment = {
   defaultLanguage: 'es',
   currencyInternational: 'USD',
 
-  logo: 'assets/images/guajiritos/guajiritos-Logo-blanco.png',
-  logoWhite: 'assets/images/logo-navbar.svg',
-  logoFooter: 'assets/images/logo-navbar.svg',
+  logo: 'assets/images/logo-navbar.png',
+  logoWhite: 'assets/images/logo-navbar.png',
+  logoFooter: 'assets/images/logo-navbar.png',
 
   limitSearch : 42,
 
@@ -22,30 +22,31 @@ export const environment = {
   timeToResearchMenuData: 300000, // (30min) Time to research menu (ms)
   timeToResearchCategoriesData: 600000, // (10min) Time to research categories (ms)
 
-  url: 'https://www.mibulevar.com/',
-  urlAboutUs: 'https://www.mibulevar.com/',
+  url: 'https://cupetltu.mibulevar.com',
+  urlAboutUs: 'https://cupetltu.mibulevar.com',
 
-  address: 'MiBulevar | Transfermóvil',
+  address: 'Cupet Las Tunas | TransferMóvil',
   localDatabaseUsers: true,
 
   contacts: {
-    email: 'bulevar@etecsa.cu',
-    address: 'Centro de Negocios Miramar, Edificio Barcelona oficina 201, Miramar, Playa.',
+    phone: '(+53) 52879308',
+    email: 'pagoelectronico@ecltu.cupet.cu',
+    address: 'Carretera Central km4 1/2  San Antonio Las Tunas. Cuba.',
   },
 
   adminService: 'https://admin.mibulevar.com/',
   mainDomain: '.mibulevar.com',
 
   tokenBusiness:
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7IkJ1c2luZXNzSWQiOjEsImlkIjoxLCJkYXRlIjoiMjAyMS0wOS0xM1QwMTo0NToxOC4wMDBaIiwibmFtZSI6IlRpZW5kYSIsImVtYWlsIjoidGllbmRhQGxvY2FsaG9zdC5jb20ifSwiaWF0IjoxNjMxNDk3NTkxfQ.FF5-276rI9SJmtebVo0spV8Y2wdOZPok7LlUxtTDwh0',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7IkJ1c2luZXNzSWQiOjY1LCJpZCI6NjUsImRhdGUiOiIyMDIyLTA3LTA0VDE4OjA3OjAwLjM4NloiLCJuYW1lIjoiVGllbmRhIFZpcnR1YWwgQ3VwZXQgbGFzIFR1bmFzIiwiZW1haWwiOiJwYWdvZWxlY3Ryb25pY29AZWNsdHUuY3VwZXQuY3UifSwiaWF0IjoxNjU2OTU4MDIwfQ.N2lmVPgbV_mMaGzksN7e1pkr6rE65Xcg-j6ftWr5obo',
 
   meta: {
     mainPage: {
-      title: 'MiBulevar | Transfermóvil',
+      title: 'Cupet Las Tunas | TransferMóvil',
       description: 'Tienda online desarrollada con el framework Angular permite la modelación de negocios B2C and C2C',
       keywords: 'HTML, CSS, JavaScript, Angular, Tienda Online B2B, Sin Cola, comercio online',
-      shareImg: 'https://www.mibulevar.com/assets/images/share-img.jpg',
-      url: 'https://www.mibulevar.com/',
+      shareImg: 'https://cupetcfg.mibulevar.com/assets/images/share-img.png',
+      url: 'https://cupetcfg.mibulevar.com/',
     },
   },
 
