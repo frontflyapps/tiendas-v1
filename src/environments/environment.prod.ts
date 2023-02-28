@@ -8,9 +8,10 @@ export const environment = {
 
   defaultLanguage: 'es',
   currencyInternational: 'USD',
+
   logo: 'assets/images/guajiritos/guajiritos-Logo-blanco.png',
-  logoWhite: 'assets/images/guajiritos/guajiritos-Logo-blanco.png',
-  logoFooter: 'assets/images/guajiritos/guajiritos-Logo-blanco.png',
+  logoWhite: 'assets/images/logo-navbar.svg',
+  logoFooter: 'assets/images/logo-navbar.svg',
 
   limitSearch : 42,
 
