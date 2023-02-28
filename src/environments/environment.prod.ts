@@ -38,15 +38,15 @@ export const environment = {
   mainDomain: '.mibulevar.com',
 
   tokenBusiness:
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7IkJ1c2luZXNzSWQiOjc1LCJpZCI6NzUsImRhdGUiOiIyMDIyLTExLTAxVDE1OjExOjM5Ljg0MVoiLCJuYW1lIjoiVUVCIERpdmlzaW9uIFRlcnJpdG9yaWFsIENvbWJ1c3RpYmxlIEhvbGd1w61uIiwiZW1haWwiOiJ0dmlydHVhbGhsZ0BlY2hvbC5jdXBldC5jdSJ9LCJpYXQiOjE2NjczMTU0OTl9.jn3iUqW1b3qZBdNqFdGrOYA-L2VBi1vFVEzV2VxDn7s',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7IkJ1c2luZXNzSWQiOjYxLCJpZCI6NjEsImRhdGUiOiIyMDIyLTA2LTI3VDIwOjIzOjU5LjQwM1oiLCJuYW1lIjoiQ29tZXJjaW8gTWlub3Jpc3RhIENpZW5mdWVnb3MiLCJlbWFpbCI6Im1laWxpLmhlcm5uYWRlekBnZWNjLmNvLmN1In0sImlhdCI6MTY1NjM2MTQzOX0.iW0tQMfs2Y1yrz1y2Qe88ZNp84uvY3fDoFirx-TlZ7Y',
 
   meta: {
     mainPage: {
-      title: 'UEB Division Territorial Combustible Holguín  | TransferMóvil',
+      title: 'Cupet Cienfuegos  | TransferMóvil',
       description: 'Tienda online desarrollada con el framework Angular permite la modelación de negocios B2C and C2C',
       keywords: 'HTML, CSS, JavaScript, Angular, Tienda Online B2B, Sin Cola, comercio online',
-      shareImg: 'https://cupethol.mibulevar.com/assets/images/share-img.png',
-      url: 'https://cupethol.mibulevar.com/',
+      shareImg: 'https://cupetcfg.mibulevar.com/assets/images/share-img.png',
+      url: 'https://cupetcfg.mibulevar.com/',
     },
   },
 
