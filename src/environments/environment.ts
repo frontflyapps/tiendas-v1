@@ -42,23 +42,24 @@ export const environment = {
   url: 'http://tienda.tiendalocal.com:4308',
   urlAboutUs: 'http://tienda.tiendalocal.com:4308',
 
-  address: 'Mi Bulevar',
+  address: 'Cupet Holguín | TransferMóvil',
   localDatabaseUsers: true,
 
   contacts: {
-    phone: '',
-    email: '',
-    address: '',
+    phone: '(+53) 59962832',
+    email: 'tvirtualhlg@echol.cupet.cu',
+    address: 'Calle 3 #20 /4ta y carretera Central, zona industria, Guirabito',
   },
 
   adminService: 'http://admintienda.tiendalocal.com/',
   mainDomain: '.tiendalocal.com',
 
-  tokenBusiness: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7IkJ1c2luZXNzSWQiOjY1LCJpZCI6NjUsImRhdGUiOiIyMDIyLTA3LTA0VDE4OjA3OjAwLjM4NloiLCJuYW1lIjoiVGllbmRhIFZpcnR1YWwgQ3VwZXQgbGFzIFR1bmFzIiwiZW1haWwiOiJwYWdvZWxlY3Ryb25pY29AZWNsdHUuY3VwZXQuY3UifSwiaWF0IjoxNjU2OTU4MDIwfQ.N2lmVPgbV_mMaGzksN7e1pkr6rE65Xcg-j6ftWr5obo',
+  tokenBusiness:
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7IkJ1c2luZXNzSWQiOjc1LCJpZCI6NzUsImRhdGUiOiIyMDIyLTExLTAxVDE1OjExOjM5Ljg0MVoiLCJuYW1lIjoiVUVCIERpdmlzaW9uIFRlcnJpdG9yaWFsIENvbWJ1c3RpYmxlIEhvbGd1w61uIiwiZW1haWwiOiJ0dmlydHVhbGhsZ0BlY2hvbC5jdXBldC5jdSJ9LCJpYXQiOjE2NjczMTU0OTl9.jn3iUqW1b3qZBdNqFdGrOYA-L2VBi1vFVEzV2VxDn7s',
 
   meta: {
     mainPage: {
-      title: 'Mi Bulevar',
+      title: 'Cupet Holguín | TransferMóvil',
       description: 'Tienda online desarrollada con el framework Angular permite la modelación de negocios B2C and C2C',
       keywords: 'HTML, CSS, JavaScript, Angular, Tienda Online B2B, comercio online',
       shareImg: 'https://www.mibulevar.com/assets/images/share-img.png',

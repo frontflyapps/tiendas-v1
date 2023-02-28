@@ -21,11 +21,11 @@ stages:
     - eval $(aws ecr get-login --no-include-email --region us-east-1)
   script:
     - docker build -f Dockerfile -t tiendav1-front .
-    - docker tag tiendav1-front:latest $AWS_ECR/tiendav1-front:production-mibulevar-cupetltu
-    - docker push $AWS_ECR/tiendav1-front:production-mibulevar-cupetltu
+    - docker tag tiendav1-front:latest $AWS_ECR/tiendav1-front:production-mibulevar-cupethol
+    - docker push $AWS_ECR/tiendav1-front:production-mibulevar-cupethol
     - docker login -u admin --password Guaj1r1t0s* registry.guajitech.com
-    - docker tag $AWS_ECR/tiendav1-front:production-mibulevar-cupetltu registry.guajitech.com/tiendav1-front:production-mibulevar-cupetltu
-    - docker push registry.guajitech.com/tiendav1-front:production-mibulevar-cupetltu
+    - docker tag $AWS_ECR/tiendav1-front:production-mibulevar-cupethol registry.guajitech.com/tiendav1-front:production-mibulevar-cupethol
+    - docker push registry.guajitech.com/tiendav1-front:production-mibulevar-cupethol
     - echo "DEPLOYED SUCCESSFULLY"
 
 build_prod:

@@ -22,31 +22,31 @@ export const environment = {
   timeToResearchMenuData: 300000, // (30min) Time to research menu (ms)
   timeToResearchCategoriesData: 600000, // (10min) Time to research categories (ms)
 
-  url: 'https://cupetltu.mibulevar.com',
-  urlAboutUs: 'https://cupetltu.mibulevar.com',
+  url: 'https://cupethol.mibulevar.com',
+  urlAboutUs: 'https://cupethol.mibulevar.com',
 
-  address: 'Cupet Las Tunas | TransferMóvil',
+  address: 'UEB Division Territorial Combustible Holguín | TransferMóvil',
   localDatabaseUsers: true,
 
   contacts: {
-    phone: '(+53) 52879308',
-    email: 'pagoelectronico@ecltu.cupet.cu',
-    address: 'Carretera Central km4 1/2  San Antonio Las Tunas. Cuba.',
+    phone: '(+53) 59962832',
+    email: 'tvirtualhlg@echol.cupet.cu',
+    address: 'Calle 3 #20 /4ta y carretera Central, zona industria, Guirabito',
   },
 
   adminService: 'https://admin.mibulevar.com/',
   mainDomain: '.mibulevar.com',
 
   tokenBusiness:
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7IkJ1c2luZXNzSWQiOjY1LCJpZCI6NjUsImRhdGUiOiIyMDIyLTA3LTA0VDE4OjA3OjAwLjM4NloiLCJuYW1lIjoiVGllbmRhIFZpcnR1YWwgQ3VwZXQgbGFzIFR1bmFzIiwiZW1haWwiOiJwYWdvZWxlY3Ryb25pY29AZWNsdHUuY3VwZXQuY3UifSwiaWF0IjoxNjU2OTU4MDIwfQ.N2lmVPgbV_mMaGzksN7e1pkr6rE65Xcg-j6ftWr5obo',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7IkJ1c2luZXNzSWQiOjc1LCJpZCI6NzUsImRhdGUiOiIyMDIyLTExLTAxVDE1OjExOjM5Ljg0MVoiLCJuYW1lIjoiVUVCIERpdmlzaW9uIFRlcnJpdG9yaWFsIENvbWJ1c3RpYmxlIEhvbGd1w61uIiwiZW1haWwiOiJ0dmlydHVhbGhsZ0BlY2hvbC5jdXBldC5jdSJ9LCJpYXQiOjE2NjczMTU0OTl9.jn3iUqW1b3qZBdNqFdGrOYA-L2VBi1vFVEzV2VxDn7s',
 
   meta: {
     mainPage: {
-      title: 'Cupet Las Tunas | TransferMóvil',
+      title: 'UEB Division Territorial Combustible Holguín  | TransferMóvil',
       description: 'Tienda online desarrollada con el framework Angular permite la modelación de negocios B2C and C2C',
       keywords: 'HTML, CSS, JavaScript, Angular, Tienda Online B2B, Sin Cola, comercio online',
-      shareImg: 'https://cupetcfg.mibulevar.com/assets/images/share-img.png',
-      url: 'https://cupetcfg.mibulevar.com/',
+      shareImg: 'https://cupethol.mibulevar.com/assets/images/share-img.png',
+      url: 'https://cupethol.mibulevar.com/',
     },
   },
 
