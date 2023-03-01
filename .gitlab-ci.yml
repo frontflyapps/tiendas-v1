@@ -30,7 +30,7 @@ stages:
 
 build_prod:
   only:
-    - prod-MiBulevar
+    - prod-MiBulevar-Cupetcfg
   environment:
     name: MIBULEVAR
   <<: *build_job
