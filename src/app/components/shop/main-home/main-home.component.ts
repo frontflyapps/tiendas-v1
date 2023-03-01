@@ -166,6 +166,15 @@ export class MainHomeComponent implements OnInit, OnDestroy {
 
   frontProduct() {
     // if (this.businessConfig) {
+    // this.productService.productsData$.pipe(takeUntil(this._unsubscribeAll)).subscribe((response) => {
+    //   if (this.businessConfig?.frontDataProduct === 'normal') {
+    //     this.getDataProducts();
+    //   } else if (this.businessConfig?.frontDataProduct === 'category') {
+    //     this.getCategoriesProducts();
+    //   } else {
+    //     this.getCategoriesProducts();
+    //   }
+    // });
 
     this.productService.updatedProducts$.subscribe((response) => {
       if (this.businessConfig?.frontDataProduct === 'normal') {
