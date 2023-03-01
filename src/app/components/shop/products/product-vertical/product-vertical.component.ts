@@ -27,6 +27,7 @@ export class ProductVerticalComponent implements OnInit, OnDestroy {
   language: any;
   _unsubscribeAll: Subject<any>;
   loggedInUser: any = null;
+  businessConfig;
 
   constructor(
     private utilsService: UtilsService,
@@ -38,6 +39,7 @@ export class ProductVerticalComponent implements OnInit, OnDestroy {
     private globalStateOfCookieService: GlobalStateOfCookieService,
   ) {
     this._unsubscribeAll = new Subject<any>();
+    this.businessConfig = this.localStorageService.getFromStorage('business-config');
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
   }
 
@@ -61,9 +63,13 @@ export class ProductVerticalComponent implements OnInit, OnDestroy {
     // this.productService.getAllProducts(this.queryAll).subscribe((data: any) => {
     //   this.allProducts = data.data;
     // });
+    this.productService.updatedProducts$.subscribe((response) => {
+      if (this.businessConfig?.frontDataProduct === 'normal') {
 
-    this.setServiceGetProduct();
-    this.getPFDFromStorage();
+        this.setServiceGetProduct();
+        this.getPFDFromStorage();
+      }
+    });
   }
 
   setSubscriptionToCookie() {
@@ -75,12 +81,13 @@ export class ProductVerticalComponent implements OnInit, OnDestroy {
   }
 
   setServiceGetProduct() {
-    this.productService.productsData$.pipe(takeUntil(this._unsubscribeAll)).subscribe((response) => {
-      const _response: any = JSON.parse(JSON.stringify(response));
-      this.setValuesFromResponse(_response);
-      _response.timespan = new Date().getTime();
-      this.localStorageService.setOnStorage(FRONT_PRODUCT_DATA, _response);
-    });
+      this.productService.productsData$.pipe(takeUntil(this._unsubscribeAll)).subscribe((response) => {
+        const _response: any = JSON.parse(JSON.stringify(response));
+        this.setValuesFromResponse(_response);
+        _response.timespan = new Date().getTime();
+        this.localStorageService.setOnStorage(FRONT_PRODUCT_DATA, _response);
+      });
+
   }
 
   getProducts() {
