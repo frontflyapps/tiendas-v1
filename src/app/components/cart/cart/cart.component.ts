@@ -53,26 +53,27 @@ export class CartComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.loggedInUserService.$loggedInUserUpdated.pipe(takeUntil(this._unsubscribeAll)).subscribe((data) => {
       this.loggedInUser = this.loggedInUserService.getLoggedInUser();
-      if (this.loggedInUser) {
-        this.cartService.getCart().then((dataCart: any) => {
-          this.carts = dataCart.data;
-        });
-      } else {
-        this.carts = [...this.cartService.getCartNoLogged()];
-
-        this.clearCartTimeData();
-      }
+      // if (this.loggedInUser) {
+      //   console.log('entro');
+      //   this.cartService.getCart().then((dataCart: any) => {
+      //     this.carts = dataCart.data;
+      //   });
+      // } else {
+      //   this.carts = [...this.cartService.getCartNoLogged()];
+      //
+      //   this.clearCartTimeData();
+      // }
     });
 
-    if (this.loggedInUser) {
-      this.cartService.getCart().then((dataCart: any) => {
-        this.carts = dataCart.data;
-      });
-    } else {
-      this.carts = [...this.cartService.getCartNoLogged()];
-
-      this.clearCartTimeData();
-    }
+    // if (this.loggedInUser) {
+    //   this.cartService.getCart().then((dataCart: any) => {
+    //     this.carts = dataCart.data;
+    //   });
+    // } else {
+    //   this.carts = [...this.cartService.getCartNoLogged()];
+    //
+    //   this.clearCartTimeData();
+    // }
 
     this.loggedInUserService.$languageChanged.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {
       this.language = data.lang;
@@ -165,8 +166,9 @@ export class CartComponent implements OnInit, OnDestroy {
 
   public goToCheckout(cart: Cart, cartITems?) {
     let cartId = cart.id;
+    let BusinessId = cart.BusinessId;
     let cartIds = cartITems ? cartITems.map((i) => i.id) : cart.CartItems.map((i) => i.id);
-    this.router.navigate(['/checkout'], { queryParams: { cartId, cartIds } }).then();
+    this.router.navigate(['/checkout'], { queryParams: { cartId, cartIds, BusinessId } }).then();
   }
 
   /**

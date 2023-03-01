@@ -1,6 +1,7 @@
 export interface Cart {
   CartItems?: CartItem[];
   PersonId?: any;
+  currenciesGateway?: any;
   totalPrice?: number;
   id?: number;
   BusinessId?: number;

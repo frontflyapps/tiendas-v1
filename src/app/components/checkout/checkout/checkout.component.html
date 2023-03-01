@@ -29,7 +29,7 @@
       ngClass.xs="pr-0"
     >
       <mat-horizontal-stepper #stepper [linear]="'true'" labelPosition="bottom" class="billing-details">
-        <mat-step *ngIf="businessConfig?.shippingType == 'normal'">
+        <mat-step *ngIf="businessConfig?.shippingType == 'normal' || businessConfig?.shippingType == 'fixed'">
           <ng-template matStepLabel>{{ 'Envío' | translate }}</ng-template>
           <!--------- SHIPPING DETAILS ----------->
           <ng-container *ngIf="canBeDelivery; else noShipping">
@@ -255,13 +255,13 @@
               <p
                 class="mat-body-2 my-2"
                 style="text-transform: uppercase"
-                *ngIf='canBeDelivery'
+                *ngIf='canBeDelivery || showAddress'
                 title="{{ 'Datos adicionales del cliente que obtendrá los productos' | translate }}"
               >
                 {{ 'Datos del destinatario' | translate }}
                 <mat-icon
                   class="iconHelp"
-                  *ngIf='canBeDelivery'
+                  *ngIf='canBeDelivery || showAddress'
                   matTooltip="{{ 'Datos adicionales del cliente que obtendrá los productos' | translate }}"
                   style="cursor: pointer"
                   >help
@@ -269,7 +269,7 @@
               </p>
 
               <!-- SOLO PARA CUBANOS -->
-              <ng-container *ngIf="onlyCubanPeople && canBeDelivery">
+              <ng-container *ngIf="onlyCubanPeople && (canBeDelivery || showAddress)">
                 <div fxLayout="row wrap" fxLayoutAlign="space-between center">
                   <mat-form-field appearance="outline" fxFlex="48" fxFlex.lt-md="100">
                     <mat-label>{{ 'Provincia' | translate }}</mat-label>
@@ -315,7 +315,7 @@
               </ng-container>
 
               <!-- SOLO PARA EXTRANJEROS -->
-              <ng-container *ngIf="!onlyCubanPeople && canBeDelivery">
+              <ng-container *ngIf="!onlyCubanPeople && (canBeDelivery || showAddress)">
                 <p class="mat-body-2 my-2" style="text-transform: uppercase">
                   {{ "Customer's location data" | translate }}
                   <mat-icon
@@ -377,7 +377,7 @@
                 </div>
               </ng-container>
 
-              <div formGroupName="address" *ngIf='canBeDelivery'>
+              <div formGroupName="address" *ngIf='canBeDelivery && showAddress'>
                 <div fxLayout="row" fxLayoutGap="10px">
                   <mat-form-field fxFlex="80" appearance="outline">
                     <mat-label>{{ 'Calle' | translate }}</mat-label>
@@ -682,17 +682,31 @@
                             || form.controls['paymentType'].value === 'tarjeta-virtual'
                             || form.controls['paymentType'].value === 'bizum'
                             || form.controls['paymentType'].value === 'iupay'
-                            || form.controls['paymentType'].value === 'discover-global')">
+                            || form.controls['paymentType'].value === 'discover-global'
+                            || multiTransfermovil)">
                     <ng-container *ngIf="!loadingPayment">
                       <p class="mat-body-2 my-2" style="text-transform: uppercase">
                         {{ 'Selecciones moneda para realizar su pago' | translate }}
                       </p>
                       <div fxLayout="row wrap">
-                        <mat-form-field fxFlex="50" fxFlex.lt-md="100" appearance="outline">
+                        <mat-form-field fxFlex="50" fxFlex.lt-md="100" appearance="outline" *ngIf='!multiTransfermovil'>
                           <mat-label>{{ 'Currency' | translate }}</mat-label>
                           <mat-select [formControl]="form.controls['currency']" placeholder="{{ 'Currency' | translate }}">
                             <ng-container *ngFor="let currency of currencies">
                               <mat-option *ngIf="!((currency === 'EUR') && (form.get('paymentType').value === 'transfermovil'))"
+                                          [value]="currency">
+                                  <span class="mat-body-2">
+                                    {{ currency }}
+                                  </span>
+                              </mat-option>
+                            </ng-container>
+                          </mat-select>
+                        </mat-form-field>
+                        <mat-form-field fxFlex="50" fxFlex.lt-md="100" appearance="outline" *ngIf="multiTransfermovil && (form.get('paymentType').value === 'transfermovil')">
+                          <mat-label>{{ 'Currency' | translate }}</mat-label>
+                          <mat-select [formControl]="form.controls['currency']" placeholder="{{ 'Currency' | translate }}">
+                            <ng-container *ngFor="let currency of currenciesTransfermovil">
+                              <mat-option *ngIf="(form.get('paymentType').value === 'transfermovil')"
                                           [value]="currency">
                                   <span class="mat-body-2">
                                     {{ currency }}
@@ -733,58 +747,6 @@
                     </span>
                   </li>
                 </ul>
-                <!------------------FIXED SHIPPING------------------>
-                <ng-container *ngIf="businessConfig?.shippingType == 'fixed'">
-                  <div
-                    fxLayout="row"
-                    class="w-100"
-                    fxLayout.xs="column"
-                    ngClass.gt-xs="pt-1"
-                    fxLayoutAlign="space-between center"
-                    fxLayoutAlign.xs="start"
-                  >
-                    <div fxLayout fxLayoutAlign="start center">
-                      <mat-checkbox
-                        ngClass.xs="mb-2"
-                        fxFlexOrder.xs="1"
-                        style="margin-bottom: 12px"
-                        (change)="onFixedHomeDelivery($event)"
-                        [formControl]="form.get('shippingRequired')"
-                      >
-                        <span class="mat-body-2">{{ 'Home delivery' | translate }}</span>
-                      </mat-checkbox>
-                    </div>
-                    <ng-container
-                      *ngIf="
-                        canBeDelivery &&
-                        form.get('shippingRequired').value &&
-                        this.fixedShipping?.fixShipingg &&
-                        this.fixedShipping?.totalPrice >= 0 &&
-                        fixedShipping?.provinces?.includes(this.form.get('ProvinceId').value)
-                      "
-                    >
-                      <span class="my-2" style="font-size: 16px; font-weight: 500; color: #f44336">
-                        {{ '*El costo del envío es de' | translate }}&nbsp;{{
-                          getFixedShippingPrice(this.fixedShipping?.totalPrice)
-                            | currencyMarket: form.controls['currency'].value
-                        }}
-                      </span>
-                    </ng-container>
-                    <ng-container
-                      *ngIf="
-                        form.get('shippingRequired').value &&
-                        (this.fixedShipping?.totalPrice < 0 ||
-                          !canBeDelivery ||
-                          !fixedShipping?.provinces?.includes(this.form.get('ProvinceId').value))
-                      "
-                    >
-                      <span class="my-2" style="font-size: 16px; font-weight: 500; color: #f44336">
-                        {{ '*Estos productos no pueden ser enviados a la localización proporcionada' | translate }}
-                      </span>
-                    </ng-container>
-                  </div>
-                </ng-container>
-                <!-------------------------------------------------->
                 <div
                   *ngIf="!loadingCart"
                   class="mb-3 pb-3"

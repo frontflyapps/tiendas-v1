@@ -33,6 +33,8 @@ export const environment = {
   logoWhite: 'assets/images/logo-navbar.png',
   logoFooter: 'assets/images/logo-navbar.png',
 
+  showPoweredBy: true,
+
   timeToResetSession: 14400000, // Time to reset the session (ms)
   timeToResearchProductData: 10000, // Time to research products (ms)
   timeToResearchLandingPageData: 10000, // Time to research products (ms)

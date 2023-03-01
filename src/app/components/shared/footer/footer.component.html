@@ -159,5 +159,9 @@
             <span>{{ 'v' | translate }}{{ version }}</span>
         </div>
 
+      <div class="mb-3" *ngIf='showPoweredBy' fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="10px" fxLayoutGap.xs="4px">
+        <span>{{'Powered By: Guajiritos S.R.L.' | translate}}</span>
+      </div>
+
     </div>
 </footer>

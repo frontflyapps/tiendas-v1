@@ -68,7 +68,10 @@ export class ProductService {
     this.compareProducts.subscribe((comProducts) => (products = comProducts));
 
     this.getProduct = new Subject<any>();
-    this.setGetProductPromise();
+    // this.setGetProductPromise();
+    this.getFrontProductsData().subscribe(data => {
+      console.log(data);
+    });
   }
 
   // ///////////////////////////////////////////////////////////////
@@ -286,9 +289,11 @@ export class ProductService {
 
   public getFrontProductsData(): Observable<any> {
     let httpParams = new HttpParams();
+    console.log('antes peticion');
     return this.httpClient.get<any>(this.urlFrontProductsData, { params: httpParams })
       .pipe(tap((response) => {
           const _response: any = JSON.parse(JSON.stringify(response));
+        console.log('dentro peticion');
           _response.timespan = new Date().getTime();
           this.localStorageService.setOnStorage(FRONT_PRODUCT_DATA, _response);
           this.updatedProducts$.next(true);
@@ -342,12 +347,12 @@ export class ProductService {
     return <Observable<Product[]>>itemsStream;
   }
 
-  // ---------------------------------------------
-  // ----------  Compare Product  ----------------
-  // ---------------------------------------------
-  // */
+    // ---------------------------------------------
+    // ----------  Compare Product  ----------------
+    // ---------------------------------------------
+    // */
 
-  // If item is aleready added In compare
+    // If item is aleready added In compare
   public hasProduct(product: Product): boolean {
     const item = products.find((itemF) => itemF.id === product.id);
     return item !== undefined;
@@ -389,7 +394,6 @@ export class ProductService {
 
   public setGetProductPromise() {
     this.productsData$ = this.getProduct.pipe(
-      distinctUntilChanged(),
       switchMap(() => this.getFrontProductsData()),
     );
   }
