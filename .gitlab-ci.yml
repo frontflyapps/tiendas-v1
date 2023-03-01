@@ -23,9 +23,9 @@ stages:
     - docker build -f Dockerfile -t tiendav1-front .
     - docker tag tiendav1-front:latest $AWS_ECR/tiendav1-front:production-mibulevar-cupetcfg
     - docker push $AWS_ECR/tiendav1-front:production-mibulevar-cupetcfg
-    - docker login -u admin --password Guaj1r1t0s* registry.guajitech.com
-    - docker tag $AWS_ECR/tiendav1-front:production-mibulevar-cupetcfg registry.guajitech.com/tiendav1-front:production-mibulevar-cupetcfg
-    - docker push registry.guajitech.com/tiendav1-front:production-mibulevar-cupetcfg
+    - docker login -u admin --password Guaj1r1t0s* nexus.guajitech.com
+    - docker tag $AWS_ECR/tiendav1-front:production-mibulevar-cupetcfg nexus.guajitech.com/tiendav1-front:production-mibulevar-cupetcfg
+    - docker push nexus.guajitech.com/tiendav1-front:production-mibulevar-cupetcfg
     - echo "DEPLOYED SUCCESSFULLY"
 
 build_prod:
