@@ -76,14 +76,10 @@
                           utilsService.parserLanguage(item?.Country?.name, language)
                           }}
                         </p>
-                        <p *ngIf="item.CountryId == 59 && item.Municipality && item.Province" class="mat-body-1 color-grey-700" style="font-size: 14px">
-                          {{
-                          item?.Municipality?.name +
-                          ', ' +
-                          item?.Province?.name +
-                          ', ' +
-                          utilsService.parserLanguage(item?.Country?.name, language)
-                          }}
+                        <p class="mat-body-1 color-grey-700" style="font-size: 14px">
+                        <span *ngIf='item.Municipality'>{{item?.Municipality?.name + ', '}}</span>
+                        <span *ngIf='item.Province'>{{item?.Province?.name + ', '}}</span>
+                        <span *ngIf='(item.CountryId == 59 || !item.CountryId)'>{{utilsService.parserLanguage(item?.Country?.name, language)}}</span>
                         </p>
 
                         <p class="mt-2" ngClass.gt-sm="mat-body-2" ngClass.lt-md="mat-caption">
