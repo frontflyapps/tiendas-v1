@@ -83,10 +83,7 @@
   <ng-container *ngIf='countProducts == 0 && !loadingAllProduct'>
     <h3 class='mat-title py-4' style='text-align: center'>{{ 'No hay ningún producto disponible' | translate }}</h3>
   </ng-container>
-  {{arrayProducts.length}}
   <div *ngIf='arrayProducts.length > 0'>
-    {{this.businessConfig}}---
-    {{this.businessConfig?.frontDataProduct}}
     <div *ngIf='!this.businessConfig || this.businessConfig?.frontDataProduct === "category"'>
       <div *ngFor='let card of arrayProducts'>
         <div class='container'>
