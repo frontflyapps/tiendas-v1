@@ -251,6 +251,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     const pfd = this.localStorageService.getFromStorage(FRONT_PRODUCT_DATA);
     if (pfd) {
       Object.entries(pfd?.categories).forEach(item => {
+        console.log(item);
         // @ts-ignore
         const arr: any[] = item[1].map((itemId) => pfd.products.find((itemProduct) => itemProduct.id === itemId));
         this.arrayProducts.push(
