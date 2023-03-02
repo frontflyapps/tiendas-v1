@@ -73,15 +73,15 @@ export class EditOrderComponent implements OnInit {
       name: [this.order.name, [Validators.required]],
       lastName: [this.order.lastName, [Validators.required]],
       email: [this.order.email, [Validators.required, Validators.email]],
-      ProvinceId: [this.order.Province.id],
-      MunicipalityId: [this.order.Municipality.id],
+      ProvinceId: [this.order?.Province?.id],
+      MunicipalityId: [this.order?.Municipality?.id],
       // ShippingBusinessId: [],
       dni: [this.order.dni],
       isForCuban: [this.order.isForCuban],
       address: this.fb.group({
-        street: [this.order.address.street ? this.order.address.street : null],
-        number: [this.order.address.number ? this.order.address.number : null],
-        between: [this.order.address.between ? this.order.address.between : null],
+        street: [this.order.address?.street ? this.order.address?.street : null],
+        number: [this.order.address?.number ? this.order.address?.number : null],
+        between: [this.order.address?.between ? this.order.address?.between : null],
       }),
       address2: [this.order ? this.order.address2 : null],
       phone: [this.order.phone],
@@ -107,7 +107,6 @@ export class EditOrderComponent implements OnInit {
   onSelectProvince(provinceId) {
     this.municipalities = this.allMunicipalities.filter((item) => item.ProvinceId == provinceId);
     this.form.get('MunicipalityId').setValue(null);
-    this.form.get('ShippingBusinessId').setValue(null);
   }
 
   fetchData() {

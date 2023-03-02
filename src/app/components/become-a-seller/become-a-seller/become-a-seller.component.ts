@@ -28,6 +28,7 @@ export class BecomeASellerComponent implements OnInit {
   firstStep: any;
   ownerInfo: any;
   logo = environment.logoWhite;
+  imageUrl = environment.imageUrl;
   secondStep: any;
   thirdStep: any;
   allProvinces: any[] = [];

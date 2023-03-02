@@ -152,6 +152,22 @@
                              matTooltip="{{ 'Existe una oferta asociada a este producto' | translate }}">
                             {{ product | parsePriceProduct: 'offert' }}
                           </p>
+                          <div fxLayout='row' fxLayoutAlign='space-between center'>
+                            <p class='mat-body-2 mr-2' style='font-size: 12px; color: #757474'>
+                              {{ 'Desde ' | translate }}
+                              {{ product.minSale }}
+                              {{ ' unidad' | translate }}
+                            </p>
+                            <button
+                              (click)='onAddToCart(product)'
+                              class='btnAddCart'
+                              mat-mini-fab
+                              matTooltip="{{ 'Añadir al carrito' | translate }}"
+                              style='z-index: 10'
+                            >
+                              <mat-icon>shopping_cart</mat-icon>
+                            </button>
+                          </div>
                         </ng-container>
 
                       </a>

@@ -92,7 +92,6 @@
           <mat-form-field appearance='outline' fxFlex='48' fxFlex.lt-md='100'>
             <mat-label>{{ 'Municipio' | translate }}</mat-label>
             <mat-select
-              (selectionChange)="form.controls['ShippingBusinessId'].setValue(null)"
               [compareWith]='compareById'
               [formControl]="form.controls['MunicipalityId']"
               placeholder="{{ 'Nombre del Municipio' | translate }}"

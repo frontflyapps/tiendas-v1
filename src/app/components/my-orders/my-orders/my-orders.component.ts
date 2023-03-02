@@ -323,8 +323,10 @@ export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      this.onSelectOrder(order);
-      window.location.reload();
+      if (result) {
+        this.onSelectOrder(order);
+        this.onSearch();
+      }
     });
   }
 
