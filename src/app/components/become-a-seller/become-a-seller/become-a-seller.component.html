@@ -411,7 +411,8 @@
             </mat-form-field>
 
             <mat-checkbox class='mb-4 mt-2' [formControl]="basicForm.controls['checked']">
-              {{'Al seleccionar esta opción usted acepta nuestos ' | translate}} <a href="/term-conditions"><strong>{{'Términos y condiciones' | translate}}</strong></a>
+              {{'Al seleccionar esta opción usted acepta nuestos ' | translate}} <a [href]='imageUrl + "2da35f81-5480-4295-862e-4c4e6d7a7455.pdf"'
+                                                                                    target="_blank"><strong>{{'Términos y condiciones' | translate}}</strong></a>
             </mat-checkbox>
           </div>
           <div>
