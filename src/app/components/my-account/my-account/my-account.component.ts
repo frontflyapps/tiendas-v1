@@ -213,38 +213,49 @@ export class MyAccountComponent implements OnInit {
         passwords: this.fromPassRegister,
       });
       return;
+    } else if (signupType === 'normal') {
+      this.regTcpForm = this.fb.group({
+        name: [null, [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
+        lastname: [null, [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
+        ci: [
+          null,
+          [Validators.required, Validators.minLength(11), Validators.maxLength(11), Validators.pattern('^[0-9]*$')],
+        ],
+        ciONAT: [
+          null,
+          [Validators.required, Validators.minLength(11), Validators.maxLength(11), Validators.pattern('^[0-9]*$')],
+        ],
+        licenceTCP: [
+          null,
+          [Validators.required, Validators.minLength(11), Validators.maxLength(11), Validators.pattern('^[0-9]*$')],
+        ],
+        activity: [null, [Validators.required]],
+        phoneCel: [null, [Validators.pattern(CUBAN_PHONE_START_5), Validators.minLength(8), Validators.maxLength(8)]],
+        phone: [null, [Validators.minLength(8), Validators.maxLength(8)]],
+        address: [null, [Validators.required]],
+        email: [null, [Validators.required, Validators.email, Validators.pattern(EMAIL_REGEX)]],
+        passwords: this.fromPassRegister,
+        bankAccountCard26: [
+          null,
+          [Validators.required, Validators.minLength(16), Validators.maxLength(16), Validators.pattern('^[0-9]*$')],
+        ],
+        bankNameCard26: [null, [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
+        bankOfficeCard26: [
+          null,
+          [Validators.required, Validators.minLength(4), Validators.maxLength(4), Validators.pattern('^[0-9]*$')],
+        ],
+      });
+    } else {
+      this.registrationForm = this.fb.group({
+        name: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
+        lastname: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
+        phone: [null, [Validators.pattern(CUBAN_PHONE_START_5), Validators.minLength(8), Validators.maxLength(8)]],
+        address: [null, []],
+        email: [null, [Validators.required, Validators.email, Validators.pattern(EMAIL_REGEX)]],
+        passwords: this.fromPassRegister,
+      });
     }
-    this.regTcpForm = this.fb.group({
-      name: [null, [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
-      lastname: [null, [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
-      ci: [
-        null,
-        [Validators.required, Validators.minLength(11), Validators.maxLength(11), Validators.pattern('^[0-9]*$')],
-      ],
-      ciONAT: [
-        null,
-        [Validators.required, Validators.minLength(11), Validators.maxLength(11), Validators.pattern('^[0-9]*$')],
-      ],
-      licenceTCP: [
-        null,
-        [Validators.required, Validators.minLength(11), Validators.maxLength(11), Validators.pattern('^[0-9]*$')],
-      ],
-      activity: [null, [Validators.required]],
-      phoneCel: [null, [Validators.pattern(CUBAN_PHONE_START_5), Validators.minLength(8), Validators.maxLength(8)]],
-      phone: [null, [Validators.minLength(8), Validators.maxLength(8)]],
-      address: [null, [Validators.required]],
-      email: [null, [Validators.required, Validators.email, Validators.pattern(EMAIL_REGEX)]],
-      passwords: this.fromPassRegister,
-      bankAccountCard26: [
-        null,
-        [Validators.required, Validators.minLength(16), Validators.maxLength(16), Validators.pattern('^[0-9]*$')],
-      ],
-      bankNameCard26: [null, [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
-      bankOfficeCard26: [
-        null,
-        [Validators.required, Validators.minLength(4), Validators.maxLength(4), Validators.pattern('^[0-9]*$')],
-      ],
-    });
+
   }
 
   createValidationForm() {
@@ -518,6 +529,7 @@ export class MyAccountComponent implements OnInit {
           10000,
         );
         this.inLoading = false;
+        console.log(this.routeToNavigate);
         this.router.navigate([this.routeToNavigate]);
         return true;
       },
