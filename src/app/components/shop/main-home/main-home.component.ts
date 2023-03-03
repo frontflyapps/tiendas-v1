@@ -243,7 +243,6 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   }
 
   setValuesFromResponse(response) {
-    console.log('asbdflksadbfksdaf');
     this.productDataService.popularProducts = UtilsService.getAnArrayFromIdsAndArray(
       response.products,
       response.rating,
@@ -265,7 +264,6 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   getDataProducts() {
     try {
       const pfd = this.localStorageService.getFromStorage(FRONT_PRODUCT_DATA);
-      console.log(pfd);
       if (!pfd) {
         this.getProducts();
         return;
