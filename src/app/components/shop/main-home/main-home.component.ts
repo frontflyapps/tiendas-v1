@@ -141,9 +141,9 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
 
     this.pathToRedirect = this.route.snapshot.routeConfig.path;
+    this.frontProduct();
     this.route.queryParamMap.subscribe((params) => {
       this.paramsToUrlRedirect = { ...params };
-      console.log(this.paramsToUrlRedirect);
     });
     // this.metaService.setMeta(
     //   environment.meta?.mainPage?.title,
@@ -161,7 +161,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.globalStateOfCookieService.getCookieState() ? this.initComponent() : this.setSubscriptionToCookie();
-    this.frontProduct();
+    // this.frontProduct();
   }
 
   frontProduct() {
@@ -251,7 +251,6 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     const pfd = this.localStorageService.getFromStorage(FRONT_PRODUCT_DATA);
     if (pfd) {
       Object.entries(pfd?.categories).forEach(item => {
-        console.log(item);
         // @ts-ignore
         const arr: any[] = item[1].map((itemId) => pfd.products.find((itemProduct) => itemProduct.id === itemId));
         this.arrayProducts.push(
@@ -259,7 +258,6 @@ export class MainHomeComponent implements OnInit, OnDestroy {
             name: item[0],
             value: arr,
           });
-        console.log(this.arrayProducts);
       });
     }
 
