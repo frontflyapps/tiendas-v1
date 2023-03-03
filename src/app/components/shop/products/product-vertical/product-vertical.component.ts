@@ -81,12 +81,25 @@ export class ProductVerticalComponent implements OnInit, OnDestroy {
   }
 
   setServiceGetProduct() {
-      this.productService.productsData$.pipe(takeUntil(this._unsubscribeAll)).subscribe((response) => {
-        const _response: any = JSON.parse(JSON.stringify(response));
-        this.setValuesFromResponse(_response);
-        _response.timespan = new Date().getTime();
-        this.localStorageService.setOnStorage(FRONT_PRODUCT_DATA, _response);
-      });
+      // this.productService.productsData$.pipe(takeUntil(this._unsubscribeAll)).subscribe((response) => {
+      //   const _response: any = JSON.parse(JSON.stringify(response));
+      //   this.setValuesFromResponse(_response);
+      //   _response.timespan = new Date().getTime();
+      //   this.localStorageService.setOnStorage(FRONT_PRODUCT_DATA, _response);
+      // });
+    try {
+      const pfd = this.localStorageService.getFromStorage(FRONT_PRODUCT_DATA);
+      if (!pfd) {
+        this.getProducts();
+        return;
+      }
+
+      if (this.localStorageService.iMostReSearch(pfd?.timespan, environment.timeToResearchProductData)) {
+        this.getProducts();
+      } else {
+        this.setValuesFromResponse(pfd);
+      }
+    } catch (e) {}
 
   }
 
