@@ -529,7 +529,6 @@ export class MyAccountComponent implements OnInit {
           10000,
         );
         this.inLoading = false;
-        console.log(this.routeToNavigate);
         this.router.navigate([this.routeToNavigate]);
         return true;
       },
