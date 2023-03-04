@@ -8,6 +8,7 @@ export interface IUser {
   avatar?: any;
   email?: string;
   ReferingId?: IUser;
+  Business?: any;
   status?: any;
   lastLogout?: any;
   description?: string;

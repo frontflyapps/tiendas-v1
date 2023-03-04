@@ -35,8 +35,6 @@ export class UtilsService {
    * Return Array of product
    */
   static getAnArrayFromIdsAndArray(arrayBase: any[], arrayIds: any[]): any[] {
-    console.log(arrayBase);
-    console.log(arrayIds);
     if (!Array.isArray(arrayBase) || !Array.isArray(arrayIds)) {
       return [];
     }

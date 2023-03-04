@@ -1,7 +1,7 @@
 import { environment } from '../../../../environments/environment';
 import { IPagination } from '../../../core/classes/pagination.class';
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-in-user.service';
 import { UtilsService } from '../../../core/services/utils/utils.service';
 import { takeUntil } from 'rxjs/operators';
@@ -15,6 +15,7 @@ import { GlobalStateOfCookieService } from '../../../core/services/request-cooki
 import { AppService } from '../../../app.service';
 import { CartService } from '../../shared/services/cart.service';
 import { ActivatedRoute } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 export interface ProductInterface {
   name: string;
@@ -34,6 +35,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
 
   public currency: any;
   public flag: any;
+  public loading: boolean = false;
 
   indexProduct: number;
 
@@ -124,6 +126,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
 
   constructor(
     public utilsService: UtilsService,
+    public spinner: NgxSpinnerService,
     private loggedInUserService: LoggedInUserService,
     private localStorageService: LocalStorageService,
     private httpClient: HttpClient,
@@ -141,9 +144,10 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
 
     this.pathToRedirect = this.route.snapshot.routeConfig.path;
+    // this.frontProduct();
+    // this.getFrontData();
     this.route.queryParamMap.subscribe((params) => {
       this.paramsToUrlRedirect = { ...params };
-      console.log(this.paramsToUrlRedirect);
     });
     // this.metaService.setMeta(
     //   environment.meta?.mainPage?.title,
@@ -161,59 +165,21 @@ export class MainHomeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.globalStateOfCookieService.getCookieState() ? this.initComponent() : this.setSubscriptionToCookie();
-    this.frontProduct();
+    // this.frontProduct();
   }
 
   frontProduct() {
-    // if (this.businessConfig) {
-    // this.productService.productsData$.pipe(takeUntil(this._unsubscribeAll)).subscribe((response) => {
-    //   if (this.businessConfig?.frontDataProduct === 'normal') {
-    //     this.getDataProducts();
-    //   } else if (this.businessConfig?.frontDataProduct === 'category') {
-    //     this.getCategoriesProducts();
-    //   } else {
-    //     this.getCategoriesProducts();
-    //   }
-    // });
-
-    this.productService.updatedProducts$.subscribe((response) => {
-      if (this.businessConfig?.frontDataProduct === 'normal') {
-        this.getDataProducts();
-      } else if (this.businessConfig?.frontDataProduct === 'category') {
-        this.getCategoriesProducts();
-      } else {
-        this.getCategoriesProducts();
-      }
-    });
-
-    // if (this.businessConfig?.frontDataProduct === 'normal') {
-    //   this.productService.updatedProducts$.subscribe((response) => {
-    //     this.getDataProducts();
-    //   });
-    // } else if (this.businessConfig?.frontDataProduct === 'category') {
-    //   this.productService.updatedProducts$.subscribe((response) => {
-    //     this.getCategoriesProducts();
-    //   });
-    // } else {
-    //   this.productService.updatedProducts$.subscribe((response) => {
-    //     this.getCategoriesProducts();
-    //   });
-    // }
-    // } else {
-    //   this.appService.getBusinessConfig().subscribe(item => {
-    //     if (item) {
-    //       console.log(item);
-    //       this.businessConfig = item.data;
-    //       if (this.businessConfig?.frontDataProduct === 'normal') {
-    //         this.productService.updatedProducts$.subscribe((response) => {
-    //           this.getDataProducts();
-    //         });
-    //       } else if (this.businessConfig?.frontDataProduct === 'category') {
-    //         this.getCategoriesProducts();
-    //       }
-    //     }
-    //   });
-    // }
+    if (this.arrayProducts.length === 0) {
+      // this.productService.updatedProducts$.subscribe((response) => {
+        if (this.businessConfig?.frontDataProduct === 'normal') {
+          this.getDataProducts();
+        } else if (this.businessConfig?.frontDataProduct === 'category') {
+          this.getCategoriesProducts();
+        } else {
+          this.getCategoriesProducts();
+        }
+      // });
+    }
   }
 
   initComponent() {
@@ -251,7 +217,6 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     const pfd = this.localStorageService.getFromStorage(FRONT_PRODUCT_DATA);
     if (pfd) {
       Object.entries(pfd?.categories).forEach(item => {
-        console.log(item);
         // @ts-ignore
         const arr: any[] = item[1].map((itemId) => pfd.products.find((itemProduct) => itemProduct.id === itemId));
         this.arrayProducts.push(
@@ -259,7 +224,6 @@ export class MainHomeComponent implements OnInit, OnDestroy {
             name: item[0],
             value: arr,
           });
-        console.log(this.arrayProducts);
       });
     }
 
@@ -387,6 +351,45 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   getFrontData() {
     this.getFrontDataRequest()
       .then((data: any) => {
+        // if (!this.localStorageService.getFromStorage(FRONT_PRODUCT_DATA)) {
+        //   console.warn('asdadasdasdasd');
+        //   this.spinner.show();
+        // this.loading = true;
+        // this.getDataProducts();
+        // this.productService.updatedProducts$.subscribe((response) => {
+        console.log(this.arrayProducts.length);
+        this.frontProduct();
+
+        // });
+          // this.productService.getFrontProductsData().subscribe(item => {
+          //   this.loading = false;
+          //   console.log(item);
+          //   this.spinner.hide();
+          // });
+        // this.spinner.hide();
+        // }
+        // if (!this.businessConfig) {
+        //   this.loading = true;
+        //   this.appService.getBusinessConfig().subscribe(item => {
+        //     this.loading = false;
+        //     this.businessConfig = item.data;
+        //     localStorage.setItem('business-config', JSON.stringify(item.data));
+        //     // this.productService.updatedProducts$.subscribe((response) => {
+        //     console.error(this.arrayProducts.length);
+        //     console.error(this.businessConfig);
+        //     if (this.arrayProducts.length === 0) {
+        //       if (this.businessConfig?.frontDataProduct === 'normal') {
+        //         this.getDataProducts();
+        //       } else if (this.businessConfig?.frontDataProduct === 'category') {
+        //         this.getCategoriesProducts();
+        //       } else {
+        //         this.getCategoriesProducts();
+        //       }
+        //     }
+        //     });
+        //   // });
+        // }
+        this.loading = false;
         const dataResponse = JSON.parse(JSON.stringify(data.data));
         this.setDataOnLandingPage(dataResponse);
 

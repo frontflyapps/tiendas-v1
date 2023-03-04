@@ -289,11 +289,9 @@ export class ProductService {
 
   public getFrontProductsData(): Observable<any> {
     let httpParams = new HttpParams();
-    console.log('antes peticion');
     return this.httpClient.get<any>(this.urlFrontProductsData, { params: httpParams })
       .pipe(tap((response) => {
           const _response: any = JSON.parse(JSON.stringify(response));
-        console.log('dentro peticion');
           _response.timespan = new Date().getTime();
           this.localStorageService.setOnStorage(FRONT_PRODUCT_DATA, _response);
           this.updatedProducts$.next(true);
