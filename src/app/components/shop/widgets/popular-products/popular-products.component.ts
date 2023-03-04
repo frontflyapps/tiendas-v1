@@ -67,9 +67,22 @@ export class PopularProductsComponent implements OnInit, OnDestroy {
   }
 
   setServiceGetProduct() {
-    this.productService.productsData$.pipe(takeUntil(this._unsubscribeAll)).subscribe((response) => {
-      this.setValuesFromResponse(response);
-    });
+    // this.productService.productsData$.pipe(takeUntil(this._unsubscribeAll)).subscribe((response) => {
+    //   this.setValuesFromResponse(response);
+    // });
+    try {
+      const pfd = this.localStorageService.getFromStorage(FRONT_PRODUCT_DATA);
+      if (!pfd) {
+        this.getProducts();
+        return;
+      }
+
+      if (this.localStorageService.iMostReSearch(pfd?.timespan, environment.timeToResearchProductData)) {
+        this.getProducts();
+      } else {
+        this.setValuesFromResponse(pfd);
+      }
+    } catch (e) {}
   }
 
   getProducts() {

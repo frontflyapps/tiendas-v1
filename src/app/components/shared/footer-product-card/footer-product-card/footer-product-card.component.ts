@@ -49,7 +49,6 @@ export class FooterProductCardComponent implements OnDestroy {
     this.pathToRedirect = this.route.snapshot.routeConfig.path;
     this.route.queryParamMap.subscribe((params) => {
       this.paramsToUrlRedirect = { ...params };
-      console.log(this.paramsToUrlRedirect);
     });
   }
 

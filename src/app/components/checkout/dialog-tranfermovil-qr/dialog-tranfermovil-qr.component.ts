@@ -6,6 +6,7 @@ import { LoggedInUserService } from '../../../core/services/loggedInUser/logged-
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { SocketIoService } from 'src/app/core/services/socket-io/socket-io.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dialog-tranfermovil-qr',
@@ -27,6 +28,7 @@ export class DialogTranfermovilQrComponent implements OnInit, OnDestroy {
     private loggedInUserService: LoggedInUserService,
     private socketIoService: SocketIoService,
     public domSanitizer: DomSanitizer,
+    private router: Router,
     private dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) {
@@ -68,8 +70,8 @@ export class DialogTranfermovilQrComponent implements OnInit, OnDestroy {
   }
 
   onCancelarTranfermovilPayment() {
-    // this.router.navigate(['/my-orders'], { queryParams: { r: 't' } }).then();
-    window.location.assign(`${environment.url}/my-orders`);
+    this.router.navigate(['/my-orders'], { queryParams: { r: 't' } }).then();
+    // window.location.assign(`${environment.url}/my-orders`);
 
     // const dialogRef = this.dialog.open(ConfirmationDialogFrontComponent, {
     //   width: '550px',

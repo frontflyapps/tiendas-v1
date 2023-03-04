@@ -365,7 +365,10 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
         () => {
           this.loggedInUserService.setLoggedInUser(null);
           this.loggedInUserService.removeCookies();
-          localStorage.clear();
+          // localStorage.clear();
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+          localStorage.removeItem('cartItem');
           this.loggedInUserService.$loggedInUserUpdated.next(null);
           const message = this.translate.instant('User successfully unlogged');
           this.showSnackbBar.showSucces(message, 5000);
