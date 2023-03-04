@@ -361,14 +361,20 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
 
   // Add to cart
   public buyNow(product: Product, quantity) {
+    console.log(product);
+    console.log(quantity);
     if (quantity > 0) {
       try {
         this.cartService.addToCart(product, parseInt(quantity, 10), true).then((carts: Cart[]) => {
+          console.log(carts);
           for (let cart of carts) {
             let dataFind = cart.CartItems.find((cartItemx) => cartItemx?.ProductId == product.id);
             if (dataFind != undefined) {
               let cartId = cart?.id;
-              this.router.navigate(['/checkout'], { queryParams: { cartId } }).then();
+              let BusinessId = cart.BusinessId;
+              let cartIds = cart?.CartItems ? cart?.CartItems.map((i) => i.id) : cart.CartItems.map((i) => i.id);
+              console.log(cartIds);
+              this.router.navigate(['/checkout'], { queryParams: { cartId, cartIds, BusinessId } }).then();
               return;
             }
           }
