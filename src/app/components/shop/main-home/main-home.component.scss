@@ -23,8 +23,8 @@
 }
 
 .product-img {
-  height: 330px;
-  width: 170px;
+  height: 350px;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -50,9 +50,9 @@
 
 .productImage{
   width: 170px;
-  max-width: 166px;
+  max-width: 165px;
   height: 170px;
-  max-height: 166px;
+  max-height: 165px;
 }
 .btnAddCart {
   background-color: white;
@@ -79,6 +79,7 @@
   border: 1px solid #e8e8e8;
   position: relative;
   border-radius: 8px;
+  width: 48%;
 }
 
 .line-clampTitle {
@@ -87,7 +88,7 @@
   -webkit-box-orient: vertical !important;
   line-height: 1.2rem;
   height: 3.3rem;
-  min-height: 2.2rem;
+  min-height: 2.6rem;
   width: 150px;
   overflow: hidden;
 }
