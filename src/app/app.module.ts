@@ -48,6 +48,7 @@ registerLocaleData(localeEs, 'es');
         deps: [HttpClient],
       },
     }),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable
