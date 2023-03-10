@@ -149,6 +149,10 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     this.route.queryParamMap.subscribe((params) => {
       this.paramsToUrlRedirect = { ...params };
     });
+
+    this.productService.updatedProducts$.subscribe((response) => {
+      this.frontProduct();
+    });
     // this.metaService.setMeta(
     //   environment.meta?.mainPage?.title,
     //   environment.meta?.mainPage?.description,
