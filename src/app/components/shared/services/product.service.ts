@@ -291,8 +291,10 @@ export class ProductService {
     let httpParams = new HttpParams();
     return this.httpClient.get<any>(this.urlFrontProductsData, { params: httpParams })
       .pipe(tap((response) => {
+        response.categories = Object.fromEntries(Object.entries(response.categories).sort(() => Math.random() - 0.5));
           const _response: any = JSON.parse(JSON.stringify(response));
           _response.timespan = new Date().getTime();
+        console.warn('Entro a pedir los productos');
           this.localStorageService.setOnStorage(FRONT_PRODUCT_DATA, _response);
           this.updatedProducts$.next(true);
           return response;

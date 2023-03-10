@@ -215,7 +215,9 @@ export class MainHomeComponent implements OnInit, OnDestroy {
 
   getCategoriesProducts() {
     const pfd = this.localStorageService.getFromStorage(FRONT_PRODUCT_DATA);
+    console.log(pfd);
     if (pfd) {
+      Object.entries(pfd).sort(() => Math.random() - 0.5);
       Object.entries(pfd?.categories).forEach(item => {
         // @ts-ignore
         const arr: any[] = item[1].map((itemId) => pfd.products.find((itemProduct) => itemProduct.id === itemId));
@@ -225,6 +227,10 @@ export class MainHomeComponent implements OnInit, OnDestroy {
             value: arr,
           });
       });
+    } else {
+      // Aqui es donde entra cuando la peticion front-data-product no ha respondido y en el local storage no hay valor
+      // de productos
+      console.warn('No hay productos');
     }
 
   }
