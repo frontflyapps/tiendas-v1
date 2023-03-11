@@ -4,7 +4,7 @@ export const environment = {
   production: true,
 
   apiUrl: 'https://api.mibulevar.com/v1/',
-  imageUrl: 'https://cdn.mibulevar.com/',
+  imageUrl: 'https://cdn.mibulevar.com/tienda/',
 
   defaultLanguage: 'es',
   currencyInternational: 'USD',
