@@ -4,7 +4,7 @@ export const environment = {
   production: true,
 
   apiUrl: 'https://api.pymesbulevar.com/v1/',
-  imageUrl: 'https://cdntienda.pymesbulevar.com/',
+  imageUrl: 'https://cdntienda.veoveofashion.com/',
 
   defaultLanguage: 'es',
   currencyInternational: 'USD',
@@ -23,8 +23,8 @@ export const environment = {
   timeToResearchMenuData: 300000, // (30min) Time to research menu (ms)
   timeToResearchCategoriesData: 600000, // (10min) Time to research categories (ms)
 
-  url: 'https://veoveofashion.com/',
-  urlAboutUs: 'https://veoveofashion.com/',
+  url: 'https://www.veoveofashion.com/',
+  urlAboutUs: 'https://www.veoveofashion.com/',
 
   address: 'Veo Veo Fashion',
   localDatabaseUsers: true,
@@ -35,7 +35,7 @@ export const environment = {
     address: '',
   },
 
-  adminService: 'https://adminveoveofashion.com/',
+  adminService: 'https://admin.veoveofashion.com/',
   mainDomain: '.veoveofashion.com',
 
   tokenBusiness:
@@ -43,11 +43,11 @@ export const environment = {
 
   meta: {
     mainPage: {
-      title: 'Tienda Guajitech DEV',
+      title: 'Veo Veo Fashion',
       description: 'Tienda online desarrollada con el framework Angular permite la modelación de negocios B2C and C2C',
       keywords: 'HTML, CSS, JavaScript, Angular, Tienda Online B2B, comercio online',
       shareImg: 'https://www.veoveofashion.com/assets/images/share-img.png',
-      url: 'https://veoveofashion.com/',
+      url: 'https://www.veoveofashion.com/',
     },
   },
 
