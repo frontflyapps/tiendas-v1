@@ -39,7 +39,7 @@ export const environment = {
   mainDomain: '.veoveofashion.com',
 
   tokenBusiness:
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7IkJ1c2luZXNzSWQiOjEsImlkIjoxLCJkYXRlIjoiMjAyMS0wOS0xM1QwMTo0NToxOC4wMDBaIiwibmFtZSI6IlRpZW5kYSIsImVtYWlsIjoidGllbmRhQGxvY2FsaG9zdC5jb20ifSwiaWF0IjoxNjMxNDk3NTkxfQ.FF5-276rI9SJmtebVo0spV8Y2wdOZPok7LlUxtTDwh0',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7IkJ1c2luZXNzSWQiOjkxLCJpZCI6OTEsImRhdGUiOiIyMDIzLTAzLTE2VDAyOjMxOjU0LjMwNloiLCJuYW1lIjoiVmVvVmVvRmFzaGlvIiwiZW1haWwiOiJzaG9wQHZlb3Zlb2Zhc2hpb24uY29tIn0sImlhdCI6MTY3ODkzMzkxNH0.5_I2SBDb3cwH6ZI566RBYR_vo57H9dqotq0wsBTjOjg',
 
   meta: {
     mainPage: {
