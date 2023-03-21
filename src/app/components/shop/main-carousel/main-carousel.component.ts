@@ -71,7 +71,7 @@ export class MainCarouselComponent implements OnInit, AfterViewInit, OnDestroy {
       preloadImages: false,
       lazy: true,
       autoplay: {
-        delay: 3000,
+        delay: 5000,
         disableOnInteraction: false,
       },
       speed: 500,
