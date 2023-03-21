@@ -217,6 +217,10 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     });
   }
 
+  getSections() {
+
+  }
+
   getCategoriesProducts() {
     const pfd = this.localStorageService.getFromStorage(FRONT_PRODUCT_DATA);
     console.log(pfd);
