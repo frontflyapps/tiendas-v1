@@ -55,6 +55,16 @@ export class MyAccountComponent implements OnInit {
   routeToNavigate = '/checkout';
   localDatabaseUsers = environment.localDatabaseUsers;
   businessConfig;
+  signUpTypes = [
+    {
+      viewValue: 'Normal',
+      value: 'normal'
+    },
+    {
+      viewValue: 'TCP',
+      value: 'tcp'
+    },
+  ];
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -211,6 +221,7 @@ export class MyAccountComponent implements OnInit {
         address: [null, []],
         email: [null, [Validators.required, Validators.email, Validators.pattern(EMAIL_REGEX)]],
         passwords: this.fromPassRegister,
+        signUpType: ['normal']
       });
       return;
     } else if (signupType === 'normal') {
@@ -244,6 +255,7 @@ export class MyAccountComponent implements OnInit {
           null,
           [Validators.required, Validators.minLength(4), Validators.maxLength(4), Validators.pattern('^[0-9]*$')],
         ],
+        signUpType: ['normal']
       });
     } else {
       this.registrationForm = this.fb.group({
@@ -253,6 +265,7 @@ export class MyAccountComponent implements OnInit {
         address: [null, []],
         email: [null, [Validators.required, Validators.email, Validators.pattern(EMAIL_REGEX)]],
         passwords: this.fromPassRegister,
+        signUpType: ['normal']
       });
     }
 

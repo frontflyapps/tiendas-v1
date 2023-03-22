@@ -147,6 +147,21 @@
 
         <!-- =========================================================================== -->
         <!-- REGISTRATION -->
+        <ng-container *ngIf='businessConfig?.signUpType == "multiple"'>
+          <div fxLayout='row' fxLayoutAlign='center center'>
+            <mat-button-toggle-group [formControl]='registrationForm.get("signUpType")' name="toggle" aria-label="Favorite Color" fxFlex='50'>
+              <mat-button-toggle fxFlex='50' class='toggle-button' *ngFor='let type of signUpTypes' [value]="type.value">{{type.viewValue}}</mat-button-toggle>
+            </mat-button-toggle-group>
+            <ng-container *ngIf='registrationForm.get("signUpType").value === "normal", else tcpRegistration'>
+
+            </ng-container>
+            <ng-template #tcpRegistration>
+
+            </ng-template>
+          </div>
+
+        </ng-container>
+
         <ng-container *ngIf="businessConfig?.signUpType == 'tcp'; else normalRegitretion">
           <div *ngIf="showRegistrationForm" class="FormLayout" fxLayout="column" fxLayoutAlign="start stretch">
             <form class="example-full-width">
