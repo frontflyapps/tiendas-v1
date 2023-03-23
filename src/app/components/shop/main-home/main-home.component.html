@@ -80,133 +80,147 @@
       <app-banners-four [_banners]="banners"></app-banners-four>
     </div>
   </div> -->
-  <ng-container *ngIf='countProducts == 0 && !loadingAllProduct'>
+  <ng-container *ngIf='sectionProducts.length == 0 && !loadingAllProduct'>
     <h3 class='mat-title py-4' style='text-align: center'>{{ 'No hay ningún producto disponible' | translate }}</h3>
   </ng-container>
-  <div *ngIf='arrayProducts.length > 0'>
-    <div *ngIf='!this.businessConfig || this.businessConfig?.frontDataProduct === "category"'>
-      <div *ngFor='let card of arrayProducts'>
-        <div class='container'>
-          <div class='products sec-padding'>
-            <!-- DESKTOP -->
-            <div class='products-four' fxHide.xs fxHide.sm fxShow>
-              <h3 style='color: initial'>{{ card.name | translate }}</h3>
-              <app-product-carousel *ngIf='card.value' [btnColor]="'accent'" [products]='card.value'>
-              </app-product-carousel>
-              <div *ngIf='loadingFeatured' class='my-3'>
-                <app-skeleton-loading-cards *ngIf='!card.value' [setConfiguration]='{ xs: 1, sm: 2, md: 3, lg: 4 }'>
-                </app-skeleton-loading-cards>
-              </div>
-            </div>
-            <!-- MOBILE -->
-            <div fxHide fxShow.xs fxShow.sm fxLayout='column' class='product-container'>
-              <h2 class='mb-2' style='color: initial; font-weight: 500' fxFlex='100'>{{ card.name | translate }}</h2>
-              <div fxLayout='row wrap' fxLayoutAlign='space-between start' fxLayoutGap='gappx'>
-                <div *ngFor='let product of card.value' class='container-product mb-2'>
-                  <div *ngIf='inLoading' class='loading-shade-main' style='height: 100%; width: 100%'>
-                    <mat-spinner [diameter]='40'></mat-spinner>
-                  </div>
-                  <div class='product-img' fxLayout='column' fxLayoutGap='8px'>
 
-                    <a
-                      [queryParams]='{ productId: product.id, stockId: product?.Stock?.id, name: product?.name?.es, sharedImage: product?.sharedImage }'
-                      [routerLink]="['/product']"
-                    >
-
-                      <img
-                        *ngIf='product.Images && product.Images.length'
-                        [alt]="product.name[language] ? product.name[language] : product.name['es']"
-                        [src]='imageUrl + product.Images[0].image'
-                        lazyImg
-                        class='productImage'
-                        onerror="this.onerror=null;this.src='assets/images/noImage.jpg';"
-                      />
-                      <img
-                        *ngIf='!(product.Images && product.Images.length)'
-                        alt='No Image'
-                        lazyImg
-                        src='assets/images/noImage.jpg'
-                      />
-                    </a>
-                    <div class='moduleTitle line-clampTitle p-2'>
-                      <h4 class='mat-body-2'>{{ utilsService.parserLanguage(product.name, language) }}</h4>
-                    </div>
-                    <div class='price p-2'>
-                      <a
-                        [queryParams]='{ productId: product.id, stockId: product?.Stock?.id,
-                          name: product?.name?.es,
-                          sharedImage: product?.sharedImage }'
-                        [routerLink]="['/product']"
-                        class='product-link'
-                      >
-                        <ng-container *ngIf='product.offerValue'>
-                          <p class='deletePrice m-0'>
-                            <del>{{ product | parsePriceProduct }}</del>
-                            <span class='offer ml-2'>
-                                <span class='mx-0 px-0'>-</span>
-                                <span *ngIf='product.isPercent' class='mx-0 px-0'>{{ product.offerValue }}% </span>
-                                <span *ngIf='!product.isPercent' class='mx-0 px-0'>${{ product.offerValue }}</span>
-                              </span>
-                          </p>
-                          <p class='mat-body-2 m-0'
-                             matTooltip="{{ 'Existe una oferta asociada a este producto' | translate }}">
-                            {{ product | parsePriceProduct: 'offert' }}
-                          </p>
-                          <div fxLayout='row' fxLayoutAlign='space-between center'>
-                            <p class='mat-body-2 mr-2' style='font-size: 12px; color: #757474'>
-                              {{ 'Desde ' | translate }}
-                              {{ product.minSale }}
-                              {{ ' unidad' | translate }}
-                            </p>
-                            <button
-                              (click)='onAddToCart(product)'
-                              class='btnAddCart'
-                              mat-mini-fab
-                              matTooltip="{{ 'Añadir al carrito' | translate }}"
-                              style='z-index: 10'
-                            >
-                              <mat-icon>shopping_cart</mat-icon>
-                            </button>
-                          </div>
-                        </ng-container>
-
-                      </a>
-                      <ng-container *ngIf='!product.offerValue'>
-                        <p class='mat-body-2 m-0'>
-                          {{ product | parsePriceProduct }}
-                        </p>
-                        <div fxLayout='row' fxLayoutAlign='space-between center'>
-                          <p class='mat-body-2 mr-2' style='font-size: 12px; color: #757474'>
-                            {{ 'Desde ' | translate }}
-                            {{ product.minSale }}
-                            {{ ' unidad' | translate }}
-                          </p>
-                          <button
-                            (click)='onAddToCart(product)'
-                            class='btnAddCart'
-                            mat-mini-fab
-                            matTooltip="{{ 'Añadir al carrito' | translate }}"
-                            style='z-index: 10'
-                          >
-                            <mat-icon>shopping_cart</mat-icon>
-                          </button>
-                        </div>
-
-                      </ng-container>
-
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </div>
-        <mat-divider fxHide fxShow.xs fxShow.sm class='my-2'></mat-divider>
-      </div>
+  <div
+    class="search-results"
+    infiniteScroll
+    [infiniteScrollDistance]="100"
+    [infiniteScrollThrottle]="1500"
+    (scrolled)="loadProducts()"
+  ></div>
+  <div *ngIf='sectionProducts.length >= 0'>
+    <div *ngFor='let elem of sectionProducts'>
+      <img *ngIf='elem.type === "businessPromotion"' [src]='applyStyle && elem?.imageXs ? elem?.imageXs : elem?.image'>
+      <span *ngIf='elem.type === "categories"'>{{elem?.title}}</span>
     </div>
   </div>
+<!--  <div *ngIf='arrayProducts.length > 0'>-->
+<!--    <div *ngIf='!this.businessConfig || this.businessConfig?.frontDataProduct === "category"'>-->
+<!--      <div *ngFor='let card of arrayProducts'>-->
+<!--        <div class='container'>-->
+<!--          <div class='products sec-padding'>-->
+<!--            &lt;!&ndash; DESKTOP &ndash;&gt;-->
+<!--            <div class='products-four' fxHide.xs fxHide.sm fxShow>-->
+<!--              <h3 style='color: initial'>{{ card.name | translate }}</h3>-->
+<!--              <app-product-carousel *ngIf='card.value' [btnColor]="'accent'" [products]='card.value'>-->
+<!--              </app-product-carousel>-->
+<!--              <div *ngIf='loadingFeatured' class='my-3'>-->
+<!--                <app-skeleton-loading-cards *ngIf='!card.value' [setConfiguration]='{ xs: 1, sm: 2, md: 3, lg: 4 }'>-->
+<!--                </app-skeleton-loading-cards>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            &lt;!&ndash; MOBILE &ndash;&gt;-->
+<!--            <div fxHide fxShow.xs fxShow.sm fxLayout='column' class='product-container'>-->
+<!--              <h2 class='mb-2' style='color: initial; font-weight: 500' fxFlex='100'>{{ card.name | translate }}</h2>-->
+<!--              <div fxLayout='row wrap' fxLayoutAlign='space-between start' fxLayoutGap='gappx'>-->
+<!--                <div *ngFor='let product of card.value' class='container-product mb-2'>-->
+<!--                  <div *ngIf='inLoading' class='loading-shade-main' style='height: 100%; width: 100%'>-->
+<!--                    <mat-spinner [diameter]='40'></mat-spinner>-->
+<!--                  </div>-->
+<!--                  <div class='product-img' fxLayout='column' fxLayoutGap='8px'>-->
+
+<!--                    <a-->
+<!--                      [queryParams]='{ productId: product.id, stockId: product?.Stock?.id, name: product?.name?.es, sharedImage: product?.sharedImage }'-->
+<!--                      [routerLink]="['/product']"-->
+<!--                    >-->
+
+<!--                      <img-->
+<!--                        *ngIf='product.Images && product.Images.length'-->
+<!--                        [alt]="product.name[language] ? product.name[language] : product.name['es']"-->
+<!--                        [src]='imageUrl + product.Images[0].image'-->
+<!--                        lazyImg-->
+<!--                        class='productImage'-->
+<!--                        onerror="this.onerror=null;this.src='assets/images/noImage.jpg';"-->
+<!--                      />-->
+<!--                      <img-->
+<!--                        *ngIf='!(product.Images && product.Images.length)'-->
+<!--                        alt='No Image'-->
+<!--                        lazyImg-->
+<!--                        src='assets/images/noImage.jpg'-->
+<!--                      />-->
+<!--                    </a>-->
+<!--                    <div class='moduleTitle line-clampTitle p-2'>-->
+<!--                      <h4 class='mat-body-2'>{{ utilsService.parserLanguage(product.name, language) }}</h4>-->
+<!--                    </div>-->
+<!--                    <div class='price p-2'>-->
+<!--                      <a-->
+<!--                        [queryParams]='{ productId: product.id, stockId: product?.Stock?.id,-->
+<!--                          name: product?.name?.es,-->
+<!--                          sharedImage: product?.sharedImage }'-->
+<!--                        [routerLink]="['/product']"-->
+<!--                        class='product-link'-->
+<!--                      >-->
+<!--                        <ng-container *ngIf='product.offerValue'>-->
+<!--                          <p class='deletePrice m-0'>-->
+<!--                            <del>{{ product | parsePriceProduct }}</del>-->
+<!--                            <span class='offer ml-2'>-->
+<!--                                <span class='mx-0 px-0'>-</span>-->
+<!--                                <span *ngIf='product.isPercent' class='mx-0 px-0'>{{ product.offerValue }}% </span>-->
+<!--                                <span *ngIf='!product.isPercent' class='mx-0 px-0'>${{ product.offerValue }}</span>-->
+<!--                              </span>-->
+<!--                          </p>-->
+<!--                          <p class='mat-body-2 m-0'-->
+<!--                             matTooltip="{{ 'Existe una oferta asociada a este producto' | translate }}">-->
+<!--                            {{ product | parsePriceProduct: 'offert' }}-->
+<!--                          </p>-->
+<!--                          <div fxLayout='row' fxLayoutAlign='space-between center'>-->
+<!--                            <p class='mat-body-2 mr-2' style='font-size: 12px; color: #757474'>-->
+<!--                              {{ 'Desde ' | translate }}-->
+<!--                              {{ product.minSale }}-->
+<!--                              {{ ' unidad' | translate }}-->
+<!--                            </p>-->
+<!--                            <button-->
+<!--                              (click)='onAddToCart(product)'-->
+<!--                              class='btnAddCart'-->
+<!--                              mat-mini-fab-->
+<!--                              matTooltip="{{ 'Añadir al carrito' | translate }}"-->
+<!--                              style='z-index: 10'-->
+<!--                            >-->
+<!--                              <mat-icon>shopping_cart</mat-icon>-->
+<!--                            </button>-->
+<!--                          </div>-->
+<!--                        </ng-container>-->
+
+<!--                      </a>-->
+<!--                      <ng-container *ngIf='!product.offerValue'>-->
+<!--                        <p class='mat-body-2 m-0'>-->
+<!--                          {{ product | parsePriceProduct }}-->
+<!--                        </p>-->
+<!--                        <div fxLayout='row' fxLayoutAlign='space-between center'>-->
+<!--                          <p class='mat-body-2 mr-2' style='font-size: 12px; color: #757474'>-->
+<!--                            {{ 'Desde ' | translate }}-->
+<!--                            {{ product.minSale }}-->
+<!--                            {{ ' unidad' | translate }}-->
+<!--                          </p>-->
+<!--                          <button-->
+<!--                            (click)='onAddToCart(product)'-->
+<!--                            class='btnAddCart'-->
+<!--                            mat-mini-fab-->
+<!--                            matTooltip="{{ 'Añadir al carrito' | translate }}"-->
+<!--                            style='z-index: 10'-->
+<!--                          >-->
+<!--                            <mat-icon>shopping_cart</mat-icon>-->
+<!--                          </button>-->
+<!--                        </div>-->
+
+<!--                      </ng-container>-->
+
+<!--                    </div>-->
+<!--                  </div>-->
+
+<!--                </div>-->
+<!--              </div>-->
+
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <mat-divider fxHide fxShow.xs fxShow.sm class='my-2'></mat-divider>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
   <!-- ---------------------- Featured Items ----------------------- -->
   <section *ngIf='featuredProducts.length > 0'>
     <div class='container'>

@@ -63,6 +63,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { Meta } from '@angular/platform-browser';
 import { GuachosSimplePaginationModule } from 'guachos-simple-pagination';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @NgModule({
   declarations: [
@@ -99,6 +100,7 @@ import { GuachosSimplePaginationModule } from 'guachos-simple-pagination';
     FlexLayoutModule,
     NgxPaginationModule,
     MatProgressSpinnerModule,
+    InfiniteScrollModule,
     TranslateModule,
     SkeletonLoadingCardsModule,
     MatTooltipModule,

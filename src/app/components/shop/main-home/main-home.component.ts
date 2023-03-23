@@ -67,6 +67,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
 
   pathToRedirect: any;
   paramsToUrlRedirect: any;
+  sectionProducts: any[] = [];
 
   queryPopular: IPagination = {
     limit: 8,
@@ -150,8 +151,14 @@ export class MainHomeComponent implements OnInit, OnDestroy {
       this.paramsToUrlRedirect = { ...params };
     });
 
+    // this.productService.updatedSections$
+
     this.productService.updatedProducts$.subscribe((response) => {
       this.frontProduct();
+    });
+    this.productService.updatedSectionsProduct$.subscribe((response) => {
+      this.sectionProducts = localStorageService.getFromStorage('sections');
+      console.log(this.sectionProducts);
     });
     // this.metaService.setMeta(
     //   environment.meta?.mainPage?.title,
@@ -196,7 +203,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     this.getPFDFromStorage();
     this.appService.$businessConfig.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {
       this.businessConfig = data;
-      console.log('************', this.businessConfig);
+      // console.log('************', this.businessConfig);
       this.getDataProducts();
     });
 
@@ -223,7 +230,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
 
   getCategoriesProducts() {
     const pfd = this.localStorageService.getFromStorage(FRONT_PRODUCT_DATA);
-    console.log(pfd);
+    // console.log(pfd);
     if (pfd) {
       Object.entries(pfd).sort(() => Math.random() - 0.5);
       Object.entries(pfd?.categories).forEach(item => {
@@ -238,7 +245,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     } else {
       // Aqui es donde entra cuando la peticion front-data-product no ha respondido y en el local storage no hay valor
       // de productos
-      console.warn('No hay productos');
+      // console.warn('No hay productos');
     }
 
   }
@@ -311,6 +318,10 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   //   this.bestSellersProducts = this.productDataService.bestSellerProducts;
   // }
 
+  loadProducts() {
+    console.log('load');
+  }
+
   getPFDFromStorage() {
     try {
       const lp = this.localStorageService.getFromStorage(FRONT_PRODUCT_DATA);
@@ -371,7 +382,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
         // this.loading = true;
         // this.getDataProducts();
         // this.productService.updatedProducts$.subscribe((response) => {
-        console.log(this.arrayProducts.length);
+        // console.log(this.arrayProducts.length);
         this.frontProduct();
 
         // });

@@ -32,6 +32,8 @@ export class ProductDataService {
 export class ProductService {
   // //////// Urls /////////
   urlFrontProductsData = environment.apiUrl + 'front-data-product';
+  urlSections = environment.apiUrl + 'section/front';
+  urlSectionsIds = environment.apiUrl + 'section/front/by-type';
   urlProduct = environment.apiUrl + 'product';
   urlProductId = environment.apiUrl + 'product/:id';
   urlProductidImage = environment.apiUrl + 'product/:id/image';
@@ -58,6 +60,8 @@ export class ProductService {
   // ////////////////////////////////////////////////////////////////
   public productsData$: Observable<IProductData>;
   updatedProducts$ = new Subject<any>();
+  updatedSections$ = new Subject<any>();
+  updatedSectionsProduct$ = new Subject<any>();
   private _url = 'assets/data/';
 
   constructor(
@@ -70,6 +74,12 @@ export class ProductService {
     this.getProduct = new Subject<any>();
     // this.setGetProductPromise();
     this.getFrontProductsData().subscribe(data => {
+      console.log(data);
+    });
+    this.getSections().subscribe(data => {
+      this.getSectionsIds(data).subscribe(item => {
+        console.log(item);
+      });
       console.log(data);
     });
   }
@@ -95,6 +105,31 @@ export class ProductService {
       httpParams = httpParams.append('filter[$and][BusinessId]', businessId);
     }
     return this.httpClient.get<any>(this.urlProduct, { params: httpParams });
+  }
+
+  public getSections() {
+    let httpParams = new HttpParams();
+    return this.httpClient.get<any>(this.urlSections, { params: httpParams })
+      .pipe(tap((response) => {
+      this.localStorageService.setOnStorage('sectionsIds', response);
+      this.updatedSections$.next(true);
+    }));
+  }
+
+  public getSectionsIds(data) {
+    let httpParams = new HttpParams();
+    console.log(data.data);
+    if (data.data) {
+      data.data.map(item => {
+        httpParams = httpParams.append('sectionIds', item.id);
+      });
+
+    }
+    return this.httpClient.get<any>(this.urlSectionsIds, { params: httpParams })
+      .pipe(tap((response) => {
+      this.localStorageService.setOnStorage('sections', response.data);
+      this.updatedSectionsProduct$.next(true);
+    }));
   }
 
   setHttpParams(httpParams: HttpParams, query?: IPagination, params?: any) {
