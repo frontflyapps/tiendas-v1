@@ -9,8 +9,6 @@
     <title>Tienda Guajiritos</title>
     <base href="/"/>
 
-
-
     <!-- Share WhatsApp, Twitter and Facebook by DmN -->
     <meta property="og:type" content="website"/>
     <meta property="og:url" content="https://tienda.guajiritos.com/"/>
@@ -28,68 +26,63 @@
     <!--    Meta for navigators-->
     <meta name="apple-mobile-web-app-status-bar-style" content="#131313">
     <meta name="theme-color" content="#131313">
-    <link rel="apple-touch-icon" href="touch-icon-iphone.png">
 
-
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-B3BB1Z2GL3"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-
-      gtag('js', new Date());
-
-      gtag('config', 'G-B3BB1Z2GL3');
-    </script>
 
     <!-- Google and Material FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
-    <script defer="">
-      // Load Font
-      let fontPoppins = document.createElement('link');
-      fontPoppins.href =
-        'https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap';
-      fontPoppins.rel = 'stylesheet';
-      fontPoppins.async = true;
-      document.getElementsByTagName('script')[0].parentNode.appendChild(fontPoppins); // Font Poppins
+    <link rel='preload' href='https://fonts.googleapis.com/icon?family=Material+Icons' as='style'>
 
-      // Icons Material
-      let fontMaterial = document.createElement('link');
-      fontMaterial.href = 'https://fonts.googleapis.com/icon?family=Material+Icons';
-      fontMaterial.rel = 'stylesheet';
-      fontMaterial.async = true;
-      document.getElementsByTagName('script')[0].parentNode.appendChild(fontMaterial);
-    </script>
+    <link href='https://fonts.googleapis.com/icon?family=Material+Icons&display=swap' rel='stylesheet'>
 
-    <!-- Synchronous CSS -->
-    <!--  <link rel="preload" href="assets/scss/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">-->
-    <!--  <noscript>-->
-    <!--    <link rel="stylesheet" href="assets/scss/all.min.css">-->
-    <!--  </noscript>-->
+    <link href='https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap' rel='stylesheet'>
 
-    <link rel="icon" type="image/x-icon" href="favicon.ico"/>
+
+    <link rel='preload' href="favicon.ico"/>
+    <link rel='preload' href="apple-touch-icon.png"/>
+
+    <link rel='preload' href="manifest.webmanifest">
     <link rel="manifest" href="manifest.webmanifest">
-  <meta name="theme-color" content="#1976d2">
+
+    <link rel='preload' href='https://cdntienda.guajiritos.com/staging/d18d9d9b-9898-4178-825c-9e734bcd0952.jpeg'>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="manifest" href="site.webmanifest">
+
+<!--    Zammad-->
+    <script rel='preload' src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script rel='preload' src="https://soporte.guajiritos.com/assets/chat/chat.min.js"></script>
+    <script rel='preload'>
+      $(function() {
+        new ZammadChat({
+          background: '#131313',
+          fontSize: '12px',
+          chatId: 1,
+          debug: true
+        });
+      });
+    </script>
 </head>
 
   <body id="BodyIdAPP" class="mat-typography">
     <app-root></app-root>
     <noscript>Please enable JavaScript to continue using this application.</noscript>
 </body>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://soporte.guajiritos.com/assets/chat/chat.min.js"></script>
-  <script>
-    $(function() {
-      new ZammadChat({
-        background: '#131313',
-        fontSize: '12px',
-        chatId: 1,
-        debug: true
-      });
-    });
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script rel='defer' async="" src="https://www.googletagmanager.com/gtag/js?id=G-B3BB1Z2GL3"></script>
+  <script rel='defer'>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-B3BB1Z2GL3');
   </script>
+
 </html>

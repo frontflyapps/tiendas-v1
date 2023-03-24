@@ -285,7 +285,7 @@
               <div class="buttoms-actions" fxLayout="row" fxLayoutAlign="space-between start">
                 <div class="text-muted mb-2" fxLayout="row" fxLayout.xs="column" id="inputQuantity">
                   <div fxLayout="row" fxLayoutAlign="center center">
-                    <button (click)="decrement(item.Product)"
+                    <button (click)="decrement(item)"
                             *ngIf="item.quantity > 1"
                             class="btn-remove"
                             mat-icon-button
@@ -302,7 +302,7 @@
                     </button>
 
                     <input [(ngModel)]="item.quantity" class="input-number" disabled name="quantity" type="text" />
-                    <button (click)="increment(item.Product)"
+                    <button (click)="increment(item)"
                             [disabled]="item.Product.maxSale <= item.quantity"
                             class="btn-add"
                             mat-icon-button
