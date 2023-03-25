@@ -1,0 +1,95 @@
+<div fxHide fxShow.xs fxShow.sm fxLayout='column' class='product-container'>
+  <h2 class='mb-2' style='color: initial; font-weight: 500' fxFlex='100'>{{ products.name | i18nField: translateService.currentLang  }}</h2>
+  <div fxLayout='row wrap' fxLayoutAlign='space-between start' fxLayoutGap='gappx'>
+    <div *ngFor='let product of products.value' class='container-product mb-2'>
+      <div *ngIf='inLoading' class='loading-shade-main' style='height: 100%; width: 100%'>
+        <mat-spinner [diameter]='40'></mat-spinner>
+      </div>
+      <div class='product-img' fxLayout='column' fxLayoutGap='8px'>
+        <a
+          [queryParams]='{ productId: product.id, stockId: product?.Stock?.id, name: product?.name?.es, sharedImage: product?.sharedImage }'
+          [routerLink]="['/product']"
+        >
+          <img
+            *ngIf='product.Images && product.Images.length'
+            [alt]="product.name[language] ? product.name[language] : product.name['es']"
+            [src]='imageUrl + product.Images[0].image'
+            lazyImg
+            class='productImage'
+            onerror="this.onerror=null;this.src='assets/images/noImage.jpg';"
+          />
+          <img
+            *ngIf='!(product.Images && product.Images.length)'
+            alt='No Image'
+            lazyImg
+            src='assets/images/noImage.jpg'
+          />
+        </a>
+        <div class='moduleTitle line-clampTitle p-2'>
+          <h4 class='mat-body-2'>{{ utilsService.parserLanguage(product.name, language) }}</h4>
+        </div>
+        <div class='price p-2'>
+          <a
+            [queryParams]='{ productId: product.id, stockId: product?.Stock?.id,
+                                                         name: product?.name?.es,
+                                                         sharedImage: product?.sharedImage }'
+            [routerLink]="['/product']"
+            class='product-link'
+          >
+            <ng-container *ngIf='product.offerValue'>
+              <p class='deletePrice m-0'>
+                <del>{{ product | parsePriceProduct }}</del>
+                <span class='offer ml-2'>
+                                                  <span class='mx-0 px-0'>-</span>
+                                                  <span *ngIf='product.isPercent' class='mx-0 px-0'>{{ product.offerValue }}% </span>
+                                                  <span *ngIf='!product.isPercent' class='mx-0 px-0'>${{ product.offerValue }}</span>
+                                                </span>
+              </p>
+              <p class='mat-body-2 m-0'
+                 matTooltip="{{ 'Existe una oferta asociada a este producto' | translate }}">
+                {{ product | parsePriceProduct: 'offert' }}
+              </p>
+              <div fxLayout='row' fxLayoutAlign='space-between center'>
+                <p class='mat-body-2 mr-2' style='font-size: 12px; color: #757474'>
+                  {{ 'Desde ' | translate }}
+                  {{ product.minSale }}
+                  {{ ' unidad' | translate }}
+                </p>
+                <button
+                  (click)='onAddToCart(product)'
+                  class='btnAddCart'
+                  mat-mini-fab
+                  matTooltip="{{ 'Añadir al carrito' | translate }}"
+                  style='z-index: 10'
+                >
+                  <mat-icon>shopping_cart</mat-icon>
+                </button>
+              </div>
+            </ng-container>
+          </a>
+          <ng-container *ngIf='!product.offerValue'>
+            <p class='mat-body-2 m-0'>
+              {{ product | parsePriceProduct }}
+            </p>
+            <div fxLayout='row' fxLayoutAlign='space-between center'>
+              <p class='mat-body-2 mr-2' style='font-size: 12px; color: #757474'>
+                {{ 'Desde ' | translate }}
+                {{ product.minSale }}
+                {{ ' unidad' | translate }}
+              </p>
+              <button
+                (click)='onAddToCart(product)'
+                class='btnAddCart'
+                mat-mini-fab
+                matTooltip="{{ 'Añadir al carrito' | translate }}"
+                style='z-index: 10'
+              >
+                <mat-icon>shopping_cart</mat-icon>
+              </button>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

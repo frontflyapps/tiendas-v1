@@ -16,6 +16,7 @@ import { AppService } from '../../../app.service';
 import { CartService } from '../../shared/services/cart.service';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { TranslateService } from '@ngx-translate/core';
 
 export interface ProductInterface {
   name: string;
@@ -68,6 +69,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   pathToRedirect: any;
   paramsToUrlRedirect: any;
   sectionProducts: any[] = [];
+  arraySectionProducts: any[] = [];
 
   queryPopular: IPagination = {
     limit: 8,
@@ -118,6 +120,8 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   url = environment.apiUrl + 'landing-page';
   arrayProducts: ProductInterface[] = [];
 
+  visualizationSections: any;
+
   bigBanner1 = null;
   bigBanner2 = null;
 
@@ -134,6 +138,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     private appService: AppService,
     private metaService: MetaService,
     public productDataService: ProductDataService,
+    public translateService: TranslateService,
     public cartService: CartService,
     private route: ActivatedRoute,
     private productService: ProductService,
@@ -158,7 +163,29 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     });
     this.productService.updatedSectionsProduct$.subscribe((response) => {
       this.sectionProducts = localStorageService.getFromStorage('sections');
-      console.log(this.sectionProducts);
+      this.visualizationSections = localStorageService.getFromStorage('sectionsIds').data;
+      console.log(this.visualizationSections);
+      let cont = 0;
+      this.sectionProducts.map(item => {
+        if (item.categories) {
+          console.log(item);
+          const arr: any[] = item.categories.categories.map((itemId) => item.categories.products.find((itemProduct) => itemProduct.id === itemId));
+          this.arraySectionProducts.push(
+            {
+              name: this.visualizationSections[cont].title,
+              value: arr,
+            });
+          // this.arraySectionProducts.push(arr);
+          console.log('categorie');
+        } else if (item.businessPromotion) {
+          this.arraySectionProducts.push(item.businessPromotion);
+          console.log('businessPromotion');
+        }
+        cont++;
+        // console.log(item);
+      });
+      // this.arraySectionProducts
+      console.log(this.arraySectionProducts);
     });
     // this.metaService.setMeta(
     //   environment.meta?.mainPage?.title,

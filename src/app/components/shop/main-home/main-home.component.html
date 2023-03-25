@@ -80,7 +80,7 @@
       <app-banners-four [_banners]="banners"></app-banners-four>
     </div>
   </div> -->
-  <ng-container *ngIf='sectionProducts.length == 0 && !loadingAllProduct'>
+  <ng-container *ngIf='arraySectionProducts.length == 0 && !loadingAllProduct'>
     <h3 class='mat-title py-4' style='text-align: center'>{{ 'No hay ningún producto disponible' | translate }}</h3>
   </ng-container>
 
@@ -91,10 +91,50 @@
     [infiniteScrollThrottle]="1500"
     (scrolled)="loadProducts()"
   ></div>
-  <div *ngIf='sectionProducts.length >= 0'>
-    <div *ngFor='let elem of sectionProducts'>
-      <img *ngIf='elem.type === "businessPromotion"' [src]='applyStyle && elem?.imageXs ? elem?.imageXs : elem?.image'>
-      <span *ngIf='elem.type === "categories"'>{{elem?.title}}</span>
+  <div *ngIf='arraySectionProducts.length >= 0'>
+    <div *ngFor='let card of arraySectionProducts; let i = index'>
+      <!--BANNER-->
+      <div class='main-banner' *ngIf='visualizationSections[i].type === "businessPromotion"'>
+        <ng-container *ngIf='applyStyle && card?.imageXs; then bannerPromo1Xs; else bannerPromo1'>
+        </ng-container>
+        <ng-template #bannerPromo1>
+          <app-banner-promotion [ngClass]="{'banner-horizontal': visualizationSections[i] === 'slim',
+                                                 'banner-vertical': visualizationSections[i] === 'broad'}"
+                                [_imageBigPromo]='imageUrl + card?.image'></app-banner-promotion>
+        </ng-template>
+        <ng-template #bannerPromo1Xs>
+          <app-banner-promotion [_imageBigPromo]='imageUrl + card?.imageXs'></app-banner-promotion>
+        </ng-template>
+      </div>
+      <!--CATEGORIES-->
+      <div *ngIf='visualizationSections[i].type === "categories"'>
+        <div class='container'>
+          <div class='products sec-padding'>
+            <div class='products-four' fxHide.xs fxHide.sm fxShow>
+              <h2 style='color: initial'>{{ card.name | i18nField: translateService.currentLang }}</h2>
+              <app-product-carousel *ngIf='card.value' [btnColor]="'accent'" [products]='card.value'>
+              </app-product-carousel>
+              <div *ngIf='loadingFeatured' class='my-3'>
+                <app-skeleton-loading-cards *ngIf='!card.value' [setConfiguration]='{ xs: 1, sm: 2, md: 3, lg: 4 }'>
+                </app-skeleton-loading-cards>
+              </div>
+            </div>
+            <div fxShow.xs fxHide.sm fxHide>
+              <app-product-grid *ngIf='card.value && visualizationSections[i].typeVisualization === "grid"'
+                                [products]='card'>
+              </app-product-grid>
+              <div *ngIf='card.value && visualizationSections[i].typeVisualization === "carousel"'>
+                <h2 style='color: initial'>{{ card.name | i18nField: translateService.currentLang }}</h2>
+                <app-product-carousel [btnColor]="'accent'" [products]='card.value'>
+                </app-product-carousel>
+              </div>
+              <app-product-list *ngIf='card.value && visualizationSections[i].typeVisualization === "list"'
+                                [products]='card'>
+              </app-product-list>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 <!--  <div *ngIf='arrayProducts.length > 0'>-->
@@ -222,106 +262,106 @@
 <!--    </div>-->
 <!--  </div>-->
   <!-- ---------------------- Featured Items ----------------------- -->
-  <section *ngIf='featuredProducts.length > 0'>
-    <div class='container'>
-      <div class='products sec-padding'>
-        <div class='products-four'>
-          <h3 style='color: initial'>{{ 'Productos destacados' | translate }}</h3>
-          <app-product-carousel *ngIf='!loadingFeatured' [btnColor]="'accent'" [products]='featuredProducts'>
-          </app-product-carousel>
-          <div *ngIf='loadingFeatured' class='my-3'>
-            <app-skeleton-loading-cards *ngIf='loadingFeatured' [setConfiguration]='{ xs: 1, sm: 2, md: 3, lg: 4 }'>
-            </app-skeleton-loading-cards>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+<!--  <section *ngIf='featuredProducts.length > 0'>-->
+<!--    <div class='container'>-->
+<!--      <div class='products sec-padding'>-->
+<!--        <div class='products-four'>-->
+<!--          <h3 style='color: initial'>{{ 'Productos destacados' | translate }}</h3>-->
+<!--          <app-product-carousel *ngIf='!loadingFeatured' [btnColor]="'accent'" [products]='featuredProducts'>-->
+<!--          </app-product-carousel>-->
+<!--          <div *ngIf='loadingFeatured' class='my-3'>-->
+<!--            <app-skeleton-loading-cards *ngIf='loadingFeatured' [setConfiguration]='{ xs: 1, sm: 2, md: 3, lg: 4 }'>-->
+<!--            </app-skeleton-loading-cards>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </section>-->
 
-  <!-- ---------------------- Popular Items ------------------------ -->
-  <section *ngIf='popularProducts.length'>
-    <div class='container'>
-      <div class='products sec-padding'>
-        <div class='products-four'>
-          <h3 style='color: initial'>{{ 'Ofertas populares' | translate }}</h3>
-          <app-product-carousel *ngIf='!loadingPopular' [btnColor]="'accent'" [products]='popularProducts'>
-          </app-product-carousel>
-          <div *ngIf='loadingPopular' class='my-3'>
-            <app-skeleton-loading-cards *ngIf='loadingPopular' [setConfiguration]='{ xs: 1, sm: 2, md: 3, lg: 4 }'>
-            </app-skeleton-loading-cards>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+<!--  &lt;!&ndash; &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45; Popular Items &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45; &ndash;&gt;-->
+<!--  <section *ngIf='popularProducts.length'>-->
+<!--    <div class='container'>-->
+<!--      <div class='products sec-padding'>-->
+<!--        <div class='products-four'>-->
+<!--          <h3 style='color: initial'>{{ 'Ofertas populares' | translate }}</h3>-->
+<!--          <app-product-carousel *ngIf='!loadingPopular' [btnColor]="'accent'" [products]='popularProducts'>-->
+<!--          </app-product-carousel>-->
+<!--          <div *ngIf='loadingPopular' class='my-3'>-->
+<!--            <app-skeleton-loading-cards *ngIf='loadingPopular' [setConfiguration]='{ xs: 1, sm: 2, md: 3, lg: 4 }'>-->
+<!--            </app-skeleton-loading-cards>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </section>-->
 
-  <div *ngIf='loadingPopular' class='container'>
-    <div class='products sec-padding'>
-      <div class='products-four'>
-        <div class='my-3'>
-          <app-skeleton-loading-cards *ngIf='loadingPopular' [setConfiguration]='{ xs: 1, sm: 2, md: 3, lg: 4 }'>
-          </app-skeleton-loading-cards>
-        </div>
-      </div>
-    </div>
-  </div>
+<!--  <div *ngIf='loadingPopular' class='container'>-->
+<!--    <div class='products sec-padding'>-->
+<!--      <div class='products-four'>-->
+<!--        <div class='my-3'>-->
+<!--          <app-skeleton-loading-cards *ngIf='loadingPopular' [setConfiguration]='{ xs: 1, sm: 2, md: 3, lg: 4 }'>-->
+<!--          </app-skeleton-loading-cards>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
 
   <!-- ---------------------- Big promo1 --------------------------- -->
-  <section *ngIf='bigBanner1?.length'>
-    <div class='main-banner'>
-      <ng-container *ngIf='applyStyle && bigBanner1[0]?.imageXs; then bannerPromo1Xs; else bannerPromo1'>
-      </ng-container>
+<!--  <section *ngIf='bigBanner1?.length'>-->
+<!--    <div class='main-banner'>-->
+<!--      <ng-container *ngIf='applyStyle && bigBanner1[0]?.imageXs; then bannerPromo1Xs; else bannerPromo1'>-->
+<!--      </ng-container>-->
 
-      <ng-template #bannerPromo1>
-        <app-banner-promotion [_imageBigPromo]='imageUrl + bigBanner1[0]?.image'></app-banner-promotion>
-      </ng-template>
+<!--      <ng-template #bannerPromo1>-->
+<!--        <app-banner-promotion [_imageBigPromo]='imageUrl + bigBanner1[0]?.image'></app-banner-promotion>-->
+<!--      </ng-template>-->
 
-      <ng-template #bannerPromo1Xs>
-        <app-banner-promotion [_imageBigPromo]='imageUrl + bigBanner1[0]?.imageXs'></app-banner-promotion>
-      </ng-template>
-    </div>
-  </section>
+<!--      <ng-template #bannerPromo1Xs>-->
+<!--        <app-banner-promotion [_imageBigPromo]='imageUrl + bigBanner1[0]?.imageXs'></app-banner-promotion>-->
+<!--      </ng-template>-->
+<!--    </div>-->
+<!--  </section>-->
 
   <!-- ---------------------- Best Seller Items -------------------- -->
-  <section *ngIf='bestSellersProducts.length'>
-    <div class='container'>
-      <div class='products sec-padding'>
-        <div class='products-four'>
-          <h3 style='color: initial'>{{ 'Productos más vendidos' | translate }}</h3>
-          <app-product-carousel *ngIf='!loadingBestSellers' [btnColor]="'accent'" [products]='bestSellersProducts'>
-          </app-product-carousel>
-          <div *ngIf='loadingBestSellers' class='my-3'>
-            <app-skeleton-loading-cards *ngIf='loadingBestSellers' [setConfiguration]='{ xs: 1, sm: 2, md: 3, lg: 4 }'>
-            </app-skeleton-loading-cards>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+<!--  <section *ngIf='bestSellersProducts.length'>-->
+<!--    <div class='container'>-->
+<!--      <div class='products sec-padding'>-->
+<!--        <div class='products-four'>-->
+<!--          <h3 style='color: initial'>{{ 'Productos más vendidos' | translate }}</h3>-->
+<!--          <app-product-carousel *ngIf='!loadingBestSellers' [btnColor]="'accent'" [products]='bestSellersProducts'>-->
+<!--          </app-product-carousel>-->
+<!--          <div *ngIf='loadingBestSellers' class='my-3'>-->
+<!--            <app-skeleton-loading-cards *ngIf='loadingBestSellers' [setConfiguration]='{ xs: 1, sm: 2, md: 3, lg: 4 }'>-->
+<!--            </app-skeleton-loading-cards>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </section>-->
 
   <!-- ---------------------- Big promo2 --------------------------- -->
-  <section *ngIf='bigBanner2?.length'>
-    <div class='main-banner'>
-      <ng-container *ngIf='applyStyle && bigBanner2[0]?.imageXs; then bannerPromo2Xs; else bannerPromo2'>
-      </ng-container>
+<!--  <section *ngIf='bigBanner2?.length'>-->
+<!--    <div class='main-banner'>-->
+<!--      <ng-container *ngIf='applyStyle && bigBanner2[0]?.imageXs; then bannerPromo2Xs; else bannerPromo2'>-->
+<!--      </ng-container>-->
 
-      <ng-template #bannerPromo2>
-        <app-banner-promotion2 [_imageBigPromo]='imageUrl + bigBanner2[0]?.image'></app-banner-promotion2>
-      </ng-template>
+<!--      <ng-template #bannerPromo2>-->
+<!--        <app-banner-promotion2 [_imageBigPromo]='imageUrl + bigBanner2[0]?.image'></app-banner-promotion2>-->
+<!--      </ng-template>-->
 
-      <ng-template #bannerPromo2Xs>
-        <app-banner-promotion2 [_imageBigPromo]='imageUrl + bigBanner2[0]?.imageXs'></app-banner-promotion2>
-      </ng-template>
-    </div>
-  </section>
+<!--      <ng-template #bannerPromo2Xs>-->
+<!--        <app-banner-promotion2 [_imageBigPromo]='imageUrl + bigBanner2[0]?.imageXs'></app-banner-promotion2>-->
+<!--      </ng-template>-->
+<!--    </div>-->
+<!--  </section>-->
 
   <!-- ---------------------- Product Vertical --------------------- -->
   <!--  <section *ngIf="featuredProducts.length && this.allProducts.length">-->
-  <section>
-    <div class='container'>
-      <app-product-vertical></app-product-vertical>
-    </div>
-  </section>
+<!--  <section>-->
+<!--    <div class='container'>-->
+<!--      <app-product-vertical></app-product-vertical>-->
+<!--    </div>-->
+<!--  </section>-->
 
   <!-- ---------------------- Big promo --------------------------- -->
   <section *ngIf='allArticles?.length'>

@@ -77,10 +77,11 @@ export class ProductService {
       console.log(data);
     });
     this.getSections().subscribe(data => {
-      this.getSectionsIds(data).subscribe(item => {
-        console.log(item);
-      });
       console.log(data);
+      if (data.meta.pagination.total > 0) {
+        this.getSectionsIds(data).subscribe(item => {
+        });
+      }
     });
   }
 
