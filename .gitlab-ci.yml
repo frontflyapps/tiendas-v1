@@ -12,21 +12,15 @@ install:
   tags:
     - Gitlab-Runner
   image:
-    name: nikolaik/python-nodejs:python3.8-nodejs14
+    name: armandofcom/python-node13-aws:latest
     entrypoint: [""]
   services:
-    - nikolaik/python-nodejs:python3.8-nodejs14
+    - armandofcom/python-node13-aws:latest
   cache:
    paths:
     - node_modules
-  before_script:
-    - DOCKER_HOST='/var/run/docker.sock'; if [ ! -S "$DOCKER_HOST" ]; then DOCKER_HOST='tcp://docker:2375'; export DOCKER_HOST=$DOCKER_HOST;fi; echo $DOCKER_HOST
-    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client git -y )'
-    - curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
-    - unzip awscli-bundle.zip
-    - ./awscli-bundle/install -b ~/bin/aws
-    - export PATH=~/bin:$PATH
   script:
+    - npm config set registry https://nexus.guajitech.com/repository/npm/
     - npm install
     - npm install -g typescript@4.6.2
     - npm run build --prod
@@ -36,6 +30,8 @@ install:
     - echo "DEPLOYED SUCCESSFULLY"
 
 success:
+  tags:
+    - Gitlab-Runner
   image: alpine:latest
   stage: notify
   script:
@@ -46,6 +42,8 @@ success:
   when: on_success
 
 failure:
+  tags:
+    - Gitlab-Runner
   image: alpine:latest
   stage: notify
   script:
