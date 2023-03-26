@@ -36,6 +36,8 @@ build_prod:
   <<: *build_job
 
 success:
+  tags:
+    - Gitlab-Runner
   image: alpine:latest
   stage: notify
   script:
@@ -46,6 +48,8 @@ success:
   when: on_success
 
 failure:
+  tags:
+    - Gitlab-Runner
   image: alpine:latest
   stage: notify
   script:
