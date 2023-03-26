@@ -12,14 +12,15 @@ install:
   tags:
     - Gitlab-Runner
   image:
-    name: nexus.guajitech.com/python-node13-aws:latest
+    name: armandofcom/python-node13-aws:latest
     entrypoint: [""]
   services:
-    - nexus.guajitech.com/python-node13-aws:latest
+    - armandofcom/python-node13-aws:latest
   cache:
    paths:
     - node_modules
   script:
+    - npm config set registry https://nexus.guajitech.com/repository/npm/
     - npm install
     - npm install -g typescript@4.6.2
     - npm run build --prod
