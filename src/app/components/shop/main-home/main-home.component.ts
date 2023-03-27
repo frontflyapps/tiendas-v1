@@ -64,6 +64,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   loadingServices = true;
   loadingBestSellers = true;
   showOnlyTwoProducts = false;
+  loadingProducts = false;
   countProducts = 0;
 
   pathToRedirect: any;
@@ -162,30 +163,28 @@ export class MainHomeComponent implements OnInit, OnDestroy {
       this.frontProduct();
     });
     this.productService.updatedSectionsProduct$.subscribe((response) => {
+      // TODO: CARLITO eliminar esta linea cunado api te envie el id de cada seccion.
+      this.arraySectionProducts = [];
       this.sectionProducts = localStorageService.getFromStorage('sections');
       this.visualizationSections = localStorageService.getFromStorage('sectionsIds').data;
-      console.log(this.visualizationSections);
       let cont = 0;
       this.sectionProducts.map(item => {
+
+        // TODO: CARLITO tienes que hacer un find en arraySectionProducts para garanbtizar que no se dupliquen las secciones
+
         if (item.categories) {
-          console.log(item);
           const arr: any[] = item.categories.categories.map((itemId) => item.categories.products.find((itemProduct) => itemProduct.id === itemId));
           this.arraySectionProducts.push(
             {
               name: this.visualizationSections[cont].title,
               value: arr,
+              uuid: this.utilsService.generateUuid(),
             });
-          // this.arraySectionProducts.push(arr);
-          console.log('categorie');
         } else if (item.businessPromotion) {
           this.arraySectionProducts.push(item.businessPromotion);
-          console.log('businessPromotion');
         }
         cont++;
-        // console.log(item);
       });
-      // this.arraySectionProducts
-      console.log(this.arraySectionProducts);
     });
     // this.metaService.setMeta(
     //   environment.meta?.mainPage?.title,
@@ -209,13 +208,13 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   frontProduct() {
     if (this.arrayProducts.length === 0) {
       // this.productService.updatedProducts$.subscribe((response) => {
-        if (this.businessConfig?.frontDataProduct === 'normal') {
-          this.getDataProducts();
-        } else if (this.businessConfig?.frontDataProduct === 'category') {
-          this.getCategoriesProducts();
-        } else {
-          this.getCategoriesProducts();
-        }
+      if (this.businessConfig?.frontDataProduct === 'normal') {
+        this.getDataProducts();
+      } else if (this.businessConfig?.frontDataProduct === 'category') {
+        this.getCategoriesProducts();
+      } else {
+        this.getCategoriesProducts();
+      }
       // });
     }
   }
@@ -249,6 +248,10 @@ export class MainHomeComponent implements OnInit, OnDestroy {
         this.initComponent();
       }
     });
+  }
+
+  identify(index, item) {
+    return item.uuid;
   }
 
   getSections() {
@@ -322,12 +325,14 @@ export class MainHomeComponent implements OnInit, OnDestroy {
       } else {
         this.setValuesFromResponse(pfd);
       }
-    } catch (e) {}
+    } catch (e) {
+    }
     this.allProducts = this.productDataService.allProducts;
     this.popularProducts = this.productDataService.popularProducts;
     this.featuredProducts = this.productDataService.featuredProducts;
     this.bestSellersProducts = this.productDataService.bestSellerProducts;
   }
+
   //
   // getDataProductsTest() {
   //   try {
@@ -347,6 +352,16 @@ export class MainHomeComponent implements OnInit, OnDestroy {
 
   loadProducts() {
     console.log('load');
+    if (!this.loadingProducts) {
+      this.loadingProducts = true;
+      this.productService.getSectionsIds().subscribe(data => {
+        setTimeout(() => {
+          this.loadingProducts = false;
+        }, 500);
+      });
+    }
+    // this.arraySectionProducts = this.arraySectionProducts.concat(this.arraySectionProducts);
+    // this.visualizationSections = this.visualizationSections.concat(this.visualizationSections);
   }
 
   getPFDFromStorage() {
@@ -413,11 +428,11 @@ export class MainHomeComponent implements OnInit, OnDestroy {
         this.frontProduct();
 
         // });
-          // this.productService.getFrontProductsData().subscribe(item => {
-          //   this.loading = false;
-          //   console.log(item);
-          //   this.spinner.hide();
-          // });
+        // this.productService.getFrontProductsData().subscribe(item => {
+        //   this.loading = false;
+        //   console.log(item);
+        //   this.spinner.hide();
+        // });
         // this.spinner.hide();
         // }
         // if (!this.businessConfig) {
