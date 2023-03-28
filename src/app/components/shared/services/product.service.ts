@@ -79,18 +79,7 @@ export class ProductService {
     this.getFrontProductsData().subscribe(data => {
       console.log(data);
     });
-    this.getSections().subscribe(data => {
-      console.log(data);
-      // if (data.meta.pagination.total > 2) {
-      //   this.getSectionsIds(data, 3).subscribe(item => {
-      //   });
-      // } else if (data.meta.pagination.total) {
-      //   this.getSectionsIds(data, data.meta.pagination.total).subscribe(item => {
-      //   });
-      // }
-      this.getSectionsIds().subscribe(item => {
-      });
-    });
+    // this.getAllProductsSections();
   }
 
   // ///////////////////////////////////////////////////////////////
@@ -102,6 +91,14 @@ export class ProductService {
     httpParams = this.setHttpParams(httpParams, query, params);
     return this.httpClient.get<any>(this.urlProduct, { params: httpParams });
     // return this.products();
+  }
+
+  public getAllProductsSections() {
+    this.offset = 0;
+    this.getSections().subscribe(data => {
+      this.getSectionsIds().subscribe(item => {
+      });
+    });
   }
 
   // //////////////////////////////////////////////////////////////

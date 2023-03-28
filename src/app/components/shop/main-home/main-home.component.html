@@ -80,7 +80,7 @@
       <app-banners-four [_banners]="banners"></app-banners-four>
     </div>
   </div> -->
-  <ng-container *ngIf='arraySectionProducts.length == 0 && !loadingAllProduct'>
+  <ng-container *ngIf='arraySectionProducts.length == 0 && !loadingAllProduct && !loadingProducts'>
     <h3 class='mat-title py-4' style='text-align: center'>{{ 'No hay ningún producto disponible' | translate }}</h3>
   </ng-container>
 

@@ -60,7 +60,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   loadingPopular = false;
   businessConfig;
   loadingFeatured = false;
-  loadingAllProduct = false;
+  loadingAllProduct = true;
   loadingServices = true;
   loadingBestSellers = true;
   showOnlyTwoProducts = false;
@@ -145,23 +145,6 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     private productService: ProductService,
     private globalStateOfCookieService: GlobalStateOfCookieService,
   ) {
-    this._unsubscribeAll = new Subject<any>();
-    this.businessConfig = this.localStorageService.getFromStorage('business-config');
-    this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
-    this.loggedInUser = this.loggedInUserService.getLoggedInUser();
-
-    this.pathToRedirect = this.route.snapshot.routeConfig.path;
-    // this.frontProduct();
-    // this.getFrontData();
-    this.route.queryParamMap.subscribe((params) => {
-      this.paramsToUrlRedirect = { ...params };
-    });
-
-    // this.productService.updatedSections$
-
-    this.productService.updatedProducts$.subscribe((response) => {
-      this.frontProduct();
-    });
     this.productService.updatedSectionsProduct$.subscribe((response) => {
       // TODO: CARLITO eliminar esta linea cunado api te envie el id de cada seccion.
       this.arraySectionProducts = [];
@@ -180,11 +163,31 @@ export class MainHomeComponent implements OnInit, OnDestroy {
               value: arr,
               uuid: this.utilsService.generateUuid(),
             });
+
+          this.loadingAllProduct = false;
         } else if (item.businessPromotion) {
           this.arraySectionProducts.push(item.businessPromotion);
         }
         cont++;
       });
+    });
+    this.productService.getAllProductsSections();
+    this._unsubscribeAll = new Subject<any>();
+    this.businessConfig = this.localStorageService.getFromStorage('business-config');
+    this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
+    this.loggedInUser = this.loggedInUserService.getLoggedInUser();
+
+    this.pathToRedirect = this.route.snapshot.routeConfig.path;
+    // this.frontProduct();
+    // this.getFrontData();
+    this.route.queryParamMap.subscribe((params) => {
+      this.paramsToUrlRedirect = { ...params };
+    });
+
+    // this.productService.updatedSections$
+
+    this.productService.updatedProducts$.subscribe((response) => {
+      this.frontProduct();
     });
     // this.metaService.setMeta(
     //   environment.meta?.mainPage?.title,
@@ -411,7 +414,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
 
     this.loadingPopular = false;
     this.loadingFeatured = false;
-    this.loadingAllProduct = false;
+    // this.loadingAllProduct = false;
     this.loadingBestSellers = false;
   }
 
@@ -471,7 +474,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
       })
       .catch((error) => {
         this.showStatic = true;
-        this.loadingAllProduct = false;
+        // this.loadingAllProduct = false;
         this.loadingPopular = false;
         this.loadingFeatured = false;
         this.loadingServices = false;
