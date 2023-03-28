@@ -138,7 +138,9 @@
 
   </div>
 
-  <span *ngIf='loadingProducts'>loading de materias</span>
+  <span *ngIf='loadingProducts' fxLayout='row' fxLayoutAlign='center center' class='mb-3 mt-3'>
+    <mat-spinner color='primary' diameter='25' fxLayoutAlign='center center'></mat-spinner>
+  </span>
 
 
   <!--  <div *ngIf='arrayProducts.length > 0'>-->
