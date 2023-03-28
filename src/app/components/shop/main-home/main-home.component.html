@@ -92,7 +92,7 @@
     <div *ngIf='arraySectionProducts.length >= 0'>
       <div *ngFor='let card of arraySectionProducts; let i = index; trackBy:identify'>
         <!--BANNER-->
-        <div class='main-banner' *ngIf='visualizationSections[i].type === "businessPromotion"'>
+        <div class='main-banner' *ngIf='card.visualType?.type === "businessPromotion"'>
           <ng-container *ngIf='applyStyle && card?.imageXs; then bannerPromo1Xs; else bannerPromo1'>
           </ng-container>
           <ng-template #bannerPromo1>
@@ -105,7 +105,7 @@
           </ng-template>
         </div>
         <!--CATEGORIES-->
-        <div *ngIf='visualizationSections[i].type === "categories"'>
+        <div *ngIf='card.visualType?.type === "categories"'>
           <div class='container'>
             <div class='products sec-padding'>
               <div class='products-four' fxHide.xs fxHide.sm fxShow>
@@ -118,15 +118,15 @@
                 </div>
               </div>
               <div fxShow.xs fxHide.sm fxHide>
-                <app-product-grid *ngIf='card.value && visualizationSections[i].typeVisualization === "grid"'
+                <app-product-grid *ngIf='card.value && card.visualType?.typeVisualization === "grid"'
                                   [products]='card'>
                 </app-product-grid>
-                <div *ngIf='card.value && visualizationSections[i].typeVisualization === "carousel"'>
+                <div *ngIf='card.value && card.visualType?.typeVisualization === "carousel"'>
                   <h2 style='color: initial'>{{ card.name | i18nField: translateService.currentLang }}</h2>
                   <app-product-carousel [btnColor]="'accent'" [products]='card.value'>
                   </app-product-carousel>
                 </div>
-                <app-product-list *ngIf='card.value && visualizationSections[i].typeVisualization === "list"'
+                <app-product-list *ngIf='card.value && card.visualType?.typeVisualization === "list"'
                                   [products]='card'>
                 </app-product-list>
               </div>

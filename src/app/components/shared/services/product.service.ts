@@ -70,8 +70,6 @@ export class ProductService {
     private localStorageService: LocalStorageService,
     public snackBar: MatSnackBar,
   ) {
-    localStorage.removeItem('sections');
-    localStorage.removeItem('sectionIds');
     this.compareProducts.subscribe((comProducts) => (products = comProducts));
 
     this.getProduct = new Subject<any>();
@@ -95,6 +93,8 @@ export class ProductService {
 
   public getAllProductsSections() {
     this.offset = 0;
+    localStorage.removeItem('sections');
+    localStorage.removeItem('sectionIds');
     this.getSections().subscribe(data => {
       this.getSectionsIds().subscribe(item => {
       });

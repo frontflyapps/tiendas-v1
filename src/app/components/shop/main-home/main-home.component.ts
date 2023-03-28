@@ -36,7 +36,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
 
   public currency: any;
   public flag: any;
-  public loading: boolean = false;
+  public loading = false;
 
   indexProduct: number;
 
@@ -147,26 +147,31 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   ) {
     this.productService.updatedSectionsProduct$.subscribe((response) => {
       // TODO: CARLITO eliminar esta linea cunado api te envie el id de cada seccion.
-      this.arraySectionProducts = [];
+      // this.arraySectionProducts = [];
       this.sectionProducts = localStorageService.getFromStorage('sections');
       this.visualizationSections = localStorageService.getFromStorage('sectionsIds').data;
       let cont = 0;
       this.sectionProducts.map(item => {
-
-        // TODO: CARLITO tienes que hacer un find en arraySectionProducts para garanbtizar que no se dupliquen las secciones
-
         if (item.categories) {
-          const arr: any[] = item.categories.categories.map((itemId) => item.categories.products.find((itemProduct) => itemProduct.id === itemId));
-          this.arraySectionProducts.push(
-            {
-              name: this.visualizationSections[cont].title,
-              value: arr,
-              uuid: this.utilsService.generateUuid(),
-            });
-
+          const encontro = this.arraySectionProducts.find(section => section.id === item.categories.id);
+          if (!encontro) {
+            const arr: any[] = item.categories.categories.map((itemId) => item.categories.products.find((itemProduct) => itemProduct.id === itemId));
+            this.arraySectionProducts.push(
+              {
+                name: this.visualizationSections[cont].title,
+                value: arr,
+                visualType: { ...this.visualizationSections[cont] },
+                id: item.categories.id,
+              });
+          }
           this.loadingAllProduct = false;
         } else if (item.businessPromotion) {
-          this.arraySectionProducts.push(item.businessPromotion);
+          const encontro = this.arraySectionProducts.find(section => section.id === item.businessPromotion.id);
+          if (!encontro) {
+            this.arraySectionProducts.push({ ...item.businessPromotion, ...{ visualType: { ...this.visualizationSections[cont] } } });
+          }
+        } else {
+          console.log('***kike***________________', item);
         }
         cont++;
       });
@@ -254,7 +259,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   }
 
   identify(index, item) {
-    return item.uuid;
+    return item.id;
   }
 
   getSections() {
