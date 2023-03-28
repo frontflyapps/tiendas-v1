@@ -170,7 +170,36 @@ export class MainHomeComponent implements OnInit, OnDestroy {
           if (!encontro) {
             this.arraySectionProducts.push({ ...item.businessPromotion, ...{ visualType: { ...this.visualizationSections[cont] } } });
           }
-        } else {
+        } else if (item.featured) {
+          // const encontro = this.arraySectionProducts.find(section => section.id === item.featured.id);
+          // if (!encontro) {
+          console.log('featured');
+            const arr: any[] = item.featured.features.map((itemId) => item.featured.products.find((itemProduct) => itemProduct.id === itemId));
+          console.log(arr);
+          this.arraySectionProducts.push(
+              {
+                name: this.visualizationSections[cont].title,
+                value: arr,
+                visualType: { ...this.visualizationSections[cont] },
+                id: item.featured.id,
+              });
+          // }
+          this.loadingAllProduct = false;
+          console.log('***kike***________________', item);
+        } else if (item.suggested) {
+          console.log('suggested');
+          // const encontro = this.arraySectionProducts.find(section => section.id === item.featured.id);
+          // if (!encontro) {
+            const arr: any[] = item.suggested.suggested.map((itemId) => item.suggested.products.find((itemProduct) => itemProduct.id === itemId));
+            this.arraySectionProducts.push(
+              {
+                name: this.visualizationSections[cont].title,
+                value: arr,
+                visualType: { ...this.visualizationSections[cont] },
+                id: item.suggested.id,
+              });
+          // }
+          this.loadingAllProduct = false;
           console.log('***kike***________________', item);
         }
         cont++;
@@ -368,8 +397,6 @@ export class MainHomeComponent implements OnInit, OnDestroy {
         }, 500);
       });
     }
-    // this.arraySectionProducts = this.arraySectionProducts.concat(this.arraySectionProducts);
-    // this.visualizationSections = this.visualizationSections.concat(this.visualizationSections);
   }
 
   getPFDFromStorage() {
@@ -426,44 +453,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   getFrontData() {
     this.getFrontDataRequest()
       .then((data: any) => {
-        // if (!this.localStorageService.getFromStorage(FRONT_PRODUCT_DATA)) {
-        //   console.warn('asdadasdasdasd');
-        //   this.spinner.show();
-        // this.loading = true;
-        // this.getDataProducts();
-        // this.productService.updatedProducts$.subscribe((response) => {
-        // console.log(this.arrayProducts.length);
         this.frontProduct();
-
-        // });
-        // this.productService.getFrontProductsData().subscribe(item => {
-        //   this.loading = false;
-        //   console.log(item);
-        //   this.spinner.hide();
-        // });
-        // this.spinner.hide();
-        // }
-        // if (!this.businessConfig) {
-        //   this.loading = true;
-        //   this.appService.getBusinessConfig().subscribe(item => {
-        //     this.loading = false;
-        //     this.businessConfig = item.data;
-        //     localStorage.setItem('business-config', JSON.stringify(item.data));
-        //     // this.productService.updatedProducts$.subscribe((response) => {
-        //     console.error(this.arrayProducts.length);
-        //     console.error(this.businessConfig);
-        //     if (this.arrayProducts.length === 0) {
-        //       if (this.businessConfig?.frontDataProduct === 'normal') {
-        //         this.getDataProducts();
-        //       } else if (this.businessConfig?.frontDataProduct === 'category') {
-        //         this.getCategoriesProducts();
-        //       } else {
-        //         this.getCategoriesProducts();
-        //       }
-        //     }
-        //     });
-        //   // });
-        // }
         this.loading = false;
         const dataResponse = JSON.parse(JSON.stringify(data.data));
         this.setDataOnLandingPage(dataResponse);
@@ -494,10 +484,6 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     this._unsubscribeAll.next(true);
     this._unsubscribeAll.complete();
   }
-
-  // getBestSellers() {
-  //   return this.httpClient.get(environment.apiUrl + 'product/best-seller').toPromise();
-  // }
 
   private applyResolution() {
     const innerWidth = window.innerWidth;

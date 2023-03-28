@@ -87,6 +87,7 @@
   <div
     class='search-results'
     infiniteScroll
+    [infiniteScrollDistance]="0.8"
     (scrolled)='loadProducts()'>
 
     <div *ngIf='arraySectionProducts.length >= 0'>
@@ -129,6 +130,38 @@
                 <app-product-list *ngIf='card.value && card.visualType?.typeVisualization === "list"'
                                   [products]='card'>
                 </app-product-list>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--DESTACADOS-->
+        <div *ngIf='card.visualType?.type === "featured"'>
+          <div class='container'>
+            <div class='products sec-padding'>
+              <div class='products-four'>
+                <h2 style='color: initial'>{{ card.name | i18nField: translateService.currentLang }}</h2>
+                <app-product-carousel *ngIf='card.value' [btnColor]="'accent'" [products]='card.value'>
+                </app-product-carousel>
+                <div *ngIf='loadingFeatured' class='my-3'>
+                  <app-skeleton-loading-cards *ngIf='!card.value' [setConfiguration]='{ xs: 1, sm: 2, md: 3, lg: 4 }'>
+                  </app-skeleton-loading-cards>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--SUGERIDOS-->
+        <div *ngIf='card.visualType?.type === "suggested"'>
+          <div class='container'>
+            <div class='products sec-padding'>
+              <div class='products-four'>
+                <h2 style='color: initial'>{{ card.name | i18nField: translateService.currentLang }}</h2>
+                <app-product-carousel *ngIf='card.value' [btnColor]="'accent'" [products]='card.value'>
+                </app-product-carousel>
+                <div *ngIf='loadingFeatured' class='my-3'>
+                  <app-skeleton-loading-cards *ngIf='!card.value' [setConfiguration]='{ xs: 1, sm: 2, md: 3, lg: 4 }'>
+                  </app-skeleton-loading-cards>
+                </div>
               </div>
             </div>
           </div>
