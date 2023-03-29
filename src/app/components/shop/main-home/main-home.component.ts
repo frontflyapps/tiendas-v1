@@ -146,8 +146,6 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     private globalStateOfCookieService: GlobalStateOfCookieService,
   ) {
     this.productService.updatedSectionsProduct$.subscribe((response) => {
-      // TODO: CARLITO eliminar esta linea cunado api te envie el id de cada seccion.
-      // this.arraySectionProducts = [];
       this.sectionProducts = localStorageService.getFromStorage('sections');
       this.visualizationSections = localStorageService.getFromStorage('sectionsIds').data;
       let cont = 0;
@@ -171,36 +169,26 @@ export class MainHomeComponent implements OnInit, OnDestroy {
             this.arraySectionProducts.push({ ...item.businessPromotion, ...{ visualType: { ...this.visualizationSections[cont] } } });
           }
         } else if (item.featured) {
-          // const encontro = this.arraySectionProducts.find(section => section.id === item.featured.id);
-          // if (!encontro) {
-          console.log('featured');
-            const arr: any[] = item.featured.features.map((itemId) => item.featured.products.find((itemProduct) => itemProduct.id === itemId));
-          console.log(arr);
+          const arr: any[] = item.featured.features.map((itemId) => item.featured.products.find((itemProduct) => itemProduct.id === itemId));
           this.arraySectionProducts.push(
-              {
-                name: this.visualizationSections[cont].title,
-                value: arr,
-                visualType: { ...this.visualizationSections[cont] },
-                id: item.featured.id,
-              });
-          // }
+            {
+              name: this.visualizationSections[cont].title,
+              value: arr,
+              visualType: { ...this.visualizationSections[cont] },
+              id: item.featured.id,
+            });
           this.loadingAllProduct = false;
-          console.log('***kike***________________', item);
         } else if (item.suggested) {
-          console.log('suggested');
-          // const encontro = this.arraySectionProducts.find(section => section.id === item.featured.id);
-          // if (!encontro) {
-            const arr: any[] = item.suggested.suggested.map((itemId) => item.suggested.products.find((itemProduct) => itemProduct.id === itemId));
-            this.arraySectionProducts.push(
-              {
-                name: this.visualizationSections[cont].title,
-                value: arr,
-                visualType: { ...this.visualizationSections[cont] },
-                id: item.suggested.id,
-              });
+          const arr: any[] = item.suggested.suggested.map((itemId) => item.suggested.products.find((itemProduct) => itemProduct.id === itemId));
+          this.arraySectionProducts.push(
+            {
+              name: this.visualizationSections[cont].title,
+              value: arr,
+              visualType: { ...this.visualizationSections[cont] },
+              id: item.suggested.id,
+            });
           // }
           this.loadingAllProduct = false;
-          console.log('***kike***________________', item);
         }
         cont++;
       });
