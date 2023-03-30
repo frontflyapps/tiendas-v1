@@ -35,6 +35,7 @@ export class MyAccountComponent implements OnInit {
   pinForm: UntypedFormGroup;
   activateForm: UntypedFormGroup;
   registrationForm: UntypedFormGroup;
+  signUpTypesForm: UntypedFormGroup;
   regTcpForm: UntypedFormGroup;
   insertEmailPassForm: UntypedFormGroup;
   changeToNewPassForm: UntypedFormGroup;
@@ -98,6 +99,17 @@ export class MyAccountComponent implements OnInit {
     this.createChangePassForm();
     this.createNewPassForm();
     this.createActivateForm();
+
+    this.signUpTypesForm.get('signUpType').valueChanges.subscribe(item => {
+      console.log(item);
+      if (item === 'normal') {
+        this.regTcpForm.disable();
+        this.registrationForm.enable();
+      } else if (item === 'tcp') {
+        this.registrationForm.disable();
+        this.regTcpForm.enable();
+      }
+    });
 
     this.getParamsAndInspect();
   }
@@ -224,7 +236,7 @@ export class MyAccountComponent implements OnInit {
         signUpType: ['normal']
       });
       return;
-    } else if (signupType === 'normal') {
+    } else if (signupType === 'tcp') {
       this.regTcpForm = this.fb.group({
         name: [null, [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
         lastname: [null, [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
@@ -255,7 +267,52 @@ export class MyAccountComponent implements OnInit {
           null,
           [Validators.required, Validators.minLength(4), Validators.maxLength(4), Validators.pattern('^[0-9]*$')],
         ],
+        signUpType: ['tcp']
+      });
+    } else if (signupType === 'multiple') {
+      this.signUpTypesForm = this.fb.group({
+        signUpType: ['normal'],
+      });
+      this.registrationForm = this.fb.group({
+        name: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
+        lastname: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
+        phone: [null, [Validators.pattern(CUBAN_PHONE_START_5), Validators.minLength(8), Validators.maxLength(8)]],
+        address: [null, []],
+        email: [null, [Validators.required, Validators.email, Validators.pattern(EMAIL_REGEX)]],
+        passwords: this.fromPassRegister,
         signUpType: ['normal']
+      });
+      this.regTcpForm = this.fb.group({
+        name: [null, [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
+        lastname: [null, [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
+        ci: [
+          null,
+          [Validators.required, Validators.minLength(11), Validators.maxLength(11), Validators.pattern('^[0-9]*$')],
+        ],
+        ciONAT: [
+          null,
+          [Validators.required, Validators.minLength(11), Validators.maxLength(11), Validators.pattern('^[0-9]*$')],
+        ],
+        licenceTCP: [
+          null,
+          [Validators.required, Validators.minLength(11), Validators.maxLength(11), Validators.pattern('^[0-9]*$')],
+        ],
+        activity: [null, [Validators.required]],
+        phoneCel: [null, [Validators.pattern(CUBAN_PHONE_START_5), Validators.minLength(8), Validators.maxLength(8)]],
+        phone: [null, [Validators.minLength(8), Validators.maxLength(8)]],
+        address: [null, [Validators.required]],
+        email: [null, [Validators.required, Validators.email, Validators.pattern(EMAIL_REGEX)]],
+        passwords: this.fromPassRegister,
+        bankAccountCard26: [
+          null,
+          [Validators.required, Validators.minLength(16), Validators.maxLength(16), Validators.pattern('^[0-9]*$')],
+        ],
+        bankNameCard26: [null, [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
+        bankOfficeCard26: [
+          null,
+          [Validators.required, Validators.minLength(4), Validators.maxLength(4), Validators.pattern('^[0-9]*$')],
+        ],
+        signUpType: ['tcp']
       });
     } else {
       this.registrationForm = this.fb.group({
@@ -268,6 +325,9 @@ export class MyAccountComponent implements OnInit {
         signUpType: ['normal']
       });
     }
+
+    console.log(this.regTcpForm.value);
+    console.log(this.registrationForm.value);
 
   }
 
