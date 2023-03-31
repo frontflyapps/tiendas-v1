@@ -100,16 +100,19 @@ export class MyAccountComponent implements OnInit {
     this.createNewPassForm();
     this.createActivateForm();
 
-    this.signUpTypesForm.get('signUpType').valueChanges.subscribe(item => {
-      console.log(item);
-      if (item === 'normal') {
-        this.regTcpForm.disable();
-        this.registrationForm.enable();
-      } else if (item === 'tcp') {
-        this.registrationForm.disable();
-        this.regTcpForm.enable();
-      }
-    });
+    if (this.businessConfig?.signUpType === 'multiple') {
+      this.signUpTypesForm.get('signUpType').valueChanges.subscribe(item => {
+        console.log(item);
+        if (item === 'normal') {
+          this.regTcpForm.disable();
+          this.registrationForm.enable();
+        } else if (item === 'tcp') {
+          this.registrationForm.disable();
+          this.regTcpForm.enable();
+        }
+      });
+    }
+
 
     this.getParamsAndInspect();
   }
