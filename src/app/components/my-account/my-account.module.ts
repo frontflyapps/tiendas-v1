@@ -16,6 +16,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { UploadFileModule } from '../shared/upload-file/upload-file.module';
 import { CapitalizeFirstDirective } from 'src/app/core/directives/capitalize-first.directive';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 @NgModule({
   declarations: [MyAccountComponent, ChangePassComponent, CapitalizeFirstDirective],
@@ -34,6 +35,7 @@ import { CapitalizeFirstDirective } from 'src/app/core/directives/capitalize-fir
     MatIconModule,
     MatDividerModule,
     MatAutocompleteModule,
+    MatButtonToggleModule
   ],
 })
 export class MyAccountModule {}
