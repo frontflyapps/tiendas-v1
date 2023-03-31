@@ -596,6 +596,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         }
         this.cartService.$cartItemsUpdated.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {
           if (data.length > 0) {
+            console.log(this.cart);
             this.theBusiness = data[0].Business;
           }
         });

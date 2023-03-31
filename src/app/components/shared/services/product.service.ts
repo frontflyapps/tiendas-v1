@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject, Subscriber } from 'rxjs';
+import { BehaviorSubject, Observable, of, Subject, Subscriber } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Product } from '../../../modals/product.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -32,6 +32,8 @@ export class ProductDataService {
 export class ProductService {
   // //////// Urls /////////
   urlFrontProductsData = environment.apiUrl + 'front-data-product';
+  urlSections = environment.apiUrl + 'section/front';
+  urlSectionsIds = environment.apiUrl + 'section/front/by-type';
   urlProduct = environment.apiUrl + 'product';
   urlProductId = environment.apiUrl + 'product/:id';
   urlProductidImage = environment.apiUrl + 'product/:id/image';
@@ -46,6 +48,7 @@ export class ProductService {
   // ----------------------------
 
   // ////////////////////////
+  public offset = 0;
   public currency = 'USD';
   public catalogMode = false;
   public url = 'assets/data/banners.json';
@@ -58,6 +61,8 @@ export class ProductService {
   // ////////////////////////////////////////////////////////////////
   public productsData$: Observable<IProductData>;
   updatedProducts$ = new Subject<any>();
+  updatedSections$ = new Subject<any>();
+  updatedSectionsProduct$ = new Subject<any>();
   private _url = 'assets/data/';
 
   constructor(
@@ -72,6 +77,7 @@ export class ProductService {
     this.getFrontProductsData().subscribe(data => {
       console.log(data);
     });
+    // this.getAllProductsSections();
   }
 
   // ///////////////////////////////////////////////////////////////
@@ -85,6 +91,16 @@ export class ProductService {
     // return this.products();
   }
 
+  public getAllProductsSections() {
+    this.offset = 0;
+    localStorage.removeItem('sections');
+    localStorage.removeItem('sectionIds');
+    this.getSections().subscribe(data => {
+      this.getSectionsIds().subscribe(item => {
+      });
+    });
+  }
+
   // //////////////////////////////////////////////////////////////
   // ///////////////////////////////////////////////////////////////
 
@@ -95,6 +111,39 @@ export class ProductService {
       httpParams = httpParams.append('filter[$and][BusinessId]', businessId);
     }
     return this.httpClient.get<any>(this.urlProduct, { params: httpParams });
+  }
+
+  public getSections() {
+    let httpParams = new HttpParams();
+    return this.httpClient.get<any>(this.urlSections, { params: httpParams })
+      .pipe(tap((response) => {
+        this.localStorageService.setOnStorage('sectionsIds', response);
+        this.updatedSections$.next(true);
+      }));
+  }
+
+  public getSectionsIds() {
+    let data = this.localStorageService.getFromStorage('sectionsIds');
+    if (this.offset < data.data.length) {
+      let httpParams = new HttpParams();
+      if (data.data) {
+        for (let i = this.offset; i < this.offset + 3; i++) {
+          if (data.data[i]) {
+            httpParams = httpParams.append('sectionIds', data.data[i].id);
+          }
+        }
+      }
+      this.offset = this.offset + 3;
+      return this.httpClient.get<any>(this.urlSectionsIds, { params: httpParams })
+        .pipe(tap((response) => {
+          let temp = this.localStorageService.getFromStorage('sections') || [];
+          temp = temp.concat(response.data);
+          this.localStorageService.setOnStorage('sections', temp);
+          this.updatedSectionsProduct$.next(true);
+        }));
+    } else {
+      return of({});
+    }
   }
 
   setHttpParams(httpParams: HttpParams, query?: IPagination, params?: any) {
@@ -291,10 +340,10 @@ export class ProductService {
     let httpParams = new HttpParams();
     return this.httpClient.get<any>(this.urlFrontProductsData, { params: httpParams })
       .pipe(tap((response) => {
-        response.categories = Object.fromEntries(Object.entries(response.categories).sort(() => Math.random() - 0.5));
+          response.categories = Object.fromEntries(Object.entries(response.categories).sort(() => Math.random() - 0.5));
           const _response: any = JSON.parse(JSON.stringify(response));
           _response.timespan = new Date().getTime();
-        console.warn('Entro a pedir los productos');
+          console.warn('Entro a pedir los productos');
           this.localStorageService.setOnStorage(FRONT_PRODUCT_DATA, _response);
           this.updatedProducts$.next(true);
           return response;
@@ -347,12 +396,12 @@ export class ProductService {
     return <Observable<Product[]>>itemsStream;
   }
 
-    // ---------------------------------------------
-    // ----------  Compare Product  ----------------
-    // ---------------------------------------------
-    // */
+  // ---------------------------------------------
+  // ----------  Compare Product  ----------------
+  // ---------------------------------------------
+  // */
 
-    // If item is aleready added In compare
+  // If item is aleready added In compare
   public hasProduct(product: Product): boolean {
     const item = products.find((itemF) => itemF.id === product.id);
     return item !== undefined;

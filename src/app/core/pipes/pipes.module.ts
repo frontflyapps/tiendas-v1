@@ -7,6 +7,7 @@ import { SafeResourseUrlPipe } from './safe-resource-url.pipe';
 import { ParsePriceProduct } from './parse-price-product.pipe';
 import { CurrencyMarket } from './currency-market.pipe';
 import { CurrencyCheckoutPipe } from './currency-checkout.pipe';
+import { I18nFieldPipe } from './i18n-field.pipe';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { CurrencyCheckoutPipe } from './currency-checkout.pipe';
     DummyPipe,
     ParsePriceProduct,
     CurrencyMarket,
+    I18nFieldPipe,
     CurrencyCheckoutPipe,
   ],
   imports: [CommonModule],
@@ -27,6 +29,7 @@ import { CurrencyCheckoutPipe } from './currency-checkout.pipe';
     ParsePriceProduct,
     CurrencyMarket,
     CurrencyCheckoutPipe,
+    I18nFieldPipe
   ],
   providers: [DummyPipe],
 })

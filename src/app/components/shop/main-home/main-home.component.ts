@@ -16,6 +16,7 @@ import { AppService } from '../../../app.service';
 import { CartService } from '../../shared/services/cart.service';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { TranslateService } from '@ngx-translate/core';
 
 export interface ProductInterface {
   name: string;
@@ -35,7 +36,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
 
   public currency: any;
   public flag: any;
-  public loading: boolean = false;
+  public loading = false;
 
   indexProduct: number;
 
@@ -59,14 +60,17 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   loadingPopular = false;
   businessConfig;
   loadingFeatured = false;
-  loadingAllProduct = false;
+  loadingAllProduct = true;
   loadingServices = true;
   loadingBestSellers = true;
   showOnlyTwoProducts = false;
+  loadingProducts = false;
   countProducts = 0;
 
   pathToRedirect: any;
   paramsToUrlRedirect: any;
+  sectionProducts: any[] = [];
+  arraySectionProducts: any[] = [];
 
   queryPopular: IPagination = {
     limit: 8,
@@ -117,6 +121,8 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   url = environment.apiUrl + 'landing-page';
   arrayProducts: ProductInterface[] = [];
 
+  visualizationSections: any;
+
   bigBanner1 = null;
   bigBanner2 = null;
 
@@ -133,11 +139,61 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     private appService: AppService,
     private metaService: MetaService,
     public productDataService: ProductDataService,
+    public translateService: TranslateService,
     public cartService: CartService,
     private route: ActivatedRoute,
     private productService: ProductService,
     private globalStateOfCookieService: GlobalStateOfCookieService,
   ) {
+    this.productService.updatedSectionsProduct$.subscribe((response) => {
+      this.sectionProducts = localStorageService.getFromStorage('sections');
+      this.visualizationSections = localStorageService.getFromStorage('sectionsIds').data;
+      let cont = 0;
+      this.sectionProducts.map(item => {
+        if (item.categories) {
+          const encontro = this.arraySectionProducts.find(section => section.id === item.categories.id);
+          if (!encontro) {
+            const arr: any[] = item.categories.categories.map((itemId) => item.categories.products.find((itemProduct) => itemProduct.id === itemId));
+            this.arraySectionProducts.push(
+              {
+                name: this.visualizationSections[cont].title,
+                value: arr,
+                visualType: { ...this.visualizationSections[cont] },
+                id: item.categories.id,
+              });
+          }
+          this.loadingAllProduct = false;
+        } else if (item.businessPromotion) {
+          const encontro = this.arraySectionProducts.find(section => section.id === item.businessPromotion.id);
+          if (!encontro) {
+            this.arraySectionProducts.push({ ...item.businessPromotion, ...{ visualType: { ...this.visualizationSections[cont] } } });
+          }
+        } else if (item.featured) {
+          const arr: any[] = item.featured.features.map((itemId) => item.featured.products.find((itemProduct) => itemProduct.id === itemId));
+          this.arraySectionProducts.push(
+            {
+              name: this.visualizationSections[cont].title,
+              value: arr,
+              visualType: { ...this.visualizationSections[cont] },
+              id: item.featured.id,
+            });
+          this.loadingAllProduct = false;
+        } else if (item.suggested) {
+          const arr: any[] = item.suggested.suggested.map((itemId) => item.suggested.products.find((itemProduct) => itemProduct.id === itemId));
+          this.arraySectionProducts.push(
+            {
+              name: this.visualizationSections[cont].title,
+              value: arr,
+              visualType: { ...this.visualizationSections[cont] },
+              id: item.suggested.id,
+            });
+          // }
+          this.loadingAllProduct = false;
+        }
+        cont++;
+      });
+    });
+    this.productService.getAllProductsSections();
     this._unsubscribeAll = new Subject<any>();
     this.businessConfig = this.localStorageService.getFromStorage('business-config');
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
@@ -149,6 +205,8 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     this.route.queryParamMap.subscribe((params) => {
       this.paramsToUrlRedirect = { ...params };
     });
+
+    // this.productService.updatedSections$
 
     this.productService.updatedProducts$.subscribe((response) => {
       this.frontProduct();
@@ -175,13 +233,13 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   frontProduct() {
     if (this.arrayProducts.length === 0) {
       // this.productService.updatedProducts$.subscribe((response) => {
-        if (this.businessConfig?.frontDataProduct === 'normal') {
-          this.getDataProducts();
-        } else if (this.businessConfig?.frontDataProduct === 'category') {
-          this.getCategoriesProducts();
-        } else {
-          this.getCategoriesProducts();
-        }
+      if (this.businessConfig?.frontDataProduct === 'normal') {
+        this.getDataProducts();
+      } else if (this.businessConfig?.frontDataProduct === 'category') {
+        this.getCategoriesProducts();
+      } else {
+        this.getCategoriesProducts();
+      }
       // });
     }
   }
@@ -196,7 +254,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     this.getPFDFromStorage();
     this.appService.$businessConfig.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {
       this.businessConfig = data;
-      console.log('************', this.businessConfig);
+      // console.log('************', this.businessConfig);
       this.getDataProducts();
     });
 
@@ -217,9 +275,17 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     });
   }
 
+  identify(index, item) {
+    return item.id;
+  }
+
+  getSections() {
+
+  }
+
   getCategoriesProducts() {
     const pfd = this.localStorageService.getFromStorage(FRONT_PRODUCT_DATA);
-    console.log(pfd);
+    // console.log(pfd);
     if (pfd) {
       Object.entries(pfd).sort(() => Math.random() - 0.5);
       Object.entries(pfd?.categories).forEach(item => {
@@ -234,7 +300,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     } else {
       // Aqui es donde entra cuando la peticion front-data-product no ha respondido y en el local storage no hay valor
       // de productos
-      console.warn('No hay productos');
+      // console.warn('No hay productos');
     }
 
   }
@@ -284,12 +350,14 @@ export class MainHomeComponent implements OnInit, OnDestroy {
       } else {
         this.setValuesFromResponse(pfd);
       }
-    } catch (e) {}
+    } catch (e) {
+    }
     this.allProducts = this.productDataService.allProducts;
     this.popularProducts = this.productDataService.popularProducts;
     this.featuredProducts = this.productDataService.featuredProducts;
     this.bestSellersProducts = this.productDataService.bestSellerProducts;
   }
+
   //
   // getDataProductsTest() {
   //   try {
@@ -306,6 +374,18 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   //   this.featuredProducts = this.productDataService.featuredProducts;
   //   this.bestSellersProducts = this.productDataService.bestSellerProducts;
   // }
+
+  loadProducts() {
+    console.log('load');
+    if (!this.loadingProducts) {
+      this.loadingProducts = true;
+      this.productService.getSectionsIds().subscribe(data => {
+        setTimeout(() => {
+          this.loadingProducts = false;
+        }, 500);
+      });
+    }
+  }
 
   getPFDFromStorage() {
     try {
@@ -354,51 +434,14 @@ export class MainHomeComponent implements OnInit, OnDestroy {
 
     this.loadingPopular = false;
     this.loadingFeatured = false;
-    this.loadingAllProduct = false;
+    // this.loadingAllProduct = false;
     this.loadingBestSellers = false;
   }
 
   getFrontData() {
     this.getFrontDataRequest()
       .then((data: any) => {
-        // if (!this.localStorageService.getFromStorage(FRONT_PRODUCT_DATA)) {
-        //   console.warn('asdadasdasdasd');
-        //   this.spinner.show();
-        // this.loading = true;
-        // this.getDataProducts();
-        // this.productService.updatedProducts$.subscribe((response) => {
-        console.log(this.arrayProducts.length);
         this.frontProduct();
-
-        // });
-          // this.productService.getFrontProductsData().subscribe(item => {
-          //   this.loading = false;
-          //   console.log(item);
-          //   this.spinner.hide();
-          // });
-        // this.spinner.hide();
-        // }
-        // if (!this.businessConfig) {
-        //   this.loading = true;
-        //   this.appService.getBusinessConfig().subscribe(item => {
-        //     this.loading = false;
-        //     this.businessConfig = item.data;
-        //     localStorage.setItem('business-config', JSON.stringify(item.data));
-        //     // this.productService.updatedProducts$.subscribe((response) => {
-        //     console.error(this.arrayProducts.length);
-        //     console.error(this.businessConfig);
-        //     if (this.arrayProducts.length === 0) {
-        //       if (this.businessConfig?.frontDataProduct === 'normal') {
-        //         this.getDataProducts();
-        //       } else if (this.businessConfig?.frontDataProduct === 'category') {
-        //         this.getCategoriesProducts();
-        //       } else {
-        //         this.getCategoriesProducts();
-        //       }
-        //     }
-        //     });
-        //   // });
-        // }
         this.loading = false;
         const dataResponse = JSON.parse(JSON.stringify(data.data));
         this.setDataOnLandingPage(dataResponse);
@@ -414,7 +457,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
       })
       .catch((error) => {
         this.showStatic = true;
-        this.loadingAllProduct = false;
+        // this.loadingAllProduct = false;
         this.loadingPopular = false;
         this.loadingFeatured = false;
         this.loadingServices = false;
@@ -429,10 +472,6 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     this._unsubscribeAll.next(true);
     this._unsubscribeAll.complete();
   }
-
-  // getBestSellers() {
-  //   return this.httpClient.get(environment.apiUrl + 'product/best-seller').toPromise();
-  // }
 
   private applyResolution() {
     const innerWidth = window.innerWidth;
