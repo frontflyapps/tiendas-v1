@@ -222,9 +222,9 @@ export class MainHomeComponent implements OnInit, OnDestroy {
 
     // this.productService.updatedSections$
 
-    this.productService.updatedProducts$.subscribe((response) => {
-      this.frontProduct();
-    });
+    // this.productService.updatedProducts$.subscribe((response) => {
+    //   this.frontProduct();
+    // });
     // this.metaService.setMeta(
     //   environment.meta?.mainPage?.title,
     //   environment.meta?.mainPage?.description,
@@ -265,11 +265,11 @@ export class MainHomeComponent implements OnInit, OnDestroy {
     this.loadingServices = true;
     this.loadingBestSellers = true;
 
-    this.getPFDFromStorage();
+    // this.getPFDFromStorage();
     this.appService.$businessConfig.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {
       this.businessConfig = data;
       // console.log('************', this.businessConfig);
-      this.getDataProducts();
+      // this.getDataProducts();
     });
 
     this.loggedInUserService.$languageChanged.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {
@@ -455,7 +455,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
   getFrontData() {
     this.getFrontDataRequest()
       .then((data: any) => {
-        this.frontProduct();
+        // this.frontProduct();
         this.loading = false;
         const dataResponse = JSON.parse(JSON.stringify(data.data));
         this.setDataOnLandingPage(dataResponse);

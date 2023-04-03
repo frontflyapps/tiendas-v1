@@ -74,9 +74,9 @@ export class ProductService {
 
     this.getProduct = new Subject<any>();
     // this.setGetProductPromise();
-    this.getFrontProductsData().subscribe(data => {
-      console.log(data);
-    });
+    // this.getFrontProductsData().subscribe(data => {
+    //   console.log(data);
+    // });
     // this.getAllProductsSections();
   }
 
