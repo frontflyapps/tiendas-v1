@@ -169,26 +169,40 @@ export class MainHomeComponent implements OnInit, OnDestroy {
             this.arraySectionProducts.push({ ...item.businessPromotion, ...{ visualType: { ...this.visualizationSections[cont] } } });
           }
         } else if (item.featured) {
-          const arr: any[] = item.featured.features.map((itemId) => item.featured.products.find((itemProduct) => itemProduct.id === itemId));
-          this.arraySectionProducts.push(
-            {
-              name: this.visualizationSections[cont].title,
-              value: arr,
-              visualType: { ...this.visualizationSections[cont] },
-              id: item.featured.id,
-            });
-          this.loadingAllProduct = false;
+          console.log(item);
+          const encontro = this.arraySectionProducts.find(section => section.id === this.visualizationSections[cont].id);
+          console.log(encontro);
+          if (!encontro) {
+            const arr: any[] = item.featured.features.map((itemId) => item.featured.products.find((itemProduct) => itemProduct.id === itemId));
+            this.arraySectionProducts.push(
+              {
+                name: this.visualizationSections[cont].title,
+                value: arr,
+                visualType: { ...this.visualizationSections[cont] },
+                id: this.visualizationSections[cont].id,
+              });
+            this.loadingAllProduct = false;
+          }
+
         } else if (item.suggested) {
-          const arr: any[] = item.suggested.suggested.map((itemId) => item.suggested.products.find((itemProduct) => itemProduct.id === itemId));
-          this.arraySectionProducts.push(
-            {
-              name: this.visualizationSections[cont].title,
-              value: arr,
-              visualType: { ...this.visualizationSections[cont] },
-              id: item.suggested.id,
-            });
-          // }
-          this.loadingAllProduct = false;
+          console.log(item);
+          console.log(item.suggested);
+          console.log(this.arraySectionProducts);
+          console.log(this.visualizationSections[cont].id);
+          const encontro = this.arraySectionProducts.find(section => section.id === this.visualizationSections[cont].id);
+          console.log(encontro);
+          if (!encontro) {
+            const arr: any[] = item.suggested.suggested.map((itemId) => item.suggested.products.find((itemProduct) => itemProduct.id === itemId));
+            this.arraySectionProducts.push(
+              {
+                name: this.visualizationSections[cont].title,
+                value: arr,
+                visualType: { ...this.visualizationSections[cont] },
+                id: this.visualizationSections[cont].id,
+              });
+            // }
+            this.loadingAllProduct = false;
+          }
         }
         cont++;
       });
