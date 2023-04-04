@@ -84,18 +84,18 @@
             <!--      </div>-->
         </div>
 
-        <div class="py-3" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start center" fxLayoutAlign.xs="start" fxLayoutGap="1rem" fxLayoutGap.xs="10px" id="footer-contacts">
-            <div *ngIf='businessConfig?.contactsFooter.phone' fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="4px">
+        <div class="py-3" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutGap="1rem" fxLayoutGap.xs="10px" id="footer-contacts">
+            <div *ngIf='businessConfig?.contactsFooter.phone' fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="4px">
                 <mat-icon>phone</mat-icon>
                 <span>{{businessConfig?.contactsFooter?.phone}}</span>
             </div>
 
-            <div *ngIf='businessConfig?.contactsFooter.email' fxLayout='row' fxLayoutAlign='start center' fxLayoutGap='4px'>
+            <div *ngIf='businessConfig?.contactsFooter.email' fxLayout='row' fxLayoutAlign='center center' fxLayoutGap='4px'>
                 <mat-icon>email</mat-icon>
                 <a class='email-text' href="mailto:{{businessConfig?.contactsFooter.email}}">{{ businessConfig?.contactsFooter?.email }}</a>
             </div>
 
-            <div *ngIf='businessConfig?.contactsFooter.address' fxLayout='row' fxLayoutAlign='start center' fxLayoutGap='4px'>
+            <div *ngIf='businessConfig?.contactsFooter.address' fxLayout='row' fxLayoutAlign='center center' fxLayoutGap='4px'>
                 <mat-icon>location_on</mat-icon>
                 <span>{{ businessConfig?.contactsFooter?.address }}</span>
             </div>
