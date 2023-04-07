@@ -21,14 +21,14 @@ export const environment = {
   apiUrl: 'https://api.pymesbulevar.com/v1/',
   imageUrl: 'https://cdntienda.pymesbulevar.com/',
 
-  apiUrl: 'http://apitienda.tiendalocal.com:8999/v1/',
-  imageUrl: 'http://cdntienda.guajiritos.com/',
+  // apiUrl: 'http://apitienda.tiendalocal.com:8999/v1/',
+  // imageUrl: 'http://cdntienda.guajiritos.com/',
 
   defaultLanguage: 'es',
   currencyInternational: 'USD',
-  logo: 'assets/images/logo-white-pink.png',
-  logoWhite: 'assets/images/logo-horizontal-white-pink.png',
-  logoFooter: 'assets/images/logo-white-pink.png',
+  logo: 'assets/images/logo-white-pink-new.png',
+  logoWhite: 'assets/images/logo-white-pink-new.png',
+  logoFooter: 'assets/images/logo-white-pink-new.png',
 
   limitSearch : 42,
 
