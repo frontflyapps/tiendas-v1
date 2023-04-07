@@ -66,6 +66,7 @@ import { GuachosSimplePaginationModule } from 'guachos-simple-pagination';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ProductGridComponent } from './product-grid/product-grid.component';
 import { ProductListComponent } from './product-list/product-list.component';
+import { LazyImgModule } from '../../core/directives/lazy-img/lazy-img.module';
 
 @NgModule({
   declarations: [
@@ -134,6 +135,7 @@ import { ProductListComponent } from './product-list/product-list.component';
     FooterProductCardModule,
     MatAutocompleteModule,
     GuachosSimplePaginationModule,
+    LazyImgModule,
   ],
   providers: [
     {
