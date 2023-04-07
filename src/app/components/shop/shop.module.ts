@@ -63,6 +63,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { Meta } from '@angular/platform-browser';
 import { GuachosSimplePaginationModule } from 'guachos-simple-pagination';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { ProductGridComponent } from './product-grid/product-grid.component';
+import { ProductListComponent } from './product-list/product-list.component';
 
 @NgModule({
   declarations: [
@@ -89,6 +92,8 @@ import { GuachosSimplePaginationModule } from 'guachos-simple-pagination';
     BannersFourComponent,
     SocialMediaComponent,
     ReceiverFormComponent,
+    ProductGridComponent,
+    ProductListComponent,
   ],
   imports: [
     CommonModule,
@@ -99,6 +104,7 @@ import { GuachosSimplePaginationModule } from 'guachos-simple-pagination';
     FlexLayoutModule,
     NgxPaginationModule,
     MatProgressSpinnerModule,
+    InfiniteScrollModule,
     TranslateModule,
     SkeletonLoadingCardsModule,
     MatTooltipModule,
@@ -107,7 +113,6 @@ import { GuachosSimplePaginationModule } from 'guachos-simple-pagination';
     MatDialogModule,
     PipesModule,
     GuachosRatingModule,
-    PipesModule,
     MatListModule,
     MatIconModule,
     MatChipsModule,
