@@ -173,11 +173,18 @@
                       <div class="swiper-wrapper h-100">
 <!--                        {{imageUrl + carrusel.Recomendeds[0].RecomendedProduct.Images[0].image}}-->
                         <div class="swiper-slide" fxLayoutAlign='center center' *ngFor='let variant of carrusel.Recomendeds'>
-                          <div class="slide-item swiper-lazy" fxLayoutAlign='center center'>
-                            <div class="container-carrusel-variants" fxLayoutAlign='center center'>
-                              <img [src]='imageUrl + variant.RecomendedProduct.Images[0].image' class="img-swiper-variant mx-10" />
+                          <a [queryParams]="{ productId: variant?.RecomendedProduct?.id,
+                                              stockId: variant?.RecomendedProduct?.Stock?.id,
+                                              name: variant?.RecomendedProduct?.name?.es, sharedImage:
+                                              variant?.RecomendedProduct?.sharedImage }"
+                             [routerLink]="['/product']">
+                            <div class="slide-item swiper-lazy" fxLayoutAlign='center center'>
+                              <div class="container-carrusel-variants" fxLayoutAlign='center center' style='cursor: pointer'>
+                                <img [src]='imageUrl + variant.RecomendedProduct.Images[0].image' lazyImg class="img-swiper-variant mx-10" />
+                              </div>
                             </div>
-                          </div>
+                          </a>
+
                         </div>
 
                       </div>
@@ -186,8 +193,8 @@
                   </div>
                 </div>
               </div>
-                        <app-skeleton-loading-cards *ngIf="loadingRelated" [setConfiguration]="{ xs: 1, sm: 2, md: 2, lg: 3 }">
-                        </app-skeleton-loading-cards>
+<!--                        <app-skeleton-loading-cards *ngIf="loadingRelated" [setConfiguration]="{ xs: 1, sm: 1, md: 1, lg: 1 }">-->
+<!--                        </app-skeleton-loading-cards>-->
               <p class="mat-body-2" style="font-size: 15px">
                 {{ 'Compra a partir de ' | translate }}
                 {{ product.minSale }}

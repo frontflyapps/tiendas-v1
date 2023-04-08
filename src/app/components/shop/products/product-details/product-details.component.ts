@@ -620,6 +620,20 @@ export class ProductDetailsComponent implements OnInit, OnDestroy, AfterViewInit
     this.initConfig();
   }
 
+  goProduct(product) {
+    console.log(product);
+    // const params = new URLSearchParams(productId: product?.Product?.id, stockId: product?.Product?.Stock?.id, name: item?.name?.es, product: item?.sharedImage);
+    const params = '/product' + '?' + 'productId=' + product?.id + 'stockId=' + product?.Stock?.id +
+    'name=' + product?.name?.es + 'sharedImage=' + product?.sharedImage;
+    console.log(params);
+    // window.location.href = params;
+
+  //   [queryParams]="{ productId: item?.Product?.id, stockId: item?.Product?.Stock?.id,
+  //   name: item?.name?.es,
+  //     sharedImage: item?.sharedImage }"
+  // [routerLink]="['/product']"
+  }
+
   initConfig() {
     this.config = {
       slidesPerView: 1,
