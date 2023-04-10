@@ -10,7 +10,7 @@ import { CopyTermsService } from '../../core/services/copy-terms/copy-terms.serv
   styleUrls: ['./terms-conditions.component.scss'],
 })
 export class TermsConditionsComponent implements OnInit {
-  language = null;
+  language = 'es';
   _unsubscribeAll: Subject<any> = new Subject();
   text: undefined;
 
