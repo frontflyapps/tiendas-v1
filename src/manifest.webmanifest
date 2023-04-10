@@ -1,7 +1,7 @@
 {
-  "name": "<Application Name>",
-  "short_name": "<Application Short Name>",
-  "theme_color": "#1976d2",
+  "name": "Veo Veo Fashion",
+  "short_name": "Veo Veo Fashion",
+  "theme_color": "#311B92",
   "background_color": "#fafafa",
   "display": "standalone",
   "scope": "./",
