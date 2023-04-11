@@ -156,8 +156,11 @@
         </div>
       </div>
     </div>
-
+    <app-skeleton-loading-cards *ngIf='arraySectionProducts.length === 0' [setConfiguration]='{ xs: 1, sm: 1, md: 1, lg: 1 }'>
+    </app-skeleton-loading-cards>
   </div>
+
+
 
   <span *ngIf='loadingProducts' fxLayout='row' fxLayoutAlign='center center' class='mb-3 mt-3'>
     <mat-spinner color='primary' diameter='25' fxLayoutAlign='center center'></mat-spinner>
