@@ -39,6 +39,7 @@ export class ProductService {
   urlProductidImage = environment.apiUrl + 'product/:id/image';
   urlProductidImageId = environment.apiUrl + 'product/:id/image/:imageId';
   urlRecomendedProduct = environment.apiUrl + 'product/:id/recomended';
+  urlNewRecomendedProduct = environment.apiUrl + 'product/:id/carrusel-recommended';
   urlRecomendedProductId = environment.apiUrl + 'product/:id/recomended/:recomendedId';
   urlPromotion = environment.apiUrl + 'product-promotion/:id';
   urlPreview = environment.apiUrl + 'review';
@@ -296,6 +297,10 @@ export class ProductService {
 
   public getRecomendedProduct(productId): Observable<any> {
     return this.httpClient.get<any>(this.urlRecomendedProduct.replace(':id', productId));
+  }
+
+  public getNewRecomendedProduct(productId): Observable<any> {
+    return this.httpClient.get<any>(this.urlNewRecomendedProduct.replace(':id', productId));
   }
 
   public getPopularProduct(query?: IPagination): Observable<any> {

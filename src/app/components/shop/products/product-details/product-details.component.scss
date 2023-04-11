@@ -10,7 +10,7 @@
   line-height: 40px !important;
 }
 .container-product-details {
-  max-width: 1360px;
+  max-width: 1500px;
   margin: 0 auto;
   padding: 0 15px;
 
@@ -48,18 +48,170 @@
     }
   }
 }
+.container-carrusel {
+  margin: 0 auto;
+  padding: 0px 15px;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  position: relative;
+
+  .box {
+    position: absolute;
+    min-height: 200px;
+    width: 360px;
+    color: white;
+    padding: 1rem;
+    box-sizing: border-box;
+    background-color: rgba(0, 0, 0, .92);
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    // justify-content: center;
+
+    .title {
+      font-size: 26px;
+      font-weight: 600;
+      margin: 1rem 0px !important;
+      display: -webkit-box !important;
+      -webkit-line-clamp: 1 !important;
+      -webkit-box-orient: vertical !important;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .subtitle {
+      font-size: 18px;
+      line-height: normal;
+      display: -webkit-box !important;
+      -webkit-line-clamp: 2 !important;
+      -webkit-box-orient: vertical !important;
+      width: 100%;
+      overflow: hidden;
+      margin-bottom: 1rem !important;
+    }
+
+    @media(max-width: 599px) {
+      width: 237px;
+      min-height: 120px;
+      left: 8px;
+      padding: 12px;
+
+      .title {
+        font-size: 14px;
+        margin: .25rem 0px !important;
+      }
+
+      .subtitle {
+        font-size: 12px;
+        margin-bottom: 8px !important;
+      }
+
+    }
+  }
+}
+.container-carrusel-variants {
+  margin: 0 auto;
+  padding: 0px 15px;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  position: relative;
+
+  .box {
+    position: absolute;
+    min-height: 50px;
+    width: 50px;
+    color: white;
+    padding: 1rem;
+    border: 1px solid $theme-main;
+    border-radius: 50%;
+    box-sizing: border-box;
+    background-color: rgba(0, 0, 0, .92);
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: row;
+
+    .title {
+      font-size: 26px;
+      font-weight: 600;
+      margin: 1rem 0px !important;
+      display: -webkit-box !important;
+      -webkit-line-clamp: 1 !important;
+      -webkit-box-orient: vertical !important;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .subtitle {
+      font-size: 18px;
+      line-height: normal;
+      display: -webkit-box !important;
+      -webkit-line-clamp: 2 !important;
+      -webkit-box-orient: vertical !important;
+      width: 100%;
+      overflow: hidden;
+      margin-bottom: 1rem !important;
+    }
+  }
+}
+
+.main-slider {
+  height: 265px;
+  max-width: 1300px !important;
+  width: 100% !important;
+  margin: 0px auto;
+  box-sizing: border-box !important;
+}
+
+.title-variant{
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.subtitle-variant{
+  font-size: 12px;
+  color: gray;
+}
+
+.main-slider-variants {
+  height: 60px;
+  max-width: 1300px !important;
+  width: 100% !important;
+  margin: 0px auto;
+  box-sizing: border-box !important;
+}
+
+.img-swiper{
+  height: 200px;
+  width: auto;
+  object-fit: cover;
+}
+
+.img-swiper-variant{
+  height: 50px;
+  width: auto;
+  object-fit: cover;
+  border: 1px solid $theme-main;
+  border-radius: 50%;
+}
+.swiper-pagination{
+  bottom: 0px !important;
+}
 
 .my-product {
   width: 100%;
   max-width: 100%;
-  //height: 400px;
   min-height: 450px;
 
   lib-ngx-image-zoom,
   .lib-ngx-image-zoom {
     position: relative;
     width: 100%;
-    //overflow: hidden;
+    margin: 0px !important;
   }
 
   @media (min-width: 400px) and (max-width: 500px) {
@@ -98,8 +250,8 @@
 }
 
 .mini-images-container {
-  height: 80px;
-  width: 80px;
+  height: 50px;
+  width: 50px;
   padding: 4px;
   margin-left: 2px;
   margin-right: 2px;
@@ -108,8 +260,8 @@
   cursor: pointer;
 
   @media (min-width: 320px) and (max-width: 480px) {
-    height: 60px !important;
-    width: 60px !important;
+    height: 30px !important;
+    width: 30px !important;
   }
 
   img {
@@ -121,8 +273,8 @@
 }
 
 .mini-images-container-selected {
-  height: 80px;
-  width: 80px;
+  height: 50px;
+  width: 50px;
   padding: 4px;
   margin-left: 2px;
   margin-right: 2px;
@@ -130,8 +282,8 @@
   overflow: hidden;
 
   @media (min-width: 320px) and (max-width: 480px) {
-    height: 60px !important;
-    width: 60px !important;
+    height: 30px !important;
+    width: 30px !important;
   }
 
   img {
