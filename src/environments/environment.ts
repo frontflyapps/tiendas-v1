@@ -15,20 +15,20 @@ export const environment = {
   // apiUrl: 'https://apitienda.guajiritos.com/v1/',
   // imageUrl: 'https://apitienda.guajiritos.com/v1/',
 
-  apiUrl: 'https://api.guajiritos.com/v1/',
-  imageUrl: 'https://cdntienda.guajiritos.com/',
+  // apiUrl: 'https://api.guajiritos.com/v1/',
+  // imageUrl: 'https://cdntienda.guajiritos.com/',
 
-  // apiUrl: 'https://api.pymesbulevar.com/v1/',
-  // imageUrl: 'https://cdntienda.pymesbulevar.com/',
+  apiUrl: 'https://api.pymesbulevar.com/v1/',
+  imageUrl: 'https://cdntienda.pymesbulevar.com/',
 
   // apiUrl: 'http://apitienda.tiendalocal.com:8998/v1/',
   // imageUrl: 'http://cdntienda.guajiritos.com/',
 
   defaultLanguage: 'es',
   currencyInternational: 'USD',
-  logo: 'assets/images/veoveo.png',
-  logoWhite: 'assets/images/veoveo.png',
-  logoFooter: 'assets/images/veoveo.png',
+  logo: 'assets/images/logo-white-pink.png',
+  logoWhite: 'assets/images/logo-horizontal-white-pink.png',
+  logoFooter: 'assets/images/logo-white-pink.png',
 
   limitSearch : 42,
 
@@ -59,7 +59,7 @@ export const environment = {
   mainDomain: '.tiendalocal.com',
 
   tokenBusiness:
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7IkJ1c2luZXNzSWQiOjEsImlkIjoxLCJkYXRlIjoiMjAyMS0wOS0xM1QwMTo0NToxOC4wMDBaIiwibmFtZSI6IlRpZW5kYSIsImVtYWlsIjoidGllbmRhQGxvY2FsaG9zdC5jb20ifSwiaWF0IjoxNjMxNDk3NTkxfQ.FF5-276rI9SJmtebVo0spV8Y2wdOZPok7LlUxtTDwh0',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7IkJ1c2luZXNzSWQiOjEsImlkIjoxLCJkYXRlIjoiMjAyMi0wMS0zMVQwNDo1NDowMC4wMDBaIiwibmFtZSI6IlRpZW5kYSIsImVtYWlsIjoidGllbmRhQGxvY2FsaG9zdC5jb20ifSwiaWF0IjoxNjQzNjQ2Njg3fQ.-pIQscQih10E1-UbtTlyiV3mj_uaxilPMpvLLN-GzSo',
 
   meta: {
     mainPage: {

@@ -8,9 +8,9 @@ export const environment = {
 
   defaultLanguage: 'es',
   currencyInternational: 'USD',
-  logo: 'assets/images/veoveo.png',
-  logoWhite: 'assets/images/veoveo.png',
-  logoFooter: 'assets/images/veoveo.png',
+  logo: 'assets/images/logo-white-pink.png',
+  logoWhite: 'assets/images/logo-white-pink.png',
+  logoFooter: 'assets/images/logo-white-pink.png',
 
   limitSearch : 42,
 
