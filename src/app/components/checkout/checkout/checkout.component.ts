@@ -314,6 +314,11 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     // this.getAvalilablePaymentType();
     this.buildForm();
 
+    this.form.get('paymentType').valueChanges.subscribe(item => {
+      console.log(this.form.get('paymentType').value.length);
+      console.log(this.form.get('paymentType').value);
+    })
+
     this.activateRoute.queryParams.subscribe((data) => {
       this.cartId = data.cartId;
       this.BusinessId = data.BusinessId;
@@ -763,12 +768,12 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.form.get('email').setValue(this.loggedInUser?.email);
     this.form.get('paymentType').setValue(this.businessConfig.gateways);
     this.form.get('regionProvinceState').setValue(null);
-    this.form.controls['address'].get('street').setValue(null);
-    this.form.controls['address'].get('number').setValue(null);
-    this.form.controls['address'].get('between').setValue(null);
-    this.form.get('CountryId').setValue(null);
-    this.form.get('ProvinceId').setValue(null);
-    this.form.get('MunicipalityId').setValue(null);
+    // this.form.controls['address'].get('street').setValue(null);
+    // this.form.controls['address'].get('number').setValue(null);
+    // this.form.controls['address'].get('between').setValue(null);
+    // this.form.get('CountryId').setValue(null);
+    // this.form.get('ProvinceId').setValue(null);
+    // this.form.get('MunicipalityId').setValue(null);
   }
 
   subsToTransfermovilChange() {
