@@ -277,6 +277,7 @@
                       (selectionChange)="onSelectProvince($event.value)"
                       [compareWith]="compareById"
                       [formControl]="form.controls['ProvinceId']"
+                      [disabled]="form.get('shippingRequired').value"
                       placeholder="{{ 'Nombre de la provincia' | translate }}"
                       required
                       type="text"
@@ -296,6 +297,7 @@
                       (selectionChange)="form.controls['ShippingBusinessId'].setValue(null)"
                       [compareWith]="compareById"
                       [formControl]="form.controls['MunicipalityId']"
+                      [disabled]="form.get('shippingRequired').value"
                       placeholder="{{ 'Nombre del Municipio' | translate }}"
                       required
                       type="text"
@@ -879,7 +881,21 @@
               <button matStepperPrevious mat-stroked-button>{{ 'Atrás' | translate }}</button>
               <button
                 (click)="onPayOrder()"
-                [disabled]="form.invalid || !buyProducts.length"
+                [disabled]="form.invalid || !buyProducts.length ||
+                              (form.controls['paymentType'].value !== 'visa'
+                            && form.controls['paymentType'].value !== 'express'
+                            && form.controls['paymentType'].value !== 'masterCard'
+                            && form.controls['paymentType'].value !== 'dinners-club-internacional'
+                            && form.controls['paymentType'].value !== 'jcb'
+                            && form.controls['paymentType'].value !== 'maestro'
+                            && form.controls['paymentType'].value !== 'electron'
+                            && form.controls['paymentType'].value !== 'tarjeta-virtual'
+                            && form.controls['paymentType'].value !== 'bizum'
+                            && form.controls['paymentType'].value !== 'iupay'
+                            && form.controls['paymentType'].value !== 'discover-global'
+                            && form.controls['paymentType'].value !== 'peoplegoto'
+                            && form.controls['paymentType'].value !== 'enzona'
+                            && form.controls['paymentType'].value !== 'transfermovil')"
                 color="primary"
                 mat-raised-button
               >
