@@ -33,6 +33,7 @@ export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
   innerWidth;
   applyStyle = false;
   selectedOrder = null;
+  businessConfig = null;
   showOrderDetails = false;
   @ViewChild('drawer', { static: true })
   public sidenav: MatSidenav;
@@ -288,7 +289,9 @@ export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
         }),
       )
       .subscribe((resp) => {
+        console.log(resp);
         this.selectedOrder.canEditPersonPayment = resp.data.length ? resp.data[0].canEditPersonPayment : true;
+        this.businessConfig = resp.data[0];
         this.showOrderDetails = true;
         this.loadingSelectedItem = false;
         if (this.isHandset) {
@@ -338,6 +341,7 @@ export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
       maxWidth: '100vw',
       data: {
         order: JSON.parse(JSON.stringify(order)),
+        businessConfig: this.businessConfig,
       },
     });
 
