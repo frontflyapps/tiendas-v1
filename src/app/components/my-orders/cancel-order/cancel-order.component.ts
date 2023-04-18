@@ -18,6 +18,8 @@ export class CancelOrderComponent implements OnInit {
   form: UntypedFormGroup;
   cancellationText =
     'Usted desea cancelar un pago en nuestra plataforma, la devolucion será de acorde a nuestros términos y condiciones';
+  cancellationByEmailText =
+    'Para cancelar una compra en este negocio debe enviar un correo electrónico a la siguiente dirección de correo: ';
   cancellationType = 'REQUESTED_BY_CLIENT';
   cancellationTypes = [
     { id: 'REQUESTED_BY_CLIENT', name: 'Petición del cliente' },
@@ -31,6 +33,7 @@ export class CancelOrderComponent implements OnInit {
   displayedColumns: string[] = ['minHour', 'maxHour', 'value'];
   ruleApply: any;
   refund: any;
+  businessConfig = null;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -43,6 +46,8 @@ export class CancelOrderComponent implements OnInit {
     public dialogRef: MatDialogRef<CancelOrderComponent>,
   ) {
     this.order = data.order;
+    this.businessConfig = data.businessConfig;
+    console.log(data);
     this.cancellationRule = this.order?.cancellationRule;
     if (this.order.status == 'on-delivery') {
       this.cancellationText = `Este pago está en proceso de envío, por lo que para continuar con su cancelación,
@@ -77,25 +82,42 @@ export class CancelOrderComponent implements OnInit {
     const cancelNote = this.form?.value?.cancelNote;
     let body = { id: this.order.id, cancelNote: cancelNote };
 
-    this.payService.cancelOrder(this.order.paymentType, body).subscribe(
-      (val) => {
-        this.loadData = false;
-        this.spinner.hide();
-        this.showToastr.showSucces(
-          `Su reserva esta en proceso de cancelacion. Le notificaremos la respuesta.`,
-          'Ok',
-          8000,
-        );
-        this.dialogRef.close(true);
-      },
-      (error: any) => {
-        this.loadData = false;
-        this.spinner.hide();
-        if (error.status == 403 || error.status == 401) {
+    // if (this.businessConfig?.cancelType === 'byEmail') {
+    //   console.log(this.order);
+    //   let dialogRef: MatDialogRef<DialogCancelConfirmationEmailComponent, any>;
+    //   dialogRef = this.dialog.open(DialogCancelConfirmationEmailComponent, {
+    //     width: '650px',
+    //     maxWidth: '100vw',
+    //     data: {
+    //       email: this.order.Business.email,
+    //     },
+    //   });
+    //   dialogRef.afterClosed().subscribe((result) => {
+    //     if (result) {
+    //       this.dialogRef.close(true);
+    //     }
+    //   });
+    // } else {
+      this.payService.cancelOrder(this.order.paymentType, body).subscribe(
+        (val) => {
+          this.loadData = false;
+          this.spinner.hide();
+          this.showToastr.showSucces(
+            `Su reserva esta en proceso de cancelacion. Le notificaremos la respuesta.`,
+            'Ok',
+            8000,
+          );
           this.dialogRef.close(true);
-        }
-      },
-    );
+        },
+        (error: any) => {
+          this.loadData = false;
+          this.spinner.hide();
+          if (error.status == 403 || error.status == 401) {
+            this.dialogRef.close(true);
+          }
+        },
+      );
+    // }
     // if (this.order.paymentType == 'transfermovil') {
     //   this.payService.cancelPaymentTranfermovil(body).subscribe(
     //     (val) => {
