@@ -24,6 +24,8 @@ import { LANDING_PAGE, PRODUCT_COUNT } from '../../../../core/classes/global.con
 import { LocalStorageService } from '../../../../core/services/localStorage/localStorage.service';
 import { ConfirmationDialogFrontComponent } from '../../../shared/confirmation-dialog-front/confirmation-dialog-front.component';
 import { SwiperConfigInterface, SwiperPaginationInterface } from 'ngx-swiper-wrapper';
+import { ProductDialogComponent } from '../product-dialog/product-dialog.component';
+import { DialogPrescriptionComponent } from '../dialog-prescription/dialog-prescription.component';
 
 @Component({
   selector: 'app-product-details',
@@ -665,14 +667,38 @@ export class ProductDetailsComponent implements OnInit, OnDestroy, AfterViewInit
 
   // Add to cart
   public addToCart(product: any, quantity) {
-    if (this.loggedInUserService.getLoggedInUser()) {
-      if (quantity === 0) {
-        return false;
+    console.log('entro aki');
+    console.log(product);
+    if (product.typeAddCart === 'glasses') {
+      if (this.loggedInUserService.getLoggedInUser()) {
+        const dialogRef = this.dialog.open(DialogPrescriptionComponent, {
+          width: 'auto',
+          maxWidth: '100vw',
+          height: 'auto',
+          maxHeight: '100vw',
+          data: {
+            product: product,
+          },
+        });
+        dialogRef.afterClosed().subscribe((result) => {
+          if (result) {
+            this.router.navigate(['/products', result.id, result.name]).then();
+          }
+        });
+      } else {
+        this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
       }
-      this.cartService.addToCart(product, Math.max(product.minSale, quantity)).then();
     } else {
-      this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
+      if (this.loggedInUserService.getLoggedInUser()) {
+        if (quantity === 0) {
+          return false;
+        }
+        this.cartService.addToCart(product, Math.max(product.minSale, quantity)).then();
+      } else {
+        this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
+      }
     }
+
   }
 
   // getFeaturedProducts() {

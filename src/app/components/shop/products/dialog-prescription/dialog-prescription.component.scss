@@ -1,0 +1,31 @@
+@import "../../../../../assets/scss/theme/variables";
+@import "../../../../../assets/scss/mixins/breakpoints";
+
+::ng-deep{
+  .toppings-panel.mat-select-panel {
+    column-count: 2 !important;
+    column-width: 100px;
+    width: 400px;
+    //max-width: 400px;
+
+    max-height: 257px;
+  }
+
+  .mat-select[name="opciones"] .mat-optgroup {
+    display: inline-block;
+    width: 50%;
+    vertical-align: top;
+    padding-right: 10px;
+    box-sizing: border-box;
+  }
+}
+
+
+mat-select[name="opciones"] mat-optgroup {
+  display: inline-block;
+  width: 50%;
+  vertical-align: top;
+  padding-right: 10px;
+  box-sizing: border-box;
+}
+

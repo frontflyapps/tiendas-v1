@@ -1,0 +1,244 @@
+
+<mat-dialog-content>
+  <mat-toolbar-row fxLayoutAlign="space-between center">
+    <span class="mat-dialog-title mb-0">{{ 'Insertar receta médica' | translate }}</span>
+    <button (click)="dialogRef.close()" aria-label="Close dialog" mat-icon-button>
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-toolbar-row>
+  <div>
+    <table class='table'>
+      <tr>
+        <th mat-header-cell></th>
+        <th mat-header-cell>
+          <span>{{ 'ESFERA' | translate }}</span>
+        </th>
+        <th mat-header-cell>
+          <span>{{ 'CILINDRO' | translate }}</span>
+        </th>
+        <th mat-header-cell>
+          <span>{{ 'EJE' | translate }}</span>
+        </th>
+      </tr>
+      <tr>
+        <th class='pb-2' mat-cell>
+          <span>Ojo izquierdo</span>
+        </th>
+        <td class='pb-2' mat-cell>
+                <mat-form-field appearance='outline'>
+                  <mat-label>{{'Ojo izquierdo'}}</mat-label>
+                  <mat-select name="opciones" class='toppings-panel' id="two-column-select" fxLayout='row'>
+                    <mat-optgroup label="Columna 1">
+                                            <mat-option value="1">Opción 1</mat-option>
+                                            <mat-option value="2">Opción 2</mat-option>
+                                            <mat-option value="3">Opción 3</mat-option>
+                                            <mat-option value="1">Opción 1</mat-option>
+                                            <mat-option value="2">Opción 2</mat-option>
+                                            <mat-option value="3">Opción 3</mat-option>
+                    </mat-optgroup>
+                    <mat-optgroup label="Columna 2">
+                                            <mat-option value="1">Opción 4</mat-option>
+                                            <mat-option value="2">Opción 5</mat-option>
+                                            <mat-option value="3">Opción 6</mat-option>
+                                            <mat-option value="1">Opción 4</mat-option>
+                                            <mat-option value="2">Opción 5</mat-option>
+                                            <mat-option value="3">Opción 6</mat-option>
+                    </mat-optgroup>
+                  </mat-select>
+<!--                  <mat-error *ngIf="form.get('left').hasError('required')">-->
+<!--                    {{ 'Ojo izquierdo' | translate }} <strong>{{ 'is required' | translate }}</strong>-->
+<!--                  </mat-error>-->
+<!--                  <mat-error *ngIf="form.get('left').hasError('pattern')">-->
+<!--                    {{ 'Ojo izquierdo' | translate }} <strong>{{ 'wrong' | translate }}</strong>-->
+<!--                  </mat-error>-->
+                </mat-form-field>
+        </td>
+        <td class='pb-2' mat-cell>
+                <mat-form-field appearance='outline'>
+                  <mat-label>{{'Cilindro izquierdo'}}</mat-label>
+                  <input
+                    [formControl]="form.get('cylinderLeft')"
+                    matInput
+                    placeholder="{{ 'Medida' | translate }}"
+                    type='text'
+                  />
+                  <mat-error *ngIf="form.get('cylinderLeft').hasError('required')">
+                    {{ 'Ojo izquierdo' | translate }} <strong>{{ 'is required' | translate }}</strong>
+                  </mat-error>
+                  <mat-error *ngIf="form.get('cylinderLeft').hasError('pattern')">
+                    {{ 'Ojo izquierdo' | translate }} <strong>{{ 'wrong' | translate }}</strong>
+                  </mat-error>
+                </mat-form-field>
+        </td>
+        <td class='pb-2' mat-cell>
+                <mat-form-field appearance='outline'>
+                  <mat-label>{{'Eje izquierdo'}}</mat-label>
+                  <input
+                    [formControl]="form.get('axisLeft')"
+                    matInput
+                    placeholder="{{ 'Medida' | translate }}"
+                    type='text'
+                  />
+                  <mat-error *ngIf="form.get('axisLeft').hasError('required')">
+                    {{ 'Ojo izquierdo' | translate }} <strong>{{ 'is required' | translate }}</strong>
+                  </mat-error>
+                  <mat-error *ngIf="form.get('axisLeft').hasError('pattern')">
+                    {{ 'Ojo izquierdo' | translate }} <strong>{{ 'wrong' | translate }}</strong>
+                  </mat-error>
+                </mat-form-field>
+        </td>
+      </tr>
+      <tr>
+        <th class='pb-2' mat-cell>
+          <span>Ojo derecho</span>
+        </th>
+        <td class='pb-2' mat-cell>
+          <mat-form-field appearance='outline'>
+            <mat-label>{{'Ojo izquierdo'}}</mat-label>
+            <input
+              [formControl]="form.get('right')"
+              matInput
+              placeholder="{{ 'Medida' | translate }}"
+              type='text'
+            />
+            <mat-error *ngIf="form.get('left').hasError('required')">
+              {{ 'Ojo izquierdo' | translate }} <strong>{{ 'is required' | translate }}</strong>
+            </mat-error>
+            <mat-error *ngIf="form.get('left').hasError('pattern')">
+              {{ 'Ojo izquierdo' | translate }} <strong>{{ 'wrong' | translate }}</strong>
+            </mat-error>
+          </mat-form-field>
+        </td>
+        <td class='pb-2' mat-cell>
+          <mat-form-field appearance='outline'>
+            <mat-label>{{'Cilindro izquierdo'}}</mat-label>
+            <input
+              [formControl]="form.get('cylinderLeft')"
+              matInput
+              placeholder="{{ 'Medida' | translate }}"
+              type='text'
+            />
+            <mat-error *ngIf="form.get('cylinderLeft').hasError('required')">
+              {{ 'Ojo izquierdo' | translate }} <strong>{{ 'is required' | translate }}</strong>
+            </mat-error>
+            <mat-error *ngIf="form.get('cylinderLeft').hasError('pattern')">
+              {{ 'Ojo izquierdo' | translate }} <strong>{{ 'wrong' | translate }}</strong>
+            </mat-error>
+          </mat-form-field>
+        </td>
+        <td class='pb-2' mat-cell>
+          <mat-form-field appearance='outline'>
+            <mat-label>{{'Eje izquierdo'}}</mat-label>
+            <input
+              [formControl]="form.get('axisLeft')"
+              matInput
+              placeholder="{{ 'Medida' | translate }}"
+              type='text'
+            />
+            <mat-error *ngIf="form.get('axisLeft').hasError('required')">
+              {{ 'Ojo izquierdo' | translate }} <strong>{{ 'is required' | translate }}</strong>
+            </mat-error>
+            <mat-error *ngIf="form.get('axisLeft').hasError('pattern')">
+              {{ 'Ojo izquierdo' | translate }} <strong>{{ 'wrong' | translate }}</strong>
+            </mat-error>
+          </mat-form-field>
+        </td>
+      </tr>
+      <tr>
+        <th class='pb-2' mat-cell>
+          <span>Distancia pupilar</span>
+        </th>
+        <td class='pb-2' mat-cell>
+          <mat-form-field appearance='outline'>
+            <mat-label>{{'Ojo izquierdo'}}</mat-label>
+            <input
+              [formControl]="form.get('pupillaryDistance')"
+              matInput
+              placeholder="{{ 'Medida' | translate }}"
+              type='text'
+            />
+            <mat-error *ngIf="form.get('left').hasError('required')">
+              {{ 'Ojo izquierdo' | translate }} <strong>{{ 'is required' | translate }}</strong>
+            </mat-error>
+            <mat-error *ngIf="form.get('left').hasError('pattern')">
+              {{ 'Ojo izquierdo' | translate }} <strong>{{ 'wrong' | translate }}</strong>
+            </mat-error>
+          </mat-form-field>
+        </td>
+        <td class='pb-2' mat-cell>
+
+        </td>
+        <td class='pb-2' mat-cell></td>
+      </tr>
+
+<!--      <td class='pb-2' mat-cell>-->
+<!--        <span>asd</span>-->
+<!--      </td>-->
+<!--      <th class='text-center' mat-header-cell>-->
+<!--        <span>{{ 'Product' | translate }}</span>-->
+<!--      </th>-->
+<!--      <td class='pb-2' mat-cell>-->
+<!--        <span>asd</span>-->
+<!--      </td>-->
+<!--      <td class='pb-2' mat-cell>-->
+<!--        <span>asd</span>-->
+<!--      </td>-->
+    </table>
+<!--    <div fxLayout='row' fxLayoutAlign='space-between center' fxLayoutGap='5px'>-->
+<!--      <mat-form-field appearance='outline'>-->
+<!--        <mat-label>{{'Ojo izquierdo'}}</mat-label>-->
+<!--        <input-->
+<!--          [formControl]="form.get('left')"-->
+<!--          matInput-->
+<!--          placeholder="{{ 'Medida' | translate }}"-->
+<!--          type='text'-->
+<!--        />-->
+<!--        <mat-error *ngIf="form.get('left').hasError('required')">-->
+<!--          {{ 'Ojo izquierdo' | translate }} <strong>{{ 'is required' | translate }}</strong>-->
+<!--        </mat-error>-->
+<!--        <mat-error *ngIf="form.get('left').hasError('pattern')">-->
+<!--          {{ 'Ojo izquierdo' | translate }} <strong>{{ 'wrong' | translate }}</strong>-->
+<!--        </mat-error>-->
+<!--      </mat-form-field>-->
+<!--      <mat-form-field appearance='outline'>-->
+<!--        <mat-label>{{'Cilindro izquierdo'}}</mat-label>-->
+<!--        <input-->
+<!--          [formControl]="form.get('cylinderLeft')"-->
+<!--          matInput-->
+<!--          placeholder="{{ 'Medida' | translate }}"-->
+<!--          type='text'-->
+<!--        />-->
+<!--        <mat-error *ngIf="form.get('cylinderLeft').hasError('required')">-->
+<!--          {{ 'Ojo izquierdo' | translate }} <strong>{{ 'is required' | translate }}</strong>-->
+<!--        </mat-error>-->
+<!--        <mat-error *ngIf="form.get('cylinderLeft').hasError('pattern')">-->
+<!--          {{ 'Ojo izquierdo' | translate }} <strong>{{ 'wrong' | translate }}</strong>-->
+<!--        </mat-error>-->
+<!--      </mat-form-field>-->
+<!--      <mat-form-field appearance='outline'>-->
+<!--        <mat-label>{{'Eje izquierdo'}}</mat-label>-->
+<!--        <input-->
+<!--          [formControl]="form.get('axisLeft')"-->
+<!--          matInput-->
+<!--          placeholder="{{ 'Medida' | translate }}"-->
+<!--          type='text'-->
+<!--        />-->
+<!--        <mat-error *ngIf="form.get('axisLeft').hasError('required')">-->
+<!--          {{ 'Ojo izquierdo' | translate }} <strong>{{ 'is required' | translate }}</strong>-->
+<!--        </mat-error>-->
+<!--        <mat-error *ngIf="form.get('axisLeft').hasError('pattern')">-->
+<!--          {{ 'Ojo izquierdo' | translate }} <strong>{{ 'wrong' | translate }}</strong>-->
+<!--        </mat-error>-->
+<!--      </mat-form-field>-->
+<!--    </div>-->
+
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <div fxLayout='row' fxLayoutAlign='end end' fxLayoutGap='6px'>
+    <button mat-stroked-button color='warn' (click)='close()'>{{'Cancelar compra' | translate}}</button>
+    <button mat-raised-button color='accent' (click)='closeWithoutPrescription()'>{{'Continuar sin receta' | translate}}</button>
+    <button mat-raised-button color='primary' [disabled]='form.invalid'>{{'Continuar con receta' | translate}}</button>
+  </div>
+
+</mat-dialog-actions>
