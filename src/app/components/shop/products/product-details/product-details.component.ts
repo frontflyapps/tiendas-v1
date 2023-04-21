@@ -542,10 +542,40 @@ export class ProductDetailsComponent implements OnInit, OnDestroy, AfterViewInit
 
   onAddtoCartNav() {
     if (this.loggedInUserService.getLoggedInUser()) {
-      this.cartService.addToCart(this.product, this.counter);
+
+
+      if (this.product.typeAddCart === 'glasses') {
+        if (this.loggedInUserService.getLoggedInUser()) {
+          const dialogRef = this.dialog.open(DialogPrescriptionComponent, {
+            width: 'auto',
+            maxWidth: '100vw',
+            height: 'auto',
+            maxHeight: '100vw',
+            data: {
+              product: this.product,
+              quantity: this.counter,
+            },
+          });
+          dialogRef.afterClosed().subscribe((result) => {
+            if (result) {
+              this.spinner.hide();
+              //   this.router.navigate(['/products', result.id, result.name]).then();
+            } else {
+              // this.showToastr.showError('No se pudo añadir al carrito');
+              this.spinner.hide();
+            }
+          });
+        } else {
+          this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
+        }
+      } else {
+        if (this.loggedInUserService.getLoggedInUser()) {
+          this.cartService.addToCart(this.product, this.counter).then();
+        } else {
+          this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
+        }
+      }
       this.router.navigate(['/cart']);
-    } else {
-      this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
     }
   }
 
