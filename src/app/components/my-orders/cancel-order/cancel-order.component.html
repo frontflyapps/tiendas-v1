@@ -1,4 +1,4 @@
-<form [formGroup]='form'>
+<form [formGroup]='form' *ngIf="this.businessConfig?.cancelType === 'normal'">
   <mat-dialog-content>
     <h2>{{ 'Cancelar Pago' | translate }}</h2>
 
@@ -106,6 +106,75 @@
       >
         {{ 'ACEPTAR' | translate }}
       </button>
+    </div>
+  </mat-dialog-actions>
+</form>
+<form *ngIf="this.businessConfig?.cancelType === 'byEmail'">
+  <mat-dialog-content>
+    <h2>{{ 'Cancelar Pago' | translate }}</h2>
+
+    <div fxLayout='column' fxLayoutAlign='start stretch' fxLayoutGap='gappx'>
+      <blockquote>
+        <p>{{ cancellationByEmailText }} <strong>{{this.order.Business.email}}.</strong></p>
+      </blockquote>
+
+      <span class='my-2' style='font-weight: 600'
+      >{{ 'Penalty for cancellation policies' | translate | uppercase }}:
+        <span *ngIf='ruleApply' class='color-cancellation'> {{ ruleApply?.value }} {{ '%' }}</span></span
+      >
+
+      <span style='font-weight: 600'
+      >{{ 'Full refund' | translate | uppercase }}:
+        <span *ngIf='refund' class='color-cancellation'> {{ refund | currency: this.order.currency }}</span></span
+      >
+
+      <ng-container>
+        <p class='mat-body-2 uppercase mb-1'>
+          {{ 'Cancellation policies' | translate }}
+        </p>
+        <mat-card class='mat-elevation-z0'>
+          <div class='responsive_table'>
+            <table [dataSource]='dataSource' mat-table>
+              <ng-container matColumnDef='minHour'>
+                <th *matHeaderCellDef mat-header-cell style='width: 10%'>
+                  <span class='mat-caption'>{{ 'Desde' | translate }}</span>
+                </th>
+                <td *matCellDef='let element' mat-cell>
+                  <span class='mat-body-2'>{{ element?.minHour }} {{ 'h' }}</span>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef='maxHour'>
+                <th *matHeaderCellDef mat-header-cell style='width: 10%'>
+                  <span class='mat-caption'>{{ 'Hasta' | translate }}</span>
+                </th>
+                <td *matCellDef='let element' mat-cell>
+                  <span class='mat-body-2'>{{ element?.maxHour }} {{ 'h' }}</span>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef='value'>
+                <th *matHeaderCellDef mat-header-cell style='width: 10%'>
+                  <span class='mat-caption'>{{ 'Valor' | translate }}</span>
+                </th>
+                <td *matCellDef='let element' mat-cell>
+                  <span class='mat-body-2'>{{ element?.value }} {{ '%' }}</span>
+                </td>
+              </ng-container>
+
+              <tr *matHeaderRowDef='displayedColumns; sticky: true' mat-header-row></tr>
+              <tr *matRowDef='let row; columns: displayedColumns' class='rowData' mat-row></tr>
+            </table>
+          </div>
+        </mat-card>
+      </ng-container>
+    </div>
+    <mat-spinner *ngIf='this.loadData' class='spinerLoad' color='primary' diameter='80'></mat-spinner>
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <div fxFlex='100' fxLayout='row' fxLayoutAlign='end center'>
+      <button class='mr-2' color='primary' mat-dialog-close mat-stroked-button>{{ 'CERRAR' | translate }}</button>
     </div>
   </mat-dialog-actions>
 </form>

@@ -123,17 +123,29 @@ export class CartService implements OnDestroy {
    * @param quantity Quantity to add
    * @param goToPay
    */
-  public async addToCart(product: any, quantity: number, goToPay?: boolean) {
+  public async addToCart(product: any, quantity: number, goToPay?: boolean, supplementIds?: any, prescription?: any) {
     const productName = product.name[this.language] ? product.name[this.language] : product.name['es'];
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
 
     if (this.isCanStock(product, quantity)) {
-      let dataToPost = {
-        ProductId: product.id,
-        quantity: quantity,
-        StockId: product?.Stock?.id,
-        goToPay: goToPay || false,
-      };
+      let dataToPost: any;
+      if (supplementIds || prescription) {
+        dataToPost = {
+          ProductId: product.id,
+          quantity: quantity,
+          StockId: product?.Stock?.id,
+          goToPay: goToPay || false,
+          supplementsIds: supplementIds || null,
+          prescription: prescription || null,
+        };
+      } else {
+        dataToPost = {
+          ProductId: product.id,
+          quantity: quantity,
+          StockId: product?.Stock?.id,
+          goToPay: goToPay || false,
+        };
+      }
       if (product.type == 'service') {
         delete dataToPost.StockId;
       }
