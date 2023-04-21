@@ -8,7 +8,7 @@
       <!--    NAME PRODUCT AND PRICE    -->
         <div class="product-right my-0" fxLayout="column" fxLayoutAlign="start start" fxHide fxShow.sm fxShow.xs>
           <div class="product-details my-0" fxLayout="column" fxLayoutAlign="start start">
-            <h2 class="nameProductVariant">{{ product.name[language] ? product.name[language] : product.name['es'] }}</h2>
+            <h2 class="nameProductVariant">{{ product?.name[language] ? product?.name[language] : product?.name['es'] }}</h2>
             <div *ngIf="product.offerValue">
               <h4 class="mb-10">
                 <del>{{ product | parsePriceProduct }}</del>
@@ -167,24 +167,24 @@
               <div *ngIf='!loadingRelated'>
                 <div *ngFor="let carrusel of relatedProduct; let i = index" fxLayout='column' fxLayoutAlign='start start'>
                   <span class='title-variant'>{{carrusel.name}}</span>
-                  <span class='subtitle-variant'>{{carrusel.description}}</span>
+<!--                  <span class='subtitle-variant'>{{carrusel.description}}</span>-->
                   <div class="main-slider-variants">
-                    <div [swiper]="configVariants" class="swiper-container h-100">
+                    <div [swiper]="configVariants" class="swiper-container h-100 my-6">
                       <div class="swiper-wrapper h-100">
 <!--                        {{imageUrl + carrusel.Recomendeds[0].RecomendedProduct.Images[0].image}}-->
-                        <div class="swiper-slide" fxLayoutAlign='center center' *ngFor='let variant of carrusel.Recomendeds'>
-                          <a [queryParams]="{ productId: variant?.RecomendedProduct?.id,
-                                              stockId: variant?.RecomendedProduct?.Stock?.id,
-                                              name: variant?.RecomendedProduct?.name?.es, sharedImage:
-                                              variant?.RecomendedProduct?.sharedImage }"
-                             [routerLink]="['/product']">
-                            <div class="slide-item swiper-lazy" fxLayoutAlign='center center'>
-                              <div class="container-carrusel-variants" fxLayoutAlign='center center' style='cursor: pointer'>
-                                <img [src]='imageUrl + variant.RecomendedProduct.Images[0].image' lazyImg class="img-swiper-variant mx-10" />
-                              </div>
+                        <div class="swiper-slide swiper-slide-variants" fxLayoutAlign='center center' fxLayoutGap='10px' *ngFor='let variant of carrusel.Recomendeds'>
+                          <div class="slide-item swiper-lazy mx-10" fxLayoutAlign='center center' fxLayoutGap='10px'>
+                            <div class="container-carrusel-variants" fxLayoutAlign='center center'>
+                              <a
+                                [queryParams]="{ productId: variant?.ProductId, stockId: variant?.RecomendedProduct?.Stocks[0]?.uuid,
+                                                 name: variant?.RecomendedProduct?.name?.es, sharedImage: variant?.RecomendedProduct?.sharedImage }"
+                                [routerLink]="['/product']"
+                                class="product-link"
+                              >
+                                <img [src]='imageUrl + variant.RecomendedProduct.Images[0].image' class="img-swiper-variant mx-10" />
+                              </a>
                             </div>
-                          </a>
-
+                          </div>
                         </div>
 
                       </div>
@@ -193,7 +193,7 @@
                   </div>
                 </div>
               </div>
-<!--                        <app-skeleton-loading-cards *ngIf="loadingRelated" [setConfiguration]="{ xs: 1, sm: 1, md: 1, lg: 1 }">-->
+<!--                        <app-skeleton-loading-cards *ngIf="loadingRelated" [setConfiguration]="{ xs: 1, sm: 2, md: 2, lg: 3 }">-->
 <!--                        </app-skeleton-loading-cards>-->
               <p class="mat-body-2" style="font-size: 15px">
                 {{ 'Compra a partir de ' | translate }}

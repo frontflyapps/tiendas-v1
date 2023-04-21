@@ -14,6 +14,8 @@ import { takeUntil } from 'rxjs/operators';
 import { UtilsService } from 'src/app/core/services/utils/utils.service';
 import { ConfirmationDialogFrontComponent } from 'src/app/components/shared/confirmation-dialog-front/confirmation-dialog-front.component';
 import { TranslateService } from '@ngx-translate/core';
+import { DialogPrescriptionComponent } from '../dialog-prescription/dialog-prescription.component';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-product',
@@ -37,9 +39,10 @@ export class ProductComponent implements OnInit, OnDestroy {
     public productsService: ProductService,
     private wishlistService: WishlistService,
     public currencyService: CurrencyService,
+    public spinner: NgxSpinnerService,
+    public dialog: MatDialog,
     public loggedInUserService: LoggedInUserService,
     public utilsService: UtilsService,
-    private dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute,
     private translate: TranslateService,
@@ -73,11 +76,42 @@ export class ProductComponent implements OnInit, OnDestroy {
    */
   public async onAddToCart(product: any, quantity: number = 1) {
     this.inLoading = true;
-    const loggedIn = await this.cartService.addToCartOnProductCard(product, quantity);
-    this.inLoading = false;
-    if (!loggedIn) {
-      this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
+
+    if (product.typeAddCart === 'glasses') {
+      if (this.loggedInUserService.getLoggedInUser()) {
+        const dialogRef = this.dialog.open(DialogPrescriptionComponent, {
+          width: 'auto',
+          maxWidth: '100vw',
+          height: 'auto',
+          maxHeight: '100vw',
+          data: {
+            product: product,
+            quantity: quantity,
+          },
+        });
+        dialogRef.afterClosed().subscribe((result) => {
+          if (result) {
+            this.spinner.hide();
+            //   this.router.navigate(['/products', result.id, result.name]).then();
+          } else {
+            // this.showToastr.showError('No se pudo añadir al carrito');
+            this.spinner.hide();
+          }
+        });
+      } else {
+        this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
+      }
+    } else {
+      if (this.loggedInUserService.getLoggedInUser()) {
+        if (quantity === 0) {
+          return false;
+        }
+        this.cartService.addToCart(product, quantity).then();
+      } else {
+        this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
+      }
     }
+    this.inLoading = false;
   }
 
   // Add to wishlist

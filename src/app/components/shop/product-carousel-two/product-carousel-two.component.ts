@@ -3,8 +3,8 @@ import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Outpu
 import { Product } from './../../../modals/product.model';
 import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductDialogComponent } from '../products/product-dialog/product-dialog.component';
 import { CartService } from './../../shared/services/cart.service';
 import { ProductService } from '../../shared/services/product.service';
@@ -15,6 +15,9 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { environment } from './../../../../environments/environment';
 import { ConfirmationDialogFrontComponent } from '../../shared/confirmation-dialog-front/confirmation-dialog-front.component';
+import { DialogPrescriptionComponent } from '../products/dialog-prescription/dialog-prescription.component';
+import { DialogNoCartSelectedComponent } from '../../checkout/no-cart-selected/no-cart-selected.component';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-product-carousel-two',
@@ -34,6 +37,9 @@ export class ProductCarouselTwoComponent implements OnInit, AfterViewInit, OnDes
   _unsubscribeAll: Subject<any>;
   loggedInUser: any = null;
   imageUrl = environment.imageUrl;
+
+  pathToRedirect: any;
+  paramsToUrlRedirect: any;
   isHandset = false;
 
   constructor(
@@ -45,10 +51,16 @@ export class ProductCarouselTwoComponent implements OnInit, AfterViewInit, OnDes
     private cartService: CartService,
     private breakpointObserver: BreakpointObserver,
     private productService: ProductService,
+    private spinner: NgxSpinnerService,
     private wishlistService: WishlistService,
+    private route: ActivatedRoute,
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
+    this.pathToRedirect = this.route.snapshot.routeConfig.path;
+    this.route.queryParamMap.subscribe((params) => {
+      this.paramsToUrlRedirect = { ...params };
+    });
   }
 
   ngOnInit() {
@@ -96,11 +108,81 @@ export class ProductCarouselTwoComponent implements OnInit, AfterViewInit, OnDes
         });
         dialogRef.afterClosed().subscribe((result) => {
           if (result) {
-            this.cartService.addToCartQuickly(product, product.minSale);
+            if (product.typeAddCart === 'glasses') {
+              // let dialogRef: MatDialogRef<DialogPrescriptionComponent>;
+              if (this.loggedInUserService.getLoggedInUser()) {
+                const dialogRefe = this.dialog.open(DialogPrescriptionComponent, {
+                  width: 'auto',
+                  maxWidth: '100vw',
+                  height: 'auto',
+                  maxHeight: '100vw',
+                  data: {
+                    product: product,
+                    quantity: product.minSale,
+                  },
+                });
+                dialogRefe.afterClosed().subscribe((result: any) => {
+                  if (result) {
+                    this.spinner.hide();
+                    //   this.router.navigate(['/products', result.id, result.name]).then();
+                  } else {
+                    // this.showToastr.showError('No se pudo añadir al carrito');
+                    this.spinner.hide();
+                  }
+                });
+              } else {
+                this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
+              }
+            } else {
+              if (this.loggedInUserService.getLoggedInUser()) {
+                if (quantity === 0) {
+                  return false;
+                }
+                this.cartService.addToCart(product, Math.max(product.minSale, quantity)).then();
+              } else {
+                this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
+              }
+            }
+            // this.cartService.addToCartQuickly(product, product.minSale);
           }
         });
       } else {
-        this.cartService.addToCartQuickly(product, product.minSale);
+        if (product.typeAddCart === 'glasses') {
+          // let dialogRef: MatDialogRef<DialogPrescriptionComponent>;
+          if (this.loggedInUserService.getLoggedInUser()) {
+            const dialogRefe = this.dialog.open(DialogPrescriptionComponent, {
+              width: 'auto',
+              maxWidth: '100vw',
+              height: 'auto',
+              maxHeight: '100vw',
+              data: {
+                product: product,
+                quantity: product.minSale,
+              },
+            });
+            dialogRefe.afterClosed().subscribe((result: any) => {
+              if (result) {
+                this.spinner.hide();
+                //   this.router.navigate(['/products', result.id, result.name]).then();
+              } else {
+                // this.showToastr.showError('No se pudo añadir al carrito');
+                this.spinner.hide();
+              }
+            });
+          } else {
+            this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
+          }
+        } else {
+          if (this.loggedInUserService.getLoggedInUser()) {
+            if (quantity === 0) {
+              return false;
+            }
+            this.cartService.addToCartQuickly(product, product.minSale).then();
+          } else {
+            this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
+          }
+        }
+        // this.cartService.addToCartQuickly(product, product.minSale);
       }
     } else {
       this.cartService.redirectToLoginWithOrigin(this.router.routerState.snapshot.url);

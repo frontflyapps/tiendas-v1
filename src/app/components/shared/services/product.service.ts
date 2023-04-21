@@ -299,8 +299,12 @@ export class ProductService {
     return this.httpClient.get<any>(this.urlRecomendedProduct.replace(':id', productId));
   }
 
-  public getNewRecomendedProduct(productId): Observable<any> {
-    return this.httpClient.get<any>(this.urlNewRecomendedProduct.replace(':id', productId));
+  public getNewRecomendedProduct(productId, type): Observable<any> {
+    let httpParams = new HttpParams();
+    if (type) {
+      httpParams = httpParams.append('type', type);
+    }
+    return this.httpClient.get<any>(this.urlNewRecomendedProduct.replace(':id', productId), { params: httpParams });
   }
 
   public getPopularProduct(query?: IPagination): Observable<any> {

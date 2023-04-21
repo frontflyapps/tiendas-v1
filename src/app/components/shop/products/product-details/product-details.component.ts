@@ -24,6 +24,9 @@ import { LANDING_PAGE, PRODUCT_COUNT } from '../../../../core/classes/global.con
 import { LocalStorageService } from '../../../../core/services/localStorage/localStorage.service';
 import { ConfirmationDialogFrontComponent } from '../../../shared/confirmation-dialog-front/confirmation-dialog-front.component';
 import { SwiperConfigInterface, SwiperPaginationInterface } from 'ngx-swiper-wrapper';
+import { ProductDialogComponent } from '../product-dialog/product-dialog.component';
+import { DialogPrescriptionComponent } from '../dialog-prescription/dialog-prescription.component';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-product-details',
@@ -33,284 +36,9 @@ import { SwiperConfigInterface, SwiperPaginationInterface } from 'ngx-swiper-wra
 export class ProductDetailsComponent implements OnInit, OnDestroy, AfterViewInit {
   isLoading = true;
   product: any = {};
-
-  Variants = [
-    {
-      'name': 'Prueba',
-      'description': 'Est es una prueba',
-      'id': 2,
-      'ProductId': 3551,
-      'createdAt': '2023-04-06T18:33:13.000Z',
-      'updatedAt': '2023-04-06T18:33:13.000Z',
-      'deletedAt': null,
-      'Recomendeds': [
-        {
-          'id': 630,
-          'ProductId': 3551,
-          'RecomendedProductId': 54,
-          'CarruselProductId': 2,
-          'createdAt': '2023-04-06T18:33:13.000Z',
-          'updatedAt': '2023-04-06T18:33:13.000Z',
-          'deletedAt': null,
-          'RecomendedProduct': {
-            'name': {
-              'es': 'Fundamentos de Psicología para escuelas pedagógicas',
-              'en': null
-            },
-            'shortDescription': {
-              'es': 'Actualizar información y profundizar en algunos aspectos de interés relacionados con el perfil profesional de educación cautivó a los autores de esta imprescindible obra. ',
-              'en': null
-            },
-            'description': {
-              'es': '<p style="text-align:justify;">Los temas incluidos se vinculan directamente al programa de las escuelas pedagógicas: métodos de investigación psicológica, concepción histórico-cultural vigostkiana, componentes de las actividades cognoscitiva y afectiva de la personalidad, características psicológicas de las diferentes edades, grupo escolar y su caracterización, entre otros muchos que conforman los fundamentos de la psicología.</p>'
-            },
-            'tags': null,
-            'id': 54,
-            'type': 'digital',
-            'status': 'cancelled',
-            'rating': 5,
-            'price': null,
-            'CreatorId': 19,
-            'minSale': 1,
-            'maxSale': 1,
-            'isFeatured': false,
-            'CategoryId': 30,
-            'BusinessId': 10,
-            'BrandId': 8,
-            'code': '9789591338181',
-            'market': 'national',
-            'saleInterval': null,
-            'saleLimit': null,
-            'sharedImage': null,
-            'MarketId': null,
-            'currency': null,
-            'createdAt': '2021-12-23T04:13:36.000Z',
-            'updatedAt': '2023-03-16T19:15:13.000Z',
-            'deletedAt': null
-          }
-        },
-        {
-          'id': 629,
-          'ProductId': 3551,
-          'RecomendedProductId': 53,
-          'CarruselProductId': 2,
-          'createdAt': '2023-04-06T18:33:13.000Z',
-          'updatedAt': '2023-04-06T18:33:13.000Z',
-          'deletedAt': null,
-          'RecomendedProduct': {
-            'name': {
-              'es': 'Criterios y técnicas para el estudio de la motivación',
-              'en': null
-            },
-            'shortDescription': {
-              'es': 'Valioso libro para la investigación de la motivación y de la personalidad del individuo y que brinda un nuevo enfoque hacia su estudio desde el punto de vista pedagógico y psicológico. ',
-              'en': null
-            },
-            'description': {
-              'es': '<p style="text-align:justify;">Dos buenas razones para no perdértelo.</p>'
-            },
-            'tags': [
-              'prueba'
-            ],
-            'id': 53,
-            'type': 'digital',
-            'status': 'cancelled',
-            'rating': 5,
-            'price': null,
-            'CreatorId': 19,
-            'minSale': 1,
-            'maxSale': 1,
-            'isFeatured': false,
-            'CategoryId': 36,
-            'BusinessId': 10,
-            'BrandId': 8,
-            'code': '9789591338204',
-            'market': 'national',
-            'saleInterval': null,
-            'saleLimit': null,
-            'sharedImage': null,
-            'MarketId': null,
-            'currency': null,
-            'createdAt': '2021-12-23T04:06:13.000Z',
-            'updatedAt': '2023-03-16T19:15:13.000Z',
-            'deletedAt': null
-          }
-        }
-      ]
-    },
-    {
-      'name': 'Prueba',
-      'description': 'Esto es una pruebab',
-      'id': 5,
-      'ProductId': 3567,
-      'createdAt': '2023-04-06T19:47:52.000Z',
-      'updatedAt': '2023-04-06T19:47:52.000Z',
-      'deletedAt': null,
-      'Recomendeds': [
-        {
-          'id': 634,
-          'ProductId': 3567,
-          'RecomendedProductId': 53,
-          'CarruselProductId': 5,
-          'createdAt': '2023-04-06T19:47:53.000Z',
-          'updatedAt': '2023-04-06T19:47:53.000Z',
-          'deletedAt': null,
-          'RecomendedProduct': {
-            'name': {
-              'es': 'Criterios y técnicas para el estudio de la motivación',
-              'en': null
-            },
-            'shortDescription': {
-              'es': 'Valioso libro para la investigación de la motivación y de la personalidad del individuo y que brinda un nuevo enfoque hacia su estudio desde el punto de vista pedagógico y psicológico. ',
-              'en': null
-            },
-            'description': {
-              'es': '<p style="text-align:justify;">Dos buenas razones para no perdértelo.</p>'
-            },
-            'tags': [
-              'prueba'
-            ],
-            'id': 53,
-            'type': 'digital',
-            'status': 'cancelled',
-            'rating': 5,
-            'price': null,
-            'CreatorId': 19,
-            'minSale': 1,
-            'maxSale': 1,
-            'isFeatured': false,
-            'CategoryId': 36,
-            'BusinessId': 10,
-            'BrandId': 8,
-            'code': '9789591338204',
-            'market': 'national',
-            'saleInterval': null,
-            'saleLimit': null,
-            'sharedImage': null,
-            'MarketId': null,
-            'currency': null,
-            'createdAt': '2021-12-23T04:06:13.000Z',
-            'updatedAt': '2023-03-16T19:15:13.000Z',
-            'deletedAt': null
-          }
-        }
-      ]
-    },
-    {
-      'name': 'Prueba 2',
-      'description': 'esto es una prueba 2',
-      'id': 6,
-      'ProductId': 3567,
-      'createdAt': '2023-04-06T19:47:52.000Z',
-      'updatedAt': '2023-04-06T19:47:52.000Z',
-      'deletedAt': null,
-      'Recomendeds': [
-        {
-          'id': 636,
-          'ProductId': 3567,
-          'RecomendedProductId': 70,
-          'CarruselProductId': 6,
-          'createdAt': '2023-04-06T19:47:53.000Z',
-          'updatedAt': '2023-04-06T19:47:53.000Z',
-          'deletedAt': null,
-          'RecomendedProduct': {
-            'name': {
-              'es': 'Didáctica: teoría y práctica',
-              'en': null
-            },
-            'shortDescription': {
-              'es': 'Es conveniente estimular desde edades  tempranas la curiosidad y la capacidad de búsqueda independiente, como puntos de partida importantes para el desarrollo de las potencialidades individuales, donde desempeñan un papel esencial los maestros. ',
-              'en': null
-            },
-            'description': {
-              'es': '<p style="text-align:justify;">Cómo enfrentar los complejos cambios que se producen en el proceso de enseñanza-aprendizaje? Esta obra explica la dinámica de este proceso y la relación maestro-estudiante como un reto para la transformación educativa y la superación docente.</p>'
-            },
-            'tags': null,
-            'id': 70,
-            'type': 'digital',
-            'status': 'cancelled',
-            'rating': 5,
-            'price': null,
-            'CreatorId': 19,
-            'minSale': 1,
-            'maxSale': 1,
-            'isFeatured': true,
-            'CategoryId': 20,
-            'BusinessId': 10,
-            'BrandId': 8,
-            'code': '9789591338525',
-            'market': 'national',
-            'saleInterval': null,
-            'saleLimit': null,
-            'sharedImage': null,
-            'MarketId': null,
-            'currency': null,
-            'createdAt': '2022-01-05T13:43:04.000Z',
-            'updatedAt': '2023-03-16T19:15:13.000Z',
-            'deletedAt': null
-          }
-        },
-        {
-          'id': 635,
-          'ProductId': 3567,
-          'RecomendedProductId': 73,
-          'CarruselProductId': 6,
-          'createdAt': '2023-04-06T19:47:53.000Z',
-          'updatedAt': '2023-04-06T19:47:53.000Z',
-          'deletedAt': null,
-          'RecomendedProduct': {
-            'name': {
-              'es': 'Sexualidad y géneros',
-              'en': null
-            },
-            'shortDescription': {
-              'es': 'Un libro que nos permite descubrir nuevas formas de comprender, vivir y sentir la sexualidad y la pertinencia a un género.',
-              'en': null
-            },
-            'description': {
-              'es': '<p style="text-align:justify;">Los problemas abordados no solo resultarán de interés para especialistas vinculados con el estudio de la sexualidad y el género, también podrán contribuir a la orientación de la familia, la pareja y las instituciones educacionales.</p>'
-            },
-            'tags': null,
-            'id': 73,
-            'type': 'digital',
-            'status': 'cancelled',
-            'rating': 5,
-            'price': null,
-            'CreatorId': 19,
-            'minSale': 1,
-            'maxSale': 1,
-            'isFeatured': null,
-            'CategoryId': 30,
-            'BusinessId': 10,
-            'BrandId': 8,
-            'code': '9789591338242',
-            'market': 'national',
-            'saleInterval': null,
-            'saleLimit': null,
-            'sharedImage': null,
-            'MarketId': null,
-            'currency': null,
-            'createdAt': '2022-01-05T14:11:47.000Z',
-            'updatedAt': '2023-03-16T19:15:13.000Z',
-            'deletedAt': null
-          }
-        }
-      ]
-    }
-  ];
-
-
-  public config: SwiperConfigInterface = {};
-  public configVariants: SwiperConfigInterface = {};
-  private pagination: SwiperPaginationInterface = {
-    el: '.swiper-pagination',
-    clickable: true,
-  };
-  private paginationVariants: SwiperPaginationInterface = {
-    clickable: true,
-  };
   products: any[] = [];
   relatedProduct: any;
+  supplementArray: any;
   featuredProducts: any[] = [];
   imageUrl = environment.imageUrl;
   arrayImages: any[] = [];
@@ -318,6 +46,8 @@ export class ProductDetailsComponent implements OnInit, OnDestroy, AfterViewInit
   changeImage = false;
   language: any;
   _unsubscribeAll: Subject<any>;
+  public config: SwiperConfigInterface = {};
+  public configVariants: SwiperConfigInterface = {};
   loggedInUser: any = null;
   reviewForm: UntypedFormGroup;
   loadingReviews = false;
@@ -367,6 +97,14 @@ export class ProductDetailsComponent implements OnInit, OnDestroy, AfterViewInit
     filter: { filterText: '' },
   };
 
+  private pagination: SwiperPaginationInterface = {
+    el: '.swiper-pagination',
+    clickable: true,
+  };
+  private paginationVariants: SwiperPaginationInterface = {
+    clickable: true,
+  };
+
   indexTab = 0;
   errorPage = false;
 
@@ -391,6 +129,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy, AfterViewInit
     private localStorageService: LocalStorageService,
     private httpClient: HttpClient,
     public productDataService: ProductDataService,
+    public spinner: NgxSpinnerService,
     private meta: Meta,
   ) {
     this._unsubscribeAll = new Subject<any>();
@@ -605,7 +344,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy, AfterViewInit
 
   getRelatedProducts() {
     this.loadingRelated = true;
-    this.productsService.getNewRecomendedProduct(this.product.id).subscribe((data: any) => {
+    this.productsService.getNewRecomendedProduct(this.product.id, 'recommended').subscribe((data: any) => {
       this.relatedProduct = data.data;
       console.log(this.relatedProduct);
       this.loadingRelated = false;
@@ -614,6 +353,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy, AfterViewInit
     //     clearTimeout(timeOut);
     //   }, 800);
     });
+
   }
 
   ngAfterViewInit(): void {
@@ -623,8 +363,8 @@ export class ProductDetailsComponent implements OnInit, OnDestroy, AfterViewInit
   goProduct(product) {
     console.log(product);
     // const params = new URLSearchParams(productId: product?.Product?.id, stockId: product?.Product?.Stock?.id, name: item?.name?.es, product: item?.sharedImage);
-    const params = '/product' + '?' + 'productId=' + product?.id + 'stockId=' + product?.Stock?.id +
-    'name=' + product?.name?.es + 'sharedImage=' + product?.sharedImage;
+    const params = '/product' + '?' + 'productId=' + product?.ProductId + 'stockId=' + product?.RecomendedProduct.Stocks[0]?.uuid +
+    'name=' + product?.RecomendedProduct.name?.es + 'sharedImage=' + product?.RecomendedProduct.sharedImage;
     console.log(params);
     // window.location.href = params;
 
@@ -643,14 +383,18 @@ export class ProductDetailsComponent implements OnInit, OnDestroy, AfterViewInit
       pagination: this.pagination,
       grabCursor: true,
       loop: false,
-      preloadImages: true,
+      preloadImages: false,
       lazy: true,
-      autoplay: false,
-      effect: 'slide',
+      autoplay: {
+        delay: 5000,
+        disableOnInteraction: false,
+      },
+      speed: 500,
+      effect: 'fade',
     };
     this.configVariants = {
       slidesPerView: 7,
-      spaceBetween: 0,
+      spaceBetween: 20,
       keyboard: true,
       navigation: true,
       pagination: this.paginationVariants,
@@ -665,14 +409,43 @@ export class ProductDetailsComponent implements OnInit, OnDestroy, AfterViewInit
 
   // Add to cart
   public addToCart(product: any, quantity) {
-    if (this.loggedInUserService.getLoggedInUser()) {
-      if (quantity === 0) {
-        return false;
+    console.log('entro aki');
+    console.log(product);
+    if (product.typeAddCart === 'glasses') {
+      if (this.loggedInUserService.getLoggedInUser()) {
+        const dialogRef = this.dialog.open(DialogPrescriptionComponent, {
+          width: 'auto',
+          maxWidth: '100vw',
+          height: 'auto',
+          maxHeight: '100vw',
+          data: {
+            product: product,
+            quantity: quantity,
+          },
+        });
+        dialogRef.afterClosed().subscribe((result) => {
+          if (result) {
+            this.spinner.hide();
+          //   this.router.navigate(['/products', result.id, result.name]).then();
+          } else {
+            // this.showToastr.showError('No se pudo añadir al carrito');
+            this.spinner.hide();
+          }
+        });
+      } else {
+        this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
       }
-      this.cartService.addToCart(product, Math.max(product.minSale, quantity)).then();
     } else {
-      this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
+      if (this.loggedInUserService.getLoggedInUser()) {
+        if (quantity === 0) {
+          return false;
+        }
+        this.cartService.addToCart(product, Math.max(product.minSale, quantity)).then();
+      } else {
+        this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
+      }
     }
+
   }
 
   // getFeaturedProducts() {
