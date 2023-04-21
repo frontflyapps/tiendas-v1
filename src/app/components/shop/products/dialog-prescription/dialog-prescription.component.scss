@@ -19,7 +19,9 @@
     box-sizing: border-box;
   }
 }
-
+.row-supplement{
+  overflow: scroll;
+}
 
 mat-select[name="opciones"] mat-optgroup {
   display: inline-block;
@@ -29,3 +31,32 @@ mat-select[name="opciones"] mat-optgroup {
   box-sizing: border-box;
 }
 
+.container-product{
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
+  padding: 8px;
+}
+
+.custom-width {
+  width: 100px !important;
+}
+
+.img-supplement{
+  height: 50px;
+  width: auto;
+  object-fit: cover;
+}
+
+blockquote {
+  background: #f4f2ff;
+  border-radius: 3px;
+  border-left: 5px solid $theme-main;
+  margin: 30px 0 !important;
+  padding: 30px !important;
+
+  p {
+    font-size: 17px;
+    line-height: 30px;
+    font-weight: 400;
+  }
+}

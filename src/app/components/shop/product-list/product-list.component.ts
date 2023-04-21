@@ -8,6 +8,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CartService } from '../../shared/services/cart.service';
 import { CurrencyService } from '../../../core/services/currency/currency.service';
 import { environment } from '../../../../environments/environment';
+import { DialogPrescriptionComponent } from '../products/dialog-prescription/dialog-prescription.component';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-product-list',
@@ -29,6 +32,8 @@ export class ProductListComponent implements OnInit, OnDestroy {
   constructor(
     public utilsService: UtilsService,
     private productService: ProductService,
+    public spinner: NgxSpinnerService,
+    public dialog: MatDialog,
     public loggedInUserService: LoggedInUserService,
     public translateService: TranslateService,
     private router: Router,
@@ -56,11 +61,42 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   public async onAddToCart(product: any, quantity: number = 1) {
     this.inLoading = true;
-    const loggedIn = await this.cartService.addToCartOnProductCard(product, quantity);
-    this.inLoading = false;
-    if (!loggedIn) {
-      this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
+
+    if (product.typeAddCart === 'glasses') {
+      if (this.loggedInUserService.getLoggedInUser()) {
+        const dialogRef = this.dialog.open(DialogPrescriptionComponent, {
+          width: 'auto',
+          maxWidth: '100vw',
+          height: 'auto',
+          maxHeight: '100vw',
+          data: {
+            product: product,
+            quantity: quantity,
+          },
+        });
+        dialogRef.afterClosed().subscribe((result) => {
+          if (result) {
+            this.spinner.hide();
+            //   this.router.navigate(['/products', result.id, result.name]).then();
+          } else {
+            // this.showToastr.showError('No se pudo añadir al carrito');
+            this.spinner.hide();
+          }
+        });
+      } else {
+        this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
+      }
+    } else {
+      if (this.loggedInUserService.getLoggedInUser()) {
+        if (quantity === 0) {
+          return false;
+        }
+        this.cartService.addToCart(product, quantity).then();
+        this.inLoading = false;
+      } else {
+        this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
+        this.inLoading = false;
+      }
     }
   }
-
 }

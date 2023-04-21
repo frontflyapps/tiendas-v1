@@ -69,6 +69,8 @@ import { ProductListComponent } from './product-list/product-list.component';
 import { LazyImgModule } from '../../core/directives/lazy-img/lazy-img.module';
 import { DialogPrescriptionComponent } from './products/dialog-prescription/dialog-prescription.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatRadioModule } from '@angular/material/radio';
 
 @NgModule({
   declarations: [
@@ -140,6 +142,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     GuachosSimplePaginationModule,
     LazyImgModule,
     MatToolbarModule,
+    MatStepperModule,
+    MatRadioModule
   ],
   providers: [
     {

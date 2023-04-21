@@ -16,9 +16,11 @@ export class Product {
   description?: string;
   stock?: number;
   newPro?: boolean;
+  minSale?: any;
   brand?: string;
   sale?: boolean;
   category?: string;
+  typeAddCart?: string;
   tags?: ProductTags[];
   colors?: ProductColor[];
 

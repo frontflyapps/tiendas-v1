@@ -7,8 +7,10 @@ import { WishlistService } from '../../shared/services/wishlist.service';
 import { environment } from 'src/environments/environment';
 import { ConfirmationDialogFrontComponent } from '../../shared/confirmation-dialog-front/confirmation-dialog-front.component';
 import { LoggedInUserService } from 'src/app/core/services/loggedInUser/logged-in-user.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
+import { DialogPrescriptionComponent } from '../../shop/products/dialog-prescription/dialog-prescription.component';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-wishlist',
@@ -18,6 +20,8 @@ import { MatDialog } from '@angular/material/dialog';
 export class WishlistComponent implements OnInit {
   public product: Observable<Product[]> = of([]);
   wishlistItems: Product[] = [];
+  pathToRedirect: any;
+  paramsToUrlRedirect: any;
 
   constructor(
     private cartService: CartService,
@@ -25,10 +29,18 @@ export class WishlistComponent implements OnInit {
     private wishlistService: WishlistService,
     private router: Router,
     private metaService: MetaService,
+    public spinner: NgxSpinnerService,
+    public route: ActivatedRoute,
+    public dialog: MatDialog
   ) {
     this.product = this.wishlistService.getProducts();
     this.product.subscribe((products) => {
       this.wishlistItems = products;
+    });
+
+    this.pathToRedirect = this.route.snapshot.routeConfig.path;
+    this.route.queryParamMap.subscribe((params) => {
+      this.paramsToUrlRedirect = { ...params };
     });
     // this.metaService.setMeta(
     //   'Lista de Deseos',
@@ -42,13 +54,39 @@ export class WishlistComponent implements OnInit {
 
   // Add to cart
   public addToCart(product: Product, quantity: number = 1) {
-    if (this.loggedInUserService.getLoggedInUser()) {
-      if (quantity > 0) {
-        this.cartService.addToCart(product, quantity);
+    if (product.typeAddCart === 'glasses') {
+      if (this.loggedInUserService.getLoggedInUser()) {
+        const dialogRef = this.dialog.open(DialogPrescriptionComponent, {
+          width: 'auto',
+          maxWidth: '100vw',
+          height: 'auto',
+          maxHeight: '100vw',
+          data: {
+            product: product,
+            quantity: quantity,
+          },
+        });
+        dialogRef.afterClosed().subscribe((result) => {
+          if (result) {
+            this.spinner.hide();
+            //   this.router.navigate(['/products', result.id, result.name]).then();
+          } else {
+            // this.showToastr.showError('No se pudo añadir al carrito');
+            this.spinner.hide();
+          }
+        });
+      } else {
+        this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
       }
-      this.wishlistService.removeFromWishlist(product);
     } else {
-      this.cartService.redirectToLoginWithOrigin(this.router.routerState.snapshot.url);
+      if (this.loggedInUserService.getLoggedInUser()) {
+        if (quantity === 0) {
+          return false;
+        }
+        this.cartService.addToCart(product, quantity).then();
+      } else {
+        this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
+      }
     }
   }
 
