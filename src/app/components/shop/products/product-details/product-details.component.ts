@@ -417,7 +417,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy, AfterViewInit
           width: 'auto',
           maxWidth: '100vw',
           height: 'auto',
-          maxHeight: '100vw',
+          maxHeight: '150vw',
           data: {
             product: product,
             quantity: quantity,
