@@ -44,7 +44,7 @@
           }}
         </p>
       </blockquote>
-      <div fxLayout='row' fxLayoutAlign='end end' fxLayoutGap='6px'>
+      <div fxLayout='row' fxLayout.xs='column' fxLayout.sm='column' fxLayoutAlign='end end' fxLayoutGap='6px'>
         <button mat-stroked-button mat-dialog-close color='warn' (click)='close()'>{{'Cancelar compra' | translate}}</button>
         <button
           class="uppercase"
@@ -70,7 +70,7 @@
 
     <mat-step disabled="supplementForm.get('supplement').value">
       <ng-template matStepLabel>{{ 'Insertar receta médica' | translate }}</ng-template>
-      <div>
+      <div class='w-100 mb-3 pb-3 row-supplement'>
         <table class='table w-100'>
           <tr>
             <th mat-header-cell></th>
@@ -229,11 +229,11 @@
         </table>
 
       </div>
-      <div fxLayout='row' fxLayoutAlign='end end' fxLayoutGap='6px'>
-        <button class="uppercase" color='primary' mat-stroked-button matStepperPrevious>{{ 'Anterior' | translate }}</button>
-        <button mat-stroked-button color='warn' (click)='close()'>{{'Cancelar compra' | translate}}</button>
-        <button mat-stroked-button color='accent' (click)='closeWithoutPrescription()'>{{'Continuar sin receta' | translate}}</button>
-        <button mat-raised-button color='primary' (click)='save()' [disabled]='form.invalid'>{{'Continuar con receta' | translate}}</button>
+      <div fxLayout='row' fxLayout.xs='column' fxLayout.sm='column' fxLayoutAlign='end end' fxLayoutGap='6px'>
+        <button class="mt-2" color='primary' mat-stroked-button matStepperPrevious>{{ 'Anterior' | translate }}</button>
+        <button class="mt-2" mat-stroked-button color='warn' (click)='close()'>{{'Cancelar compra' | translate}}</button>
+        <button class="mt-2" mat-stroked-button color='accent' (click)='closeWithoutPrescription()'>{{'Continuar sin receta' | translate}}</button>
+        <button class="mt-2" mat-raised-button color='primary' (click)='save()' [disabled]='form.invalid'>{{'Continuar con receta' | translate}}</button>
       </div>
     </mat-step>
 
