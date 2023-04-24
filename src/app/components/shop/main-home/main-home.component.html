@@ -101,10 +101,11 @@
                 <h2 style='color: initial'>{{ card.name | i18nField: translateService.currentLang }}</h2>
                 <app-product-carousel *ngIf='card.value' [btnColor]="'accent'" [products]='card.value'>
                 </app-product-carousel>
-                <div *ngIf='loadingFeatured' class='my-3'>
-                  <app-skeleton-loading-cards *ngIf='!card.value' [setConfiguration]='{ xs: 1, sm: 2, md: 3, lg: 4 }'>
-                  </app-skeleton-loading-cards>
-                </div>
+<!--                TODO: CARLITO VER QUE PASA CON VEO VEO-->
+<!--                <div *ngIf='loadingFeatured' class='my-3'>-->
+<!--                  <app-skeleton-loading-cards *ngIf='!card.value' [setConfiguration]='{ xs: 1, sm: 2, md: 3, lg: 4 }'>-->
+<!--                  </app-skeleton-loading-cards>-->
+<!--                </div>-->
               </div>
               <div fxShow.xs fxHide.sm fxHide>
                 <app-product-grid *ngIf='card.value && card.visualType?.typeVisualization === "grid"'
@@ -160,11 +161,10 @@
     </app-skeleton-loading-cards>
   </div>
 
-
-
-  <span *ngIf='loadingProducts' fxLayout='row' fxLayoutAlign='center center' class='mb-3 mt-3'>
-    <mat-spinner color='primary' diameter='25' fxLayoutAlign='center center'></mat-spinner>
-  </span>
+  <!--                TODO: CARLITO VER QUE PASA CON VEO VEO-->
+<!--  <span *ngIf='loadingProducts' fxLayout='row' fxLayoutAlign='center center' class='mb-3 mt-3'>-->
+<!--    <mat-spinner color='primary' diameter='25' fxLayoutAlign='center center'></mat-spinner>-->
+<!--  </span>-->
 
   <!-- ---------------------- Big promo --------------------------- -->
   <section *ngIf='allArticles?.length'>

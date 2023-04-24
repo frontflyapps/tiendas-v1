@@ -199,6 +199,8 @@ export class MainHomeComponent implements OnInit, OnDestroy {
         }
         cont++;
       });
+
+      console.log(this.arraySectionProducts);
     });
     this.productService.getAllProductsSections();
     this._unsubscribeAll = new Subject<any>();
