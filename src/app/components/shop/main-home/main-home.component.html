@@ -32,8 +32,10 @@
   <!--    </h1>-->
   <!--  </div>-->
   <!-- BANNER TEMPORAL -->
-  <app-skeleton-loading-cards *ngIf='showStatic' [setConfiguration]='{ xs: 1, sm: 1, md: 1, lg: 1 }'>
-  </app-skeleton-loading-cards>
+
+  <!--TODO: CARLITO VER QUE PASA CON VEO VEO-->
+<!--  <app-skeleton-loading-cards *ngIf='showStatic' [setConfiguration]='{ xs: 1, sm: 1, md: 1, lg: 1 }'>-->
+<!--  </app-skeleton-loading-cards>-->
 </div>
 
 <div class='home-1-wrap'>
@@ -131,10 +133,11 @@
                 <h2 style='color: initial'>{{ card.name | i18nField: translateService.currentLang }}</h2>
                 <app-product-carousel *ngIf='card.value' [btnColor]="'accent'" [products]='card.value'>
                 </app-product-carousel>
-                <div *ngIf='loadingFeatured' class='my-3'>
-                  <app-skeleton-loading-cards *ngIf='!card.value' [setConfiguration]='{ xs: 1, sm: 2, md: 3, lg: 4 }'>
-                  </app-skeleton-loading-cards>
-                </div>
+                <!--TODO: CARLITO VER QUE PASA CON VEO VEO-->
+<!--                <div *ngIf='loadingFeatured' class='my-3'>-->
+<!--                  <app-skeleton-loading-cards *ngIf='!card.value' [setConfiguration]='{ xs: 1, sm: 2, md: 3, lg: 4 }'>-->
+<!--                  </app-skeleton-loading-cards>-->
+<!--                </div>-->
               </div>
             </div>
           </div>
@@ -147,21 +150,25 @@
                 <h2 style='color: initial'>{{ card.name | i18nField: translateService.currentLang }}</h2>
                 <app-product-carousel *ngIf='card.value' [btnColor]="'accent'" [products]='card.value'>
                 </app-product-carousel>
-                <div *ngIf='loadingFeatured' class='my-3'>
-                  <app-skeleton-loading-cards *ngIf='!card.value' [setConfiguration]='{ xs: 1, sm: 2, md: 3, lg: 4 }'>
-                  </app-skeleton-loading-cards>
-                </div>
+                <!--TODO: CARLITO VER QUE PASA CON VEO VEO-->
+<!--                <div *ngIf='loadingFeatured' class='my-3'>-->
+<!--                  <app-skeleton-loading-cards *ngIf='!card.value' [setConfiguration]='{ xs: 1, sm: 2, md: 3, lg: 4 }'>-->
+<!--                  </app-skeleton-loading-cards>-->
+<!--                </div>-->
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <app-skeleton-loading-cards *ngIf='arraySectionProducts.length === 0' [setConfiguration]='{ xs: 1, sm: 1, md: 1, lg: 1 }'>
-    </app-skeleton-loading-cards>
+
+    <!--TODO: CARLITO VER QUE PASA CON VEO VEO-->
+<!--    <app-skeleton-loading-cards *ngIf='arraySectionProducts.length === 0'-->
+<!--                                [setConfiguration]='{ xs: 1, sm: 1, md: 1, lg: 1 }'>-->
+<!--    </app-skeleton-loading-cards>-->
   </div>
 
-  <!--                TODO: CARLITO VER QUE PASA CON VEO VEO-->
+  <!--TODO: CARLITO VER QUE PASA CON VEO VEO-->
 <!--  <span *ngIf='loadingProducts' fxLayout='row' fxLayoutAlign='center center' class='mb-3 mt-3'>-->
 <!--    <mat-spinner color='primary' diameter='25' fxLayoutAlign='center center'></mat-spinner>-->
 <!--  </span>-->
