@@ -18,8 +18,11 @@ export const environment = {
   // apiUrl: 'https://api.guajiritos.com/v1/',
   // imageUrl: 'https://cdntienda.guajiritos.com/',
 
+  // apiUrl: 'https://api.pymesbulevar.com/v1/',
+  // imageUrl: 'https://cdntienda.pymesbulevar.com/',
+
   apiUrl: 'https://api.pymesbulevar.com/v1/',
-  imageUrl: 'https://cdntienda.pymesbulevar.com/',
+  imageUrl: 'https://cdntienda.veoveofashion.com/',
 
   // apiUrl: 'http://apitienda.tiendalocal.com:8999/v1/',
   // imageUrl: 'http://cdntienda.guajiritos.com/',
@@ -59,7 +62,7 @@ export const environment = {
   mainDomain: '.tiendalocal.com',
 
   tokenBusiness:
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7IkJ1c2luZXNzSWQiOjEsImlkIjoxLCJkYXRlIjoiMjAyMi0wMS0zMVQwNDo1NDowMC4wMDBaIiwibmFtZSI6IlRpZW5kYSIsImVtYWlsIjoidGllbmRhQGxvY2FsaG9zdC5jb20ifSwiaWF0IjoxNjQzNjQ2Njg3fQ.-pIQscQih10E1-UbtTlyiV3mj_uaxilPMpvLLN-GzSo',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7IkJ1c2luZXNzSWQiOjkxLCJpZCI6OTEsImRhdGUiOiIyMDIzLTAzLTE2VDAyOjMxOjU0LjMwNloiLCJuYW1lIjoiVmVvVmVvRmFzaGlvIiwiZW1haWwiOiJzaG9wQHZlb3Zlb2Zhc2hpb24uY29tIn0sImlhdCI6MTY3ODkzMzkxNH0.5_I2SBDb3cwH6ZI566RBYR_vo57H9dqotq0wsBTjOjg',
 
   meta: {
     mainPage: {
