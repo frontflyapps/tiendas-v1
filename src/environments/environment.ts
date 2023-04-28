@@ -1,7 +1,7 @@
 const packageJson = require('../../package.json');
 export const PASARELA_BASE = 'peoplegoto';
 export const environment = {
-  production: false,
+  production: true,
 
   apiUrl: 'https://api.pymesbulevar.com/v1/',
   imageUrl: 'https://cdntienda.veoveofashion.com/',
