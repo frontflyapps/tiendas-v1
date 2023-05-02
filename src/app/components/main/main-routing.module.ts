@@ -50,6 +50,10 @@ const routes: Routes = [
         loadChildren: () => import('../../components/my-account/my-account.module').then((m) => m.MyAccountModule),
       },
       {
+        path: 'captcha',
+        loadChildren: () => import('../../components/shared/dialog-captcha/dialog-captcha.module').then((m) => m.DialogCaptchaModule),
+      },
+      {
         path: 'privacy-policy',
         loadChildren: () =>
           import('../../components/privacy-policy/privacy-policy.module').then((m) => m.PrivacyPolicyModule),

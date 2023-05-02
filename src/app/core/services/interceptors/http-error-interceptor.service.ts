@@ -7,6 +7,10 @@ import { UtilsService } from '../utils/utils.service';
 import { ShowSnackbarService } from '../show-snackbar/show-snackbar.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogPrescriptionComponent } from '../../../components/shop/products/dialog-prescription/dialog-prescription.component';
+import { DialogCaptchaComponent } from '../../../components/shared/dialog-captcha/dialog-captcha.component';
+import { LocalStorageService } from '../localStorage/localStorage.service';
 
 @Injectable()
 export class HttpErrorInterceptorService implements HttpInterceptor {
@@ -16,7 +20,9 @@ export class HttpErrorInterceptorService implements HttpInterceptor {
     private utilsService: UtilsService,
     private showSnackbar: ShowSnackbarService,
     private loggedInUserService: LoggedInUserService,
+    public dialog: MatDialog,
     private translate: TranslateService,
+    private localStorageService: LocalStorageService,
     private router: Router,
   ) {
     this.router.events.subscribe((event) => {
@@ -62,6 +68,24 @@ export class HttpErrorInterceptorService implements HttpInterceptor {
         this.router.navigate(['my-account']).then();
       }
       this.utilsService.errorHandle(err);
+    }  else if (err.status == 406) {
+      console.log(err);
+      // const dialogRef = this.dialog.open(DialogCaptchaComponent, {
+      //   width: '50vw',
+      //   maxWidth: '100vw',
+      //   height: '60vh',
+      //   maxHeight: '100vh',
+      //   disableClose: true,
+      //   data: {
+      //     data: err.error,
+      //   },
+      // });
+      // dialogRef.afterClosed().subscribe((result) => {
+      //   console.log(result);
+      // });
+      this.localStorageService.setOnStorage('captcha', err.error);
+      this.router.navigate(['captcha']);
+      // this.utilsService.errorHandle(err);
     } else if (err.status == 404) {
       this.utilsService.errorHandle(err);
       // this.router.navigate(['/error/404']);
