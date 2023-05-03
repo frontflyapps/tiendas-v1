@@ -329,8 +329,8 @@ export class MyAccountComponent implements OnInit {
       });
     }
 
-    console.log(this.regTcpForm.value);
-    console.log(this.registrationForm.value);
+    // console.log(this.regTcpForm.value);
+    // console.log(this.registrationForm.value);
 
   }
 
