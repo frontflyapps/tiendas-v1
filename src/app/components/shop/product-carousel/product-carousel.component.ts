@@ -174,7 +174,7 @@ export class ProductCarouselComponent implements OnInit, AfterViewInit, OnDestro
     }
 
     // const loggedIn = await this.cartService.addToCartOnProductCard(product, quantity);
-    // this.inLoading = false;
+    this.inLoading = false;
     // if (!loggedIn) {
     //   this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
     // }
