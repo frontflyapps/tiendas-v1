@@ -15,6 +15,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { PipesModule } from '../../../core/pipes/pipes.module';
+import { DialogCaptchaRoutingModule } from './dialog-captcha-routing.module';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { PipesModule } from '../../../core/pipes/pipes.module';
   ],
   imports: [
     CommonModule,
+    DialogCaptchaRoutingModule,
     FlexLayoutModule,
     TranslateModule,
     MatButtonModule,

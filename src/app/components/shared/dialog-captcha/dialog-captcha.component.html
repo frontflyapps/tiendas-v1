@@ -1,8 +1,9 @@
-<div fxLayout='column'>
-  <h3 mat-dialog-title class='mb-2'>{{data.message | i18nField: translateService.currentLang}}</h3>
-  <img [src]="data.image" class='mb-2'/>
+<div fxLayout='column' fxLayoutAlign='center center' class='mb-20 mt-10'>
+  <h2 class='mb-2'>{{data.message | i18nField: translateService.currentLang}}</h2>
 
-  <div fxLayout='row' fxLayoutAlign='end end'>
+
+  <div fxLayout='row' fxLayoutAlign='center center'>
+    <img [src]="data.image" class='mr-2 img-captcha'/>
     <button mat-icon-button mat-raised-button (click)='refreshData()'>
       <mat-icon>refresh</mat-icon>
     </button>
