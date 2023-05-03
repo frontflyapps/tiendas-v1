@@ -7,6 +7,7 @@ import { UtilsService } from '../../../core/services/utils/utils.service';
 import { TranslateService } from '@ngx-translate/core';
 import { DialogCaptchaModule } from './dialog-captcha.module';
 import { LocalStorageService } from '../../../core/services/localStorage/localStorage.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-dialog-captcha',
@@ -17,18 +18,22 @@ export class DialogCaptchaComponent implements OnInit {
 
   form: UntypedFormGroup;
   data: any;
+  pathToRedirect: any;
 
   constructor(
     private fb: UntypedFormBuilder,
-    public dialogRef: MatDialogRef<DialogCaptchaModule>,
     public captchaService: CaptchaService,
     public showToastr: ShowToastrService,
     public utilsService: UtilsService,
     public translateService: TranslateService,
-    public localStorageService: LocalStorageService
+    public localStorageService: LocalStorageService,
+    private route: ActivatedRoute,
   ) {
     this.data = this.localStorageService.getFromStorage('captcha');
     console.log(this.data);
+    this.pathToRedirect = this.route.snapshot;
+    console.log(this.pathToRedirect);
+    // this.refreshData();
   }
 
   ngOnInit(): void {
@@ -49,9 +54,9 @@ export class DialogCaptchaComponent implements OnInit {
       hash: this.data?.hash,
     };
     this.captchaService.getCaptcha(dataToSend).subscribe(item => {
-      this.data = {
-        data: item,
-      };
+        console.log(item);
+        this.localStorageService.setOnStorage('captcha', item);
+        this.data = this.localStorageService.getFromStorage('captcha');
     },
       error => {
         console.log(error);
@@ -69,8 +74,15 @@ export class DialogCaptchaComponent implements OnInit {
 
     this.captchaService.confirmCaptcha(dataToSend).subscribe(item => {
       this.showToastr.showSucces("Captcha correcto");
-      this.dialogRef.close(true);
-    });
+    },
+      error => {
+        console.log(error);
+        this.localStorageService.setOnStorage('captcha', error.error);
+        this.data = this.localStorageService.getFromStorage('captcha');
+        this.showToastr.showError(error.error.title);
+        // this.utilsService.errorHandle(error);
+      }
+    );
     console.log('sendData');
   }
 

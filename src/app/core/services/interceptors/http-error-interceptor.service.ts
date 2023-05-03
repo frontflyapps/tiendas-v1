@@ -5,7 +5,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { UtilsService } from '../utils/utils.service';
 import { ShowSnackbarService } from '../show-snackbar/show-snackbar.service';
-import { NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogPrescriptionComponent } from '../../../components/shop/products/dialog-prescription/dialog-prescription.component';
@@ -15,6 +15,7 @@ import { LocalStorageService } from '../localStorage/localStorage.service';
 @Injectable()
 export class HttpErrorInterceptorService implements HttpInterceptor {
   url = '';
+  pathToRedirect: any;
 
   constructor(
     private utilsService: UtilsService,
@@ -24,6 +25,7 @@ export class HttpErrorInterceptorService implements HttpInterceptor {
     private translate: TranslateService,
     private localStorageService: LocalStorageService,
     private router: Router,
+    private route: ActivatedRoute,
   ) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -83,6 +85,8 @@ export class HttpErrorInterceptorService implements HttpInterceptor {
       // dialogRef.afterClosed().subscribe((result) => {
       //   console.log(result);
       // });
+      this.pathToRedirect = this.route.snapshot;
+      console.log(this.pathToRedirect);
       this.localStorageService.setOnStorage('captcha', err.error);
       this.router.navigate(['captcha']);
       // this.utilsService.errorHandle(err);
