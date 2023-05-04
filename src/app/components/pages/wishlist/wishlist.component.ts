@@ -1,6 +1,6 @@
 import { MetaService } from './../../../core/services/meta.service';
 import { Component, OnInit } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { Product } from './../../../modals/product.model';
 import { CartService } from '../../shared/services/cart.service';
 import { WishlistService } from '../../shared/services/wishlist.service';
@@ -11,6 +11,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogPrescriptionComponent } from '../../shop/products/dialog-prescription/dialog-prescription.component';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-wishlist',
@@ -22,6 +24,8 @@ export class WishlistComponent implements OnInit {
   wishlistItems: Product[] = [];
   pathToRedirect: any;
   paramsToUrlRedirect: any;
+  isSmallDevice = false;
+  _unsubscribeAll: Subject<any>;
 
   constructor(
     private cartService: CartService,
@@ -31,7 +35,8 @@ export class WishlistComponent implements OnInit {
     private metaService: MetaService,
     public spinner: NgxSpinnerService,
     public route: ActivatedRoute,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public breakpointObserver: BreakpointObserver
   ) {
     this.product = this.wishlistService.getProducts();
     this.product.subscribe((products) => {
@@ -42,6 +47,18 @@ export class WishlistComponent implements OnInit {
     this.route.queryParamMap.subscribe((params) => {
       this.paramsToUrlRedirect = { ...params };
     });
+    this.breakpointObserver
+      .observe([
+        Breakpoints.Medium,
+        Breakpoints.Handset,
+        Breakpoints.XSmall,
+        Breakpoints.Small,
+        Breakpoints.Tablet
+      ])
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((data) => {
+        this.isSmallDevice = data.matches;
+      });
     // this.metaService.setMeta(
     //   'Lista de Deseos',
     //   environment.meta?.mainPage?.description,
@@ -57,10 +74,10 @@ export class WishlistComponent implements OnInit {
     if (product.typeAddCart === 'glasses') {
       if (this.loggedInUserService.getLoggedInUser()) {
         const dialogRef = this.dialog.open(DialogPrescriptionComponent, {
-          width: 'auto',
-          maxWidth: '100vw',
-          height: 'auto',
-          maxHeight: '100vw',
+          width: this.isSmallDevice ? '100vw' : '50rem',
+          maxWidth: this.isSmallDevice ? '100vw' : '50rem',
+          height: this.isSmallDevice ? '100vh' : '50rem',
+          maxHeight: this.isSmallDevice ? '100vh' : '50rem',
           data: {
             product: product,
             quantity: quantity,

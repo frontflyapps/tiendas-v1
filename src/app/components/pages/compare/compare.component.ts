@@ -13,6 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DialogPrescriptionComponent } from '../../shop/products/dialog-prescription/dialog-prescription.component';
 import { MatDialog } from '@angular/material/dialog';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-compare',
@@ -32,6 +33,7 @@ export class CompareComponent implements OnInit, OnDestroy {
   };
   pathToRedirect: any;
   paramsToUrlRedirect: any;
+  isSmallDevice = false;
 
   constructor(
     private productService: ProductService,
@@ -43,7 +45,8 @@ export class CompareComponent implements OnInit, OnDestroy {
     private router: Router,
     public loggedInUserService: LoggedInUserService,
     private metaService: MetaService,
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
+    public breakpointObserver: BreakpointObserver
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
@@ -52,6 +55,18 @@ export class CompareComponent implements OnInit, OnDestroy {
     this.route.queryParamMap.subscribe((params) => {
       this.paramsToUrlRedirect = { ...params };
     });
+    this.breakpointObserver
+      .observe([
+        Breakpoints.Medium,
+        Breakpoints.Handset,
+        Breakpoints.XSmall,
+        Breakpoints.Small,
+        Breakpoints.Tablet
+      ])
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((data) => {
+        this.isSmallDevice = data.matches;
+      });
     // this.metaService.setMeta(
     //   'Lista de Comparación',
     //   environment.meta?.mainPage?.description,
@@ -74,10 +89,10 @@ export class CompareComponent implements OnInit, OnDestroy {
     if (product.typeAddCart === 'glasses') {
       if (this.loggedInUserService.getLoggedInUser()) {
         const dialogRef = this.dialog.open(DialogPrescriptionComponent, {
-          width: 'auto',
-          maxWidth: '100vw',
-          height: 'auto',
-          maxHeight: '100vw',
+          width: this.isSmallDevice ? '100vw' : '50rem',
+          maxWidth: this.isSmallDevice ? '100vw' : '50rem',
+          height: this.isSmallDevice ? '100vh' : '50rem',
+          maxHeight: this.isSmallDevice ? '100vh' : '50rem',
           data: {
             product: product,
             quantity: quantity,

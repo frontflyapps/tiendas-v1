@@ -23,7 +23,12 @@
   }
 }
 .row-supplement{
-  overflow: scroll;
+  overflow: auto;
+}
+.select{
+  @media(max-width: 599px) {
+    width: 99px;
+  }
 }
 
 mat-select[name="opciones"] mat-optgroup {
@@ -38,6 +43,7 @@ mat-select[name="opciones"] mat-optgroup {
   border: 1px solid #e8e8e8;
   border-radius: 8px;
   padding: 8px;
+  width: 150px;
 }
 
 .custom-width {
