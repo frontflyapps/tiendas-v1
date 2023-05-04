@@ -27,6 +27,7 @@ import { SwiperConfigInterface, SwiperPaginationInterface } from 'ngx-swiper-wra
 import { ProductDialogComponent } from '../product-dialog/product-dialog.component';
 import { DialogPrescriptionComponent } from '../dialog-prescription/dialog-prescription.component';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-product-details',
@@ -110,6 +111,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy, AfterViewInit
 
   previewUrl: any;
   videoUrl: any;
+  isSmallDevice: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -131,10 +133,24 @@ export class ProductDetailsComponent implements OnInit, OnDestroy, AfterViewInit
     public productDataService: ProductDataService,
     public spinner: NgxSpinnerService,
     private meta: Meta,
+    private breakpointObserver: BreakpointObserver,
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
+
+    this.breakpointObserver
+      .observe([
+        Breakpoints.Medium,
+        Breakpoints.Handset,
+        Breakpoints.XSmall,
+        Breakpoints.Small,
+        Breakpoints.Tablet
+      ])
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((data) => {
+        this.isSmallDevice = data.matches;
+      });
 
     this.route.queryParams.subscribe((query) => {
       const productId = query.productId;
@@ -414,10 +430,10 @@ export class ProductDetailsComponent implements OnInit, OnDestroy, AfterViewInit
     if (product.typeAddCart === 'glasses') {
       if (this.loggedInUserService.getLoggedInUser()) {
         const dialogRef = this.dialog.open(DialogPrescriptionComponent, {
-          width: 'auto',
-          maxWidth: '100vw',
-          height: 'auto',
-          maxHeight: '150vw',
+          width: this.isSmallDevice ? '100vw' : '50rem',
+          maxWidth: this.isSmallDevice ? '100vw' : '50rem',
+          height: this.isSmallDevice ? '100vh' : '50rem',
+          maxHeight: this.isSmallDevice ? '100vh' : '50rem',
           data: {
             product: product,
             quantity: quantity,
@@ -547,10 +563,10 @@ export class ProductDetailsComponent implements OnInit, OnDestroy, AfterViewInit
       if (this.product.typeAddCart === 'glasses') {
         if (this.loggedInUserService.getLoggedInUser()) {
           const dialogRef = this.dialog.open(DialogPrescriptionComponent, {
-            width: 'auto',
-            maxWidth: '100vw',
-            height: 'auto',
-            maxHeight: '100vw',
+            width: this.isSmallDevice ? '100vw' : '50rem',
+            maxWidth: this.isSmallDevice ? '100vw' : '50rem',
+            height: this.isSmallDevice ? '100vh' : '50rem',
+            maxHeight: this.isSmallDevice ? '100vh' : '50rem',
             data: {
               product: this.product,
               quantity: this.counter,

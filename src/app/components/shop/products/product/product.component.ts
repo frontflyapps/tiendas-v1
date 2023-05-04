@@ -16,6 +16,7 @@ import { ConfirmationDialogFrontComponent } from 'src/app/components/shared/conf
 import { TranslateService } from '@ngx-translate/core';
 import { DialogPrescriptionComponent } from '../dialog-prescription/dialog-prescription.component';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-product',
@@ -33,6 +34,7 @@ export class ProductComponent implements OnInit, OnDestroy {
   language = 'es';
   pathToRedirect: any;
   paramsToUrlRedirect: any;
+  isSmallDevice = false;
 
   constructor(
     private cartService: CartService,
@@ -46,6 +48,7 @@ export class ProductComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private translate: TranslateService,
+    private breakpointObserver: BreakpointObserver,
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
@@ -54,6 +57,18 @@ export class ProductComponent implements OnInit, OnDestroy {
     this.route.queryParamMap.subscribe((params) => {
         this.paramsToUrlRedirect = params ;
     });
+    this.breakpointObserver
+      .observe([
+        Breakpoints.Medium,
+        Breakpoints.Handset,
+        Breakpoints.XSmall,
+        Breakpoints.Small,
+        Breakpoints.Tablet
+      ])
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((data) => {
+        this.isSmallDevice = data.matches;
+      });
   }
 
   ngOnInit() {
@@ -80,10 +95,10 @@ export class ProductComponent implements OnInit, OnDestroy {
     if (product.typeAddCart === 'glasses') {
       if (this.loggedInUserService.getLoggedInUser()) {
         const dialogRef = this.dialog.open(DialogPrescriptionComponent, {
-          width: 'auto',
-          maxWidth: '100vw',
-          height: 'auto',
-          maxHeight: '100vw',
+          width: this.isSmallDevice ? '100vw' : '50rem',
+          maxWidth: this.isSmallDevice ? '100vw' : '50rem',
+          height: this.isSmallDevice ? '100vh' : '50rem',
+          maxHeight: this.isSmallDevice ? '100vh' : '50rem',
           data: {
             product: product,
             quantity: quantity,

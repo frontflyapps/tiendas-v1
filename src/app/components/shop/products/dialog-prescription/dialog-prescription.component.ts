@@ -30,6 +30,7 @@ export class DialogPrescriptionComponent implements OnInit {
   public form: UntypedFormGroup;
   public supplementForm: UntypedFormGroup;
   supplementSelected: any[] = [];
+  loadingSearch: boolean = false;
   supplementArray: any;
 
   pathToRedirect: any;
@@ -179,7 +180,9 @@ export class DialogPrescriptionComponent implements OnInit {
     //     this.form.get('axisRight').setValidators(null);
     //   }
     // });
+    this.loadingSearch = true;
     this.productsService.getNewRecomendedProduct(this.data.product.id, 'supplement').subscribe((data: any) => {
+      this.loadingSearch = false;
       this.supplementArray = data.data;
       console.log(this.supplementArray);
     //   // this.loadingRelated = false;

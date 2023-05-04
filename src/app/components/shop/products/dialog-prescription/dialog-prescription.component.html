@@ -2,6 +2,9 @@
 <!--<mat-dialog-content>-->
   <mat-horizontal-stepper #stepper [linear]="'true'" labelPosition="bottom" class="billing-details">
     <mat-step *ngIf='supplementArray?.length >= 0' [completed]="supplementForm.get('supplement').value">
+      <div *ngIf="this.loadingSearch" class="loading-shade-full" style="background: rgba(0, 0, 0, 0.08) !important;">
+        <mat-spinner *ngIf="this.loadingSearch" color="primary" diameter="60"></mat-spinner>
+      </div>
       <ng-template matStepLabel>{{ 'Escoja lentes' | translate }}</ng-template>
       <div *ngFor='let supplement of supplementArray; let i = index'>
         <h3 class='my-3'>{{ supplement?.name }}</h3>
@@ -14,14 +17,13 @@
                     <span>{{element?.RecomendedProduct?.name | i18nField: translateService.currentLang}}</span>
                     <div
                       *ngFor="let item of element?.RecomendedProduct?.PriceRanges"
-                      [matTooltip]="'entre ' + item.min + ' y ' + item.max + ' unidades'"
                       class="mx-2 py-3"
                       fxLayout="column"
                       fxLayoutAlign="start start"
                       fxLayoutGap="gappx"
                       style="width: 80px"
                     >
-                      <p class="mat-body-1">{{ item.min }} - {{ item.max }}</p>
+<!--                      <p class="mat-body-1">{{ item.min }} - {{ item.max }}</p>-->
                       <p *ngIf="element?.RecomendedProduct?.offerValue" class="mat-body-2">
                         {{ item.priceOffer | currencyMarket: element?.RecomendedProduct?.market }}
                       </p>
@@ -36,7 +38,7 @@
         </mat-radio-group>
 
       </div>
-      <blockquote>
+      <blockquote *ngIf='!this.loadingSearch'>
         <p>
           {{
           'Nota: Para introducir los datos de su receta médica, debe escoger al menos un elemento.'
@@ -44,27 +46,29 @@
           }}
         </p>
       </blockquote>
-      <div fxLayout='row' fxLayout.xs='column' fxLayout.sm='column' fxLayoutAlign='end end' fxLayoutGap='6px'>
+      <div fxLayout='row' fxLayout.xs='column' fxLayout.sm='column' fxLayoutAlign='end end' fxLayoutGap='6px' *ngIf='!this.loadingSearch'>
         <button mat-stroked-button mat-dialog-close color='warn' (click)='close()'>{{'Cancelar compra' | translate}}</button>
+        <button class="mt-2" mat-raised-button color='accent' (click)='buyWithoutGlass()'>{{'Añadir al carrito sin receta' | translate}}</button>
         <button
-          class="uppercase"
+          class="mt-2"
           mat-raised-button
           matStepperNext
           color='primary'
           *ngIf="supplementForm.get('supplement').value"
         >
-          {{ 'Siguiente' | translate }}
+          {{ 'Añadir receta' | translate }}
         </button>
-        <button
-          class="uppercase"
-          mat-raised-button
-          matStepperNext
-          color='primary'
-          (click)='buyWithoutGlass()'
-          *ngIf="!supplementForm.get('supplement').value"
-        >
-          {{ 'Comprar sin lentes' | translate }}
-        </button>
+
+<!--        <button-->
+<!--          class="uppercase"-->
+<!--          mat-raised-button-->
+<!--          matStepperNext-->
+<!--          color='primary'-->
+<!--          (click)='buyWithoutGlass()'-->
+<!--          *ngIf="!supplementForm.get('supplement').value"-->
+<!--        >-->
+<!--          {{ 'Comprar sin lentes' | translate }}-->
+<!--        </button>-->
       </div>
     </mat-step>
 
@@ -73,7 +77,7 @@
       <div class='w-100 mb-3 pb-3 row-supplement'>
         <table class='table w-100'>
           <tr>
-            <th mat-header-cell></th>
+<!--            <th mat-header-cell></th>-->
             <th mat-header-cell>
               <span>{{ 'ESFERA' | translate }}</span>
             </th>
@@ -85,12 +89,12 @@
             </th>
           </tr>
           <tr>
-            <th class='pb-2' mat-cell>
-              <span>Ojo izquierdo</span>
-            </th>
+<!--            <th class='pb-2' mat-cell>-->
+<!--              <span>Ojo izquierdo</span>-->
+<!--            </th>-->
             <td class='pb-2' mat-cell>
-              <mat-form-field appearance='outline'>
-                <mat-label>{{'Ojo izquierdo'}}</mat-label>
+              <mat-form-field appearance='outline' class='select'>
+                <mat-label>{{'Izquierdo'}}</mat-label>
                 <mat-select [formControl]="form.get('left')">
                   <mat-optgroup *ngFor="let sign of signArray" [label]="sign.name">
                     <mat-option *ngFor="let measure of sign.sign" [value]="measure.value">
@@ -104,8 +108,8 @@
               </mat-form-field>
             </td>
             <td class='pb-2' mat-cell>
-              <mat-form-field appearance='outline'>
-                <mat-label>{{'Cilindro izquierdo'}}</mat-label>
+              <mat-form-field appearance='outline' class='select'>
+                <mat-label>{{'Izquierdo'}}</mat-label>
                 <mat-select [formControl]="form.get('cylinderLeft')">
                   <mat-optgroup *ngFor="let sign of signArray" [label]="sign.name">
                     <mat-option *ngFor="let measure of sign.sign" [value]="measure.value">
@@ -122,8 +126,8 @@
               </mat-form-field>
             </td>
             <td class='pb-2' mat-cell>
-              <mat-form-field appearance='outline'>
-                <mat-label>{{'Eje izquierdo'}}</mat-label>
+              <mat-form-field appearance='outline' class='select'>
+                <mat-label>{{'Izquierdo'}}</mat-label>
                 <input
                   [formControl]="form.get('axisLeft')"
                   matInput
@@ -141,12 +145,12 @@
             </td>
           </tr>
           <tr>
-            <th class='pb-2' mat-cell>
-              <span>Ojo derecho</span>
-            </th>
+<!--            <th class='pb-2' mat-cell>-->
+<!--              <span>Ojo derecho</span>-->
+<!--            </th>-->
             <td class='pb-2' mat-cell>
-              <mat-form-field appearance='outline'>
-                <mat-label>{{'Ojo derecho'}}</mat-label>
+              <mat-form-field appearance='outline' class='select'>
+                <mat-label>{{'Derecho'}}</mat-label>
                 <mat-select [formControl]="form.get('right')">
                   <mat-optgroup *ngFor="let sign of signArray" [label]="sign.name">
                     <mat-option *ngFor="let measure of sign.sign" [value]="measure.value">
@@ -163,8 +167,8 @@
               </mat-form-field>
             </td>
             <td class='pb-2' mat-cell>
-              <mat-form-field appearance='outline'>
-                <mat-label>{{'Cilindro derecho'}}</mat-label>
+              <mat-form-field appearance='outline' class='select'>
+                <mat-label>{{'Derecho'}}</mat-label>
 
                 <mat-select [formControl]="form.get('cylinderRight')">
                   <mat-optgroup *ngFor="let sign of signArray" [label]="sign.name">
@@ -182,8 +186,8 @@
               </mat-form-field>
             </td>
             <td class='pb-2' mat-cell>
-              <mat-form-field appearance='outline'>
-                <mat-label>{{'Eje derecho'}}</mat-label>
+              <mat-form-field appearance='outline' class='select'>
+                <mat-label>{{'Derecho'}}</mat-label>
                 <input
                   [formControl]="form.get('axisRight')"
                   matInput
@@ -200,13 +204,14 @@
               </mat-form-field>
             </td>
           </tr>
-          <tr>
-            <th class='pb-2' mat-cell>
-              <span>Distancia pupilar</span>
-            </th>
-            <td class='pb-2' mat-cell>
-              <mat-form-field appearance='outline'>
-                <mat-label>{{'Distancia pupilar'}}</mat-label>
+<!--          <tr>-->
+<!--            <th class='pb-2' mat-cell>-->
+<!--              <span>Distancia pupilar</span>-->
+<!--            </th>-->
+<!--            <td class='pb-2' mat-cell>-->
+              <h4>Distancia pupilar</h4>
+              <mat-form-field appearance='outline' class='select'>
+                <mat-label>{{'Distancia'}}</mat-label>
                 <input
                   [formControl]="form.get('pupillaryDistance')"
                   matInput
@@ -220,20 +225,19 @@
                 <!--              {{ 'Ojo izquierdo' | translate }} <strong>{{ 'wrong' | translate }}</strong>-->
                 <!--            </mat-error>-->
               </mat-form-field>
-            </td>
-            <td class='pb-2' mat-cell>
+<!--            </td>-->
+<!--            <td class='pb-2' mat-cell>-->
 
-            </td>
-            <td class='pb-2' mat-cell></td>
-          </tr>
+<!--            </td>-->
+<!--            <td class='pb-2' mat-cell></td>-->
+<!--          </tr>-->
         </table>
 
       </div>
       <div fxLayout='row' fxLayout.xs='column' fxLayout.sm='column' fxLayoutAlign='end end' fxLayoutGap='6px'>
-        <button class="mt-2" color='primary' mat-stroked-button matStepperPrevious>{{ 'Anterior' | translate }}</button>
+        <button class="mt-2" color='primary' mat-stroked-button matStepperPrevious>{{ 'Atrás' | translate }}</button>
         <button class="mt-2" mat-stroked-button color='warn' (click)='close()'>{{'Cancelar compra' | translate}}</button>
-        <button class="mt-2" mat-stroked-button color='accent' (click)='closeWithoutPrescription()'>{{'Continuar sin receta' | translate}}</button>
-        <button class="mt-2" mat-raised-button color='primary' (click)='save()' [disabled]='form.invalid'>{{'Continuar con receta' | translate}}</button>
+        <button class="mt-2" mat-raised-button color='primary' (click)='save()' [disabled]='form.invalid'>{{'Añadir al carrito' | translate}}</button>
       </div>
     </mat-step>
 

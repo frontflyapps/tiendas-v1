@@ -45,6 +45,7 @@ export class ProductCarouselComponent implements OnInit, AfterViewInit, OnDestro
 
   pathToRedirect: any;
   paramsToUrlRedirect: any;
+  isSmallDevice = false;
 
   constructor(
     private dialog: MatDialog,
@@ -66,6 +67,19 @@ export class ProductCarouselComponent implements OnInit, AfterViewInit, OnDestro
     this.route.queryParamMap.subscribe((params) => {
       this.paramsToUrlRedirect = { ...params };
     });
+
+    this.breakpointObserver
+      .observe([
+        Breakpoints.Medium,
+        Breakpoints.Handset,
+        Breakpoints.XSmall,
+        Breakpoints.Small,
+        Breakpoints.Tablet
+      ])
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((data) => {
+        this.isSmallDevice = data.matches;
+      });
   }
 
   ngOnInit() {
@@ -141,10 +155,10 @@ export class ProductCarouselComponent implements OnInit, AfterViewInit, OnDestro
     if (product.typeAddCart === 'glasses') {
       if (this.loggedInUserService.getLoggedInUser()) {
         const dialogRef = this.dialog.open(DialogPrescriptionComponent, {
-          width: 'auto',
-          maxWidth: '100vw',
-          height: 'auto',
-          maxHeight: '100vw',
+          width: this.isSmallDevice ? '100vw' : '50rem',
+          maxWidth: this.isSmallDevice ? '100vw' : '50rem',
+          height: this.isSmallDevice ? '100vh' : '50rem',
+          maxHeight: this.isSmallDevice ? '100vh' : '50rem',
           data: {
             product: product,
             quantity: quantity,
