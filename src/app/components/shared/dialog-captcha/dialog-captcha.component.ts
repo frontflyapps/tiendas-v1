@@ -7,7 +7,7 @@ import { UtilsService } from '../../../core/services/utils/utils.service';
 import { TranslateService } from '@ngx-translate/core';
 import { DialogCaptchaModule } from './dialog-captcha.module';
 import { LocalStorageService } from '../../../core/services/localStorage/localStorage.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-dialog-captcha',
@@ -28,6 +28,7 @@ export class DialogCaptchaComponent implements OnInit {
     public translateService: TranslateService,
     public localStorageService: LocalStorageService,
     private route: ActivatedRoute,
+    private router: Router,
   ) {
     this.data = this.localStorageService.getFromStorage('captcha');
     console.log(this.data);
@@ -74,6 +75,7 @@ export class DialogCaptchaComponent implements OnInit {
 
     this.captchaService.confirmCaptcha(dataToSend).subscribe(item => {
       this.showToastr.showSucces("Captcha correcto");
+        this.router.navigate(['']);
     },
       error => {
         console.log(error);
