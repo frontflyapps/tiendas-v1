@@ -14,8 +14,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { PipesModule } from '../../../core/pipes/pipes.module';
 import { DialogCaptchaRoutingModule } from './dialog-captcha-routing.module';
+import { PipesModule } from 'guachos-general-autocomplete/utils/pipes/pipes.module';
 
 
 @NgModule({
