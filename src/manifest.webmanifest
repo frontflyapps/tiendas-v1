@@ -1,7 +1,7 @@
 {
-  "name": "Tienda Guajiritos",
-  "short_name": "Tienda Guajiritos",
-  "theme_color": "#131313",
+  "name": "Tienda Mi Bulevar",
+  "short_name": "Tienda Mi Bulevar",
+  "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",
   "scope": "./",
