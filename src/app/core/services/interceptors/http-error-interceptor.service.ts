@@ -8,7 +8,6 @@ import { ShowSnackbarService } from '../show-snackbar/show-snackbar.service';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogPrescriptionComponent } from '../../../components/shop/products/dialog-prescription/dialog-prescription.component';
 import { DialogCaptchaComponent } from '../../../components/shared/dialog-captcha/dialog-captcha.component';
 import { LocalStorageService } from '../localStorage/localStorage.service';
 
