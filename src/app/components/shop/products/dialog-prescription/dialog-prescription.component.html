@@ -1,41 +1,67 @@
 
 <!--<mat-dialog-content>-->
   <mat-horizontal-stepper #stepper [linear]="'true'" labelPosition="bottom" class="billing-details">
-    <mat-step *ngIf='supplementArray?.length >= 0' [completed]="supplementForm.get('supplement').value">
+    <mat-step *ngIf='supplementArray?.length >= 0' [completed]="supplementForm.get('supplementType').value">
       <div *ngIf="this.loadingSearch" class="loading-shade-full" style="background: rgba(0, 0, 0, 0.08) !important;">
         <mat-spinner *ngIf="this.loadingSearch" color="primary" diameter="60"></mat-spinner>
       </div>
       <ng-template matStepLabel>{{ 'Escoja lentes' | translate }}</ng-template>
       <div *ngFor='let supplement of supplementArray; let i = index'>
-        <h3 class='my-3'>{{ supplement?.name }}</h3>
-        <mat-radio-group (change)='onChangeSelection($event, i)'>
-          <div fxLayout='row' fxLayoutAlign='start center' fxLayoutGap='6px' class='w-100 mb-3 pb-3 row-supplement'>
-            <div *ngFor='let element of supplement.Recomendeds' fxLayout='row' fxLayoutAlign='start center'>
-                <mat-radio-button [value]="element" fxLayout='column' fxLayoutAlign='center center'>
-                  <div fxLayout='column' fxLayoutAlign='center center' class='container-product'>
-                    <img [src]='imageUrl + element?.RecomendedProduct?.Images[0]?.image' class='img-supplement mb-2'>
-                    <span>{{element?.RecomendedProduct?.name | i18nField: translateService.currentLang}}</span>
-                    <div
-                      *ngFor="let item of element?.RecomendedProduct?.PriceRanges"
-                      class="mx-2 py-3"
-                      fxLayout="column"
-                      fxLayoutAlign="start start"
-                      fxLayoutGap="gappx"
-                      style="width: 80px"
-                    >
-<!--                      <p class="mat-body-1">{{ item.min }} - {{ item.max }}</p>-->
-                      <p *ngIf="element?.RecomendedProduct?.offerValue" class="mat-body-2">
-                        {{ item.priceOffer | currencyMarket: element?.RecomendedProduct?.market }}
-                      </p>
-                      <p *ngIf="!element?.RecomendedProduct?.offerValue" class="mat-body-2">
-                        {{ item.price | currencyMarket: element?.RecomendedProduct?.market }}
-                      </p>
-                    </div>
+        <h3 *ngIf='i === 0 || supplementForm.get("supplementType").value' class='my-3'>{{ supplement?.name }}</h3>
+<!--        <mat-radio-group (change)='onChangeSelection($event, i)'>-->
+          <div fxLayout='column' fxLayoutAlign='start center' fxLayoutGap='6px' class='w-100 mb-3 pb-3 row-supplement'>
+            <div *ngFor='let element of supplement.Recomendeds; let j = index' fxLayout='column' fxLayoutAlign='start center'>
+              <div *ngIf='i === 0 || supplementForm.get("supplementType").value' [ngClass]="{'itemSelected': element.checked,
+                               'itemUnselected': !element.checked}"
+                   fxLayout='row' fxLayoutAlign='start center' (click)='onChangeSelection($event, i, j)'>
+                <img *ngIf='element?.RecomendedProduct?.name.es !== "Ninguno"' [src]='imageUrl + element?.RecomendedProduct?.Images[0]?.image' class='img-supplement mb-2'>
+                <div fxLayout='column' fxLayoutAlign='start start'>
+                  <mat-icon *ngIf='element.checked' class='icon-checked' color='primary'>check_circle</mat-icon>
+                  <span class="mx-2">{{element?.RecomendedProduct?.name | i18nField: translateService.currentLang}}</span>
+                  <span *ngIf='element?.RecomendedProduct?.description' class="mx-2 description" [innerHTML]='this.utilsService.publicSetDescription(element?.RecomendedProduct?.description, translateService.currentLang)'></span>
+                  <div
+                    *ngFor="let item of element?.RecomendedProduct?.PriceRanges"
+                    class="mx-2 pt-2"
+                    fxLayout="column"
+                    fxLayoutAlign="start start"
+                    fxLayoutGap="gappx"
+                    style="width: 80px"
+                  >
+                    <!--                      <p class="mat-body-1">{{ item.min }} - {{ item.max }}</p>-->
+                    <p *ngIf="element?.RecomendedProduct?.offerValue" class="mat-body-2">
+                      {{ item?.priceOffer | currencyMarket: element?.RecomendedProduct?.market }}
+                    </p>
+                    <p *ngIf="!element?.RecomendedProduct?.offerValue" class="mat-body-2">
+                      {{ item?.price | currencyMarket: element?.RecomendedProduct?.market }}
+                    </p>
                   </div>
-                </mat-radio-button>
+                </div>
+              </div>
+<!--                <mat-radio-button [value]="element" fxLayout='column' fxLayoutAlign='center center'>-->
+<!--                  <div fxLayout='column' fxLayoutAlign='center center' class='container-product'>-->
+<!--                    <img [src]='imageUrl + element?.RecomendedProduct?.Images[0]?.image' class='img-supplement mb-2'>-->
+<!--                    <span>{{element?.RecomendedProduct?.name | i18nField: translateService.currentLang}}</span>-->
+<!--                    <div-->
+<!--                      *ngFor="let item of element?.RecomendedProduct?.PriceRanges"-->
+<!--                      class="mx-2 py-3"-->
+<!--                      fxLayout="column"-->
+<!--                      fxLayoutAlign="start start"-->
+<!--                      fxLayoutGap="gappx"-->
+<!--                      style="width: 80px"-->
+<!--                    >-->
+<!--&lt;!&ndash;                      <p class="mat-body-1">{{ item.min }} - {{ item.max }}</p>&ndash;&gt;-->
+<!--                      <p *ngIf="element?.RecomendedProduct?.offerValue" class="mat-body-2">-->
+<!--                        {{ item.priceOffer | currencyMarket: element?.RecomendedProduct?.market }}-->
+<!--                      </p>-->
+<!--                      <p *ngIf="!element?.RecomendedProduct?.offerValue" class="mat-body-2">-->
+<!--                        {{ item.price | currencyMarket: element?.RecomendedProduct?.market }}-->
+<!--                      </p>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </mat-radio-button>-->
               </div>
           </div>
-        </mat-radio-group>
+<!--        </mat-radio-group>-->
 
       </div>
       <blockquote *ngIf='!this.loadingSearch'>
@@ -54,7 +80,7 @@
           mat-raised-button
           matStepperNext
           color='primary'
-          *ngIf="supplementForm.get('supplement').value"
+          *ngIf="supplementForm.get('supplementType').value"
         >
           {{ 'Añadir receta' | translate }}
         </button>
@@ -72,7 +98,7 @@
       </div>
     </mat-step>
 
-    <mat-step disabled="supplementForm.get('supplement').value">
+    <mat-step disabled="supplementForm.get('supplementType').value">
       <ng-template matStepLabel>{{ 'Insertar receta médica' | translate }}</ng-template>
       <div class='w-100 mb-3 pb-3 row-supplement'>
         <table class='table w-100'>

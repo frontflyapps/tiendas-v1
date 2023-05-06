@@ -8,6 +8,7 @@ import { CartService } from '../../../shared/services/cart.service';
 import { LoggedInUserService } from '../../../../core/services/loggedInUser/logged-in-user.service';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { UtilsService } from '../../../../core/services/utils/utils.service';
 
 interface Sign {
   value: string;
@@ -29,9 +30,10 @@ export class DialogPrescriptionComponent implements OnInit {
 
   public form: UntypedFormGroup;
   public supplementForm: UntypedFormGroup;
-  supplementSelected: any[] = [];
-  loadingSearch: boolean = false;
+  supplementSelected = [];
+  loadingSearch = false;
   supplementArray: any;
+  // supplementArray: any;
 
   pathToRedirect: any;
   paramsToUrlRedirect: any;
@@ -153,6 +155,7 @@ export class DialogPrescriptionComponent implements OnInit {
     public loggedInUserService: LoggedInUserService,
     public translateService: TranslateService,
     private route: ActivatedRoute,
+    public utilsService: UtilsService,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) {
     this.createForm();
@@ -184,12 +187,20 @@ export class DialogPrescriptionComponent implements OnInit {
     this.productsService.getNewRecomendedProduct(this.data.product.id, 'supplement').subscribe((data: any) => {
       this.loadingSearch = false;
       this.supplementArray = data.data;
+      this.supplementArray.forEach( item => { item.Recomendeds.push(
+        {
+          RecomendedProduct: {
+            name: {
+              es: 'Ninguno',
+              en: 'None'
+            },
+            id: null,
+          }
+        }
+      ); });
+      this.supplementArray.forEach( item => { item.Recomendeds.forEach( item2 => { item2.checked = false; }); });
       console.log(this.supplementArray);
-    //   // this.loadingRelated = false;
-    //   //   const timeOut = setTimeout(() => {
-    //   //     this.loadingRelated = false;
-    //   //     clearTimeout(timeOut);
-    //   //   }, 800);
+      console.log(this.supplementSelected);
     });
   }
 
@@ -208,18 +219,38 @@ export class DialogPrescriptionComponent implements OnInit {
       pupillaryDistance: [null],
     });
     this.supplementForm = this.fb.group({
-      supplement: [null, [Validators.required]],
+      supplementType: [null, [Validators.required]],
+      supplementDye: [null, [Validators.required]],
     });
   }
 
-  onChangeSelection(event: any, position: number) {
-    this.supplementSelected[position] = event.value;
-    this.supplementForm.get('supplement').setValue(this.supplementSelected);
+  onChangeSelection(event: any, positionArrayFather: number, positionArrayChild: number) {
+    // this.supplementArray[positionArrayFather].Recomendeds[positionArrayChild].checked = true;
+    this.supplementArray[positionArrayFather].Recomendeds.forEach(item => {
+      if (item.RecomendedProduct.name.es !== this.supplementArray[positionArrayFather].Recomendeds[positionArrayChild].RecomendedProduct.name.es) {
+        item.checked = false;
+      } else {
+        if (positionArrayFather === 0) {
+          this.supplementForm.get('supplementType').setValue(item);
+        } else if (positionArrayFather === 1) {
+          this.supplementForm.get('supplementDye').setValue(item);
+        }
+        item.checked = true;
+      }
+    });
+    if (!this.supplementForm.get('supplementType').value) {
+      this.supplementArray[1].Recomendeds.forEach( item => { item.checked = false; });
+      this.supplementForm.get('supplementDye').setValue(null);
+    }
+    console.log(this.supplementForm.value);
   }
 
   buyWithoutGlass() {
-    this.spinner.show();
-    // if (this.supplementForm.get('supplement').value && this.form.value) {
+    if (this.supplementForm.get('supplementType').value) {
+      this.closeWithoutPrescription();
+    } else {
+      this.spinner.show();
+      // if (this.supplementForm.get('supplement').value && this.form.value) {
 
       if (this.loggedInUserService.getLoggedInUser()) {
         if (this.data.quantity === 0) {
@@ -232,21 +263,20 @@ export class DialogPrescriptionComponent implements OnInit {
       } else {
         this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
       }
-    // }
+      // }
+    }
   }
 
   save() {
     this.spinner.show();
     let supplements: any[] = [];
 
-    if (this.supplementForm.get('supplement').value && this.form.value) {
-      this.supplementForm.get('supplement').value.map(item => {
-        console.log(item);
-        if (item) {
-          supplements.push(item.RecomendedProduct.Stocks[0].uuid);
-        }
-        console.log(supplements);
-      });
+    if (this.supplementForm.get('supplementType').value && this.form.value) {
+      supplements.push(this.supplementForm.get('supplementType').value.RecomendedProduct.Stocks[0].uuid);
+      if (this.supplementForm.get('supplementDye').value) {
+        supplements.push(this.supplementForm.get('supplementDye').value.RecomendedProduct.Stocks[0].uuid);
+      }
+      console.log(supplements);
       let dataToSend = {
         StockId: this.data.product.Stock.id,
         ProductId: this.data.product.Stock.id,
@@ -298,19 +328,19 @@ export class DialogPrescriptionComponent implements OnInit {
     this.spinner.show();
     let supplements: any[] = [];
 
-    if (this.supplementForm.get('supplement').value) {
-      this.supplementForm.get('supplement').value.map(item => {
-        console.log(item);
-        if (item) {
-          supplements.push(item.RecomendedProduct.Stocks[0].uuid);
-        }
-        console.log(supplements);
-      });
+    console.log(this.supplementForm.get('supplementType').value);
+
+    if (this.supplementForm.get('supplementType').value) {
+      supplements.push(this.supplementForm.get('supplementType').value.RecomendedProduct.Stocks[0].uuid);
+      if (this.supplementForm.get('supplementDye').value) {
+        supplements.push(this.supplementForm.get('supplementDye').value.RecomendedProduct.Stocks[0].uuid);
+      }
       let dataToSend = {
         StockId: this.data.product.Stock.id,
         ProductId: this.data.product.Stock.id,
         supplementIds: supplements
       };
+      console.log(supplements);
 
       if (this.loggedInUserService.getLoggedInUser()) {
         if (this.data.quantity === 0) {

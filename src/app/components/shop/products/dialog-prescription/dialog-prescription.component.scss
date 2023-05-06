@@ -38,12 +38,46 @@ mat-select[name="opciones"] mat-optgroup {
   padding-right: 10px;
   box-sizing: border-box;
 }
+.itemUnselected{
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
+  padding: 8px;
+  width: 300px;
+  height: 110px;
+  position: relative;
+}
+.itemSelected{
+  border: 1px solid #e8e8e8;
+  background-color: #e8e8e8;
+  border-radius: 8px;
+  padding: 8px;
+  width: 300px;
+  height: 110px;
+  position: relative;
+}
+
+.description{
+  font-size: 12px;
+  color: #93959b;
+  display: -webkit-box !important;
+  overflow: hidden;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  line-height: 1.4rem;
+  height: 3rem;
+}
 
 .container-product{
   border: 1px solid #e8e8e8;
   border-radius: 8px;
   padding: 8px;
-  width: 150px;
+  width: 280px;
+  position: relative;
+}
+.icon-checked{
+  position: absolute;
+  bottom: 0;
+  right: 0;
 }
 
 .custom-width {
