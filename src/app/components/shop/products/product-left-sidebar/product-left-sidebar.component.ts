@@ -167,6 +167,13 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
       this.language = data.lang;
     });
 
+    this.currencyService
+      .$currencyUpdated
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((data: any) => {
+      this.newSearchMethod(0);
+    });
+
     this.breakpointObserver
       .observe([Breakpoints.Medium, Breakpoints.Small, Breakpoints.XSmall])
       .pipe(takeUntil(this._unsubscribeAll))
@@ -451,6 +458,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
       total: this.queryProduct?.total ? +this.queryProduct?.total : 0,
       order: this.queryProduct?.order ? this.queryProduct?.order : null,
       BrandIds: brandIds,
+      currency: this.currencyService.getCurrency().code || 'USD',
       CategoryIds: categoryIds,
       maxPrice: this.paramsSearch?.maxPrice ? +this.paramsSearch?.maxPrice : 0,
       minPrice: this.paramsSearch?.minPrice ? +this.paramsSearch?.minPrice : 0,

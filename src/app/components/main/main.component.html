@@ -220,23 +220,21 @@
           </div>
         </div>
 
+<!--        <a [routerLink]="['/pages/compare']"-->
+<!--           class='px-3'-->
+<!--           fxLayoutAlign='start center'-->
+<!--           matTooltip='Comparar productos'-->
+<!--           routerLinkActive='router-link-active'>-->
 
+<!--          <mat-icon *ngIf='compareItems.length' [matBadge]='compareItems.length'-->
+<!--                    matBadgeColor='accent'>compare_arrows-->
+<!--          </mat-icon>-->
 
-        <a [routerLink]="['/pages/compare']"
-           class='px-3'
-           fxLayoutAlign='start center'
-           matTooltip='Comparar productos'
-           routerLinkActive='router-link-active'>
+<!--          <mat-icon *ngIf='!compareItems.length'>compare_arrows</mat-icon>-->
+<!--          <span fxHide fxShow='false'>{{ 'Comparar productos' | translate }}</span>-->
+<!--        </a>-->
 
-          <mat-icon *ngIf='compareItems.length' [matBadge]='compareItems.length'
-                    matBadgeColor='accent'>compare_arrows
-          </mat-icon>
-
-          <mat-icon *ngIf='!compareItems.length'>compare_arrows</mat-icon>
-          <span fxHide fxShow='false'>{{ 'Comparar productos' | translate }}</span>
-        </a>
-
-        <!-- <a class="px-3" fxLayoutAlign="start center" mat-button [matMenuTriggerFor]="currencyMenu" #currencyMenuTrigger="matMenuTrigger">
+        <a class="px-3" fxLayoutAlign="start center" mat-button [matMenuTriggerFor]="currencyMenu" #currencyMenuTrigger="matMenuTrigger">
           <span class="flag-menu-title">{{currency?.name}}</span>
           <mat-icon class="mat-icon-sm caret cur-icon">arrow_drop_down</mat-icon>
         </a>
@@ -248,8 +246,7 @@
           </span>
         </mat-menu>
 
-
-        <a class="px-3" fxLayoutAlign="start center" mat-button [matMenuTriggerFor]="langMenu" #langMenuTrigger="matMenuTrigger">
+        <!-- <a class="px-3" fxLayoutAlign="start center" mat-button [matMenuTriggerFor]="langMenu" #langMenuTrigger="matMenuTrigger">
           <img [src]="flag.image" width="18">
           <mat-icon class="mat-icon-sm caret cur-icon">arrow_drop_down</mat-icon>
         </a>
@@ -389,6 +386,18 @@
               </mat-menu>
             </div>
           </div>
+
+          <a class="px-3 mr-3" fxLayoutAlign="start center" mat-button [matMenuTriggerFor]="currencyMenu" #currencyMenuTrigger="matMenuTrigger">
+            <span class="flag-menu-title">{{currency?.name}}</span>
+            <mat-icon class="mat-icon-sm caret cur-icon">arrow_drop_down</mat-icon>
+          </a>
+          <mat-menu #currencyMenu="matMenu" [overlapTrigger]="false" xPosition="before" class="app-dropdown">
+          <span>
+            <button mat-menu-item *ngFor="let cur of currencies" (click)="changeCurrency(cur)">
+              <span>{{cur?.name}}</span>
+            </button>
+          </span>
+          </mat-menu>
 
           <a *ngIf='!loggedInUser'
              [routerLink]="['/my-account']"
