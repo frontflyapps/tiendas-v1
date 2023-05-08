@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CurrencyService {
+  public $currencyUpdated = new Subject<any>();
   public currencies: any[] = [
     { name: 'CUP', code: 'CUP' },
+    { name: 'MLC', code: 'MLC' },
     { name: 'USD', code: 'USD' },
   ];
 
@@ -26,6 +29,7 @@ export class CurrencyService {
   public setCurrency(currency) {
     this.currency = currency;
     localStorage.setItem('currency', JSON.stringify(currency));
+    this.$currencyUpdated.next(currency);
   }
 
   public getCurrency() {
