@@ -217,7 +217,6 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
       _response.count = JSON.parse(JSON.stringify(data.data.count));
       _response.timespan = new Date().getTime();
       this.localStorageService.setOnStorage(PRODUCT_COUNT, _response);
-
       this.setIsOnlyTwoProducts(_response.count);
     });
   }
