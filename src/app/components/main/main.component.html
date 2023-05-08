@@ -67,11 +67,11 @@
 <!--        <mat-icon class='mat-icon-sm caret cur-icon ml-auto'>arrow_drop_down</mat-icon>-->
 <!--      </a>-->
 
-      <mat-menu #langMenu1='matMenu' [overlapTrigger]='false' class='app-dropdown' xPosition='before'>
-        <button (click)='changeLang(flag)' *ngFor='let flag of flags' fxLayoutAlign='start center' mat-menu-item>
-          <img [src]='flag?.image' width='18' alt='logo'> <span class='ml-3 mat-body-2'>{{ flag?.name }}</span>
-        </button>
-      </mat-menu>
+<!--      <mat-menu #langMenu1='matMenu' [overlapTrigger]='false' class='app-dropdown' xPosition='before'>-->
+<!--        <button (click)='changeLang(flag)' *ngFor='let flag of flags' fxLayoutAlign='start center' mat-menu-item>-->
+<!--          <img [src]='flag?.image' width='18' alt='logo'> <span class='ml-3 mat-body-2'>{{ flag?.name }}</span>-->
+<!--        </button>-->
+<!--      </mat-menu>-->
 
       <!--<a
         fxLayoutAlign="start center"
@@ -234,7 +234,7 @@
 <!--          <span fxHide fxShow='false'>{{ 'Comparar productos' | translate }}</span>-->
 <!--        </a>-->
 
-        <a class="px-3" fxLayoutAlign="start center" mat-button [matMenuTriggerFor]="currencyMenu" #currencyMenuTrigger="matMenuTrigger">
+        <a fxLayoutAlign="start center" mat-button [matMenuTriggerFor]="currencyMenu" #currencyMenuTrigger="matMenuTrigger">
           <span class="flag-menu-title">{{currency?.name}}</span>
           <mat-icon class="mat-icon-sm caret cur-icon">arrow_drop_down</mat-icon>
         </a>
@@ -369,25 +369,9 @@
 
         <div class='userWidgets m-0 p-0' fxLayoutAlign='start center'>
 
-          <div fxFlex="75" fxLayout="row" fxLayoutAlign="end center">
-            <div class="widget-text mx-2">
-              <a #langMenuTrigger="matMenuTrigger" [matMenuTriggerFor]="langMenu" mat-icon-button
-                 matTooltip="{{ 'Change language' | translate }}">
-                <img [src]="flag?.image" height="24" width="24" />
-                <span class="flag-menu-title" fxShow="false" fxShow.gt-sm></span>
-                <mat-icon class="mat-icon-sm caret cur-icon">arrow_drop_down</mat-icon>
-              </a>
-              <mat-menu #langMenu="matMenu" [overlapTrigger]="false" class="app-dropdown" xPosition="before">
-                <span>
-                  <button (click)="changeLang(flag)" *ngFor="let flag of flags" mat-menu-item>
-                    <img [src]="flag.image" width="18" /> {{ flag?.name }}
-                  </button>
-                </span>
-              </mat-menu>
-            </div>
-          </div>
 
-          <a class="px-3 mr-3" fxLayoutAlign="start center" mat-button [matMenuTriggerFor]="currencyMenu" #currencyMenuTrigger="matMenuTrigger">
+
+          <a class='button-currency' fxLayoutAlign="center center" mat-button [matMenuTriggerFor]="currencyMenu" #currencyMenuTrigger="matMenuTrigger">
             <span class="flag-menu-title">{{currency?.name}}</span>
             <mat-icon class="mat-icon-sm caret cur-icon">arrow_drop_down</mat-icon>
           </a>

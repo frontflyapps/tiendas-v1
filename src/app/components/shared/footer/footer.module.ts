@@ -11,6 +11,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [FooterComponent],
@@ -27,6 +28,7 @@ import { MatMenuModule } from '@angular/material/menu';
     MatButtonModule,
     RouterModule,
     MatMenuModule,
+    MatTooltipModule,
   ],
 })
 export class FooterModule {
