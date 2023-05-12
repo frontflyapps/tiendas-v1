@@ -8,6 +8,7 @@ import { Subject } from 'rxjs';
 export class CurrencyService {
   public $currencyUpdated = new Subject<any>();
   public currencies: any[] = [
+    { name: 'All', code: '' },
     { name: 'CUP', code: 'CUP' },
     { name: 'MLC', code: 'MLC' },
     { name: 'USD', code: 'USD' },

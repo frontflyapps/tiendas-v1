@@ -457,7 +457,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
       total: this.queryProduct?.total ? +this.queryProduct?.total : 0,
       order: this.queryProduct?.order ? this.queryProduct?.order : null,
       BrandIds: brandIds,
-      currency: this.currencyService.getCurrency().code || 'USD',
+      currency: this.currencyService.getCurrency().code,
       CategoryIds: categoryIds,
       maxPrice: this.paramsSearch?.maxPrice ? +this.paramsSearch?.maxPrice : 0,
       minPrice: this.paramsSearch?.minPrice ? +this.paramsSearch?.minPrice : 0,

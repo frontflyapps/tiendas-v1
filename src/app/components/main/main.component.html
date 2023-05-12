@@ -234,14 +234,14 @@
 <!--          <span fxHide fxShow='false'>{{ 'Comparar productos' | translate }}</span>-->
 <!--        </a>-->
 
-        <a fxLayoutAlign="start center" mat-button [matMenuTriggerFor]="currencyMenu" #currencyMenuTrigger="matMenuTrigger">
-          <span class="flag-menu-title">{{currency?.name}}</span>
+        <a fxLayoutAlign="start center" class='px-3' mat-button [matMenuTriggerFor]="currencyMenu" #currencyMenuTrigger="matMenuTrigger">
+          <span class="flag-menu-title">{{currency?.name | translate}}</span>
           <mat-icon class="mat-icon-sm caret cur-icon">arrow_drop_down</mat-icon>
         </a>
         <mat-menu #currencyMenu="matMenu" [overlapTrigger]="false" xPosition="before" class="app-dropdown">
           <span>
             <button mat-menu-item *ngFor="let cur of currencies" (click)="changeCurrency(cur)">
-              <span>{{cur?.name}}</span>
+              <span>{{cur?.name | translate}}</span>
             </button>
           </span>
         </mat-menu>
@@ -260,7 +260,7 @@
 
         <!-- ================================ -->
         <!-- CART MENU -->
-        <app-shopping-widgets></app-shopping-widgets>
+        <app-shopping-widgets class='button-web-currency'></app-shopping-widgets>
 
         <!-- ================================ -->
         <!-- NOTIFICATIONS -->
@@ -368,24 +368,20 @@
         </div>
 
         <div class='userWidgets m-0 p-0' fxLayoutAlign='start center'>
-
-
-
-          <a class='button-currency' fxLayoutAlign="center center" mat-button [matMenuTriggerFor]="currencyMenu" #currencyMenuTrigger="matMenuTrigger">
-            <span class="flag-menu-title">{{currency?.name}}</span>
+          <a class='button-currency ml-3' fxLayoutAlign="center center" mat-button [matMenuTriggerFor]="currencyMenu" #currencyMenuTrigger="matMenuTrigger">
+            <span class="flag-menu-title">{{currency?.name | translate}}</span>
             <mat-icon class="mat-icon-sm caret cur-icon">arrow_drop_down</mat-icon>
           </a>
           <mat-menu #currencyMenu="matMenu" [overlapTrigger]="false" xPosition="before" class="app-dropdown">
           <span>
             <button mat-menu-item *ngFor="let cur of currencies" (click)="changeCurrency(cur)">
-              <span>{{cur?.name}}</span>
+              <span>{{cur?.name | translate}}</span>
             </button>
           </span>
           </mat-menu>
 
           <a *ngIf='!loggedInUser'
              [routerLink]="['/my-account']"
-             class='px-3'
              fxLayoutAlign='start center'
              fxShow='true'
              routerLinkActive='router-link-active'>

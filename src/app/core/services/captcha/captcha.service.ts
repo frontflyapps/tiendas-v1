@@ -11,8 +11,6 @@ export class CaptchaService {
   urlHash = environment.apiUrl + 'captcha/confirm/:hash';
   httpOptions           = {};
 
-  public
-
   constructor(private httpClient: HttpClient) {
     this.httpOptions = {};
   }
