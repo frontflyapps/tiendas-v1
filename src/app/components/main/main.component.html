@@ -238,10 +238,11 @@
           <span class="flag-menu-title">{{currency?.name | translate}}</span>
           <mat-icon class="mat-icon-sm caret cur-icon">arrow_drop_down</mat-icon>
         </a>
-        <mat-menu #currencyMenu="matMenu" [overlapTrigger]="false" xPosition="before" class="app-dropdown">
+        <mat-menu #currencyMenu="matMenu" [overlapTrigger]="false" xPosition="before" class="app-dropdown menu-currency">
           <span>
+            <span class='px-2 mt-1 title-mat-menu'>{{ 'Currencies' | translate}}:</span>
             <button mat-menu-item *ngFor="let cur of currencies" (click)="changeCurrency(cur)">
-              <span>{{cur?.name | translate}}</span>
+              <span>> {{cur?.name | translate}}</span>
             </button>
           </span>
         </mat-menu>
@@ -373,11 +374,11 @@
             <mat-icon class="mat-icon-sm caret cur-icon">arrow_drop_down</mat-icon>
           </a>
           <mat-menu #currencyMenu="matMenu" [overlapTrigger]="false" xPosition="before" class="app-dropdown">
-          <span>
-            <button mat-menu-item *ngFor="let cur of currencies" (click)="changeCurrency(cur)">
-              <span>{{cur?.name | translate}}</span>
-            </button>
-          </span>
+            <span>
+              <button mat-menu-item *ngFor="let cur of currencies; let i = index" [disabled]='i === 0' (click)="changeCurrency(cur)">
+                <span>{{cur?.name | translate}} {{i}}</span>
+              </button>
+            </span>
           </mat-menu>
 
           <a *ngIf='!loggedInUser'
