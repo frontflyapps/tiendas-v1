@@ -1,3 +1,7 @@
+<div *ngIf="inLoading" class="loading-shade" style="height: 100%">
+  <mat-spinner *ngIf="inLoading" [diameter]="40"></mat-spinner>
+</div>
+
 <div fxLayout='column' fxLayoutAlign='center center' class='mb-20 mt-10'>
   <h2 class='mb-2'>{{data.message | i18nField: translateService.currentLang}}</h2>
 

@@ -8,6 +8,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { DialogCaptchaModule } from './dialog-captcha.module';
 import { LocalStorageService } from '../../../core/services/localStorage/localStorage.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CartService } from '../services/cart.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-dialog-captcha',
@@ -19,6 +21,7 @@ export class DialogCaptchaComponent implements OnInit {
   form: UntypedFormGroup;
   data: any;
   pathToRedirect: any;
+  inLoading: boolean = false;
 
   constructor(
     private fb: UntypedFormBuilder,
@@ -28,7 +31,9 @@ export class DialogCaptchaComponent implements OnInit {
     public translateService: TranslateService,
     public localStorageService: LocalStorageService,
     private route: ActivatedRoute,
+    public spinner: NgxSpinnerService,
     private router: Router,
+    private cartService: CartService
   ) {
     this.data = this.localStorageService.getFromStorage('captcha');
     console.log(this.data);
@@ -72,10 +77,26 @@ export class DialogCaptchaComponent implements OnInit {
       hash: this.data?.hash,
       answer: this.form.get('value').value
     };
+    this.inLoading = true;
 
     this.captchaService.confirmCaptcha(dataToSend).subscribe(item => {
-      this.showToastr.showSucces("Captcha correcto");
+        this.showToastr.showSucces('Captcha correcto');
+        this.inLoading = true;
+      if (this.cartService.dataAddToCart) {
+        this.cartService.addToCart(this.cartService.dataAddToCart.product,
+                                   this.cartService.dataAddToCart.quantity,
+                                   this.cartService.dataAddToCart.goToPay,
+                                   this.cartService.dataAddToCart.supplementIds,
+                                   this.cartService.dataAddToCart.prescription).then( item => {
+                                     this.router.navigate(['cart']);
+                                     this.inLoading = false;
+                                     this.cartService.dataAddToCart = null;
+        });
+      } else {
+        this.inLoading = false;
         this.router.navigate(['']);
+      }
+        this.inLoading = false;
     },
       error => {
         console.log(error);
