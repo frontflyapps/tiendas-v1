@@ -37,6 +37,7 @@ export class CartService implements OnDestroy {
   _unsubscribeAll: Subject<any>;
   language = null;
   carts: Cart[] = [];
+  dataAddToCart: any;
 
   // public globalCart: Cart[] = [];
 
@@ -124,6 +125,14 @@ export class CartService implements OnDestroy {
    * @param goToPay
    */
   public async addToCart(product: any, quantity: number, goToPay?: boolean, supplementIds?: any, prescription?: any) {
+
+    this.dataAddToCart = {
+      product: product,
+      quantity: quantity,
+      goToPay: goToPay,
+      supplementIds: supplementIds,
+      prescription: prescription
+    };
     const productName = product.name[this.language] ? product.name[this.language] : product.name['es'];
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
 
