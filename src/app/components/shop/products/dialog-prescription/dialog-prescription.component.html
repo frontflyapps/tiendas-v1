@@ -235,22 +235,7 @@
 <!--              <span>Distancia pupilar</span>-->
 <!--            </th>-->
 <!--            <td class='pb-2' mat-cell>-->
-              <h4>Distancia pupilar</h4>
-              <mat-form-field appearance='outline' class='select'>
-                <mat-label>{{'Distancia'}}</mat-label>
-                <input
-                  [formControl]="form.get('pupillaryDistance')"
-                  matInput
-                  placeholder="{{ 'Medida' | translate }}"
-                  type='text'
-                />
-                <mat-error *ngIf="form.get('pupillaryDistance').hasError('required')">
-                  {{ 'La medida de la distancia pupilar' | translate }} <strong>{{ 'is required' | translate }}</strong>
-                </mat-error>
-                <!--            <mat-error *ngIf="form.get('left').hasError('pattern')">-->
-                <!--              {{ 'Ojo izquierdo' | translate }} <strong>{{ 'wrong' | translate }}</strong>-->
-                <!--            </mat-error>-->
-              </mat-form-field>
+
 <!--            </td>-->
 <!--            <td class='pb-2' mat-cell>-->
 
@@ -258,6 +243,44 @@
 <!--            <td class='pb-2' mat-cell></td>-->
 <!--          </tr>-->
         </table>
+        <div fxLayout='row' fxLayoutAlign='start start' fxLayoutGap='1rem'>
+          <div fxLayout='column'>
+            <h4>Distancia pupilar</h4>
+            <mat-form-field appearance='outline' class='select'>
+              <mat-label>{{'Distancia'}}</mat-label>
+              <input
+                [formControl]="form.get('pupillaryDistance')"
+                matInput
+                placeholder="{{ 'Medida' | translate }}"
+                type='text'
+              />
+              <mat-error *ngIf="form.get('pupillaryDistance').hasError('required')">
+                {{ 'La medida de la distancia pupilar' | translate }} <strong>{{ 'is required' | translate }}</strong>
+              </mat-error>
+              <!--            <mat-error *ngIf="form.get('left').hasError('pattern')">-->
+              <!--              {{ 'Ojo izquierdo' | translate }} <strong>{{ 'wrong' | translate }}</strong>-->
+              <!--            </mat-error>-->
+            </mat-form-field>
+          </div>
+          <div fxLayout='column'>
+            <h4>ADD</h4>
+            <mat-form-field appearance='outline' class='select'>
+              <mat-label>{{'ADD'}}</mat-label>
+              <input
+                [formControl]="form.get('add')"
+                matInput
+                placeholder="{{ 'ADD' | translate }}"
+                type='text'
+              />
+              <mat-error *ngIf="form.get('add').hasError('required')">
+                {{ 'ADD' | translate }} <strong>{{ 'is required' | translate }}</strong>
+              </mat-error>
+              <!--            <mat-error *ngIf="form.get('left').hasError('pattern')">-->
+              <!--              {{ 'Ojo izquierdo' | translate }} <strong>{{ 'wrong' | translate }}</strong>-->
+              <!--            </mat-error>-->
+            </mat-form-field>
+          </div>
+        </div>
 
       </div>
       <div fxLayout='row' fxLayout.xs='column' fxLayout.sm='column' fxLayoutAlign='end end' fxLayoutGap='6px'>

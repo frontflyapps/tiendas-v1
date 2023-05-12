@@ -16,6 +16,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { PipesModule } from '../../../core/pipes/pipes.module';
 import { DialogCaptchaRoutingModule } from './dialog-captcha-routing.module';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 @NgModule({
@@ -40,6 +41,7 @@ import { DialogCaptchaRoutingModule } from './dialog-captcha-routing.module';
     MatDividerModule,
     MatButtonToggleModule,
     PipesModule,
+    MatProgressSpinnerModule,
   ],
   exports: [
     DialogCaptchaComponent

@@ -217,6 +217,7 @@ export class DialogPrescriptionComponent implements OnInit {
       cylinderRight: [null],
       axisRight: [null],
       pupillaryDistance: [null],
+      add: [null],
     });
     this.supplementForm = this.fb.group({
       supplementType: [null, [Validators.required]],

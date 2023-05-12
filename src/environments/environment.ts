@@ -1,7 +1,22 @@
+// This file can be replaced during build by using the `fileReplacements` array.
+// `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
+// The list of file replacements can be found in `angular.json`.
 const packageJson = require('../../package.json');
+
+// peopleGoTo | transfermovil | bidaiondo
 export const PASARELA_BASE = 'peoplegoto';
+
 export const environment = {
-  production: true,
+  production: false,
+
+  // apiUrl: 'https://api.mibulevar.com/v1/',
+  // imageUrl: 'https://api.mibulevar.com/v1/',
+
+  // apiUrl: 'https://apitienda.guajiritos.com/v1/',
+  // imageUrl: 'https://apitienda.guajiritos.com/v1/',
+
+  // apiUrl: 'https://api.guajiritos.com/v1/',
+  // imageUrl: 'https://cdntienda.guajiritos.com/',
 
   apiUrl: 'https://api.pymesbulevar.com/v1/',
   imageUrl: 'https://cdntienda.veoveofashion.com/',

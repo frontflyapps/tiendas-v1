@@ -9,7 +9,7 @@ RUN npm config get registry
 ENV NODE_OPTIONS=--max-old-space-size=8000
 ENV NODE_OPTIONS=--max_old_space_size=8000
 
-RUN yarn install
+RUN yarn install --network-timeout 1000000
 
 RUN yarn build
 

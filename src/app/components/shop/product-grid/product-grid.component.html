@@ -26,7 +26,15 @@
           />
         </a>
         <div class='moduleTitle line-clampTitle p-2'>
+          <a
+            [queryParams]='{ productId: product.id, stockId: product?.Stock?.id,
+                                                         name: product?.name?.es,
+                                                         sharedImage: product?.sharedImage }'
+            [routerLink]="['/product']"
+            class='product-link'
+          >
           <h4 class='mat-body-2'>{{ utilsService.parserLanguage(product.name, language) }}</h4>
+          </a>
         </div>
         <div class='price p-2'>
           <a
