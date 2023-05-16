@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class CaptchaService {
 
+  urlCheck = environment.apiUrl + 'captcha/checkCaptcha';
   urlUuid = environment.apiUrl + 'captcha/confirm/:uuid';
   urlHash = environment.apiUrl + 'captcha/confirm/:hash';
   httpOptions           = {};
@@ -22,7 +23,7 @@ export class CaptchaService {
 
   getCaptcha(data) {
     console.log(data);
-    return this.httpClient.patch<any>(this.urlUuid.replace(':uuid', data.uuid), data, this.httpOptions);
+    return this.httpClient.get<any>(this.urlCheck, data);
   }
 
 }
