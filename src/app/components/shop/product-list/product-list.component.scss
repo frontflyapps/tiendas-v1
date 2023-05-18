@@ -37,6 +37,8 @@
   max-width: 140px;
   height: 140px;
   max-height: 180px;
+  aspect-ratio: 3/2;
+  mix-blend-mode: darken;
   object-fit: cover;
   object-position: center;
   border-top-left-radius: 4px;
