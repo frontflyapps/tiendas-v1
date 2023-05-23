@@ -470,7 +470,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         }
         this.configurationService.getCurrencys(this.query, params).subscribe((response) => {
           if (response.data) {
-            this.rate = response.data[0]?.rate;
+            this.rate = response.data[0]?.rate || 1;
           } else {
             this.rate = 1;
           }
@@ -481,7 +481,14 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.form.controls['paymentType'].valueChanges.pipe(takeUntil(this._unsubscribeAll)).subscribe((data) => {
       if (data && (data == 'peoplegoto' || data == 'authorize')) {
         this.form.controls['currency'].setValue(CoinEnum.EUR);
+      } else if (data === 'transfermovil') {
+        if (this.cart.market === 'international') {
+          this.form.get('currency').setValue('USD');
+        } else  {
+          this.form.get('currency').setValue('CUP');
+        }
       }
+      this.onRecalculateShipping();
     });
 
     this.form.controls['ProvinceId'].valueChanges.subscribe((data) => {
@@ -759,6 +766,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           Validators.maxLength(8),
         ]);
     }
+    this.form.valueChanges.subscribe(data => {
+      console.log(this.form);
+    })
     this.form.updateValueAndValidity();
     this.updateValidatorsForChangeNationality(this.onlyCubanPeople);
     this.subsToTransfermovilChange();
