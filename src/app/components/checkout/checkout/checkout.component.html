@@ -138,7 +138,8 @@
                             || form.controls['paymentType'].value === 'discover-global'
                             || multiTransfermovil)">
             <ng-container *ngIf="!loadingPayment">
-              <p class="mat-body-2 my-2" style="text-transform: uppercase" *ngIf="form.get('paymentType').value.length !== 2 && form.get('paymentType').value.length !== 3">
+              <p class="mat-body-2 my-2" style="text-transform: uppercase"
+                 *ngIf="!multiTransfermovil || (multiTransfermovil && (form.get('paymentType').value === 'transfermovil'))">
                 {{ 'Selecciones moneda para realizar su pago' | translate }}
               </p>
               <div fxLayout="row wrap">
