@@ -1,6 +1,6 @@
 import { MetaService } from 'src/app/core/services/meta.service';
 import { DialogNoCartSelectedComponent } from '../no-cart-selected/no-cart-selected.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { PayService } from '../../../core/services/pay/pay.service';
 import {
@@ -307,6 +307,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     private currencyCheckoutPipe: CurrencyCheckoutPipe,
     private metaService: MetaService,
     public contactsService: ContactsService,
+    public router: Router,
     private spinner: NgxSpinnerService,
   ) {
     this._unsubscribeAll = new Subject<any>();
@@ -365,6 +366,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           this.arrPayments.push(item);
         });
         enabledGates = this.arrPayments;
+        console.log(enabledGates);
       } else {
         this.onMarket = false;
         enabledGates = this.businessConfig?.gateways;
@@ -511,6 +513,13 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       }
     });
 
+    this.form.controls['currency'].valueChanges.subscribe((data) => {
+      this.selectedMunicipality = this.allMunicipalities.find(item => data === item.id);
+      if (data && this.form.controls['currency'].value) {
+        this.calculateShippingRequired();
+      }
+    });
+
     this.form.controls['ShippingBusinessId'].valueChanges.subscribe((value) => {
       this.getTotalWithShippingIncluded();
     });
@@ -538,8 +547,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   onShippingSelected(data) {
     this.shippingSelected = data.value;
     this.form.get('ShippingBusinessId').setValue(data.value);
-    this.form.controls['ProvinceId'].setValue(data.value.shippingItems[0].Shipping.ProvinceId);
-    this.form.controls['MunicipalityId'].setValue(data.value.shippingItems[0].Shipping.MunicipalityId);
   }
 
   private validateShippingRequired() {
@@ -580,58 +587,66 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.loadingCart = true;
     this.cartService.getCartData({ cartId: this.cartId, cartItemIds: this.cartItemIds }).subscribe({
         next: (data) => {
-          this.cart = data.Cart;
-          this.getBusinessConfig(this.cart?.BusinessId);
-          this.buyProducts = data.CartItems || [];
-          // Obtain data for fixed shipping value
-          this.buyWithDiscount = data.discount.priceWithDiscount ? data.discount : null;
-          this.fixShippingBusiness = data.Cart.BusinessId;
-          // Obtain data for fixed shipping value
-          this.buyWithDiscount = data.discount.priceWithDiscount ? data.discount : null;
-          this.fixShippingBusiness = data.Cart.BusinessId;
-          // Check if is required shipping by business
-          this.shippingIsRequired = data.Cart.Business.shippingRequired;
-          if (this.shippingIsRequired) {
-            this.form.controls['shippingRequired'].setValidators(Validators.required);
-            this.form.controls['ShippingBusinessId'].setValidators(Validators.required);
-            this.form.controls['shippingRequired'].updateValueAndValidity();
-          }
-          // Check if the Pick-Up-Place label has to be displayed
-          if (data.CartItems.filter((item) => item.Product.type === 'physical').length > 0) {
-            this.hasPickUpPlace = true;
+          console.log(data);
+          if (data.CartItems.length === 0) {
+            this.router.navigate(['']);
           } else {
-            this.hasPickUpPlace = false;
-          }
-          if (this.cart.market === 'national' && this.onMarket) {
-            this.form.controls['currency'].setValue('CUP');
-          }
-          this.dataSource = new MatTableDataSource(this.buyProducts);
-          this.marketCard =
-            this.buyProducts && this.buyProducts.length > 0 ? this.buyProducts[0].Product.market : MarketEnum.NATIONAL;
-          // if (this.buyProducts && this.buyProducts.length > 0 && ) {
-          //   this.onRecalculateShipping();
-          // } else {
-          this.shippingData = [];
-          this.loading = true;
-          // }
-          if (this.cart.market === MarketEnum.NATIONAL && !this.onMarket) {
-            this.form.get('currency').setValue(CoinEnum.CUP);
-          }
-          if (this.cart.market === MarketEnum.INTERNATIONAL && !this.onMarket) {
-            this.form.get('currency').setValue(CoinEnum.USD);
-          }
-          this.cartService.$cartItemsUpdated.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {
-            if (data.length > 0) {
-              console.log(this.cart);
-              this.theBusiness = data[0].Business;
+            this.cart = data.Cart;
+            this.getBusinessConfig(this.cart?.BusinessId);
+            this.buyProducts = data.CartItems || [];
+            // Obtain data for fixed shipping value
+            this.buyWithDiscount = data.discount.priceWithDiscount ? data.discount : null;
+            this.fixShippingBusiness = data.Cart.BusinessId;
+            // Obtain data for fixed shipping value
+            this.buyWithDiscount = data.discount.priceWithDiscount ? data.discount : null;
+            this.fixShippingBusiness = data.Cart.BusinessId;
+            // Check if is required shipping by business
+            this.shippingIsRequired = data.Cart.Business.shippingRequired;
+            if (this.shippingIsRequired) {
+              this.form.controls['shippingRequired'].setValidators(Validators.required);
+              this.form.controls['ShippingBusinessId'].setValidators(Validators.required);
+              this.form.controls['shippingRequired'].updateValueAndValidity();
             }
-          });
-          setTimeout(() => {
-            this.loadingCart = false;
-          }, 250);
-          this.form.updateValueAndValidity();
+            // Check if the Pick-Up-Place label has to be displayed
+            if (data.CartItems.filter((item) => item.Product.type === 'physical').length > 0) {
+              this.hasPickUpPlace = true;
+            } else {
+              this.hasPickUpPlace = false;
+            }
+            if (this.cart.market === 'national' && this.onMarket) {
+              this.form.controls['currency'].setValue('CUP');
+            }
+            this.dataSource = new MatTableDataSource(this.buyProducts);
+            this.marketCard =
+              this.buyProducts && this.buyProducts.length > 0 ? this.buyProducts[0].Product.market : MarketEnum.NATIONAL;
+            // if (this.buyProducts && this.buyProducts.length > 0 && ) {
+            //   this.onRecalculateShipping();
+            // } else {
+            this.shippingData = [];
+            this.loading = true;
+            // }
+            if (this.cart.market === MarketEnum.NATIONAL && !this.onMarket) {
+              this.form.get('currency').setValue(CoinEnum.CUP);
+            }
+            if (this.cart.market === MarketEnum.INTERNATIONAL && !this.onMarket) {
+              this.form.get('currency').setValue(CoinEnum.USD);
+            }
+            this.cartService.$cartItemsUpdated.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {
+              if (data.length > 0) {
+                console.log(this.cart);
+                this.theBusiness = data[0].Business;
+              }
+            });
+            setTimeout(() => {
+              this.loadingCart = false;
+            }, 250);
+            this.form.updateValueAndValidity();
+          }
+
         },
         error: (err) => {
+          console.log('________________________________________________________________');
+          this.showToastr.showError(err.message)
           this.loadingCart = false;
         },
       },
@@ -790,7 +805,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.form.get('phone').setValue(this.loggedInUser?.phone);
     this.form.get('dni').setValue(this.loggedInUser?.ci);
     this.form.get('email').setValue(this.loggedInUser?.email);
-    this.form.get('paymentType').setValue(this.businessConfig.gateways);
+    // this.form.get('paymentType').setValue(this.businessConfig.gateways);
     this.form.get('regionProvinceState').setValue(null);
     // this.form.controls['address'].get('street').setValue(null);
     // this.form.controls['address'].get('number').setValue(null);

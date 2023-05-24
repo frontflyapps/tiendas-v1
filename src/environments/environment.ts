@@ -18,7 +18,7 @@ export const environment = {
   // apiUrl: 'https://api.pymesbulevar.com/v1/',
   // imageUrl: 'https://cdntienda.pymesbulevar.com/',
 
-  // apiUrl: 'http://apitienda.tiendalocal.com:8999/v1/',
+  // apiUrl: 'http://apitienda.tiendalocal.com:8998/v1/',
   // imageUrl: 'http://cdntienda.guajiritos.com/',
 
   defaultLanguage: 'es',
