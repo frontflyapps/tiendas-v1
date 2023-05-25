@@ -167,9 +167,9 @@
                               (selectionChange)="form.controls['ShippingBusinessId'].setValue(null)">
                     <ng-container *ngFor="let currency of currenciesTransfermovil">
                       <mat-option *ngIf="(form.get('paymentType').value === 'transfermovil')"
-                                  [value]="currency">
+                                  [value]="currency.value">
                                   <span class="mat-body-2">
-                                    {{ currency }}
+                                    {{ currency.name }}
                                   </span>
                       </mat-option>
                     </ng-container>

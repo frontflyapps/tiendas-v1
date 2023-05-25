@@ -99,7 +99,15 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   buscoShipping = false;
   launchTM = undefined;
   currencies = ['USD', 'EUR'];
-  currenciesTransfermovil = ['USD', 'CUP'];
+  currenciesTransfermovil = [
+    {
+      name: 'MLC',
+      value: 'USD'
+    },
+    {
+      name: 'CUP',
+      value: 'CUP'
+    }];
   multiTransfermovil = false;
   dataSource: MatTableDataSource<any>;
   amount: number;
