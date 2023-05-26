@@ -129,13 +129,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   payments: any[] = [
     {
-      id: 'transfermovil',
-      enabled: false,
-      name: 'Transfermovil',
-      logo: 'assets/images/cards/transfermovil_logo.png',
-      market: 'national',
-    },
-    {
       id: 'enzona',
       name: 'Enzona',
       logo: 'assets/images/cards/enzona.jpeg',
