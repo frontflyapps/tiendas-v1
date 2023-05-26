@@ -664,10 +664,9 @@ export class CartService implements OnDestroy {
   getShippingCart(cartId: any, businessId?: any): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
-        BusinessId: businessId,
+        BusinessId: businessId
       }),
     };
-    console.log('aaaaaaaaaaaaaaaaaa');
     return this.httpClient.post<any>(this.urlShipping, cartId, httpOptions);
   }
 
@@ -685,7 +684,7 @@ export class CartService implements OnDestroy {
       data: {
         title: 'Información',
         textHtml: `
-        <h4 style="text-transform:none !important; line-height:1.6rem !important;">
+        <h4 style='text-transform:none !important; line-height:1.6rem !important;'>
           Es necesario iniciar sesión para adicionar al carrito de compra.
         </h4>
        `,
