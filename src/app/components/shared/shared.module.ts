@@ -9,6 +9,7 @@ import { OrderByPipe } from './pipes/order-by.pipe';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PreviousRouteService } from '../../core/services/previous-route/previous-route.service';
+import { DialogCaptchaModule } from './dialog-captcha/dialog-captcha.module';
 
 @NgModule({
     declarations: [OrderByPipe],
@@ -22,6 +23,7 @@ import { PreviousRouteService } from '../../core/services/previous-route/previou
         MatIconModule,
         FlexLayoutModule,
         TranslateModule,
+      DialogCaptchaModule
     ],
     exports: [
         ReactiveFormsModule,
@@ -33,6 +35,7 @@ import { PreviousRouteService } from '../../core/services/previous-route/previou
         MatIconModule,
         FlexLayoutModule,
         TranslateModule,
+      DialogCaptchaModule
     ],
     providers: [PreviousRouteService]
 })

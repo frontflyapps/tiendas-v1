@@ -223,12 +223,24 @@ $red-600: mat-color(mat-palette($mat-red), 600);
   }
 }
 
+
+
+
+mat-select[name="opciones"] mat-optgroup {
+  display: inline-block;
+  width: 50%;
+  vertical-align: top;
+  padding-right: 10px;
+  box-sizing: border-box;
+}
+
 /* Zoom Style */
 .ngxImageZoomContainer {
   //min-width: 360px;
   max-width: 100%;
-  width: 450px;
-  height: 450px;
+  margin: 0px !important;
+  width: 600px;
+  height: 600px;
   overflow: visible !important;
   box-shadow: 0 0 8px #e5e5e5;
 

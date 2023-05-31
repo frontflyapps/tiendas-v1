@@ -2,7 +2,7 @@ import { MetaService } from 'src/app/core/services/meta.service';
 import { ShowToastrService } from '../../../../core/services/show-toastr/show-toastr.service';
 import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { CartService } from '../../../shared/services/cart.service';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { Product } from '../../../../modals/product.model';
 import { ProductDataService, ProductService } from '../../../shared/services/product.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -23,17 +23,23 @@ import { SocialMediaComponent } from './social-media/social-media.component';
 import { LANDING_PAGE, PRODUCT_COUNT } from '../../../../core/classes/global.const';
 import { LocalStorageService } from '../../../../core/services/localStorage/localStorage.service';
 import { ConfirmationDialogFrontComponent } from '../../../shared/confirmation-dialog-front/confirmation-dialog-front.component';
+import { SwiperConfigInterface, SwiperPaginationInterface } from 'ngx-swiper-wrapper';
+import { ProductDialogComponent } from '../product-dialog/product-dialog.component';
+import { DialogPrescriptionComponent } from '../dialog-prescription/dialog-prescription.component';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.scss'],
 })
-export class ProductDetailsComponent implements OnInit, OnDestroy {
+export class ProductDetailsComponent implements OnInit, OnDestroy, AfterViewInit {
   isLoading = true;
   product: any = {};
   products: any[] = [];
-  relatedProduct: any[] = [];
+  relatedProduct: any;
+  supplementArray: any;
   featuredProducts: any[] = [];
   imageUrl = environment.imageUrl;
   arrayImages: any[] = [];
@@ -41,6 +47,8 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   changeImage = false;
   language: any;
   _unsubscribeAll: Subject<any>;
+  public config: SwiperConfigInterface = {};
+  public configVariants: SwiperConfigInterface = {};
   loggedInUser: any = null;
   reviewForm: UntypedFormGroup;
   loadingReviews = false;
@@ -90,11 +98,20 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     filter: { filterText: '' },
   };
 
+  private pagination: SwiperPaginationInterface = {
+    el: '.swiper-pagination',
+    clickable: true,
+  };
+  private paginationVariants: SwiperPaginationInterface = {
+    clickable: true,
+  };
+
   indexTab = 0;
   errorPage = false;
 
   previewUrl: any;
   videoUrl: any;
+  isSmallDevice: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -114,11 +131,26 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     private localStorageService: LocalStorageService,
     private httpClient: HttpClient,
     public productDataService: ProductDataService,
+    public spinner: NgxSpinnerService,
     private meta: Meta,
+    private breakpointObserver: BreakpointObserver,
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
+
+    this.breakpointObserver
+      .observe([
+        Breakpoints.Medium,
+        Breakpoints.Handset,
+        Breakpoints.XSmall,
+        Breakpoints.Small,
+        Breakpoints.Tablet
+      ])
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((data) => {
+        this.isSmallDevice = data.matches;
+      });
 
     this.route.queryParams.subscribe((query) => {
       const productId = query.productId;
@@ -129,6 +161,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
       this.productsService.getProductById(productId, stockId).subscribe(
         (data) => {
           this.product = data.data;
+          console.log(this.product);
           this.getProductsByBusiness(this.product?.BusinessId);
           this.initStateView();
           this.isLoading = false;
@@ -226,7 +259,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
       map((value) => this._filter(value)),
     );
 
-    ///Data to redirect function///
+    /// Data to redirect function///
     this.pathToRedirect = this.route.snapshot.routeConfig.path;
     this.route.queryParamMap.subscribe((params) => {
       this.paramsToUrlRedirect = { ...params };
@@ -327,25 +360,108 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
 
   getRelatedProducts() {
     this.loadingRelated = true;
-    this.productsService.getRecomendedProduct(this.product.id).subscribe((data: any) => {
+    this.productsService.getNewRecomendedProduct(this.product.id, 'recommended').subscribe((data: any) => {
       this.relatedProduct = data.data;
-      const timeOut = setTimeout(() => {
-        this.loadingRelated = false;
-        clearTimeout(timeOut);
-      }, 800);
+      console.log(this.relatedProduct);
+      this.loadingRelated = false;
+    //   const timeOut = setTimeout(() => {
+    //     this.loadingRelated = false;
+    //     clearTimeout(timeOut);
+    //   }, 800);
     });
+
+  }
+
+  ngAfterViewInit(): void {
+    this.initConfig();
+  }
+
+  goProduct(product) {
+    console.log(product);
+    // const params = new URLSearchParams(productId: product?.Product?.id, stockId: product?.Product?.Stock?.id, name: item?.name?.es, product: item?.sharedImage);
+    const params = '/product' + '?' + 'productId=' + product?.ProductId + 'stockId=' + product?.RecomendedProduct.Stocks[0]?.uuid +
+    'name=' + product?.RecomendedProduct.name?.es + 'sharedImage=' + product?.RecomendedProduct.sharedImage;
+    console.log(params);
+    // window.location.href = params;
+
+  //   [queryParams]="{ productId: item?.Product?.id, stockId: item?.Product?.Stock?.id,
+  //   name: item?.name?.es,
+  //     sharedImage: item?.sharedImage }"
+  // [routerLink]="['/product']"
+  }
+
+  initConfig() {
+    this.config = {
+      slidesPerView: 1,
+      spaceBetween: 0,
+      keyboard: true,
+      navigation: true,
+      pagination: this.pagination,
+      grabCursor: true,
+      loop: false,
+      preloadImages: false,
+      lazy: true,
+      autoplay: {
+        delay: 5000,
+        disableOnInteraction: false,
+      },
+      speed: 500,
+      effect: 'fade',
+    };
+    this.configVariants = {
+      slidesPerView: 7,
+      spaceBetween: 20,
+      keyboard: true,
+      navigation: true,
+      pagination: this.paginationVariants,
+      grabCursor: true,
+      loop: false,
+      preloadImages: true,
+      lazy: true,
+      autoplay: false,
+      effect: 'slide',
+    };
   }
 
   // Add to cart
   public addToCart(product: any, quantity) {
-    if (this.loggedInUserService.getLoggedInUser()) {
-      if (quantity === 0) {
-        return false;
+    console.log('entro aki');
+    console.log(product);
+    if (product.typeAddCart === 'glasses') {
+      if (this.loggedInUserService.getLoggedInUser()) {
+        const dialogRef = this.dialog.open(DialogPrescriptionComponent, {
+          width: this.isSmallDevice ? '100vw' : '50rem',
+          maxWidth: this.isSmallDevice ? '100vw' : '50rem',
+          height: this.isSmallDevice ? '100vh' : '50rem',
+          maxHeight: this.isSmallDevice ? '100vh' : '50rem',
+          data: {
+            product: product,
+            quantity: quantity,
+          },
+        });
+        dialogRef.afterClosed().subscribe((result) => {
+          if (result) {
+            this.spinner.hide();
+          //   this.router.navigate(['/products', result.id, result.name]).then();
+          } else {
+            // this.showToastr.showError('No se pudo añadir al carrito');
+            this.spinner.hide();
+          }
+        });
+      } else {
+        this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
       }
-      this.cartService.addToCart(product, Math.max(product.minSale, quantity)).then();
     } else {
-      this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
+      if (this.loggedInUserService.getLoggedInUser()) {
+        if (quantity === 0) {
+          return false;
+        }
+        this.cartService.addToCart(product, Math.max(product.minSale, quantity)).then();
+      } else {
+        this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
+      }
     }
+
   }
 
   // getFeaturedProducts() {
@@ -442,10 +558,40 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
 
   onAddtoCartNav() {
     if (this.loggedInUserService.getLoggedInUser()) {
-      this.cartService.addToCart(this.product, this.counter);
+
+
+      if (this.product.typeAddCart === 'glasses') {
+        if (this.loggedInUserService.getLoggedInUser()) {
+          const dialogRef = this.dialog.open(DialogPrescriptionComponent, {
+            width: this.isSmallDevice ? '100vw' : '50rem',
+            maxWidth: this.isSmallDevice ? '100vw' : '50rem',
+            height: this.isSmallDevice ? '100vh' : '50rem',
+            maxHeight: this.isSmallDevice ? '100vh' : '50rem',
+            data: {
+              product: this.product,
+              quantity: this.counter,
+            },
+          });
+          dialogRef.afterClosed().subscribe((result) => {
+            if (result) {
+              this.spinner.hide();
+              //   this.router.navigate(['/products', result.id, result.name]).then();
+            } else {
+              // this.showToastr.showError('No se pudo añadir al carrito');
+              this.spinner.hide();
+            }
+          });
+        } else {
+          this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
+        }
+      } else {
+        if (this.loggedInUserService.getLoggedInUser()) {
+          this.cartService.addToCart(this.product, this.counter).then();
+        } else {
+          this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
+        }
+      }
       this.router.navigate(['/cart']);
-    } else {
-      this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
     }
   }
 

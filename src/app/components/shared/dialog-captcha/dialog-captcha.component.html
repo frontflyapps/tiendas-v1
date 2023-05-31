@@ -1,0 +1,40 @@
+<div *ngIf="inLoading" fxLayout='row' fxLayoutAlign='center center' style='height: 80vh'>
+  <mat-spinner *ngIf="inLoading" [diameter]="60"></mat-spinner>
+</div>
+
+<div fxLayout='column' fxLayoutAlign='center center' class='mb-20 mt-10' *ngIf='!inLoading && data'>
+  <h2 class='mb-2'>{{data.message | i18nField: translateService.currentLang}}</h2>
+
+
+  <div fxLayout='row' fxLayoutAlign='center center'>
+    <img [src]="data.image" class='mr-2 img-captcha'/>
+    <button mat-icon-button mat-raised-button (click)='refreshData()'>
+      <mat-icon>refresh</mat-icon>
+    </button>
+  </div>
+
+  <mat-form-field appearance="outline" class="example-full-width mt-2">
+    <mat-label>{{ 'Resultado' | translate }}</mat-label>
+    <input
+      [formControl]="form.get('value')"
+      autocomplete="username"
+      matInput
+      name="username"
+      placeholder="{{ 'Resultado' | translate }}"
+      required
+    />
+    <mat-error *ngIf="form.get('value').hasError('required')">
+      {{ 'Resultado' | translate }} <strong>{{ 'is required' | translate }}</strong>
+    </mat-error>
+    <mat-error *ngIf="form.get('value').hasError('pattern')">
+      {{ 'El resultado debe contener números' | translate }}
+    </mat-error>
+  </mat-form-field>
+
+  <mat-dialog-actions fxLayout='row' fxLayoutAlign='end end'>
+<!--    <div fxLayout='row' fxLayoutAlign='end end'>-->
+      <button mat-raised-button color='primary' (click)='sendData()'>Enviar</button>
+<!--    </div>-->
+  </mat-dialog-actions>
+</div>
+

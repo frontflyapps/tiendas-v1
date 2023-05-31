@@ -94,7 +94,7 @@ export class UtilsService {
 
     if (error.status >= 300 && error.status < 500) {
       this.showToastr
-        .showInfo(msg, 'Error', 5000)
+        .showError(msg, 'Error', 5000)
         .toastRef.afterClosed()
         .subscribe((data) => {
           this.showErrorState = false;

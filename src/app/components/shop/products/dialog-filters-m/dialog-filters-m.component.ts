@@ -67,7 +67,7 @@ export class DialogFiltersMComponent implements OnInit, OnDestroy {
     public loggedInUserService: LoggedInUserService,
     private route: ActivatedRoute,
     public dialogRef: MatDialogRef<DialogFiltersMComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+      @Inject(MAT_DIALOG_DATA) public data: DialogData,
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';

@@ -311,6 +311,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public changeCurrency(currency) {
+    console.log(currency);
     this.currency = currency;
     this.currencyService.setCurrency(currency);
   }

@@ -43,6 +43,12 @@ export class TokenInterceptorService implements HttpInterceptor {
       });
     }
 
+    request = request.clone({
+      setHeaders: {
+        version: environment.versions.app
+      }
+    });
+
     if (this.token && !request.url.includes('auth/login')) {
       request = request.clone({
         setHeaders: {

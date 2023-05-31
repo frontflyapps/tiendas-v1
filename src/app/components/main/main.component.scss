@@ -23,6 +23,11 @@
 
 }
 
+.button-web-currency{
+  margin-right: 8px;
+  margin-left: 8px;
+}
+
 .nl-titles {
   .nl-province {
     font-size: 12px;
@@ -52,6 +57,26 @@
   height: auto;
   max-width: 170px;
 }
+.menu-currency {
+  text-align: center;
+  justify-content: center;
+  .mat-menu-content {
+    width: 100px !important;
+    //padding-top: 0px !important;
+  }
+  .mat-menu-item {
+    height: 35px !important;
+  }
+  span{
+    line-height: 35px;
+    height: 35px;
+  }
+}
+
+//.title-mat-menu {
+// width: 100%;
+//  background-color: $grey10;
+//}
 
 app-main,
 .app-main {
@@ -73,6 +98,9 @@ app-main,
     span {
       text-decoration: underline;
     }
+  }
+  .button-currency{
+    padding: 0px !important;
   }
 
   .sidebar-close-btn {
