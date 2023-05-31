@@ -1233,8 +1233,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.form.get('lastName').setValue(contact?.lastName);
     this.form.get('email').setValue(contact?.email);
     this.form.get('CountryId').setValue(59);
-    this.form.get('ProvinceId').setValue(contact?.ProvinceId);
-    this.form.get('MunicipalityId').setValue(contact?.MunicipalityId);
+    // this.form.get('ProvinceId').setValue(contact?.ProvinceId);
+    // this.form.get('MunicipalityId').setValue(contact?.MunicipalityId);
     this.form.get('address').get('street').setValue(contact?.address.street);
     this.form.get('address').get('number').setValue(contact?.address.number);
     this.form.get('address').get('between').setValue(contact?.address.between);
