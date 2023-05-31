@@ -165,7 +165,7 @@
                   <mat-select [formControl]="form.controls['currency']"
                               placeholder="{{ 'Currency' | translate }}"
                               (selectionChange)="form.controls['ShippingBusinessId'].setValue(null)">
-                    <ng-container *ngFor="let currency of currenciesTransfermovil">
+                    <ng-container *ngFor="let currency of currenciesTuUse">
                       <mat-option *ngIf="(form.get('paymentType').value === 'transfermovil')"
                                   [value]="currency.value">
                                   <span class="mat-body-2">
