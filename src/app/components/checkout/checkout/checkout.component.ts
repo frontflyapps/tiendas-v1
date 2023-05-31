@@ -99,6 +99,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   buscoShipping = false;
   launchTM = undefined;
   currencies = ['USD', 'EUR'];
+  currenciesTuUse: any[] = [];
   currenciesTransfermovil = [
     {
       name: 'MLC',
@@ -359,6 +360,18 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       if (objectKeys(this.cart.currenciesGateway).length > 0) {
         this.onMarket = true;
         if (this.cart.currenciesGateway?.transfermovil?.currency.length > 0) {
+          this.cart.currenciesGateway?.transfermovil?.currency.forEach(item => {
+            switch (item) {
+              case 'CUP': {
+                this.currenciesTuUse.push(this.currenciesTransfermovil[1]);
+                break;
+              }
+              case 'USD': {
+                this.currenciesTuUse.push(this.currenciesTransfermovil[0]);
+                break;
+              }
+            }
+          });
           this.multiTransfermovil = true;
         } else {
           this.multiTransfermovil = false;
@@ -1240,7 +1253,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.form.get('address').get('between').setValue(contact?.address.between);
     this.form.get('dni').setValue(contact?.identification);
     this.form.get('phone').setValue(contact?.phone);
-    this.form.get('paymentType').setValue(this.businessConfig.gateways);
+    // this.form.get('paymentType').setValue(this.businessConfig.gateways);
 
     this.form.markAllAsTouched();
   }
