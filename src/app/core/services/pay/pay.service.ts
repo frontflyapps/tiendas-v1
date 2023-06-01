@@ -12,6 +12,9 @@ export class PayService {
   urlPaymentEnzona = environment.apiUrl + 'payment/enzona';
   urlPaymentBidaiondo = environment.apiUrl + 'payment/bidaiondo';
   urlPaymentAuthorize = environment.apiUrl + 'payment/authorize';
+  urlPaymentPaypal = environment.apiUrl + 'payment/paypal';
+  urlPaymentMultisafepay = environment.apiUrl + 'payment/multisafepay';
+  urlPaymentTropipay = environment.apiUrl + 'payment/tropipay';
   urlBidaiondoCards = environment.apiUrl + 'payment/bidaiondo/get-card';
   urlPaymentPeopleGoTo = environment.apiUrl + 'payment/peoplegoto';
   urlPaymentBidaiondoNew = 'https://apibidpay.guajitech.com/v1/to-bidaiondo-redirect';
@@ -49,6 +52,18 @@ export class PayService {
 
   makePaymentAuthorize(data): Observable<any> {
     return this.httpClient.post<any>(this.urlPaymentAuthorize, data).pipe(timeout(60000));
+  }
+
+  makePaymentPaypal(data): Observable<any> {
+    return this.httpClient.post<any>(this.urlPaymentPaypal, data).pipe(timeout(60000));
+  }
+
+  makePaymentMultisafepay(data): Observable<any> {
+    return this.httpClient.post<any>(this.urlPaymentMultisafepay, data).pipe(timeout(60000));
+  }
+
+  makePaymentTropipay(data): Observable<any> {
+    return this.httpClient.post<any>(this.urlPaymentTropipay, data).pipe(timeout(60000));
   }
 
   makePaymentBidaiondoNew(data): Observable<any> {

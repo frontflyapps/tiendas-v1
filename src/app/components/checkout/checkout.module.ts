@@ -40,6 +40,9 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { MatDatepicker, MatDatepickerModule } from '@angular/material/datepicker';
 import { DialogPgtConfirmToPayComponent } from './dialog-pgt-confirm-to-pay/dialog-pgt-confirm-to-pay.component';
 import { DialogAuthorizeConfirmToPayComponent } from './dialog-authorize-confirm-to-pay/dialog-authorize-confirm-to-pay.component';
+import { DialogPaypalConfirmToPayComponent } from './dialog-paypal-confirm-to-pay/dialog-paypal-confirm-to-pay.component';
+import { DialogMultisafepayConfirmToPayComponent } from './dialog-multisafepay-confirm-to-pay/dialog-multisafepay-confirm-to-pay.component';
+import { DialogTropipayConfirmToPayComponent } from './dialog-tropipay-confirm-to-pay/dialog-tropipay-confirm-to-pay.component';
 
 @NgModule({
     imports: [
@@ -84,6 +87,9 @@ import { DialogAuthorizeConfirmToPayComponent } from './dialog-authorize-confirm
         DialogBidaiondoConfirmToPayComponent,
         DialogPgtConfirmToPayComponent,
         DialogAuthorizeConfirmToPayComponent,
+        DialogPaypalConfirmToPayComponent,
+        DialogMultisafepayConfirmToPayComponent,
+        DialogTropipayConfirmToPayComponent,
     ],
     providers: [TaxesShippingService]
 })

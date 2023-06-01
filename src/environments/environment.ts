@@ -12,14 +12,14 @@ export const environment = {
   // apiUrl: 'https://api.mibulevar.com/v1/',
   // imageUrl: 'https://api.mibulevar.com/v1/',
 
-  apiUrl: 'https://api.guajiritos.com/v1/',
-  imageUrl: 'https://cdntienda.guajiritos.com/',
+  // apiUrl: 'https://api.guajiritos.com/v1/',
+  // imageUrl: 'https://cdntienda.guajiritos.com/',
   //
   // apiUrl: 'https://api.pymesbulevar.com/v1/',
   // imageUrl: 'https://cdntienda.pymesbulevar.com/',
 
-  // apiUrl: 'http://apitienda.tiendalocal.com:8998/v1/',
-  // imageUrl: 'http://cdntienda.guajiritos.com/',
+  apiUrl: 'http://apitienda.tiendalocal.com:8997/v1/',
+  imageUrl: 'http://cdntienda.guajiritos.com/',
 
   defaultLanguage: 'es',
   currencyInternational: 'USD',
