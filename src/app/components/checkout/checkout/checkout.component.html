@@ -198,7 +198,7 @@
             </div>
 
             <!--SELECTORE DE PROVINCIA Y MUNICIPIOS-->
-            <div fxLayout="row wrap" fxLayoutAlign="space-between center" *ngIf='showShipping'>
+            <div fxLayout="row wrap" fxLayoutAlign="space-between center" *ngIf="showShipping && form.get('paymentType').value?.length !== 1 && form.get('paymentType').value?.length !== 2 && form.get('paymentType').value?.length !== 3 && form.get('paymentType').value?.length !== 4">
               <mat-form-field appearance="outline" fxFlex="48" fxFlex.lt-md="100">
                 <mat-label>{{ 'Provincia' | translate }}</mat-label>
                 <mat-select
@@ -323,16 +323,20 @@
             <h1 *ngIf='noGateway' class="tex-align-center p-4 color-red-500">{{ 'Este negocio no tiene método de pago permitido' }}</h1>
 <!--          </ng-container>-->
           <!---------------------->
+
           <div class="actions-buttons" fxFlex="grow" fxLayout="row" fxLayoutAlign="space-between start">
             <button [routerLink]="['/products/search']" mat-stroked-button matStepperPrevious>
               {{ 'Cancelar' | translate }}
             </button>
+
             <button
               id="buttonFirstStep"
               color="primary"
               mat-raised-button
               matStepperNext
-              [disabled]="noGateway || form.get('ShippingBusinessId').invalid"
+              [disabled]="noGateway || form.get('ShippingBusinessId').invalid || (shippingIsRequired && !form.get('ShippingBusinessId').value) ||
+                          (form.get('paymentType').value?.length == 1 || form.get('paymentType').value?.length == 2 ||
+                          form.get('paymentType').value?.length == 3 || form.get('paymentType').value?.length == 4)"
             >
               {{ 'Continuar' | translate }}
             </button>
