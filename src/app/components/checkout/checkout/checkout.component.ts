@@ -45,6 +45,7 @@ import { DialogPgtConfirmToPayComponent } from '../dialog-pgt-confirm-to-pay/dia
 import { AppService } from '../../../app.service';
 import { DialogAuthorizeConfirmToPayComponent } from '../dialog-authorize-confirm-to-pay/dialog-authorize-confirm-to-pay.component';
 import { objectKeys } from 'codelyzer/util/objectKeys';
+import { DialogPaypalConfirmToPayComponent } from '../dialog-paypal-confirm-to-pay/dialog-paypal-confirm-to-pay.component';
 
 export const amexData = {
   express: 1, // American Express
@@ -131,6 +132,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   payments: any[] = [
     {
       id: 'enzona',
+      enabled: false,
       name: 'Enzona',
       logo: 'assets/images/cards/enzona.jpeg',
       market: 'national',
@@ -207,6 +209,27 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       amex: 14,
       name: 'Discover Global',
       logo: 'assets/images/cards/discover.png',
+      market: 'international',
+    },
+    {
+      id: 'paypal',
+      enabled: false,
+      name: 'PayPal',
+      market: 'international',
+      logo: 'assets/images/cards/paypal.png',
+    },
+    {
+      id: 'multisafepay',
+      enabled: false,
+      name: 'MultiSafePay',
+      logo: 'assets/images/cards/multisafepay.png',
+      market: 'international',
+    },
+    {
+      id: 'tropipay',
+      enabled: false,
+      name: 'TropiPay',
+      logo: 'assets/images/cards/tropipay.png',
       market: 'international',
     },
   ];
@@ -497,6 +520,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.form.controls['paymentType'].valueChanges.pipe(takeUntil(this._unsubscribeAll)).subscribe((data) => {
       if (data && (data == 'peoplegoto' || data == 'authorize')) {
         this.form.controls['currency'].setValue(CoinEnum.EUR);
+      } else if (data === 'paypal' || data === 'multisafepay' || data === 'tropipay') {
+        this.form.controls['currency'].setValue(CoinEnum.USD);
       } else if (data === 'transfermovil') {
         if (this.cart.market === 'international') {
           this.form.get('currency').setValue('USD');
@@ -1053,6 +1078,18 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       data.paymentType = 'authorize';
       return this.processBidaiondo(data);
     }
+    if (data.paymentType == 'paypal') {
+      data.paymentType = 'paypal';
+      return this.processBidaiondo(data);
+    }
+    if (data.paymentType == 'multisafepay') {
+      data.paymentType = 'multisafepay';
+      return this.processBidaiondo(data);
+    }
+    if (data.paymentType == 'tropipay') {
+      data.paymentType = 'tropipay';
+      return this.processBidaiondo(data);
+    }
   }
 
   // /////////////////////////////////////////////
@@ -1156,6 +1193,93 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           let dialogRef: MatDialogRef<DialogAuthorizeConfirmToPayComponent, any>;
 
           dialogRef = this.dialog.open(DialogAuthorizeConfirmToPayComponent, {
+            width: '15cm',
+            maxWidth: '100vw',
+            data: {
+              form: data,
+            },
+          });
+
+          dialogRef.afterClosed().subscribe((result) => {
+            if (result) {
+              window.location.reload();
+            }
+            this.loadingPayment = false;
+          });
+        },
+        (error) => {
+          this.loadingPayment = false;
+        },
+      );
+    }  else if (bodyData.paymentType === 'paypal') {
+      bodyData.urlRedirectSuccesfully = environment.url + 'my-orders';
+      bodyData.urlRedirectCancel = environment.url + 'my-orders';
+      paymentMethod = this.payService.makePaymentPaypal(bodyData);
+      bodyData.currency = 'USD';
+      paymentMethod.subscribe(
+        (data: any) => {
+          console.log(data);
+          let dialogRef: MatDialogRef<DialogPaypalConfirmToPayComponent, any>;
+
+          dialogRef = this.dialog.open(DialogPaypalConfirmToPayComponent, {
+            width: '15cm',
+            maxWidth: '100vw',
+            data: {
+              form: data,
+            },
+          });
+
+          dialogRef.afterClosed().subscribe((result) => {
+            if (result) {
+              window.location.reload();
+            }
+            this.loadingPayment = false;
+          });
+        },
+        (error) => {
+          this.loadingPayment = false;
+        },
+      );
+    }   else if (bodyData.paymentType === 'multisafepay') {
+      bodyData.urlRedirectSuccesfully = environment.url + 'my-orders';
+      bodyData.urlRedirectCancel = environment.url + 'my-orders';
+      paymentMethod = this.payService.makePaymentMultisafepay(bodyData);
+      bodyData.currency = 'USD';
+      paymentMethod.subscribe(
+        (data: any) => {
+          console.log(data);
+          let dialogRef: MatDialogRef<DialogPaypalConfirmToPayComponent, any>;
+
+          dialogRef = this.dialog.open(DialogPaypalConfirmToPayComponent, {
+            width: '15cm',
+            maxWidth: '100vw',
+            data: {
+              form: data,
+            },
+          });
+
+          dialogRef.afterClosed().subscribe((result) => {
+            if (result) {
+              window.location.reload();
+            }
+            this.loadingPayment = false;
+          });
+        },
+        (error) => {
+          this.loadingPayment = false;
+        },
+      );
+    }   else if (bodyData.paymentType === 'paypal') {
+      bodyData.urlRedirectSuccesfully = environment.url + 'my-orders';
+      bodyData.urlRedirectCancel = environment.url + 'my-orders';
+      paymentMethod = this.payService.makePaymentPaypal(bodyData);
+      bodyData.currency = 'USD';
+      paymentMethod.subscribe(
+        (data: any) => {
+          console.log(data);
+          let dialogRef: MatDialogRef<DialogPaypalConfirmToPayComponent, any>;
+
+          dialogRef = this.dialog.open(DialogPaypalConfirmToPayComponent, {
             width: '15cm',
             maxWidth: '100vw',
             data: {
