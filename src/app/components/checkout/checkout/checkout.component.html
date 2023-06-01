@@ -32,7 +32,7 @@
         <mat-step *ngIf="businessConfig?.shippingType == 'normal' || businessConfig?.shippingType == 'fixed'"
                   [completed]="!noGateway && !form.get('ShippingBusinessId').invalid">
           <ng-template matStepLabel>{{ 'Datos de pago' | translate }}</ng-template>
-          <p class="my-2">
+          <p class="my-2" *ngIf="form.get('paymentType').value">
             <strong>{{ 'Seleccione una pasarela para efectuar el pago' | translate }}</strong>
           </p>
 
@@ -179,8 +179,8 @@
             </ng-container>
           </ng-container>
           <!--------- SHIPPING DETAILS ----------->
-          <ng-container *ngIf="form.controls['currency'].value; else noShipping">
-            <p class="my-3" *ngIf="form.get('paymentType').value.length !== 2 && form.get('paymentType').value.length !== 3">
+          <ng-container *ngIf="form.controls['currency'].value && form.get('paymentType').value; else noShipping">
+            <p class="my-3" *ngIf="form.get('paymentType').value?.length !== 1 && form.get('paymentType').value?.length !== 2 && form.get('paymentType').value?.length !== 3 && form.get('paymentType').value?.length !== 4">
               <strong>{{ 'Shipping Details' | translate }}</strong>
             </p>
 
@@ -190,10 +190,10 @@
                 fxFlexOrder.xs="1"
                 style="margin-bottom: 12px"
                 (change)="onChangeShippingRequired($event)"
-                *ngIf="form.get('paymentType').value.length !== 2 && form.get('paymentType').value.length !== 3"
+                *ngIf="form.get('paymentType').value?.length !== 1 && form.get('paymentType').value?.length !== 2 && form.get('paymentType').value?.length !== 3 && form.get('paymentType').value?.length !== 4"
                 [formControl]="form.get('shippingRequired')"
               >
-                <span class="mat-body-2">{{ 'Shipping required' | translate }}</span>
+                <span class="mat-body-2">{{ 'Solicitar envío' | translate }}</span>
               </mat-checkbox>
             </div>
 
@@ -256,8 +256,21 @@
     height: 60px;
     font-size: 47px;' color='accent'>info</mat-icon>
                 <h1>
-                  {{ 'Lo sentimos. No hay envíos disponibles para el municipio:' | translate }} <b>{{selectedMunicipality?.name}}</b>
+                  {{ 'Lo sentimos! No hay envíos disponibles para el municipio:' | translate }} <b>{{selectedMunicipality?.name}}</b>
                 </h1>
+              </div>
+
+              <div fxLayout="row"
+                   fxLayoutAlign="start center"
+                   class='px-2 pt-2 w-100'
+                   style='background-color: #e3e3e3; border-radius: 8px'
+                   *ngIf="buscoShipping && !shippingData.length">
+                <mat-icon style='min-width: 40px;width: 40px;
+    height: 40px;
+    font-size: 30px;' color='accent'>help</mat-icon>
+                <h5>
+                  {{ 'Desmarque la opción de solicitar envío para poder continuar con la compra.' | translate }}
+                </h5>
               </div>
 
               <!--------------------------------->
