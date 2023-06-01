@@ -142,6 +142,13 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       enabled: false,
       name: 'Transfermovil',
       logo: 'assets/images/cards/transfermovil_logo.png',
+      market: 'national',
+    },
+    {
+      id: 'transfermovil',
+      enabled: false,
+      name: 'Transfermovil',
+      logo: 'assets/images/cards/transfermovil_logo.png',
       market: 'international',
     },
     {
@@ -578,12 +585,26 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.form.get('ShippingBusinessId').updateValueAndValidity();
   }
 
+  onChangeShippingRequiredDefault(data) {
+    this.showShipping = data;
+    if (data) {
+      this.form.get('ShippingBusinessId').setValidators(Validators.required);
+      this.onRecalculateShipping();
+    } else {
+      this.form.get('ShippingBusinessId').setValue(null);
+      this.form.get('ShippingBusinessId').clearValidators();
+      this.shippingData = [];
+    }
+    this.form.get('ShippingBusinessId').updateValueAndValidity();
+  }
+
   /**
    * Obtain location from shipping option selected
    *
    * @param data Shipping option selected
    */
   onShippingSelected(data) {
+    console.log(data);
     this.shippingSelected = data.value;
     this.form.get('ShippingBusinessId').setValue(data.value);
   }
@@ -642,6 +663,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
             // Check if is required shipping by business
             this.shippingIsRequired = data.Cart.Business.shippingRequired;
             if (this.shippingIsRequired) {
+              this.form.controls['shippingRequired'].setValue(this.shippingIsRequired);
+              this.onChangeShippingRequiredDefault(this.shippingIsRequired);
               this.form.controls['shippingRequired'].setValidators(Validators.required);
               this.form.controls['ShippingBusinessId'].setValidators(Validators.required);
               this.form.controls['shippingRequired'].updateValueAndValidity();
