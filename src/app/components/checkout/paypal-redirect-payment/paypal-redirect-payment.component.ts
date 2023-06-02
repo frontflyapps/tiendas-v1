@@ -12,6 +12,7 @@ import { PayService } from '../../../core/services/pay/pay.service';
 export class PaypalRedirectPaymentComponent implements OnInit {
 
   params: any;
+  loading = true;
   urlToRedirect = environment.url + 'my-orders';
 
   constructor(
@@ -20,11 +21,13 @@ export class PaypalRedirectPaymentComponent implements OnInit {
     public route: ActivatedRoute,
     private payService: PayService,
   ) {
+    this.loading = true;
     this.route.queryParams.subscribe((data) => {
-      this.params = data.urlToRedirect;
+      this.params = data;
       console.log(this.params);
       this.payService.confirmPaymentPaypal(this.params).subscribe(item => {
-        this.router.navigate([this.urlToRedirect]);
+        this.router.navigate(['/my-orders']);
+        this.loading = false;
       });
     });
   }
