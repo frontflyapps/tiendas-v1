@@ -1,6 +1,6 @@
 import { environment } from './../../../../environments/environment';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { timeout } from 'rxjs/operators';
 
@@ -60,7 +60,19 @@ export class PayService {
   }
 
   confirmPaymentPaypal(data): Observable<any> {
-    return this.httpClient.post<any>(this.urlConfirmPaymentPaypal, data).pipe(timeout(60000));
+    let httpParams = new HttpParams();
+    if (data) {
+      if (data.type) {
+        httpParams = httpParams.append('type', data.type);
+      }
+      if (data.token) {
+        httpParams = httpParams.append('token', data.token);
+      }
+      if (data.PayerID) {
+        httpParams = httpParams.append('PayerID', data.PayerID);
+      }
+    }
+    return this.httpClient.get<any>(this.urlConfirmPaymentPaypal, { params: httpParams }).pipe(timeout(60000));
   }
 
   makePaymentMultisafepay(data): Observable<any> {
