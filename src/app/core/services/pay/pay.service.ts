@@ -13,6 +13,7 @@ export class PayService {
   urlPaymentBidaiondo = environment.apiUrl + 'payment/bidaiondo';
   urlPaymentAuthorize = environment.apiUrl + 'payment/authorize';
   urlPaymentPaypal = environment.apiUrl + 'payment/paypal';
+  urlConfirmPaymentPaypal = environment.apiUrl + 'payment/paypal/confirm';
   urlPaymentMultisafepay = environment.apiUrl + 'payment/multisafepay';
   urlPaymentTropipay = environment.apiUrl + 'payment/tropipay';
   urlBidaiondoCards = environment.apiUrl + 'payment/bidaiondo/get-card';
@@ -56,6 +57,10 @@ export class PayService {
 
   makePaymentPaypal(data): Observable<any> {
     return this.httpClient.post<any>(this.urlPaymentPaypal, data).pipe(timeout(60000));
+  }
+
+  confirmPaymentPaypal(data): Observable<any> {
+    return this.httpClient.post<any>(this.urlConfirmPaymentPaypal, data).pipe(timeout(60000));
   }
 
   makePaymentMultisafepay(data): Observable<any> {
