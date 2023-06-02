@@ -24,6 +24,10 @@ const routes: Routes = [
         canLoad: [CheckoutGuard],
       },
       {
+        path: 'confirm-payment',
+        loadChildren: () => import('../../components/checkout/paypal-redirect-payment/paypal-redirect-payment.module').then((m) => m.PaypalRedirectPaymentModule)
+      },
+      {
         path: 'cart',
         loadChildren: () => import('../../components/cart/cart.module').then((m) => m.CartModule),
       },
