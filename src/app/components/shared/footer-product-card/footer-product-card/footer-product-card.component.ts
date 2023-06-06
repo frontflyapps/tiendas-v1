@@ -74,31 +74,31 @@ export class FooterProductCardComponent implements OnDestroy {
         });
         dialogRef.afterClosed().subscribe((result) => {
           if (result) {
-            if (product.typeAddCart === 'glasses') {
-              if (this.loggedInUserService.getLoggedInUser()) {
-                const dialogRefe = this.dialog.open(DialogPrescriptionComponent, {
-                  width: 'auto',
-                  maxWidth: '100vw',
-                  height: 'auto',
-                  maxHeight: '100vw',
-                  data: {
-                    product: product,
-                    quantity: quantity,
-                  },
-                });
-                dialogRefe.afterClosed().subscribe((result) => {
-                  if (result) {
-                    this.spinner.hide();
-                    //   this.router.navigate(['/products', result.id, result.name]).then();
-                  } else {
-                    // this.showToastr.showError('No se pudo añadir al carrito');
-                    this.spinner.hide();
-                  }
-                });
-              } else {
-                this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
-              }
-            } else {
+            // if (product.typeAddCart === 'glasses') {
+            //   if (this.loggedInUserService.getLoggedInUser()) {
+            //     const dialogRefe = this.dialog.open(DialogPrescriptionComponent, {
+            //       width: 'auto',
+            //       maxWidth: '100vw',
+            //       height: 'auto',
+            //       maxHeight: '100vw',
+            //       data: {
+            //         product: product,
+            //         quantity: quantity,
+            //       },
+            //     });
+            //     dialogRefe.afterClosed().subscribe((result) => {
+            //       if (result) {
+            //         this.spinner.hide();
+            //         //   this.router.navigate(['/products', result.id, result.name]).then();
+            //       } else {
+            //         // this.showToastr.showError('No se pudo añadir al carrito');
+            //         this.spinner.hide();
+            //       }
+            //     });
+            //   } else {
+            //     this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
+            //   }
+            // } else {
               if (this.loggedInUserService.getLoggedInUser()) {
                 if (quantity === 0) {
                   return false;
@@ -107,7 +107,7 @@ export class FooterProductCardComponent implements OnDestroy {
               } else {
                 this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
               }
-            }
+            // }
           }
         });
       } else {

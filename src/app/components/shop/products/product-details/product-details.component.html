@@ -305,6 +305,24 @@
                 fxLayout="row"
                 fxLayoutAlign="start center"
                 fxLayoutAlign.lt-sm="center center"
+                *ngIf="product.typeAddCart === 'glasses'"
+              >
+                <button
+                  (click)="addLenses(product, counter)"
+                  class="btn-custom my-2 w-100"
+                  color="primary"
+                  mat-raised-button
+                  ngClass.lt-sm="w-80"
+                >
+                  {{ 'CHOOSES LENSES' | translate }}
+                </button>
+              </div>
+
+              <div
+                class="buttons"
+                fxLayout="row"
+                fxLayoutAlign="start center"
+                fxLayoutAlign.lt-sm="center center"
               >
                 <button
                   (click)="addToCart(product, counter)"

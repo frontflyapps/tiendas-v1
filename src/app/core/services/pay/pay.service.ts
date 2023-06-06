@@ -28,6 +28,10 @@ export class PayService {
     transfermovil: environment.apiUrl + 'payment/transfermovil/:id/cancel',
     bidaiondo: environment.apiUrl + 'payment/bidaiondo/:id/cancel',
     peoplegoto: environment.apiUrl + 'payment/peopleGoTo/:id/cancel',
+    authorize: environment.apiUrl + 'payment/authorize/:id/cancel',
+    paypal: environment.apiUrl + 'payment/paypal/:id/cancel',
+    multisafepay: environment.apiUrl + 'payment/multisafepay/:id/cancel',
+    tropipay: environment.apiUrl + 'payment/tropipay/:id/cancel',
     cash: environment.apiUrl + 'payment/cash/:id/cancel'
   };
 
