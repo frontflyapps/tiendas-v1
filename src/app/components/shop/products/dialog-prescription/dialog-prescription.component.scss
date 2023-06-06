@@ -42,6 +42,9 @@
   color: white;
   padding: 7px;
   padding-left: 12px;
+  @media (min-width: 380px) and (max-width: 500px) {
+    //font-size: 14px;
+  }
 }
 
 .container-add {
@@ -50,6 +53,9 @@
   color: white;
   padding: 7px;
   padding-left: 12px;
+  @media (min-width: 380px) and (max-width: 500px) {
+    //font-size: 14px;
+  }
 }
 
 .input-add {
@@ -59,6 +65,10 @@
   width: 50px;
   text-align: center;
   border-radius: 6px;
+  @media (min-width: 380px) and (max-width: 500px) {
+    width: 70px;
+    //font-size: 14px;
+  }
 }
 
 .container-dp {
@@ -67,6 +77,9 @@
   color: white;
   padding: 7px;
   padding-left: 12px;
+  @media (min-width: 380px) and (max-width: 500px) {
+    //font-size: 14px;
+  }
 }
 
 .input-dp {
@@ -76,12 +89,20 @@
   width: 70px;
   text-align: center;
   border-radius: 6px;
+  @media (min-width: 380px) and (max-width: 500px) {
+    width: 70px;
+    //font-size: 14px;
+  }
 }
 
 ::ng-deep {
   .mat-select-trigger {
     height: 36px !important;
     width: 60px !important;
+    @media (min-width: 380px) and (max-width: 500px) {
+      width: 70px;
+      //font-size: 14px;
+    }
   }
 }
 
@@ -93,6 +114,10 @@
   height: 36px;
   width: 60px;
   border-radius: 6px;
+  @media (min-width: 380px) and (max-width: 500px) {
+    width: 70px;
+    //font-size: 14px;
+  }
 }
 
 .text-axis {
@@ -134,18 +159,28 @@ mat-select[name="opciones"] mat-optgroup {
   border: 2px solid #e8e8e8;
   border-radius: 8px;
   padding: 8px;
-  width: 140px;
+  //width: 140px;
+  width: 100%;
   height: 200px;
   position: relative;
+  @media (min-width: 380px) and (max-width: 500px) {
+    //width: 160px;
+    //font-size: 14px;
+  }
 }
 .supplementColorSelected{
   border: 2px solid $theme-main-accent;
   //background-color: #e8e8e8;
   border-radius: 8px;
   padding: 8px;
-  width: 140px;
+  //width: 140px;
+  width: 100%;
   height: 200px;
   position: relative;
+  @media (min-width: 380px) and (max-width: 500px) {
+    //width: 160px;
+    //font-size: 14px;
+  }
 }
 .difuminado {
   position: absolute;
@@ -194,7 +229,7 @@ mat-select[name="opciones"] mat-optgroup {
   //-webkit-box-orient: vertical !important;
   //overflow-y: hidden;
   //line-height: 1.6rem;
-  //height: 3.2rem;
+  height: 4rem;
 }
 
 .description{
