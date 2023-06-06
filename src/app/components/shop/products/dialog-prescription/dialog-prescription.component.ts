@@ -245,10 +245,18 @@ export class DialogPrescriptionComponent implements OnInit {
             this.supplementForm.get('supplementType').setValue(item);
           } else if (positionArrayFather === 1) {
             this.supplementForm.get('supplementFilter').setValue(item);
+            this.supplementForm.get('supplementDye').setValue(null);
+            this.supplementArray[3].Recomendeds.forEach( item2 => { item2.checked = false; });
           } else if (positionArrayFather === 2) {
             this.supplementForm.get('supplementColor').setValue(item);
+            this.supplementForm.get('supplementDye').setValue(null);
+            this.supplementArray[3].Recomendeds.forEach( item2 => { item2.checked = false; });
           } else if (positionArrayFather === 3) {
             this.supplementForm.get('supplementDye').setValue(item);
+            this.supplementForm.get('supplementColor').setValue(null);
+            this.supplementForm.get('supplementFilter').setValue(null);
+            this.supplementArray[1].Recomendeds.forEach( item2 => { item2.checked = false; });
+            this.supplementArray[2].Recomendeds.forEach( item2 => { item2.checked = false; });
           }
           item.checked = true;
         }
