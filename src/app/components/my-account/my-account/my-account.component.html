@@ -1168,7 +1168,7 @@
 
                   <div fxLayout='row' fxLayoutGap='8px' fxFlex="48" class='w-100' fxFlex.lt-md="100">
                     <guachos-general-autocomplete fxFlex="28" [withoutPaddingBottom]="false" [label]="'Código'"
-                                                  [valueId]="false"
+                                                  [valueId]="true"
                                                   fxFlex.lt-md="28"
                                                   [displayOptions]="callingCodeDisplayOptions" [field]="['code']"
                                                   [filterString]="['filter[$and][code][$like]']"
@@ -1177,7 +1177,7 @@
 
                     <mat-form-field appearance="outline" fxFlex="70" fxFlex.lt-md="70" id="phone">
                       <mat-label>{{ 'Teléfono (opcional)' | translate }}</mat-label>
-                      <span class="mr-2" matPrefix>+ 53</span>
+<!--                      <span class="mr-2" matPrefix>+ 53</span>-->
                       <input
                         (keypress)="utilsService.keyPressNumbers($event)"
                         [formControl]="registrationForm.get('phone')"

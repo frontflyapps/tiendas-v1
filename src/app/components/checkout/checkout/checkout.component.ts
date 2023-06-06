@@ -46,6 +46,7 @@ import { AppService } from '../../../app.service';
 import { DialogAuthorizeConfirmToPayComponent } from '../dialog-authorize-confirm-to-pay/dialog-authorize-confirm-to-pay.component';
 import { objectKeys } from 'codelyzer/util/objectKeys';
 import { DialogPaypalConfirmToPayComponent } from '../dialog-paypal-confirm-to-pay/dialog-paypal-confirm-to-pay.component';
+import { PhoneCodeService } from '../../../core/services/phone-code/phone-codes.service';
 
 export const amexData = {
   express: 1, // American Express
@@ -78,7 +79,7 @@ export const amexData = {
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.scss'],
-  providers: [CurrencyCheckoutPipe],
+  providers: [CurrencyCheckoutPipe, PhoneCodeService],
 })
 export class CheckoutComponent implements OnInit, OnDestroy {
   public CI_Length = 11;
@@ -318,6 +319,15 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   businessConfig;
   noGateway = true;
 
+  callingCodeDisplayOptions = {
+    firthLabel: [
+      {
+        type: 'path',
+        path: ['code'],
+      },
+    ],
+  };
+
   constructor(
     public cartService: CartService,
     public appService: AppService,
@@ -341,6 +351,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     public contactsService: ContactsService,
     public router: Router,
     private spinner: NgxSpinnerService,
+    public phoneCodesService: PhoneCodeService,
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
@@ -815,6 +826,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       dni: [null, [Validators.required, Validators.minLength(this.CI_Length), Validators.maxLength(this.CI_Length)]],
       email: [null, [Validators.required, Validators.pattern(EMAIL_REGEX)]],
       phone: [null, []],
+      PhoneCallingCodeId: [null, []],
       info: [null, []],
       paymentType: [null, [Validators.required]],
       ShippingBusinessId: [null, []],
