@@ -426,10 +426,12 @@ export class ProductDetailsComponent implements OnInit, OnDestroy, AfterViewInit
   addLenses(product: any, quantity) {
     if (this.loggedInUserService.getLoggedInUser()) {
       const dialogRef = this.dialog.open(DialogPrescriptionComponent, {
-        width: this.isSmallDevice ? '100vw' : '50rem',
-        maxWidth: this.isSmallDevice ? '100vw' : '50rem',
-        height: this.isSmallDevice ? '100vh' : '50rem',
-        maxHeight: this.isSmallDevice ? '100vh' : '50rem',
+        disableClose: false,
+        hasBackdrop: true,
+        width: this.isSmallDevice ? '100vw' : '20vw',
+        maxWidth: this.isSmallDevice ? '100vw' : '50vw',
+        height: this.isSmallDevice ? '100vh' : '50vh',
+        maxHeight: this.isSmallDevice ? '100vh' : '50vh',
         data: {
           product: product,
           quantity: quantity,
