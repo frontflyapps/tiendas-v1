@@ -85,31 +85,31 @@ export class ProductDialogComponent implements OnInit, OnDestroy {
     if (quantity == 0) {
       return false;
     }
-    if (product.typeAddCart === 'glasses') {
-      if (this.loggedInUserService.getLoggedInUser()) {
-        const dialogRef = this.dialog.open(DialogPrescriptionComponent, {
-          width: this.isSmallDevice ? '100vw' : '50rem',
-          maxWidth: this.isSmallDevice ? '100vw' : '50rem',
-          height: this.isSmallDevice ? '100vh' : '50rem',
-          maxHeight: this.isSmallDevice ? '100vh' : '50rem',
-          data: {
-            product: product,
-            quantity: quantity,
-          },
-        });
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result) {
-            this.spinner.hide();
-            //   this.router.navigate(['/products', result.id, result.name]).then();
-          } else {
-            // this.showToastr.showError('No se pudo añadir al carrito');
-            this.spinner.hide();
-          }
-        });
-      } else {
-        this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
-      }
-    } else {
+    // if (product.typeAddCart === 'glasses') {
+    //   if (this.loggedInUserService.getLoggedInUser()) {
+    //     const dialogRef = this.dialog.open(DialogPrescriptionComponent, {
+    //       width: this.isSmallDevice ? '100vw' : '50rem',
+    //       maxWidth: this.isSmallDevice ? '100vw' : '50rem',
+    //       height: this.isSmallDevice ? '100vh' : '50rem',
+    //       maxHeight: this.isSmallDevice ? '100vh' : '50rem',
+    //       data: {
+    //         product: product,
+    //         quantity: quantity,
+    //       },
+    //     });
+    //     dialogRef.afterClosed().subscribe((result) => {
+    //       if (result) {
+    //         this.spinner.hide();
+    //         //   this.router.navigate(['/products', result.id, result.name]).then();
+    //       } else {
+    //         // this.showToastr.showError('No se pudo añadir al carrito');
+    //         this.spinner.hide();
+    //       }
+    //     });
+    //   } else {
+    //     this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
+    //   }
+    // } else {
       if (this.loggedInUserService.getLoggedInUser()) {
         if (quantity === 0) {
           return false;
@@ -118,7 +118,7 @@ export class ProductDialogComponent implements OnInit, OnDestroy {
       } else {
         this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
       }
-    }
+    // }
 
 
   }

@@ -13,7 +13,7 @@
   -webkit-line-clamp: 2 !important;
   -webkit-box-orient: vertical !important;
   line-height: 1.2rem;
-  height: 3.3rem;
+  height: 3rem;
   min-height: 2.6rem;
   width: 150px;
   overflow: hidden;
@@ -46,10 +46,12 @@
 }
 
 .productImage{
-  width: 170px;
-  max-width: 170px;
+  //width: 170px;
+  max-width: 100%;
   height: 180px;
   max-height: 180px;
+  aspect-ratio: 3/2;
+  mix-blend-mode: darken;
   object-fit: cover;
   object-position: center;
   border-top-left-radius: 4px;

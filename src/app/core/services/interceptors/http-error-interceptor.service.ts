@@ -86,9 +86,14 @@ export class HttpErrorInterceptorService implements HttpInterceptor {
       //   console.log(result);
       // });
       this.pathToRedirect = this.route.snapshot;
-      console.log(this.pathToRedirect);
-      this.localStorageService.setOnStorage('captcha', err.error);
-      this.router.navigate(['captcha']);
+      console.log('pathToRedirect' + this.pathToRedirect);
+      if (err.url.includes(['payment'])) {
+        this.router.navigate(['captcha'], { queryParams: { url: err.url } });
+      } else {
+        this.router.navigate(['captcha']);
+      }
+      // this.localStorageService.setOnStorage('captcha', err.error);
+
       // this.utilsService.errorHandle(err);
     } else if (err.status == 404) {
       this.utilsService.errorHandle(err);

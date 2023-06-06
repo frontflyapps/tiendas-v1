@@ -1,6 +1,6 @@
 import { MetaService } from 'src/app/core/services/meta.service';
 import { DialogNoCartSelectedComponent } from '../no-cart-selected/no-cart-selected.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { PayService } from '../../../core/services/pay/pay.service';
 import {
@@ -45,6 +45,7 @@ import { DialogPgtConfirmToPayComponent } from '../dialog-pgt-confirm-to-pay/dia
 import { AppService } from '../../../app.service';
 import { DialogAuthorizeConfirmToPayComponent } from '../dialog-authorize-confirm-to-pay/dialog-authorize-confirm-to-pay.component';
 import { objectKeys } from 'codelyzer/util/objectKeys';
+import { DialogPaypalConfirmToPayComponent } from '../dialog-paypal-confirm-to-pay/dialog-paypal-confirm-to-pay.component';
 
 export const amexData = {
   express: 1, // American Express
@@ -95,9 +96,20 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   public showPayment = false;
   inLoading = false;
   loadingPayment = false;
+  loadingShipping = false;
+  buscoShipping = false;
   launchTM = undefined;
   currencies = ['USD', 'EUR'];
-  currenciesTransfermovil = ['USD', 'CUP'];
+  currenciesTuUse: any[] = [];
+  currenciesTransfermovil = [
+    {
+      name: 'MLC',
+      value: 'USD'
+    },
+    {
+      name: 'CUP',
+      value: 'CUP'
+    }];
   multiTransfermovil = false;
   dataSource: MatTableDataSource<any>;
   amount: number;
@@ -119,17 +131,19 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   payments: any[] = [
     {
+      id: 'enzona',
+      enabled: false,
+      name: 'Enzona',
+      logo: 'assets/images/cards/enzona.jpeg',
+      market: 'national',
+    },
+    {
       id: 'transfermovil',
       enabled: false,
       name: 'Transfermovil',
       logo: 'assets/images/cards/transfermovil_logo.png',
       market: 'national',
     },
-    {
-      id: 'enzona',
-      name: 'Enzona',
-      logo: 'assets/images/cards/enzona.jpeg',
-      market: 'national' },
     {
       id: 'transfermovil',
       enabled: false,
@@ -204,11 +218,33 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       logo: 'assets/images/cards/discover.png',
       market: 'international',
     },
+    {
+      id: 'paypal',
+      enabled: false,
+      name: 'PayPal',
+      market: 'international',
+      logo: 'assets/images/cards/paypal.png',
+    },
+    {
+      id: 'multisafepay',
+      enabled: false,
+      name: 'MultiSafePay',
+      logo: 'assets/images/cards/multisafepay.png',
+      market: 'international',
+    },
+    {
+      id: 'tropipay',
+      enabled: false,
+      name: 'TropiPay',
+      logo: 'assets/images/cards/tropipay.png',
+      market: 'international',
+    },
   ];
   language: any;
   _unsubscribeAll: Subject<any>;
   imageUrl = environment.imageUrl;
   loggedInUser: any = null;
+  selectedMunicipality: any = null;
   form: UntypedFormGroup;
   selectedDataPay: any = null;
   loadingCart = true;
@@ -303,6 +339,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     private currencyCheckoutPipe: CurrencyCheckoutPipe,
     private metaService: MetaService,
     public contactsService: ContactsService,
+    public router: Router,
     private spinner: NgxSpinnerService,
   ) {
     this._unsubscribeAll = new Subject<any>();
@@ -317,7 +354,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.form.get('paymentType').valueChanges.subscribe(item => {
       console.log(this.form.get('paymentType').value.length);
       console.log(this.form.get('paymentType').value);
-    })
+    });
 
     this.activateRoute.queryParams.subscribe((data) => {
       this.cartId = data.cartId;
@@ -328,6 +365,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       this.processToCart();
     });
   }
+
   public getBusinessConfig(id) {
     this.appService.getBusinessConfigId(id).subscribe((item) => {
       // this.loading = true;
@@ -352,12 +390,27 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       if (objectKeys(this.cart.currenciesGateway).length > 0) {
         this.onMarket = true;
         if (this.cart.currenciesGateway?.transfermovil?.currency.length > 0) {
+          this.cart.currenciesGateway?.transfermovil?.currency.forEach(item => {
+            switch (item) {
+              case 'CUP': {
+                this.currenciesTuUse.push(this.currenciesTransfermovil[1]);
+                break;
+              }
+              case 'USD': {
+                this.currenciesTuUse.push(this.currenciesTransfermovil[0]);
+                break;
+              }
+            }
+          });
           this.multiTransfermovil = true;
-        } else {this.multiTransfermovil = false;}
+        } else {
+          this.multiTransfermovil = false;
+        }
         objectKeys(this.cart.currenciesGateway).forEach(item => {
           this.arrPayments.push(item);
         });
         enabledGates = this.arrPayments;
+        console.log(enabledGates);
       } else {
         this.onMarket = false;
         enabledGates = this.businessConfig?.gateways;
@@ -386,7 +439,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         this.noGateway = false;
         if (this.onMarket) {
           this.form.get('paymentType').setValue(this.arrPayments);
-        } else {this.form.get('paymentType').setValue(this.businessConfig.gateways);}
+        } else {
+          this.form.get('paymentType').setValue(this.businessConfig.gateways);
+        }
         this.spinner.show();
         if (this.arrPayments.find((item) => item === 'bidaiondo')) {
           this.getEnabledBidaiondoCards();
@@ -461,7 +516,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         }
         this.configurationService.getCurrencys(this.query, params).subscribe((response) => {
           if (response.data) {
-            this.rate = response.data[0]?.rate;
+            this.rate = response.data[0]?.rate || 1;
           } else {
             this.rate = 1;
           }
@@ -472,7 +527,16 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.form.controls['paymentType'].valueChanges.pipe(takeUntil(this._unsubscribeAll)).subscribe((data) => {
       if (data && (data == 'peoplegoto' || data == 'authorize')) {
         this.form.controls['currency'].setValue(CoinEnum.EUR);
+      } else if (data === 'paypal' || data === 'multisafepay' || data === 'tropipay') {
+        this.form.controls['currency'].setValue(CoinEnum.USD);
+      } else if (data === 'transfermovil') {
+        if (this.cart.market === 'international') {
+          this.form.get('currency').setValue('USD');
+        } else  {
+          this.form.get('currency').setValue('CUP');
+        }
       }
+      this.onRecalculateShipping();
     });
 
     this.form.controls['ProvinceId'].valueChanges.subscribe((data) => {
@@ -489,7 +553,17 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     });
 
     this.form.controls['MunicipalityId'].valueChanges.subscribe((data) => {
-      this.calculateShippingRequired();
+      this.selectedMunicipality = this.allMunicipalities.find(item => data === item.id);
+      if (data && this.form.controls['currency'].value) {
+        this.calculateShippingRequired();
+      }
+    });
+
+    this.form.controls['currency'].valueChanges.subscribe((data) => {
+      this.selectedMunicipality = this.allMunicipalities.find(item => data === item.id);
+      if (data && this.form.controls['currency'].value) {
+        this.calculateShippingRequired();
+      }
     });
 
     this.form.controls['ShippingBusinessId'].valueChanges.subscribe((value) => {
@@ -511,16 +585,28 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.form.get('ShippingBusinessId').updateValueAndValidity();
   }
 
+  onChangeShippingRequiredDefault(data) {
+    this.showShipping = data;
+    if (data) {
+      this.form.get('ShippingBusinessId').setValidators(Validators.required);
+      this.onRecalculateShipping();
+    } else {
+      this.form.get('ShippingBusinessId').setValue(null);
+      this.form.get('ShippingBusinessId').clearValidators();
+      this.shippingData = [];
+    }
+    this.form.get('ShippingBusinessId').updateValueAndValidity();
+  }
+
   /**
    * Obtain location from shipping option selected
    *
    * @param data Shipping option selected
    */
   onShippingSelected(data) {
+    console.log(data);
     this.shippingSelected = data.value;
     this.form.get('ShippingBusinessId').setValue(data.value);
-    this.form.controls['ProvinceId'].setValue(data.value.shippingItems[0].Shipping.ProvinceId);
-    this.form.controls['MunicipalityId'].setValue(data.value.shippingItems[0].Shipping.MunicipalityId);
   }
 
   private validateShippingRequired() {
@@ -533,6 +619,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   private calculateShippingRequired() {
+    console.log('llega aqui', this.showShipping);
     if (this.showShipping) {
       this.onRecalculateShipping();
     } else {
@@ -559,61 +646,72 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   public getCartData() {
     this.loadingCart = true;
     this.cartService.getCartData({ cartId: this.cartId, cartItemIds: this.cartItemIds }).subscribe({
-      next: (data) => {
-        this.cart = data.Cart;
-        this.getBusinessConfig(this.cart?.BusinessId);
-        this.buyProducts = data.CartItems || [];
-        // Obtain data for fixed shipping value
-        this.buyWithDiscount = data.discount.priceWithDiscount ? data.discount : null;
-        this.fixShippingBusiness = data.Cart.BusinessId;
-        // Obtain data for fixed shipping value
-        this.buyWithDiscount = data.discount.priceWithDiscount ? data.discount : null;
-        this.fixShippingBusiness = data.Cart.BusinessId;
-        // Check if is required shipping by business
-        this.shippingIsRequired = data.Cart.Business.shippingRequired;
-        if (this.shippingIsRequired) {
-          this.form.controls['shippingRequired'].setValidators(Validators.required);
-          this.form.controls['ShippingBusinessId'].setValidators(Validators.required);
-          this.form.controls['shippingRequired'].updateValueAndValidity();
-        }
-        // Check if the Pick-Up-Place label has to be displayed
-        if (data.CartItems.filter((item) => item.Product.type === 'physical').length > 0) {
-          this.hasPickUpPlace = true;
-        } else {
-          this.hasPickUpPlace = false;
-        }
-        if (this.cart.market === 'national' && this.onMarket) {
-          this.form.controls['currency'].setValue('CUP');
-        }
-        this.dataSource = new MatTableDataSource(this.buyProducts);
-        this.marketCard =
-          this.buyProducts && this.buyProducts.length > 0 ? this.buyProducts[0].Product.market : MarketEnum.NATIONAL;
-        if (this.buyProducts && this.buyProducts.length > 0) {
-          this.onRecalculateShipping();
-        } else {
-          this.shippingData = [];
-        }
-        if (this.cart.market === MarketEnum.NATIONAL && !this.onMarket) {
-          this.form.get('currency').setValue(CoinEnum.CUP);
-        }
-        if (this.cart.market === MarketEnum.INTERNATIONAL && !this.onMarket) {
-          this.form.get('currency').setValue(CoinEnum.USD);
-        }
-        this.cartService.$cartItemsUpdated.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {
-          if (data.length > 0) {
-            console.log(this.cart);
-            this.theBusiness = data[0].Business;
+        next: (data) => {
+          console.log(data);
+          if (data.CartItems.length === 0) {
+            this.router.navigate(['']);
+          } else {
+            this.cart = data.Cart;
+            this.getBusinessConfig(this.cart?.BusinessId);
+            this.buyProducts = data.CartItems || [];
+            // Obtain data for fixed shipping value
+            this.buyWithDiscount = data.discount.priceWithDiscount ? data.discount : null;
+            this.fixShippingBusiness = data.Cart.BusinessId;
+            // Obtain data for fixed shipping value
+            this.buyWithDiscount = data.discount.priceWithDiscount ? data.discount : null;
+            this.fixShippingBusiness = data.Cart.BusinessId;
+            // Check if is required shipping by business
+            this.shippingIsRequired = data.Cart.Business.shippingRequired;
+            if (this.shippingIsRequired) {
+              this.form.controls['shippingRequired'].setValue(this.shippingIsRequired);
+              this.onChangeShippingRequiredDefault(this.shippingIsRequired);
+              this.form.controls['shippingRequired'].setValidators(Validators.required);
+              this.form.controls['ShippingBusinessId'].setValidators(Validators.required);
+              this.form.controls['shippingRequired'].updateValueAndValidity();
+            }
+            // Check if the Pick-Up-Place label has to be displayed
+            if (data.CartItems.filter((item) => item.Product.type === 'physical').length > 0) {
+              this.hasPickUpPlace = true;
+            } else {
+              this.hasPickUpPlace = false;
+            }
+            if (this.cart.market === 'national' && this.onMarket) {
+              this.form.controls['currency'].setValue('CUP');
+            }
+            this.dataSource = new MatTableDataSource(this.buyProducts);
+            this.marketCard =
+              this.buyProducts && this.buyProducts.length > 0 ? this.buyProducts[0].Product.market : MarketEnum.NATIONAL;
+            // if (this.buyProducts && this.buyProducts.length > 0 && ) {
+            //   this.onRecalculateShipping();
+            // } else {
+            this.shippingData = [];
+            this.loading = true;
+            // }
+            if (this.cart.market === MarketEnum.NATIONAL && !this.onMarket) {
+              this.form.get('currency').setValue(CoinEnum.CUP);
+            }
+            if (this.cart.market === MarketEnum.INTERNATIONAL && !this.onMarket) {
+              this.form.get('currency').setValue(CoinEnum.USD);
+            }
+            this.cartService.$cartItemsUpdated.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {
+              if (data.length > 0) {
+                console.log(this.cart);
+                this.theBusiness = data[0].Business;
+              }
+            });
+            setTimeout(() => {
+              this.loadingCart = false;
+            }, 250);
+            this.form.updateValueAndValidity();
           }
-        });
-        setTimeout(() => {
+
+        },
+        error: (err) => {
+          console.log('________________________________________________________________');
+          this.showToastr.showError(err.message)
           this.loadingCart = false;
-          }, 250);
-        this.form.updateValueAndValidity();
+        },
       },
-      error: (err) => {
-        this.loadingCart = false;
-      }
-      }
     );
   }
 
@@ -745,6 +843,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           Validators.maxLength(8),
         ]);
     }
+    this.form.valueChanges.subscribe(data => {
+      console.log(this.form);
+    })
     this.form.updateValueAndValidity();
     this.updateValidatorsForChangeNationality(this.onlyCubanPeople);
     this.subsToTransfermovilChange();
@@ -766,7 +867,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.form.get('phone').setValue(this.loggedInUser?.phone);
     this.form.get('dni').setValue(this.loggedInUser?.ci);
     this.form.get('email').setValue(this.loggedInUser?.email);
-    this.form.get('paymentType').setValue(this.businessConfig.gateways);
+    // this.form.get('paymentType').setValue(this.businessConfig.gateways);
     this.form.get('regionProvinceState').setValue(null);
     // this.form.controls['address'].get('street').setValue(null);
     // this.form.controls['address'].get('number').setValue(null);
@@ -797,9 +898,14 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   onRecalculateShipping() {
-    if (this.shippingData.length === 0) {
-      let dataCartId = { cartId: this.cartId };
-      this.inLoading = true;
+    if (this.form.controls['currency'].value && this.form.controls['MunicipalityId'].value) {
+      let dataCartId = {
+        cartId: this.cartId,
+        MunicipalityId: this.form.controls['MunicipalityId'].value,
+        currency: this.form.controls['currency'].value,
+      };
+      this.loadingShipping = true;
+      this.buscoShipping = true;
       this.loading = false;
       this.cartService.getShippingCart(dataCartId, this.BusinessId).subscribe({
         next: (item) => {
@@ -807,11 +913,13 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           this.fixedShipping = item;
           console.log(this.fixedShipping);
           this.loading = true;
+          this.loadingShipping = false;
           console.log(item);
           this.canBeDelivery = item?.canBeDelivery;
           this.inLoading = false;
         },
         error: (error) => {
+          this.loadingShipping = false;
           this.inLoading = false;
         },
       });
@@ -993,6 +1101,18 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       data.paymentType = 'authorize';
       return this.processBidaiondo(data);
     }
+    if (data.paymentType == 'paypal') {
+      data.paymentType = 'paypal';
+      return this.processBidaiondo(data);
+    }
+    if (data.paymentType == 'multisafepay') {
+      data.paymentType = 'multisafepay';
+      return this.processBidaiondo(data);
+    }
+    if (data.paymentType == 'tropipay') {
+      data.paymentType = 'tropipay';
+      return this.processBidaiondo(data);
+    }
   }
 
   // /////////////////////////////////////////////
@@ -1114,6 +1234,93 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           this.loadingPayment = false;
         },
       );
+    }  else if (bodyData.paymentType === 'paypal') {
+      bodyData.urlRedirectSuccesfully = environment.url + 'my-orders';
+      bodyData.urlRedirectCancel = environment.url + 'my-orders';
+      paymentMethod = this.payService.makePaymentPaypal(bodyData);
+      bodyData.currency = 'USD';
+      paymentMethod.subscribe(
+        (data: any) => {
+          console.log(data);
+          let dialogRef: MatDialogRef<DialogPaypalConfirmToPayComponent, any>;
+
+          dialogRef = this.dialog.open(DialogPaypalConfirmToPayComponent, {
+            width: '15cm',
+            maxWidth: '100vw',
+            data: {
+              form: data,
+            },
+          });
+
+          dialogRef.afterClosed().subscribe((result) => {
+            if (result) {
+              window.location.reload();
+            }
+            this.loadingPayment = false;
+          });
+        },
+        (error) => {
+          this.loadingPayment = false;
+        },
+      );
+    }   else if (bodyData.paymentType === 'multisafepay') {
+      bodyData.urlRedirectSuccesfully = environment.url + 'my-orders';
+      bodyData.urlRedirectCancel = environment.url + 'my-orders';
+      paymentMethod = this.payService.makePaymentMultisafepay(bodyData);
+      bodyData.currency = 'USD';
+      paymentMethod.subscribe(
+        (data: any) => {
+          console.log(data);
+          let dialogRef: MatDialogRef<DialogPaypalConfirmToPayComponent, any>;
+
+          dialogRef = this.dialog.open(DialogPaypalConfirmToPayComponent, {
+            width: '15cm',
+            maxWidth: '100vw',
+            data: {
+              form: data,
+            },
+          });
+
+          dialogRef.afterClosed().subscribe((result) => {
+            if (result) {
+              window.location.reload();
+            }
+            this.loadingPayment = false;
+          });
+        },
+        (error) => {
+          this.loadingPayment = false;
+        },
+      );
+    }   else if (bodyData.paymentType === 'paypal') {
+      bodyData.urlRedirectSuccesfully = environment.url + 'my-orders';
+      bodyData.urlRedirectCancel = environment.url + 'my-orders';
+      paymentMethod = this.payService.makePaymentPaypal(bodyData);
+      bodyData.currency = 'USD';
+      paymentMethod.subscribe(
+        (data: any) => {
+          console.log(data);
+          let dialogRef: MatDialogRef<DialogPaypalConfirmToPayComponent, any>;
+
+          dialogRef = this.dialog.open(DialogPaypalConfirmToPayComponent, {
+            width: '15cm',
+            maxWidth: '100vw',
+            data: {
+              form: data,
+            },
+          });
+
+          dialogRef.afterClosed().subscribe((result) => {
+            if (result) {
+              window.location.reload();
+            }
+            this.loadingPayment = false;
+          });
+        },
+        (error) => {
+          this.loadingPayment = false;
+        },
+      );
     } else {
       bodyData.amex = amexData[this.paymentType];
       paymentMethod = this.payService.makePaymentBidaiondo(bodyData);
@@ -1186,14 +1393,14 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.form.get('lastName').setValue(contact?.lastName);
     this.form.get('email').setValue(contact?.email);
     this.form.get('CountryId').setValue(59);
-    this.form.get('ProvinceId').setValue(contact?.ProvinceId);
-    this.form.get('MunicipalityId').setValue(contact?.MunicipalityId);
+    // this.form.get('ProvinceId').setValue(contact?.ProvinceId);
+    // this.form.get('MunicipalityId').setValue(contact?.MunicipalityId);
     this.form.get('address').get('street').setValue(contact?.address.street);
     this.form.get('address').get('number').setValue(contact?.address.number);
     this.form.get('address').get('between').setValue(contact?.address.between);
     this.form.get('dni').setValue(contact?.identification);
     this.form.get('phone').setValue(contact?.phone);
-    this.form.get('paymentType').setValue(this.businessConfig.gateways);
+    // this.form.get('paymentType').setValue(this.businessConfig.gateways);
 
     this.form.markAllAsTouched();
   }

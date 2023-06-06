@@ -35,11 +35,11 @@ export class DialogCaptchaComponent implements OnInit {
     private router: Router,
     private cartService: CartService
   ) {
-    this.data = this.localStorageService.getFromStorage('captcha');
+    // this.data = this.localStorageService.getFromStorage('captcha');
     console.log(this.data);
-    this.pathToRedirect = this.route.snapshot;
+    this.pathToRedirect = this.route.snapshot.queryParams.url;
     console.log(this.pathToRedirect);
-    // this.refreshData();
+    this.refreshData();
   }
 
   ngOnInit(): void {
@@ -59,12 +59,16 @@ export class DialogCaptchaComponent implements OnInit {
       uuid: this.data?.uuid,
       hash: this.data?.hash,
     };
+    this.inLoading = true;
     this.captchaService.getCaptcha(dataToSend).subscribe(item => {
+        this.inLoading = false;
+        this.data = item;
         console.log(item);
-        this.localStorageService.setOnStorage('captcha', item);
-        this.data = this.localStorageService.getFromStorage('captcha');
+        // this.localStorageService.setOnStorage('captcha', item);
+        // this.data = this.localStorageService.getFromStorage('captcha');
     },
       error => {
+        this.inLoading = false;
         console.log(error);
         this.utilsService.errorHandle(error);
       });
@@ -92,6 +96,10 @@ export class DialogCaptchaComponent implements OnInit {
                                      this.inLoading = false;
                                      this.cartService.dataAddToCart = null;
         });
+      } else if (this.pathToRedirect.includes(['payment'])) {
+        console.log('entro aki');
+        console.log(this.pathToRedirect);
+        this.router.navigate([this.pathToRedirect]);
       } else {
         this.inLoading = false;
         this.router.navigate(['']);
@@ -100,8 +108,10 @@ export class DialogCaptchaComponent implements OnInit {
     },
       error => {
         console.log(error);
-        this.localStorageService.setOnStorage('captcha', error.error);
-        this.data = this.localStorageService.getFromStorage('captcha');
+        this.inLoading = false;
+        this.data = error.error;
+        // this.localStorageService.setOnStorage('captcha', error.error);
+        // this.data = this.localStorageService.getFromStorage('captcha');
         this.showToastr.showError(error.error.title);
         // this.utilsService.errorHandle(error);
       }
