@@ -10,12 +10,14 @@ import { ShowSnackbarService } from '../../../core/services/show-snackbar/show-s
 import { ShowToastrService } from '../../../core/services/show-toastr/show-toastr.service';
 import { UtilsService } from '../../../core/services/utils/utils.service';
 import { CUBAN_PHONE_START_5, EMAIL_REGEX, PASS_CLIENT_REGEX } from '../../../core/classes/regex.const';
+import { PhoneCodeService } from '../../../core/services/phone-code/phone-codes.service';
 
 @Component({
   selector: 'app-my-account',
   templateUrl: './my-account.component.html',
   styleUrls: ['./my-account.component.scss'],
   encapsulation: ViewEncapsulation.None,
+  providers: [PhoneCodeService],
 })
 export class MyAccountComponent implements OnInit {
   innerWidth: any;
@@ -39,6 +41,15 @@ export class MyAccountComponent implements OnInit {
   regTcpForm: UntypedFormGroup;
   insertEmailPassForm: UntypedFormGroup;
   changeToNewPassForm: UntypedFormGroup;
+
+  callingCodeDisplayOptions = {
+    firthLabel: [
+      {
+        type: 'path',
+        path: ['code'],
+      },
+    ],
+  };
 
   pdfData: any[] = [];
   selectedDocument = false;
@@ -83,6 +94,7 @@ export class MyAccountComponent implements OnInit {
     private route: ActivatedRoute,
     private showSnackbar: ShowSnackbarService,
     private loggedInUserService: LoggedInUserService,
+    public phoneCodesService: PhoneCodeService,
     public utilsService: UtilsService,
   ) {
     this.message = '';
@@ -232,7 +244,8 @@ export class MyAccountComponent implements OnInit {
       this.registrationForm = this.fb.group({
         name: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
         lastname: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
-        phone: [null, [Validators.pattern(CUBAN_PHONE_START_5), Validators.minLength(8), Validators.maxLength(8)]],
+        phone: [null, []],
+        PhoneCallingCodeId: [null, []],
         address: [null, []],
         email: [null, [Validators.required, Validators.email, Validators.pattern(EMAIL_REGEX)]],
         passwords: this.fromPassRegister,
