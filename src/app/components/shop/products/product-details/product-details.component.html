@@ -312,7 +312,8 @@
                   class="btn-custom my-2 w-100"
                   color="primary"
                   mat-raised-button
-                  ngClass.lt-sm="w-80"
+                  ngClass.sm="w-80"
+                  ngClass.xs="w-80"
                 >
                   {{ 'CHOOSES LENSES' | translate }}
                 </button>
@@ -326,20 +327,20 @@
               >
                 <button
                   (click)="addToCart(product, counter)"
-                  class="btn-custom my-2"
+                  class="btn-custom my-2 w-100"
                   color="primary"
                   mat-raised-button
-                  ngClass.lt-sm="w-80"
+                  ngClass.lt-sm="w-100"
                 >
                   {{ 'ADD TO CART' | translate }}
                 </button>
 
                 <button
                   (click)="buyNow(product, 1)"
-                  class="btn-custom my-2"
+                  class="btn-custom my-2 w-100"
                   color="primary"
                   mat-raised-button
-                  ngClass.lt-sm="w-80"
+                  ngClass.lt-sm="w-100"
                 >
                   {{ 'BUY NOW' | translate }}
                 </button>
