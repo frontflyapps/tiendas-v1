@@ -8,8 +8,8 @@ export const environment = {
 
   defaultLanguage: 'es',
   currencyInternational: 'USD',
-  logo: 'assets/images/logo-white-pink.png',
-  logoWhite: 'assets/images/logo-white-pink.png',
+  logo: 'assets/images/logo-navbar.png',
+  logoWhite: 'assets/images/logo-navbar.png',
   logoFooter: 'assets/images/logo-white-pink.png',
 
   limitSearch : 42,
