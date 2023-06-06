@@ -66,15 +66,42 @@
             {{ 'email' | translate }} <strong>{{ 'is required' | translate }}</strong>
           </mat-error>
         </mat-form-field>
-        <mat-form-field appearance='outline'>
-          <mat-label>{{ 'Phone' | translate }}</mat-label>
-          <input [formControl]="form.controls['phone']" matInput placeholder="{{ 'Phone' | translate }}" type='tel' />
-          <mat-icon class='greyIcon' matSuffix>call</mat-icon>
-          <mat-hint>{{ 'Formato de teléfono de 10 dígitos mínimo' | translate }}</mat-hint>
-          <mat-error *ngIf="form.controls['phone'].hasError('required')">
-            {{ 'phone' | translate }} <strong>{{ 'is required' | translate }}</strong>
-          </mat-error>
-        </mat-form-field>
+        <div fxLayout='row' fxLayoutGap='8px' fxFlex="48" class='w-100' fxFlex.lt-md="100">
+          <guachos-general-autocomplete fxFlex="28" [withoutPaddingBottom]="false" [label]="'Código'"
+                                        [valueId]="false"
+                                        fxFlex.lt-md="28"
+                                        [displayOptions]="callingCodeDisplayOptions" [field]="['code']"
+                                        [filterString]="['filter[$and][code][$like]']"
+                                        [url]="phoneCodesService.url"
+                                        [formControl]="form.get('PhoneCallingCodeId')"></guachos-general-autocomplete>
+
+          <mat-form-field appearance="outline" fxFlex="70" fxFlex.lt-md="70" id="phone">
+            <mat-label>{{ 'Teléfono (opcional)' | translate }}</mat-label>
+            <!--                      <span class="mr-2" matPrefix>+ 53</span>-->
+            <mat-icon class='greyIcon' matSuffix>call</mat-icon>
+            <input
+              (keypress)="utilsService.keyPressNumbers($event)"
+              [formControl]="form.get('phone')"
+              matInput
+              autocomplete="off"
+              placeholder="{{ 'Teléfono...' | translate }}"
+            />
+            <mat-hint *ngIf="form.get('phone').value && form.get('phone').valid">
+              {{ 'Número válido' | translate }}
+            </mat-hint>
+            <mat-error
+              *ngIf="
+                      (form.controls['phone'].hasError('minlength') ||
+                        form.controls['phone'].hasError('maxlength')) &&
+                      !form.controls['phone'].hasError('pattern')
+                    "
+            >
+              {{ 'Longitud del número' | translate }}&nbsp;<strong>{{
+              '8 caracteres, Ex: 51234567' | translate
+              }}</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
         <mat-form-field appearance='outline'>
           <mat-label>{{ 'Documento de identidad' | translate }}</mat-label>
           <input [formControl]="form.controls['ci']"
