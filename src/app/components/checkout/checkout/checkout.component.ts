@@ -47,6 +47,7 @@ import { DialogAuthorizeConfirmToPayComponent } from '../dialog-authorize-confir
 import { objectKeys } from 'codelyzer/util/objectKeys';
 import { DialogPaypalConfirmToPayComponent } from '../dialog-paypal-confirm-to-pay/dialog-paypal-confirm-to-pay.component';
 import { PhoneCodeService } from '../../../core/services/phone-code/phone-codes.service';
+import { DialogTropipayConfirmToPayComponent } from '../dialog-tropipay-confirm-to-pay/dialog-tropipay-confirm-to-pay.component';
 
 export const amexData = {
   express: 1, // American Express
@@ -1304,17 +1305,17 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           this.loadingPayment = false;
         },
       );
-    }   else if (bodyData.paymentType === 'paypal') {
+    }   else if (bodyData.paymentType === 'tropipay') {
       bodyData.urlRedirectSuccesfully = environment.url + 'my-orders';
       bodyData.urlRedirectCancel = environment.url + 'my-orders';
-      paymentMethod = this.payService.makePaymentPaypal(bodyData);
+      paymentMethod = this.payService.makePaymentTropipay(bodyData);
       bodyData.currency = 'USD';
       paymentMethod.subscribe(
         (data: any) => {
           console.log(data);
-          let dialogRef: MatDialogRef<DialogPaypalConfirmToPayComponent, any>;
+          let dialogRef: MatDialogRef<DialogTropipayConfirmToPayComponent, any>;
 
-          dialogRef = this.dialog.open(DialogPaypalConfirmToPayComponent, {
+          dialogRef = this.dialog.open(DialogTropipayConfirmToPayComponent, {
             width: '15cm',
             maxWidth: '100vw',
             data: {
