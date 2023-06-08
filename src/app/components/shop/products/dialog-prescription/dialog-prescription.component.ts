@@ -171,7 +171,16 @@ export class DialogPrescriptionComponent implements OnInit {
       if (item) {
         this.stepper.next();
       }
+      // if (this.supplementForm.get('supplementType').value.RecomendedProduct.name.es.includes('Progresivos') ||
+      //     this.supplementForm.get('supplementType').value.RecomendedProduct.name.es.includes('Bifocales')) {
+      //   this.form.get('add').setValidators(Validators.required);
+      //   console.log(this.form);
+      //   console.log('entro aki');
+      // } else {
+      //   this.form.get('add').setValidators(null);
+      // }
     });
+
   }
 
   ngOnInit(): void {
@@ -199,8 +208,6 @@ export class DialogPrescriptionComponent implements OnInit {
 
       this.supplementArray.forEach( item => { item.Recomendeds.forEach( item2 => { item2.checked = false; }); });
       this.supplementArray.forEach( item => { item.forEach( item2 => { item2.seeDetails = false; }); });
-      console.log(this.supplementArray);
-      console.log(this.supplementSelected);
     });
   }
 
@@ -214,23 +221,22 @@ export class DialogPrescriptionComponent implements OnInit {
       cylinderLeft: [null],
       axisLeft: [null],
       right: ['+0.00', [Validators.required]],
-      cylinderRight: [null],
-      axisRight: [null],
-      pupillaryDistance: [null],
-      add: [null],
+      cylinderRight: [null, []],
+      axisRight: [null, []],
+      pupillaryDistance: [null, []],
+      add: [null, [Validators.required]],
     });
     this.supplementForm = this.fb.group({
       supplementType: [null, [Validators.required]],
-      supplementFilter: [null, [Validators.required]],
-      supplementColor: [null, [Validators.required]],
-      supplementDye: [null, [Validators.required]],
+      supplementFilter: [null, []],
+      supplementColor: [null, []],
+      supplementDye: [null, []],
     });
   }
 
   onChangeSelection(event: any, positionArrayFather: number, positionArrayChild: number, stepper?: any) {
     // this.supplementArray[positionArrayFather].Recomendeds[positionArrayChild].checked = true;
 
-    console.log(event);
     console.log(positionArrayFather);
     console.log(positionArrayChild);
 
@@ -238,11 +244,16 @@ export class DialogPrescriptionComponent implements OnInit {
 
         if (item.RecomendedProduct.name.es !== this.supplementArray[positionArrayFather].Recomendeds[positionArrayChild].RecomendedProduct.name.es) {
           item.checked = false;
-          console.log(item);
         } else {
-          console.log(item);
           if (positionArrayFather === 0) {
             this.supplementForm.get('supplementType').setValue(item);
+
+            if (item.RecomendedProduct.name.es.includes('Progresivos') ||
+              item.RecomendedProduct.name.es.includes('Bifocales')) {
+              this.form.get('add').setValidators([Validators.required]);
+            } else {
+              this.form.get('add').setValidators([]);
+            }
           } else if (positionArrayFather === 1) {
             this.supplementForm.get('supplementFilter').setValue(item);
             this.supplementForm.get('supplementDye').setValue(null);
