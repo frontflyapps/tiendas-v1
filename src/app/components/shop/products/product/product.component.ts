@@ -121,7 +121,7 @@ export class ProductComponent implements OnInit, OnDestroy {
         if (quantity === 0) {
           return false;
         }
-        this.cartService.addToCart(product, quantity).then();
+        this.cartService.addToCart(product, product.PriceRanges[0].min).then();
       } else {
         this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
       }
