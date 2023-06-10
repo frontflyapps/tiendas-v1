@@ -37,9 +37,16 @@
 
   <div (click)="onGoToProduct(product)" class="product-info-wrapper"
        fxLayout="column" ngClass.gt-sm="p-3" ngClass.lt-md="p-2 w-100">
-    <span class="category">
+    <div fxLayout='row' fxLayoutAlign='space-between center'>
+      <span class="category">
       {{ utilsService.parserLanguage(product?.Category?.name, language) }}
     </span>
+      <span *ngIf='product?.justPublished' class="just-published">
+      {{ 'NUEVO'  | translate}}
+    </span>
+    </div>
+
+
 
     <div class="title">
       <a [queryParams]="{

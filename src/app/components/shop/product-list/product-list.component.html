@@ -9,7 +9,12 @@
       <a
         [queryParams]='{ productId: product.id, stockId: product?.Stock?.id, name: product?.name?.es, sharedImage: product?.sharedImage }'
         [routerLink]="['/product']"
+        style='position: relative'
       >
+
+      <span *ngIf='product?.justPublished' class="just-published">
+      {{ 'NUEVO'  | translate}}
+    </span>
         <img
           *ngIf='product.Images && product.Images.length'
           [alt]="product.name[language] ? product.name[language] : product.name['es']"

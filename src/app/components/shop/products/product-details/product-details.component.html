@@ -98,6 +98,9 @@
           </mat-card>
 
           <mat-card class="mat-elevation-z0 w-100" fxLayout='column' fxHide fxShow.sm fxShow.xs>
+            <span *ngIf='product?.justPublished' class="just-published">
+              {{ 'NUEVO'  | translate}}
+            </span>
             <button
               (click)="onShareProduct()"
               fxHide

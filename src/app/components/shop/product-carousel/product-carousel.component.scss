@@ -28,6 +28,18 @@
   object-position: center !important;
 }
 
+.just-published {
+  background-color: $theme-main-accent;
+  color: white !important;
+  border-radius: 6px;
+  font-size: 10px !important;
+  padding: 0px 10px 0px 10px;
+  position: absolute;
+  top: 0 !important;
+  z-index: 9;
+  right: 0;
+}
+
 .product-img {
   height: 300px;
   display: flex;

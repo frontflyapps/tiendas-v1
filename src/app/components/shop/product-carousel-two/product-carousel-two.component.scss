@@ -16,6 +16,18 @@
   margin: 4px auto !important;
 }
 
+.just-published {
+  background-color: $theme-main-accent;
+  color: white;
+  border-radius: 6px;
+  font-size: 10px;
+  padding: 0px 10px 0px 10px;
+  position: absolute;
+  top: 5px !important;
+  z-index: 9;
+  right: 0;
+}
+
 .cardProduct {
   max-width: 400px !important;
   width: 100% !important;
