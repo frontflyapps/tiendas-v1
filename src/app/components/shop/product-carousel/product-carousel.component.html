@@ -37,10 +37,16 @@
                 sharedImage: product?.sharedImage }"
               [routerLink]="['/product']"
               class="product-link"
+              style='position: relative'
             >
-              <span class="mat-caption" style="font-size: 0.8rem !important">
-                {{ utilsService.parserLanguage(product?.Category?.name, language) }}
-              </span>
+              <div fxLayout='row' fxLayoutAlign='space-between center'>
+                <span class="category">
+                  {{ utilsService.parserLanguage(product?.Category?.name, language) }}
+                </span>
+              <span *ngIf='product?.justPublished' class="just-published">
+                  {{ 'NUEVO'  | translate}}
+                </span>
+            </div>
 
               <div class="moduleTitle line-clampTitle">
                 <h4 class="mat-body-2">{{ utilsService.parserLanguage(product?.name, language) }}</h4>
