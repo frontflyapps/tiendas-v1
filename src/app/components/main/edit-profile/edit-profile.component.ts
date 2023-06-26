@@ -11,12 +11,14 @@ import { UtilsService } from '../../../core/services/utils/utils.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ImagePickerConf } from 'guachos-image-picker';
 import { IDENTITY_PASSPORT } from '../../../core/classes/regex.const';
+import { PhoneCodeService } from '../../../core/services/phone-code/phone-codes.service';
 
 @Component({
   selector: 'app-edit-profile',
   templateUrl: './edit-profile.component.html',
   styleUrls: ['./edit-profile.component.scss'],
   encapsulation: ViewEncapsulation.None,
+  providers: [PhoneCodeService],
 })
 export class EditProfileComponent implements OnInit {
   innerWidth: any;
@@ -33,6 +35,15 @@ export class EditProfileComponent implements OnInit {
   showErrorImage = false;
   urlImage = '';
   base64textString = null;
+
+  callingCodeDisplayOptions = {
+    firthLabel: [
+      {
+        type: 'path',
+        path: ['code'],
+      },
+    ],
+  };
   imageAvatar = null;
   imagePickerConf: ImagePickerConf = {
     borderRadius: '50%',
@@ -53,6 +64,7 @@ export class EditProfileComponent implements OnInit {
     private translate: TranslateService,
     private showSnackbar: ShowSnackbarService,
     private compressImage: CompressImageService,
+    public phoneCodesService: PhoneCodeService,
   ) {
     this.urlImage = environment.imageUrl;
     this.dialogRef.disableClose = true;
@@ -85,6 +97,7 @@ export class EditProfileComponent implements OnInit {
       number: [this.loggedInUser && this.loggedInUser.address ? this.loggedInUser.address.number : null, []],
       between: [this.loggedInUser && this.loggedInUser.address ? this.loggedInUser.address.between : null, []],
       phone: [this.loggedInUser && this.loggedInUser.phone ? this.loggedInUser.phone : null, []],
+      PhoneCallingCodeId: [this.loggedInUser && this.loggedInUser?.PhoneCallingCodeId ? this.loggedInUser?.PhoneCallingCodeId : null, []],
       email: [
         this.loggedInUser && this.loggedInUser.email ? this.loggedInUser.email : null,
         [Validators.required, Validators.email],

@@ -1,0 +1,22 @@
+<mat-dialog-content>
+  <blockquote>
+    <p>
+      {{ "Usted dejara nuestro sistema y navegara hacia la pasarela de pago" | translate }}
+    </p>
+  </blockquote>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <form ngNoForm
+        method="post"
+        target="_blank"
+        [action]="data.form.data.shortUrl"
+        id="formAuthorizeNetTestPage"
+        name="formAuthorizeNetTestPage">
+    <div id="inputsHiddenBid"></div>
+    <input type='hidden' name='token' [value]='data.form.data.token'>
+    <button class="primary-buttom" id="bid-btn-submit" type="submit" value="Enviar" aria-label="Confirm" mat-button
+            mat-dialog-close>
+      {{ "Confirmar" | translate }}
+    </button>
+  </form>
+</mat-dialog-actions>

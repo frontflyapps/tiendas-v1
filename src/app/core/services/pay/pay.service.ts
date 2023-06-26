@@ -1,6 +1,6 @@
 import { environment } from './../../../../environments/environment';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { timeout } from 'rxjs/operators';
 
@@ -12,6 +12,10 @@ export class PayService {
   urlPaymentEnzona = environment.apiUrl + 'payment/enzona';
   urlPaymentBidaiondo = environment.apiUrl + 'payment/bidaiondo';
   urlPaymentAuthorize = environment.apiUrl + 'payment/authorize';
+  urlPaymentPaypal = environment.apiUrl + 'payment/paypal';
+  urlConfirmPaymentPaypal = environment.apiUrl + 'payment/paypal/confirm';
+  urlPaymentMultisafepay = environment.apiUrl + 'payment/multisafepay';
+  urlPaymentTropipay = environment.apiUrl + 'payment/tropipay';
   urlBidaiondoCards = environment.apiUrl + 'payment/bidaiondo/get-card';
   urlPaymentPeopleGoTo = environment.apiUrl + 'payment/peoplegoto';
   urlPaymentBidaiondoNew = 'https://apibidpay.guajitech.com/v1/to-bidaiondo-redirect';
@@ -24,6 +28,10 @@ export class PayService {
     transfermovil: environment.apiUrl + 'payment/transfermovil/:id/cancel',
     bidaiondo: environment.apiUrl + 'payment/bidaiondo/:id/cancel',
     peoplegoto: environment.apiUrl + 'payment/peopleGoTo/:id/cancel',
+    authorize: environment.apiUrl + 'payment/authorize/:id/cancel',
+    paypal: environment.apiUrl + 'payment/paypal/:id/cancel',
+    multisafepay: environment.apiUrl + 'payment/multisafepay/:id/cancel',
+    tropipay: environment.apiUrl + 'payment/tropipay/:id/cancel',
     cash: environment.apiUrl + 'payment/cash/:id/cancel'
   };
 
@@ -49,6 +57,34 @@ export class PayService {
 
   makePaymentAuthorize(data): Observable<any> {
     return this.httpClient.post<any>(this.urlPaymentAuthorize, data).pipe(timeout(60000));
+  }
+
+  makePaymentPaypal(data): Observable<any> {
+    return this.httpClient.post<any>(this.urlPaymentPaypal, data).pipe(timeout(60000));
+  }
+
+  confirmPaymentPaypal(data): Observable<any> {
+    let httpParams = new HttpParams();
+    if (data) {
+      if (data.type) {
+        httpParams = httpParams.append('type', data.type);
+      }
+      if (data.token) {
+        httpParams = httpParams.append('token', data.token);
+      }
+      if (data.PayerID) {
+        httpParams = httpParams.append('PayerID', data.PayerID);
+      }
+    }
+    return this.httpClient.get<any>(this.urlConfirmPaymentPaypal, { params: httpParams }).pipe(timeout(60000));
+  }
+
+  makePaymentMultisafepay(data): Observable<any> {
+    return this.httpClient.post<any>(this.urlPaymentMultisafepay, data).pipe(timeout(60000));
+  }
+
+  makePaymentTropipay(data): Observable<any> {
+    return this.httpClient.post<any>(this.urlPaymentTropipay, data).pipe(timeout(60000));
   }
 
   makePaymentBidaiondoNew(data): Observable<any> {

@@ -98,6 +98,9 @@
           </mat-card>
 
           <mat-card class="mat-elevation-z0 w-100" fxLayout='column' fxHide fxShow.sm fxShow.xs>
+            <span *ngIf='product?.justPublished' class="just-published">
+              {{ 'NUEVO'  | translate}}
+            </span>
             <button
               (click)="onShareProduct()"
               fxHide
@@ -305,23 +308,42 @@
                 fxLayout="row"
                 fxLayoutAlign="start center"
                 fxLayoutAlign.lt-sm="center center"
+                *ngIf="product.typeAddCart === 'glasses'"
+              >
+                <button
+                  (click)="addLenses(product, counter)"
+                  class="btn-custom my-2 w-100"
+                  color="primary"
+                  mat-raised-button
+                  ngClass.sm="w-80"
+                  ngClass.xs="w-80"
+                >
+                  {{ 'CHOOSES LENSES' | translate }}
+                </button>
+              </div>
+
+              <div
+                class="buttons"
+                fxLayout="row"
+                fxLayoutAlign="start center"
+                fxLayoutAlign.lt-sm="center center"
               >
                 <button
                   (click)="addToCart(product, counter)"
-                  class="btn-custom my-2"
+                  class="btn-custom my-2 w-100"
                   color="primary"
                   mat-raised-button
-                  ngClass.lt-sm="w-80"
+                  ngClass.lt-sm="w-100"
                 >
                   {{ 'ADD TO CART' | translate }}
                 </button>
 
                 <button
                   (click)="buyNow(product, 1)"
-                  class="btn-custom my-2"
+                  class="btn-custom my-2 w-100"
                   color="primary"
                   mat-raised-button
-                  ngClass.lt-sm="w-80"
+                  ngClass.lt-sm="w-100"
                 >
                   {{ 'BUY NOW' | translate }}
                 </button>

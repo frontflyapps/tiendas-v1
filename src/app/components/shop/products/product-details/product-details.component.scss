@@ -260,6 +260,18 @@
   }
 }
 
+.just-published {
+  background-color: $theme-main-accent;
+  color: white;
+  border-radius: 6px;
+  font-size: 10px;
+  padding: 0px 10px 0px 10px;
+  position: absolute;
+  top: 0;
+  z-index: 9;
+  left: 0;
+}
+
 .mini-images-container {
   height: 50px;
   width: 50px;

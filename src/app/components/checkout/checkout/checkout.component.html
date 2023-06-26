@@ -19,7 +19,7 @@
     </div>
 
     <div
-      *ngIf="!loadingPayment"
+      *ngIf="!loadingPayment && businessConfig"
       class="billing-details"
       fxFlex="100"
       fxFlex.gt-md="50"
@@ -32,7 +32,7 @@
         <mat-step *ngIf="businessConfig?.shippingType == 'normal' || businessConfig?.shippingType == 'fixed'"
                   [completed]="!noGateway && !form.get('ShippingBusinessId').invalid">
           <ng-template matStepLabel>{{ 'Datos de pago' | translate }}</ng-template>
-          <p class="my-2">
+          <p class="my-2" *ngIf="form.get('paymentType').value">
             <strong>{{ 'Seleccione una pasarela para efectuar el pago' | translate }}</strong>
           </p>
 
@@ -179,8 +179,8 @@
             </ng-container>
           </ng-container>
           <!--------- SHIPPING DETAILS ----------->
-          <ng-container *ngIf="form.controls['currency'].value; else noShipping">
-            <p class="my-3" *ngIf="form.get('paymentType').value.length !== 2 && form.get('paymentType').value.length !== 3">
+          <ng-container *ngIf="form.controls['currency'].value && form.get('paymentType').value; else noShipping">
+            <p class="my-3" *ngIf="form.get('paymentType').value?.length !== 1 && form.get('paymentType').value?.length !== 2 && form.get('paymentType').value?.length !== 3 && form.get('paymentType').value?.length !== 4">
               <strong>{{ 'Shipping Details' | translate }}</strong>
             </p>
 
@@ -190,15 +190,15 @@
                 fxFlexOrder.xs="1"
                 style="margin-bottom: 12px"
                 (change)="onChangeShippingRequired($event)"
-                *ngIf="form.get('paymentType').value.length !== 2 && form.get('paymentType').value.length !== 3"
+                *ngIf="form.get('paymentType').value?.length !== 1 && form.get('paymentType').value?.length !== 2 && form.get('paymentType').value?.length !== 3 && form.get('paymentType').value?.length !== 4"
                 [formControl]="form.get('shippingRequired')"
               >
-                <span class="mat-body-2">{{ 'Shipping required' | translate }}</span>
+                <span class="mat-body-2">{{ 'Solicitar envío' | translate }}</span>
               </mat-checkbox>
             </div>
 
             <!--SELECTORE DE PROVINCIA Y MUNICIPIOS-->
-            <div fxLayout="row wrap" fxLayoutAlign="space-between center" *ngIf='showShipping'>
+            <div fxLayout="row wrap" fxLayoutAlign="space-between center" *ngIf="showShipping && form.get('paymentType').value?.length !== 1 && form.get('paymentType').value?.length !== 2 && form.get('paymentType').value?.length !== 3 && form.get('paymentType').value?.length !== 4">
               <mat-form-field appearance="outline" fxFlex="48" fxFlex.lt-md="100">
                 <mat-label>{{ 'Provincia' | translate }}</mat-label>
                 <mat-select
@@ -256,8 +256,21 @@
     height: 60px;
     font-size: 47px;' color='accent'>info</mat-icon>
                 <h1>
-                  {{ 'Lo sentimos. No hay envíos disponibles para el municipio:' | translate }} <b>{{selectedMunicipality?.name}}</b>
+                  {{ 'Lo sentimos! No hay envíos disponibles para el municipio:' | translate }} <b>{{selectedMunicipality?.name}}</b>
                 </h1>
+              </div>
+
+              <div fxLayout="row"
+                   fxLayoutAlign="start center"
+                   class='px-2 pt-2 w-100'
+                   style='background-color: #e3e3e3; border-radius: 8px'
+                   *ngIf="buscoShipping && !shippingData.length">
+                <mat-icon style='min-width: 40px;width: 40px;
+    height: 40px;
+    font-size: 30px;' color='accent'>help</mat-icon>
+                <h5>
+                  {{ 'Desmarque la opción de solicitar envío para poder continuar con la compra.' | translate }}
+                </h5>
               </div>
 
               <!--------------------------------->
@@ -310,16 +323,20 @@
             <h1 *ngIf='noGateway' class="tex-align-center p-4 color-red-500">{{ 'Este negocio no tiene método de pago permitido' }}</h1>
 <!--          </ng-container>-->
           <!---------------------->
+
           <div class="actions-buttons" fxFlex="grow" fxLayout="row" fxLayoutAlign="space-between start">
             <button [routerLink]="['/products/search']" mat-stroked-button matStepperPrevious>
               {{ 'Cancelar' | translate }}
             </button>
+
             <button
               id="buttonFirstStep"
               color="primary"
               mat-raised-button
               matStepperNext
-              [disabled]="noGateway || form.get('ShippingBusinessId').invalid"
+              [disabled]="noGateway || form.get('ShippingBusinessId').invalid || (shippingIsRequired && !form.get('ShippingBusinessId').value) ||
+                          (form.get('paymentType').value?.length == 1 || form.get('paymentType').value?.length == 2 ||
+                          form.get('paymentType').value?.length == 3 || form.get('paymentType').value?.length == 4)"
             >
               {{ 'Continuar' | translate }}
             </button>
@@ -631,41 +648,77 @@
                   </mat-error>
                 </mat-form-field>
 
-                <mat-form-field appearance="outline" fxFlex="100" fxFlex.gt-md="48" fxFlex.md="48" id="phone-checkout">
-                  <mat-label>{{ 'Phone' | translate }}</mat-label>
-                  <span class="mr-2" matPrefix>+ 53</span>
-                  <input
-                    (keypress)="utilsService.keyPressNumbers($event)"
-                    [formControl]="this.form.controls['phone']"
-                    matInput
-                    placeholder="{{ 'Phone' | translate }}"
-                    required
-                  />
-                  <mat-hint *ngIf="!form.get('phone').value">
-                    {{ 'Escriba un teléfono móvil cubano, Ex: 51234567' | translate }}
-                  </mat-hint>
-                  <mat-hint *ngIf="form.get('phone').value && form.get('phone').valid">
-                    {{ 'Número válido' | translate }}
-                  </mat-hint>
-                  <mat-error *ngIf="form.controls['phone'].hasError('required')">
-                    {{ 'Phone' | translate }} <strong>{{ 'is required' | translate }}</strong>
-                  </mat-error>
-                  <mat-error
-                    *ngIf="
-                      (form.controls['phone'].hasError('minlength') || form.controls['phone'].hasError('maxlength')) &&
+                <div fxLayout='row' fxLayoutGap='8px' fxFlex="48" class='w-100' fxFlex.lt-md="100">
+                  <guachos-general-autocomplete fxFlex="28" [withoutPaddingBottom]="false" [label]="'Código'"
+                                                [valueId]="true"
+                                                fxFlex.lt-md="28"
+                                                [displayOptions]="callingCodeDisplayOptions" [field]="['code']"
+                                                [filterString]="['filter[$and][code][$like]']"
+                                                [url]="phoneCodesService.url"
+                                                [formControl]="form.get('PhoneCallingCodeId')"></guachos-general-autocomplete>
+
+                  <mat-form-field appearance="outline" fxFlex="70" fxFlex.lt-md="70" id="phone">
+                    <mat-label>{{ 'Teléfono (opcional)' | translate }}</mat-label>
+                    <!--                      <span class="mr-2" matPrefix>+ 53</span>-->
+                    <input
+                      (keypress)="utilsService.keyPressNumbers($event)"
+                      [formControl]="form.get('phone')"
+                      matInput
+                      autocomplete="off"
+                      placeholder="{{ 'Teléfono...' | translate }}"
+                    />
+                    <mat-hint *ngIf="form.get('phone').value && form.get('phone').valid">
+                      {{ 'Número válido' | translate }}
+                    </mat-hint>
+                    <mat-error
+                      *ngIf="
+                      (form.controls['phone'].hasError('minlength') ||
+                        form.controls['phone'].hasError('maxlength')) &&
                       !form.controls['phone'].hasError('pattern')
                     "
-                  >
-                    {{ 'Longitud del número' | translate }}&nbsp;<strong>{{
+                    >
+                      {{ 'Longitud del número' | translate }}&nbsp;<strong>{{
                       '8 caracteres, Ex: 51234567' | translate
-                    }}</strong>
-                  </mat-error>
-                  <mat-error *ngIf="form.controls['phone'].hasError('pattern')">
-                    {{ 'El número' | translate }}&nbsp;<strong>{{
-                      'debe empezar con 5, Ex: 51234567' | translate
-                    }}</strong>
-                  </mat-error>
-                </mat-form-field>
+                      }}</strong>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+
+<!--                <mat-form-field appearance="outline" fxFlex="100" fxFlex.gt-md="48" fxFlex.md="48" id="phone-checkout">-->
+<!--                  <mat-label>{{ 'Phone' | translate }}</mat-label>-->
+<!--                  <span class="mr-2" matPrefix>+ 53</span>-->
+<!--                  <input-->
+<!--                    (keypress)="utilsService.keyPressNumbers($event)"-->
+<!--                    [formControl]="this.form.controls['phone']"-->
+<!--                    matInput-->
+<!--                    placeholder="{{ 'Phone' | translate }}"-->
+<!--                    required-->
+<!--                  />-->
+<!--                  <mat-hint *ngIf="!form.get('phone').value">-->
+<!--                    {{ 'Escriba un teléfono móvil cubano, Ex: 51234567' | translate }}-->
+<!--                  </mat-hint>-->
+<!--                  <mat-hint *ngIf="form.get('phone').value && form.get('phone').valid">-->
+<!--                    {{ 'Número válido' | translate }}-->
+<!--                  </mat-hint>-->
+<!--                  <mat-error *ngIf="form.controls['phone'].hasError('required')">-->
+<!--                    {{ 'Phone' | translate }} <strong>{{ 'is required' | translate }}</strong>-->
+<!--                  </mat-error>-->
+<!--                  <mat-error-->
+<!--                    *ngIf="-->
+<!--                      (form.controls['phone'].hasError('minlength') || form.controls['phone'].hasError('maxlength')) &&-->
+<!--                      !form.controls['phone'].hasError('pattern')-->
+<!--                    "-->
+<!--                  >-->
+<!--                    {{ 'Longitud del número' | translate }}&nbsp;<strong>{{-->
+<!--                      '8 caracteres, Ex: 51234567' | translate-->
+<!--                    }}</strong>-->
+<!--                  </mat-error>-->
+<!--                  <mat-error *ngIf="form.controls['phone'].hasError('pattern')">-->
+<!--                    {{ 'El número' | translate }}&nbsp;<strong>{{-->
+<!--                      'debe empezar con 5, Ex: 51234567' | translate-->
+<!--                    }}</strong>-->
+<!--                  </mat-error>-->
+<!--                </mat-form-field>-->
 
                 <!----------------CUSTOM FIELDS------------------>
                 <ng-container *ngIf="customFields?.length > 0 && fields">
@@ -955,6 +1008,9 @@
                             && form.controls['paymentType'].value !== 'iupay'
                             && form.controls['paymentType'].value !== 'discover-global'
                             && form.controls['paymentType'].value !== 'peoplegoto'
+                            && form.controls['paymentType'].value !== 'paypal'
+                            && form.controls['paymentType'].value !== 'multisafepay'
+                            && form.controls['paymentType'].value !== 'tropipay'
                             && form.controls['paymentType'].value !== 'enzona'
                             && form.controls['paymentType'].value !== 'transfermovil')"
                 color="primary"

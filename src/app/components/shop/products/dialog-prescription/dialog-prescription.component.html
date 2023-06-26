@@ -1,293 +1,434 @@
 
 <!--<mat-dialog-content>-->
-  <mat-horizontal-stepper #stepper [linear]="'true'" labelPosition="bottom" class="billing-details">
-    <mat-step *ngIf='supplementArray?.length >= 0' [completed]="supplementForm.get('supplementType').value">
-      <div *ngIf="this.loadingSearch" class="loading-shade-full" style="background: rgba(0, 0, 0, 0.08) !important;">
-        <mat-spinner *ngIf="this.loadingSearch" color="primary" diameter="60"></mat-spinner>
-      </div>
-      <ng-template matStepLabel>{{ 'Escoja lentes' | translate }}</ng-template>
-      <div *ngFor='let supplement of supplementArray; let i = index'>
-        <h3 *ngIf='i === 0 || supplementForm.get("supplementType").value' class='my-3'>{{ supplement?.name }}</h3>
-<!--        <mat-radio-group (change)='onChangeSelection($event, i)'>-->
-          <div fxLayout='column' fxLayoutAlign='start center' fxLayoutGap='6px' class='w-100 mb-3 pb-3 row-supplement'>
-            <div *ngFor='let element of supplement.Recomendeds; let j = index' fxLayout='column' fxLayoutAlign='start center'>
-              <div *ngIf='i === 0 || supplementForm.get("supplementType").value' [ngClass]="{'itemSelected': element.checked,
-                               'itemUnselected': !element.checked}"
-                   fxLayout='row' fxLayoutAlign='start center' (click)='onChangeSelection($event, i, j)'>
-                <img *ngIf='element?.RecomendedProduct?.name.es !== "Ninguno"' [src]='imageUrl + element?.RecomendedProduct?.Images[0]?.image' class='img-supplement mb-2'>
-                <div fxLayout='column' fxLayoutAlign='start start'>
-                  <mat-icon *ngIf='element.checked' class='icon-checked' color='primary'>check_circle</mat-icon>
-                  <span class="mx-2">{{element?.RecomendedProduct?.name | i18nField: translateService.currentLang}}</span>
-                  <span *ngIf='element?.RecomendedProduct?.description' class="mx-2 description" [innerHTML]='this.utilsService.publicSetDescription(element?.RecomendedProduct?.description, translateService.currentLang)'></span>
-                  <div
-                    *ngFor="let item of element?.RecomendedProduct?.PriceRanges"
-                    class="mx-2 pt-2"
-                    fxLayout="column"
-                    fxLayoutAlign="start start"
-                    fxLayoutGap="gappx"
-                    style="width: 80px"
-                  >
-                    <!--                      <p class="mat-body-1">{{ item.min }} - {{ item.max }}</p>-->
-                    <p *ngIf="element?.RecomendedProduct?.offerValue" class="mat-body-2">
-                      {{ item?.priceOffer | currencyMarket: element?.RecomendedProduct?.market }}
-                    </p>
-                    <p *ngIf="!element?.RecomendedProduct?.offerValue" class="mat-body-2">
-                      {{ item?.price | currencyMarket: element?.RecomendedProduct?.market }}
-                    </p>
-                  </div>
-                </div>
+<div *ngIf="this.loadingSearch" class="loading-shade-full" style="background: rgba(0, 0, 0, 0.08) !important;">
+  <mat-spinner *ngIf="this.loadingSearch" color="primary" diameter="60"></mat-spinner>
+</div>
+  <mat-horizontal-stepper #stepper [linear]="true" *ngIf="!this.loadingSearch && supplementArray?.length > 0" labelPosition="bottom" class="billing-details">
+    <mat-step [stepControl]="supplementForm.get('supplementType')">
+      <ng-template matStepLabel fxHide.xs fxHide.sm>{{ 'Escoja lentes' | translate }}</ng-template>
+      <ng-template fxHide fxShow.xs fxShow.sm>{{ 'Escoja lentes' | translate }}</ng-template>
+      <h3 class='my-3 title-supplement'>{{ supplementArray[0]?.name }}</h3>
+      <h5 class='my-3 subtitle-supplement'>{{ supplementArray[0]?.description }}</h5>
+      <div fxLayout='column' fxLayoutAlign='start center' fxLayoutGap='6px' class='w-100 mb-3 pb-3 row-supplement'>
+        <div *ngFor='let element of supplementArray[0].Recomendeds; let j = index' fxLayout='column' fxLayoutAlign='start center'>
+          <div [ngClass]="{'itemSelected': element.checked,
+                                'itemUnselected': !element.checked}"
+               fxLayout='column' fxLayoutAlign='start center' (click)='onChangeSelection($event, 0, j, stepper)'>
+            <img *ngIf='element?.RecomendedProduct?.name.es !== "Ninguno"' [src]='imageUrl + element?.RecomendedProduct?.Images[0]?.image' class='img-supplement mb-2'>
+            <div fxLayout='column' fxLayoutAlign='start center' style='text-align: center'>
+              <span class="mx-2 my-2"><strong>{{element?.RecomendedProduct?.name | i18nField: translateService.currentLang}}</strong></span>
+              <div
+                *ngFor="let item of element?.RecomendedProduct?.PriceRanges"
+                class="mx-2 pt-2"
+                fxLayout="column"
+                fxLayoutAlign="start start"
+                fxLayoutGap="gappx"
+                style="width: 80px"
+              >
+                <!--                      <p class="mat-body-1">{{ item.min }} - {{ item.max }}</p>-->
+                <p *ngIf="element?.RecomendedProduct?.offerValue" class="mat-body-2">
+                  {{ item?.priceOffer | currencyMarket: element?.RecomendedProduct?.market }}
+                </p>
+                <p *ngIf="!element?.RecomendedProduct?.offerValue" class="mat-body-2">
+                  {{ item?.price | currencyMarket: element?.RecomendedProduct?.market }}
+                </p>
               </div>
-<!--                <mat-radio-button [value]="element" fxLayout='column' fxLayoutAlign='center center'>-->
-<!--                  <div fxLayout='column' fxLayoutAlign='center center' class='container-product'>-->
-<!--                    <img [src]='imageUrl + element?.RecomendedProduct?.Images[0]?.image' class='img-supplement mb-2'>-->
-<!--                    <span>{{element?.RecomendedProduct?.name | i18nField: translateService.currentLang}}</span>-->
-<!--                    <div-->
-<!--                      *ngFor="let item of element?.RecomendedProduct?.PriceRanges"-->
-<!--                      class="mx-2 py-3"-->
-<!--                      fxLayout="column"-->
-<!--                      fxLayoutAlign="start start"-->
-<!--                      fxLayoutGap="gappx"-->
-<!--                      style="width: 80px"-->
-<!--                    >-->
-<!--&lt;!&ndash;                      <p class="mat-body-1">{{ item.min }} - {{ item.max }}</p>&ndash;&gt;-->
-<!--                      <p *ngIf="element?.RecomendedProduct?.offerValue" class="mat-body-2">-->
-<!--                        {{ item.priceOffer | currencyMarket: element?.RecomendedProduct?.market }}-->
-<!--                      </p>-->
-<!--                      <p *ngIf="!element?.RecomendedProduct?.offerValue" class="mat-body-2">-->
-<!--                        {{ item.price | currencyMarket: element?.RecomendedProduct?.market }}-->
-<!--                      </p>-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                </mat-radio-button>-->
-              </div>
+              <mat-icon *ngIf='!element.checked' class='icon-unchecked' fxLayoutAlign='center center' color='primary'>radio_button_unchecked</mat-icon>
+              <mat-icon *ngIf='element.checked' class='icon-checked' fxLayoutAlign='center center' color='accent'>task_alt</mat-icon>
+            </div>
           </div>
-<!--        </mat-radio-group>-->
-
+        </div>
       </div>
-      <blockquote *ngIf='!this.loadingSearch'>
-        <p>
-          {{
-          'Nota: Para introducir los datos de su receta médica, debe escoger al menos un elemento.'
-            | translate
-          }}
-        </p>
-      </blockquote>
-      <div fxLayout='row' fxLayout.xs='column' fxLayout.sm='column' fxLayoutAlign='end end' fxLayoutGap='6px' *ngIf='!this.loadingSearch'>
-        <button mat-stroked-button mat-dialog-close color='warn' (click)='close()'>{{'Cancelar compra' | translate}}</button>
-        <button class="mt-2" mat-raised-button color='accent' (click)='buyWithoutGlass()'>{{'Añadir al carrito sin receta' | translate}}</button>
-        <button
-          class="mt-2"
-          mat-raised-button
-          matStepperNext
-          color='primary'
-          *ngIf="supplementForm.get('supplementType').value"
-        >
-          {{ 'Añadir receta' | translate }}
-        </button>
 
-<!--        <button-->
-<!--          class="uppercase"-->
-<!--          mat-raised-button-->
-<!--          matStepperNext-->
-<!--          color='primary'-->
-<!--          (click)='buyWithoutGlass()'-->
-<!--          *ngIf="!supplementForm.get('supplement').value"-->
-<!--        >-->
-<!--          {{ 'Comprar sin lentes' | translate }}-->
-<!--        </button>-->
-      </div>
     </mat-step>
 
-    <mat-step disabled="supplementForm.get('supplementType').value">
-      <ng-template matStepLabel>{{ 'Insertar receta médica' | translate }}</ng-template>
+    <mat-step disabled="supplementForm.get('supplementType').value" [stepControl]="form" >
+      <ng-template matStepLabel fxHide.xs fxHide.sm>{{ 'Insertar receta médica' | translate }}</ng-template>
+      <ng-template fxShow.xs fxShow.sm fxHide>{{ 'Insertar receta médica' | translate }}</ng-template>
       <div class='w-100 mb-3 pb-3 row-supplement'>
-        <table class='table w-100'>
-          <tr>
-<!--            <th mat-header-cell></th>-->
-            <th mat-header-cell>
-              <span>{{ 'ESFERA' | translate }}</span>
-            </th>
-            <th mat-header-cell>
-              <span>{{ 'CILINDRO' | translate }}</span>
-            </th>
-            <th mat-header-cell>
-              <span>{{ 'EJE' | translate }}</span>
-            </th>
-          </tr>
-          <tr>
+        <div fxLayout='row' fxLayoutAlign='end end' fxLayoutGap='6px' class='mb-3'>
+          <span style='width: 80px'>{{ 'ESFERA' | translate }}</span>
+          <span style='width: 80px'>{{ 'CILINDRO' | translate }}</span>
+          <span style='width: 60px'>{{ 'EJE' | translate }}</span>
+        </div>
+        <div fxLayout='row' fxLayoutAlign='end end' fxLayoutGap='6px' class='container-selects mb-3'>
+          <span class='text-axis'>Ojo izquierdo</span>
+          <mat-select [formControl]="form.get('left')"
+                      class='input-axis'>
+            <mat-optgroup *ngFor="let sign of signArray" [label]="sign.name">
+              <mat-option *ngFor="let measure of sign.sign" [value]="measure.value">
+                {{measure.viewValue}}
+              </mat-option>
+            </mat-optgroup>
+          </mat-select>
+          <mat-select [formControl]="form.get('cylinderLeft')"
+                      class='input-axis'>
+            <mat-optgroup *ngFor="let sign of signArray" [label]="sign.name">
+              <mat-option *ngFor="let measure of sign.sign" [value]="measure.value">
+                {{measure.viewValue}}
+              </mat-option>
+            </mat-optgroup>
+          </mat-select>
+          <input
+            [formControl]="form.get('axisLeft')"
+            matInput
+            type='number'
+            class='input-axis'
+            [required]="form.get('cylinderLeft').value"
+          />
+        </div>
+        <div fxLayout='row' fxLayoutAlign='end end' fxLayoutGap='6px' class='container-selects mb-3'>
+          <span class='text-axis'>Ojo derecho</span>
+          <mat-select [formControl]="form.get('right')"
+                      class='input-axis'>
+            <mat-optgroup *ngFor="let sign of signArray" [label]="sign.name">
+              <mat-option *ngFor="let measure of sign.sign" [value]="measure.value">
+                {{measure.viewValue}}
+              </mat-option>
+            </mat-optgroup>
+          </mat-select>
+          <mat-select [formControl]="form.get('cylinderRight')"
+                      class='input-axis'>
+            <mat-optgroup *ngFor="let sign of signArray" [label]="sign.name">
+              <mat-option *ngFor="let measure of sign.sign" [value]="measure.value">
+                {{measure.viewValue}}
+              </mat-option>
+            </mat-optgroup>
+          </mat-select>
+          <input
+            [formControl]="form.get('axisRight')"
+            matInput
+            type='number'
+            class='input-axis'
+            [required]="form.get('cylinderLeft').value"
+          />
+        </div>
+<!--        <table class='table w-100'>-->
+<!--          <tr>-->
+<!--&lt;!&ndash;            <th mat-header-cell></th>&ndash;&gt;-->
+<!--            <th mat-header-cell>-->
+<!--              <span>{{ 'ESFERA' | translate }}</span>-->
+<!--            </th>-->
+<!--            <th mat-header-cell>-->
+<!--              <span>{{ 'CILINDRO' | translate }}</span>-->
+<!--            </th>-->
+<!--            <th mat-header-cell>-->
+<!--              <span>{{ 'EJE' | translate }}</span>-->
+<!--            </th>-->
+<!--          </tr>-->
+<!--          <tr>-->
 <!--            <th class='pb-2' mat-cell>-->
 <!--              <span>Ojo izquierdo</span>-->
 <!--            </th>-->
-            <td class='pb-2' mat-cell>
-              <mat-form-field appearance='outline' class='select'>
-                <mat-label>{{'Izquierdo'}}</mat-label>
-                <mat-select [formControl]="form.get('left')">
-                  <mat-optgroup *ngFor="let sign of signArray" [label]="sign.name">
-                    <mat-option *ngFor="let measure of sign.sign" [value]="measure.value">
-                      {{measure.viewValue}}
-                    </mat-option>
-                  </mat-optgroup>
-                </mat-select>
-                <mat-error *ngIf="form.get('left').hasError('required')">
-                  {{ 'La medida del ojo izquierdo' | translate }} <strong>{{ 'is required' | translate }}</strong>
-                </mat-error>
-              </mat-form-field>
-            </td>
-            <td class='pb-2' mat-cell>
-              <mat-form-field appearance='outline' class='select'>
-                <mat-label>{{'Izquierdo'}}</mat-label>
-                <mat-select [formControl]="form.get('cylinderLeft')">
-                  <mat-optgroup *ngFor="let sign of signArray" [label]="sign.name">
-                    <mat-option *ngFor="let measure of sign.sign" [value]="measure.value">
-                      {{measure.viewValue}}
-                    </mat-option>
-                  </mat-optgroup>
-                </mat-select>
-                <mat-error *ngIf="form.get('cylinderLeft').hasError('required')">
-                  {{ 'La medida del cilindro izquierdo' | translate }} <strong>{{ 'is required' | translate }}</strong>
-                </mat-error>
-                <!--                  <mat-error *ngIf="form.get('cylinderLeft').hasError('pattern')">-->
-                <!--                    {{ 'Ojo izquierdo' | translate }} <strong>{{ 'wrong' | translate }}</strong>-->
-                <!--                  </mat-error>-->
-              </mat-form-field>
-            </td>
-            <td class='pb-2' mat-cell>
-              <mat-form-field appearance='outline' class='select'>
-                <mat-label>{{'Izquierdo'}}</mat-label>
-                <input
-                  [formControl]="form.get('axisLeft')"
-                  matInput
-                  type='number'
-                  placeholder="{{ 'Eje izquierdo' | translate }}"
-                  [required]="form.get('cylinderLeft').value"
-                />
-                <mat-error *ngIf="form.get('axisLeft').hasError('required')">
-                  {{ 'La medida del eje izquierdo' | translate }} <strong>{{ 'is required' | translate }}</strong>
-                </mat-error>
-                <!--                  <mat-error *ngIf="form.get('axisLeft').hasError('pattern')">-->
-                <!--                    {{ 'Ojo izquierdo' | translate }} <strong>{{ 'wrong' | translate }}</strong>-->
-                <!--                  </mat-error>-->
-              </mat-form-field>
-            </td>
-          </tr>
-          <tr>
+<!--            <td class='pb-2' mat-cell>-->
+<!--&lt;!&ndash;              <mat-form-field appearance='outline' class='select'>&ndash;&gt;-->
+<!--&lt;!&ndash;                <mat-label>{{'Izquierdo'}}</mat-label>&ndash;&gt;-->
+<!--                <mat-select [formControl]="form.get('left')">-->
+<!--                  <mat-optgroup *ngFor="let sign of signArray" [label]="sign.name">-->
+<!--                    <mat-option *ngFor="let measure of sign.sign" [value]="measure.value">-->
+<!--                      {{measure.viewValue}}-->
+<!--                    </mat-option>-->
+<!--                  </mat-optgroup>-->
+<!--                </mat-select>-->
+<!--&lt;!&ndash;                <mat-error *ngIf="form.get('left').hasError('required')">&ndash;&gt;-->
+<!--&lt;!&ndash;                  {{ 'La medida del ojo izquierdo' | translate }} <strong>{{ 'is required' | translate }}</strong>&ndash;&gt;-->
+<!--&lt;!&ndash;                </mat-error>&ndash;&gt;-->
+<!--&lt;!&ndash;              </mat-form-field>&ndash;&gt;-->
+<!--            </td>-->
+<!--            <td class='pb-2' mat-cell>-->
+<!--              <mat-form-field appearance='outline' class='select'>-->
+<!--                <mat-label>{{'Izquierdo'}}</mat-label>-->
+<!--                <mat-select [formControl]="form.get('cylinderLeft')">-->
+<!--                  <mat-optgroup *ngFor="let sign of signArray" [label]="sign.name">-->
+<!--                    <mat-option *ngFor="let measure of sign.sign" [value]="measure.value">-->
+<!--                      {{measure.viewValue}}-->
+<!--                    </mat-option>-->
+<!--                  </mat-optgroup>-->
+<!--                </mat-select>-->
+<!--                <mat-error *ngIf="form.get('cylinderLeft').hasError('required')">-->
+<!--                  {{ 'La medida del cilindro izquierdo' | translate }} <strong>{{ 'is required' | translate }}</strong>-->
+<!--                </mat-error>-->
+<!--                &lt;!&ndash;                  <mat-error *ngIf="form.get('cylinderLeft').hasError('pattern')">&ndash;&gt;-->
+<!--                &lt;!&ndash;                    {{ 'Ojo izquierdo' | translate }} <strong>{{ 'wrong' | translate }}</strong>&ndash;&gt;-->
+<!--                &lt;!&ndash;                  </mat-error>&ndash;&gt;-->
+<!--              </mat-form-field>-->
+<!--            </td>-->
+<!--            <td class='pb-2' mat-cell>-->
+<!--              <mat-form-field appearance='outline' class='select-axis'>-->
+<!--                <mat-label>{{'Izquierdo'}}</mat-label>-->
+<!--                <input-->
+<!--                  [formControl]="form.get('axisLeft')"-->
+<!--                  matInput-->
+<!--                  type='number'-->
+<!--                  placeholder="{{ 'Eje izquierdo' | translate }}"-->
+<!--                  [required]="form.get('cylinderLeft').value"-->
+<!--                />-->
+<!--                <mat-error *ngIf="form.get('axisLeft').hasError('required')">-->
+<!--                  {{ 'La medida del eje izquierdo' | translate }} <strong>{{ 'is required' | translate }}</strong>-->
+<!--                </mat-error>-->
+<!--                &lt;!&ndash;                  <mat-error *ngIf="form.get('axisLeft').hasError('pattern')">&ndash;&gt;-->
+<!--                &lt;!&ndash;                    {{ 'Ojo izquierdo' | translate }} <strong>{{ 'wrong' | translate }}</strong>&ndash;&gt;-->
+<!--                &lt;!&ndash;                  </mat-error>&ndash;&gt;-->
+<!--              </mat-form-field>-->
+<!--            </td>-->
+<!--          </tr>-->
+<!--          <tr>-->
 <!--            <th class='pb-2' mat-cell>-->
 <!--              <span>Ojo derecho</span>-->
 <!--            </th>-->
-            <td class='pb-2' mat-cell>
-              <mat-form-field appearance='outline' class='select'>
-                <mat-label>{{'Derecho'}}</mat-label>
-                <mat-select [formControl]="form.get('right')">
-                  <mat-optgroup *ngFor="let sign of signArray" [label]="sign.name">
-                    <mat-option *ngFor="let measure of sign.sign" [value]="measure.value">
-                      {{measure.viewValue}}
-                    </mat-option>
-                  </mat-optgroup>
-                </mat-select>
-                <mat-error *ngIf="form.get('right').hasError('required')">
-                  {{ 'La medida del ojo derecho' | translate }} <strong>{{ 'is required' | translate }}</strong>
-                </mat-error>
-                <!--            <mat-error *ngIf="form.get('left').hasError('pattern')">-->
-                <!--              {{ 'Ojo izquierdo' | translate }} <strong>{{ 'wrong' | translate }}</strong>-->
-                <!--            </mat-error>-->
-              </mat-form-field>
-            </td>
-            <td class='pb-2' mat-cell>
-              <mat-form-field appearance='outline' class='select'>
-                <mat-label>{{'Derecho'}}</mat-label>
-
-                <mat-select [formControl]="form.get('cylinderRight')">
-                  <mat-optgroup *ngFor="let sign of signArray" [label]="sign.name">
-                    <mat-option *ngFor="let measure of sign.sign" [value]="measure.value">
-                      {{measure.viewValue}}
-                    </mat-option>
-                  </mat-optgroup>
-                </mat-select>
-                <mat-error *ngIf="form.get('cylinderRight').hasError('required')">
-                  {{ 'La medida del cilindro derecho' | translate }} <strong>{{ 'is required' | translate }}</strong>
-                </mat-error>
-                <!--            <mat-error *ngIf="form.get('cylinderLeft').hasError('pattern')">-->
-                <!--              {{ 'Ojo izquierdo' | translate }} <strong>{{ 'wrong' | translate }}</strong>-->
-                <!--            </mat-error>-->
-              </mat-form-field>
-            </td>
-            <td class='pb-2' mat-cell>
-              <mat-form-field appearance='outline' class='select'>
-                <mat-label>{{'Derecho'}}</mat-label>
-                <input
-                  [formControl]="form.get('axisRight')"
-                  matInput
-                  type='number'
-                  placeholder="{{ 'Eje derecho' | translate }}"
-                  [required]="form.get('cylinderRight').value"
-                />
-                <mat-error *ngIf="form.get('axisRight').hasError('required')">
-                  {{ 'La medida del eje derecho' | translate }} <strong>{{ 'is required' | translate }}</strong>
-                </mat-error>
-                <!--            <mat-error *ngIf="form.get('axisLeft').hasError('pattern')">-->
-                <!--              {{ 'Ojo izquierdo' | translate }} <strong>{{ 'wrong' | translate }}</strong>-->
-                <!--            </mat-error>-->
-              </mat-form-field>
-            </td>
-          </tr>
-<!--          <tr>-->
-<!--            <th class='pb-2' mat-cell>-->
-<!--              <span>Distancia pupilar</span>-->
-<!--            </th>-->
 <!--            <td class='pb-2' mat-cell>-->
-
+<!--              <mat-form-field appearance='outline' class='select'>-->
+<!--                <mat-label>{{'Derecho'}}</mat-label>-->
+<!--                <mat-select [formControl]="form.get('right')">-->
+<!--                  <mat-optgroup *ngFor="let sign of signArray" [label]="sign.name">-->
+<!--                    <mat-option *ngFor="let measure of sign.sign" [value]="measure.value">-->
+<!--                      {{measure.viewValue}}-->
+<!--                    </mat-option>-->
+<!--                  </mat-optgroup>-->
+<!--                </mat-select>-->
+<!--                <mat-error *ngIf="form.get('right').hasError('required')">-->
+<!--                  {{ 'La medida del ojo derecho' | translate }} <strong>{{ 'is required' | translate }}</strong>-->
+<!--                </mat-error>-->
+<!--                &lt;!&ndash;            <mat-error *ngIf="form.get('left').hasError('pattern')">&ndash;&gt;-->
+<!--                &lt;!&ndash;              {{ 'Ojo izquierdo' | translate }} <strong>{{ 'wrong' | translate }}</strong>&ndash;&gt;-->
+<!--                &lt;!&ndash;            </mat-error>&ndash;&gt;-->
+<!--              </mat-form-field>-->
 <!--            </td>-->
 <!--            <td class='pb-2' mat-cell>-->
+<!--              <mat-form-field appearance='outline' class='select'>-->
+<!--                <mat-label>{{'Derecho'}}</mat-label>-->
 
+<!--                <mat-select [formControl]="form.get('cylinderRight')">-->
+<!--                  <mat-optgroup *ngFor="let sign of signArray" [label]="sign.name">-->
+<!--                    <mat-option *ngFor="let measure of sign.sign" [value]="measure.value">-->
+<!--                      {{measure.viewValue}}-->
+<!--                    </mat-option>-->
+<!--                  </mat-optgroup>-->
+<!--                </mat-select>-->
+<!--                <mat-error *ngIf="form.get('cylinderRight').hasError('required')">-->
+<!--                  {{ 'La medida del cilindro derecho' | translate }} <strong>{{ 'is required' | translate }}</strong>-->
+<!--                </mat-error>-->
+<!--                &lt;!&ndash;            <mat-error *ngIf="form.get('cylinderLeft').hasError('pattern')">&ndash;&gt;-->
+<!--                &lt;!&ndash;              {{ 'Ojo izquierdo' | translate }} <strong>{{ 'wrong' | translate }}</strong>&ndash;&gt;-->
+<!--                &lt;!&ndash;            </mat-error>&ndash;&gt;-->
+<!--              </mat-form-field>-->
 <!--            </td>-->
-<!--            <td class='pb-2' mat-cell></td>-->
+<!--            <td class='pb-2' mat-cell>-->
+<!--              <mat-form-field appearance='outline' class='select-axis'>-->
+<!--                <mat-label>{{'Derecho'}}</mat-label>-->
+<!--                <input-->
+<!--                  [formControl]="form.get('axisRight')"-->
+<!--                  matInput-->
+<!--                  type='number'-->
+<!--                  placeholder="{{ 'Eje derecho' | translate }}"-->
+<!--                  [required]="form.get('cylinderRight').value"-->
+<!--                />-->
+<!--                <mat-error *ngIf="form.get('axisRight').hasError('required')">-->
+<!--                  {{ 'La medida del eje derecho' | translate }} <strong>{{ 'is required' | translate }}</strong>-->
+<!--                </mat-error>-->
+<!--                &lt;!&ndash;            <mat-error *ngIf="form.get('axisLeft').hasError('pattern')">&ndash;&gt;-->
+<!--                &lt;!&ndash;              {{ 'Ojo izquierdo' | translate }} <strong>{{ 'wrong' | translate }}</strong>&ndash;&gt;-->
+<!--                &lt;!&ndash;            </mat-error>&ndash;&gt;-->
+<!--              </mat-form-field>-->
+<!--            </td>-->
 <!--          </tr>-->
-        </table>
-        <div fxLayout='row' fxLayoutAlign='start start' fxLayoutGap='1rem'>
-          <div fxLayout='column'>
-            <h4>Distancia pupilar</h4>
-            <mat-form-field appearance='outline' class='select'>
-              <mat-label>{{'Distancia'}}</mat-label>
-              <input
-                [formControl]="form.get('pupillaryDistance')"
-                matInput
-                placeholder="{{ 'Medida' | translate }}"
-                type='text'
-              />
-              <mat-error *ngIf="form.get('pupillaryDistance').hasError('required')">
-                {{ 'La medida de la distancia pupilar' | translate }} <strong>{{ 'is required' | translate }}</strong>
-              </mat-error>
-              <!--            <mat-error *ngIf="form.get('left').hasError('pattern')">-->
-              <!--              {{ 'Ojo izquierdo' | translate }} <strong>{{ 'wrong' | translate }}</strong>-->
-              <!--            </mat-error>-->
-            </mat-form-field>
-          </div>
-          <div fxLayout='column'>
+<!--&lt;!&ndash;          <tr>&ndash;&gt;-->
+<!--&lt;!&ndash;            <th class='pb-2' mat-cell>&ndash;&gt;-->
+<!--&lt;!&ndash;              <span>Distancia pupilar</span>&ndash;&gt;-->
+<!--&lt;!&ndash;            </th>&ndash;&gt;-->
+<!--&lt;!&ndash;            <td class='pb-2' mat-cell>&ndash;&gt;-->
+
+<!--&lt;!&ndash;            </td>&ndash;&gt;-->
+<!--&lt;!&ndash;            <td class='pb-2' mat-cell>&ndash;&gt;-->
+
+<!--&lt;!&ndash;            </td>&ndash;&gt;-->
+<!--&lt;!&ndash;            <td class='pb-2' mat-cell></td>&ndash;&gt;-->
+<!--&lt;!&ndash;          </tr>&ndash;&gt;-->
+<!--        </table>-->
+        <div fxLayout='row' fxLayoutAlign='space-between center'>
+          <div fxLayout='row' fxLayoutAlign='center center' class='container-add'>
             <h4>ADD</h4>
-            <mat-form-field appearance='outline' class='select'>
-              <mat-label>{{'ADD'}}</mat-label>
+<!--            <mat-form-field appearance='outline' class='select'>-->
+<!--              <mat-label>{{'ADD'}}</mat-label>-->
               <input
                 [formControl]="form.get('add')"
                 matInput
-                placeholder="{{ 'ADD' | translate }}"
                 type='text'
+                class='input-add ml-1'
               />
-              <mat-error *ngIf="form.get('add').hasError('required')">
-                {{ 'ADD' | translate }} <strong>{{ 'is required' | translate }}</strong>
-              </mat-error>
+<!--              <mat-error *ngIf="form.get('add').hasError('required')">-->
+<!--                {{ 'ADD' | translate }} <strong>{{ 'is required' | translate }}</strong>-->
+<!--              </mat-error>-->
               <!--            <mat-error *ngIf="form.get('left').hasError('pattern')">-->
               <!--              {{ 'Ojo izquierdo' | translate }} <strong>{{ 'wrong' | translate }}</strong>-->
               <!--            </mat-error>-->
-            </mat-form-field>
+<!--            </mat-form-field>-->
           </div>
+          <div fxLayout='row' fxLayoutAlign='center center' class='container-dp'>
+            <h4 class='text-dp' style='text-align: center'>DISTANCIA PUPILAR</h4>
+<!--            <mat-form-field appearance='outline' class='select'>-->
+<!--              <mat-label>{{'Distancia'}}</mat-label>-->
+              <input
+                [formControl]="form.get('pupillaryDistance')"
+                matInput
+                type='text'
+                class='input-dp'
+              />
+<!--              <mat-error *ngIf="form.get('pupillaryDistance').hasError('required')">-->
+<!--                {{ 'La medida de la distancia pupilar' | translate }} <strong>{{ 'is required' | translate }}</strong>-->
+<!--              </mat-error>-->
+              <!--            <mat-error *ngIf="form.get('left').hasError('pattern')">-->
+              <!--              {{ 'Ojo izquierdo' | translate }} <strong>{{ 'wrong' | translate }}</strong>-->
+              <!--            </mat-error>-->
+<!--            </mat-form-field>-->
+          </div>
+
         </div>
 
       </div>
-      <div fxLayout='row' fxLayout.xs='column' fxLayout.sm='column' fxLayoutAlign='end end' fxLayoutGap='6px'>
-        <button class="mt-2" color='primary' mat-stroked-button matStepperPrevious>{{ 'Atrás' | translate }}</button>
-        <button class="mt-2" mat-stroked-button color='warn' (click)='close()'>{{'Cancelar compra' | translate}}</button>
-        <button class="mt-2" mat-raised-button color='primary' (click)='save()' [disabled]='form.invalid'>{{'Añadir al carrito' | translate}}</button>
+      <div fxLayout='row' fxLayoutAlign='space-between end'>
+        <button class="mt-2" color='primary' mat-stroked-button matStepperPrevious>{{ 'Volver' | translate }}</button>
+        <button class="mt-2" mat-raised-button color='primary' [disabled]='form.invalid' matStepperNext>{{'Siguiente' | translate}}</button>
+      </div>
+    </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel fxHide.xs fxHide.sm>{{ 'Escoja lentes' | translate }}</ng-template>
+      <ng-template fxHide fxShow.xs fxShow.sm>{{ 'Escoger lentes' | translate }}</ng-template>
+
+      <h3 class='my-3 title-supplement'>{{ supplementArray[1]?.name }}</h3>
+      <h5 [ngClass]="{'subtitle-supplement':!supplementArray[1]?.seeDetails,'subtitle-supplement-desplegado':supplementArray[1]?.seeDetails}" class='my-1 subtitle-supplement'>{{ supplementArray[1]?.description }}</h5>
+      <span fxLayoutAlign='center center' (click)="supplementArray[1].seeDetails = !supplementArray[1].seeDetails" class="see-details" fxLayout="row" fxLayoutAlign="end center">
+          {{(!supplementArray[1]?.seeDetails ? "Leer más" : "Leer menos") | translate}}
+        </span>
+      <div fxLayout='row' fxLayoutAlign='space-between center' fxLayoutGap='6px' class='w-100 mb-3 mt-3 pb-3 row-supplement'>
+        <div *ngFor='let element of supplementArray[1].Recomendeds; let j = index' fxFlex='50' fxLayout='column' fxLayoutAlign='start center'>
+          <div [ngClass]="{'supplementColorSelected': element.checked,
+                               'supplementColorUnselected': !element.checked}"
+               fxLayout='column' fxLayoutAlign='start center' (click)='onChangeSelection($event, 1, j)'>
+            <img *ngIf='element?.RecomendedProduct?.name.es !== "Ninguno"' [src]='imageUrl + element?.RecomendedProduct?.Images[0]?.image' class='img-supplement mb-2'>
+            <div fxLayout='column' fxLayoutAlign='center center' style='text-align: center'>
+
+              <span class="mx-2 my-2"><strong>{{element?.RecomendedProduct?.name | i18nField: translateService.currentLang}}</strong></span>
+              <!--                  <span *ngIf='element?.RecomendedProduct?.description' class="mx-2 description" [innerHTML]='this.utilsService.publicSetDescription(element?.RecomendedProduct?.description, translateService.currentLang)'></span>-->
+              <div
+                *ngFor="let item of element?.RecomendedProduct?.PriceRanges"
+                class="mx-2 pt-2"
+                fxLayout="column"
+                fxLayoutAlign="center center"
+                fxLayoutGap="gappx"
+                style="width: 80px"
+              >
+                <!--                      <p class="mat-body-1">{{ item.min }} - {{ item.max }}</p>-->
+                <p *ngIf="element?.RecomendedProduct?.offerValue" class="mat-body-2">
+                  {{ item?.priceOffer | currencyMarket: element?.RecomendedProduct?.market }}
+                </p>
+                <p *ngIf="!element?.RecomendedProduct?.offerValue" class="mat-body-2">
+                  {{ item?.price | currencyMarket: element?.RecomendedProduct?.market }}
+                </p>
+              </div>
+              <mat-icon *ngIf='!element.checked' class='icon-unchecked' fxLayoutAlign='center center' color='primary'>radio_button_unchecked</mat-icon>
+              <mat-icon *ngIf='element.checked' class='icon-checked' fxLayoutAlign='center center' color='accent'>task_alt</mat-icon>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3 class='my-3 title-supplement'>{{ supplementArray[2]?.name }}</h3>
+      <h5 [ngClass]="{'subtitle-supplement':!supplementArray[2]?.seeDetails,'subtitle-supplement-desplegado':supplementArray[2]?.seeDetails}" class='my-1 subtitle-supplement'>{{ supplementArray[2]?.description }}</h5>
+      <span fxLayoutAlign='center center' (click)="supplementArray[2].seeDetails = !supplementArray[2].seeDetails" class="see-details" fxLayout="row" fxLayoutAlign="end center">
+          {{(!supplementArray[2]?.seeDetails ? "Leer más" : "Leer menos") | translate}}
+        </span>
+      <div fxLayout='row' fxLayoutAlign='space-between center' fxLayoutGap='6px' class='w-100 mb-3 mt-3 pb-3 row-supplement'>
+        <div *ngFor='let element of supplementArray[2].Recomendeds; let j = index' fxFlex='50' fxLayout='column' fxLayoutAlign='start center'>
+          <div [ngClass]="{'supplementColorSelected': element.checked,
+                               'supplementColorUnselected': !element.checked}"
+               fxLayout='column' fxLayoutAlign='start center' (click)='onChangeSelection($event, 2, j)'>
+            <img *ngIf='element?.RecomendedProduct?.name.es !== "Ninguno"' [src]='imageUrl + element?.RecomendedProduct?.Images[0]?.image' class='img-supplement mb-2'>
+            <div fxLayout='column' fxLayoutAlign='center center' style='text-align: center'>
+
+              <span class="mx-2 my-2"><strong>{{element?.RecomendedProduct?.name | i18nField: translateService.currentLang}}</strong></span>
+              <!--                  <span *ngIf='element?.RecomendedProduct?.description' class="mx-2 description" [innerHTML]='this.utilsService.publicSetDescription(element?.RecomendedProduct?.description, translateService.currentLang)'></span>-->
+              <div
+                *ngFor="let item of element?.RecomendedProduct?.PriceRanges"
+                class="mx-2 pt-2"
+                fxLayout="column"
+                fxLayoutAlign="center center"
+                fxLayoutGap="gappx"
+                style="width: 80px"
+              >
+                <!--                      <p class="mat-body-1">{{ item.min }} - {{ item.max }}</p>-->
+                <p *ngIf="element?.RecomendedProduct?.offerValue" class="mat-body-2">
+                  {{ item?.priceOffer | currencyMarket: element?.RecomendedProduct?.market }}
+                </p>
+                <p *ngIf="!element?.RecomendedProduct?.offerValue" class="mat-body-2">
+                  {{ item?.price | currencyMarket: element?.RecomendedProduct?.market }}
+                </p>
+              </div>
+              <mat-icon *ngIf='!element.checked' class='icon-unchecked' fxLayoutAlign='center center' color='primary'>radio_button_unchecked</mat-icon>
+              <mat-icon *ngIf='element.checked' class='icon-checked' fxLayoutAlign='center center' color='accent'>task_alt</mat-icon>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3 class='my-3 title-supplement'>{{ supplementArray[3]?.name }}</h3>
+      <h5 [ngClass]="{'subtitle-supplement':!supplementArray[3]?.seeDetails,'subtitle-supplement-desplegado':supplementArray[3]?.seeDetails}" class='my-1 subtitle-supplement'>{{ supplementArray[3]?.description }}</h5>
+      <span fxLayoutAlign='center center' (click)="supplementArray[3].seeDetails = !supplementArray[3].seeDetails" class="see-details" fxLayout="row" fxLayoutAlign="end center">
+          {{(!supplementArray[3]?.seeDetails ? "Leer más" : "Leer menos") | translate}}
+        </span>
+      <div fxLayout='row' fxLayoutAlign='space-between center' fxLayoutGap='6px' class='w-100 mb-3 mt-3 pb-3 row-supplement'>
+        <div *ngFor='let element of supplementArray[3].Recomendeds; let j = index' fxFlex='50' fxLayout='column' fxLayoutAlign='start center'>
+          <div [ngClass]="{'supplementColorSelected': element.checked,
+                               'supplementColorUnselected': !element.checked}"
+               fxLayout='column' fxLayoutAlign='start center' (click)='onChangeSelection($event, 3, j)'>
+            <img *ngIf='element?.RecomendedProduct?.name.es !== "Ninguno"' [src]='imageUrl + element?.RecomendedProduct?.Images[0]?.image' class='img-supplement mb-2'>
+            <div fxLayout='column' fxLayoutAlign='center center' style='text-align: center'>
+
+              <span class="mx-2 my-2"><strong>{{element?.RecomendedProduct?.name | i18nField: translateService.currentLang}}</strong></span>
+              <!--                  <span *ngIf='element?.RecomendedProduct?.description' class="mx-2 description" [innerHTML]='this.utilsService.publicSetDescription(element?.RecomendedProduct?.description, translateService.currentLang)'></span>-->
+              <div
+                *ngFor="let item of element?.RecomendedProduct?.PriceRanges"
+                class="mx-2 pt-2"
+                fxLayout="column"
+                fxLayoutAlign="center center"
+                fxLayoutGap="gappx"
+                style="width: 80px"
+              >
+                <!--                      <p class="mat-body-1">{{ item.min }} - {{ item.max }}</p>-->
+                <p *ngIf="element?.RecomendedProduct?.offerValue" class="mat-body-2">
+                  {{ item?.priceOffer | currencyMarket: element?.RecomendedProduct?.market }}
+                </p>
+                <p *ngIf="!element?.RecomendedProduct?.offerValue" class="mat-body-2">
+                  {{ item?.price | currencyMarket: element?.RecomendedProduct?.market }}
+                </p>
+              </div>
+              <mat-icon *ngIf='!element.checked' class='icon-unchecked' fxLayoutAlign='center center' color='primary'>radio_button_unchecked</mat-icon>
+              <mat-icon *ngIf='element.checked' class='icon-checked' fxLayoutAlign='center center' color='accent'>task_alt</mat-icon>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div fxLayout='row' fxLayout.xs='row' fxLayout.sm='row' fxLayoutAlign='space-between end' fxLayoutGap='6px' *ngIf='!this.loadingSearch'>
+        <button mat-stroked-button mat-dialog-close color='warn' (click)='close()'>{{'Cancelar' | translate}}</button>
+        <div fxLayout='column' fxLayoutGap='6px'>
+          <button class="mt-2" mat-stroked-button color='primary' (click)='save()'>{{'Añadir al carrito' | translate}}</button>
+          <button
+            class="mt-2"
+            mat-raised-button
+            color='primary'
+            (click)='buyNow()'
+          >
+            {{ 'Comprar ahora' | translate }}
+          </button>
+        </div>
       </div>
     </mat-step>
 
   </mat-horizontal-stepper>
+
+
+<!--<div class='difuminado w-100'>-->
+<!--&lt;!&ndash;  <h6 style='color: white'>Lentes</h6>&ndash;&gt;-->
+<!--</div>-->

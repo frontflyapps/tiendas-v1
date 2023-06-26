@@ -401,11 +401,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy, AfterViewInit
       loop: false,
       preloadImages: false,
       lazy: true,
-      autoplay: {
-        delay: 5000,
-        disableOnInteraction: false,
-      },
-      speed: 500,
+      autoplay: false,
       effect: 'fade',
     };
     this.configVariants = {
@@ -423,35 +419,38 @@ export class ProductDetailsComponent implements OnInit, OnDestroy, AfterViewInit
     };
   }
 
+  addLenses(product: any, quantity) {
+    if (this.loggedInUserService.getLoggedInUser()) {
+      const dialogRef = this.dialog.open(DialogPrescriptionComponent, {
+        disableClose: false,
+        hasBackdrop: true,
+        width: this.isSmallDevice ? '100vw' : '20vw',
+        maxWidth: this.isSmallDevice ? '100vw' : '50vw',
+        height: this.isSmallDevice ? '100vh' : '50vh',
+        maxHeight: this.isSmallDevice ? '100vh' : '50vh',
+        data: {
+          product: product,
+          quantity: quantity,
+        },
+      });
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result) {
+          this.spinner.hide();
+          //   this.router.navigate(['/products', result.id, result.name]).then();
+        } else {
+          // this.showToastr.showError('No se pudo añadir al carrito');
+          this.spinner.hide();
+        }
+      });
+    } else {
+      this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
+    }
+  }
+
   // Add to cart
   public addToCart(product: any, quantity) {
     console.log('entro aki');
     console.log(product);
-    if (product.typeAddCart === 'glasses') {
-      if (this.loggedInUserService.getLoggedInUser()) {
-        const dialogRef = this.dialog.open(DialogPrescriptionComponent, {
-          width: this.isSmallDevice ? '100vw' : '50rem',
-          maxWidth: this.isSmallDevice ? '100vw' : '50rem',
-          height: this.isSmallDevice ? '100vh' : '50rem',
-          maxHeight: this.isSmallDevice ? '100vh' : '50rem',
-          data: {
-            product: product,
-            quantity: quantity,
-          },
-        });
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result) {
-            this.spinner.hide();
-          //   this.router.navigate(['/products', result.id, result.name]).then();
-          } else {
-            // this.showToastr.showError('No se pudo añadir al carrito');
-            this.spinner.hide();
-          }
-        });
-      } else {
-        this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
-      }
-    } else {
       if (this.loggedInUserService.getLoggedInUser()) {
         if (quantity === 0) {
           return false;
@@ -460,8 +459,6 @@ export class ProductDetailsComponent implements OnInit, OnDestroy, AfterViewInit
       } else {
         this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
       }
-    }
-
   }
 
   // getFeaturedProducts() {
@@ -560,37 +557,37 @@ export class ProductDetailsComponent implements OnInit, OnDestroy, AfterViewInit
     if (this.loggedInUserService.getLoggedInUser()) {
 
 
-      if (this.product.typeAddCart === 'glasses') {
-        if (this.loggedInUserService.getLoggedInUser()) {
-          const dialogRef = this.dialog.open(DialogPrescriptionComponent, {
-            width: this.isSmallDevice ? '100vw' : '50rem',
-            maxWidth: this.isSmallDevice ? '100vw' : '50rem',
-            height: this.isSmallDevice ? '100vh' : '50rem',
-            maxHeight: this.isSmallDevice ? '100vh' : '50rem',
-            data: {
-              product: this.product,
-              quantity: this.counter,
-            },
-          });
-          dialogRef.afterClosed().subscribe((result) => {
-            if (result) {
-              this.spinner.hide();
-              //   this.router.navigate(['/products', result.id, result.name]).then();
-            } else {
-              // this.showToastr.showError('No se pudo añadir al carrito');
-              this.spinner.hide();
-            }
-          });
-        } else {
-          this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
-        }
-      } else {
+      // if (this.product.typeAddCart === 'glasses') {
+      //   if (this.loggedInUserService.getLoggedInUser()) {
+      //     const dialogRef = this.dialog.open(DialogPrescriptionComponent, {
+      //       width: this.isSmallDevice ? '100vw' : '50rem',
+      //       maxWidth: this.isSmallDevice ? '100vw' : '50rem',
+      //       height: this.isSmallDevice ? '100vh' : '50rem',
+      //       maxHeight: this.isSmallDevice ? '100vh' : '50rem',
+      //       data: {
+      //         product: this.product,
+      //         quantity: this.counter,
+      //       },
+      //     });
+      //     dialogRef.afterClosed().subscribe((result) => {
+      //       if (result) {
+      //         this.spinner.hide();
+      //         //   this.router.navigate(['/products', result.id, result.name]).then();
+      //       } else {
+      //         // this.showToastr.showError('No se pudo añadir al carrito');
+      //         this.spinner.hide();
+      //       }
+      //     });
+      //   } else {
+      //     this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
+      //   }
+      // } else {
         if (this.loggedInUserService.getLoggedInUser()) {
           this.cartService.addToCart(this.product, this.counter).then();
         } else {
           this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
         }
-      }
+      // }
       this.router.navigate(['/cart']);
     }
   }

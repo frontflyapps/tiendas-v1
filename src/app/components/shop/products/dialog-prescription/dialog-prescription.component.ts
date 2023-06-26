@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
@@ -6,9 +6,10 @@ import { ProductService } from '../../../shared/services/product.service';
 import { environment } from '../../../../../environments/environment';
 import { CartService } from '../../../shared/services/cart.service';
 import { LoggedInUserService } from '../../../../core/services/loggedInUser/logged-in-user.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { UtilsService } from '../../../../core/services/utils/utils.service';
+import { Cart } from '../../../../modals/cart-item';
 
 interface Sign {
   value: string;
@@ -30,6 +31,8 @@ export class DialogPrescriptionComponent implements OnInit {
 
   public form: UntypedFormGroup;
   public supplementForm: UntypedFormGroup;
+  public supplementType = false;
+  @ViewChild('stepper') stepper: any;
   supplementSelected = [];
   loadingSearch = false;
   supplementArray: any;
@@ -156,6 +159,7 @@ export class DialogPrescriptionComponent implements OnInit {
     public translateService: TranslateService,
     private route: ActivatedRoute,
     public utilsService: UtilsService,
+    private router: Router,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) {
     this.createForm();
@@ -163,6 +167,20 @@ export class DialogPrescriptionComponent implements OnInit {
     this.route.queryParamMap.subscribe((params) => {
       this.paramsToUrlRedirect = { ...params };
     });
+    this.supplementForm.get('supplementType').valueChanges.subscribe(item => {
+      if (item) {
+        this.stepper.next();
+      }
+      // if (this.supplementForm.get('supplementType').value.RecomendedProduct.name.es.includes('Progresivos') ||
+      //     this.supplementForm.get('supplementType').value.RecomendedProduct.name.es.includes('Bifocales')) {
+      //   this.form.get('add').setValidators(Validators.required);
+      //   console.log(this.form);
+      //   console.log('entro aki');
+      // } else {
+      //   this.form.get('add').setValidators(null);
+      // }
+    });
+
   }
 
   ngOnInit(): void {
@@ -187,20 +205,9 @@ export class DialogPrescriptionComponent implements OnInit {
     this.productsService.getNewRecomendedProduct(this.data.product.id, 'supplement').subscribe((data: any) => {
       this.loadingSearch = false;
       this.supplementArray = data.data;
-      this.supplementArray.forEach( item => { item.Recomendeds.push(
-        {
-          RecomendedProduct: {
-            name: {
-              es: 'Ninguno',
-              en: 'None'
-            },
-            id: null,
-          }
-        }
-      ); });
+
       this.supplementArray.forEach( item => { item.Recomendeds.forEach( item2 => { item2.checked = false; }); });
-      console.log(this.supplementArray);
-      console.log(this.supplementSelected);
+      this.supplementArray.forEach( item => { item.forEach( item2 => { item2.seeDetails = false; }); });
     });
   }
 
@@ -210,72 +217,139 @@ export class DialogPrescriptionComponent implements OnInit {
 
   createForm() {
     this.form = this.fb.group({
-      left: [null, [Validators.required]],
+      left: ['+0.00', [Validators.required]],
       cylinderLeft: [null],
       axisLeft: [null],
-      right: [null, [Validators.required]],
-      cylinderRight: [null],
-      axisRight: [null],
-      pupillaryDistance: [null],
-      add: [null],
+      right: ['+0.00', [Validators.required]],
+      cylinderRight: [null, []],
+      axisRight: [null, []],
+      pupillaryDistance: [null, []],
+      add: [null, [Validators.required]],
     });
     this.supplementForm = this.fb.group({
       supplementType: [null, [Validators.required]],
-      supplementDye: [null, [Validators.required]],
+      supplementFilter: [null, []],
+      supplementColor: [null, []],
+      supplementDye: [null, []],
     });
   }
 
-  onChangeSelection(event: any, positionArrayFather: number, positionArrayChild: number) {
+  onChangeSelection(event: any, positionArrayFather: number, positionArrayChild: number, stepper?: any) {
     // this.supplementArray[positionArrayFather].Recomendeds[positionArrayChild].checked = true;
+
+    console.log(positionArrayFather);
+    console.log(positionArrayChild);
+
     this.supplementArray[positionArrayFather].Recomendeds.forEach(item => {
-      if (item.RecomendedProduct.name.es !== this.supplementArray[positionArrayFather].Recomendeds[positionArrayChild].RecomendedProduct.name.es) {
-        item.checked = false;
-      } else {
-        if (positionArrayFather === 0) {
-          this.supplementForm.get('supplementType').setValue(item);
-        } else if (positionArrayFather === 1) {
-          this.supplementForm.get('supplementDye').setValue(item);
+
+        if (item.RecomendedProduct.name.es !== this.supplementArray[positionArrayFather].Recomendeds[positionArrayChild].RecomendedProduct.name.es) {
+          item.checked = false;
+        } else {
+          if (positionArrayFather === 0) {
+            this.supplementForm.get('supplementType').setValue(item);
+
+            if (item.RecomendedProduct.name.es.includes('Progresivos') ||
+              item.RecomendedProduct.name.es.includes('Bifocales')) {
+              this.form.get('add').setValidators([Validators.required]);
+            } else {
+              this.form.get('add').setValidators([]);
+            }
+          } else if (positionArrayFather === 1) {
+            this.supplementForm.get('supplementFilter').setValue(item);
+            this.supplementForm.get('supplementDye').setValue(null);
+            this.supplementArray[3].Recomendeds.forEach( item2 => { item2.checked = false; });
+          } else if (positionArrayFather === 2) {
+            this.supplementForm.get('supplementColor').setValue(item);
+            this.supplementForm.get('supplementDye').setValue(null);
+            this.supplementArray[3].Recomendeds.forEach( item2 => { item2.checked = false; });
+          } else if (positionArrayFather === 3) {
+            this.supplementForm.get('supplementDye').setValue(item);
+            this.supplementForm.get('supplementColor').setValue(null);
+            this.supplementForm.get('supplementFilter').setValue(null);
+            this.supplementArray[1].Recomendeds.forEach( item2 => { item2.checked = false; });
+            this.supplementArray[2].Recomendeds.forEach( item2 => { item2.checked = false; });
+          }
+          item.checked = true;
         }
-        item.checked = true;
-      }
     });
-    if (!this.supplementForm.get('supplementType').value) {
-      this.supplementArray[1].Recomendeds.forEach( item => { item.checked = false; });
-      this.supplementForm.get('supplementDye').setValue(null);
-    }
+    // if (!this.supplementForm.get('supplementType').value) {
+    //   this.supplementArray[1].Recomendeds.forEach( item => { item.checked = false; });
+    //   this.supplementForm.get('supplementFilter').setValue(null);
+    //   this.supplementForm.get('supplementColor').setValue(null);
+    //   this.supplementForm.get('supplementDye').setValue(null);
+    // }
     console.log(this.supplementForm.value);
   }
 
-  buyWithoutGlass() {
-    if (this.supplementForm.get('supplementType').value) {
-      this.closeWithoutPrescription();
-    } else {
-      this.spinner.show();
-      // if (this.supplementForm.get('supplement').value && this.form.value) {
-
-      if (this.loggedInUserService.getLoggedInUser()) {
-        if (this.data.quantity === 0) {
-          return false;
-        }
-        this.cartService.addToCart(this.data.product,
-          Math.max(this.data.product.minSale, this.data.quantity),
-          false).then();
-        this.dialogRef.close(true);
-      } else {
-        this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
-      }
-      // }
-    }
-  }
-
-  save() {
+  buyNow() {
     this.spinner.show();
+    this.loadingSearch = true;
     let supplements: any[] = [];
 
     if (this.supplementForm.get('supplementType').value && this.form.value) {
       supplements.push(this.supplementForm.get('supplementType').value.RecomendedProduct.Stocks[0].uuid);
       if (this.supplementForm.get('supplementDye').value) {
         supplements.push(this.supplementForm.get('supplementDye').value.RecomendedProduct.Stocks[0].uuid);
+      }
+      if (this.supplementForm.get('supplementColor').value) {
+        supplements.push(this.supplementForm.get('supplementColor').value.RecomendedProduct.Stocks[0].uuid);
+      }
+      if (this.supplementForm.get('supplementFilter').value) {
+        supplements.push(this.supplementForm.get('supplementFilter').value.RecomendedProduct.Stocks[0].uuid);
+      }
+      console.log(supplements);
+      let dataToSend = {
+        StockId: this.data.product.Stock.id,
+        ProductId: this.data.product.Stock.id,
+        supplementIds: supplements,
+        prescription: this.form.value
+      };
+
+      if (this.loggedInUserService.getLoggedInUser()) {
+        this.cartService.addToCart(this.data.product,
+          Math.max(this.data.product.minSale, this.data.quantity),
+          true,
+          dataToSend.supplementIds,
+          dataToSend.prescription).then((carts: Cart[]) => {
+          this.loadingSearch = false;
+          this.dialogRef.close(true);
+          console.log(carts);
+          for (let cart of carts) {
+            let dataFind = cart.CartItems.find((cartItemx) => cartItemx?.ProductId == this.data.product.id);
+            if (dataFind != undefined) {
+              let cartId = cart?.id;
+              let BusinessId = cart.BusinessId;
+              let cartIds = cart?.CartItems ? cart?.CartItems.map((i) => i.id) : cart.CartItems.map((i) => i.id);
+              console.log(cartIds);
+              this.router.navigate(['/checkout'], { queryParams: { cartId, cartIds, BusinessId } }).then();
+              return;
+            }
+          }
+        });
+      } else {
+        this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
+      }
+    } else {
+        this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
+      }
+
+}
+
+  save() {
+    this.spinner.show();
+    this.loadingSearch = true;
+    let supplements: any[] = [];
+
+    if (this.supplementForm.get('supplementType').value && this.form.value) {
+      supplements.push(this.supplementForm.get('supplementType').value.RecomendedProduct.Stocks[0].uuid);
+      if (this.supplementForm.get('supplementDye').value) {
+        supplements.push(this.supplementForm.get('supplementDye').value.RecomendedProduct.Stocks[0].uuid);
+      }
+      if (this.supplementForm.get('supplementColor').value) {
+        supplements.push(this.supplementForm.get('supplementColor').value.RecomendedProduct.Stocks[0].uuid);
+      }
+      if (this.supplementForm.get('supplementFilter').value) {
+        supplements.push(this.supplementForm.get('supplementFilter').value.RecomendedProduct.Stocks[0].uuid);
       }
       console.log(supplements);
       let dataToSend = {
@@ -294,6 +368,7 @@ export class DialogPrescriptionComponent implements OnInit {
           false,
           dataToSend.supplementIds,
           dataToSend.prescription).then();
+        this.loadingSearch = false;
         this.dialogRef.close(true);
       } else {
         this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
@@ -315,9 +390,11 @@ export class DialogPrescriptionComponent implements OnInit {
           false,
           dataToSend.supplementIds,
           dataToSend.prescription).then();
+        this.loadingSearch = false;
         this.dialogRef.close(true);
 
       } else {
+        this.loadingSearch = false;
         this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
       }
     }
