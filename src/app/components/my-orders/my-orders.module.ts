@@ -30,7 +30,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { DialogBidaiondoCancelToPayComponent } from './dialog-bidaiondo-cancel-to-pay/dialog-bidaiondo-cancel-to-pay.component';
 import { EditOrderComponent } from './edit-order/edit-order.component';
-import { DialogCancelConfirmationEmailComponent } from './cancel-order/dialog-cancel-confirmation-email/dialog-cancel-confirmation-email.component';
 
 ///////////////////////////////////////////////////////////////////
 
@@ -61,7 +60,7 @@ import { DialogCancelConfirmationEmailComponent } from './cancel-order/dialog-ca
         MatDialogModule,
         MatFormFieldModule,
     ],
-    declarations: [MyOrdersComponent, CancelOrderComponent, DialogBidaiondoCancelToPayComponent, EditOrderComponent, DialogCancelConfirmationEmailComponent],
+    declarations: [MyOrdersComponent, CancelOrderComponent, DialogBidaiondoCancelToPayComponent, EditOrderComponent],
     providers: []
 })
 export class MyOrdersModule {
