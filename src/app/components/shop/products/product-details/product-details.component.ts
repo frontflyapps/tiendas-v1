@@ -401,11 +401,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy, AfterViewInit
       loop: false,
       preloadImages: false,
       lazy: true,
-      autoplay: {
-        delay: 5000,
-        disableOnInteraction: false,
-      },
-      speed: 500,
+      autoplay: false,
       effect: 'fade',
     };
     this.configVariants = {

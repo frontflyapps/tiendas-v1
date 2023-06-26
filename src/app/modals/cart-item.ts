@@ -36,8 +36,12 @@ export interface CartItem {
   Stock?: Stock;
   quantity?: number;
   quantityCurrent?: number;
+  offerValue?: number;
+  isPercent?: boolean;
   id?: number;
   createdAt?: any;
   updatedAt?: any;
   deletedAt?: any;
+  sharedImage?: any;
+  name?: any;
 }
