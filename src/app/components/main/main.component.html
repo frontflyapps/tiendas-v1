@@ -1,495 +1,495 @@
-<!--<mat-sidenav-container fullscreen>-->
-<!--  &lt;!&ndash; Vista movil menu &ndash;&gt;-->
-<!--  <mat-sidenav #start [opened]="false" class="DrawerMobileView" mode="over">-->
-<!--    <mat-list class="position-relative">-->
-<!--      <mat-list-item>-->
-<!--        <mat-icon> person</mat-icon>-->
-<!--        &nbsp;-->
-<!--        <span class="mat-body-2" style="font-size: 19px"> {{ '¡Hola' | translate }}, </span>-->
-<!--        &nbsp;-->
-<!--        <span *ngIf="loggedInUser" class="mat-body-2" style="font-size: 19px">-->
-<!--          {{ loggedInUser.name }}!-->
-<!--        </span>-->
+<mat-sidenav-container fullscreen>
+  <!-- Vista movil menu -->
+  <mat-sidenav #start [opened]="false" class="DrawerMobileView" mode="over">
+    <mat-list class="position-relative">
+      <mat-list-item>
+        <mat-icon> person</mat-icon>
+        &nbsp;
+        <span class="mat-body-2" style="font-size: 19px"> {{ '¡Hola' | translate }}, </span>
+        &nbsp;
+        <span *ngIf="loggedInUser" class="mat-body-2" style="font-size: 19px">
+          {{ loggedInUser.name }}!
+        </span>
 
-<!--        <a *ngIf="!loggedInUser" class="mat-body-2" href="/my-account" style="font-size: 19px">-->
-<!--          {{ 'Inicia Sesión' | translate }}!-->
-<!--        </a>-->
+        <a *ngIf="!loggedInUser" class="mat-body-2" href="/my-account" style="font-size: 19px">
+          {{ 'Inicia Sesión' | translate }}!
+        </a>
 
-<!--        <span (click)="start.toggle()" class="sidebar-close-btn">-->
-<!--          <mat-icon>close</mat-icon>-->
-<!--        </span>-->
-<!--      </mat-list-item>-->
-<!--    </mat-list>-->
+        <span (click)="start.toggle()" class="sidebar-close-btn">
+          <mat-icon>close</mat-icon>
+        </span>
+      </mat-list-item>
+    </mat-list>
 
-<!--    <mat-divider></mat-divider>-->
+    <mat-divider></mat-divider>
 
-<!--    <div class='sidebar-nav-items' fxLayout='column' fxLayoutAlign='start stretch'>-->
-<!--      <app-sidebar *ngFor='let item of navItems' [item]='item'></app-sidebar>-->
-<!--&lt;!&ndash;            <a mat-list-item class="link-nav-a" href="/become-a-seller">&ndash;&gt;-->
-<!--&lt;!&ndash;              <mat-icon class="mr-3">card_membership</mat-icon>&ndash;&gt;-->
-<!--&lt;!&ndash;              <span class="mat-body-2" style="font-size: 15px">{{ 'Crea tu negocio' | translate }}</span>&ndash;&gt;-->
-<!--&lt;!&ndash;            </a>&ndash;&gt;-->
-<!--      <div (click)='createYourBusiness()' class='link-nav-a' *ngIf='businessConfig?.showDigitalContract && !this.loggedInUser?.Business'>-->
-<!--        <mat-icon class='mr-3'>card_membership</mat-icon>-->
-<!--        <span class='mat-body-2' style='font-size: 15px'>{{ 'Crea tu negocio' | translate }}</span>-->
-<!--      </div>-->
-<!--    </div>-->
+    <div class='sidebar-nav-items' fxLayout='column' fxLayoutAlign='start stretch'>
+      <app-sidebar *ngFor='let item of navItems' [item]='item'></app-sidebar>
+<!--            <a mat-list-item class="link-nav-a" href="/become-a-seller">-->
+<!--              <mat-icon class="mr-3">card_membership</mat-icon>-->
+<!--              <span class="mat-body-2" style="font-size: 15px">{{ 'Crea tu negocio' | translate }}</span>-->
+<!--            </a>-->
+      <div (click)='createYourBusiness()' class='link-nav-a' *ngIf='businessConfig?.showDigitalContract && !this.loggedInUser?.Business'>
+        <mat-icon class='mr-3'>card_membership</mat-icon>
+        <span class='mat-body-2' style='font-size: 15px'>{{ 'Crea tu negocio' | translate }}</span>
+      </div>
+    </div>
 
-<!--    <mat-divider *ngFor='let item of [1, 2, 3, 4]'></mat-divider>-->
+    <mat-divider *ngFor='let item of [1, 2, 3, 4]'></mat-divider>
 
-<!--    <mat-list>-->
-<!--      <mat-list-item>-->
-<!--        <span class='mat-body-2' style='font-size: 19px'>-->
-<!--          {{ 'Configuración' | translate }}-->
-<!--        </span>-->
-<!--      </mat-list-item>-->
-<!--    </mat-list>-->
+    <mat-list>
+      <mat-list-item>
+        <span class='mat-body-2' style='font-size: 19px'>
+          {{ 'Configuración' | translate }}
+        </span>
+      </mat-list-item>
+    </mat-list>
 
-<!--    <mat-nav-list>-->
-<!--      <a (click)='onShowProfile()' *ngIf='loggedInUser' fxLayoutAlign='start center' mat-list-item>-->
-<!--        <mat-icon>build</mat-icon>-->
-<!--        <span class='ml-3'>{{ 'Profile' | translate }}</span>-->
+    <mat-nav-list>
+      <a (click)='onShowProfile()' *ngIf='loggedInUser' fxLayoutAlign='start center' mat-list-item>
+        <mat-icon>build</mat-icon>
+        <span class='ml-3'>{{ 'Profile' | translate }}</span>
+      </a>
+
+      <a (click)='onShowMyContacts()' *ngIf='loggedInUser' fxLayoutAlign='start center' mat-list-item>
+        <mat-icon>book</mat-icon>
+        <span class='ml-3'>{{ 'Mis contactos' | translate }}</span>
+      </a>
+
+      <a (click)='onChangePass()' *ngIf='loggedInUser' fxLayoutAlign='start center' mat-list-item>
+        <mat-icon>no_encryption</mat-icon>
+        <span class='ml-3'>{{ 'Cambiar contraseña' | translate }}</span>
+      </a>
+
+<!--      <a #langMenuTrigger='matMenuTrigger' [matMenuTriggerFor]='langMenu1' fxLayoutAlign='start center' mat-list-item>-->
+<!--        <img [src]='flag?.image' width='18' />-->
+<!--        <span class='ml-3 mat-body-2'>{{ flag?.name }}</span>-->
+<!--        <mat-icon class='mat-icon-sm caret cur-icon ml-auto'>arrow_drop_down</mat-icon>-->
 <!--      </a>-->
 
-<!--      <a (click)='onShowMyContacts()' *ngIf='loggedInUser' fxLayoutAlign='start center' mat-list-item>-->
-<!--        <mat-icon>book</mat-icon>-->
-<!--        <span class='ml-3'>{{ 'Mis contactos' | translate }}</span>-->
-<!--      </a>-->
-
-<!--      <a (click)='onChangePass()' *ngIf='loggedInUser' fxLayoutAlign='start center' mat-list-item>-->
-<!--        <mat-icon>no_encryption</mat-icon>-->
-<!--        <span class='ml-3'>{{ 'Cambiar contraseña' | translate }}</span>-->
-<!--      </a>-->
-
-<!--&lt;!&ndash;      <a #langMenuTrigger='matMenuTrigger' [matMenuTriggerFor]='langMenu1' fxLayoutAlign='start center' mat-list-item>&ndash;&gt;-->
-<!--&lt;!&ndash;        <img [src]='flag?.image' width='18' />&ndash;&gt;-->
-<!--&lt;!&ndash;        <span class='ml-3 mat-body-2'>{{ flag?.name }}</span>&ndash;&gt;-->
-<!--&lt;!&ndash;        <mat-icon class='mat-icon-sm caret cur-icon ml-auto'>arrow_drop_down</mat-icon>&ndash;&gt;-->
-<!--&lt;!&ndash;      </a>&ndash;&gt;-->
-
-<!--&lt;!&ndash;      <mat-menu #langMenu1='matMenu' [overlapTrigger]='false' class='app-dropdown' xPosition='before'>&ndash;&gt;-->
-<!--&lt;!&ndash;        <button (click)='changeLang(flag)' *ngFor='let flag of flags' fxLayoutAlign='start center' mat-menu-item>&ndash;&gt;-->
-<!--&lt;!&ndash;          <img [src]='flag?.image' width='18' alt='logo'> <span class='ml-3 mat-body-2'>{{ flag?.name }}</span>&ndash;&gt;-->
-<!--&lt;!&ndash;        </button>&ndash;&gt;-->
-<!--&lt;!&ndash;      </mat-menu>&ndash;&gt;-->
-
-<!--      &lt;!&ndash;<a-->
-<!--        fxLayoutAlign="start center"-->
-<!--        mat-list-item-->
-<!--        [matMenuTriggerFor]="currencyMenu1"-->
-<!--        #currencyMenuTrigger="matMenuTrigger"-->
-<!--      >-->
-<!--        <span *ngIf="currency?.name == 'CUP'" style="font-size: 19px; margin-left: 7px"> &#36; </span>-->
-<!--        <span *ngIf="currency?.name == 'USD'" style="font-size: 19px; margin-left: 7px"> &#36; </span>-->
-<!--        <span class="ml-3 mat-body-2">{{ currency?.name }}</span>-->
-<!--        <mat-icon class="mat-icon-sm caret cur-icon ml-auto">arrow_drop_down</mat-icon>-->
-<!--      </a>&ndash;&gt;-->
-
-<!--      <mat-menu #currencyMenu1='matMenu' [overlapTrigger]='false' class='app-dropdown' xPosition='before'>-->
-<!--        <button (click)='changeCurrency(cur)' *ngFor='let cur of currencies' fxLayoutAlign='start center' mat-menu-item>-->
-<!--          <span>{{ cur?.name }}</span>-->
+<!--      <mat-menu #langMenu1='matMenu' [overlapTrigger]='false' class='app-dropdown' xPosition='before'>-->
+<!--        <button (click)='changeLang(flag)' *ngFor='let flag of flags' fxLayoutAlign='start center' mat-menu-item>-->
+<!--          <img [src]='flag?.image' width='18' alt='logo'> <span class='ml-3 mat-body-2'>{{ flag?.name }}</span>-->
 <!--        </button>-->
 <!--      </mat-menu>-->
 
-<!--      <a (click)='onGotoBackend()'-->
-<!--         *ngIf='loggedInUser && (loggedInUserService.isAdminOrOwnerUser() || loggedInUserService.isMessengerUser())'-->
-<!--         class='link-nav-a'-->
-<!--         mat-list-item>-->
-<!--        <mat-icon>edit</mat-icon>-->
-<!--        <span class='ml-3'>{{ 'Ir a la administración' | translate }}</span>-->
-<!--      </a>-->
+      <!--<a
+        fxLayoutAlign="start center"
+        mat-list-item
+        [matMenuTriggerFor]="currencyMenu1"
+        #currencyMenuTrigger="matMenuTrigger"
+      >
+        <span *ngIf="currency?.name == 'CUP'" style="font-size: 19px; margin-left: 7px"> &#36; </span>
+        <span *ngIf="currency?.name == 'USD'" style="font-size: 19px; margin-left: 7px"> &#36; </span>
+        <span class="ml-3 mat-body-2">{{ currency?.name }}</span>
+        <mat-icon class="mat-icon-sm caret cur-icon ml-auto">arrow_drop_down</mat-icon>
+      </a>-->
 
-<!--      <a (click)='onLogout()' *ngIf='loggedInUser' class='link-nav-a' mat-list-item>-->
-<!--        <mat-icon>exit_to_app</mat-icon>-->
-<!--        <span class='ml-3'>{{ 'Logout' | translate }}</span>-->
-<!--      </a>-->
-<!--    </mat-nav-list>-->
-<!--  </mat-sidenav>-->
+      <mat-menu #currencyMenu1='matMenu' [overlapTrigger]='false' class='app-dropdown' xPosition='before'>
+        <button (click)='changeCurrency(cur)' *ngFor='let cur of currencies' fxLayoutAlign='start center' mat-menu-item>
+          <span>{{ cur?.name }}</span>
+        </button>
+      </mat-menu>
 
-<!--  &lt;!&ndash; Notifications &ndash;&gt;-->
-<!--  <mat-sidenav-->
-<!--    #notificationBar-->
-<!--    [opened]='false'-->
-<!--    class='DrawerNotificationPanel'-->
-<!--    fixedInViewport-->
-<!--    mode='over'-->
-<!--    position='end'-->
-<!--  >-->
-<!--    <mat-list class='position-relative'>-->
-<!--      <mat-list-item>-->
-<!--        <mat-icon> notifications</mat-icon>-->
-<!--        &nbsp;-->
-<!--        <span class='mat-body-2' style='font-size: 19px'>-->
-<!--          {{ 'Notificaciones' | translate }}-->
-<!--        </span>-->
+      <a (click)='onGotoBackend()'
+         *ngIf='loggedInUser && (loggedInUserService.isAdminOrOwnerUser() || loggedInUserService.isMessengerUser())'
+         class='link-nav-a'
+         mat-list-item>
+        <mat-icon>edit</mat-icon>
+        <span class='ml-3'>{{ 'Ir a la administración' | translate }}</span>
+      </a>
 
-<!--        <span (click)='notificationBar.toggle()' class='sidebar-close-btn'>-->
-<!--          <mat-icon>close</mat-icon>-->
-<!--        </span>-->
-<!--      </mat-list-item>-->
-<!--    </mat-list>-->
+      <a (click)='onLogout()' *ngIf='loggedInUser' class='link-nav-a' mat-list-item>
+        <mat-icon>exit_to_app</mat-icon>
+        <span class='ml-3'>{{ 'Logout' | translate }}</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
 
-<!--    <mat-divider></mat-divider>-->
+  <!-- Notifications -->
+  <mat-sidenav
+    #notificationBar
+    [opened]='false'
+    class='DrawerNotificationPanel'
+    fixedInViewport
+    mode='over'
+    position='end'
+  >
+    <mat-list class='position-relative'>
+      <mat-list-item>
+        <mat-icon> notifications</mat-icon>
+        &nbsp;
+        <span class='mat-body-2' style='font-size: 19px'>
+          {{ 'Notificaciones' | translate }}
+        </span>
 
-<!--    <app-panel-notifications (closePanel)='notificationBar.toggle()'></app-panel-notifications>-->
-<!--  </mat-sidenav>-->
+        <span (click)='notificationBar.toggle()' class='sidebar-close-btn'>
+          <mat-icon>close</mat-icon>
+        </span>
+      </mat-list-item>
+    </mat-list>
 
-<!--  &lt;!&ndash; Todos excepto vista movil &ndash;&gt;-->
-<!--  <div [class.py-2]='!loggedInUser' class='home-header' fxHide.lt-md>-->
-<!--    <div class='container-header' fxLayout='row wrap' fxLayoutAlign='space-between center'>-->
-<!--      <img alt='logo' class='Logo-img' fxHide.lt-md fxShow (click)='metaAdd()'-->
-<!--           routerLink='/' [src]="logo" />-->
-<!--      <button (click)='start.toggle()' fxHide fxShow.lt-md mat-icon-button>-->
-<!--        <mat-icon>menu</mat-icon>-->
-<!--      </button>-->
+    <mat-divider></mat-divider>
 
-<!--      <div class="search-form" fxFlex fxLayout="row" fxLayoutAlign="start center">-->
-<!--        <div class="search-form" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1rem">-->
-<!--          &lt;!&ndash; ======== &ndash;&gt;-->
-<!--          &lt;!&ndash; Location &ndash;&gt;-->
-<!--          <div-->
-<!--            fxLayout="row"-->
-<!--            fxLayoutAlign="start center"-->
-<!--            fxLayoutGap="4px"-->
-<!--            id="nav-location"-->
-<!--            class="info-location"-->
-<!--            fxHide.lt-md-->
-<!--            fxShow-->
-<!--            (click)="tour?.getCurrentStep()?.isOpen() ? $event.stopPropagation() : openSetLocation()"-->
-<!--          >-->
-<!--            <div class="nl-logo">-->
-<!--              <mat-icon>room</mat-icon>-->
-<!--            </div>-->
-<!--            <div-->
-<!--              *ngIf="business || province"-->
-<!--              class="nl-titles"-->
-<!--              fxLayout="column"-->
-<!--            >-->
-<!--              <ng-container *ngIf="business">-->
-<!--                <div class="nl-province">{{ business?.name }}</div>-->
-<!--                <div class="nl-municipality">{{ province?.name }}</div>-->
-<!--              </ng-container>-->
-<!--              <ng-container *ngIf="!business">-->
-<!--                <div class="nl-province">{{ province?.name }}</div>-->
-<!--                <div class="nl-municipality">{{ municipality?.name }}</div>-->
-<!--              </ng-container>-->
-<!--            </div>-->
+    <app-panel-notifications (closePanel)='notificationBar.toggle()'></app-panel-notifications>
+  </mat-sidenav>
 
-<!--            <div *ngIf="!business && !province" class="nl-titles" fxLayout="column">-->
-<!--              &lt;!&ndash; <span></span>-->
-<!--              <span></span>-->
-<!--              <span></span>-->
-<!--              <span></span> &ndash;&gt;-->
-<!--              <div class="nl-province">{{ 'Comprar en...' | translate }}</div>-->
-<!--              <div class="nl-municipality">{{ 'Escoger ubicación' | translate }}</div>-->
-<!--            </div>-->
-<!--          </div>-->
+  <!-- Todos excepto vista movil -->
+  <div [class.py-2]='!loggedInUser' class='home-header' fxHide.lt-md>
+    <div class='container-header' fxLayout='row wrap' fxLayoutAlign='space-between center'>
+      <img alt='logo' class='Logo-img' fxHide.lt-md fxShow (click)='metaAdd()'
+           routerLink='/' [src]="logo" />
+      <button (click)='start.toggle()' fxHide fxShow.lt-md mat-icon-button>
+        <mat-icon>menu</mat-icon>
+      </button>
 
-<!--          &lt;!&ndash; ======== &ndash;&gt;-->
-<!--          &lt;!&ndash; SEARCHING &ndash;&gt;-->
-<!--          <div class='form-wrap' fxFlex='grow'>-->
-<!--            <input (keyup.enter)='onSearch()' [formControl]='searchForm' placeholder="{{ 'Buscar en la tienda...' | translate }}" type='text' />-->
-<!--            <button (click)='onSearch()' class='btn-search'>-->
-<!--              <mat-icon>search</mat-icon>-->
-<!--            </button>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
+      <div class="search-form" fxFlex fxLayout="row" fxLayoutAlign="start center">
+        <div class="search-form" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1rem">
+          <!-- ======== -->
+          <!-- Location -->
+          <div
+            fxLayout="row"
+            fxLayoutAlign="start center"
+            fxLayoutGap="4px"
+            id="nav-location"
+            class="info-location"
+            fxHide.lt-md
+            fxShow
+            (click)="tour?.getCurrentStep()?.isOpen() ? $event.stopPropagation() : openSetLocation()"
+          >
+            <div class="nl-logo">
+              <mat-icon>room</mat-icon>
+            </div>
+            <div
+              *ngIf="business || province"
+              class="nl-titles"
+              fxLayout="column"
+            >
+              <ng-container *ngIf="business">
+                <div class="nl-province">{{ business?.name }}</div>
+                <div class="nl-municipality">{{ province?.name }}</div>
+              </ng-container>
+              <ng-container *ngIf="!business">
+                <div class="nl-province">{{ province?.name }}</div>
+                <div class="nl-municipality">{{ municipality?.name }}</div>
+              </ng-container>
+            </div>
 
-<!--      <div class='userWidgets'-->
-<!--           fxLayout='row'-->
-<!--           fxLayoutAlign='end center'-->
-<!--           fxLayoutAlign.xs='start center'-->
-<!--           ngClass.xs='w-100'>-->
+            <div *ngIf="!business && !province" class="nl-titles" fxLayout="column">
+              <!-- <span></span>
+              <span></span>
+              <span></span>
+              <span></span> -->
+              <div class="nl-province">{{ 'Comprar en...' | translate }}</div>
+              <div class="nl-municipality">{{ 'Escoger ubicación' | translate }}</div>
+            </div>
+          </div>
 
-<!--        <div fxFlex="75" fxLayout="row" fxLayoutAlign="end center">-->
-<!--          <div class="widget-text mx-2">-->
-<!--            <a #langMenuTrigger="matMenuTrigger" [matMenuTriggerFor]="langMenu" mat-icon-button-->
-<!--               matTooltip="{{ 'Change language' | translate }}">-->
-<!--              <img [src]="flag?.image" height="24" width="24" />-->
-<!--              <span class="flag-menu-title" fxShow="false" fxShow.gt-sm></span>-->
-<!--              <mat-icon class="mat-icon-sm caret cur-icon">arrow_drop_down</mat-icon>-->
-<!--            </a>-->
-<!--            <mat-menu #langMenu="matMenu" [overlapTrigger]="false" class="app-dropdown" xPosition="before">-->
-<!--                <span>-->
-<!--                  <button (click)="changeLang(flag)" *ngFor="let flag of flags" mat-menu-item>-->
-<!--                    <img [src]="flag.image" width="18" /> {{ flag?.name }}-->
-<!--                  </button>-->
-<!--                </span>-->
-<!--            </mat-menu>-->
-<!--          </div>-->
-<!--        </div>-->
+          <!-- ======== -->
+          <!-- SEARCHING -->
+          <div class='form-wrap' fxFlex='grow'>
+            <input (keyup.enter)='onSearch()' [formControl]='searchForm' placeholder="{{ 'Buscar en la tienda...' | translate }}" type='text' />
+            <button (click)='onSearch()' class='btn-search'>
+              <mat-icon>search</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
 
-<!--&lt;!&ndash;        <a [routerLink]="['/pages/compare']"&ndash;&gt;-->
-<!--&lt;!&ndash;           class='px-3'&ndash;&gt;-->
-<!--&lt;!&ndash;           fxLayoutAlign='start center'&ndash;&gt;-->
-<!--&lt;!&ndash;           matTooltip='Comparar productos'&ndash;&gt;-->
-<!--&lt;!&ndash;           routerLinkActive='router-link-active'>&ndash;&gt;-->
+      <div class='userWidgets'
+           fxLayout='row'
+           fxLayoutAlign='end center'
+           fxLayoutAlign.xs='start center'
+           ngClass.xs='w-100'>
 
-<!--&lt;!&ndash;          <mat-icon *ngIf='compareItems.length' [matBadge]='compareItems.length'&ndash;&gt;-->
-<!--&lt;!&ndash;                    matBadgeColor='accent'>compare_arrows&ndash;&gt;-->
-<!--&lt;!&ndash;          </mat-icon>&ndash;&gt;-->
+        <div fxFlex="75" fxLayout="row" fxLayoutAlign="end center">
+          <div class="widget-text mx-2">
+            <a #langMenuTrigger="matMenuTrigger" [matMenuTriggerFor]="langMenu" mat-icon-button
+               matTooltip="{{ 'Change language' | translate }}">
+              <img [src]="flag?.image" height="24" width="24" />
+              <span class="flag-menu-title" fxShow="false" fxShow.gt-sm></span>
+              <mat-icon class="mat-icon-sm caret cur-icon">arrow_drop_down</mat-icon>
+            </a>
+            <mat-menu #langMenu="matMenu" [overlapTrigger]="false" class="app-dropdown" xPosition="before">
+                <span>
+                  <button (click)="changeLang(flag)" *ngFor="let flag of flags" mat-menu-item>
+                    <img [src]="flag.image" width="18" /> {{ flag?.name }}
+                  </button>
+                </span>
+            </mat-menu>
+          </div>
+        </div>
 
-<!--&lt;!&ndash;          <mat-icon *ngIf='!compareItems.length'>compare_arrows</mat-icon>&ndash;&gt;-->
-<!--&lt;!&ndash;          <span fxHide fxShow='false'>{{ 'Comparar productos' | translate }}</span>&ndash;&gt;-->
-<!--&lt;!&ndash;        </a>&ndash;&gt;-->
-
-<!--        <a fxLayoutAlign="start center" class='px-3' mat-button [matMenuTriggerFor]="currencyMenu" #currencyMenuTrigger="matMenuTrigger">-->
-<!--          <span class="flag-menu-title">{{currency?.name | translate}}</span>-->
-<!--          <mat-icon class="mat-icon-sm caret cur-icon">arrow_drop_down</mat-icon>-->
-<!--        </a>-->
-<!--        <mat-menu #currencyMenu="matMenu" [overlapTrigger]="false" xPosition="before" class="app-dropdown menu-currency">-->
-<!--          <span>-->
-<!--            <span class='px-2 mt-1 title-mat-menu'>{{ 'Currencies' | translate}}:</span>-->
-<!--            <button mat-menu-item *ngFor="let cur of currencies" (click)="changeCurrency(cur)">-->
-<!--              <span>> {{cur?.name | translate}}</span>-->
-<!--            </button>-->
-<!--          </span>-->
-<!--        </mat-menu>-->
-
-<!--        &lt;!&ndash; <a class="px-3" fxLayoutAlign="start center" mat-button [matMenuTriggerFor]="langMenu" #langMenuTrigger="matMenuTrigger">-->
-<!--          <img [src]="flag.image" width="18">-->
-<!--          <mat-icon class="mat-icon-sm caret cur-icon">arrow_drop_down</mat-icon>-->
-<!--        </a>-->
-<!--        <mat-menu #langMenu="matMenu" [overlapTrigger]="false" xPosition="before" class="app-dropdown">-->
-<!--          <span>-->
-<!--            <button mat-menu-item *ngFor="let flag of flags" (click)="changeLang(flag)">-->
-<!--              <img [src]="flag.image" width="18"> {{flag?.name}}-->
-<!--            </button>-->
-<!--          </span>-->
-<!--        </mat-menu> &ndash;&gt;-->
-
-<!--        &lt;!&ndash; ================================ &ndash;&gt;-->
-<!--        &lt;!&ndash; CART MENU &ndash;&gt;-->
-<!--        <app-shopping-widgets class='button-web-currency'></app-shopping-widgets>-->
-
-<!--        &lt;!&ndash; ================================ &ndash;&gt;-->
-<!--        &lt;!&ndash; NOTIFICATIONS &ndash;&gt;-->
-<!--        <a *ngIf='loggedInUser' class='px-3' fxLayoutAlign='start center' style='color: white'>-->
-<!--          <button (click)='notificationBar.toggle()' mat-icon-button>-->
-<!--            <mat-icon [matBadge]='notificationsService.getUnreadNotifications()' matBadgeColor='accent'-->
-<!--            >notifications-->
-<!--            </mat-icon>-->
-<!--          </button>-->
-<!--        </a>-->
-
-<!--        &lt;!&ndash; ================================ &ndash;&gt;-->
-<!--        &lt;!&ndash; ACCOUNT MENU &ndash;&gt;-->
-<!--        <a *ngIf='!loggedInUser'-->
-<!--           [routerLink]="['/my-account']"-->
+<!--        <a [routerLink]="['/pages/compare']"-->
 <!--           class='px-3'-->
 <!--           fxLayoutAlign='start center'-->
-<!--           fxShow='true'-->
+<!--           matTooltip='Comparar productos'-->
 <!--           routerLinkActive='router-link-active'>-->
-<!--          <mat-icon>person</mat-icon>-->
-<!--          <span fxHide.xs>{{ 'Account' | translate }}</span>-->
-<!--        </a>-->
 
-<!--        <a #userMenuTrigger='matMenuTrigger'-->
-<!--           *ngIf='loggedInUser'-->
-<!--           [matMenuTriggerFor]='userMenu'-->
-<!--           class='px-0 pl-2'-->
-<!--           fxLayoutAlign='start center'-->
-<!--           fxShow-->
-<!--           mat-icon-button>-->
-
-<!--&lt;!&ndash;          <img *ngIf='!this.loggedInUser?.avatar' alt='Profile'&ndash;&gt;-->
-<!--&lt;!&ndash;               class='profileImage' src='assets/images/avatars/profile2.png' />&ndash;&gt;-->
-<!--          <mat-icon *ngIf='!this.loggedInUser?.avatar' alt='Profile'>-->
-<!--              account_circle-->
+<!--          <mat-icon *ngIf='compareItems.length' [matBadge]='compareItems.length'-->
+<!--                    matBadgeColor='accent'>compare_arrows-->
 <!--          </mat-icon>-->
-<!--          <img *ngIf='this.loggedInUser?.avatar' [src]='urlImage + loggedInUser?.avatar' alt='Profile'-->
-<!--               class='profileImage' />-->
+
+<!--          <mat-icon *ngIf='!compareItems.length'>compare_arrows</mat-icon>-->
+<!--          <span fxHide fxShow='false'>{{ 'Comparar productos' | translate }}</span>-->
 <!--        </a>-->
 
-<!--        <mat-menu #userMenu="matMenu" [overlapTrigger]="false" class="app-dropdown" xPosition="before">-->
-<!--          <button *ngIf="this.loggedInUser" mat-menu-item>-->
-<!--            <strong>{{ this.loggedInUser.name }} {{ this.loggedInUser.lastName || '' }}</strong>-->
-<!--          </button>-->
+        <a fxLayoutAlign="start center" class='px-3' mat-button [matMenuTriggerFor]="currencyMenu" #currencyMenuTrigger="matMenuTrigger">
+          <span class="flag-menu-title">{{currency?.name | translate}}</span>
+          <mat-icon class="mat-icon-sm caret cur-icon">arrow_drop_down</mat-icon>
+        </a>
+        <mat-menu #currencyMenu="matMenu" [overlapTrigger]="false" xPosition="before" class="app-dropdown menu-currency">
+          <span>
+            <span class='px-2 mt-1 title-mat-menu'>{{ 'Currencies' | translate}}:</span>
+            <button mat-menu-item *ngFor="let cur of currencies" (click)="changeCurrency(cur)">
+              <span>> {{cur?.name | translate}}</span>
+            </button>
+          </span>
+        </mat-menu>
 
-<!--          <button [routerLink]="['/my-orders']" mat-menu-item>-->
-<!--            <mat-icon>receipt</mat-icon>-->
-<!--            <span class="mat-body-1">{{ 'Mis órdenes' | translate }}</span>-->
-<!--          </button>-->
+        <!-- <a class="px-3" fxLayoutAlign="start center" mat-button [matMenuTriggerFor]="langMenu" #langMenuTrigger="matMenuTrigger">
+          <img [src]="flag.image" width="18">
+          <mat-icon class="mat-icon-sm caret cur-icon">arrow_drop_down</mat-icon>
+        </a>
+        <mat-menu #langMenu="matMenu" [overlapTrigger]="false" xPosition="before" class="app-dropdown">
+          <span>
+            <button mat-menu-item *ngFor="let flag of flags" (click)="changeLang(flag)">
+              <img [src]="flag.image" width="18"> {{flag?.name}}
+            </button>
+          </span>
+        </mat-menu> -->
 
-<!--          <button (click)='onShowProfile()' mat-menu-item>-->
-<!--            <mat-icon>build</mat-icon>-->
-<!--            <span class='mat-body-1'>{{ 'Profile' | translate }}</span>-->
-<!--          </button>-->
+        <!-- ================================ -->
+        <!-- CART MENU -->
+        <app-shopping-widgets class='button-web-currency'></app-shopping-widgets>
 
-<!--          <button (click)='onShowMyContacts()' mat-menu-item>-->
-<!--            <mat-icon>book</mat-icon>-->
-<!--            <span class='mat-body-1'>{{ 'Mis contactos' | translate }}</span>-->
-<!--          </button>-->
+        <!-- ================================ -->
+        <!-- NOTIFICATIONS -->
+        <a *ngIf='loggedInUser' class='px-3' fxLayoutAlign='start center' style='color: white'>
+          <button (click)='notificationBar.toggle()' mat-icon-button>
+            <mat-icon [matBadge]='notificationsService.getUnreadNotifications()' matBadgeColor='accent'
+            >notifications
+            </mat-icon>
+          </button>
+        </a>
 
-<!--          <button-->
-<!--            (click)='onGotoBackend()'-->
-<!--            *ngIf='loggedInUser && (loggedInUserService.isAdminOrOwnerUser() || loggedInUserService.isMessengerUser())'-->
-<!--            mat-menu-item>-->
-<!--            <mat-icon>edit</mat-icon>-->
-<!--            <a id='linkNavBack' style='display: none'></a>-->
-<!--            <span class='mat-body-1'>{{ 'Administración' | translate }}</span>-->
-<!--          </button>-->
+        <!-- ================================ -->
+        <!-- ACCOUNT MENU -->
+        <a *ngIf='!loggedInUser'
+           [routerLink]="['/my-account']"
+           class='px-3'
+           fxLayoutAlign='start center'
+           fxShow='true'
+           routerLinkActive='router-link-active'>
+          <mat-icon>person</mat-icon>
+          <span fxHide.xs>{{ 'Account' | translate }}</span>
+        </a>
 
-<!--          <button (click)='onChangePass()' *ngIf='loggedInUser' mat-menu-item>-->
-<!--            <mat-icon>settings</mat-icon>-->
-<!--            <span class='mat-body-1'>{{ 'Cambie la contraseña' | translate }}</span>-->
-<!--          </button>-->
+        <a #userMenuTrigger='matMenuTrigger'
+           *ngIf='loggedInUser'
+           [matMenuTriggerFor]='userMenu'
+           class='px-0 pl-2'
+           fxLayoutAlign='start center'
+           fxShow
+           mat-icon-button>
 
-<!--          &lt;!&ndash; -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45; &ndash;&gt;-->
-<!--          &lt;!&ndash; NOTIFICATIONS &ndash;&gt;-->
-<!--          <div (click)='createYourBusiness()' *ngIf='loggedInUser && (businessConfig?.showDigitalContract && !this.loggedInUser?.Business)' mat-menu-item>-->
-<!--            <mat-icon>shopping_basket</mat-icon>-->
-<!--            <span class='mat-body-1'>{{ 'Crea tu negocio' | translate }}</span>-->
-<!--          </div>-->
-<!--&lt;!&ndash;                    <a *ngIf="loggedInUser" mat-menu-item href="{{urlToCreateBusiness}}" target="_blank">&ndash;&gt;-->
-<!--&lt;!&ndash;                      <mat-icon>shopping_basket</mat-icon>&ndash;&gt;-->
-<!--&lt;!&ndash;                      <span class="mat-body-1">{{ 'Crea tu negocio' | translate }}</span>&ndash;&gt;-->
-<!--&lt;!&ndash;                    </a>&ndash;&gt;-->
+<!--          <img *ngIf='!this.loggedInUser?.avatar' alt='Profile'-->
+<!--               class='profileImage' src='assets/images/avatars/profile2.png' />-->
+          <mat-icon *ngIf='!this.loggedInUser?.avatar' alt='Profile'>
+              account_circle
+          </mat-icon>
+          <img *ngIf='this.loggedInUser?.avatar' [src]='urlImage + loggedInUser?.avatar' alt='Profile'
+               class='profileImage' />
+        </a>
+
+        <mat-menu #userMenu="matMenu" [overlapTrigger]="false" class="app-dropdown" xPosition="before">
+          <button *ngIf="this.loggedInUser" mat-menu-item>
+            <strong>{{ this.loggedInUser.name }} {{ this.loggedInUser.lastName || '' }}</strong>
+          </button>
+
+          <button [routerLink]="['/my-orders']" mat-menu-item>
+            <mat-icon>receipt</mat-icon>
+            <span class="mat-body-1">{{ 'Mis órdenes' | translate }}</span>
+          </button>
+
+          <button (click)='onShowProfile()' mat-menu-item>
+            <mat-icon>build</mat-icon>
+            <span class='mat-body-1'>{{ 'Profile' | translate }}</span>
+          </button>
+
+          <button (click)='onShowMyContacts()' mat-menu-item>
+            <mat-icon>book</mat-icon>
+            <span class='mat-body-1'>{{ 'Mis contactos' | translate }}</span>
+          </button>
+
+          <button
+            (click)='onGotoBackend()'
+            *ngIf='loggedInUser && (loggedInUserService.isAdminOrOwnerUser() || loggedInUserService.isMessengerUser())'
+            mat-menu-item>
+            <mat-icon>edit</mat-icon>
+            <a id='linkNavBack' style='display: none'></a>
+            <span class='mat-body-1'>{{ 'Administración' | translate }}</span>
+          </button>
+
+          <button (click)='onChangePass()' *ngIf='loggedInUser' mat-menu-item>
+            <mat-icon>settings</mat-icon>
+            <span class='mat-body-1'>{{ 'Cambie la contraseña' | translate }}</span>
+          </button>
+
+          <!-- ------------------------- -->
+          <!-- NOTIFICATIONS -->
+          <div (click)='createYourBusiness()' *ngIf='loggedInUser && (businessConfig?.showDigitalContract && !this.loggedInUser?.Business)' mat-menu-item>
+            <mat-icon>shopping_basket</mat-icon>
+            <span class='mat-body-1'>{{ 'Crea tu negocio' | translate }}</span>
+          </div>
+<!--                    <a *ngIf="loggedInUser" mat-menu-item href="{{urlToCreateBusiness}}" target="_blank">-->
+<!--                      <mat-icon>shopping_basket</mat-icon>-->
+<!--                      <span class="mat-body-1">{{ 'Crea tu negocio' | translate }}</span>-->
+<!--                    </a>-->
 
 
-<!--          <button (click)='onLogout()' mat-menu-item>-->
-<!--            <mat-icon>exit_to_app</mat-icon>-->
-<!--            <span class='mat-body-1'>{{ 'Logout' | translate }}</span>-->
-<!--          </button>-->
-<!--        </mat-menu>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-
-<!--  &lt;!&ndash;Home Header En vista movil &ndash;&gt;-->
-<!--  <div class='home-header-2 p-2' fxHide fxShow.lt-md>-->
-<!--    <div fxLayout='column' fxLayoutAlign='start stretch'>-->
-<!--      <div fxLayout='row' fxLayoutAlign='space-between center' fxLayoutGap='gappx'>-->
-<!--        <div class='main-logo-container' fxLayoutAlign='start center'>-->
-<!--          <button (click)='start.toggle()' class='mr-2' mat-icon-button>-->
-<!--            <mat-icon>menu</mat-icon>-->
-<!--          </button>-->
-<!--          <img alt='logo' class='logo-img-main' routerLink='/' [src]="logo" />-->
-<!--        </div>-->
-
-<!--        <div class='userWidgets m-0 p-0' fxLayoutAlign='start center'>-->
-<!--          <a class='button-currency ml-3' fxLayoutAlign="center center" mat-button [matMenuTriggerFor]="currencyMenu" #currencyMenuTrigger="matMenuTrigger">-->
-<!--            <span class="flag-menu-title">{{currency?.name | translate}}</span>-->
-<!--            <mat-icon class="mat-icon-sm caret cur-icon">arrow_drop_down</mat-icon>-->
-<!--          </a>-->
-<!--          <mat-menu #currencyMenu="matMenu" [overlapTrigger]="false" xPosition="before" class="app-dropdown">-->
-<!--            <span>-->
-<!--              <button mat-menu-item *ngFor="let cur of currencies; let i = index" [disabled]='i === 0' (click)="changeCurrency(cur)">-->
-<!--                <span>{{cur?.name | translate}} {{i}}</span>-->
-<!--              </button>-->
-<!--            </span>-->
-<!--          </mat-menu>-->
-
-<!--          <a *ngIf='!loggedInUser'-->
-<!--             [routerLink]="['/my-account']"-->
-<!--             fxLayoutAlign='start center'-->
-<!--             fxShow='true'-->
-<!--             routerLinkActive='router-link-active'>-->
-<!--            <mat-icon>person</mat-icon>-->
-<!--            <span fxHide.xs>{{ 'Account' | translate }}</span>-->
-<!--          </a>-->
-
-<!--          <app-shopping-widgets></app-shopping-widgets>-->
-
-<!--          <a *ngIf='loggedInUser' fxLayoutAlign='start center' style='color: white'>-->
-<!--            <button (click)='notificationBar.toggle()' mat-icon-button>-->
-<!--              <mat-icon [matBadge]='notificationsService.getUnreadNotifications()' matBadgeColor='accent'-->
-<!--              >notifications-->
-<!--              </mat-icon>-->
-<!--            </button>-->
-<!--          </a>-->
-
-<!--        </div>-->
-<!--      </div>-->
-
-<!--      <div fxLayout='row' fxLayoutAlign='center start' fxLayoutGap='gappx'>-->
-<!--        <div class='mobile-search' fxLayout='row' fxLayoutAlign='start center'>-->
-<!--          <input (keyup.enter)='onSearch()'-->
-<!--                 [formControl]='searchForm'-->
-<!--                 fxFlex-->
-<!--                 placeholder="{{ 'Buscar...' | translate }}"-->
-<!--                 type='search' />-->
-<!--          <button (click)='onSearch()'>-->
-<!--            <mat-icon>search</mat-icon>-->
-<!--          </button>-->
-<!--        </div>-->
-<!--      </div>-->
-
-<!--      <div class='showCategories'-->
-<!--           fxLayout='row'-->
-<!--           fxLayoutAlign.sm='center center'-->
-<!--           fxLayoutAlign.xs='start center'-->
-<!--           fxLayoutGap='gappx'>-->
-
-<!--        &lt;!&ndash;        <a [routerLink]="['']"&ndash;&gt;-->
-<!--        &lt;!&ndash;           [routerLinkActiveOptions]="{ exact: true }"&ndash;&gt;-->
-<!--        &lt;!&ndash;           routerLinkActive="router-link-active"&ndash;&gt;-->
-<!--        &lt;!&ndash;           class="itemCategory"&ndash;&gt;-->
-<!--        &lt;!&ndash;           mat-button>{{ 'Inicio' | translate }}</a>&ndash;&gt;-->
-
-<!--        <a [routerLink]="['/shops-list']" *ngIf='businessConfig?.canShowOurBussiness' class='itemCategory' mat-button routerLinkActive='router-link-active'>-->
-<!--          {{ 'Nuestras tiendas' | translate }}</a>-->
-<!--        <a [routerLink]="['/products/search']" class='itemCategory' mat-button routerLinkActive='router-link-active'>-->
-<!--          {{ 'Todos los productos' | translate }}</a>-->
-
-<!--        &lt;!&ndash;        routerLinkActive="router-link-active"&ndash;&gt;-->
-<!--        <a-->
-<!--          *ngFor="let category of categories"-->
-<!--          [queryParams]="{ CategoryId: category.id }"-->
-<!--          [routerLink]="['/products/search']"-->
-<!--          class="itemCategory"-->
-<!--          mat-button-->
-<!--          >{{ category.name | parseLang: utilsService.getLang() }}</a-->
-<!--        >-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--  <div-->
-<!--    (click)="openSetLocation()"-->
-<!--    class="mobile-location"-->
-<!--    fxLayout="row"-->
-<!--    fxLayoutAlign="start center"-->
-<!--    fxLayoutGap="20"-->
-<!--    fxHide-->
-<!--    fxShow.lt-md-->
-<!--  >-->
-<!--    <div class="nl-logo" fxLayoutAlign="center center">-->
-<!--      <mat-icon>room</mat-icon>-->
-<!--    </div>-->
-<!--    <div *ngIf="!business && !province">{{ 'Comprar en...' | translate }}</div>-->
-<!--    <div *ngIf="province && !business">{{ province?.name }}, {{ municipality?.name }}</div>-->
-<!--    <div *ngIf="business">{{ business?.name }}, {{ province?.name }}</div>-->
-<!--  </div>-->
-
-<!--  <div class="menu-container1">-->
-<!--&lt;!&ndash;    <app-menu [_categories]="categories"></app-menu>&ndash;&gt;-->
-<!--    <app-menu></app-menu>-->
-<!--  </div>-->
-
-<!--  <router-outlet></router-outlet>-->
-
-<!--  &lt;!&ndash;  <app-footer-two *ngIf="!url.includes('my-account')"></app-footer-two>&ndash;&gt;-->
-<!--  <app-footer *ngIf="!url?.includes('my-account')"></app-footer>-->
-<!--</mat-sidenav-container>-->
-<section class='section-maintainer mt-3'>
-  <!-- BANNER TEMPORAL -->
-    <div
-      style="
-        padding: 16px;
-        background-color: darkred;
-        color: white !important;
-        font-weight: bold;
-        width: 91%;
-        white-space: normal;
-        max-width: 91% !important;
-        margin: 0 auto;
-      "
-      fxLayoutAlign='center center'
-    >
-      <h1 style="color: white !important">
-        En este momento estamos en mantenimiento, dentro de unos minutos estaremos de vuelta.
-      </h1>
+          <button (click)='onLogout()' mat-menu-item>
+            <mat-icon>exit_to_app</mat-icon>
+            <span class='mat-body-1'>{{ 'Logout' | translate }}</span>
+          </button>
+        </mat-menu>
+      </div>
     </div>
-  <!-- BANNER TEMPORAL -->
-</section>
+  </div>
+
+  <!--Home Header En vista movil -->
+  <div class='home-header-2 p-2' fxHide fxShow.lt-md>
+    <div fxLayout='column' fxLayoutAlign='start stretch'>
+      <div fxLayout='row' fxLayoutAlign='space-between center' fxLayoutGap='gappx'>
+        <div class='main-logo-container' fxLayoutAlign='start center'>
+          <button (click)='start.toggle()' class='mr-2' mat-icon-button>
+            <mat-icon>menu</mat-icon>
+          </button>
+          <img alt='logo' class='logo-img-main' routerLink='/' [src]="logo" />
+        </div>
+
+        <div class='userWidgets m-0 p-0' fxLayoutAlign='start center'>
+          <a class='button-currency ml-3' fxLayoutAlign="center center" mat-button [matMenuTriggerFor]="currencyMenu" #currencyMenuTrigger="matMenuTrigger">
+            <span class="flag-menu-title">{{currency?.name | translate}}</span>
+            <mat-icon class="mat-icon-sm caret cur-icon">arrow_drop_down</mat-icon>
+          </a>
+          <mat-menu #currencyMenu="matMenu" [overlapTrigger]="false" xPosition="before" class="app-dropdown">
+            <span>
+              <button mat-menu-item *ngFor="let cur of currencies; let i = index" [disabled]='i === 0' (click)="changeCurrency(cur)">
+                <span>{{cur?.name | translate}} {{i}}</span>
+              </button>
+            </span>
+          </mat-menu>
+
+          <a *ngIf='!loggedInUser'
+             [routerLink]="['/my-account']"
+             fxLayoutAlign='start center'
+             fxShow='true'
+             routerLinkActive='router-link-active'>
+            <mat-icon>person</mat-icon>
+            <span fxHide.xs>{{ 'Account' | translate }}</span>
+          </a>
+
+          <app-shopping-widgets></app-shopping-widgets>
+
+          <a *ngIf='loggedInUser' fxLayoutAlign='start center' style='color: white'>
+            <button (click)='notificationBar.toggle()' mat-icon-button>
+              <mat-icon [matBadge]='notificationsService.getUnreadNotifications()' matBadgeColor='accent'
+              >notifications
+              </mat-icon>
+            </button>
+          </a>
+
+        </div>
+      </div>
+
+      <div fxLayout='row' fxLayoutAlign='center start' fxLayoutGap='gappx'>
+        <div class='mobile-search' fxLayout='row' fxLayoutAlign='start center'>
+          <input (keyup.enter)='onSearch()'
+                 [formControl]='searchForm'
+                 fxFlex
+                 placeholder="{{ 'Buscar...' | translate }}"
+                 type='search' />
+          <button (click)='onSearch()'>
+            <mat-icon>search</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <div class='showCategories'
+           fxLayout='row'
+           fxLayoutAlign.sm='center center'
+           fxLayoutAlign.xs='start center'
+           fxLayoutGap='gappx'>
+
+        <!--        <a [routerLink]="['']"-->
+        <!--           [routerLinkActiveOptions]="{ exact: true }"-->
+        <!--           routerLinkActive="router-link-active"-->
+        <!--           class="itemCategory"-->
+        <!--           mat-button>{{ 'Inicio' | translate }}</a>-->
+
+        <a [routerLink]="['/shops-list']" *ngIf='businessConfig?.canShowOurBussiness' class='itemCategory' mat-button routerLinkActive='router-link-active'>
+          {{ 'Nuestras tiendas' | translate }}</a>
+        <a [routerLink]="['/products/search']" class='itemCategory' mat-button routerLinkActive='router-link-active'>
+          {{ 'Todos los productos' | translate }}</a>
+
+        <!--        routerLinkActive="router-link-active"-->
+        <a
+          *ngFor="let category of categories"
+          [queryParams]="{ CategoryId: category.id }"
+          [routerLink]="['/products/search']"
+          class="itemCategory"
+          mat-button
+          >{{ category.name | parseLang: utilsService.getLang() }}</a
+        >
+      </div>
+    </div>
+  </div>
+  <div
+    (click)="openSetLocation()"
+    class="mobile-location"
+    fxLayout="row"
+    fxLayoutAlign="start center"
+    fxLayoutGap="20"
+    fxHide
+    fxShow.lt-md
+  >
+    <div class="nl-logo" fxLayoutAlign="center center">
+      <mat-icon>room</mat-icon>
+    </div>
+    <div *ngIf="!business && !province">{{ 'Comprar en...' | translate }}</div>
+    <div *ngIf="province && !business">{{ province?.name }}, {{ municipality?.name }}</div>
+    <div *ngIf="business">{{ business?.name }}, {{ province?.name }}</div>
+  </div>
+
+  <div class="menu-container1">
+<!--    <app-menu [_categories]="categories"></app-menu>-->
+    <app-menu></app-menu>
+  </div>
+
+  <router-outlet></router-outlet>
+
+  <!--  <app-footer-two *ngIf="!url.includes('my-account')"></app-footer-two>-->
+  <app-footer *ngIf="!url?.includes('my-account')"></app-footer>
+</mat-sidenav-container>
+<!--<section class='section-maintainer mt-3'>-->
+<!--  &lt;!&ndash; BANNER TEMPORAL &ndash;&gt;-->
+<!--    <div-->
+<!--      style="-->
+<!--        padding: 16px;-->
+<!--        background-color: darkred;-->
+<!--        color: white !important;-->
+<!--        font-weight: bold;-->
+<!--        width: 91%;-->
+<!--        white-space: normal;-->
+<!--        max-width: 91% !important;-->
+<!--        margin: 0 auto;-->
+<!--      "-->
+<!--      fxLayoutAlign='center center'-->
+<!--    >-->
+<!--      <h1 style="color: white !important">-->
+<!--        En este momento estamos en mantenimiento, dentro de unos minutos estaremos de vuelta.-->
+<!--      </h1>-->
+<!--    </div>-->
+<!--  &lt;!&ndash; BANNER TEMPORAL &ndash;&gt;-->
+<!--</section>-->
