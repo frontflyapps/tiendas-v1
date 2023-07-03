@@ -533,13 +533,13 @@
                     ngClass.lt-sm="py-2 border-bottom"
                   >
                     <ng-container
-                      *ngIf="this.selectedOrder?.shippingDetails && this.selectedOrder?.shippingDetails?.totalPrice"
+                      *ngIf="this.selectedOrder?.shippingCost !== null"
                     >
                       <span class="mat-caption color-grey-800">
                         {{ 'Precio de envio' | translate }}
                       </span>
                       <span>
-                        {{ this.selectedOrder?.shippingDetails?.totalPrice }}
+                        {{ this.selectedOrder?.shippingCost }}
                       </span>
                     </ng-container>
                   </div>
