@@ -8,6 +8,7 @@ import { ParsePriceProduct } from './parse-price-product.pipe';
 import { CurrencyMarket } from './currency-market.pipe';
 import { CurrencyCheckoutPipe } from './currency-checkout.pipe';
 import { I18nFieldPipe } from './i18n-field.pipe';
+import { CurrencyProductPipe } from './currency.pipe';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { I18nFieldPipe } from './i18n-field.pipe';
     CurrencyMarket,
     I18nFieldPipe,
     CurrencyCheckoutPipe,
+    CurrencyProductPipe
   ],
   imports: [CommonModule],
   exports: [
@@ -29,6 +31,7 @@ import { I18nFieldPipe } from './i18n-field.pipe';
     ParsePriceProduct,
     CurrencyMarket,
     CurrencyCheckoutPipe,
+    CurrencyProductPipe,
     I18nFieldPipe
   ],
   providers: [DummyPipe],
