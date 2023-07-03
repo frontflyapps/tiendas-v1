@@ -37,8 +37,8 @@
 </div>
 
 <div class='home-1-wrap'>
-  <div *ngIf='allBicons.length > 0 && !loadingAllProduct' class='info-bar-four-wrapper'>
-    <div class='container'>
+  <div *ngIf='allBicons.length > 0' class='info-bar-four-wrapper'>
+    <div class='container my-4'>
       <div class='info-bar-four' fxLayout='row wrap' fxLayout.xs='column wrap' fxLayoutAlign='center center'
            fxLayoutAlign.xs='center start'>
         <div
@@ -60,7 +60,7 @@
             </div>
             <div class='content' fxFlex='80'>
               <p class='uppercase'>{{ item.title | parseLang: utilsService.getLang() }}</p>
-              <span class='text-muted m-0 mt-2'>{{ item.subTitle | parseLang: utilsService.getLang() }}</span>
+              <span class='text-muted m-0 mt-2 word-break'>{{ item.subTitle | parseLang: utilsService.getLang() }}</span>
             </div>
           </mat-card>
         </div>
@@ -156,7 +156,7 @@
         </div>
       </div>
     </div>
-    <app-skeleton-loading-cards *ngIf='arraySectionProducts.length === 0' [setConfiguration]='{ xs: 1, sm: 1, md: 1, lg: 1 }'>
+    <app-skeleton-loading-cards *ngIf='loadingAllProduct' [setConfiguration]='{ xs: 1, sm: 1, md: 1, lg: 1 }'>
     </app-skeleton-loading-cards>
   </div>
 

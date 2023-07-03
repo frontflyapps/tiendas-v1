@@ -168,6 +168,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
           if (!encontro) {
             this.arraySectionProducts.push({ ...item.businessPromotion, ...{ visualType: { ...this.visualizationSections[cont] } } });
           }
+          this.loadingAllProduct = false;
         } else if (item.featured) {
           const encontro = this.arraySectionProducts.find(section => section.id === this.visualizationSections[cont].id);
           if (!encontro) {
@@ -197,8 +198,10 @@ export class MainHomeComponent implements OnInit, OnDestroy {
             this.loadingAllProduct = false;
           }
         }
+        this.loadingAllProduct = false;
         cont++;
       });
+      this.loadingAllProduct = false;
     });
     this.productService.getAllProductsSections();
     this._unsubscribeAll = new Subject<any>();
@@ -441,7 +444,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
 
     this.loadingPopular = false;
     this.loadingFeatured = false;
-    // this.loadingAllProduct = false;
+    this.loadingAllProduct = false;
     this.loadingBestSellers = false;
   }
 
@@ -464,7 +467,7 @@ export class MainHomeComponent implements OnInit, OnDestroy {
       })
       .catch((error) => {
         this.showStatic = true;
-        // this.loadingAllProduct = false;
+        this.loadingAllProduct = false;
         this.loadingPopular = false;
         this.loadingFeatured = false;
         this.loadingServices = false;
