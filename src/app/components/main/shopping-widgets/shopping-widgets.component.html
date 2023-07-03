@@ -76,7 +76,7 @@
                     </p>
                   </div>
                 </ng-container>
-                <span *ngIf='!item.Product.offerValue'>{{ getTotalPricePerItem(item) | currencyMarket: cart.market }}</span>
+                <span *ngIf='!item.Product.offerValue'>{{ item.totalPrice | currencyProduct: item.Product.currency }}</span>
               </span>
 
             </div>
