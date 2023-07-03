@@ -179,7 +179,7 @@
             </ng-container>
           </ng-container>
           <!--------- SHIPPING DETAILS ----------->
-          <ng-container *ngIf="form.controls['currency'].value && form.get('paymentType').value; else noShipping">
+          <ng-container *ngIf="form.controls['currency'].value && form.get('paymentType').value">
             <p class="my-3" *ngIf="form.get('paymentType').value?.length !== 1 && form.get('paymentType').value?.length !== 2 && form.get('paymentType').value?.length !== 3 && form.get('paymentType').value?.length !== 4">
               <strong>{{ 'Shipping Details' | translate }}</strong>
             </p>
@@ -307,7 +307,7 @@
                         </div>
                       </div>
                       <span class="taxAmount" style="font-size: 20px" fxFlex.lt-md='30'>
-                      {{ shipping.totalPrice || 0 | currencyMarket: marketCard }}
+                      {{ shipping.totalPrice || 0 | currencyProduct: shipping.shippingItems[0]?.Shipping?.currency }}
                     </span>
                     </div>
                   </mat-radio-button>
@@ -316,9 +316,9 @@
               <!--------------------------->
             </div>
           </ng-container>
-          <ng-template #noShipping>
-            <p class="tex-align-center p-4">{{ 'No hay envio para estos productos' }}</p>
-          </ng-template>
+          <ng-container *ngIf='!cart?.hasShippingBusiness'>
+            <p class="tex-align-center p-4">{{ 'No hay envío para estos productos' | translate}}</p>
+          </ng-container>
 <!--          <ng-container >-->
             <h1 *ngIf='noGateway' class="tex-align-center p-4 color-red-500">{{ 'Este negocio no tiene método de pago permitido' }}</h1>
 <!--          </ng-container>-->
@@ -846,7 +846,7 @@
                   <li>
                     {{ 'Subtotal' | translate }}:
                     <span class="amount px-2">{{
-                      getTotalAmountCurrency() | currencyMarket: form.controls['currency'].value
+                      getTotalAmountCurrency() | currencyProduct: form.controls['currency'].value
                     }}</span>
                   </li>
                 </ul>
@@ -858,7 +858,7 @@
                     {{ 'Tarifa de envío' | translate }}:
 
                     <span class="count px-2">
-                      {{ getShippingSelectedPrice() | currencyMarket: marketCard }}
+                      {{ getShippingSelectedPrice() | currencyProduct: form.controls['currency'].value }}
                     </span>
                   </li>
                 </ul>
@@ -973,7 +973,7 @@
                   <li>
                     {{ 'Total' | translate }}
                     <span class="count px-2">{{
-                      getTotalWithShippingIncludedCurrency() | currencyMarket: form.controls['currency'].value
+                      getTotalWithShippingIncludedCurrency() | currencyProduct: form.controls['currency'].value
                     }}</span>
                   </li>
                 </ul>
