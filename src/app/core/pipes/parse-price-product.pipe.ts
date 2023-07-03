@@ -13,12 +13,30 @@ export class ParsePriceProduct implements PipeTransform {
   transform(product: any, type?: any): string {
     let currency;
     currency = CoinEnum.USD;
-    if (product.market == MarketEnum.INTERNATIONAL) {
-      currency = CoinEnum.USD;
+    if (product.currency !== null) {
+      switch (product.currency) {
+        case 'USD': {
+          currency = CoinEnum.USD;
+          break;
+        }
+        case 'EUR': {
+          currency = CoinEnum.EUR;
+          break;
+        }
+        case 'CUP': {
+          currency = CoinEnum.CUP;
+          break;
+        }
+      }
+    } else {
+      if (product.market == MarketEnum.INTERNATIONAL) {
+        currency = CoinEnum.USD;
+      }
+      if (product.market == MarketEnum.NATIONAL) {
+        currency = CoinEnum.CUP;
+      }
     }
-    if (product.market == MarketEnum.NATIONAL) {
-      currency = CoinEnum.CUP;
-    }
+
     if (type) {
       const minPrice = this.currency.transform(product.limitMinOffersPrice, currency);
       const maxPrice = this.currency.transform(product.limitMaxOffersPrice, currency);

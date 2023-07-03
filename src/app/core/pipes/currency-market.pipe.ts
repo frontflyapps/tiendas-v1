@@ -12,9 +12,11 @@ export class CurrencyMarket implements PipeTransform {
 
   transform(price: number, market: string): string {
     let currency;
-    currency = CoinEnum.CUP;
+    currency = CoinEnum.USD;
     if (market == MarketEnum.INTERNATIONAL) {
       currency = CoinEnum.USD;
+    } else if (market == MarketEnum.NATIONAL) {
+      currency = CoinEnum.CUP;
     } else if (market == CoinEnum.EUR) {
       currency = CoinEnum.EUR;
     } else if (market == CoinEnum.USD) {

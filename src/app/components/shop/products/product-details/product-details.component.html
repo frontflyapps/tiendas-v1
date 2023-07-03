@@ -235,10 +235,10 @@
                 >
                   <p class="mat-body-1">{{ item.min }} - {{ item.max }}</p>
                   <p *ngIf="product.offerValue" class="mat-body-2">
-                    {{ item.priceOffer | currencyMarket: product.market }}
+                    {{ item.priceOffer | currencyProduct: product.currency }}
                   </p>
                   <p *ngIf="!product.offerValue" class="mat-body-2">
-                    {{ item.price | currencyMarket: product.market }}
+                    {{ item.price | currencyProduct: product.currency }}
                   </p>
                 </div>
               </div>

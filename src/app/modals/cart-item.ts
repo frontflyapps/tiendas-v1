@@ -9,6 +9,7 @@ export interface Cart {
   createdAt?: string;
   status?: boolean;
   Business?: IBusiness;
+  hasShippingBusiness?: boolean;
 }
 
 export interface IBusiness {
@@ -44,4 +45,5 @@ export interface CartItem {
   deletedAt?: any;
   sharedImage?: any;
   name?: any;
+  totalPrice?: number;
 }
