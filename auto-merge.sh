@@ -6,9 +6,10 @@ git push
 #branches=$(git branch | sed 's/\*//' | sed 's/ //g')
 
 source_branch=production
-branches=(prod-PymesBulevar prod-Dujo prod-ElGuajirito prod-GranComercial prod-Acubamos prod-Apululu prod-Mercado+ prod-BCSuministros prod-Bianca prod-DCero prod-Donato prod-DondeDorian prod-LaLuciana prod-LaPolimita prod-MisterDamian prod-Pruebalo)
+branches=(prod-PymesBulevar prod-Dujo prod-ElGuajirito prod-GranComercial prod-Acubamos prod-Apululu prod-Mercado+ prod-BCSuministros prod-Bianca prod-DCero prod-Donato prod-DondeDorian prod-LaLuciana prod-LaPolimita prod-MisterDamian prod-Pruebalo prod-Atec  prod-Caracol prod-ElAjibe prod-Gelato prod-GranComerial-Mayoristas prod-GranFerretero prod-HavTel prod-HomeDeli prod-ITH prod-LaCeiba prod-LaTorre prod-LasPraderas prod-MCV prod-MM_Caribe prod-Marlin prod-MercadosPresidente prod-MiBulevar prod-MiBulevar-Alcansan prod-MiBulevar-Aligan prod-MiBulevar-ComercioCienfueg prod-MiBulevar-Cupetcfg prod-MiBulevar-Cupetgrm prod-MiBulevar-Cupethol prod-MiBulevar-Cupetltu prod-MiBulevar-Epueblo prod-MiBulevar-Etecsa prod-MiBulevar-Genesis prod-MiBulevar-Mercatuaba prod-MiBulevar-Ofa prod-MiBulevar-TiendasPatrimonio prod-MiBulevar-Trd prod-MundoCopextel prod-OpticasTheia prod-Palmares prod-PeopleGoTo prod-RapidMultiservice prod-Supermax prod-Umbralf prod-VeoVeo)
 
 # Convierte la lista de ramas en un arreglo
+#IFS=$'\n' read -d '' -a branches_arr <<< "$branches"
 #IFS=$'\n' read -d '' -a branches_arr <<< "$branches"
 
 # Pide al usuario que seleccione las ramas
