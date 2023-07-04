@@ -194,6 +194,14 @@ export class CartService implements OnDestroy {
         status = 'success';
         this.snackBar.open(message, '×', { panelClass: ['succes'], verticalPosition: 'top', duration: 5000 });
         this.loggedInUserService._setDataToStorage('cartItem', JSON.stringify(this.carts));
+        if (data.existGift) {
+          this.showToastr.showSucces(
+            this.translate.instant(
+              'Se ha añadido un producto gratis por tener más de 75€ en su compra',
+            ),
+            'Éxito',
+            5000);
+        }
         this.$cartItemsUpdated.next(this.carts);
         return this.carts;
       })
