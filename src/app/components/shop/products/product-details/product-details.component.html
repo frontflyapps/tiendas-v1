@@ -9,7 +9,7 @@
         <div class="product-right my-0" fxLayout="column" fxLayoutAlign="start start" fxHide fxShow.sm fxShow.xs>
           <div class="product-details my-0" fxLayout="column" fxLayoutAlign="start start">
             <h2 class="nameProductVariant">{{ product?.name[language] ? product?.name[language] : product?.name['es'] }}</h2>
-            <div *ngIf="product.offerValue">
+            <div *ngIf="product.offerValue && product.status !== 'comingSoon'">
               <h4 class="mb-10">
                 <del>{{ product | parsePriceProduct }}</del>
                 <span class='offer ml-2'>
@@ -21,7 +21,7 @@
               <h3 class="price mb-10">{{ product | parsePriceProduct: 'offert' }}</h3>
             </div>
 
-            <div *ngIf="!product.offerValue" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px">
+            <div *ngIf="!product.offerValue && product.status !== 'comingSoon'" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px">
               <h3 class="price mb-10">{{ product | parsePriceProduct }}</h3>
               <span
                 class="location-span"
@@ -145,7 +145,7 @@
           <div class="product-right" fxLayout='column'>
             <div class="product-details" fxLayout='column'>
               <h2 class="nameProduct" fxHide.sm fxHide.xs>{{ product.name[language] ? product.name[language] : product.name['es'] }}</h2>
-              <div *ngIf="product.offerValue" fxHide.sm fxHide.xs>
+              <div *ngIf="product.offerValue && product.status !== 'comingSoon'" fxHide.sm fxHide.xs>
                 <h4 class="mb-10">
                   <del>{{ product | parsePriceProduct }}</del>
                   <span class='offer ml-2'>
@@ -157,7 +157,7 @@
                 <h3 class="price mb-10">{{ product | parsePriceProduct: 'offert' }}</h3>
               </div>
 
-              <div *ngIf="!product.offerValue" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px" fxHide.sm fxHide.xs>
+              <div *ngIf="!product.offerValue && product.status !== 'comingSoon'" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px" fxHide.sm fxHide.xs>
                 <h3 class="price mb-10">{{ product | parsePriceProduct }}</h3>
                 <span
                   class="location-span"
@@ -244,7 +244,7 @@
               </div>
               <div>
                 <div class="py-1 mt-15">
-                  <p>
+                  <p *ngIf='product.status !== "comingSoon"'>
                     <span class="text-muted fw-500">{{ 'Avalibility:' | translate }}</span>
                     <span
                       class="avalibility"
@@ -265,8 +265,15 @@
                       }}</span></span
                     >
                   </p>
+                  <p
+                    class="mat-body-2 uppercase my-3 coming-soon-text"
+                    *ngIf='product.status === "comingSoon"'
+                    matTooltip="{{ 'Este producto estará a la venta próximamente' | translate }}"
+                  >
+                    {{ 'Próximamente' | translate }}
+                  </p>
                 </div>
-                <div class="quantity">
+                <div class="quantity" *ngIf='product.status !== "comingSoon"'>
                   <span class="text-muted fw-500">{{ 'Quantity' | translate }}:</span>
                   <div class="text-muted" fxLayout="row" fxLayout.xs="column">
                     <div fxLayout="row" fxLayoutAlign="center start">
@@ -308,7 +315,7 @@
                 fxLayout="row"
                 fxLayoutAlign="start center"
                 fxLayoutAlign.lt-sm="center center"
-                *ngIf="product.typeAddCart === 'glasses'"
+                *ngIf="product.typeAddCart === 'glasses' && product.status !== "comingSoon""
               >
                 <button
                   (click)="addLenses(product, counter)"
@@ -327,6 +334,7 @@
                 fxLayout="row"
                 fxLayoutAlign="start center"
                 fxLayoutAlign.lt-sm="center center"
+                *ngIf='product.status !== "comingSoon"'
               >
                 <button
                   (click)="addToCart(product, counter)"
