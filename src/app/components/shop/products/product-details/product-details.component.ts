@@ -200,8 +200,8 @@ export class ProductDetailsComponent implements OnInit, OnDestroy, AfterViewInit
     this.queryReviews.page = 1;
     this.counter = this.product.minSale;
     this.getReviews();
-    if (this.product.Images) {
-      this.arrayImages = this.product.Images.map((item) => {
+    if (this.product?.Images) {
+      this.arrayImages = this.product?.Images.map((item) => {
         return { image: this.imageUrl + item.image, selected: false };
       });
       this.arrayImages[0].selected = true;
@@ -528,7 +528,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy, AfterViewInit
 
   getReviews() {
     this.loadingReviews = true;
-    this.productsService.getReviews(this.queryReviews, { ProductId: this.product.id }).subscribe(
+    this.productsService.getReviews(this.queryReviews, { ProductId: this.product?.id }).subscribe(
       (data) => {
         this.allReviews = this.allReviews.concat(data.data.flat());
         this.queryReviews.offset += data.meta.pagination.count;
