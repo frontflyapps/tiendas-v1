@@ -65,8 +65,11 @@
     </div>
     <!-- <p fxHide.xs class="module line-clamp mt-1 mb-2">
       {{(product?.shortDescription[language])?product?.shortDescription[language]:product?.shortDescription['es']}}</p> -->
+    <div fxLayout="row" fxLayoutAlign="end end">
+      <span class='coming-soon-text' *ngIf='product.status === "comingSoon"'>{{ 'Próximamente' | translate }}</span>
+    </div>
 
-    <div class="price mt-2" fxLayout="row" fxLayoutAlign="space-between start">
+    <div class="price mt-2" fxLayout="row" fxLayoutAlign="space-between start" *ngIf='product.status !== "comingSoon"'>
       <button (click)="$event.stopPropagation();onAddToCart(product)" class="btnAddCart" mat-mini-fab
               matTooltip="{{ 'Añadir al carrito' | translate }}"
               style="z-index: 10">
