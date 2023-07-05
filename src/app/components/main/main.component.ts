@@ -370,6 +370,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
           localStorage.removeItem('token');
           localStorage.removeItem('user');
           localStorage.removeItem('cartItem');
+          this.cartService.$cartItemsUpdated.next(null);
           this.loggedInUserService.$loggedInUserUpdated.next(null);
           const message = this.translate.instant('User successfully unlogged');
           this.showSnackbBar.showSucces(message, 5000);
