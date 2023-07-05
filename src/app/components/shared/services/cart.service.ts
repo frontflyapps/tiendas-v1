@@ -192,7 +192,13 @@ export class CartService implements OnDestroy {
           '  ' +
           this.translate.instant(' has been added to cart.');
         status = 'success';
-        this.snackBar.open(message, '×', { panelClass: ['succes'], verticalPosition: 'top', duration: 5000 });
+        // this.snackBar.open(message, '×', { panelClass: ['succes'], verticalPosition: 'top', duration: 5000 });
+        this.showToastr.showSucces(
+          this.translate.instant(
+            'El producto' + productName + ' ha sido agregado correctamente al carrito',
+          ),
+          'Éxito',
+          5000, );
         this.loggedInUserService._setDataToStorage('cartItem', JSON.stringify(this.carts));
         if (data.existGift) {
           this.showToastr.showSucces(
