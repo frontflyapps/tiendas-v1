@@ -106,11 +106,11 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   currenciesTransfermovil = [
     {
       name: 'MLC',
-      value: 'USD'
+      value: 'USD',
     },
     {
       name: 'CUP',
-      value: 'CUP'
+      value: 'CUP',
     }];
   multiTransfermovil = false;
   dataSource: MatTableDataSource<any>;
@@ -453,6 +453,11 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           this.form.get('paymentType').setValue(this.arrPayments);
         } else {
           this.form.get('paymentType').setValue(this.businessConfig.gateways);
+          if (this.cart.market === 'national') {
+            this.currencyInternational = 'CUP';
+          } else if (this.cart.market === 'international') {
+            this.currencyInternational = 'USD';
+          }
         }
         this.spinner.show();
         if (this.arrPayments.find((item) => item === 'bidaiondo')) {
@@ -513,6 +518,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
 
     this.form.controls['currency'].valueChanges.subscribe((data) => {
+      console.log(this.currencyInternational);
+      console.log(data);
       if (this.currencyInternational === data) {
         this.rate = 1;
       } else {
@@ -543,8 +550,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         this.form.controls['currency'].setValue(CoinEnum.USD);
       } else if (data === 'transfermovil') {
         if (this.cart.market === 'international') {
+          this.currencyInternational = 'USD';
           this.form.get('currency').setValue('USD');
-        } else  {
+        } else {
+          this.currencyInternational = 'CUP';
           this.form.get('currency').setValue('CUP');
         }
       }
@@ -576,10 +585,11 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       if (data && this.form.controls['currency'].value) {
         this.calculateShippingRequired();
       }
+      this.getTotalWithShippingIncluded();
     });
 
     this.form.controls['ShippingBusinessId'].valueChanges.subscribe((value) => {
-      this.getTotalWithShippingIncluded();
+      this.getTotalWithShippingIncluded(value);
     });
     this.validateShippingRequired();
   }
@@ -687,9 +697,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
             } else {
               this.hasPickUpPlace = false;
             }
-            if (this.cart.market === 'national' && this.onMarket) {
-              this.form.controls['currency'].setValue('CUP');
-            }
+            // if (this.cart.market === 'national' && !this.onMarket) {
+            //   this.form.controls['currency'].setValue('CUP');
+            // }
             this.dataSource = new MatTableDataSource(this.buyProducts);
             this.marketCard =
               this.buyProducts && this.buyProducts.length > 0 ? this.buyProducts[0].Product.market : MarketEnum.NATIONAL;
@@ -720,7 +730,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         },
         error: (err) => {
           console.log('________________________________________________________________');
-          this.showToastr.showError(err.message)
+          this.showToastr.showError(err.message);
           this.loadingCart = false;
         },
       },
@@ -732,16 +742,24 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   public getTotalWithShippingIncludedCurrency(): any {
-    let total = this.getTotalWithShippingIncluded();
-    return this.currencyCheckoutPipe.transform({
-      currency: this.form.get('currency').value,
-      value: total,
-      rate: this.rate,
-    });
+    return this.getTotalWithShippingIncluded();
+
+    // console.log(this.currencyCheckoutPipe.transform({
+    //   currency: this.form.get('currency').value,
+    //   value: total,
+    //   rate: this.rate,
+    // }));
+    // return this.currencyCheckoutPipe.transform({
+    //   currency: this.form.get('currency').value,
+    //   value: total,
+    //   rate: this.rate,
+    // });
   }
 
-  public getTotalWithShippingIncluded(): any {
-    let total = this.getTotalAmout() as Number;
+  public getTotalWithShippingIncluded(shipping?: any): any {
+    // console.log(shipping);
+
+    let total = this.getTotalAmountCurrency() as Number;
     let ShippingBusinessId = this.shippingSelected;
     if (ShippingBusinessId) {
       let ShippingByBusiness = this.shippingData?.find(
@@ -750,6 +768,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           i.shippingItems[0].Shipping?.ProvinceId === this.form.get('ProvinceId').value &&
           i.shippingItems[0].Shipping?.MunicipalityId === this.form.get('MunicipalityId').value,
       );
+      console.log(ShippingByBusiness);
+      console.log(total);
+      console.log(total + (ShippingByBusiness?.totalPrice || 0.0));
       return total + (ShippingByBusiness?.totalPrice || 0.0);
     }
     // Total if shipping is fixed
@@ -760,6 +781,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       this.fixedShipping.totalPrice >= 0 &&
       this.fixedShipping?.provinces.includes(this.form.get('ProvinceId').value)
     ) {
+
+      console.log(this.fixedShipping);
+      console.log(total);
       return total + (this.fixedShipping?.totalPrice || 0.0);
     }
 
@@ -858,7 +882,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     }
     this.form.valueChanges.subscribe(data => {
       console.log(this.form);
-    })
+    });
     this.form.updateValueAndValidity();
     this.updateValidatorsForChangeNationality(this.onlyCubanPeople);
     this.subsToTransfermovilChange();
@@ -1247,7 +1271,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           this.loadingPayment = false;
         },
       );
-    }  else if (bodyData.paymentType === 'paypal') {
+    } else if (bodyData.paymentType === 'paypal') {
       bodyData.urlRedirectSuccesfully = environment.url + 'my-orders';
       bodyData.urlRedirectCancel = environment.url + 'my-orders';
       paymentMethod = this.payService.makePaymentPaypal(bodyData);
@@ -1276,7 +1300,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           this.loadingPayment = false;
         },
       );
-    }   else if (bodyData.paymentType === 'multisafepay') {
+    } else if (bodyData.paymentType === 'multisafepay') {
       bodyData.urlRedirectSuccesfully = environment.url + 'my-orders';
       bodyData.urlRedirectCancel = environment.url + 'my-orders';
       paymentMethod = this.payService.makePaymentMultisafepay(bodyData);
@@ -1305,7 +1329,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           this.loadingPayment = false;
         },
       );
-    }   else if (bodyData.paymentType === 'tropipay') {
+    } else if (bodyData.paymentType === 'tropipay') {
       bodyData.urlRedirectSuccesfully = environment.url + 'my-orders';
       bodyData.urlRedirectCancel = environment.url + 'my-orders';
       paymentMethod = this.payService.makePaymentTropipay(bodyData);
