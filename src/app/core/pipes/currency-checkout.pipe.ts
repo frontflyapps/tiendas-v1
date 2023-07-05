@@ -9,10 +9,13 @@ export class CurrencyCheckoutPipe implements PipeTransform {
   }
 
   transform(data: any): number {
-    if (data.currency === 'EUR') {
-      return data.value * data.rate;
-    } else {
-      return data.value;
-    }
+    return data.value * data.rate;
+    // if (data.currency === 'EUR') {
+    //   return data.value * data.rate;
+    // } else if (data.currency === 'CUP') {
+    //   return data.value * data.rate;
+    // } else {
+    //   return data.value;
+    // }
   }
 }
