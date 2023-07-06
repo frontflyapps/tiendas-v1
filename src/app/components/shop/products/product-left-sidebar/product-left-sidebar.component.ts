@@ -172,6 +172,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((data: any) => {
       this.newSearchMethod(0);
+      this.infiniteScrollSearchMethod();
     });
 
     this.breakpointObserver
@@ -262,92 +263,92 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
     // this.router.onSameUrlNavigation = 'reload';
   }
 
-  searchMoreProducts() {
-    // this.loading = true;
-    this.isFromMoreProductBtn = true;
+  // searchMoreProducts() {
+  //   // this.loading = true;
+  //   this.isFromMoreProductBtn = true;
+  //
+  //   // this.router
+  //   //   .navigate(['/products/search'], {
+  //   //     queryParams: {
+  //   //       ...this.paramsSearch,
+  //   //       ...this.queryProduct,
+  //   //     },
+  //   //   })
+  //   //   .then(() => (this.loading = false));
+  //
+  //   this.search();
+  // }
 
-    // this.router
-    //   .navigate(['/products/search'], {
-    //     queryParams: {
-    //       ...this.paramsSearch,
-    //       ...this.queryProduct,
-    //     },
-    //   })
-    //   .then(() => (this.loading = false));
-
-    this.search();
-  }
-
-  search() {
-    let brandIds: number[] = null;
-    let categoryIds: number[] = null;
-
-    if (this.paramsSearch.categoryIds) {
-      if (Array.isArray(this.paramsSearch.categoryIds)) {
-        if (this.paramsSearch.categoryIds.length > 0) {
-          categoryIds = this.paramsSearch.categoryIds.map((i) => Number(i));
-        }
-      } else {
-        categoryIds = [this.paramsSearch.categoryIds];
-      }
-    }
-
-    // if (Array.isArray(this.paramsSearch.brandIds) && this.paramsSearch.brandIds.length > 0) {
-    if (this.paramsSearch.categoryIds) {
-      if (Array.isArray(this.paramsSearch.brandIds)) {
-        if (this.paramsSearch.brandIds.length > 0) {
-          brandIds = this.paramsSearch.brandIds.map((i) => Number(i));
-        }
-      } else {
-        brandIds = [this.paramsSearch.brandIds];
-      }
-    }
-
-    const body: any = {
-      limit: this.queryProduct?.limit ? +this.queryProduct?.limit : 0,
-      offset: this.queryProduct?.offset ? +this.queryProduct?.offset : 0,
-      page: this.queryProduct?.page ? +this.queryProduct?.page : 0,
-      total: this.queryProduct?.total ? +this.queryProduct?.total : 0,
-      order: this.queryProduct?.order ? this.queryProduct?.order : null,
-      BrandIds: brandIds,
-      CategoryIds: categoryIds,
-      maxPrice: this.paramsSearch?.maxPrice ? +this.paramsSearch?.maxPrice : 0,
-      minPrice: this.paramsSearch?.minPrice ? +this.paramsSearch?.minPrice : 0,
-      rating: this.paramsSearch?.rating ? +this.paramsSearch?.rating : null,
-      text: this.paramsSearch?.filterText ? this.paramsSearch?.filterText : null,
-      ProvinceId: this.province?.id || null,
-      MunicipalityId: this.municipality?.id || null,
-    };
-    this.productService
-      .searchProduct(body)
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe(
-        (data: any) => {
-          // this.loading = true;
-          if (this.isStarting) {
-            this.allProducts = [];
-            this.allProducts = data.data.slice(0, this.initLimit * (this.numberOfSearch + 1));
-            this.allProductsResponse = data.data;
-            this.noResults = data.info;
-            this.isStarting = false;
-            setTimeout(() => {
-              document.body.scrollTop = 0; // Safari
-              document.documentElement.scrollTop = 0; // Other
-            }, 0);
-          } else {
-            this.allProductsResponse = this.allProductsResponse.concat(data.data);
-            this.allProducts = this.allProductsResponse.slice(0, this.initLimit * (this.numberOfSearch + 1));
-          }
-
-          this.queryProduct.total = data.meta.pagination.total;
-          this.loading = false;
-          this.gotToProductId();
-        },
-        () => {
-          this.loading = false;
-        },
-      );
-  }
+  // search() {
+  //   this.loading = true;
+  //   let brandIds: number[] = null;
+  //   let categoryIds: number[] = null;
+  //
+  //   if (this.paramsSearch.categoryIds) {
+  //     if (Array.isArray(this.paramsSearch.categoryIds)) {
+  //       if (this.paramsSearch.categoryIds.length > 0) {
+  //         categoryIds = this.paramsSearch.categoryIds.map((i) => Number(i));
+  //       }
+  //     } else {
+  //       categoryIds = [this.paramsSearch.categoryIds];
+  //     }
+  //   }
+  //
+  //   // if (Array.isArray(this.paramsSearch.brandIds) && this.paramsSearch.brandIds.length > 0) {
+  //   if (this.paramsSearch.categoryIds) {
+  //     if (Array.isArray(this.paramsSearch.brandIds)) {
+  //       if (this.paramsSearch.brandIds.length > 0) {
+  //         brandIds = this.paramsSearch.brandIds.map((i) => Number(i));
+  //       }
+  //     } else {
+  //       brandIds = [this.paramsSearch.brandIds];
+  //     }
+  //   }
+  //
+  //   const body: any = {
+  //     limit: this.queryProduct?.limit ? +this.queryProduct?.limit : 0,
+  //     offset: this.queryProduct?.offset ? +this.queryProduct?.offset : 0,
+  //     page: this.queryProduct?.page ? +this.queryProduct?.page : 0,
+  //     total: this.queryProduct?.total ? +this.queryProduct?.total : 0,
+  //     order: this.queryProduct?.order ? this.queryProduct?.order : null,
+  //     BrandIds: brandIds,
+  //     CategoryIds: categoryIds,
+  //     maxPrice: this.paramsSearch?.maxPrice ? +this.paramsSearch?.maxPrice : 0,
+  //     minPrice: this.paramsSearch?.minPrice ? +this.paramsSearch?.minPrice : 0,
+  //     rating: this.paramsSearch?.rating ? +this.paramsSearch?.rating : null,
+  //     text: this.paramsSearch?.filterText ? this.paramsSearch?.filterText : null,
+  //     ProvinceId: this.province?.id || null,
+  //     MunicipalityId: this.municipality?.id || null,
+  //   };
+  //   this.productService
+  //     .searchProduct(body)
+  //     .pipe(takeUntil(this._unsubscribeAll))
+  //     .subscribe(
+  //       (data: any) => {
+  //         if (this.isStarting) {
+  //           this.allProducts = [];
+  //           this.allProducts = data.data.slice(0, this.initLimit * (this.numberOfSearch + 1));
+  //           this.allProductsResponse = data.data;
+  //           this.noResults = data.info;
+  //           this.isStarting = false;
+  //           setTimeout(() => {
+  //             document.body.scrollTop = 0; // Safari
+  //             document.documentElement.scrollTop = 0; // Other
+  //           }, 0);
+  //         } else {
+  //           this.allProductsResponse = this.allProductsResponse.concat(data.data);
+  //           this.allProducts = this.allProductsResponse.slice(0, this.initLimit * (this.numberOfSearch + 1));
+  //         }
+  //
+  //         this.queryProduct.total = data.meta.pagination.total;
+  //         this.loading = false;
+  //         this.gotToProductId();
+  //       },
+  //       () => {
+  //         this.loading = false;
+  //       },
+  //     );
+  // }
 
   showChips() {
     let chips = [];
@@ -493,24 +494,164 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
         },
       );
   }
+  infiniteScrollSearchMethod() {
+    if (this.loading === false) {
+      this.loading = true;
+      // let currentPage = page > 0 ? page - 1 : page;
+      // this.queryProduct.page = currentPage;
+      if ((this.queryProduct.offset < this.queryProduct.total) && (this.queryProduct.total - this.queryProduct.offset >= this.initLimit)) {
+        this.queryProduct.offset = this.initLimit + this.queryProduct.offset;
+        let brandIds: number[] = null;
+        let categoryIds: number[] = null;
 
-  seeMoreProductsBtn(event) {
-    event.preventDefault();
+        if (this.paramsSearch.categoryIds) {
+          if (Array.isArray(this.paramsSearch.categoryIds)) {
+            if (this.paramsSearch.categoryIds.length > 0) {
+              categoryIds = this.paramsSearch.categoryIds.map((i) => Number(i));
+            }
+          } else {
+            categoryIds = [this.paramsSearch.categoryIds];
+          }
+        }
 
-    this.globalScrollTopS = document.body.scrollTop; // Safari
-    this.globalScrollTopOth = document.documentElement.scrollTop; // Other
+        // if (Array.isArray(this.paramsSearch.brandIds) && this.paramsSearch.brandIds.length > 0) {
+        if (this.paramsSearch.categoryIds) {
+          if (Array.isArray(this.paramsSearch.brandIds)) {
+            if (this.paramsSearch.brandIds.length > 0) {
+              brandIds = this.paramsSearch.brandIds.map((i) => Number(i));
+            }
+          } else {
+            brandIds = [this.paramsSearch.brandIds];
+          }
+        }
 
-    this.numberOfSearch++;
-    if (this.numberOfSearch % 3 > 0) {
-      this.allProducts = this.allProductsResponse.slice(0, this.initLimit * (this.numberOfSearch + 1));
-      this.queryProduct.offset = this.initLimit;
-    } else {
-      // this.numberOfSearch = this.numberOfSearchBase;
-      this.queryProduct.page++;
-      this.queryProduct.offset = this.initLimit * this.amountInitialResults * this.queryProduct.page;
-      this.searchMoreProducts();
+        const body: any = {
+          limit: this.initLimit,
+          offset: this.queryProduct?.offset ? this.queryProduct?.offset : 0,
+          page: this.queryProduct?.page ? +this.queryProduct?.page : 0,
+          total: this.queryProduct?.total ? +this.queryProduct?.total : 0,
+          order: this.queryProduct?.order ? this.queryProduct?.order : null,
+          BrandIds: brandIds,
+          CategoryIds: categoryIds,
+          maxPrice: this.paramsSearch?.maxPrice ? +this.paramsSearch?.maxPrice : 0,
+          minPrice: this.paramsSearch?.minPrice ? +this.paramsSearch?.minPrice : 0,
+          rating: this.paramsSearch?.rating ? +this.paramsSearch?.rating : null,
+          text: this.paramsSearch?.filterText ? this.paramsSearch?.filterText : null,
+          ProvinceId: this.province?.id || null,
+          MunicipalityId: this.municipality?.id || null,
+        };
+        this.productService
+          .searchProduct(body)
+          .pipe(takeUntil(this._unsubscribeAll))
+          .subscribe(
+            (data: any) => {
+              this.allProducts = this.allProducts.concat(data.data);
+              this.totalPages = data.meta.total / this.initLimit;
+              if (data.meta.total % this.initLimit) {
+                this.totalPages++;
+              }
+              setTimeout(() => {
+                // document.body.scrollTop = 0; // Safari
+                // document.documentElement.scrollTop = 0; // Other
+              }, 0);
+
+
+              this.queryProduct.total = data.meta.pagination.total;
+              this.loading = false;
+              this.gotToProductId();
+            },
+            () => {
+              this.loading = false;
+            },
+          );
+      } else if (this.queryProduct.offset < this.queryProduct.total - 1) {
+        this.queryProduct.offset = this.queryProduct.total - 1;
+        let brandIds: number[] = null;
+        let categoryIds: number[] = null;
+
+        if (this.paramsSearch.categoryIds) {
+          if (Array.isArray(this.paramsSearch.categoryIds)) {
+            if (this.paramsSearch.categoryIds.length > 0) {
+              categoryIds = this.paramsSearch.categoryIds.map((i) => Number(i));
+            }
+          } else {
+            categoryIds = [this.paramsSearch.categoryIds];
+          }
+        }
+
+        // if (Array.isArray(this.paramsSearch.brandIds) && this.paramsSearch.brandIds.length > 0) {
+        if (this.paramsSearch.categoryIds) {
+          if (Array.isArray(this.paramsSearch.brandIds)) {
+            if (this.paramsSearch.brandIds.length > 0) {
+              brandIds = this.paramsSearch.brandIds.map((i) => Number(i));
+            }
+          } else {
+            brandIds = [this.paramsSearch.brandIds];
+          }
+        }
+
+        const body: any = {
+          limit: this.initLimit,
+          offset: this.queryProduct?.offset ? this.queryProduct?.offset : 0,
+          page: this.queryProduct?.page ? +this.queryProduct?.page : 0,
+          total: this.queryProduct?.total ? +this.queryProduct?.total : 0,
+          order: this.queryProduct?.order ? this.queryProduct?.order : null,
+          BrandIds: brandIds,
+          CategoryIds: categoryIds,
+          maxPrice: this.paramsSearch?.maxPrice ? +this.paramsSearch?.maxPrice : 0,
+          minPrice: this.paramsSearch?.minPrice ? +this.paramsSearch?.minPrice : 0,
+          rating: this.paramsSearch?.rating ? +this.paramsSearch?.rating : null,
+          text: this.paramsSearch?.filterText ? this.paramsSearch?.filterText : null,
+          ProvinceId: this.province?.id || null,
+          MunicipalityId: this.municipality?.id || null,
+        };
+        this.productService
+          .searchProduct(body)
+          .pipe(takeUntil(this._unsubscribeAll))
+          .subscribe(
+            (data: any) => {
+              this.allProducts = this.allProducts.concat(data.data);
+              this.totalPages = data.meta.total / this.initLimit;
+              if (data.meta.total % this.initLimit) {
+                this.totalPages++;
+              }
+              setTimeout(() => {
+                // document.body.scrollTop = 0; // Safari
+                // document.documentElement.scrollTop = 0; // Other
+              }, 0);
+
+
+              this.queryProduct.total = data.meta.pagination.total;
+              this.loading = false;
+              this.gotToProductId();
+            },
+            () => {
+              this.loading = false;
+            },
+          );
+      }
+
     }
+    // this.loading = false;
   }
+
+  // seeMoreProductsBtn(event) {
+  //   event.preventDefault();
+  //
+  //   this.globalScrollTopS = document.body.scrollTop; // Safari
+  //   this.globalScrollTopOth = document.documentElement.scrollTop; // Other
+  //
+  //   this.numberOfSearch++;
+  //   if (this.numberOfSearch % 3 > 0) {
+  //     this.allProducts = this.allProductsResponse.slice(0, this.initLimit * (this.numberOfSearch + 1));
+  //     this.queryProduct.offset = this.initLimit;
+  //   } else {
+  //     // this.numberOfSearch = this.numberOfSearchBase;
+  //     this.queryProduct.page++;
+  //     this.queryProduct.offset = this.initLimit * this.amountInitialResults * this.queryProduct.page;
+  //     this.searchMoreProducts();
+  //   }
+  // }
 
   OnPaginatorChange(event) {
     if (event) {
