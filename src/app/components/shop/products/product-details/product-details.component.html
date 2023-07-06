@@ -1,30 +1,34 @@
-<div class="container-product-details">
-  <div *ngIf="isLoading" class="loading-shade-full" style="background: rgba(0, 0, 0, 0.02) !important">
-    <mat-spinner *ngIf="isLoading"></mat-spinner>
+<div class='container-product-details'>
+  <div *ngIf='isLoading' class='loading-shade-full' style='background: rgba(0, 0, 0, 0.02) !important'>
+    <mat-spinner *ngIf='isLoading'></mat-spinner>
   </div>
-  <div *ngIf="!this.errorPage && !isLoading" class="details-wrapper sec-padding" fxLayout="row wrap" ngClass.lt-md="pt-3">
-    <div class="h-100" fxFlex="100" fxFlex.gt-sm="77" fxLayout="column">
-      <div fxFlex="100" fxFlex.gt-md="100" fxFlex.gt-sm="100" fxLayout="row" fxLayout.sm="row wrap" fxLayout.xs="row wrap" fxLayoutAlign="start start">
-      <!--    NAME PRODUCT AND PRICE    -->
-        <div class="product-right my-0" fxLayout="column" fxLayoutAlign="start start" fxHide fxShow.sm fxShow.xs>
-          <div class="product-details my-0" fxLayout="column" fxLayoutAlign="start start">
-            <h2 class="nameProductVariant">{{ product?.name[language] ? product?.name[language] : product?.name['es'] }}</h2>
+  <div *ngIf='!this.errorPage && !isLoading' class='details-wrapper sec-padding' fxLayout='row wrap'
+       ngClass.lt-md='pt-3'>
+    <div class='h-100' fxFlex='100' fxFlex.gt-sm='77' fxLayout='column'>
+      <div fxFlex='100' fxFlex.gt-md='100' fxFlex.gt-sm='100' fxLayout='row' fxLayout.sm='row wrap'
+           fxLayout.xs='row wrap' fxLayoutAlign='start start'>
+        <!--    NAME PRODUCT AND PRICE    -->
+        <div class='product-right my-0' fxLayout='column' fxLayoutAlign='start start' fxHide fxShow.sm fxShow.xs>
+          <div class='product-details my-0' fxLayout='column' fxLayoutAlign='start start'>
+            <h2
+              class='nameProductVariant'>{{ product?.name[language] ? product?.name[language] : product?.name['es'] }}</h2>
             <div *ngIf="product.offerValue && product.status !== 'comingSoon'">
-              <h4 class="mb-10">
+              <h4 class='mb-10'>
                 <del>{{ product | parsePriceProduct }}</del>
                 <span class='offer ml-2'>
-                    <span class="mx-0 px-0">-</span>
-                    <span *ngIf="product.isPercent" class="mx-0 px-0">{{ product.offerValue }}% </span>
-                    <span *ngIf="!product.isPercent" class="mx-0 px-0">${{ product.offerValue }}</span>
+                    <span class='mx-0 px-0'>-</span>
+                    <span *ngIf='product.isPercent' class='mx-0 px-0'>{{ product.offerValue }}% </span>
+                    <span *ngIf='!product.isPercent' class='mx-0 px-0'>${{ product.offerValue }}</span>
                   </span>
               </h4>
-              <h3 class="price mb-10">{{ product | parsePriceProduct: 'offert' }}</h3>
+              <h3 class='price mb-10'>{{ product | parsePriceProduct: 'offert' }}</h3>
             </div>
 
-            <div *ngIf="!product.offerValue && product.status !== 'comingSoon'" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px">
-              <h3 class="price mb-10">{{ product | parsePriceProduct }}</h3>
+            <div *ngIf="!product.offerValue && product.status !== 'comingSoon'" fxLayout='row wrap'
+                 fxLayoutAlign='start center' fxLayoutGap='10px'>
+              <h3 class='price mb-10'>{{ product | parsePriceProduct }}</h3>
               <span
-                class="location-span"
+                class='location-span'
               ><mat-icon>room</mat-icon>&nbsp;<strong>{{
                 product.Business?.Province?.name | parseLang: utilsService.getLang()
                 }}</strong
@@ -34,133 +38,137 @@
           </div>
         </div>
         <!--    IMAGES    -->
-        <div fxFlex="100" fxFlex.gt-md="66" fxLayoutAlign="center center" >
-          <mat-card class="my-product mat-elevation-z0" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxHide.sm fxHide.xs>
+        <div fxFlex='100' fxFlex.gt-md='66' fxLayoutAlign='center center'>
+          <mat-card class='my-product mat-elevation-z0' fxLayout='row' fxLayout.xs='column' fxLayout.sm='column'
+                    fxHide.sm fxHide.xs>
             <!--            <button matTooltip="{{ 'Zoom for a image' | translate }}" id="zoomBtn" mat-icon-button-->
             <!--                    (click)="openZoomViewer()">-->
             <!--              <mat-icon>fullscreen</mat-icon>-->
             <!--            </button>-->
             <button
-              (click)="onShareProduct()"
+              (click)='onShareProduct()'
               fxHide
               fxShow.lt-md
-              id="shareBtn"
+              id='shareBtn'
               mat-icon-button
               matTooltip="{{ 'Compartir en redes sociales' | translate }}"
             >
               <mat-icon>share</mat-icon>
             </button>
             <div
-              *ngIf="product?.Images && product?.Images?.length"
-              class="p-2 mt-2"
-              fxLayout="column"
-              fxLayoutAlign="center center"
+              *ngIf='product?.Images && product?.Images?.length'
+              class='p-2 mt-2'
+              fxLayout='column'
+              fxLayoutAlign='center center'
             >
               <div
-                *ngFor="let image of arrayImages; let i = index"
-                (click)="onSelectImage(i)"
+                *ngFor='let image of arrayImages; let i = index'
+                (click)='onSelectImage(i)'
                 [ngClass]="{
                   'mini-images-container': !image.selected,
                   'mini-images-container-selected': image.selected
                 }"
               >
-                <img lazyImg [src]="image?.image" onerror="this.onerror=null;this.src='assets/images/noImage.jpg';" />
+                <img lazyImg [src]='image?.image' onerror="this.onerror=null;this.src='assets/images/noImage.jpg';" />
               </div>
             </div>
-            <div fxLayoutAlign="center center" class='w-100'>
-              <ng-container *ngIf="product?.Images && product?.Images.length">
-                <ng-container *ngFor="let image of arrayImages; let i = index">
+            <div fxLayoutAlign='center center' class='w-100'>
+              <ng-container *ngIf='product?.Images && product?.Images.length'>
+                <ng-container *ngFor='let image of arrayImages; let i = index'>
                   <!--                  <img *ngIf="image.selected"-->
                   <!--                       onerror="this.onerror=null;this.src='assets/images/noImage.jpg';" -->
                   <!--                       [src]="image.image" (click)="openZoomViewer()" class="ImageProduct" />-->
 
                   <lib-ngx-image-zoom
-                    (click)="openZoomViewer()"
-                    *ngIf="image.selected"
-                    [fullImage]="image.image"
-                    [magnification]="1"
-                    [thumbImage]="image.image"
+                    (click)='openZoomViewer()'
+                    *ngIf='image.selected'
+                    [fullImage]='image.image'
+                    [magnification]='1'
+                    [thumbImage]='image.image'
                     [zoomMode]="'hover'"
-                    class="lib-ngx-image-zoom"
+                    class='lib-ngx-image-zoom'
                   >
                   </lib-ngx-image-zoom>
                 </ng-container>
               </ng-container>
               <img
                 lazyImg
-                *ngIf="!(product?.Images && product?.Images?.length)"
-                src="../../../../assets/images/noImage.jpg"
-                alt=""
-                class="ImageProduct"
+                *ngIf='!(product?.Images && product?.Images?.length)'
+                src='../../../../assets/images/noImage.jpg'
+                alt=''
+                class='ImageProduct'
               />
             </div>
 
           </mat-card>
 
-          <mat-card class="mat-elevation-z0 w-100" fxLayout='column' fxHide fxShow.sm fxShow.xs>
-            <span *ngIf='product?.justPublished' class="just-published">
+          <mat-card class='mat-elevation-z0 w-100' fxLayout='column' fxHide fxShow.sm fxShow.xs>
+            <span *ngIf='product?.justPublished' class='just-published'>
               {{ 'NUEVO'  | translate}}
             </span>
             <button
-              (click)="onShareProduct()"
+              (click)='onShareProduct()'
               fxHide
               fxShow.lt-md
-              id="shareBtn"
+              id='shareBtn'
               mat-icon-button
               matTooltip="{{ 'Compartir en redes sociales' | translate }}"
             >
               <mat-icon>share</mat-icon>
             </button>
-            <div fxLayoutAlign="center center">
+            <div fxLayoutAlign='center center'>
 
-              <div class="main-slider">
-                <div [swiper]="config" class="swiper-container h-100">
-                  <div class="swiper-wrapper h-100">
-                    <div *ngFor="let image of arrayImages; let i = index" class="swiper-slide" fxLayoutAlign='center center'>
-                      <div class="slide-item swiper-lazy" fxLayoutAlign='center center'>
+              <div class='main-slider'>
+                <div [swiper]='config' class='swiper-container h-100'>
+                  <div class='swiper-wrapper h-100'>
+                    <div *ngFor='let image of arrayImages; let i = index' class='swiper-slide'
+                         fxLayoutAlign='center center'>
+                      <div class='slide-item swiper-lazy' fxLayoutAlign='center center'>
 
-                          <div class="container-carrusel" fxLayoutAlign='center center'>
-                            <img [src]='image.image' class="img-swiper" />
-                          </div>
+                        <div class='container-carrusel' fxLayoutAlign='center center'>
+                          <img [src]='image.image' class='img-swiper' />
+                        </div>
 
                       </div>
                     </div>
                   </div>
-                  <div class="swiper-pagination white"></div>
+                  <div class='swiper-pagination white'></div>
                 </div>
               </div>
               <img
                 lazyImg
-                *ngIf="!(product?.Images && product?.Images?.length)"
-                src="../../../../assets/images/noImage.jpg"
-                alt=""
-                class="ImageProduct"
+                *ngIf='!(product?.Images && product?.Images?.length)'
+                src='../../../../assets/images/noImage.jpg'
+                alt=''
+                class='ImageProduct'
               />
 
             </div>
           </mat-card>
         </div>
         <!--    VARIANTS    -->
-        <div *ngIf="!isLoading" fxFlex="100" fxFlex.gt-md="34" fxFlex.md="90" ngClass.gt-sm="px-3 m-0">
-          <div class="product-right" fxLayout='column'>
-            <div class="product-details" fxLayout='column'>
-              <h2 class="nameProduct" fxHide.sm fxHide.xs>{{ product.name[language] ? product.name[language] : product.name['es'] }}</h2>
+        <div *ngIf='!isLoading' fxFlex='100' fxFlex.gt-md='34' fxFlex.md='90' ngClass.gt-sm='px-3 m-0'>
+          <div class='product-right' fxLayout='column'>
+            <div class='product-details' fxLayout='column'>
+              <h2 class='nameProduct' fxHide.sm
+                  fxHide.xs>{{ product.name[language] ? product.name[language] : product.name['es'] }}</h2>
               <div *ngIf="product.offerValue && product.status !== 'comingSoon'" fxHide.sm fxHide.xs>
-                <h4 class="mb-10">
+                <h4 class='mb-10'>
                   <del>{{ product | parsePriceProduct }}</del>
                   <span class='offer ml-2'>
-                    <span class="mx-0 px-0">-</span>
-                    <span *ngIf="product.isPercent" class="mx-0 px-0">{{ product.offerValue }}% </span>
-                    <span *ngIf="!product.isPercent" class="mx-0 px-0">${{ product.offerValue }}</span>
+                    <span class='mx-0 px-0'>-</span>
+                    <span *ngIf='product.isPercent' class='mx-0 px-0'>{{ product.offerValue }}% </span>
+                    <span *ngIf='!product.isPercent' class='mx-0 px-0'>${{ product.offerValue }}</span>
                   </span>
                 </h4>
-                <h3 class="price mb-10">{{ product | parsePriceProduct: 'offert' }}</h3>
+                <h3 class='price mb-10'>{{ product | parsePriceProduct: 'offert' }}</h3>
               </div>
 
-              <div *ngIf="!product.offerValue && product.status !== 'comingSoon'" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px" fxHide.sm fxHide.xs>
-                <h3 class="price mb-10">{{ product | parsePriceProduct }}</h3>
+              <div *ngIf="!product.offerValue && product.status !== 'comingSoon'" fxLayout='row wrap'
+                   fxLayoutAlign='start center' fxLayoutGap='10px' fxHide.sm fxHide.xs>
+                <h3 class='price mb-10'>{{ product | parsePriceProduct }}</h3>
                 <span
-                  class="location-span"
+                  class='location-span'
                 ><mat-icon>room</mat-icon>&nbsp;<strong>{{
                   product.Business?.Province?.name | parseLang: utilsService.getLang()
                   }}</strong
@@ -168,23 +176,26 @@
                 >
               </div>
               <div *ngIf='!loadingRelated'>
-                <div *ngFor="let carrusel of relatedProduct; let i = index" fxLayout='column' fxLayoutAlign='start start'>
+                <div *ngFor='let carrusel of relatedProduct; let i = index' fxLayout='column'
+                     fxLayoutAlign='start start'>
                   <span class='title-variant'>{{carrusel.name}}</span>
-<!--                  <span class='subtitle-variant'>{{carrusel.description}}</span>-->
-                  <div class="main-slider-variants">
-                    <div [swiper]="configVariants" class="swiper-container h-100 my-6">
-                      <div class="swiper-wrapper h-100">
-<!--                        {{imageUrl + carrusel.Recomendeds[0].RecomendedProduct.Images[0].image}}-->
-                        <div class="swiper-slide swiper-slide-variants" fxLayoutAlign='center center' fxLayoutGap='10px' *ngFor='let variant of carrusel.Recomendeds'>
-                          <div class="slide-item swiper-lazy mx-10" fxLayoutAlign='center center' fxLayoutGap='10px'>
-                            <div class="container-carrusel-variants" fxLayoutAlign='center center'>
+                  <!--                  <span class='subtitle-variant'>{{carrusel.description}}</span>-->
+                  <div class='main-slider-variants'>
+                    <div [swiper]='configVariants' class='swiper-container h-100 my-6'>
+                      <div class='swiper-wrapper h-100'>
+                        <!--                        {{imageUrl + carrusel.Recomendeds[0].RecomendedProduct.Images[0].image}}-->
+                        <div class='swiper-slide swiper-slide-variants' fxLayoutAlign='center center' fxLayoutGap='10px'
+                             *ngFor='let variant of carrusel.Recomendeds'>
+                          <div class='slide-item swiper-lazy mx-10' fxLayoutAlign='center center' fxLayoutGap='10px'>
+                            <div class='container-carrusel-variants' fxLayoutAlign='center center'>
                               <a
-                                [queryParams]="{ productId: variant?.ProductId, stockId: variant?.RecomendedProduct?.Stocks[0]?.uuid,
-                                                 name: variant?.RecomendedProduct?.name?.es, sharedImage: variant?.RecomendedProduct?.sharedImage }"
+                                [queryParams]='{ productId: variant?.ProductId, stockId: variant?.RecomendedProduct?.Stocks[0]?.uuid,
+                                                 name: variant?.RecomendedProduct?.name?.es, sharedImage: variant?.RecomendedProduct?.sharedImage }'
                                 [routerLink]="['/product']"
-                                class="product-link"
+                                class='product-link'
                               >
-                                <img [src]='imageUrl + variant.RecomendedProduct.Images[0].image' class="img-swiper-variant mx-10" />
+                                <img [src]='imageUrl + variant.RecomendedProduct.Images[0].image'
+                                     class='img-swiper-variant mx-10' />
                               </a>
                             </div>
                           </div>
@@ -192,115 +203,115 @@
 
                       </div>
                     </div>
-                    <div class="swiper-pagination white"></div>
+                    <div class='swiper-pagination white'></div>
                   </div>
                 </div>
               </div>
-<!--                        <app-skeleton-loading-cards *ngIf="loadingRelated" [setConfiguration]="{ xs: 1, sm: 2, md: 2, lg: 3 }">-->
-<!--                        </app-skeleton-loading-cards>-->
-              <p class="mat-body-2" style="font-size: 15px">
+              <!--                        <app-skeleton-loading-cards *ngIf="loadingRelated" [setConfiguration]="{ xs: 1, sm: 2, md: 2, lg: 3 }">-->
+              <!--                        </app-skeleton-loading-cards>-->
+              <p class='mat-body-2' style='font-size: 15px'>
                 {{ 'Compra a partir de ' | translate }}
                 {{ product.minSale }}
                 {{ ' unidades' | translate }}
               </p>
 
-              <p *ngIf="product.shortDescription == null" class="module line-clamp mt-1 mb-2">No tiene descripcion</p>
-              <p *ngIf="product.shortDescription != null" class="module line-clamp mt-1 mb-2">
+              <p *ngIf='product.shortDescription == null' class='module line-clamp mt-1 mb-2'>No tiene descripcion</p>
+              <p *ngIf='product.shortDescription != null' class='module line-clamp mt-1 mb-2'>
                 {{
-                  product.shortDescription[language]
-                    ? product.shortDescription[language]
-                    : product.shortDescription['es']
+                product.shortDescription[language]
+                  ? product.shortDescription[language]
+                  : product.shortDescription['es']
                 }}
               </p>
               <p
-                class="mat-body-2 uppercase mb-2"
+                class='mat-body-2 uppercase mb-2'
                 matTooltip="{{ 'Rango de precios por cantidad de unidades a comprar' | translate }}"
               >
                 {{ 'Precios de venta según la cantidad a comprar' | translate }}
               </p>
               <div
-                fxLayout="row wrap"
-                fxLayoutAlign="start center"
-                fxLayoutGap="gappx"
-                style="border-top: 1px solid #eeeeee; border-bottom: 1px solid #eeeeee"
+                fxLayout='row wrap'
+                fxLayoutAlign='start center'
+                fxLayoutGap='gappx'
+                style='border-top: 1px solid #eeeeee; border-bottom: 1px solid #eeeeee'
               >
                 <div
-                  *ngFor="let item of product.PriceRanges"
+                  *ngFor='let item of product.PriceRanges'
                   [matTooltip]="'entre ' + item.min + ' y ' + item.max + ' unidades'"
-                  class="mx-2 py-3"
-                  fxLayout="column"
-                  fxLayoutAlign="start start"
-                  fxLayoutGap="gappx"
-                  style="width: 80px"
+                  class='mx-2 py-3'
+                  fxLayout='column'
+                  fxLayoutAlign='start start'
+                  fxLayoutGap='gappx'
+                  style='width: 80px'
                 >
-                  <p class="mat-body-1">{{ item.min }} - {{ item.max }}</p>
-                  <p *ngIf="product.offerValue" class="mat-body-2">
+                  <p class='mat-body-1'>{{ item.min }} - {{ item.max }}</p>
+                  <p *ngIf='product.offerValue' class='mat-body-2'>
                     {{ item.priceOffer | currencyProduct: product.currency }}
                   </p>
-                  <p *ngIf="!product.offerValue" class="mat-body-2">
+                  <p *ngIf='!product.offerValue' class='mat-body-2'>
                     {{ item.price | currencyProduct: product.currency }}
                   </p>
                 </div>
               </div>
               <div>
-                <div class="py-1 mt-15">
+                <div class='py-1 mt-15'>
                   <p *ngIf='product.status !== "comingSoon"'>
-                    <span class="text-muted fw-500">{{ 'Avalibility:' | translate }}</span>
+                    <span class='text-muted fw-500'>{{ 'Avalibility:' | translate }}</span>
                     <span
-                      class="avalibility"
-                      style="color: #4caf50 !important; font-weight: 500"
-                      *ngIf="counter < product?.Stock?.quantity ? product?.Stock?.quantity : 0"
-                      ><span class="ml-3"
-                        >{{ 'Disponible en la
-                        tienda' | translate }} "{{
-                          product?.Business?.name
-                        }}" {{ 'ubicada en la provincia' | translate }} "{{ product?.Business?.Province?.name }}"
-                        {{ 'en el municipio' | translate }} "{{ product?.Business?.Municipality?.name }}"</span
-                      ></span
+                      class='avalibility'
+                      style='color: #4caf50 !important; font-weight: 500'
+                      *ngIf='counter < product?.Stock?.quantity ? product?.Stock?.quantity : 0'
+                    ><span class='ml-3'
+                    >{{ 'Disponible en la
+                      tienda' | translate }} "{{
+                      product?.Business?.name
+                      }}" {{ 'ubicada en la provincia' | translate }} "{{ product?.Business?.Province?.name }}"
+                      {{ 'en el municipio' | translate }} "{{ product?.Business?.Municipality?.name }}"</span
+                    ></span
                     >
 
-                    <span *ngIf="counter > product?.Stock?.quantity ? product?.Stock?.quantity : 0" class="avalibility"
-                      ><span class="ml-3" style="color: #f33927 !important; font-weight: 500">{{
-                        'No disponible, está agotado' | translate
+                    <span *ngIf='counter > product?.Stock?.quantity ? product?.Stock?.quantity : 0' class='avalibility'
+                    ><span class='ml-3' style='color: #f33927 !important; font-weight: 500'>{{
+                      'No disponible, está agotado' | translate
                       }}</span></span
                     >
                   </p>
                   <p
-                    class="mat-body-2 uppercase my-3 coming-soon-text"
+                    class='mat-body-2 uppercase my-3 coming-soon-text'
                     *ngIf='product.status === "comingSoon"'
                     matTooltip="{{ 'Este producto estará a la venta próximamente' | translate }}"
                   >
                     {{ 'Próximamente' | translate }}
                   </p>
                 </div>
-                <div class="quantity" *ngIf='product.status !== "comingSoon"'>
-                  <span class="text-muted fw-500">{{ 'Quantity' | translate }}:</span>
-                  <div class="text-muted" fxLayout="row" fxLayout.xs="column">
-                    <div fxLayout="row" fxLayoutAlign="center start">
-                      <div class="addQuantity">
+                <div class='quantity' *ngIf='product.status !== "comingSoon"'>
+                  <span class='text-muted fw-500'>{{ 'Quantity' | translate }}:</span>
+                  <div class='text-muted' fxLayout='row' fxLayout.xs='column'>
+                    <div fxLayout='row' fxLayoutAlign='center start'>
+                      <div class='addQuantity'>
                         <button
-                          (click)="decrement()"
-                          [disabled]="counter <= product.minSale"
-                          class="leftBtn"
-                          matTooltip="Remove"
+                          (click)='decrement()'
+                          [disabled]='counter <= product.minSale'
+                          class='leftBtn'
+                          matTooltip='Remove'
                         >
                           <mat-icon>keyboard_arrow_left</mat-icon>
                         </button>
                         <input
-                          [min]="product.minSale"
-                          [max]="product.maxSale"
-                          (keyup)="checkMinMaxValues($event, product)"
-                          [(ngModel)]="counter"
-                          class="inputBtn"
+                          [min]='product.minSale'
+                          [max]='product.maxSale'
+                          (keyup)='checkMinMaxValues($event, product)'
+                          [(ngModel)]='counter'
+                          class='inputBtn'
                           matTooltip="{{ 'Cantidad de unidades a adquirir' | translate }}"
-                          type="text"
-                          value="{{ counter }}"
+                          type='text'
+                          value='{{ counter }}'
                         />
                         <button
-                          (click)="increment()"
-                          [disabled]="counter > product.stock || counter >= product.maxSale"
-                          class="rightBtn"
-                          matTooltip="Add"
+                          (click)='increment()'
+                          [disabled]='counter > product.stock || counter >= product.maxSale'
+                          class='rightBtn'
+                          matTooltip='Add'
                         >
                           <mat-icon>keyboard_arrow_right</mat-icon>
                         </button>
@@ -311,47 +322,47 @@
               </div>
 
               <div
-                class="buttons mt-20"
-                fxLayout="row"
-                fxLayoutAlign="start center"
-                fxLayoutAlign.lt-sm="center center"
+                class='buttons mt-20'
+                fxLayout='row'
+                fxLayoutAlign='start center'
+                fxLayoutAlign.lt-sm='center center'
                 *ngIf="product.typeAddCart === 'glasses' && product.status !== 'comingSoon'"
               >
                 <button
-                  (click)="addLenses(product, counter)"
-                  class="btn-custom my-2 w-100"
-                  color="primary"
+                  (click)='addLenses(product, counter)'
+                  class='btn-custom my-2 w-100'
+                  color='primary'
                   mat-raised-button
-                  ngClass.sm="w-80"
-                  ngClass.xs="w-80"
+                  ngClass.sm='w-80'
+                  ngClass.xs='w-80'
                 >
                   {{ 'CHOOSES LENSES' | translate }}
                 </button>
               </div>
 
               <div
-                class="buttons"
-                fxLayout="row"
-                fxLayoutAlign="start center"
-                fxLayoutAlign.lt-sm="center center"
+                class='buttons'
+                fxLayout='row'
+                fxLayoutAlign='start center'
+                fxLayoutAlign.lt-sm='center center'
                 *ngIf='product.status !== "comingSoon"'
               >
                 <button
-                  (click)="addToCart(product, counter)"
-                  class="btn-custom my-2 w-100"
-                  color="primary"
+                  (click)='addToCart(product, counter)'
+                  class='btn-custom my-2 w-100'
+                  color='primary'
                   mat-raised-button
-                  ngClass.lt-sm="w-100"
+                  ngClass.lt-sm='w-100'
                 >
                   {{ 'ADD TO CART' | translate }}
                 </button>
 
                 <button
-                  (click)="buyNow(product, 1)"
-                  class="btn-custom my-2 w-100"
-                  color="primary"
+                  (click)='buyNow(product, 1)'
+                  class='btn-custom my-2 w-100'
+                  color='primary'
                   mat-raised-button
-                  ngClass.lt-sm="w-100"
+                  ngClass.lt-sm='w-100'
                 >
                   {{ 'BUY NOW' | translate }}
                 </button>
@@ -361,20 +372,20 @@
         </div>
       </div>
 
-      <div *ngIf="!isLoading" fxFlex="100" fxFlex.md="75" fxLayout="row" fxLayoutAlign="start start">
-        <mat-tab-group [selectedIndex]="indexTab" ngClass.gt-sm="w-95" ngClass.lt-md="w-100">
+      <div *ngIf='!isLoading' fxFlex='100' fxFlex.md='75' fxLayout='row' fxLayoutAlign='start start'>
+        <mat-tab-group [selectedIndex]='indexTab' ngClass.gt-sm='w-95' ngClass.lt-md='w-100'>
           <mat-tab label="{{ 'Details' | translate }}">
-            <div class="full-desc text-muted">
+            <div class='full-desc text-muted'>
               <div
-                *ngIf="product.description == null"
+                *ngIf='product.description == null'
                 [id]="'ProductId' + product.id"
                 [innerHTML]="'No tiene descripcion'"
-                class="InnerHtmlContent"
+                class='InnerHtmlContent'
               ></div>
               <div
-                *ngIf="product.description != null"
-                [innerHTML]="this.utilsService.parserLanguage(product.description, language)"
-                class="InnerHtmlContent"
+                *ngIf='product.description != null'
+                [innerHTML]='this.utilsService.parserLanguage(product.description, language)'
+                class='InnerHtmlContent'
               ></div>
               <!--<p class="my-3">
                 <span style="font-weight: 600; font-size: 16px">
@@ -385,38 +396,38 @@
               </p>-->
             </div>
           </mat-tab>
-          <mat-tab *ngIf="loggedInUser" label="{{ 'Reviews' | translate }}">
-            <div fxLayout="container">
-              <div class="full-desc lh px-4" ngClass.lt-md="px-0">
-                <div *ngFor="let review of allReviews" class="content" fxLayout="row" fxLayoutAlign="start center">
+          <mat-tab *ngIf='loggedInUser' label="{{ 'Reviews' | translate }}">
+            <div fxLayout='container'>
+              <div class='full-desc lh px-4' ngClass.lt-md='px-0'>
+                <div *ngFor='let review of allReviews' class='content' fxLayout='row' fxLayoutAlign='start center'>
                   <img
-                    *ngIf="review.Client.avatar"
-                    [src]="imageUrl + review.Client.avatar"
-                    alt="image"
-                    class="review-author"
+                    *ngIf='review.Client.avatar'
+                    [src]='imageUrl + review.Client.avatar'
+                    alt='image'
+                    class='review-author'
                   />
                   <img
-                    *ngIf="!review.Client.avatar"
+                    *ngIf='!review.Client.avatar'
                     [src]="'../../../../../assets/images/avatars/profile2.png'"
-                    alt="image"
-                    class="review-author"
+                    alt='image'
+                    class='review-author'
                   />
-                  <div class="ml-2 text-list" fxLayout="column" fxLayoutAlign="start start">
-                    <span class="name mat-body-2"
-                      >{{ review.Client.name + ' ' + (review.Client.lastname || '') }}
-                      <span class="text-muted"
-                        ><small>&nbsp;{{ review.createdAt | date: 'shortDate' }}</small>
+                  <div class='ml-2 text-list' fxLayout='column' fxLayoutAlign='start start'>
+                    <span class='name mat-body-2'
+                    >{{ review.Client.name + ' ' + (review.Client.lastname || '') }}
+                      <span class='text-muted'
+                      ><small>&nbsp;{{ review.createdAt | date: 'shortDate' }}</small>
                       </span>
                     </span>
                     <!-- <p>
                       <guachos-rating [config]="{label:'estrellas',readOnly:true,size:'12px'}" [value]="review.rating">
                       </guachos-rating>
                     </p> -->
-                    <p class="mat-body-1" ngClass.lt-md="mat-caption">{{ review.review }}</p>
+                    <p class='mat-body-1' ngClass.lt-md='mat-caption'>{{ review.review }}</p>
                     <button
-                      (click)="onEditReview(review)"
-                      *ngIf="loggedInUser.id == review.ClientId"
-                      class="editBtn"
+                      (click)='onEditReview(review)'
+                      *ngIf='loggedInUser.id == review.ClientId'
+                      class='editBtn'
                       mat-icon-button
                     >
                       <mat-icon>edit</mat-icon>
@@ -425,32 +436,32 @@
                 </div>
 
                 <div
-                  fxLayout="row"
-                  *ngIf="this.queryReviews.offset < this.queryReviews.total"
-                  class="py-3"
-                  fxLayoutAlign="center center"
+                  fxLayout='row'
+                  *ngIf='this.queryReviews.offset < this.queryReviews.total'
+                  class='py-3'
+                  fxLayoutAlign='center center'
                 >
                   <button
-                    (click)="onGetMorePriviews()"
-                    *ngIf="this.queryReviews.offset < this.queryReviews.total"
-                    class="px-4"
-                    color="accent"
+                    (click)='onGetMorePriviews()'
+                    *ngIf='this.queryReviews.offset < this.queryReviews.total'
+                    class='px-4'
+                    color='accent'
                     mat-stroked-button
                   >
                     {{ 'LOAD MORE...' | translate }}
                   </button>
                 </div>
 
-                <div class="writte-reviews mt-3">
-                  <h4 class="my-2 mat-title">{{ 'LEAVE YOUR REVIEW' | translate }}</h4>
-                  <div class="divider"></div>
-                  <p class="mt-2 text-muted">
+                <div class='writte-reviews mt-3'>
+                  <h4 class='my-2 mat-title'>{{ 'LEAVE YOUR REVIEW' | translate }}</h4>
+                  <div class='divider'></div>
+                  <p class='mt-2 text-muted'>
                     {{ 'Your email address will not be published. Required fields are marked *' | translate }}
                   </p>
 
-                  <form [formGroup]="reviewForm" fxLayout="row wrap">
-                    <h3 class="mt-2" fxLayoutAlign="start center">
-                      <span class="mr-2">{{ 'Your Rating: ' | translate }}</span>
+                  <form [formGroup]='reviewForm' fxLayout='row wrap'>
+                    <h3 class='mt-2' fxLayoutAlign='start center'>
+                      <span class='mr-2'>{{ 'Your Rating: ' | translate }}</span>
                       <guachos-rating
                         [config]="{ label: 'estrellas', size: '22px', showNumber: true, showClearBtn: true }"
                         [formControl]="reviewForm.controls['rating']"
@@ -458,28 +469,28 @@
                       </guachos-rating>
                     </h3>
 
-                    <div fxFlex="100" fxFlex.gt-sm="100">
-                      <mat-form-field appearance="outline" class="w-100">
+                    <div fxFlex='100' fxFlex.gt-sm='100'>
+                      <mat-form-field appearance='outline' class='w-100'>
                         <mat-label>{{ 'Post content' | translate }}</mat-label>
                         <textarea
                           #message
                           [formControl]="reviewForm.controls['review']"
                           matInput
-                          maxlength="250"
+                          maxlength='250'
                           placeholder="{{ 'Post content' | translate }}"
                           required
-                          rows="3"
+                          rows='3'
                         ></textarea>
-                        <mat-hint align="end">{{ message.value.length }} / 250</mat-hint>
+                        <mat-hint align='end'>{{ message.value.length }} / 250</mat-hint>
                       </mat-form-field>
                     </div>
-                    <div class="button-wrap px-1 mt-2" fxFlex="100" fxFlex.gt-sm="100" fxLayoutAlign="end start">
+                    <div class='button-wrap px-1 mt-2' fxFlex='100' fxFlex.gt-sm='100' fxLayoutAlign='end start'>
                       <button
-                        (click)="onPostReview()"
-                        [disabled]="reviewForm.invalid"
-                        color="accent"
+                        (click)='onPostReview()'
+                        [disabled]='reviewForm.invalid'
+                        color='accent'
                         mat-raised-button
-                        type="submit"
+                        type='submit'
                       >
                         {{ 'Submit Review' | translate }}
                       </button>
@@ -493,40 +504,44 @@
       </div>
 
       <div fxHide fxShow.lt-md>
-        <ng-container [ngTemplateOutlet]="providerDetails"></ng-container>
+        <ng-container [ngTemplateOutlet]='providerDetails'></ng-container>
       </div>
 
-<!--      <div *ngIf="relatedProduct.length" class="products pt-5">-->
-<!--        <div class="title">-->
-<!--          <h4 class="widget-title">{{ 'RECOMENDED PRODUCTS' | translate }}</h4>-->
-<!--        </div>-->
-<!--        <app-product-carousel-two *ngIf="!loadingRelated" [products]="relatedProduct" [btnColor]="'accent'"-->
-<!--                                  [grid]="{ '480': 1, '740': 2, '960': 2, '1024': 2, '1280': 3 }">-->
-<!--        </app-product-carousel-two>-->
-<!--        <div *ngIf="loadingRelated" class="my-3">-->
-<!--          <app-skeleton-loading-cards *ngIf="loadingRelated" [setConfiguration]="{ xs: 1, sm: 2, md: 2, lg: 3 }">-->
-<!--          </app-skeleton-loading-cards>-->
-<!--        </div>-->
-<!--      </div>-->
+      <!--      <div *ngIf="relatedProduct.length" class="products pt-5">-->
+      <!--        <div class="title">-->
+      <!--          <h4 class="widget-title">{{ 'RECOMENDED PRODUCTS' | translate }}</h4>-->
+      <!--        </div>-->
+      <!--        <app-product-carousel-two *ngIf="!loadingRelated" [products]="relatedProduct" [btnColor]="'accent'"-->
+      <!--                                  [grid]="{ '480': 1, '740': 2, '960': 2, '1024': 2, '1280': 3 }">-->
+      <!--        </app-product-carousel-two>-->
+      <!--        <div *ngIf="loadingRelated" class="my-3">-->
+      <!--          <app-skeleton-loading-cards *ngIf="loadingRelated" [setConfiguration]="{ xs: 1, sm: 2, md: 2, lg: 3 }">-->
+      <!--          </app-skeleton-loading-cards>-->
+      <!--        </div>-->
+      <!--      </div>-->
 
-      <div *ngIf="allProductsOnMenu?.length > 0" class="products pt-5">
+      <div *ngIf='allProductsOnMenu?.length > 0'
+           class='products pt-5'
+           infiniteScroll
+           [infiniteScrollDistance]='0.5'
+           (scrolled)='loadProducts()'>
         <div
           fxLayout
-          fxLayoutAlign="space-between center"
-          fxLayout.lt-md="column"
-          fxLayoutAlign.lt-md="space-between start"
+          fxLayoutAlign='space-between center'
+          fxLayout.lt-md='column'
+          fxLayoutAlign.lt-md='space-between start'
         >
-          <div class="title">
-            <h4 class="widget-title">{{ 'Otros productos del negocio' | translate }}</h4>
+          <div class='title'>
+            <h4 class='widget-title'>{{ 'Otros productos del negocio' | translate }}</h4>
           </div>
-          <mat-form-field appearance="outline" class="auto-complete-search" style="min-width: 310px">
+          <mat-form-field appearance='outline' class='auto-complete-search' style='min-width: 310px'>
             <mat-label>{{ 'Buscar en este local' | translate }}</mat-label>
             <input
-              [formControl]="searchProductControl"
-              aria-label="Number"
+              [formControl]='searchProductControl'
+              aria-label='Number'
               matInput
-              placeholder="Buscar lo que desea...?"
-              type="text"
+              placeholder='Buscar lo que desea...?'
+              type='text'
             />
             <mat-icon matSuffix>search</mat-icon>
             <!--            [matAutocomplete]="auto"-->
@@ -538,23 +553,26 @@
           </mat-form-field>
         </div>
 
-        <div *ngIf="!loadingMenu" class="w-100" fxLayout="row wrap" fxLayoutAlign="start start">
+        <div *ngIf='allProductsOnMenu.length >= 0' class='w-100' fxLayout='row wrap' fxLayoutAlign='start start'>
           <app-product
-            *ngFor="let products of allProductsOnMenuToShow | async"
-            [product]="products"
-            fxFlex.lt-md="100"
+            *ngFor='let products of allProductsOnMenu'
+            [product]='products'
+            fxFlex.lt-md='100'
           ></app-product>
-          <ng-container *ngIf="(allProductsOnMenuToShow | async)?.length == 0">
-            <h3 class="py-4" style="text-align: center">
+          <ng-container *ngIf='allProductsOnMenu.length == 0'>
+            <h3 class='py-4' style='text-align: center'>
               {{ 'No hay producto con ese criterio de búsqueda' | translate }}
             </h3>
           </ng-container>
         </div>
 
-        <div *ngIf="loadingMenu" class="my-3">
-          <app-skeleton-loading-cards [setConfiguration]="{ xs: 1, sm: 2, md: 2, lg: 3 }"> </app-skeleton-loading-cards>
+        <div *ngIf='loadingMenu || loadingProducts' class='my-3'>
+          <app-skeleton-loading-cards [setConfiguration]='{ xs: 1, sm: 2, md: 2, lg: 3 }'></app-skeleton-loading-cards>
         </div>
       </div>
+<!--         <span *ngIf='loadingProducts' fxLayout='row' fxLayoutAlign='center center' class='mb-3 mt-3'>-->
+<!--          <mat-spinner color='primary' diameter='25' fxLayoutAlign='center center'></mat-spinner>-->
+<!--          </span>-->
 
       <!--      <div *ngIf="relatedProduct.length" class="products pt-5">-->
       <!--        <div class="title">-->
@@ -583,90 +601,90 @@
       <!--      </div>-->
     </div>
 
-    <div fxLayout="row wrap" fxLayoutAlign="start start" fxFlex="100" fxFlex.gt-sm="23">
+    <div fxLayout='row wrap' fxLayoutAlign='start start' fxFlex='100' fxFlex.gt-sm='23'>
       <div fxHide.lt-md fxShow>
-        <ng-container [ngTemplateOutlet]="providerDetails"></ng-container>
+        <ng-container [ngTemplateOutlet]='providerDetails'></ng-container>
       </div>
 
-      <div fxHide.xs fxLayout="row wrap" class="info-bar" style="border-radius: 4px !important" ngClass.gt-md="m-0">
-        <div *ngFor="let item of allBicons; let i = index" fxFlex="100" class="mt-16">
+      <div fxHide.xs fxLayout='row wrap' class='info-bar' style='border-radius: 4px !important' ngClass.gt-md='m-0'>
+        <div *ngFor='let item of allBicons; let i = index' fxFlex='100' class='mt-16'>
           <mat-card
-            class="light-block"
+            class='light-block'
             [ngClass]="{ 'no-border': i === allBicons.length - 1 }"
-            fxLayout="row"
-            fxLayoutAlign="start center"
+            fxLayout='row'
+            fxLayoutAlign='start center'
           >
-            <mat-icon class="mat-icon-xlg m-0 icon-common-bicon">{{ item.icon }}</mat-icon>
-            <div class="content ml-4">
-              <p class="uppercase">{{ utilsService.parserLanguage(item.title, language) }}</p>
-              <span class="text-muted m-0">{{ utilsService.parserLanguage(item.subTitle, language) }}</span>
+            <mat-icon class='mat-icon-xlg m-0 icon-common-bicon'>{{ item.icon }}</mat-icon>
+            <div class='content ml-4'>
+              <p class='uppercase'>{{ utilsService.parserLanguage(item.title, language) }}</p>
+              <span class='text-muted m-0'>{{ utilsService.parserLanguage(item.subTitle, language) }}</span>
             </div>
           </mat-card>
         </div>
       </div>
 
-      <div style="width: 100%">
-        <mat-divider class="my-2"></mat-divider>
-        <a (click)="onAddtoCartNav()" class="list-compare-link" fxLayout="row" fxLayoutAlign="start center">
-          <mat-icon class="mr-2"> shopping_cart</mat-icon>
+      <div style='width: 100%'>
+        <mat-divider class='my-2'></mat-divider>
+        <a (click)='onAddtoCartNav()' class='list-compare-link' fxLayout='row' fxLayoutAlign='start center'>
+          <mat-icon class='mr-2'> shopping_cart</mat-icon>
           {{ 'Añadir al carrito' | translate }}
         </a>
-        <a (click)="onAddtoCompListNav()" class="list-compare-link" fxLayout="row" fxLayoutAlign="start center">
-          <mat-icon class="mr-2"> compare_arrows</mat-icon>
+        <a (click)='onAddtoCompListNav()' class='list-compare-link' fxLayout='row' fxLayoutAlign='start center'>
+          <mat-icon class='mr-2'> compare_arrows</mat-icon>
           {{ 'Añadir a la lista de comparación' | translate }}
         </a>
 
-        <a (click)="onGoToCheckouNav()" class="list-compare-link" fxLayout="row" fxLayoutAlign="start center">
-          <mat-icon class="mr-2"> slideshow</mat-icon>
+        <a (click)='onGoToCheckouNav()' class='list-compare-link' fxLayout='row' fxLayoutAlign='start center'>
+          <mat-icon class='mr-2'> slideshow</mat-icon>
           {{ 'Comprar ahora' | translate }}
         </a>
 
-        <mat-divider class="my-2"></mat-divider>
-        <section *ngIf="!isLoading" fxHide.lt-md>
+        <mat-divider class='my-2'></mat-divider>
+        <section *ngIf='!isLoading' fxHide.lt-md>
           <share-button
             [description]="this.product?.name?.es + ': \n' + this.product?.shortDescription?.es"
-            [title]="this.product?.name?.es"
-            button="facebook"
+            [title]='this.product?.name?.es'
+            button='facebook'
           >
           </share-button>
           <share-button
             [description]="this.product?.name?.es + ': \n' + this.product?.shortDescription?.es"
-            [title]="this.product?.name?.es"
-            button="whatsapp"
+            [title]='this.product?.name?.es'
+            button='whatsapp'
           >
           </share-button>
           <share-button
             [description]="this.product?.name?.es + ': \n' + this.product?.shortDescription?.es"
-            [title]="this.product?.name?.es"
-            button="telegram"
+            [title]='this.product?.name?.es'
+            button='telegram'
           >
           </share-button>
           <share-button
             [description]="this.product?.name?.es + ': \n' + this.product?.shortDescription?.es"
-            [image]="this.mainImage?.image"
-            [title]="this.product?.name?.es"
-            button="email"
+            [image]='this.mainImage?.image'
+            [title]='this.product?.name?.es'
+            button='email'
           >
           </share-button>
         </section>
-        <mat-divider fxHide.lt-md class="my-2"></mat-divider>
+        <mat-divider fxHide.lt-md class='my-2'></mat-divider>
       </div>
 
       <ng-template #providerDetails>
-        <div style="width: 100%">
-          <h4 class="mat-body-2 uppercase">{{ 'Comprando en' | translate }}</h4>
-          <a class="list-compare-link no-decoration" fxLayout="row" fxLayoutAlign="start center">
+        <div style='width: 100%'>
+          <h4 class='mat-body-2 uppercase'>{{ 'Comprando en' | translate }}</h4>
+          <a class='list-compare-link no-decoration' fxLayout='row' fxLayoutAlign='start center'>
             <img
-              style="height: 32px; width: 32px; border-radius: 50%; object-fit: cover"
-              [src]="imageUrl + product?.Business?.logo"
+              style='height: 32px; width: 32px; border-radius: 50%; object-fit: cover'
+              [src]='imageUrl + product?.Business?.logo'
               onerror="this.onerror=null;this.src='assets/images/noImage.jpg';"
             />
 
-            <span class="ml-2">{{ product?.Business?.name | parseLang: utilsService.getLang()}}</span>
+            <span class='ml-2'>{{ product?.Business?.name | parseLang: utilsService.getLang()}}</span>
           </a>
-          <a class="list-compare-link no-decoration" fxLayout="row" fxLayoutAlign="start center">
-            <mat-icon class="mr-2 icon-common"> location_on</mat-icon>
-            <div fxLayout="column">
+          <a class='list-compare-link no-decoration' fxLayout='row' fxLayoutAlign='start center'>
+            <mat-icon class='mr-2 icon-common'> location_on</mat-icon>
+            <div fxLayout='column'>
               <div>{{ product?.Business?.address | parseLang: utilsService.getLang() }}.</div>
               <div>
                 <strong>
@@ -677,19 +695,19 @@
             </div>
           </a>
 
-          <a class="list-compare-link" fxLayout="row" fxLayoutAlign="start center">
-            <mat-icon class="mr-2 icon-common"> phone</mat-icon>
-            <a href="tel:{{ product?.Business?.cellphone }}">{{ product?.Business?.cellphone }}</a>
+          <a class='list-compare-link' fxLayout='row' fxLayoutAlign='start center'>
+            <mat-icon class='mr-2 icon-common'> phone</mat-icon>
+            <a href='tel:{{ product?.Business?.cellphone }}'>{{ product?.Business?.cellphone }}</a>
           </a>
-          <a class="list-compare-link" fxLayout="row" fxLayoutAlign="start center">
-            <mat-icon class="mr-2 icon-common"> mail</mat-icon>
-            <a class='email-text' href="mailto:{{product?.Business?.email}}">{{ product?.Business?.email }}</a>
+          <a class='list-compare-link' fxLayout='row' fxLayoutAlign='start center'>
+            <mat-icon class='mr-2 icon-common'> mail</mat-icon>
+            <a class='email-text' href='mailto:{{product?.Business?.email}}'>{{ product?.Business?.email }}</a>
           </a>
-          <mat-divider class="my-2"></mat-divider>
+          <mat-divider class='my-2'></mat-divider>
         </div>
       </ng-template>
 
-      <div class="popular-products mt-2" fxFlex.lt-md="100">
+      <div class='popular-products mt-2' fxFlex.lt-md='100'>
         <app-popular-products></app-popular-products>
       </div>
     </div>
@@ -697,76 +715,76 @@
 
   <!-- =========================================================== -->
   <!-- ======== on NO PRODUCT ================================== -->
-  <div *ngIf="errorPage" class="mb-4" fxLayout="column">
+  <div *ngIf='errorPage' class='mb-4' fxLayout='column'>
     <section
-      class="py-4 product-detail-not-found"
-      fxLayout="row"
-      fxLayout.xs="column"
-      fxLayoutAlign="center"
-      fxLayoutAlign.xs="start"
-      fxLayoutGap="6rem"
-      fxLayoutGap.xs="0"
+      class='py-4 product-detail-not-found'
+      fxLayout='row'
+      fxLayout.xs='column'
+      fxLayoutAlign='center'
+      fxLayoutAlign.xs='start'
+      fxLayoutGap='6rem'
+      fxLayoutGap.xs='0'
     >
-      <picture [fxFlexOrder.xs]="2" class="pdnf-picture" fxFlex="50" fxFlex.xs="100">
+      <picture [fxFlexOrder.xs]='2' class='pdnf-picture' fxFlex='50' fxFlex.xs='100'>
         <!--        <source srcset="assets/images/not-found-product.webp" type="image/webp">-->
         <!--        <source srcset="assets/images/not-found-product.png" type="image/png">-->
         <img
-          alt="Producto no encontrado"
+          alt='Producto no encontrado'
           onerror="this.onerror=null;this.src='assets/images/noImage.jpg';"
-          src="assets/images/not-found-product.png"
-          type="image/png"
+          src='assets/images/not-found-product.png'
+          type='image/png'
         />
       </picture>
 
       <div
-        [fxFlexOrder.xs]="1"
-        class="pdnf-right-side-text"
-        fxFlex="50"
-        fxFlex.xs="100"
-        fxLayout="column"
-        fxLayoutAlign="center start"
+        [fxFlexOrder.xs]='1'
+        class='pdnf-right-side-text'
+        fxFlex='50'
+        fxFlex.xs='100'
+        fxLayout='column'
+        fxLayoutAlign='center start'
       >
-        <div [fxFlexOrder.xs]="1" class="pdnf-1-text mb-4">{{ 'Upss' | translate }}...</div>
-        <div [fxFlexOrder.xs]="2" class="pdnf-2-text mb-1">{{ 'Lo sentimos' | translate }}</div>
-        <div [fxFlexOrder.xs]="3" class="pdnf-3-text mb-4">
+        <div [fxFlexOrder.xs]='1' class='pdnf-1-text mb-4'>{{ 'Upss' | translate }}...</div>
+        <div [fxFlexOrder.xs]='2' class='pdnf-2-text mb-1'>{{ 'Lo sentimos' | translate }}</div>
+        <div [fxFlexOrder.xs]='3' class='pdnf-3-text mb-4'>
           {{ 'El producto que busca no se encuentra disponible' | translate }}
         </div>
 
-        <div [fxFlexOrder.xs]="4" class="pdnf-action-button">
-          <button [routerLink]="['/products/search']" color="primary" mat-flat-button ngClass.xs="mb-4">
+        <div [fxFlexOrder.xs]='4' class='pdnf-action-button'>
+          <button [routerLink]="['/products/search']" color='primary' mat-flat-button ngClass.xs='mb-4'>
             {{ 'Seguir comprando' | translate }}
           </button>
         </div>
       </div>
     </section>
 
-    <div *ngIf="featuredProducts.length" class="products pt-5 pb-0">
-      <div class="title">
-        <h4 class="widget-title">{{ 'FEATURED PRODUCTS' | translate }}</h4>
+    <div *ngIf='featuredProducts.length' class='products pt-5 pb-0'>
+      <div class='title'>
+        <h4 class='widget-title'>{{ 'FEATURED PRODUCTS' | translate }}</h4>
       </div>
       <app-product-carousel-two
-        *ngIf="!loadingFeatured"
+        *ngIf='!loadingFeatured'
         [btnColor]="'accent'"
         [grid]="{ '480': 1, '740': 2, '960': 2, '1024': 2, '1280': 3 }"
-        [products]="featuredProducts"
+        [products]='featuredProducts'
       >
       </app-product-carousel-two>
-      <div *ngIf="loadingFeatured" class="my-3">
-        <app-skeleton-loading-cards *ngIf="loadingFeatured" [setConfiguration]="{ xs: 1, sm: 2, md: 2, lg: 3 }">
+      <div *ngIf='loadingFeatured' class='my-3'>
+        <app-skeleton-loading-cards *ngIf='loadingFeatured' [setConfiguration]='{ xs: 1, sm: 2, md: 2, lg: 3 }'>
         </app-skeleton-loading-cards>
       </div>
     </div>
   </div>
 </div>
 
-<div *ngIf="showZoom" class="popup" id="popup">
-  <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="gappx">
-    <button (click)="this.showZoom = false" mat-icon-button>
-      <mat-icon class="mat-18">clear</mat-icon>
+<div *ngIf='showZoom' class='popup' id='popup'>
+  <div fxLayout='row' fxLayoutAlign='end center' fxLayoutGap='gappx'>
+    <button (click)='this.showZoom = false' mat-icon-button>
+      <mat-icon class='mat-18'>clear</mat-icon>
     </button>
   </div>
 
-  <div fxFlexFill fxLayout="column" fxLayoutAlign="center center">
-    <img [src]="this.mainImage.image" />
+  <div fxFlexFill fxLayout='column' fxLayoutAlign='center center'>
+    <img [src]='this.mainImage.image' />
   </div>
 </div>
