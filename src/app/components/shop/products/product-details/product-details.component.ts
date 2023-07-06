@@ -39,6 +39,16 @@ export class ProductDetailsComponent implements OnInit, OnDestroy, AfterViewInit
   product: any = {};
   products: any[] = [];
   relatedProduct: any;
+  totalProducts: number;
+  limitSearch = environment.limitSearch;
+  query: IPagination = {
+    limit: this.limitSearch,
+    total: 0,
+    offset: 0,
+    order: '-updatedAt',
+    page: 0,
+  };
+  loadingProducts = false;
   supplementArray: any;
   featuredProducts: any[] = [];
   imageUrl = environment.imageUrl;
@@ -162,7 +172,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy, AfterViewInit
         (data) => {
           this.product = data.data;
           console.log(this.product);
-          this.getProductsByBusiness(this.product?.BusinessId);
+          this.getProductsByBusiness(this.product?.BusinessId, this.query);
           this.initStateView();
           this.isLoading = false;
         },
@@ -338,20 +348,39 @@ export class ProductDetailsComponent implements OnInit, OnDestroy, AfterViewInit
     }
   }
 
-  getProductsByBusiness(businessId) {
+  loadProducts() {
+    if (!this.loadingProducts) {
+      if (this.query.offset <= this.totalProducts) {
+        this.loadingProducts = true;
+        this.query.page = this.query.page + 1;
+        this.query.offset = this.query.limit * this.query.page;
+        this.getProductsByBusiness(this.product?.BusinessId, this.query);
+      }
+    }
+  }
+
+  getProductsByBusiness(businessId, query?: any) {
     this.loadingMenu = true;
-    this.productsService.getProductsByBusiness(businessId).subscribe(
+    this.productsService.getProductsByBusiness(businessId, query).subscribe(
       (data: any) => {
         console.log('PRODUCTS ON MENU', data.data);
-        this.allProductsOnMenu = data.data.slice();
+        this.totalProducts = data?.meta?.pagination?.total;
+        let temp = this.allProductsOnMenu;
+        console.log(temp);
+        temp = temp.concat(data.data.slice());
+
+        console.log(temp);
+        this.allProductsOnMenu = temp;
         const timeOut = setTimeout(() => {
           this.loadingMenu = false;
+          this.loadingProducts = false;
           clearTimeout(timeOut);
         }, 200);
       },
       (error) => {
         const timeOut = setTimeout(() => {
           this.loadingMenu = false;
+          this.loadingProducts = false;
           clearTimeout(timeOut);
         }, 200);
       },
