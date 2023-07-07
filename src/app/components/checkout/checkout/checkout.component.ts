@@ -544,9 +544,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     });
 
     this.form.controls['paymentType'].valueChanges.pipe(takeUntil(this._unsubscribeAll)).subscribe((data) => {
-      if (data && (data == 'peoplegoto' || data == 'authorize')) {
+      if (data && (data == 'peoplegoto' || data == 'authorize' || data == 'multisafepay')) {
         this.form.controls['currency'].setValue(CoinEnum.EUR);
-      } else if (data === 'paypal' || data === 'multisafepay' || data === 'tropipay') {
+      } else if (data === 'paypal' || data === 'tropipay') {
         this.form.controls['currency'].setValue(CoinEnum.USD);
       } else if (data === 'transfermovil') {
         if (this.cart.market === 'international') {
@@ -770,9 +770,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           i.shippingItems[0].Shipping?.ProvinceId === this.form.get('ProvinceId').value &&
           i.shippingItems[0].Shipping?.MunicipalityId === this.form.get('MunicipalityId').value,
       );
-      console.log(ShippingByBusiness);
-      console.log(total);
-      console.log(total + (ShippingByBusiness?.totalPrice || 0.0));
       return total + (ShippingByBusiness?.totalPrice || 0.0);
     }
     // Total if shipping is fixed
@@ -783,9 +780,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       this.fixedShipping.totalPrice >= 0 &&
       this.fixedShipping?.provinces.includes(this.form.get('ProvinceId').value)
     ) {
-
-      console.log(this.fixedShipping);
-      console.log(total);
       return total + (this.fixedShipping?.totalPrice || 0.0);
     }
 
@@ -850,7 +844,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       ProvinceId: [null, [Validators.required]],
       MunicipalityId: [null, [Validators.required]],
       isForCuban: [true, [Validators.required]],
-      dni: [null, [Validators.required, Validators.minLength(this.CI_Length), Validators.maxLength(this.CI_Length)]],
+      dni: [null, [Validators.required]],
       email: [null, [Validators.required, Validators.pattern(EMAIL_REGEX)]],
       phone: [null, []],
       PhoneCallingCodeId: [null, []],
@@ -1306,7 +1300,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       bodyData.urlRedirectSuccesfully = environment.url + 'my-orders';
       bodyData.urlRedirectCancel = environment.url + 'my-orders';
       paymentMethod = this.payService.makePaymentMultisafepay(bodyData);
-      bodyData.currency = 'USD';
+      bodyData.currency = 'EUR';
       paymentMethod.subscribe(
         (data: any) => {
           console.log(data);
