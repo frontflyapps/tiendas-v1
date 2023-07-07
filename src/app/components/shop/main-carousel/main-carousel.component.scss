@@ -26,12 +26,24 @@
 
 .main-slider .slide-item {
   @media (max-width: 500px) {
-    height: 100%;
+    height: 180px !important;
     background-size: contain !important;
     background-position: top;
     background-repeat: no-repeat !important;
   }
 
+}
+
+.main-slider{
+  @media (max-width: 500px) {
+    height: 180px !important;
+  }
+}
+
+.swiper-container-horizontal>.swiper-pagination-bullets, .swiper-pagination-custom, .swiper-pagination-fraction {
+  @media (max-width: 500px) {
+    bottom: 0px !important;
+  }
 }
 
 .myBtn {
