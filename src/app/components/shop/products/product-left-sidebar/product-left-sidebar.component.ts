@@ -629,6 +629,8 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
               this.loading = false;
             },
           );
+      } else {
+        this.loading = false;
       }
 
     }
