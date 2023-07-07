@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#version: 1.0.1
+
 git push
 
 # Obtiene la lista de ramas del proyecto
@@ -21,6 +23,7 @@ for branch in "${branches[@]}"; do
   # Verifica que la rama seleccionada exista en el proyecto
   if [[ " ${branches[@]} " =~ " ${branch} " ]]; then
     git checkout "$branch" &&
+    git pull &&
     git merge --no-ff -m "Merge $source_branch into $branch" "$source_branch" &&
     git push
   else
