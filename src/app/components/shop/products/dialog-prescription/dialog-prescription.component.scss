@@ -96,7 +96,7 @@
 }
 
 ::ng-deep {
-  .mat-select-trigger {
+  .input-axis .mat-select-trigger {
     height: 36px !important;
     width: 60px !important;
     @media (min-width: 380px) and (max-width: 500px) {
