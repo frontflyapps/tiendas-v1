@@ -169,16 +169,16 @@ export class DialogPrescriptionComponent implements OnInit {
     });
     this.supplementForm.get('supplementType').valueChanges.subscribe(item => {
       if (item) {
-        this.stepper.next();
+        // this.stepper.next();
       }
-      // if (this.supplementForm.get('supplementType').value.RecomendedProduct.name.es.includes('Progresivos') ||
-      //     this.supplementForm.get('supplementType').value.RecomendedProduct.name.es.includes('Bifocales')) {
-      //   this.form.get('add').setValidators(Validators.required);
-      //   console.log(this.form);
-      //   console.log('entro aki');
-      // } else {
-      //   this.form.get('add').setValidators(null);
-      // }
+      if (this.supplementForm.get('supplementType').value?.RecomendedProduct?.name?.es.includes('Progresivos') ||
+        this.supplementForm.get('supplementType').value?.RecomendedProduct?.name?.es.includes('Bifocales')) {
+        this.form.get('add').setValidators(Validators.required);
+        console.log(this.form);
+        console.log('entro aki');
+      } else {
+        this.form.get('add').setValidators(null);
+      }
     });
 
   }
@@ -201,13 +201,41 @@ export class DialogPrescriptionComponent implements OnInit {
     //     this.form.get('axisRight').setValidators(null);
     //   }
     // });
-    this.loadingSearch = true;
-    this.productsService.getNewRecomendedProduct(this.data.product.id, 'supplement').subscribe((data: any) => {
-      this.loadingSearch = false;
-      this.supplementArray = data.data;
 
-      this.supplementArray.forEach( item => { item.Recomendeds.forEach( item2 => { item2.checked = false; }); });
-      this.supplementArray.forEach( item => { item.forEach( item2 => { item2.seeDetails = false; }); });
+    this.supplementForm.get('supplementType').valueChanges.subscribe(item => {
+      if (item) {
+        this.stepper.next();
+      }
+      if (this.supplementForm.get('supplementType').value?.RecomendedProduct?.name?.es.includes('Progresivos') ||
+        this.supplementForm.get('supplementType').value?.RecomendedProduct?.name?.es.includes('Bifocales')) {
+        this.form.get('add').setValidators(Validators.required);
+        console.log(this.form);
+        console.log('entro aki');
+      } else {
+        this.form.get('add').setValidators(null);
+      }
+    });
+
+    this.loadingSearch = true;
+    this.productsService.getNewRecomendedProduct(this.data.product.id, 'supplement').subscribe({
+      next: (data) => {
+        this.loadingSearch = false;
+        this.supplementArray = data.data;
+
+        this.supplementArray.forEach(item => {
+          item.Recomendeds.forEach(item2 => {
+            item2.checked = false;
+          });
+        });
+        this.supplementArray.forEach(item => {
+          item.forEach(item2 => {
+            item2.seeDetails = false;
+          });
+        });
+      },
+      error: (err) => {
+        this.dialogRef.close(false);
+      }
     });
   }
 
@@ -224,7 +252,7 @@ export class DialogPrescriptionComponent implements OnInit {
       cylinderRight: [null, []],
       axisRight: [null, []],
       pupillaryDistance: [null, []],
-      add: [null, [Validators.required]],
+      add: [null, []],
     });
     this.supplementForm = this.fb.group({
       supplementType: [null, [Validators.required]],
@@ -248,12 +276,17 @@ export class DialogPrescriptionComponent implements OnInit {
           if (positionArrayFather === 0) {
             this.supplementForm.get('supplementType').setValue(item);
 
-            if (item.RecomendedProduct.name.es.includes('Progresivos') ||
-              item.RecomendedProduct.name.es.includes('Bifocales')) {
-              this.form.get('add').setValidators([Validators.required]);
+            console.log(item.RecomendedProduct.name.es.includes('Progresivos'));
+            console.log(item.RecomendedProduct.name.es.includes('Bifocales'));
+            console.log(item);
+
+            if (this.supplementForm.get('supplementType').value?.RecomendedProduct?.name?.es.includes('Progresivos') ||
+                this.supplementForm.get('supplementType').value?.RecomendedProduct?.name?.es.includes('Bifocales')) {
+              this.form.get('add').setValidators(Validators.required);
             } else {
               this.form.get('add').setValidators([]);
             }
+            console.log(this.form);
           } else if (positionArrayFather === 1) {
             this.supplementForm.get('supplementFilter').setValue(item);
             this.supplementForm.get('supplementDye').setValue(null);
