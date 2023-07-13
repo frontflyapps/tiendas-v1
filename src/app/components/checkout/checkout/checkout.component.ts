@@ -382,11 +382,16 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.appService.getBusinessConfigId(id).subscribe((item) => {
       // this.loading = true;
       this.businessConfig = item.data;
-      this.showAddress = this.businessConfig.showAddress;
-      this.form.get('shippingType').setValue(this.businessConfig.shippingType);
-      this.form.get('configProductsType').setValue(this.businessConfig.configProductsType);
+      this.showAddress = this.businessConfig?.showAddress;
+      this.form.get('shippingType').setValue(this.businessConfig?.shippingType);
+      this.form.get('configProductsType').setValue(this.businessConfig?.configProductsType);
+      if (this.businessConfig?.isDniRequired) {
+        this.form.get('dni').setValidators(Validators.required);
+      } else {
+        this.form.get('dni').setValidators([]);
+      }
       this.getAvalilablePaymentType();
-      if (this.businessConfig.gateways?.length == 0) {
+      if (this.businessConfig?.gateways?.length == 0) {
         this.noGateway = true;
       } else {
         this.noGateway = false;
