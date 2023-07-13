@@ -636,7 +636,7 @@
                     [formControl]="this.form.controls['dni']"
                     matInput
                     placeholder="{{ 'Identity card' | translate }}"
-                    required
+                    [required]='businessConfig.isDniRequired'
                     type="text"
                   />
                   <mat-hint>{{ 'Asegúrese de escribirlo correctamente' }}</mat-hint>

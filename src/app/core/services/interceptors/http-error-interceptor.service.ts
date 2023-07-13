@@ -11,6 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogPrescriptionComponent } from '../../../components/shop/products/dialog-prescription/dialog-prescription.component';
 import { DialogCaptchaComponent } from '../../../components/shared/dialog-captcha/dialog-captcha.component';
 import { LocalStorageService } from '../localStorage/localStorage.service';
+import { ShowToastrService } from '../show-toastr/show-toastr.service';
 
 @Injectable()
 export class HttpErrorInterceptorService implements HttpInterceptor {
@@ -20,6 +21,7 @@ export class HttpErrorInterceptorService implements HttpInterceptor {
   constructor(
     private utilsService: UtilsService,
     private showSnackbar: ShowSnackbarService,
+    private showToastr: ShowToastrService,
     private loggedInUserService: LoggedInUserService,
     public dialog: MatDialog,
     private translate: TranslateService,
@@ -70,7 +72,7 @@ export class HttpErrorInterceptorService implements HttpInterceptor {
         this.router.navigate(['my-account']).then();
       }
       this.utilsService.errorHandle(err);
-    }  else if (err.status == 406) {
+    } else if (err.status == 406) {
       console.log(err);
       // const dialogRef = this.dialog.open(DialogCaptchaComponent, {
       //   width: '50vw',
@@ -99,7 +101,21 @@ export class HttpErrorInterceptorService implements HttpInterceptor {
       this.utilsService.errorHandle(err);
       // this.router.navigate(['/error/404']);
     } else if (err.status == 400 || err.status == 500) {
-      this.utilsService.errorHandle(err);
+      console.log(err);
+      if (err.error.code === 418) {
+        this.showToastr.showInfo(
+          this.translate.instant(
+            err.error.errors[0].title,
+          ),
+        );
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
+
+      } else {
+        this.utilsService.errorHandle(err);
+      }
+
     } else if (err.status == 0) {
       // this.router.navigate(['/error/conexion-perdida']);
       this.showSnackbar.showError(

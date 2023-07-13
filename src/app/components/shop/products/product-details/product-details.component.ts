@@ -453,10 +453,10 @@ export class ProductDetailsComponent implements OnInit, OnDestroy, AfterViewInit
       const dialogRef = this.dialog.open(DialogPrescriptionComponent, {
         disableClose: false,
         hasBackdrop: true,
-        width: this.isSmallDevice ? '100vw' : '20vw',
-        maxWidth: this.isSmallDevice ? '100vw' : '50vw',
-        height: this.isSmallDevice ? '100vh' : '50vh',
-        maxHeight: this.isSmallDevice ? '100vh' : '50vh',
+        width: this.isSmallDevice ? '100vw' : '60%',
+        maxWidth: this.isSmallDevice ? '100vw' : '100vw',
+        height: this.isSmallDevice ? '70vh' : '70%',
+        maxHeight: this.isSmallDevice ? '70vh' : '100vh',
         data: {
           product: product,
           quantity: quantity,
