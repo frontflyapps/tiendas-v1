@@ -1,4 +1,4 @@
-<div *ngIf='product.Business?.Province' class="location-label-sm" fxShow.lt-md fxHide>
+<div *ngIf='product.Business?.Province && showLocationSpan' class="location-label-sm" fxShow.lt-md fxHide>
   <span>
     <mat-icon>room</mat-icon>&nbsp;<strong>{{
       product.Business?.Province?.name | parseLang: utilsService.getLang()
@@ -117,7 +117,7 @@
         </a> -->
     </div>
   </div>
-  <div *ngIf='product.Business?.Province' class="location-label" fxShow fxHide.lt-md>
+  <div *ngIf='product.Business?.Province && showLocationSpan' class="location-label" fxShow fxHide.lt-md>
     <span>
       <mat-icon>room</mat-icon>&nbsp;<strong>{{
         product.Business?.Province?.name | parseLang: utilsService.getLang()

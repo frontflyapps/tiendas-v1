@@ -149,7 +149,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.url = event.url;
-        this.sidenav.close().then();
+        this.sidenav?.close().then();
       }
     });
     this.searchForm = new UntypedFormControl(null, []);
@@ -293,6 +293,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onSearch() {
     const searchValue = this.searchForm.value;
+    console.log(this.searchForm.value);
     localStorage.setItem('searchText', JSON.stringify(searchValue));
     if (searchValue && searchValue.length > 1) {
       this.router.navigate(['/products/search'], { queryParams: { filterText: searchValue } }).then();

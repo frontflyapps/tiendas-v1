@@ -1,4 +1,4 @@
-<mat-sidenav-container fullscreen>
+<mat-sidenav-container fullscreen *ngIf='businessConfig?.Business?.status !== "blockPayment"'>
   <!-- Vista movil menu -->
   <mat-sidenav #start [opened]="false" class="DrawerMobileView" mode="over">
     <mat-list class="position-relative">
@@ -472,24 +472,32 @@
   <!--  <app-footer-two *ngIf="!url.includes('my-account')"></app-footer-two>-->
   <app-footer *ngIf="!url?.includes('my-account')"></app-footer>
 </mat-sidenav-container>
-<!--<section class='section-maintainer mt-3'>-->
-<!--  &lt;!&ndash; BANNER TEMPORAL &ndash;&gt;-->
-<!--    <div-->
-<!--      style="-->
-<!--        padding: 16px;-->
-<!--        background-color: darkred;-->
-<!--        color: white !important;-->
-<!--        font-weight: bold;-->
-<!--        width: 91%;-->
-<!--        white-space: normal;-->
-<!--        max-width: 91% !important;-->
-<!--        margin: 0 auto;-->
-<!--      "-->
-<!--      fxLayoutAlign='center center'-->
-<!--    >-->
-<!--      <h1 style="color: white !important">-->
-<!--        En este momento estamos en mantenimiento, dentro de unos minutos estaremos de vuelta.-->
-<!--      </h1>-->
-<!--    </div>-->
-<!--  &lt;!&ndash; BANNER TEMPORAL &ndash;&gt;-->
-<!--</section>-->
+
+<mat-sidenav-container fullscreen *ngIf='businessConfig?.Business?.status === "blockPayment"'>
+
+  <div [class.py-2]='!loggedInUser' class='home-header' fxHide.lt-md>
+    <div class='container-header' fxLayout='row wrap' fxLayoutAlign='space-between center'>
+      <img alt='logo' class='Logo-img' fxHide.lt-md fxShow (click)='metaAdd()'
+           routerLink='/' [src]="logo" />
+    </div>
+  </div>
+  <!-- BANNER TEMPORAL -->
+    <div
+      style="
+        padding: 16px;
+        background-color: darkred;
+        color: white !important;
+        font-weight: bold;
+        width: 91%;
+        white-space: normal;
+        max-width: 91% !important;
+        margin: 0 auto;
+      "
+      class='mt-3'
+    >
+      <h1 style="color: white !important">
+        Esta tienda online se encuentra mantenimiento, disculpe por las molestias ocasionadas
+      </h1>
+    </div>
+  <!-- BANNER TEMPORAL -->
+</mat-sidenav-container>

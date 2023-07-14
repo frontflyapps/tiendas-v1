@@ -30,6 +30,7 @@ export class ProductCarouselComponent implements OnInit, AfterViewInit, OnDestro
   @Input() grid = { 480: 1, 740: 2, 960: 2, 1024: 3, 1280: 4 };
   @Input() showBig = false;
   inLoading = false;
+  showLocationSpan = environment.showLocation;
   typesProducts = [
     { id: 'physical', name: { es: 'Físico', en: 'Physical' } },
     { id: 'digital', name: { es: 'Digital', en: 'Digital' } },

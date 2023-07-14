@@ -99,7 +99,7 @@
           <div class='container'>
             <div class='products sec-padding'>
               <div class='products-four' fxHide.xs fxHide.sm fxShow>
-                <h2 style='color: initial'>{{ card.name | i18nField: translateService.currentLang }}</h2>
+                <h1 style='color: initial'>{{ card.name | i18nField: translateService.currentLang }}</h1>
                 <app-product-carousel *ngIf='card.value' [btnColor]="'accent'" [products]='card.value'>
                 </app-product-carousel>
                 <div *ngIf='loadingFeatured' class='my-3'>
@@ -112,7 +112,7 @@
                                   [products]='card'>
                 </app-product-grid>
                 <div *ngIf='card.value && card.visualType?.typeVisualization === "carousel"'>
-                  <h2 style='color: initial'>{{ card.name | i18nField: translateService.currentLang }}</h2>
+                  <h1 style='color: initial'>{{ card.name | i18nField: translateService.currentLang }}</h1>
                   <app-product-carousel [btnColor]="'accent'" [products]='card.value'>
                   </app-product-carousel>
                 </div>
@@ -128,7 +128,7 @@
           <div class='container'>
             <div class='products sec-padding'>
               <div class='products-four'>
-                <h2 style='color: initial'>{{ card.name | i18nField: translateService.currentLang }}</h2>
+                <h1 style='color: initial'>{{ card.name | i18nField: translateService.currentLang }}</h1>
                 <app-product-carousel *ngIf='card.value' [btnColor]="'accent'" [products]='card.value'>
                 </app-product-carousel>
                 <div *ngIf='loadingFeatured' class='my-3'>
@@ -144,7 +144,7 @@
           <div class='container'>
             <div class='products sec-padding'>
               <div class='products-four'>
-                <h2 style='color: initial'>{{ card.name | i18nField: translateService.currentLang }}</h2>
+                <h1 style='color: initial'>{{ card.name | i18nField: translateService.currentLang }}</h1>
                 <app-product-carousel *ngIf='card.value' [btnColor]="'accent'" [products]='card.value'>
                 </app-product-carousel>
                 <div *ngIf='loadingFeatured' class='my-3'>

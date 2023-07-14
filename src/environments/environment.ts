@@ -31,12 +31,16 @@ export const environment = {
 
   showPoweredBy: true,
 
+  showLocation: true,
 
-  timeToResetSession: 14400000, // (4hrs) Time to reset the session (ms)
-  timeToResearchProductData: 300000, // (5min) Time to research products (ms)
-  timeToResearchLandingPageData: 1800000, // (30min) Time to research landing-page (ms)
-  timeToResearchMenuData: 300000, // (30min) Time to research menu (ms)
-  timeToResearchCategoriesData: 600000, // (10min) Time to research categories (ms)
+  timeToResetSession: 14400000, // Time to reset the session (ms)
+  timeToResearchProductData: 10000, // Time to research products (ms)
+  timeToResearchLandingPageData: 10000, // Time to research products (ms)
+  timeToResearchMenuData: 10000, // Time to research products (ms)
+  timeToResearchCategoriesData: 10000, // Time to research categories (ms)
+
+  // url: 'http://tienda.tiendalocal.com:4308',
+  // urlAboutUs: 'http://tienda.tiendalocal.com:4308',
 
   url: 'https://www.veoveofashion.com/',
   urlAboutUs: 'https://www.veoveofashion.com/',
@@ -77,3 +81,16 @@ export const environment = {
     tslint: packageJson.devDependencies['tslint'],
   },
 };
+
+/*
+ * For easier debugging in development mode, you can import the following file
+ * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
+ *
+ * This import should be commented out in production mode because it will have a negative impact
+ * on performance if an error is thrown.
+ */
+// import 'zone.js/plugins/zone-error';  // Included with Angular CLI.
+
+/**
+ * Esto es la tienda Online B2b De Guajiritos
+ */
