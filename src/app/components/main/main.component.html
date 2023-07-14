@@ -1,4 +1,4 @@
-<mat-sidenav-container fullscreen>
+<mat-sidenav-container fullscreen *ngIf='businessConfig?.Business?.status !== "shopMaintance"'>
   <!-- Vista movil menu -->
   <mat-sidenav #start [opened]="false" class="DrawerMobileView" mode="over">
     <mat-list class="position-relative">
@@ -471,4 +471,14 @@
 
   <!--  <app-footer-two *ngIf="!url.includes('my-account')"></app-footer-two>-->
   <app-footer *ngIf="!url?.includes('my-account')"></app-footer>
+</mat-sidenav-container>
+
+<mat-sidenav-container fullscreen *ngIf='businessConfig?.Business?.status === "shopMaintance"'>
+
+  <div [class.py-2]='!loggedInUser' class='home-header' fxHide.lt-md>
+    <div class='container-header' fxLayout='row wrap' fxLayoutAlign='space-between center'>
+      <img alt='logo' class='Logo-img' fxHide.lt-md fxShow (click)='metaAdd()'
+           routerLink='/' [src]="logo" />
+    </div>
+  </div>
 </mat-sidenav-container>
