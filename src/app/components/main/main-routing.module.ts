@@ -42,6 +42,10 @@ const routes: Routes = [
         canLoad: [MyOrdersGuard],
       },
       {
+        path: 'referred',
+        loadChildren: () => import('../../components/referred-layout/referred-layout.module').then((m) => m.ReferredLayoutModule),
+      },
+      {
         path: 'blog',
         loadChildren: () => import('../../components/blog/blog.module').then((m) => m.BlogModule),
       },

@@ -1,10 +1,10 @@
 <div *ngIf='product.Business?.Province' class="location-label-sm" fxShow.lt-md fxHide>
-  <span>
-    <mat-icon>room</mat-icon>&nbsp;<strong>{{
-      product.Business?.Province?.name | parseLang: utilsService.getLang()
-    }}</strong
-    >, {{ product.Business?.Municipality?.name | parseLang: utilsService.getLang() }}
-  </span>
+<!--  <span>-->
+<!--    <mat-icon>room</mat-icon>&nbsp;<strong>{{-->
+<!--      product.Business?.Province?.name | parseLang: utilsService.getLang()-->
+<!--    }}</strong-->
+<!--    >, {{ product.Business?.Municipality?.name | parseLang: utilsService.getLang() }}-->
+<!--  </span>-->
 </div>
 <div
   [id]="'ProductCardId' + product.id"
@@ -118,12 +118,12 @@
     </div>
   </div>
   <div *ngIf='product.Business?.Province' class="location-label" fxShow fxHide.lt-md>
-    <span>
-      <mat-icon>room</mat-icon>&nbsp;<strong>{{
-        product.Business?.Province?.name | parseLang: utilsService.getLang()
-      }}</strong
-      >, {{ product.Business?.Municipality?.name | parseLang: utilsService.getLang() }}
-    </span>
+<!--    <span>-->
+<!--      <mat-icon>room</mat-icon>&nbsp;<strong>{{-->
+<!--        product.Business?.Province?.name | parseLang: utilsService.getLang()-->
+<!--      }}</strong-->
+<!--      >, {{ product.Business?.Municipality?.name | parseLang: utilsService.getLang() }}-->
+<!--    </span>-->
   </div>
 </div>
 
