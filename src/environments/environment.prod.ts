@@ -16,6 +16,8 @@ export const environment = {
 
   showPoweredBy: true,
 
+  showLocation: true,
+
 
   timeToResetSession: 14400000, // (4hrs) Time to reset the session (ms)
   timeToResearchProductData: 300000, // (5min) Time to research products (ms)

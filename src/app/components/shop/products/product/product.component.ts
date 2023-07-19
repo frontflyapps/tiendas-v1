@@ -28,6 +28,7 @@ export class ProductComponent implements OnInit, OnDestroy {
   @Input() product: any;
   inLoading = false;
   _unsubscribeAll: Subject<any>;
+  showLocationSpan = environment.showLocation;
   loggedInUser: any = null;
   imageUrl = environment.imageUrl;
   isHandset = false;

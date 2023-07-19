@@ -29,6 +29,7 @@
               <h3 class='price mb-10'>{{ product | parsePriceProduct }}</h3>
               <span
                 class='location-span'
+                *ngIf='showLocationSpan'
               ><mat-icon>room</mat-icon>&nbsp;<strong>{{
                 product.Business?.Province?.name | parseLang: utilsService.getLang()
                 }}</strong
@@ -169,6 +170,7 @@
                 <h3 class='price mb-10'>{{ product | parsePriceProduct }}</h3>
                 <span
                   class='location-span'
+                  *ngIf='showLocationSpan'
                 ><mat-icon>room</mat-icon>&nbsp;<strong>{{
                   product.Business?.Province?.name | parseLang: utilsService.getLang()
                   }}</strong
