@@ -29,6 +29,7 @@
               <h3 class='price mb-10'>{{ product | parsePriceProduct }}</h3>
               <span
                 class='location-span'
+                *ngIf='showLocationSpan'
               ><mat-icon>room</mat-icon>&nbsp;<strong>{{
                 product.Business?.Province?.name | parseLang: utilsService.getLang()
                 }}</strong
@@ -150,17 +151,17 @@
         <div *ngIf='!isLoading' fxFlex='100' fxFlex.gt-md='34' fxFlex.md='90' ngClass.gt-sm='px-3 m-0'>
           <div class='product-right' fxLayout='column'>
             <div class='product-details' fxLayout='column'>
-              <h2 class='nameProduct' fxHide.sm
-                  fxHide.xs>{{ product.name[language] ? product.name[language] : product.name['es'] }}</h2>
+              <h1 class='nameProduct' fxHide.sm
+                  fxHide.xs>{{ product.name[language] ? product.name[language] : product.name['es'] }}</h1>
               <div *ngIf="product.offerValue && product.status !== 'comingSoon'" fxHide.sm fxHide.xs>
-                <h4 class='mb-10'>
+                <h1 class='mb-10'>
                   <del>{{ product | parsePriceProduct }}</del>
                   <span class='offer ml-2'>
                     <span class='mx-0 px-0'>-</span>
                     <span *ngIf='product.isPercent' class='mx-0 px-0'>{{ product.offerValue }}% </span>
                     <span *ngIf='!product.isPercent' class='mx-0 px-0'>${{ product.offerValue }}</span>
                   </span>
-                </h4>
+                </h1>
                 <h3 class='price mb-10'>{{ product | parsePriceProduct: 'offert' }}</h3>
               </div>
 
@@ -169,6 +170,7 @@
                 <h3 class='price mb-10'>{{ product | parsePriceProduct }}</h3>
                 <span
                   class='location-span'
+                  *ngIf='showLocationSpan'
                 ><mat-icon>room</mat-icon>&nbsp;<strong>{{
                   product.Business?.Province?.name | parseLang: utilsService.getLang()
                   }}</strong
