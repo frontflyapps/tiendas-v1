@@ -16,7 +16,7 @@ export const environment = {
 
   showPoweredBy: true,
 
-  showLocation: true,
+  showLocation: false,
 
 
   timeToResetSession: 14400000, // (4hrs) Time to reset the session (ms)
