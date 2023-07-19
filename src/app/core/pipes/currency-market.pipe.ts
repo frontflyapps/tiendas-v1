@@ -13,14 +13,12 @@ export class CurrencyMarket implements PipeTransform {
   transform(price: number, market: string): string {
     let currency;
     currency = CoinEnum.USD;
-    if (market == MarketEnum.INTERNATIONAL) {
+    if (market == MarketEnum.INTERNATIONAL || market == CoinEnum.USD) {
       currency = CoinEnum.USD;
-    } else if (market == MarketEnum.NATIONAL) {
+    } else if (market == MarketEnum.NATIONAL || market == CoinEnum.CUP) {
       currency = CoinEnum.CUP;
     } else if (market == CoinEnum.EUR) {
       currency = CoinEnum.EUR;
-    } else if (market == CoinEnum.USD) {
-      currency = CoinEnum.USD;
     }
     const data = this.currencyPipe.transform(price, currency);
     return data;

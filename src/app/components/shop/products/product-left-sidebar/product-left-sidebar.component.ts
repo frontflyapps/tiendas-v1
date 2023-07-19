@@ -56,6 +56,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
     maxPrice: null,
   };
   loading = false;
+  loadingSearch = false;
   language: any;
   _unsubscribeAll: Subject<any>;
   isOnlyTwoProducts = false;
@@ -105,6 +106,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
     this.route.queryParams.pipe(takeUntil(this._unsubscribeAll)).subscribe((data) => {
       this.isStarting = true;
+      console.log(data);
       // this.paramsSearch.categoryIds = data?.categoryIds ? data.categoryIds : this.paramsSearch.categoryIds;
       this.paramsSearch.categoryIds = data?.categoryIds ? data.categoryIds : [];
       this.paramsSearch.brandIds = data?.brandIds ? data.brandIds : [];
@@ -120,6 +122,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
       this.queryProduct.order = data?.order ? data.order : '-id';
 
       if (data.CategoryId) {
+        console.log('entro');
         this.paramsSearch.categoryIds = [data.CategoryId];
         this.paramsSearch.minPrice = 0;
         this.paramsSearch.maxPrice = null;
@@ -136,12 +139,18 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
         this.paramsSearch.maxPrice = null;
         this.resetPrices = !this.resetPrices;
 
-        this.queryProduct.limit = this.initLimit;
-        this.queryProduct.offset = 0;
-        this.queryProduct.total = 0;
-        this.queryProduct.page = 1;
-        this.paramsSearch.categoryIds = [];
+
+        if (this.paramsSearch.filterText) {
+          this.queryProduct.limit = this.initLimit;
+          this.queryProduct.offset = 0;
+          this.queryProduct.total = 0;
+          this.queryProduct.page = 1;
+          this.paramsSearch.categoryIds = [];
+        }
+
       }
+
+      console.log(this.paramsSearch);
 
       this.categoriesIds = [...this.paramsSearch.categoryIds];
       this.brandsIds = [...this.paramsSearch.brandIds];
@@ -423,6 +432,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
       return total % this.initLimit ? Math.ceil(total / this.initLimit) : (total / this.initLimit > 0 ? total / this.initLimit : 1);
   }
   newSearchMethod(page) {
+    this.loadingSearch = true;
     let currentPage = page > 0 ? page - 1 : page;
     this.queryProduct.page = currentPage;
     this.queryProduct.offset = currentPage * this.initLimit;
@@ -434,6 +444,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
       if (Array.isArray(this.paramsSearch.categoryIds)) {
         if (this.paramsSearch.categoryIds.length > 0) {
           categoryIds = this.paramsSearch.categoryIds.map((i) => Number(i));
+          console.log(categoryIds);
         }
       } else {
         categoryIds = [this.paramsSearch.categoryIds];
@@ -441,7 +452,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
     }
 
     // if (Array.isArray(this.paramsSearch.brandIds) && this.paramsSearch.brandIds.length > 0) {
-    if (this.paramsSearch.categoryIds) {
+    if (this.paramsSearch.brandIds) {
       if (Array.isArray(this.paramsSearch.brandIds)) {
         if (this.paramsSearch.brandIds.length > 0) {
           brandIds = this.paramsSearch.brandIds.map((i) => Number(i));
@@ -487,10 +498,12 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
 
           this.queryProduct.total = data.meta.pagination.total;
           this.loading = false;
+          this.loadingSearch = false;
           this.gotToProductId();
         },
         () => {
           this.loading = false;
+          this.loadingSearch = false;
         },
       );
   }

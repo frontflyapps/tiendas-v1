@@ -1,21 +1,24 @@
 <mat-dialog-content style="position: relative">
   <div fxLayout="column" fxLayoutAlign="start center" fxLayoutAlign.lt-md="start start" fxLayoutGap="gappx">
     <p ngClass.gt-sm="mat-body-2" ngClass.lt-md="mat-body-2">
-      {{ 'Confirmación de pago usando transfermóvil.' | translate }}
+      {{ 'Confirmación de pago usando Transfermóvil.' | translate }}
     </p>
     <ul>
       <div fxHide.lt-md>
         <li>
-          {{ 'Abra la aplicación de transfermóvil en su teléfono.' | translate }}
+          {{ 'a. Abra la App de Transfermovil' | translate }}
         </li>
         <li>
-          {{ 'Seleccione su banco y autentíquese.' | translate }}
+          {{ 'b. Busque la opción Pago en Línea.' | translate }}
         </li>
         <li>
-          {{ 'Entre en la opción de "Operaciones" y pulse la opción de pago en línea.' | translate }}
+          {{ 'c. Escanee el QR.' | translate }}
         </li>
         <li>
-          {{ 'Precione el botón de lectura de qr y realize su pago.' | translate }}
+          {{ 'd. Proceda a ingresar los datos que la App solicita.' | translate }}
+        </li>
+        <li>
+          {{ 'e. Cuando concluya el pago, de clic en el botón LISTO.' | translate }}
         </li>
       </div>
       <a [href]="domSanitizer.bypassSecurityTrustUrl(this.launchTM)" class="mt-2" color="primary" mat-flat-button>
