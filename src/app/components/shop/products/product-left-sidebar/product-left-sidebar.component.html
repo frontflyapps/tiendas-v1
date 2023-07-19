@@ -103,12 +103,15 @@
         </div>
       </div>
       <div class="all-products" fxFlex="75" fxFlex.lt-md="100" id="topSearchBar">
-        <ng-container *ngIf='noResults && allProductsResponse.length'>
+        <ng-container *ngIf='noResults && allProductsResponse.length && !loadingSearch'>
           <div class='my-5' fxLayout='column' fxLayoutAlign='center center'>
             <h3 class='mb-2' style='text-align: center'>{{ 'No se encontraron resultados para la ubicación seleccionada' }}</h3>
             <h2>{{ 'Resultados sugeridos' }}</h2>
           </div>
         </ng-container>
+        <div *ngIf="loadingSearch" fxLayout='row' fxLayoutAlign='center center' style='height: 80vh'>
+          <mat-spinner *ngIf="loadingSearch" diameter="60" color="primary"></mat-spinner>
+        </div>
 
         <!-- <div fxLayout="row" ngClass.lt-md="mt-3" fxHide.lt-md fxLayoutAlign="space-between center"
           class="filter-row mat-elevation-z1 text-muted">
@@ -145,7 +148,7 @@
           </select>
         </div> -->
 
-        <div *ngIf='allProducts?.length > 0' class='w-100' fxLayout='row wrap' fxLayoutAlign='start start'>
+        <div *ngIf='allProducts?.length > 0 && !loadingSearch' class='w-100' fxLayout='row wrap' fxLayoutAlign='start start'>
           <div
             class='w-100' fxLayout='row wrap' fxLayoutAlign='start start'
             infiniteScroll
@@ -157,7 +160,7 @@
             <h3 class='py-4' style='text-align: center'>{{ 'No hay ningún producto disponible' | translate }}</h3>
           </ng-container>
         </div>
-        <span *ngIf='loading' fxLayout='row' fxLayoutAlign='center center' class='mb-3 mt-3'>
+        <span *ngIf='loading && !loadingSearch' fxLayout='row' fxLayoutAlign='center center' class='mb-3 mt-3'>
           <mat-spinner color='primary' diameter='25' fxLayoutAlign='center center'></mat-spinner>
         </span>
 
