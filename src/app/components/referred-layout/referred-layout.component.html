@@ -27,11 +27,9 @@
       <div fxLayout='row wrap' fxLayoutGap='8px'>
         <mat-card class='mat-elevation-z4' fxFlex='48' class='mb-2' fxLayout='row' fxLayoutAlign='start center'>
           <h2 mat-card-title>{{'Usuarios registrados con su enlace: ' | translate}}{{data?.ReferredPerson?.length ? data?.ReferredPerson?.length : 0}}</h2>
-<!--          <h2 mat-card-title ></h2>-->
         </mat-card>
         <mat-card class='mat-elevation-z4' fxFlex='48' class='mb-2' fxLayout='row'>
-          <h2 mat-card-title>{{'Usuarios que compraron con su enlace: ' | translate}}</h2>
-           <h2 mat-card-title class='mb-0' fxLayoutAlign='center center'>{{data?.Payments?.length ? data?.Payments?.length : 0}}</h2>
+          <h2 mat-card-title>{{'Usuarios que compraron con su enlace: ' | translate}}{{data?.Payments?.length ? data?.Payments?.length : 0}}</h2>
         </mat-card>
 <!--        <mat-card class='mat-elevation-z4' fxFlex='48' class='mb-2' fxLayout='row'>-->
 <!--          <h2 mat-card-title>{{'Descuento actual: ' | translate}}</h2>-->
