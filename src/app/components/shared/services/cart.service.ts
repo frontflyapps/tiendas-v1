@@ -13,6 +13,7 @@ import { ShowToastrService } from 'src/app/core/services/show-toastr/show-toastr
 import { Router } from '@angular/router';
 import { ConfirmationDialogFrontComponent } from '../confirmation-dialog-front/confirmation-dialog-front.component';
 import { MatDialog } from '@angular/material/dialog';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Injectable({
   providedIn: 'root',
@@ -51,6 +52,7 @@ export class CartService implements OnDestroy {
     private translate: TranslateService,
     private showToastr: ShowToastrService,
     private showSnackbar: ShowSnackbarService,
+    private spinner: NgxSpinnerService
   ) {
     // Get product from Localstorage
     this.carts = this.loggedInUserService._getDataFromStorage('cartItem') || [];
@@ -125,6 +127,7 @@ export class CartService implements OnDestroy {
    * @param goToPay
    */
   public async addToCart(product: any, quantity: number, goToPay?: boolean, supplementIds?: any, prescription?: any) {
+    this.spinner.show();
 
     this.dataAddToCart = {
       product: product,
@@ -169,6 +172,7 @@ export class CartService implements OnDestroy {
         }
         return;
       }
+      this.spinner.hide();
       return await this.postProductToCart(productName, dataToPost);
     }
   }
@@ -561,6 +565,7 @@ export class CartService implements OnDestroy {
 
   // Removed in cart
   public async removeFromCart(item: CartItem) {
+    this.spinner.show();
     if (item === undefined) {
       return false;
     }
@@ -570,7 +575,7 @@ export class CartService implements OnDestroy {
     if (item.id) {
       try {
         const data = await this.deleteCartItem(item);
-        this.carts = data.data;
+        this.carts = data?.response;
       } catch (error) {
         this.utilsService.errorHandle2(error);
         return;
@@ -590,6 +595,7 @@ export class CartService implements OnDestroy {
       }
     }
     this.loggedInUserService._setDataToStorage('cartItem', JSON.stringify(this.carts));
+    this.spinner.hide();
     this.$cartItemsUpdated.next(this.carts);
   }
 
