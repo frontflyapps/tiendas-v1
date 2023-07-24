@@ -50,6 +50,7 @@ import { compile } from 'sass';
 import { CategoryMenuNavService } from '../../core/services/category-menu-nav.service';
 import { Meta } from '@angular/platform-browser';
 import { AppService } from '../../app.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-main',
@@ -134,6 +135,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
     private locationService: LocationService,
     private globalStateOfCookieService: GlobalStateOfCookieService,
     private categoryMenuServ: CategoryMenuNavService,
+    public spinner: NgxSpinnerService
   ) {
     this.metaAdd();
     this._unsubscribeAll = new Subject<any>();
@@ -360,6 +362,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onLogout(): void {
+    this.spinner.show();
     this.authService
       .logout()
       .pipe(takeUntil(this._unsubscribeAll))
@@ -367,6 +370,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
         () => {
           this.loggedInUserService.setLoggedInUser(null);
           this.loggedInUserService.removeCookies();
+          this.spinner.hide();
           // localStorage.clear();
           localStorage.removeItem('token');
           localStorage.removeItem('user');
@@ -381,6 +385,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
         (err) => {
           const message = this.translate.instant('User sing out unsuccessfully');
           this.showSnackbBar.showError(message, 8000);
+          this.spinner.hide();
           /*this.loggedInUserService.removeCookies();
           this.loggedInUserService.setLoggedInUser(null);
           this.socketIoService.disconnect();
