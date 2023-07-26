@@ -1,6 +1,6 @@
 import { MetaService } from 'src/app/core/services/meta.service';
 import { ShowToastrService } from '../../../../core/services/show-toastr/show-toastr.service';
-import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormControl, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { CartService } from '../../../shared/services/cart.service';
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { Product } from '../../../../modals/product.model';
@@ -81,7 +81,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy, AfterViewInit
   public allProductsOnMenu = [];
   public allProductsOnMenuToShow: Observable<any[]>;
 
-  searchProductControl = new UntypedFormControl();
+  searchProductControl = new FormControl();
 
   url = environment.apiUrl + 'landing-page';
 

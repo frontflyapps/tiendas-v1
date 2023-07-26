@@ -3,13 +3,13 @@ import { BusinessService } from '../../shared/services/business.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { environment } from '../../../../environments/environment';
-import { UntypedFormBuilder, UntypedFormControl, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, FormGroup, FormControl } from '@angular/forms';
 import { AppService } from '../../../app.service';
 
 @Component({
   selector: 'app-shops-list',
   templateUrl: './shops-list.component.html',
-  styleUrls: ['./shops-list.component.scss']
+  styleUrls: ['./shops-list.component.scss'],
 })
 export class ShopsListComponent implements OnInit, OnDestroy {
   apiURL = environment.imageUrl;
@@ -29,7 +29,7 @@ export class ShopsListComponent implements OnInit, OnDestroy {
   pageSizeOptions: number[] = [this.initialPage, 25, 100, 1000];
 
   constructor(private businessService: BusinessService, private fb: UntypedFormBuilder, private appService: AppService) {
-    this.businessName = new UntypedFormControl(null, []);
+    this.businessName = new FormControl(null, []);
     this._unsubscribeAll = new Subject<any>();
   }
 
@@ -42,18 +42,18 @@ export class ShopsListComponent implements OnInit, OnDestroy {
       this.query.total = data.meta.pagination.total;
       this.allBusiness = data.data;
       console.log(this.allBusiness);
-    })
+    });
   }
 
   onSearchBusiness() {
     let params = {
-      name: this.businessName.value
+      name: this.businessName.value,
     };
     this.fetchBusiness(params);
   }
 
-  onShop(business){
-    if (business.url){
+  onShop(business) {
+    if (business.url) {
 
     }
   }
@@ -63,7 +63,7 @@ export class ShopsListComponent implements OnInit, OnDestroy {
     this._unsubscribeAll.complete();
   }
 
-  OnPaginatorChange(event: any){
+  OnPaginatorChange(event: any) {
     if (event) {
       this.query.limit = event.pageSize || this.initialPage;
       this.query.offset = event.pageIndex * event.pageSize;

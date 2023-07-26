@@ -27,7 +27,7 @@ import { ShowSnackbarService } from '../../core/services/show-snackbar/show-snac
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { CurrencyService } from '../../core/services/currency/currency.service';
 import { environment } from '../../../environments/environment';
-import { UntypedFormControl } from '@angular/forms';
+import { FormControl, UntypedFormControl } from '@angular/forms';
 import { SocketIoService } from '../../core/services/socket-io/socket-io.service';
 import { NotificationsService } from './notification/notifications.service';
 import { MyOrdersService } from '../my-orders/service/my-orders.service';
@@ -50,6 +50,7 @@ import { compile } from 'sass';
 import { CategoryMenuNavService } from '../../core/services/category-menu-nav.service';
 import { Meta } from '@angular/platform-browser';
 import { AppService } from '../../app.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-main',
@@ -134,6 +135,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
     private locationService: LocationService,
     private globalStateOfCookieService: GlobalStateOfCookieService,
     private categoryMenuServ: CategoryMenuNavService,
+    public spinner: NgxSpinnerService
   ) {
     this.metaAdd();
     this._unsubscribeAll = new Subject<any>();
@@ -152,7 +154,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
         this.sidenav?.close().then();
       }
     });
-    this.searchForm = new UntypedFormControl(null, []);
+    this.searchForm = new FormControl(null, []);
 
     this.tour = new Shepherd.Tour({
       useModalOverlay: false,
@@ -360,6 +362,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onLogout(): void {
+    this.spinner.show();
     this.authService
       .logout()
       .pipe(takeUntil(this._unsubscribeAll))
@@ -367,6 +370,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
         () => {
           this.loggedInUserService.setLoggedInUser(null);
           this.loggedInUserService.removeCookies();
+          this.spinner.hide();
           // localStorage.clear();
           localStorage.removeItem('token');
           localStorage.removeItem('user');
@@ -381,6 +385,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
         (err) => {
           const message = this.translate.instant('User sing out unsuccessfully');
           this.showSnackbBar.showError(message, 8000);
+          this.spinner.hide();
           /*this.loggedInUserService.removeCookies();
           this.loggedInUserService.setLoggedInUser(null);
           this.socketIoService.disconnect();

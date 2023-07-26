@@ -185,10 +185,12 @@ export class CartService implements OnDestroy {
    * @private
    */
   private postProductToCart(productName, dataForPost) {
+    this.spinner.show();
     let message;
     return this.postCart(dataForPost)
       .then((data) => {
         this.carts = data.data;
+        this.spinner.hide();
         message =
           this.translate.instant('The product ') +
           '  ' +
@@ -217,6 +219,7 @@ export class CartService implements OnDestroy {
       })
       .catch((err) => {
         console.warn(err);
+        this.spinner.hide();
       });
   }
 
@@ -575,8 +578,15 @@ export class CartService implements OnDestroy {
     if (item.id) {
       try {
         const data = await this.deleteCartItem(item);
-        this.carts = data?.response;
+        if (data?.data) {
+          this.carts = data?.data;
+          this.spinner.hide();
+        } else {
+          this.carts = data?.response;
+          this.spinner.hide();
+        }
       } catch (error) {
+        this.spinner.hide();
         this.utilsService.errorHandle2(error);
         return;
       }
