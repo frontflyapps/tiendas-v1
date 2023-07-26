@@ -578,8 +578,15 @@ export class CartService implements OnDestroy {
     if (item.id) {
       try {
         const data = await this.deleteCartItem(item);
-        this.carts = data?.response;
+        if (data?.data) {
+          this.carts = data?.data;
+          this.spinner.hide();
+        } else {
+          this.carts = data?.response;
+          this.spinner.hide();
+        }
       } catch (error) {
+        this.spinner.hide();
         this.utilsService.errorHandle2(error);
         return;
       }
