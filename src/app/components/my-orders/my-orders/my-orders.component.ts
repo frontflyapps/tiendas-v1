@@ -27,7 +27,7 @@ import { EditOrderComponent } from '../edit-order/edit-order.component';
 })
 export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
   _unsubscribeAll: Subject<any>;
-  formSearch: UntypedFormControl = new UntypedFormControl([null]);
+  formSearch: UntypedFormControl;
   isHandset = false;
   urlImage = environment.imageUrl;
   innerWidth;
