@@ -43,7 +43,8 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
   public municipality: any = null;
   public amountInitialResults = 3;
   public numberOfSearchBase = 0;
-  public totalPages =0;
+  public totalPages = 0;
+  public totalProducts: number;
   public numberOfSearch = 0;
   private isStarting = true;
   resetPrices = false;
@@ -486,7 +487,9 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
           // this.loading = true;
 
             this.allProducts = data.data;
+            this.allProductsResponse = data.data;
             this.totalPages = data.meta.total / this.initLimit;
+            this.totalProducts = data.meta.pagination.total;
             if (data.meta.total % this.initLimit) {
               this.totalPages++;
             }
@@ -559,7 +562,9 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
           .subscribe(
             (data: any) => {
               this.allProducts = this.allProducts.concat(data.data);
+              this.allProductsResponse = this.allProductsResponse.concat(data.data);
               this.totalPages = data.meta.total / this.initLimit;
+              this.totalProducts = data.meta.pagination.total;
               if (data.meta.total % this.initLimit) {
                 this.totalPages++;
               }
@@ -624,7 +629,9 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
           .subscribe(
             (data: any) => {
               this.allProducts = this.allProducts.concat(data.data);
+              this.allProductsResponse = this.allProductsResponse.concat(data.data);
               this.totalPages = data.meta.total / this.initLimit;
+              this.totalProducts = data.meta.pagination.total;
               if (data.meta.total % this.initLimit) {
                 this.totalPages++;
               }
@@ -701,6 +708,8 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
     this.queryProduct.offset = 0;
     this.queryProduct.total = 0;
     this.allProducts = [];
+    this.totalProducts = 0;
+    this.allProductsResponse = [];
     this.initValuesOnSearch();
     // this.paginator.firstPage();
     setTimeout(() => {
@@ -774,6 +783,8 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
       if ( newLocation ) {
         if ( nowLocation?.province?.id !== newLocation.province?.id || nowLocation?.municipality?.id !== newLocation.municipality?.id ) {
           this.allProducts = [];
+          this.allProductsResponse = [];
+          this.totalProducts = 0;
           this.searchProducts();
         }
 

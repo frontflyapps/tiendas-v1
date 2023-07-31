@@ -20,7 +20,7 @@ export class CurrencyMarket implements PipeTransform {
     } else if (market == CoinEnum.EUR) {
       currency = CoinEnum.EUR;
     }
-    const data = this.currencyPipe.transform(price, currency);
+    const data = this.currencyPipe.transform(price, currency, 'code');
     return data;
   }
 }

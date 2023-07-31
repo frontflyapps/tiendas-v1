@@ -26,7 +26,7 @@ export class CurrencyProductPipe implements PipeTransform {
         break;
       }
     }
-    const newPrice = this.currencyPipe.transform(price, currency);
+    const newPrice = this.currencyPipe.transform(price, currency, 'code');
 
     return  newPrice;
   }
