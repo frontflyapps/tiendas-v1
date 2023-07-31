@@ -10,8 +10,8 @@
         <!--    NAME PRODUCT AND PRICE    -->
         <div class='product-right my-0' fxLayout='column' fxLayoutAlign='start start' fxHide fxShow.sm fxShow.xs>
           <div class='product-details my-0' fxLayout='column' fxLayoutAlign='start start'>
-            <h2
-              class='nameProductVariant'>{{ product?.name[language] ? product?.name[language] : product?.name['es'] }}</h2>
+            <h1
+              class='nameProductVariant'>{{ product?.name[language] ? product?.name[language] : product?.name['es'] }}</h1>
             <div *ngIf="product.offerValue && product.status !== 'comingSoon'">
               <h4 class='mb-10'>
                 <del>{{ product | parsePriceProduct }}</del>
