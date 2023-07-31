@@ -17,6 +17,9 @@
   min-height: 2.6rem;
   width: 150px;
   overflow: hidden;
+  @media (min-width: 300px) and (max-width: 350px) {
+    width: auto;
+  }
 }
 
 .product-img {
