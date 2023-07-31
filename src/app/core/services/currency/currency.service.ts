@@ -45,8 +45,8 @@ export class CurrencyService {
 
   public getPriceLabel(product) {
     const currencyCode = this.getCurrency();
-    const minPrice = this.currencyPipe.transform(product.limitMinPrice, currencyCode.code);
-    const maxPrice = this.currencyPipe.transform(product.limitMaxPrice, currencyCode.code);
+    const minPrice = this.currencyPipe.transform(product.limitMinPrice, currencyCode.code, 'code');
+    const maxPrice = this.currencyPipe.transform(product.limitMaxPrice, currencyCode.code, 'code');
     if (product.limitMinPrice == product.limitMaxPrice) {
       return minPrice;
     } else {
@@ -56,8 +56,8 @@ export class CurrencyService {
 
   public getOfferLabel(product) {
     const currencyCode = this.getCurrency();
-    const minPrice = this.currencyPipe.transform(product.limitMinOffersPrice, currencyCode.code);
-    const maxPrice = this.currencyPipe.transform(product.limitMaxOffersPrice, currencyCode.code);
+    const minPrice = this.currencyPipe.transform(product.limitMinOffersPrice, currencyCode.code, 'code');
+    const maxPrice = this.currencyPipe.transform(product.limitMaxOffersPrice, currencyCode.code, 'code');
     if (product.limitMinOffersPrice == product.limitMaxOffersPrice) {
       return minPrice;
     } else {
