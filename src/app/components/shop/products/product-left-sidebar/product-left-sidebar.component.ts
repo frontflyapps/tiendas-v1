@@ -583,7 +583,8 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
             },
           );
       } else if (this.queryProduct.offset < this.queryProduct.total - 1) {
-        this.queryProduct.offset = this.queryProduct.total - 1;
+        this.queryProduct.offset = this.queryProduct.total;
+        console.log('asfhakjh');
         let brandIds: number[] = null;
         let categoryIds: number[] = null;
 
@@ -628,8 +629,11 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
           .pipe(takeUntil(this._unsubscribeAll))
           .subscribe(
             (data: any) => {
-              this.allProducts = this.allProducts.concat(data.data);
-              this.allProductsResponse = this.allProductsResponse.concat(data.data);
+              if (data.data) {
+                this.allProducts = this.allProducts.concat(data.data);
+                this.allProductsResponse = this.allProductsResponse.concat(data.data);
+              }
+
               this.totalPages = data.meta.total / this.initLimit;
               this.totalProducts = data.meta.pagination.total;
               if (data.meta.total % this.initLimit) {
