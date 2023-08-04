@@ -60,41 +60,6 @@
         <span style='width: 60px'>{{ 'EJE' | translate }}</span>
       </div>
       <div fxLayout='row' fxLayoutAlign='end end' fxLayoutGap='6px' class='container-selects mb-3'>
-        <span class='text-axis'>Ojo izquierdo</span>
-        <mat-select [formControl]="form.get('left')"
-                    class='input-axis'>
-          <mat-optgroup *ngFor='let sign of signArray' [label]='sign.name'>
-            <mat-option *ngFor='let measure of sign.sign' [value]='measure.value'>
-              {{measure.viewValue}}
-            </mat-option>
-          </mat-optgroup>
-        </mat-select>
-        <mat-select [formControl]="form.get('cylinderLeft')"
-                    class='input-axis'>
-          <mat-optgroup *ngFor='let sign of signArray' [label]='sign.name'>
-            <mat-option *ngFor='let measure of sign.sign' [value]='measure.value'>
-              {{measure.viewValue}}
-            </mat-option>
-          </mat-optgroup>
-        </mat-select>
-        <input
-          [formControl]="form.get('axisLeft')"
-          matInput
-          type='number'
-          class='input-axis'
-          [required]="form.get('cylinderLeft').value"
-        />
-      </div>
-      <mat-error *ngIf="form.get('left').hasError('required')">
-        {{ 'Izquierdo' | translate }} <strong>{{ 'is required' | translate }}</strong>
-      </mat-error>
-      <mat-error *ngIf="form.get('cylinderLeft').hasError('required')">
-        {{ 'Cilindro izquierdo' | translate }} <strong>{{ 'is required' | translate }}</strong>
-      </mat-error>
-      <mat-error *ngIf="form.get('axisLeft').hasError('required')">
-        {{ 'Eje izquierdo' | translate }} <strong>{{ 'is required' | translate }}</strong>
-      </mat-error>
-      <div fxLayout='row' fxLayoutAlign='end end' fxLayoutGap='6px' class='container-selects mb-3'>
         <span class='text-axis'>Ojo derecho</span>
         <mat-select [formControl]="form.get('right')"
                     class='input-axis'>
@@ -128,6 +93,41 @@
       </mat-error>
       <mat-error *ngIf="form.get('axisRight').hasError('required')">
         {{ 'Eje derecho' | translate }} <strong>{{ 'is required' | translate }}</strong>
+      </mat-error>
+      <div fxLayout='row' fxLayoutAlign='end end' fxLayoutGap='6px' class='container-selects mb-3'>
+        <span class='text-axis'>Ojo izquierdo</span>
+        <mat-select [formControl]="form.get('left')"
+                    class='input-axis'>
+          <mat-optgroup *ngFor='let sign of signArray' [label]='sign.name'>
+            <mat-option *ngFor='let measure of sign.sign' [value]='measure.value'>
+              {{measure.viewValue}}
+            </mat-option>
+          </mat-optgroup>
+        </mat-select>
+        <mat-select [formControl]="form.get('cylinderLeft')"
+                    class='input-axis'>
+          <mat-optgroup *ngFor='let sign of signArray' [label]='sign.name'>
+            <mat-option *ngFor='let measure of sign.sign' [value]='measure.value'>
+              {{measure.viewValue}}
+            </mat-option>
+          </mat-optgroup>
+        </mat-select>
+        <input
+          [formControl]="form.get('axisLeft')"
+          matInput
+          type='number'
+          class='input-axis'
+          [required]="form.get('cylinderLeft').value"
+        />
+      </div>
+      <mat-error *ngIf="form.get('left').hasError('required')">
+        {{ 'Izquierdo' | translate }} <strong>{{ 'is required' | translate }}</strong>
+      </mat-error>
+      <mat-error *ngIf="form.get('cylinderLeft').hasError('required')">
+        {{ 'Cilindro izquierdo' | translate }} <strong>{{ 'is required' | translate }}</strong>
+      </mat-error>
+      <mat-error *ngIf="form.get('axisLeft').hasError('required')">
+        {{ 'Eje izquierdo' | translate }} <strong>{{ 'is required' | translate }}</strong>
       </mat-error>
       <div fxLayout='row' fxLayoutAlign='space-between center'>
         <div fxLayout='column'>
