@@ -13,7 +13,7 @@
                 <div class="my-2" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="gappx">
                   <form class="mobile-search" fxLayout="row" fxLayoutAlign="start center">
                     <input
-                      [formControl]="formSearch"
+                      [formControl]="formSearch.get('filterText')"
                       fxFlex
                       placeholder="{{ 'Type to search...' | translate }}"
                       type="search"
@@ -24,7 +24,7 @@
                   </form>
                 </div>
 
-                <mat-list *ngIf="allOrders.length && !loadingSearch">
+                <mat-list *ngIf="allOrders?.length && !loadingSearch">
                   <mat-list-item
                     (click)="onSelectOrder(item)"
                     *ngFor="let item of allOrders"
