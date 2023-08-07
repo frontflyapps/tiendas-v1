@@ -3,7 +3,7 @@ import { BusinessService } from '../../shared/services/business.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { environment } from '../../../../environments/environment';
-import { UntypedFormBuilder, UntypedFormControl, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, FormGroup, FormControl } from '@angular/forms';
 import { AppService } from '../../../app.service';
 
 @Component({
@@ -29,7 +29,7 @@ export class ShopsListComponent implements OnInit, OnDestroy {
   pageSizeOptions: number[] = [this.initialPage, 25, 100, 1000];
 
   constructor(private businessService: BusinessService, private fb: UntypedFormBuilder, private appService: AppService) {
-    this.businessName = new UntypedFormControl(null, []);
+    this.businessName = new FormControl(null, []);
     this._unsubscribeAll = new Subject<any>();
   }
 

@@ -4,7 +4,7 @@ import { IPagination } from '../../../core/classes/pagination.class';
 import { AfterViewInit, Component, HostListener, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { forkJoin, Subject } from 'rxjs';
 import { debounceTime, switchMap, takeUntil } from 'rxjs/operators';
-import { UntypedFormBuilder, UntypedFormControl } from '@angular/forms';
+import { FormControl, UntypedFormBuilder, UntypedFormControl } from '@angular/forms';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { environment } from '../../../../environments/environment';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -27,7 +27,7 @@ import { EditOrderComponent } from '../edit-order/edit-order.component';
 })
 export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
   _unsubscribeAll: Subject<any>;
-  formSearch: UntypedFormControl = new UntypedFormControl([null]);
+  formSearch: UntypedFormControl = new FormControl([null]);
   isHandset = false;
   urlImage = environment.imageUrl;
   innerWidth;
