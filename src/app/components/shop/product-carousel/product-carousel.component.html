@@ -113,7 +113,7 @@
             </div>
           </div>
 
-          <div *ngIf="product?.Business?.Province" class="location-label">
+          <div *ngIf="product?.Business?.Province && showLocationSpan" class="location-label">
             <span>
               <mat-icon>room</mat-icon>&nbsp;<strong>{{ product?.Business?.Province?.name }}</strong
               >, {{ product?.Business?.Municipality?.name }}

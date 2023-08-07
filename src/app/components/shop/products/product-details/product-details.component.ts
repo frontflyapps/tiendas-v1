@@ -51,6 +51,8 @@ export class ProductDetailsComponent implements OnInit, OnDestroy, AfterViewInit
   loadingProducts = false;
   supplementArray: any;
   featuredProducts: any[] = [];
+
+  showLocationSpan = environment.showLocation;
   imageUrl = environment.imageUrl;
   arrayImages: any[] = [];
   mainImage = null;

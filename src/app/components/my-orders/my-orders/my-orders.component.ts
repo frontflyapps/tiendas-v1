@@ -4,7 +4,7 @@ import { IPagination } from '../../../core/classes/pagination.class';
 import { AfterViewInit, Component, HostListener, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { forkJoin, Subject } from 'rxjs';
 import { debounceTime, switchMap, takeUntil } from 'rxjs/operators';
-import { FormControl, UntypedFormBuilder, UntypedFormControl } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { environment } from '../../../../environments/environment';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -27,7 +27,7 @@ import { EditOrderComponent } from '../edit-order/edit-order.component';
 })
 export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
   _unsubscribeAll: Subject<any>;
-  formSearch: UntypedFormControl = new FormControl([null]);
+  formSearch: UntypedFormGroup;
   isHandset = false;
   urlImage = environment.imageUrl;
   innerWidth;
@@ -200,7 +200,9 @@ export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
       this.language = data.lang;
     });
 
-    this.formSearch.valueChanges.pipe(debounceTime(250), takeUntil(this._unsubscribeAll)).subscribe((value) => {
+    this.buildForm();
+
+    this.formSearch.get('filterText').valueChanges.pipe(debounceTime(250), takeUntil(this._unsubscribeAll)).subscribe((value) => {
       let searchValue = value || '';
       this.loadingSearch = true;
       searchValue = value.toLowerCase().trim();
@@ -214,6 +216,12 @@ export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
       this.query.total = 0;
       this.query.offset = 0;
       this.onSearch();
+    });
+  }
+
+  buildForm() {
+    this.formSearch = this.fb.group({
+      filterText: [null, [Validators.required, Validators.maxLength(250), Validators.minLength(10)]],
     });
   }
 
@@ -231,7 +239,8 @@ export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onFilter() {
-    let value = this.formSearch.value;
+    console.log(this.formSearch.get('filterText'));
+    let value = this.formSearch.get('filterText').value;
     let searchValue = value || '';
     this.loadingSearch = true;
     searchValue = value.toLowerCase().trim();
@@ -240,7 +249,7 @@ export class MyOrdersComponent implements OnInit, AfterViewInit, OnDestroy {
     this.query.filter.properties.push('filter[$or][Country][name][$like]');
     this.query.filter.properties.push('filter[$or][Province][name][$like]');
     this.query.filter.properties.push('filter[$or][Municipality][name][$like]');
-    this.query.filter.properties.push('filter[$or][Product][name][$like]');
+    this.query.filter.properties.push('filter[$or][PaymentItems][Product][name][$like]');
     // this.query.filter.properties.push('filter[$or][Category][name][$like]');
     this.query.total = 0;
     this.query.offset = 0;

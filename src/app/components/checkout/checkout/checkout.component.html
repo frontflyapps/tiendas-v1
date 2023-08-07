@@ -487,6 +487,7 @@
                       [disabled]="form.get('shippingRequired').value"
                       placeholder="{{ 'Nombre de la provincia' | translate }}"
                       type="text"
+                      [required]='showAddress'
                     >
                       <mat-option *ngFor="let province of allProvinces" [value]="province.id">
                         {{ province.name }}
@@ -506,6 +507,7 @@
                       [disabled]="form.get('shippingRequired').value"
                       placeholder="{{ 'Nombre del Municipio' | translate }}"
                       type="text"
+                      [required]='showAddress'
                     >
                       <mat-option *ngFor="let municipio of municipalities" [value]="municipio.id">
                         {{ municipio.name }}

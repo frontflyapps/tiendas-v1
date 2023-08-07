@@ -13,7 +13,7 @@ export class ParsePriceProduct implements PipeTransform {
   transform(product: any, type?: any): string {
     let currency;
     currency = CoinEnum.USD;
-    if (product.currency !== null) {
+    if (product.currency && product.currency !== null) {
       switch (product.currency) {
         case 'USD': {
           currency = CoinEnum.USD;
@@ -38,16 +38,16 @@ export class ParsePriceProduct implements PipeTransform {
     }
 
     if (type) {
-      const minPrice = this.currency.transform(product.limitMinOffersPrice, currency);
-      const maxPrice = this.currency.transform(product.limitMaxOffersPrice, currency);
+      const minPrice = this.currency.transform(product.limitMinOffersPrice, currency, 'code');
+      const maxPrice = this.currency.transform(product.limitMaxOffersPrice, currency, 'code');
       if (product.limitMinPrice == product.limitMaxPrice) {
         return minPrice;
       } else {
         return `(${minPrice} - ${maxPrice})`;
       }
     } else {
-      const minPrice = this.currency.transform(product.limitMinPrice, currency);
-      const maxPrice = this.currency.transform(product.limitMaxPrice, currency);
+      const minPrice = this.currency.transform(product.limitMinPrice, currency, 'code');
+      const maxPrice = this.currency.transform(product.limitMaxPrice, currency, 'code');
       if (product.limitMinPrice == product.limitMaxPrice) {
         return minPrice;
       } else {

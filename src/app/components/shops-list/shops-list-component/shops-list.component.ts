@@ -9,7 +9,7 @@ import { AppService } from '../../../app.service';
 @Component({
   selector: 'app-shops-list',
   templateUrl: './shops-list.component.html',
-  styleUrls: ['./shops-list.component.scss']
+  styleUrls: ['./shops-list.component.scss'],
 })
 export class ShopsListComponent implements OnInit, OnDestroy {
   apiURL = environment.imageUrl;
@@ -42,18 +42,18 @@ export class ShopsListComponent implements OnInit, OnDestroy {
       this.query.total = data.meta.pagination.total;
       this.allBusiness = data.data;
       console.log(this.allBusiness);
-    })
+    });
   }
 
   onSearchBusiness() {
     let params = {
-      name: this.businessName.value
+      name: this.businessName.value,
     };
     this.fetchBusiness(params);
   }
 
-  onShop(business){
-    if (business.url){
+  onShop(business) {
+    if (business.url) {
 
     }
   }
@@ -63,7 +63,7 @@ export class ShopsListComponent implements OnInit, OnDestroy {
     this._unsubscribeAll.complete();
   }
 
-  OnPaginatorChange(event: any){
+  OnPaginatorChange(event: any) {
     if (event) {
       this.query.limit = event.pageSize || this.initialPage;
       this.query.offset = event.pageIndex * event.pageSize;

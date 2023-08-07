@@ -1,10 +1,10 @@
 @import '../../../../assets/scss/theme/variables';
 
 .icon-info{
-  width: 50px;
+  width: 40px !important;
   height: 35px;
-  font-size: 35px;
+  font-size: 25px;
   @media (min-width: 320px) and (max-width: 1024px) {
-    width: 90px !important;
+    width: 50px !important;
   }
 }
