@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { PayService } from '../../../core/services/pay/pay.service';
 import {
+  FormControl,
   UntypedFormBuilder,
   UntypedFormControl,
   UntypedFormGroup,
@@ -1067,21 +1068,21 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     let controls = {};
     fields.forEach((item) => {
       if (item.type === 'INTEGER') {
-        controls[item.name] = new UntypedFormControl(
-          '',
+        controls[item.name] = new FormControl(
+          null,
           item.required ? [Validators.required, Validators.pattern('^[0-9]*$')] : [Validators.pattern('^[0-9]*$')],
         );
       }
       if (item.type === 'STRING') {
-        controls[item.name] = new UntypedFormControl(
-          '',
+        controls[item.name] = new FormControl(
+          null,
           item.required
             ? [Validators.required, Validators.pattern('^[a-zA-Z0-9 _.-]*$')]
             : [Validators.pattern('^[a-zA-Z0-9 _.-]*$')],
         );
       }
       if (item.type === 'DATE' || item.type === 'TIME') {
-        controls[item.name] = new UntypedFormControl('', item.required ? [Validators.required] : []);
+        controls[item.name] = new FormControl(null, item.required ? [Validators.required] : []);
       }
     });
     return controls;
