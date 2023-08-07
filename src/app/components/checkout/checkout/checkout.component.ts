@@ -1,5 +1,3 @@
-// noinspection TypeScriptValidateTypes
-
 import { MetaService } from 'src/app/core/services/meta.service';
 import { DialogNoCartSelectedComponent } from '../no-cart-selected/no-cart-selected.component';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -1071,20 +1069,20 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     fields.forEach((item) => {
       if (item.type === 'INTEGER') {
         controls[item.name] = new FormControl(
-          '',
+          null,
           item.required ? [Validators.required, Validators.pattern('^[0-9]*$')] : [Validators.pattern('^[0-9]*$')],
         );
       }
       if (item.type === 'STRING') {
         controls[item.name] = new FormControl(
-          '',
+          null,
           item.required
             ? [Validators.required, Validators.pattern('^[a-zA-Z0-9 _.-]*$')]
             : [Validators.pattern('^[a-zA-Z0-9 _.-]*$')],
         );
       }
       if (item.type === 'DATE' || item.type === 'TIME') {
-        controls[item.name] = new FormControl('', item.required ? [Validators.required] : []);
+        controls[item.name] = new FormControl(null, item.required ? [Validators.required] : []);
       }
     });
     return controls;
