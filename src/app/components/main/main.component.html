@@ -312,6 +312,11 @@
             <span class="mat-body-1">{{ 'Mis órdenes' | translate }}</span>
           </button>
 
+          <button [routerLink]="['/referred']" mat-menu-item>
+            <mat-icon>person_add</mat-icon>
+            <span class="mat-body-1">{{ 'Referidos' | translate }}</span>
+          </button>
+
           <button (click)='onShowProfile()' mat-menu-item>
             <mat-icon>build</mat-icon>
             <span class='mat-body-1'>{{ 'Profile' | translate }}</span>
