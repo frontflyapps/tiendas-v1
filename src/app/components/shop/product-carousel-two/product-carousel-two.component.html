@@ -64,7 +64,11 @@
                 {{utilsService.parserLanguage(product.shortDescription,language)}}</p> -->
             </a>
 
-            <div class="price">
+            <div fxLayout="row" fxLayoutAlign="end end">
+              <span class='coming-soon-text' *ngIf='product.status === "comingSoon"'>{{ 'Próximamente' | translate }}</span>
+            </div>
+
+            <div class="price" *ngIf='product.status !== "comingSoon"'>
               <ng-container *ngIf="product.offerValue">
                 <p class="deletePrice m-0">
                   <del>{{ product | parsePriceProduct }}</del>
@@ -93,6 +97,7 @@
               (click)="addToCart(product)"
               class="btnAddCart"
               mat-mini-fab
+              *ngIf='product.status !== "comingSoon"'
               matTooltip="{{ 'Añadir al carrito' | translate }}"
               style="z-index: 10"
             >
