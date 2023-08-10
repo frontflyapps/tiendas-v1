@@ -14,6 +14,7 @@ export class PayService {
   urlPaymentAuthorize = environment.apiUrl + 'payment/authorize';
   urlPaymentPaypal = environment.apiUrl + 'payment/paypal';
   urlConfirmPaymentPaypal = environment.apiUrl + 'payment/paypal/confirm';
+  urlConfirmPaymenttropipay = environment.apiUrl + 'payment/tropipay/confirm';
   urlPaymentMultisafepay = environment.apiUrl + 'payment/multisafepay';
   urlPaymentTropipay = environment.apiUrl + 'payment/tropipay';
   urlBidaiondoCards = environment.apiUrl + 'payment/bidaiondo/get-card';
@@ -77,6 +78,25 @@ export class PayService {
       }
     }
     return this.httpClient.get<any>(this.urlConfirmPaymentPaypal, { params: httpParams }).pipe(timeout(60000));
+  }
+
+  confirmPaymentTropipay(data): Observable<any> {
+    let httpParams = new HttpParams();
+    if (data) {
+      if (data.order) {
+        httpParams = httpParams.append('order', data.order);
+      }
+      if (data.bankOrderCode) {
+        httpParams = httpParams.append('bankOrderCode', data.bankOrderCode);
+      }
+      if (data.reference) {
+        httpParams = httpParams.append('reference', data.reference);
+      }
+      if (data.state) {
+        httpParams = httpParams.append('reference', data.state);
+      }
+    }
+    return this.httpClient.get<any>(this.urlConfirmPaymenttropipay, { params: httpParams }).pipe(timeout(60000));
   }
 
   makePaymentMultisafepay(data): Observable<any> {
