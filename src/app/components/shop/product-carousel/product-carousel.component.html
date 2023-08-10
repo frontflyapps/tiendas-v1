@@ -59,7 +59,11 @@
                 {{utilsService.parserLanguage(product.shortDescription,language)}}</p> -->
             </a>
 
-            <div class="price">
+            <div fxLayout="row" fxLayoutAlign="end end">
+              <span class='coming-soon-text' *ngIf='product.status === "comingSoon"'>{{ 'Próximamente' | translate }}</span>
+            </div>
+
+            <div class="price" *ngIf='product.status !== "comingSoon"'>
               <a
                 [queryParams]="{ productId: product?.id, stockId: product?.Stock?.id,
                 name: product?.name?.es,
@@ -96,6 +100,7 @@
             <button
               (click)="onAddToCart(product)"
               class="btnAddCart"
+              *ngIf='product.status !== "comingSoon"'
               mat-mini-fab
               matTooltip="{{ 'Añadir al carrito' | translate }}"
               style="z-index: 10"

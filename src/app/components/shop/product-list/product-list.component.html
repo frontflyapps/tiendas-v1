@@ -35,7 +35,11 @@
         <div class='moduleTitle line-clampTitle p-2'>
           <h4 class='mat-body-2'>{{ utilsService.parserLanguage(product.name, language) }}</h4>
         </div>
-        <div class='price p-2'>
+
+        <div fxLayout="row" fxLayoutAlign="end end">
+          <span class='coming-soon-text' *ngIf='product.status === "comingSoon"'>{{ 'Próximamente' | translate }}</span>
+        </div>
+        <div class='price p-2' *ngIf='product.status !== "comingSoon"'>
           <a
             [queryParams]='{ productId: product.id, stockId: product?.Stock?.id,
                                                          name: product?.name?.es,
