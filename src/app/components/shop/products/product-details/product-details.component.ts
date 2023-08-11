@@ -450,6 +450,18 @@ export class ProductDetailsComponent implements OnInit, OnDestroy, AfterViewInit
     };
   }
 
+  downloadFile(product) {
+    // const filePath = product;
+    // const fileUrl = this.imageUrl + product.dataSheetUrl;
+    // const fileName = product.dataSheetName;
+
+    const link = document.createElement('a');
+    link.href = this.imageUrl + product.dataSheetUrl;
+    link.download = product.dataSheetName;
+    link.click();
+
+  }
+
   addLenses(product: any, quantity) {
     if (this.loggedInUserService.getLoggedInUser()) {
       const dialogRef = this.dialog.open(DialogPrescriptionComponent, {

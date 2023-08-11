@@ -398,6 +398,21 @@
               </p>-->
             </div>
           </mat-tab>
+          <mat-tab label="{{ 'Ficha técnica' | translate }}" *ngIf='product?.dataSheetUrl && product?.dataSheetUrl !== null'>
+            <div class='full-desc text-muted' fxLayout='row' fxLayoutAlign='center center' fxLayoutGap='1rem'>
+              <span>{{product?.dataSheetName}}</span>
+              <button
+                (click)="downloadFile(product)"
+                aria-label="Download Data Sheet"
+                class="mr-2"
+                color="primary"
+                mat-mini-fab
+              >
+                <mat-icon>file_download</mat-icon>
+              </button>
+<!--              <a id="downloadLink" style="display: none;"></a>-->
+            </div>
+          </mat-tab>
           <mat-tab *ngIf='loggedInUser' label="{{ 'Reviews' | translate }}">
             <div fxLayout='container'>
               <div class='full-desc lh px-4' ngClass.lt-md='px-0'>
