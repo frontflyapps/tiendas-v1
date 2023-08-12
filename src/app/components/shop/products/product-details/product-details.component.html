@@ -47,6 +47,7 @@
                  fxLayoutAlign='start center' fxLayoutGap='10px'>
                 <span
                   class='location-span'
+                  *ngIf='showLocationSpanGeneral'
                 ><mat-icon>room</mat-icon>&nbsp;<strong>{{
                   product.Business?.Province?.name | parseLang: utilsService.getLang()
                   }}</strong
@@ -191,6 +192,7 @@
                    fxLayoutAlign='start center' fxLayoutGap='10px' fxHide.sm fxHide.xs>
                 <span
                   class='location-span'
+                  *ngIf='showLocationSpanGeneral'
                 ><mat-icon>room</mat-icon>&nbsp;<strong>{{
                   product.Business?.Province?.name | parseLang: utilsService.getLang()
                   }}</strong
@@ -298,6 +300,15 @@
                       }}</span></span
                     >
                   </p>
+                  <div *ngIf='product.status !== "comingSoon" && businessConfig?.showQuantityProductFront && (counter < product?.Stock?.quantity ? product?.Stock?.quantity : 0)' class='my-2'>
+                    <div fxLayoutAlign='center center' [ngClass]="{'disponibilityHigh': product?.Stock?.quantity > 15,
+                               'disponibilityMedium': (product?.Stock?.quantity <= 15 && product?.Stock?.quantity > 5),
+                               'disponibilityLow': product?.Stock?.quantity <= 5}">
+                      <span class='text-availability'>
+                        {{product?.Stock?.quantity + ' disponibles'}}
+                      </span>
+                    </div>
+                  </div>
                   <p
                     class='mat-body-2 uppercase my-3 coming-soon-text'
                     *ngIf='product.status === "comingSoon"'
