@@ -586,7 +586,7 @@
                 </div>
               </ng-container>
 
-              <div formGroupName="address" *ngIf='canBeDelivery && showAddress'>
+              <div formGroupName="address" *ngIf='canBeDelivery || showAddress'>
                 <div fxLayout="row" fxLayoutGap="10px">
                   <mat-form-field fxFlex="80" appearance="outline">
                     <mat-label>{{ 'Calle' | translate }}</mat-label>
