@@ -216,7 +216,9 @@ export class MyAccountComponent implements OnInit {
       this.inLoading = false;
       this.changeToNewPassForm.controls['pin'].setValue(this.queryParams.pin);
       this.insertEmailPassForm.value.email = this.queryParams.email;
-    } else if (this.queryParams.ref) {
+    }
+    if (this.queryParams.ref) {
+      console.log(this.queryParams);
       this.registrationForm.controls['code'].setValue(this.queryParams.ref);
     }
   }
@@ -296,6 +298,7 @@ export class MyAccountComponent implements OnInit {
       this.registrationForm = this.fb.group({
         name: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
         lastname: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
+        code: [null, []],
         phone: [null, [Validators.pattern(CUBAN_PHONE_START_5), Validators.minLength(8), Validators.maxLength(8)]],
         address: [null, []],
         email: [null, [Validators.required, Validators.email, Validators.pattern(EMAIL_REGEX)]],
@@ -305,6 +308,7 @@ export class MyAccountComponent implements OnInit {
       this.regTcpForm = this.fb.group({
         name: [null, [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
         lastname: [null, [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
+        code: [null, []],
         ci: [
           null,
           [Validators.required, Validators.minLength(11), Validators.maxLength(11), Validators.pattern('^[0-9]*$')],
@@ -505,6 +509,7 @@ export class MyAccountComponent implements OnInit {
     data.password = data.passwords.password;
     data.lastName = data.lastname;
     data.role = 'Client';
+    console.log(data);
     let token = localStorage.getItem('token');
     if (token != undefined) {
       data.token = token;
@@ -515,7 +520,7 @@ export class MyAccountComponent implements OnInit {
     this.showLoginForm = false;
     this.showResetPassForm = false;
     this.showRegistrationForm = true;
-
+    //
     this.authService.singUp(data).subscribe({
       next: (result) => {
         this.toastr.showInfo(
