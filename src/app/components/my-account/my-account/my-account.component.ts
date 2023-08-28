@@ -216,6 +216,8 @@ export class MyAccountComponent implements OnInit {
       this.inLoading = false;
       this.changeToNewPassForm.controls['pin'].setValue(this.queryParams.pin);
       this.insertEmailPassForm.value.email = this.queryParams.email;
+    } else if (this.queryParams.ref) {
+      this.registrationForm.controls['code'].setValue(this.queryParams.ref);
     }
   }
 
@@ -245,6 +247,7 @@ export class MyAccountComponent implements OnInit {
         name: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
         lastname: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
         phone: [null, []],
+        code: [null, []],
         PhoneCallingCodeId: [null, []],
         address: [null, []],
         email: [null, [Validators.required, Validators.email, Validators.pattern(EMAIL_REGEX)]],
@@ -256,6 +259,7 @@ export class MyAccountComponent implements OnInit {
       this.regTcpForm = this.fb.group({
         name: [null, [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
         lastname: [null, [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
+        code: [null, []],
         ci: [
           null,
           [Validators.required, Validators.minLength(11), Validators.maxLength(11), Validators.pattern('^[0-9]*$')],

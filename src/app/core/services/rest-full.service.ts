@@ -134,12 +134,16 @@ export abstract class RestFullService<T> {
     this.deleteKeysHttpParams();
     this.httpParams = this.httpParams.set('limit', '0');
     this.httpParams = this.httpParams.set('offset', '0');
+    console.log(params);
     if (params) {
       if (params.name) {
         this.httpParams = this.httpParams.append(
           'filter[$and][name][$like]',
           '%' + params.name + '%'
         );
+      }
+      if (params?.personId) {
+        this.httpParams = this.httpParams.append('personId', params.personId);
       }
     }
     return this.http.get<any>(this.url, { params: this.httpParams });

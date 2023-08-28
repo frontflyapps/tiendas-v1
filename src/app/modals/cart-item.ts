@@ -10,6 +10,7 @@ export interface Cart {
   status?: boolean;
   Business?: IBusiness;
   hasShippingBusiness?: boolean;
+  offerGiftDiscount?: any;
 }
 
 export interface IBusiness {
@@ -45,5 +46,6 @@ export interface CartItem {
   deletedAt?: any;
   sharedImage?: any;
   name?: any;
+  offerGiftDiscount?: any;
   totalPrice?: number;
 }
