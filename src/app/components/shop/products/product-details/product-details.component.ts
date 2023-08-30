@@ -469,8 +469,8 @@ export class ProductDetailsComponent implements OnInit, OnDestroy, AfterViewInit
         hasBackdrop: true,
         width: this.isSmallDevice ? '100vw' : '60%',
         maxWidth: this.isSmallDevice ? '100vw' : '100vw',
-        height: this.isSmallDevice ? '70vh' : '70%',
-        maxHeight: this.isSmallDevice ? '70vh' : '100vh',
+        height: this.isSmallDevice ? '85vh' : '70%',
+        maxHeight: this.isSmallDevice ? '85vh' : '100vh',
         data: {
           product: product,
           quantity: quantity,
