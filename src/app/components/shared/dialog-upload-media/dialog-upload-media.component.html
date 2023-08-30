@@ -1,0 +1,37 @@
+<div class="dialog-content-wrapper">
+
+  <mat-toolbar class="mb-2" color="primary" id="toolbarHeader" matDialogTitle>
+    <mat-toolbar-row fxLayoutAlign="space-between center">
+      <span class="mat-title mb-0">{{'Subir Multimedia'|translate}}</span>
+      <button (click)="dialogRef.close()" aria-label="Close dialog" mat-icon-button>
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <div class="my-dialog-content" mat-dialog-content>
+    <!--    <lib-cu-form-load-file [showLoadPanel]="true" [apiUrl]="apiUrlRepositoy" [loggedInUser]="loggedInUser"-->
+    <!--      (onUploadFile)="onSaveMedia($event)" (onLoadFile)="onSelectMedia($event)">-->
+    <!--    </lib-cu-form-load-file>-->
+<!--    <app-file-uploader [_type]="uploadType.PRODUCT" ($fileUploaded)="onNewFileLoaded($event)" [_fkId]="product?.id"-->
+<!--                       [_fkModel]="'Digital'" *ngIf="data?.type === 'product'">-->
+<!--    </app-file-uploader>-->
+    <app-file-uploader [_type]="uploadType.PRESCRIPTIONIMAGE" ($fileUploaded)="onNewFileLoaded($event)" [_fkId]="product?.id"
+                       *ngIf="data?.type === 'prescriptionImage'">
+    </app-file-uploader>
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="end start" mat-dialog-actions>
+
+    <div *ngIf="newFile?.success" fxLayout="column" fxLayoutAlign="center">
+      <div>{{'Archivo subido correctamente'|translate}}</div>
+
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <button (click)="fileUploadDone()" color="primary" mat-stroked-button
+                matTooltip="Listo, archivo subido">{{'Listo'|translate}}</button>
+      </div>
+    </div>
+
+  </div>
+
+</div>

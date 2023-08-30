@@ -348,6 +348,28 @@
         <td class='pb-2' mat-cell></td>
       </tr>
     </table>
+    <div fxLayout='column'>
+      <span>{{'Subir imagen de receta' | translate}}</span>
+      <div fxLayout='row' fxLayoutAlign='start start' fxLayoutGap='gappx'>
+        <mat-form-field appearance='outline' fxFlex>
+          <mat-label>{{'Imagen de receta'|translate}}
+          </mat-label>
+          <input [formControl]="form.controls['prescriptionImageName']" matInput placeholder="{{'Imagen'|translate}}"
+                 readonly
+                 type='text'>
+          <mat-icon class='greyIcon' matSuffix>link</mat-icon>
+          <mat-error *ngIf="form.controls['prescriptionImageName'].hasError('pattern')">
+            {{'Url'|translate}} <strong>{{'is not valid'|translate}}</strong>
+          </mat-error>
+        </mat-form-field>
+        <button (click)='onUploadDataSheet()'
+                aria-label='Subir videos'
+                class='ml-2 mt-2' color='primary' mat-mini-fab style='font-size: 18px !important;'
+                matTooltip='Subir archivo que se mostrará en la descripción del producto'>
+          <mat-icon>cloud_upload</mat-icon>
+        </button>
+      </div>
+    </div>
     <div fxLayout='row' fxLayoutAlign='space-between end'>
       <button class='mt-2' color='primary' mat-stroked-button matStepperPrevious>{{ 'Volver' | translate }}</button>
       <button class='mt-2' mat-raised-button color='primary' [disabled]='form.invalid'

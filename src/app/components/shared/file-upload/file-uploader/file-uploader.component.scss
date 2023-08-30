@@ -1,0 +1,63 @@
+.width-stepper {
+  max-width: 60rem;
+  width: 100%;
+}
+
+.customInputFile {
+  height: 54px;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  padding: 16px 8px;
+  box-sizing: border-box;
+}
+
+.imageContainer {
+  height: 120px;
+  max-width: 210px;
+  width: auto;
+  box-sizing: border-box;
+  padding: 8px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.videoContainer {
+  height: 120px;
+  max-width: 210px;
+  width: auto;
+  box-sizing: border-box;
+  padding: 8px;
+}
+
+.cut-text {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 150px;
+  white-space: nowrap;
+}
+
+.errorMsg {
+  background-color: #e53935;
+  text-align: center;
+  border-radius: 4px;
+  color: white;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.successMsg {
+  background-color: #4caf50;
+  text-align: center;
+  border-radius: 4px;
+  color: white;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.invalid {
+  border: 2px solid #e53935;
+
+  &:focus {
+    outline: #e53935;
+  }
+}
