@@ -554,7 +554,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         this.form.controls['currency'].setValue(CoinEnum.EUR);
       } else if (data === 'paypal') {
         this.form.controls['currency'].setValue(CoinEnum.USD);
-      } else if (data === 'transfermovil') {
+      } else if (data === 'transfermovil' || data === 'enzona') {
         if (this.cart.market === 'international') {
           this.currencyInternational = 'USD';
           this.form.get('currency').setValue('USD');
