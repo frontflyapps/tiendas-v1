@@ -10,21 +10,26 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PreviousRouteService } from '../../core/services/previous-route/previous-route.service';
 import { DialogCaptchaModule } from './dialog-captcha/dialog-captcha.module';
+import { DialogUploadMediaComponent } from './dialog-upload-media/dialog-upload-media.component';
+import { FileUploadModule } from './file-upload/file-upload.module';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
-    declarations: [OrderByPipe],
-    imports: [
-        ReactiveFormsModule,
-        FormsModule,
-        CommonModule,
-        RouterModule,
-        MatButtonModule,
-        MatDialogModule,
-        MatIconModule,
-        FlexLayoutModule,
-        TranslateModule,
-      DialogCaptchaModule
-    ],
+    declarations: [OrderByPipe, DialogUploadMediaComponent],
+  imports: [
+    ReactiveFormsModule,
+    FormsModule,
+    CommonModule,
+    RouterModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatIconModule,
+    FlexLayoutModule,
+    TranslateModule,
+    DialogCaptchaModule,
+    FileUploadModule,
+    MatToolbarModule,
+  ],
     exports: [
         ReactiveFormsModule,
         FormsModule,
@@ -35,7 +40,8 @@ import { DialogCaptchaModule } from './dialog-captcha/dialog-captcha.module';
         MatIconModule,
         FlexLayoutModule,
         TranslateModule,
-      DialogCaptchaModule
+      DialogCaptchaModule,
+      DialogUploadMediaComponent
     ],
     providers: [PreviousRouteService]
 })
