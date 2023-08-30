@@ -289,9 +289,9 @@ export class DialogPrescriptionComponent implements OnInit {
     let dialogRef: MatDialogRef<DialogUploadMediaComponent, any>;
     dialogRef = this.dialog.open(DialogUploadMediaComponent, {
       panelClass: 'app-dialog-upload-media',
-      width: this.isSmallDevice ? '60vw' : '90%',
+      width: this.isSmallDevice ? '90%' : '60vh',
       maxWidth: this.isSmallDevice ? '100vw' : '100vw',
-      height: this.isSmallDevice ? '50vh' : '50%',
+      height: this.isSmallDevice ? '50%' : '60vh',
       maxHeight: this.isSmallDevice ? '70vh' : '100vh',
       data: {
         type: 'prescriptionImage'
