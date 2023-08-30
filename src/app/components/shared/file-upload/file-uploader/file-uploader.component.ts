@@ -91,9 +91,9 @@ export class FileUploaderComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     // @ts-ignore
     this.form = new UntypedFormGroup({
-      type: new FormControl(null, [Validators.required]),
+      type: new FormControl('localMedia', [Validators.required]),
       file: new FormControl(null, [Validators.required]),
-      formatType: new FormControl(null, [Validators.required]),
+      formatType: new FormControl('image', [Validators.required]),
       link: new FormControl(null, [
         Validators.required,
         Validators.pattern(
