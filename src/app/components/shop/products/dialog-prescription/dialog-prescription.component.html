@@ -5,6 +5,7 @@
 <mat-horizontal-stepper #stepper [linear]='true' *ngIf='!this.loadingSearch && supplementArray?.length > 0'
                         labelPosition='bottom' class='billing-details'>
   <mat-step [stepControl]="supplementForm.get('supplementType')">
+
     <ng-template matStepLabel fxHide.xs fxHide.sm>{{ 'Escoja lentes' | translate }}</ng-template>
     <ng-template fxHide fxShow.xs fxShow.sm>{{ 'Escoja lentes' | translate }}</ng-template>
     <h3 class='my-3 title-supplement'>{{ supplementArray[0]?.name }}</h3>
@@ -51,330 +52,357 @@
   </mat-step>
 
   <mat-step disabled="supplementForm.get('supplementType').value" [stepControl]='form'>
-    <ng-template matStepLabel fxHide.xs fxHide.sm>{{ 'Insertar receta médica' | translate }}</ng-template>
-    <ng-template fxShow.xs fxShow.sm fxHide>{{ 'Insertar receta médica' | translate }}</ng-template>
-    <div class='w-100 mb-3 pb-3 row-supplement' fxHide fxShow.xs fxShow.sm>
-      <div fxLayout='row' fxLayoutAlign='end end' fxLayoutGap='6px' class='mb-3'>
-        <span style='width: 80px'>{{ 'ESFERA' | translate }}</span>
-        <span style='width: 80px'>{{ 'CILINDRO' | translate }}</span>
-        <span style='width: 60px'>{{ 'EJE' | translate }}</span>
-      </div>
-      <div fxLayout='row' fxLayoutAlign='end end' fxLayoutGap='6px' class='container-selects mb-3'>
-        <span class='text-axis'>Ojo derecho</span>
-        <mat-select [formControl]="form.get('right')"
-                    class='input-axis'>
-          <mat-optgroup *ngFor='let sign of signArray' [label]='sign.name'>
-            <mat-option *ngFor='let measure of sign.sign' [value]='measure.value'>
-              {{measure.viewValue}}
-            </mat-option>
-          </mat-optgroup>
-        </mat-select>
-        <mat-select [formControl]="form.get('cylinderRight')"
-                    class='input-axis'>
-          <mat-optgroup *ngFor='let sign of signArray' [label]='sign.name'>
-            <mat-option *ngFor='let measure of sign.sign' [value]='measure.value'>
-              {{measure.viewValue}}
-            </mat-option>
-          </mat-optgroup>
-        </mat-select>
-        <input
-          [formControl]="form.get('axisRight')"
-          matInput
-          type='number'
-          class='input-axis'
-          [required]="form.get('cylinderRight').value"
-        />
-      </div>
-      <mat-error *ngIf="form.get('right').hasError('required')">
-        {{ 'Derecho' | translate }} <strong>{{ 'is required' | translate }}</strong>
-      </mat-error>
-      <mat-error *ngIf="form.get('cylinderRight').hasError('required')">
-        {{ 'Cilindro derecho' | translate }} <strong>{{ 'is required' | translate }}</strong>
-      </mat-error>
-      <mat-error *ngIf="form.get('axisRight').hasError('required')">
-        {{ 'Eje derecho' | translate }} <strong>{{ 'is required' | translate }}</strong>
-      </mat-error>
-      <div fxLayout='row' fxLayoutAlign='end end' fxLayoutGap='6px' class='container-selects mb-3'>
-        <span class='text-axis'>Ojo izquierdo</span>
-        <mat-select [formControl]="form.get('left')"
-                    class='input-axis'>
-          <mat-optgroup *ngFor='let sign of signArray' [label]='sign.name'>
-            <mat-option *ngFor='let measure of sign.sign' [value]='measure.value'>
-              {{measure.viewValue}}
-            </mat-option>
-          </mat-optgroup>
-        </mat-select>
-        <mat-select [formControl]="form.get('cylinderLeft')"
-                    class='input-axis'>
-          <mat-optgroup *ngFor='let sign of signArray' [label]='sign.name'>
-            <mat-option *ngFor='let measure of sign.sign' [value]='measure.value'>
-              {{measure.viewValue}}
-            </mat-option>
-          </mat-optgroup>
-        </mat-select>
-        <input
-          [formControl]="form.get('axisLeft')"
-          matInput
-          type='number'
-          class='input-axis'
-          [required]="form.get('cylinderLeft').value"
-        />
-      </div>
-      <mat-error *ngIf="form.get('left').hasError('required')">
-        {{ 'Izquierdo' | translate }} <strong>{{ 'is required' | translate }}</strong>
-      </mat-error>
-      <mat-error *ngIf="form.get('cylinderLeft').hasError('required')">
-        {{ 'Cilindro izquierdo' | translate }} <strong>{{ 'is required' | translate }}</strong>
-      </mat-error>
-      <mat-error *ngIf="form.get('axisLeft').hasError('required')">
-        {{ 'Eje izquierdo' | translate }} <strong>{{ 'is required' | translate }}</strong>
-      </mat-error>
-      <div fxLayout='row' fxLayoutAlign='space-between center'>
-        <div fxLayout='column'>
-          <div fxLayout='row' fxLayoutAlign='center center' class='container-add'>
-            <h4>ADD</h4>
+    <mat-dialog-content>
+      <ng-template matStepLabel fxHide.xs fxHide.sm>{{ 'Insertar receta médica' | translate }}</ng-template>
+      <ng-template fxShow.xs fxShow.sm fxHide>{{ 'Insertar receta médica' | translate }}</ng-template>
+      <div class='w-100 mb-3 pb-3 row-supplement' fxHide fxShow.xs fxShow.sm>
+        <div fxLayout='row' fxLayoutAlign='end end' fxLayoutGap='6px' class='mb-3'>
+          <span style='width: 80px'>{{ 'ESFERA' | translate }}</span>
+          <span style='width: 80px'>{{ 'CILINDRO' | translate }}</span>
+          <span style='width: 60px'>{{ 'EJE' | translate }}</span>
+        </div>
+        <div fxLayout='row' fxLayoutAlign='end end' fxLayoutGap='6px' class='container-selects mb-3'>
+          <span class='text-axis'>Ojo derecho</span>
+          <mat-select [formControl]="form.get('right')"
+                      class='input-axis'>
+            <mat-optgroup *ngFor='let sign of signArray' [label]='sign.name'>
+              <mat-option *ngFor='let measure of sign.sign' [value]='measure.value'>
+                {{measure.viewValue}}
+              </mat-option>
+            </mat-optgroup>
+          </mat-select>
+          <mat-select [formControl]="form.get('cylinderRight')"
+                      class='input-axis'>
+            <mat-optgroup *ngFor='let sign of signArray' [label]='sign.name'>
+              <mat-option *ngFor='let measure of sign.sign' [value]='measure.value'>
+                {{measure.viewValue}}
+              </mat-option>
+            </mat-optgroup>
+          </mat-select>
+          <input
+            [formControl]="form.get('axisRight')"
+            matInput
+            type='number'
+            class='input-axis'
+            [required]="form.get('cylinderRight').value"
+          />
+        </div>
+        <mat-error *ngIf="form.get('right').hasError('required')">
+          {{ 'Derecho' | translate }} <strong>{{ 'is required' | translate }}</strong>
+        </mat-error>
+        <mat-error *ngIf="form.get('cylinderRight').hasError('required')">
+          {{ 'Cilindro derecho' | translate }} <strong>{{ 'is required' | translate }}</strong>
+        </mat-error>
+        <mat-error *ngIf="form.get('axisRight').hasError('required')">
+          {{ 'Eje derecho' | translate }} <strong>{{ 'is required' | translate }}</strong>
+        </mat-error>
+        <div fxLayout='row' fxLayoutAlign='end end' fxLayoutGap='6px' class='container-selects mb-3'>
+          <span class='text-axis'>Ojo izquierdo</span>
+          <mat-select [formControl]="form.get('left')"
+                      class='input-axis'>
+            <mat-optgroup *ngFor='let sign of signArray' [label]='sign.name'>
+              <mat-option *ngFor='let measure of sign.sign' [value]='measure.value'>
+                {{measure.viewValue}}
+              </mat-option>
+            </mat-optgroup>
+          </mat-select>
+          <mat-select [formControl]="form.get('cylinderLeft')"
+                      class='input-axis'>
+            <mat-optgroup *ngFor='let sign of signArray' [label]='sign.name'>
+              <mat-option *ngFor='let measure of sign.sign' [value]='measure.value'>
+                {{measure.viewValue}}
+              </mat-option>
+            </mat-optgroup>
+          </mat-select>
+          <input
+            [formControl]="form.get('axisLeft')"
+            matInput
+            type='number'
+            class='input-axis'
+            [required]="form.get('cylinderLeft').value"
+          />
+        </div>
+        <mat-error *ngIf="form.get('left').hasError('required')">
+          {{ 'Izquierdo' | translate }} <strong>{{ 'is required' | translate }}</strong>
+        </mat-error>
+        <mat-error *ngIf="form.get('cylinderLeft').hasError('required')">
+          {{ 'Cilindro izquierdo' | translate }} <strong>{{ 'is required' | translate }}</strong>
+        </mat-error>
+        <mat-error *ngIf="form.get('axisLeft').hasError('required')">
+          {{ 'Eje izquierdo' | translate }} <strong>{{ 'is required' | translate }}</strong>
+        </mat-error>
+        <div fxLayout='row' fxLayoutAlign='space-between center'>
+          <div fxLayout='column'>
+            <div fxLayout='row' fxLayoutAlign='center center' class='container-add'>
+              <h4>ADD</h4>
+              <!--            <mat-form-field appearance='outline' class='select'>-->
+              <!--              <mat-label>{{'ADD'}}</mat-label>-->
+              <input
+                [formControl]="form.get('add')"
+                matInput
+                type='text'
+                class='input-add ml-1'
+                [required]="this.supplementForm.get('supplementType').value?.RecomendedProduct?.name?.es.includes('Progresivos') ||
+        this.supplementForm.get('supplementType').value?.RecomendedProduct?.name?.es.includes('Bifocales')"
+              />
+
+              <!--            <mat-error *ngIf="form.get('left').hasError('pattern')">-->
+              <!--              {{ 'Ojo izquierdo' | translate }} <strong>{{ 'wrong' | translate }}</strong>-->
+              <!--            </mat-error>-->
+              <!--            </mat-form-field>-->
+            </div>
+            <mat-error *ngIf="form.get('add').hasError('required')">
+              {{ 'ADD' | translate }} <strong>{{ 'is required' | translate }}</strong>
+            </mat-error>
+          </div>
+
+          <div fxLayout='row' fxLayoutAlign='center center' class='container-dp'>
+            <h4 class='text-dp' style='text-align: center'>DISTANCIA PUPILAR</h4>
             <!--            <mat-form-field appearance='outline' class='select'>-->
-            <!--              <mat-label>{{'ADD'}}</mat-label>-->
+            <!--              <mat-label>{{'Distancia'}}</mat-label>-->
             <input
-              [formControl]="form.get('add')"
+              [formControl]="form.get('pupillaryDistance')"
               matInput
               type='text'
-              class='input-add ml-1'
-              [required]="this.supplementForm.get('supplementType').value?.RecomendedProduct?.name?.es.includes('Progresivos') ||
-        this.supplementForm.get('supplementType').value?.RecomendedProduct?.name?.es.includes('Bifocales')"
+              class='input-dp'
             />
-
+            <!--              <mat-error *ngIf="form.get('pupillaryDistance').hasError('required')">-->
+            <!--                {{ 'La medida de la distancia pupilar' | translate }} <strong>{{ 'is required' | translate }}</strong>-->
+            <!--              </mat-error>-->
             <!--            <mat-error *ngIf="form.get('left').hasError('pattern')">-->
             <!--              {{ 'Ojo izquierdo' | translate }} <strong>{{ 'wrong' | translate }}</strong>-->
             <!--            </mat-error>-->
             <!--            </mat-form-field>-->
           </div>
-          <mat-error *ngIf="form.get('add').hasError('required')">
-            {{ 'ADD' | translate }} <strong>{{ 'is required' | translate }}</strong>
-          </mat-error>
-        </div>
 
-        <div fxLayout='row' fxLayoutAlign='center center' class='container-dp'>
-          <h4 class='text-dp' style='text-align: center'>DISTANCIA PUPILAR</h4>
-          <!--            <mat-form-field appearance='outline' class='select'>-->
-          <!--              <mat-label>{{'Distancia'}}</mat-label>-->
-          <input
-            [formControl]="form.get('pupillaryDistance')"
-            matInput
-            type='text'
-            class='input-dp'
-          />
-          <!--              <mat-error *ngIf="form.get('pupillaryDistance').hasError('required')">-->
-          <!--                {{ 'La medida de la distancia pupilar' | translate }} <strong>{{ 'is required' | translate }}</strong>-->
-          <!--              </mat-error>-->
-          <!--            <mat-error *ngIf="form.get('left').hasError('pattern')">-->
-          <!--              {{ 'Ojo izquierdo' | translate }} <strong>{{ 'wrong' | translate }}</strong>-->
-          <!--            </mat-error>-->
-          <!--            </mat-form-field>-->
         </div>
-
       </div>
-    </div>
-    <table class='table w-100' fxShow fxHide.xs fxHide.sm>
-      <tr>
-        <th mat-header-cell></th>
-        <th mat-header-cell>
-          <span>{{ 'ESFERA' | translate }}</span>
-        </th>
-        <th mat-header-cell>
-          <span>{{ 'CILINDRO' | translate }}</span>
-        </th>
-        <th mat-header-cell>
-          <span>{{ 'EJE' | translate }}</span>
-        </th>
-      </tr>
-      <tr>
-        <th class='pb-2' mat-cell>
-          <span>Ojo izquierdo</span>
-        </th>
-        <td class='pb-2' mat-cell>
-          <mat-form-field appearance='outline' class='select'>
-            <mat-label>{{'Izquierdo'}}</mat-label>
-            <mat-select [formControl]="form.get('left')">
-              <mat-optgroup *ngFor='let sign of signArray' [label]='sign.name'>
-                <mat-option *ngFor='let measure of sign.sign' [value]='measure.value'>
-                  {{measure.viewValue}}
-                </mat-option>
-              </mat-optgroup>
-            </mat-select>
-            <mat-error *ngIf="form.get('left').hasError('required')">
-              {{ 'La medida del ojo izquierdo' | translate }} <strong>{{ 'is required' | translate }}</strong>
-            </mat-error>
-          </mat-form-field>
-        </td>
-        <td class='pb-2' mat-cell>
-          <mat-form-field appearance='outline' class='select'>
-            <mat-label>{{'Izquierdo'}}</mat-label>
-            <mat-select [formControl]="form.get('cylinderLeft')">
-              <mat-optgroup *ngFor='let sign of signArray' [label]='sign.name'>
-                <mat-option *ngFor='let measure of sign.sign' [value]='measure.value'>
-                  {{measure.viewValue}}
-                </mat-option>
-              </mat-optgroup>
-            </mat-select>
-            <mat-error *ngIf="form.get('cylinderLeft').hasError('required')">
-              {{ 'La medida del cilindro izquierdo' | translate }} <strong>{{ 'is required' | translate }}</strong>
-            </mat-error>
-            <!--                  <mat-error *ngIf="form.get('cylinderLeft').hasError('pattern')">-->
-            <!--                    {{ 'Ojo izquierdo' | translate }} <strong>{{ 'wrong' | translate }}</strong>-->
-            <!--                  </mat-error>-->
-          </mat-form-field>
-        </td>
-        <td class='pb-2' mat-cell>
-          <mat-form-field appearance='outline' class='select-axis'>
-            <mat-label>{{'Izquierdo'}}</mat-label>
-            <input
-              [formControl]="form.get('axisLeft')"
-              matInput
-              type='number'
-              placeholder="{{ 'Eje izquierdo' | translate }}"
-              [required]="form.get('cylinderLeft').value"
-            />
-            <mat-error *ngIf="form.get('axisLeft').hasError('required')">
-              {{ 'La medida del eje izquierdo' | translate }} <strong>{{ 'is required' | translate }}</strong>
-            </mat-error>
-            <!--                  <mat-error *ngIf="form.get('axisLeft').hasError('pattern')">-->
-            <!--                    {{ 'Ojo izquierdo' | translate }} <strong>{{ 'wrong' | translate }}</strong>-->
-            <!--                  </mat-error>-->
-          </mat-form-field>
-        </td>
-      </tr>
-      <tr>
-        <th class='pb-2' mat-cell>
-          <span>Ojo derecho</span>
-        </th>
-        <td class='pb-2' mat-cell>
-          <mat-form-field appearance='outline' class='select'>
-            <mat-label>{{'Derecho' | translate}}</mat-label>
-            <mat-select [formControl]="form.get('right')">
-              <mat-optgroup *ngFor='let sign of signArray' [label]='sign.name'>
-                <mat-option *ngFor='let measure of sign.sign' [value]='measure.value'>
-                  {{measure.viewValue}}
-                </mat-option>
-              </mat-optgroup>
-            </mat-select>
-            <mat-error *ngIf="form.get('right').hasError('required')">
-              {{ 'La medida del ojo derecho' | translate }} <strong>{{ 'is required' | translate }}</strong>
-            </mat-error>
-            <!--            <mat-error *ngIf="form.get('left').hasError('pattern')">-->
-            <!--              {{ 'Ojo izquierdo' | translate }} <strong>{{ 'wrong' | translate }}</strong>-->
-            <!--            </mat-error>-->
-          </mat-form-field>
-        </td>
-        <td class='pb-2' mat-cell>
-          <mat-form-field appearance='outline' class='select'>
-            <mat-label>{{'Cilindro derecho' | translate}}</mat-label>
+      <table class='table w-100' fxShow fxHide.xs fxHide.sm>
+        <tr>
+          <th mat-header-cell></th>
+          <th mat-header-cell>
+            <span>{{ 'ESFERA' | translate }}</span>
+          </th>
+          <th mat-header-cell>
+            <span>{{ 'CILINDRO' | translate }}</span>
+          </th>
+          <th mat-header-cell>
+            <span>{{ 'EJE' | translate }}</span>
+          </th>
+        </tr>
+        <tr>
+          <th class='pb-2' mat-cell>
+            <span>Ojo izquierdo</span>
+          </th>
+          <td class='pb-2' mat-cell>
+            <mat-form-field appearance='outline' class='select'>
+              <mat-label>{{'Izquierdo'}}</mat-label>
+              <mat-select [formControl]="form.get('left')">
+                <mat-optgroup *ngFor='let sign of signArray' [label]='sign.name'>
+                  <mat-option *ngFor='let measure of sign.sign' [value]='measure.value'>
+                    {{measure.viewValue}}
+                  </mat-option>
+                </mat-optgroup>
+              </mat-select>
+              <mat-error *ngIf="form.get('left').hasError('required')">
+                {{ 'La medida del ojo izquierdo' | translate }} <strong>{{ 'is required' | translate }}</strong>
+              </mat-error>
+            </mat-form-field>
+          </td>
+          <td class='pb-2' mat-cell>
+            <mat-form-field appearance='outline' class='select'>
+              <mat-label>{{'Izquierdo'}}</mat-label>
+              <mat-select [formControl]="form.get('cylinderLeft')">
+                <mat-optgroup *ngFor='let sign of signArray' [label]='sign.name'>
+                  <mat-option *ngFor='let measure of sign.sign' [value]='measure.value'>
+                    {{measure.viewValue}}
+                  </mat-option>
+                </mat-optgroup>
+              </mat-select>
+              <mat-error *ngIf="form.get('cylinderLeft').hasError('required')">
+                {{ 'La medida del cilindro izquierdo' | translate }} <strong>{{ 'is required' | translate }}</strong>
+              </mat-error>
+              <!--                  <mat-error *ngIf="form.get('cylinderLeft').hasError('pattern')">-->
+              <!--                    {{ 'Ojo izquierdo' | translate }} <strong>{{ 'wrong' | translate }}</strong>-->
+              <!--                  </mat-error>-->
+            </mat-form-field>
+          </td>
+          <td class='pb-2' mat-cell>
+            <mat-form-field appearance='outline' class='select-axis'>
+              <mat-label>{{'Izquierdo'}}</mat-label>
+              <input
+                [formControl]="form.get('axisLeft')"
+                matInput
+                type='number'
+                placeholder="{{ 'Eje izquierdo' | translate }}"
+                [required]="form.get('cylinderLeft').value"
+              />
+              <mat-error *ngIf="form.get('axisLeft').hasError('required')">
+                {{ 'La medida del eje izquierdo' | translate }} <strong>{{ 'is required' | translate }}</strong>
+              </mat-error>
+              <!--                  <mat-error *ngIf="form.get('axisLeft').hasError('pattern')">-->
+              <!--                    {{ 'Ojo izquierdo' | translate }} <strong>{{ 'wrong' | translate }}</strong>-->
+              <!--                  </mat-error>-->
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr>
+          <th class='pb-2' mat-cell>
+            <span>Ojo derecho</span>
+          </th>
+          <td class='pb-2' mat-cell>
+            <mat-form-field appearance='outline' class='select'>
+              <mat-label>{{'Derecho' | translate}}</mat-label>
+              <mat-select [formControl]="form.get('right')">
+                <mat-optgroup *ngFor='let sign of signArray' [label]='sign.name'>
+                  <mat-option *ngFor='let measure of sign.sign' [value]='measure.value'>
+                    {{measure.viewValue}}
+                  </mat-option>
+                </mat-optgroup>
+              </mat-select>
+              <mat-error *ngIf="form.get('right').hasError('required')">
+                {{ 'La medida del ojo derecho' | translate }} <strong>{{ 'is required' | translate }}</strong>
+              </mat-error>
+              <!--            <mat-error *ngIf="form.get('left').hasError('pattern')">-->
+              <!--              {{ 'Ojo izquierdo' | translate }} <strong>{{ 'wrong' | translate }}</strong>-->
+              <!--            </mat-error>-->
+            </mat-form-field>
+          </td>
+          <td class='pb-2' mat-cell>
+            <mat-form-field appearance='outline' class='select'>
+              <mat-label>{{'Cilindro derecho' | translate}}</mat-label>
 
-            <mat-select [formControl]="form.get('cylinderRight')">
-              <mat-optgroup *ngFor='let sign of signArray' [label]='sign.name'>
-                <mat-option *ngFor='let measure of sign.sign' [value]='measure.value'>
-                  {{measure.viewValue}}
-                </mat-option>
-              </mat-optgroup>
-            </mat-select>
-            <mat-error *ngIf="form.get('cylinderRight').hasError('required')">
-              {{ 'La medida del cilindro derecho' | translate }} <strong>{{ 'is required' | translate }}</strong>
-            </mat-error>
-            <!--            <mat-error *ngIf="form.get('cylinderLeft').hasError('pattern')">-->
-            <!--              {{ 'Ojo izquierdo' | translate }} <strong>{{ 'wrong' | translate }}</strong>-->
-            <!--            </mat-error>-->
-          </mat-form-field>
-        </td>
-        <td class='pb-2' mat-cell>
-          <mat-form-field appearance='outline' class='select-axis'>
-            <mat-label>{{'Derecho' | translate}}</mat-label>
-            <input
-              [formControl]="form.get('axisRight')"
-              matInput
-              type='number'
-              placeholder="{{ 'Eje derecho' | translate }}"
-              [required]="form.get('cylinderRight').value"
-            />
-            <mat-error *ngIf="form.get('axisRight').hasError('required')">
-              {{ 'La medida del eje derecho' | translate }} <strong>{{ 'is required' | translate }}</strong>
-            </mat-error>
-            <!--            <mat-error *ngIf="form.get('axisLeft').hasError('pattern')">-->
-            <!--              {{ 'Ojo izquierdo' | translate }} <strong>{{ 'wrong' | translate }}</strong>-->
-            <!--            </mat-error>-->
-          </mat-form-field>
-        </td>
-      </tr>
-      <tr>
-        <th class='pb-2' mat-cell>
-          <span>ADD</span>
-        </th>
-        <td class='pb-2' mat-cell>
-          <mat-form-field appearance='outline' class='select-axis'>
-            <mat-label>{{'add' | translate}}</mat-label>
-            <input
-              [formControl]="form.get('add')"
-              matInput
-              type='number'
-              placeholder="{{ 'Adición' | translate }}"
-              [required]="supplementForm.get('supplementType').value?.RecomendedProduct?.name?.es.includes('Progresivos') ||
+              <mat-select [formControl]="form.get('cylinderRight')">
+                <mat-optgroup *ngFor='let sign of signArray' [label]='sign.name'>
+                  <mat-option *ngFor='let measure of sign.sign' [value]='measure.value'>
+                    {{measure.viewValue}}
+                  </mat-option>
+                </mat-optgroup>
+              </mat-select>
+              <mat-error *ngIf="form.get('cylinderRight').hasError('required')">
+                {{ 'La medida del cilindro derecho' | translate }} <strong>{{ 'is required' | translate }}</strong>
+              </mat-error>
+              <!--            <mat-error *ngIf="form.get('cylinderLeft').hasError('pattern')">-->
+              <!--              {{ 'Ojo izquierdo' | translate }} <strong>{{ 'wrong' | translate }}</strong>-->
+              <!--            </mat-error>-->
+            </mat-form-field>
+          </td>
+          <td class='pb-2' mat-cell>
+            <mat-form-field appearance='outline' class='select-axis'>
+              <mat-label>{{'Derecho' | translate}}</mat-label>
+              <input
+                [formControl]="form.get('axisRight')"
+                matInput
+                type='number'
+                placeholder="{{ 'Eje derecho' | translate }}"
+                [required]="form.get('cylinderRight').value"
+              />
+              <mat-error *ngIf="form.get('axisRight').hasError('required')">
+                {{ 'La medida del eje derecho' | translate }} <strong>{{ 'is required' | translate }}</strong>
+              </mat-error>
+              <!--            <mat-error *ngIf="form.get('axisLeft').hasError('pattern')">-->
+              <!--              {{ 'Ojo izquierdo' | translate }} <strong>{{ 'wrong' | translate }}</strong>-->
+              <!--            </mat-error>-->
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr>
+          <th class='pb-2' mat-cell>
+            <span>ADD</span>
+          </th>
+          <td class='pb-2' mat-cell>
+            <mat-form-field appearance='outline' class='select-axis'>
+              <mat-label>{{'add' | translate}}</mat-label>
+              <input
+                [formControl]="form.get('add')"
+                matInput
+                type='number'
+                placeholder="{{ 'Adición' | translate }}"
+                [required]="supplementForm.get('supplementType').value?.RecomendedProduct?.name?.es.includes('Progresivos') ||
                           supplementForm.get('supplementType').value?.RecomendedProduct?.name?.es.includes('Bifocales')"
-            />
-            <mat-error *ngIf="form.get('add').hasError('required') && form.get('add').invalid">
-              {{ 'add' | translate }} <strong>{{ 'is required' | translate }}</strong>
-            </mat-error>
-            <!--            <mat-error *ngIf="form.get('axisLeft').hasError('pattern')">-->
-            <!--              {{ 'Ojo izquierdo' | translate }} <strong>{{ 'wrong' | translate }}</strong>-->
-            <!--            </mat-error>-->
-          </mat-form-field>
-        </td>
-        <td class='pb-2' mat-cell>
-          <mat-form-field appearance='outline' class='select-axis'>
-            <mat-label>{{'Distancia pupilar'}}</mat-label>
-            <input
-              [formControl]="form.get('pupillaryDistance')"
-              matInput
-              type='number'
-              placeholder="{{ 'Eje derecho' | translate }}"
-              [required]="form.get('pupillaryDistance').value"
-            />
-            <mat-error *ngIf="form.get('pupillaryDistance').hasError('required')">
-              {{ 'Distancia pupilar' | translate }} <strong>{{ 'is required' | translate }}</strong>
-            </mat-error>
-            <!--            <mat-error *ngIf="form.get('axisLeft').hasError('pattern')">-->
-            <!--              {{ 'Ojo izquierdo' | translate }} <strong>{{ 'wrong' | translate }}</strong>-->
-            <!--            </mat-error>-->
-          </mat-form-field>
-        </td>
-        <td class='pb-2' mat-cell></td>
-      </tr>
-    </table>
-    <div fxLayout='column'>
-      <span>{{'Subir imagen de receta' | translate}}</span>
-      <div fxLayout='row' fxLayoutAlign='start start' fxLayoutGap='gappx'>
-        <mat-form-field appearance='outline' fxFlex>
-          <mat-label>{{'Imagen de receta'|translate}}
-          </mat-label>
-          <input [formControl]="form.controls['prescriptionImageName']" matInput placeholder="{{'Imagen'|translate}}"
-                 readonly
-                 type='text'>
-          <mat-icon class='greyIcon' matSuffix>link</mat-icon>
-          <mat-error *ngIf="form.controls['prescriptionImageName'].hasError('pattern')">
-            {{'Url'|translate}} <strong>{{'is not valid'|translate}}</strong>
-          </mat-error>
-        </mat-form-field>
-        <button (click)='onUploadDataSheet()'
-                aria-label='Subir videos'
-                class='ml-2 mt-2' color='primary' mat-mini-fab style='font-size: 18px !important;'
-                matTooltip='Subir archivo que se mostrará en la descripción del producto'>
-          <mat-icon>cloud_upload</mat-icon>
-        </button>
+              />
+              <mat-error *ngIf="form.get('add').hasError('required') && form.get('add').invalid">
+                {{ 'add' | translate }} <strong>{{ 'is required' | translate }}</strong>
+              </mat-error>
+              <!--            <mat-error *ngIf="form.get('axisLeft').hasError('pattern')">-->
+              <!--              {{ 'Ojo izquierdo' | translate }} <strong>{{ 'wrong' | translate }}</strong>-->
+              <!--            </mat-error>-->
+            </mat-form-field>
+          </td>
+          <td class='pb-2' mat-cell>
+            <mat-form-field appearance='outline' class='select-axis'>
+              <mat-label>{{'Distancia pupilar'}}</mat-label>
+              <input
+                [formControl]="form.get('pupillaryDistance')"
+                matInput
+                type='number'
+                placeholder="{{ 'Eje derecho' | translate }}"
+                [required]="form.get('pupillaryDistance').value"
+              />
+              <mat-error *ngIf="form.get('pupillaryDistance').hasError('required')">
+                {{ 'Distancia pupilar' | translate }} <strong>{{ 'is required' | translate }}</strong>
+              </mat-error>
+              <!--            <mat-error *ngIf="form.get('axisLeft').hasError('pattern')">-->
+              <!--              {{ 'Ojo izquierdo' | translate }} <strong>{{ 'wrong' | translate }}</strong>-->
+              <!--            </mat-error>-->
+            </mat-form-field>
+          </td>
+          <td class='pb-2' mat-cell></td>
+        </tr>
+      </table>
+      <div fxLayout='column'>
+        <h2 class='title-prescription-image'>{{'Subir imagen de receta' | translate}}</h2>
+        <div fxLayout='row' fxLayoutAlign='start start' fxLayoutGap='gappx'>
+          <div class='container-image-prescription' fxLayout='row' fxLayoutAlign='start center' fxLayoutGap='1rem' *ngIf="form.get('prescriptionImageName').value; else noPrescriptionImage">
+            <img [src]="imageUrl + form.get('prescriptionImageUrl').value" width='300px' height='300px'/>
+            <button (click)='onUploadDataSheet()'
+                    aria-label='Subir videos'
+                    class='ml-2 mt-2' color='primary' mat-mini-fab style='font-size: 18px !important;'
+                    matTooltip='Subir archivo que se mostrará en la descripción del producto'>
+              <mat-icon>refresh</mat-icon>
+            </button>
+          </div>
+          <ng-template class='container-image-prescription' #noPrescriptionImage>
+            <div class='container-no-image-prescription' fxLayoutAlign='center center' (click)='onUploadDataSheet()'>
+              <!--            <button (click)='onUploadDataSheet()'-->
+              <!--                    aria-label='Subir videos'-->
+              <!--                    class='ml-2 mt-2' color='primary' mat-icon-button style='font-size: 18px !important;'-->
+              <!--                    matTooltip='Subir archivo que se mostrará en la descripción del producto'>-->
+              <!--              <mat-icon (click)='onUploadDataSheet()'>photo_camera</mat-icon>-->
+              <!--            </button>-->
+              <mat-icon class='icon-camera'>photo_camera</mat-icon>
+            </div>
+
+          </ng-template>
+          <!--        <mat-form-field appearance='outline' fxFlex>-->
+          <!--          <mat-label>{{'Imagen de receta'|translate}}-->
+          <!--          </mat-label>-->
+          <!--          <input [formControl]="form.controls['prescriptionImageName']" matInput placeholder="{{'Imagen'|translate}}"-->
+          <!--                 readonly-->
+          <!--                 type='text'>-->
+          <!--          <mat-icon class='greyIcon' matSuffix>link</mat-icon>-->
+          <!--          <mat-error *ngIf="form.controls['prescriptionImageName'].hasError('pattern')">-->
+          <!--            {{'Url'|translate}} <strong>{{'is not valid'|translate}}</strong>-->
+          <!--          </mat-error>-->
+          <!--        </mat-form-field>-->
+          <!--        <button (click)='onUploadDataSheet()'-->
+          <!--                aria-label='Subir videos'-->
+          <!--                class='ml-2 mt-2' color='primary' mat-mini-fab style='font-size: 18px !important;'-->
+          <!--                matTooltip='Subir archivo que se mostrará en la descripción del producto'>-->
+          <!--          <mat-icon>cloud_upload</mat-icon>-->
+          <!--        </button>-->
+        </div>
       </div>
-    </div>
-    <div fxLayout='row' fxLayoutAlign='space-between end'>
-      <button class='mt-2' color='primary' mat-stroked-button matStepperPrevious>{{ 'Volver' | translate }}</button>
-      <button class='mt-2' mat-raised-button color='primary' [disabled]='form.invalid'
-              matStepperNext>{{'Siguiente' | translate}}</button>
-    </div>
+    </mat-dialog-content>
+
+    <mat-dialog-actions fxLayout='row' fxLayoutAlign='space-between end'>
+<!--      <div fxLayout='row' fxLayoutAlign='space-between end'>-->
+        <button class='mt-2' color='primary' mat-stroked-button matStepperPrevious>{{ 'Volver' | translate }}</button>
+        <button class='mt-2' mat-raised-button color='primary' [disabled]='form.invalid'
+                matStepperNext>{{'Siguiente' | translate}}</button>
+<!--      </div>-->
+    </mat-dialog-actions>
+
   </mat-step>
 
   <mat-step>

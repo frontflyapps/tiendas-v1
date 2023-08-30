@@ -22,6 +22,23 @@
     box-sizing: border-box;
   }
 }
+.container-image-prescription {
+  //border: 2px dashed #444550;
+}
+.icon-camera {
+  width: 60px;
+  height: 60px;
+  font-size: 60px;
+  color: #44455066;
+  cursor: pointer;
+}
+.container-no-image-prescription {
+  border: 2px dashed #44455066;
+  width: 300px;
+  height: 300px;
+  border-radius: 8px;
+  cursor: pointer;
+}
 .row-supplement{
   overflow: auto;
 }
