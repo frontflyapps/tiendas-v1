@@ -1,0 +1,107 @@
+<div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="gappx" class='m-3'>
+  <ng-container *ngIf="showFileLoaded">
+    <img *ngIf="fileLoaded.type == 'image'" [src]="imageUrl + fileLoaded.file" alt="image" class="imageContainer" />
+    <video *ngIf="fileLoaded.type == 'video'" class="videoContainer" controls>
+      <source [src]="imageUrl + fileLoaded.file" type="video/mp4" />
+    </video>
+  </ng-container>
+  <div class="width-stepper mt-2" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="gappx" style="position: relative">
+
+    <!-- ============================================== -->
+    <!-- ORIGEN DEL ARCHIVO -->
+    <mat-form-field appearance="outline" class="width-stepper" matTooltip="{{ 'Seleccione el origen del archivo a subir' | translate }}">
+      <mat-label>
+        <span>{{ 'Selecciones Origen del archivo' }}</span>
+      </mat-label>
+      <mat-select [formControl]="form.get('type')" placeholder="{{ 'Tipo' }}">
+        <mat-option *ngFor="let type of allType; let i = index" [value]="type.id">
+          <div fxLayout="row" fxLayoutAlign="start center">
+            <span class="mat-body-2">
+              {{ type.type }}
+            </span>
+          </div>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- ============================================== -->
+    <!-- TIPO DE ARCHIVO -->
+    <mat-form-field appearance="outline" class="width-stepper"
+      matTooltip="{{ 'Seleccione el tipo de archivo a subir. Ej: audio, video, imagen, ebook, PDF u otro archivo' | translate }}">
+      <mat-label>
+        <span>{{ 'Selecciones el Tipo de archivo' }}</span>
+      </mat-label>
+      <mat-select [formControl]="form.get('formatType')" placeholder="{{ 'Tipo' }}">
+        <mat-select-trigger>{{ formatTypeName?.name || null }}</mat-select-trigger>
+        <mat-option *ngFor="let type of formatTypes; let i = index" [value]="type.id">
+          <div fxLayout="row" fxLayoutAlign="start center">
+            <mat-icon *ngIf="type.icon">{{type.icon}}</mat-icon>
+            <span class="mat-body-2">
+              {{ type.name }}
+            </span>
+          </div>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <ng-container *ngIf="this.form.get('type').valid">
+
+      <!-- Inputs File -->
+      <input #fileInput (change)="handleFileSelect($event)" *ngIf="this.form.get('type')?.value?.includes('local')"
+        accept="{{formatAccepted[form.get('formatType').value] || '*/*'}}" class="width-stepper customInputFile" id="file-uploader-input"
+        placeholder="{{ 'Subir Archivo' }}" type="file" />
+
+      <input #fileInput1 *ngIf="this.form.get('type').value == 'externalMedia'" [formControl]="this.form.get('link')"
+        [ngClass]="{'invalid': this.form.get('link').invalid}" class="width-stepper customInputFile ng-hide" id="file-uploader-input"
+        placeholder="{{ 'https://examplevideo.someserver.io' }}" type="text" />
+
+      <!-- Label -->
+      <label class="mt-1" for="file-uploader-input">{{'Seleccione archivo a subir'|translate}}</label>
+
+      <!-- Hint -->
+      <p *ngIf="this.form.get('type').value == 'externalMedia'" class="mat-caption">
+        *Nota no copie el link, copie el código fuente del embebido del video, por ejemplo en el
+        caso de youtube seleccione la opcion "Copy embed link"
+      </p>
+
+      <!-- Subir ficheros -->
+      <button (click)="onUploadFile()" *ngIf="form.get('file').valid && this.fileUploadedChange" color="primary" mat-mini-fab
+        matTooltip="Subir el archivo" style="position: absolute; bottom: 8px; right: 16px">
+        <mat-icon>backup</mat-icon>
+      </button>
+
+      <button (click)="onUploadLink()" *ngIf="form.get('link').valid && form.get('type').value == 'externalMedia'" color="primary"
+        mat-mini-fab matTooltip="Subir el link" style="position: absolute; bottom: 8px; right: 16px">
+        <mat-icon>backup</mat-icon>
+      </button>
+
+    </ng-container>
+
+  </div>
+
+  <!-- Formato incorrecto -->
+  <div *ngIf="form.get('file').value != undefined" class="my-3 width-stepper" fxLayout="row" fxLayoutAlign="space-between start">
+    <p style="font-size: 12px">
+      <strong>formato:</strong> &nbsp; <span>{{ form.get('file').value.type }}</span>
+      &nbsp; &nbsp; &nbsp;
+      <strong>tamaño:</strong> &nbsp; <span>{{ this.computedSize() }}</span>
+    </p>
+  </div>
+
+  <!-- Progress BAR -->
+  <div *ngIf="this.showUploadingProgress" class="px-2 width-stepper" fxLayout="row" fxLayoutAlign="space-between center"
+    fxLayoutGap="gappx">
+    <span class="mat-caption cut-text" matTooltip="{{ this.metaDataUploading.fileName }}">{{ this.metaDataUploading.fileName }}</span>
+    <mat-progress-bar *ngIf="this.metaDataUploading.status == 'uploading'" [value]="this.metaDataUploading.progress" class="mx-2" fxFlex
+      mode="determinate"></mat-progress-bar>
+    <span *ngIf="this.metaDataUploading.status == 'completed'" class="mx-2 mat-caption successMsg" fxFlex> Completado Exitósamente </span>
+    <span *ngIf="this.metaDataUploading.status == 'error'" class="mx-2 mat-caption errorMsg" fxFlex> Error </span>
+    <span *ngIf="this.metaDataUploading.status == 'uploading'" class="mat-caption" style="width: 40px">{{ this.metaDataUploading.progress
+      }}%</span>
+    <!-- <span *ngIf="item.status != 'uploading'" class="mat-caption" style="width:40px;">
+      <button mat-icon-button (click)="onRemoveRecords(item)">
+        <mat-icon>clear</mat-icon>
+      </button> </span> -->
+  </div>
+
+</div>
