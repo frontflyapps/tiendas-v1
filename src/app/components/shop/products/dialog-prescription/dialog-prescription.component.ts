@@ -235,6 +235,20 @@ export class DialogPrescriptionComponent implements OnInit {
         this.form.get('add').setValidators(null);
       }
     });
+    this.form.get('prescriptionImageUrl').valueChanges.subscribe((item) => {
+      if (item) {
+        this.form.get('left').setValidators(null);
+        this.form.get('cylinderLeft').setValidators(null);
+        this.form.get('axisLeft').setValidators(null);
+        this.form.get('right').setValidators(null);
+        this.form.get('cylinderRight').setValidators(null);
+        this.form.get('axisRight').setValidators(null);
+        this.form.get('pupillaryDistance').setValidators(null);
+
+        this.form.get('left').setValue(null);
+        this.form.get('right').setValue(null);
+      }
+    });
 
     this.loadingSearch = true;
     this.productsService.getNewRecomendedProduct(this.data.product.id, 'supplement').subscribe({
