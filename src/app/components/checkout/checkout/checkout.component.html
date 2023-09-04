@@ -651,7 +651,7 @@
                 </mat-form-field>
 
                 <div fxLayout='row' fxLayoutGap='8px' fxFlex="48" class='w-100' fxFlex.lt-md="100">
-                  <guachos-general-autocomplete fxFlex="28" [withoutPaddingBottom]="false" [label]="'Código'"
+                  <guachos-general-autocomplete fxFlex="30" [withoutPaddingBottom]="false" [label]="'Código telefónico'"
                                                 [valueId]="true"
                                                 fxFlex.lt-md="28"
                                                 [displayOptions]="callingCodeDisplayOptions" [field]="['code']"
@@ -659,8 +659,8 @@
                                                 [url]="phoneCodesService.url"
                                                 [formControl]="form.get('PhoneCallingCodeId')"></guachos-general-autocomplete>
 
-                  <mat-form-field appearance="outline" fxFlex="70" fxFlex.lt-md="70" id="phone">
-                    <mat-label>{{ 'Teléfono' | translate }}</mat-label>
+                  <mat-form-field appearance="outline" fxFlex="68" fxFlex.lt-md="70" id="phone">
+                    <mat-label>{{ 'Teléfono celular' | translate }}</mat-label>
                     <!--                      <span class="mr-2" matPrefix>+ 53</span>-->
                     <input
                       (keypress)="utilsService.keyPressNumbers($event)"

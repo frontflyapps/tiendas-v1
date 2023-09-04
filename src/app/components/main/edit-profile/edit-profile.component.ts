@@ -35,6 +35,7 @@ export class EditProfileComponent implements OnInit {
   showErrorImage = false;
   urlImage = '';
   base64textString = null;
+  businessConfig;
 
   callingCodeDisplayOptions = {
     firthLabel: [
@@ -69,6 +70,8 @@ export class EditProfileComponent implements OnInit {
     this.urlImage = environment.imageUrl;
     this.dialogRef.disableClose = true;
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
+
+    this.businessConfig = JSON.parse(localStorage.getItem('business-config'));
   }
 
   @HostListener('window:resize', ['$event'])
@@ -96,7 +99,7 @@ export class EditProfileComponent implements OnInit {
       street: [this.loggedInUser && this.loggedInUser.address ? this.loggedInUser.address.street : null, []],
       number: [this.loggedInUser && this.loggedInUser.address ? this.loggedInUser.address.number : null, []],
       between: [this.loggedInUser && this.loggedInUser.address ? this.loggedInUser.address.between : null, []],
-      phone: [this.loggedInUser && this.loggedInUser.phone ? this.loggedInUser.phone : null, []],
+      phone: [this.loggedInUser && this.loggedInUser.phone ? this.loggedInUser.phone : null,  this.businessConfig.phoneRequired ? [Validators.required, Validators.minLength(8)] : []],
       PhoneCallingCodeId: [this.loggedInUser && this.loggedInUser?.PhoneCallingCodeId ? this.loggedInUser?.PhoneCallingCodeId : null, []],
       email: [
         this.loggedInUser && this.loggedInUser.email ? this.loggedInUser.email : null,
