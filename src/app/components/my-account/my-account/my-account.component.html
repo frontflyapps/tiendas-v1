@@ -211,39 +211,41 @@
                         </mat-error>
                       </mat-form-field>
 
-                      <mat-form-field appearance="outline" fxFlex="48" fxFlex.lt-md="100" id="phone">
-                        <mat-label>{{ 'Teléfono (opcional)' | translate }}</mat-label>
-                        <span class="mr-2" matPrefix>+ 53</span>
-                        <input
-                          (keypress)="utilsService.keyPressNumbers($event)"
-                          [formControl]="registrationForm.get('phone')"
-                          matInput
-                          autocomplete="off"
-                          placeholder="{{ 'Teléfono cubano...' | translate }}"
-                        />
-                        <mat-hint *ngIf="!registrationForm.get('phone').value">
-                          {{ 'Escriba un teléfono móvil cubano, Ex: 51234567' | translate }}
-                        </mat-hint>
-                        <mat-hint *ngIf="registrationForm.get('phone').value && registrationForm.get('phone').valid">
-                          {{ 'Número válido' | translate }}
-                        </mat-hint>
-                        <mat-error
-                          *ngIf="
+                      <div fxLayout='row' fxLayoutGap='8px' fxFlex="48" class='w-100' fxFlex.lt-md="100">
+                        <guachos-general-autocomplete fxFlex="30" [withoutPaddingBottom]="false" [label]="'Código telefónico'"
+                                                      [valueId]="true"
+                                                      fxFlex.lt-md="28"
+                                                      [displayOptions]="callingCodeDisplayOptions" [field]="['code']"
+                                                      [filterString]="['filter[$and][code][$like]']"
+                                                      [url]="phoneCodesService.url"
+                                                      [formControl]="registrationForm.get('PhoneCallingCodeId')"></guachos-general-autocomplete>
+
+                        <mat-form-field appearance="outline" fxFlex="70" fxFlex.lt-md="70" id="phone">
+                          <mat-label>{{ 'Teléfono celular' | translate }}</mat-label>
+                          <!--                      <span class="mr-2" matPrefix>+ 53</span>-->
+                          <input
+                            (keypress)="utilsService.keyPressNumbers($event)"
+                            [formControl]="registrationForm.get('phone')"
+                            matInput
+                            autocomplete="off"
+                            placeholder="{{ 'Teléfono...' | translate }}"
+                          />
+                          <mat-hint *ngIf="registrationForm.get('phone').value && registrationForm.get('phone').valid">
+                            {{ 'Número válido' | translate }}
+                          </mat-hint>
+                          <mat-error
+                            *ngIf="
                       (registrationForm.controls['phone'].hasError('minlength') ||
                         registrationForm.controls['phone'].hasError('maxlength')) &&
                       !registrationForm.controls['phone'].hasError('pattern')
                     "
-                        >
-                          {{ 'Longitud del número' | translate }}&nbsp;<strong>{{
-                          '8 caracteres, Ex: 51234567' | translate
-                          }}</strong>
-                        </mat-error>
-                        <mat-error *ngIf="registrationForm.controls['phone'].hasError('pattern')">
-                          {{ 'El número' | translate }}&nbsp;<strong>{{
-                          'debe empezar con 5, Ex: 51234567' | translate
-                          }}</strong>
-                        </mat-error>
-                      </mat-form-field>
+                          >
+                            {{ 'Longitud del número' | translate }}&nbsp;<strong>{{
+                            '8 caracteres, Ex: 51234567' | translate
+                            }}</strong>
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
 
                       <div
                         fxLayout="row"
@@ -458,12 +460,19 @@
                         </mat-form-field>
 
                         <div fxLayout="row wrap" fxLayoutAlign="space-between start" fxLayoutGap="gappx">
-                          <mat-form-field id="phone" fxFlex="48" fxFlex.lt-md="100" appearance="outline">
+                          <guachos-general-autocomplete fxFlex="30" [withoutPaddingBottom]="false" [label]="'Código de teléfono'"
+                                                        [valueId]="true"
+                                                        fxFlex.lt-md="28"
+                                                        [displayOptions]="callingCodeDisplayOptions" [field]="['code']"
+                                                        [filterString]="['filter[$and][code][$like]']"
+                                                        [url]="phoneCodesService.url"
+                                                        [formControl]="regTcpForm.get('PhoneCallingCodeId')"></guachos-general-autocomplete>
+                          <mat-form-field id="phone" fxFlex="68" fxFlex.lt-md="100" appearance="outline">
                             <mat-label>{{ 'Teléfono celular' | translate }}</mat-label>
-                            <span matPrefix class="mr-2">+ 53</span>
+<!--                            <span matPrefix class="mr-2">+ 53</span>-->
                             <input
                               matInput
-                              placeholder="{{ 'Teléfono cubano...' | translate }}"
+                              placeholder="{{ 'Teléfono' | translate }}"
                               required
                               (keypress)="utilsService.keyPressNumbers($event)"
                               [formControl]="regTcpForm.get('phoneCel')"
@@ -491,22 +500,22 @@
                               }}</strong>
                             </mat-error>
                           </mat-form-field>
-
-                          <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline">
-                            <mat-label>{{ 'Teléfono fijo' | translate }}</mat-label>
-                            <input
-                              matInput
-                              placeholder="{{ 'Teléfono fijo' | translate }}"
-                              required
-                              (keypress)="utilsService.keyPressNumbers($event)"
-                              [formControl]="regTcpForm.get('phone')"
-                            />
-
-                            <mat-error *ngIf="regTcpForm.controls['phoneCel'].hasError('pattern')">
-                              {{ 'Teléfono fijo' | translate }}&nbsp;<strong>{{ 'is required' | translate }}</strong>
-                            </mat-error>
-                          </mat-form-field>
                         </div>
+
+                        <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline">
+                          <mat-label>{{ 'Teléfono fijo' | translate }}</mat-label>
+                          <input
+                            matInput
+                            placeholder="{{ 'Teléfono fijo' | translate }}"
+                            required
+                            (keypress)="utilsService.keyPressNumbers($event)"
+                            [formControl]="regTcpForm.get('phone')"
+                          />
+
+                          <mat-error *ngIf="regTcpForm.controls['phoneCel'].hasError('pattern')">
+                            {{ 'Teléfono fijo' | translate }}&nbsp;<strong>{{ 'is required' | translate }}</strong>
+                          </mat-error>
+                        </mat-form-field>
 
                         <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline" class="mt-2">
                           <mat-label>{{ 'Actividad que desarrolla' | translate }}</mat-label>
@@ -874,22 +883,22 @@
                         }}</strong>
                       </mat-error>
                     </mat-form-field>
-
-                    <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline">
-                      <mat-label>{{ 'Teléfono fijo' | translate }}</mat-label>
-                      <input
-                        matInput
-                        placeholder="{{ 'Teléfono fijo' | translate }}"
-                        required
-                        (keypress)="utilsService.keyPressNumbers($event)"
-                        [formControl]="regTcpForm.get('phone')"
-                      />
-
-                      <mat-error *ngIf="regTcpForm.controls['phoneCel'].hasError('pattern')">
-                        {{ 'Teléfono fijo' | translate }}&nbsp;<strong>{{ 'is required' | translate }}</strong>
-                      </mat-error>
-                    </mat-form-field>
                   </div>
+
+                  <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline">
+                    <mat-label>{{ 'Teléfono fijo' | translate }}</mat-label>
+                    <input
+                      matInput
+                      placeholder="{{ 'Teléfono fijo' | translate }}"
+                      required
+                      (keypress)="utilsService.keyPressNumbers($event)"
+                      [formControl]="regTcpForm.get('phone')"
+                    />
+
+                    <mat-error *ngIf="regTcpForm.controls['phoneCel'].hasError('pattern')">
+                      {{ 'Teléfono fijo' | translate }}&nbsp;<strong>{{ 'is required' | translate }}</strong>
+                    </mat-error>
+                  </mat-form-field>
 
                   <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline" class="mt-2">
                     <mat-label>{{ 'Actividad que desarrolla' | translate }}</mat-label>
@@ -1167,7 +1176,7 @@
                   </mat-form-field>
 
                   <div fxLayout='row' fxLayoutGap='8px' fxFlex="48" class='w-100' fxFlex.lt-md="100">
-                    <guachos-general-autocomplete fxFlex="28" [withoutPaddingBottom]="false" [label]="'Código'"
+                    <guachos-general-autocomplete fxFlex="28" [withoutPaddingBottom]="false" [label]="'Código telefónico'"
                                                   [valueId]="true"
                                                   fxFlex.lt-md="28"
                                                   [displayOptions]="callingCodeDisplayOptions" [field]="['code']"
@@ -1176,7 +1185,7 @@
                                                   [formControl]="registrationForm.get('PhoneCallingCodeId')"></guachos-general-autocomplete>
 
                     <mat-form-field appearance="outline" fxFlex="70" fxFlex.lt-md="70" id="phone">
-                      <mat-label>{{ 'Teléfono (opcional)' | translate }}</mat-label>
+                      <mat-label>{{ 'Teléfono celular' | translate }}</mat-label>
 <!--                      <span class="mr-2" matPrefix>+ 53</span>-->
                       <input
                         (keypress)="utilsService.keyPressNumbers($event)"
