@@ -11,6 +11,8 @@ import { ShowToastrService } from '../../../core/services/show-toastr/show-toast
 import { UtilsService } from '../../../core/services/utils/utils.service';
 import { CUBAN_PHONE_START_5, EMAIL_REGEX, PASS_CLIENT_REGEX } from '../../../core/classes/regex.const';
 import { PhoneCodeService } from '../../../core/services/phone-code/phone-codes.service';
+import { CartService } from '../../shared/services/cart.service';
+import { Cart } from '../../../modals/cart-item';
 
 @Component({
   selector: 'app-my-account',
@@ -30,6 +32,7 @@ export class MyAccountComponent implements OnInit {
   redirectToOriginPage: string;
   paramsToRedirect: any;
   urlToRedirect: any;
+  dataToCart: any;
   inLoading = false;
   loginForm: UntypedFormGroup;
   formPass: UntypedFormGroup;
@@ -96,6 +99,7 @@ export class MyAccountComponent implements OnInit {
     private loggedInUserService: LoggedInUserService,
     public phoneCodesService: PhoneCodeService,
     public utilsService: UtilsService,
+    private cartService: CartService,
   ) {
     this.message = '';
     this.isRegisterToPay = !!localStorage.getItem('isRegisterToPay');
@@ -141,8 +145,20 @@ export class MyAccountComponent implements OnInit {
       this.redirectToOriginPage = data.redirectToOriginPage;
       this.paramsToRedirect = data.paramsToRedirect;
       this.urlToRedirect = data.urlToRedirect;
+      if (JSON.parse(data.addToCart)) {
+        this.dataToCart = this.cartService.getDataToAddToCart();
+        console.log(this.dataToCart);
+      }
+      // this.dataToCart = {
+      //   goToPay: JSON.parse(data.goToPay),
+      //   addToCart: JSON.parse(data.addToCart),
+      //   product: data.product,
+      //   counter: JSON.parse(data.counter),
+      // };
+      // console.log(this.dataToCart);
     });
   }
+
 
   paramsVerifyPositionModal(data) {
     const viewPositionOfModal = {
@@ -416,11 +432,43 @@ export class MyAccountComponent implements OnInit {
             /** URL with params **/
             if (this.paramsToRedirect) {
               let tempParams = JSON.parse(this.paramsToRedirect);
-              this.router
-                .navigate([this.redirectToOriginPage], {
-                  queryParams: { ...tempParams.params },
-                })
-                .then();
+              if (this.dataToCart?.addToCart) {
+                if (this.dataToCart?.goToPay) {
+                  this.cartService.addToCart(this.dataToCart.product, this.dataToCart.counter).then((carts: Cart[]) => {
+                    console.log(carts);
+                    for (let cart of carts) {
+                      let dataFind = cart.CartItems.find((cartItemx) => cartItemx?.ProductId == this.dataToCart.product.id);
+                      if (dataFind != undefined) {
+                        let cartId = cart?.id;
+                        let BusinessId = cart.BusinessId;
+                        let cartIds = cart?.CartItems ? cart?.CartItems.map((i) => i.id) : cart.CartItems.map((i) => i.id);
+                        console.log(cartIds);
+                        this.router.navigate(['/checkout'], { queryParams: { cartId, cartIds, BusinessId } }).then();
+                        return;
+                      }
+                    }
+                  });
+                 // await carts = this.loggedInUserService._getDataFromStorage('cartItem') || [];
+                 //  console.log(carts);
+                  // const cartId =
+                  // this.router.navigate(['/checkout'], { queryParams: { cartId, cartIds, BusinessId } }).then();
+                } else {
+                  console.log('entrooooooo');
+                  this.cartService.addToCart(this.dataToCart.product, this.dataToCart.counter).then();
+                  this.router
+                    .navigate([this.redirectToOriginPage], {
+                      queryParams: { ...tempParams.params },
+                    })
+                    .then();
+                }
+              } else {
+                this.router
+                  .navigate([this.redirectToOriginPage], {
+                    queryParams: { ...tempParams.params },
+                  })
+                  .then();
+              }
+
             } else {
               this.router.navigate([this.redirectToOriginPage]).then();
             }
