@@ -28,6 +28,9 @@ export class ParsePriceProduct implements PipeTransform {
           break;
         }
       }
+      if (product?.currencies) {
+        currency = 'USD/MLC';
+      }
     } else {
       if (product.market == MarketEnum.INTERNATIONAL) {
         currency = CoinEnum.USD;
