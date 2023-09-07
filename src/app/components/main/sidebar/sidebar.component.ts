@@ -1,5 +1,5 @@
 import { LoggedInUserService } from './../../../core/services/loggedInUser/logged-in-user.service';
-import { Component, HostBinding, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, HostBinding, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Subject } from 'rxjs';
@@ -25,6 +25,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
   @HostBinding('attr.aria-expanded') ariaExpanded;
   @Input() item: any;
   @Input() depth: number;
+
+  @Output() itemSelected = new EventEmitter<any>();
 
   isChildOfMeFlag = false;
 
@@ -70,6 +72,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
       if (!this.compareUrl(itemUrl, currentUrl)) {
         // this.ngProgress.start();
       }
+      this.itemSelected.next(true);
       this.router.navigate([item.route]);
     }
     if (item.children && item.children.length) {

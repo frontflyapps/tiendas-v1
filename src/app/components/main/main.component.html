@@ -1,4 +1,4 @@
-<mat-sidenav-container fullscreen *ngIf='businessConfig?.Business?.status !== "blockPayment"'>
+<mat-sidenav-container *ngIf='businessConfig?.Business?.status !== "blockPayment"'>
   <!-- Vista movil menu -->
   <mat-sidenav #start [opened]="false" class="DrawerMobileView" mode="over">
     <mat-list class="position-relative">
@@ -24,7 +24,7 @@
     <mat-divider></mat-divider>
 
     <div class='sidebar-nav-items' fxLayout='column' fxLayoutAlign='start stretch'>
-      <app-sidebar *ngFor='let item of navItems' [item]='item'></app-sidebar>
+      <app-sidebar *ngFor='let item of navItems' [item]='item' (itemSelected)='start.toggle()'></app-sidebar>
 <!--            <a mat-list-item class="link-nav-a" href="/become-a-seller">-->
 <!--              <mat-icon class="mr-3">card_membership</mat-icon>-->
 <!--              <span class="mat-body-2" style="font-size: 15px">{{ 'Crea tu negocio' | translate }}</span>-->
