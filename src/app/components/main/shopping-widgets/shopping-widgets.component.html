@@ -76,6 +76,7 @@
                     </p>
                   </div>
                 </ng-container>
+
                 <span *ngIf='!item.Product.offerValue'>{{ item.totalPrice | currencyProduct: item.Product.currency }}</span>
               </span>
 
@@ -91,7 +92,17 @@
               <a (click)='cartService.goToCheckout(cart)' class='my-2' color='primary'
                  mat-flat-button>{{ 'Ir a Pagar' | translate }}</a>
             </p>
-            <span>{{ getTotal(cart) | currencyMarket: cart.market }}</span>
+            <div fxLayout='column'>
+              <p class='deletePrice m-0' fxLayout='row' *ngIf='cart?.offerGiftDiscount?.discountGift > 0'>
+                <del>{{ cart?.offerGiftDiscount.totalPrice | currencyMarket: cart.market }}</del>
+                <span class='offer ml-2 mt-0' fxLayout='row' style='margin-top: 0px !important;'>
+                        <span class='mx-0 px-0'>-</span>
+                        <span class='mx-0 px-0'>${{ cart.offerGiftDiscount.discountGift }}</span>
+                      </span>
+              </p>
+              <span>{{ getTotal(cart) | currencyMarket: cart.market }}</span>
+            </div>
+
           </div>
           <!--          <mat-divider class="mt-3"></mat-divider>-->
         </ng-container>

@@ -11,6 +11,8 @@ import { ShowToastrService } from '../../../core/services/show-toastr/show-toast
 import { UtilsService } from '../../../core/services/utils/utils.service';
 import { CUBAN_PHONE_START_5, EMAIL_REGEX, PASS_CLIENT_REGEX } from '../../../core/classes/regex.const';
 import { PhoneCodeService } from '../../../core/services/phone-code/phone-codes.service';
+import { CartService } from '../../shared/services/cart.service';
+import { Cart } from '../../../modals/cart-item';
 
 @Component({
   selector: 'app-my-account',
@@ -30,6 +32,7 @@ export class MyAccountComponent implements OnInit {
   redirectToOriginPage: string;
   paramsToRedirect: any;
   urlToRedirect: any;
+  dataToCart: any;
   inLoading = false;
   loginForm: UntypedFormGroup;
   formPass: UntypedFormGroup;
@@ -96,6 +99,7 @@ export class MyAccountComponent implements OnInit {
     private loggedInUserService: LoggedInUserService,
     public phoneCodesService: PhoneCodeService,
     public utilsService: UtilsService,
+    private cartService: CartService,
   ) {
     this.message = '';
     this.isRegisterToPay = !!localStorage.getItem('isRegisterToPay');
@@ -141,8 +145,20 @@ export class MyAccountComponent implements OnInit {
       this.redirectToOriginPage = data.redirectToOriginPage;
       this.paramsToRedirect = data.paramsToRedirect;
       this.urlToRedirect = data.urlToRedirect;
+      if (JSON.parse(data.addToCart)) {
+        this.dataToCart = this.cartService.getDataToAddToCart();
+        console.log(this.dataToCart);
+      }
+      // this.dataToCart = {
+      //   goToPay: JSON.parse(data.goToPay),
+      //   addToCart: JSON.parse(data.addToCart),
+      //   product: data.product,
+      //   counter: JSON.parse(data.counter),
+      // };
+      // console.log(this.dataToCart);
     });
   }
+
 
   paramsVerifyPositionModal(data) {
     const viewPositionOfModal = {
@@ -217,6 +233,10 @@ export class MyAccountComponent implements OnInit {
       this.changeToNewPassForm.controls['pin'].setValue(this.queryParams.pin);
       this.insertEmailPassForm.value.email = this.queryParams.email;
     }
+    if (this.queryParams.ref) {
+      console.log(this.queryParams);
+      this.registrationForm.controls['code'].setValue(this.queryParams.ref);
+    }
   }
 
   createForm() {
@@ -244,7 +264,8 @@ export class MyAccountComponent implements OnInit {
       this.registrationForm = this.fb.group({
         name: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
         lastname: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
-        phone: [null, []],
+        phone: [null, this.businessConfig.phoneRequired ? [Validators.required] : []],
+        code: [null, []],
         PhoneCallingCodeId: [null, []],
         address: [null, []],
         email: [null, [Validators.required, Validators.email, Validators.pattern(EMAIL_REGEX)]],
@@ -256,6 +277,7 @@ export class MyAccountComponent implements OnInit {
       this.regTcpForm = this.fb.group({
         name: [null, [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
         lastname: [null, [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
+        code: [null, []],
         ci: [
           null,
           [Validators.required, Validators.minLength(11), Validators.maxLength(11), Validators.pattern('^[0-9]*$')],
@@ -270,7 +292,7 @@ export class MyAccountComponent implements OnInit {
         ],
         activity: [null, [Validators.required]],
         phoneCel: [null, [Validators.pattern(CUBAN_PHONE_START_5), Validators.minLength(8), Validators.maxLength(8)]],
-        phone: [null, [Validators.minLength(8), Validators.maxLength(8)]],
+        phone: [null, this.businessConfig.phoneRequired ? [Validators.required, Validators.minLength(8), Validators.maxLength(8)] : [Validators.minLength(8), Validators.maxLength(8)]],
         address: [null, [Validators.required]],
         email: [null, [Validators.required, Validators.email, Validators.pattern(EMAIL_REGEX)]],
         passwords: this.fromPassRegister,
@@ -292,7 +314,9 @@ export class MyAccountComponent implements OnInit {
       this.registrationForm = this.fb.group({
         name: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
         lastname: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
-        phone: [null, [Validators.pattern(CUBAN_PHONE_START_5), Validators.minLength(8), Validators.maxLength(8)]],
+        code: [null, []],
+        PhoneCallingCodeId: [null, []],
+        phone: [null, this.businessConfig.phoneRequired ? [Validators.required, Validators.minLength(8), Validators.maxLength(8)] : [Validators.minLength(8), Validators.maxLength(8)]],
         address: [null, []],
         email: [null, [Validators.required, Validators.email, Validators.pattern(EMAIL_REGEX)]],
         passwords: this.fromPassRegister,
@@ -301,6 +325,7 @@ export class MyAccountComponent implements OnInit {
       this.regTcpForm = this.fb.group({
         name: [null, [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
         lastname: [null, [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
+        code: [null, []],
         ci: [
           null,
           [Validators.required, Validators.minLength(11), Validators.maxLength(11), Validators.pattern('^[0-9]*$')],
@@ -315,7 +340,8 @@ export class MyAccountComponent implements OnInit {
         ],
         activity: [null, [Validators.required]],
         phoneCel: [null, [Validators.pattern(CUBAN_PHONE_START_5), Validators.minLength(8), Validators.maxLength(8)]],
-        phone: [null, [Validators.minLength(8), Validators.maxLength(8)]],
+        phone: [null, this.businessConfig.phoneRequired ? [Validators.required, Validators.minLength(8), Validators.maxLength(8)] : [Validators.minLength(8), Validators.maxLength(8)]],
+        PhoneCallingCodeId: [null, []],
         address: [null, [Validators.required]],
         email: [null, [Validators.required, Validators.email, Validators.pattern(EMAIL_REGEX)]],
         passwords: this.fromPassRegister,
@@ -334,8 +360,9 @@ export class MyAccountComponent implements OnInit {
       this.registrationForm = this.fb.group({
         name: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
         lastname: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
-        phone: [null, [Validators.pattern(CUBAN_PHONE_START_5), Validators.minLength(8), Validators.maxLength(8)]],
+        phone: [null, this.businessConfig.phoneRequired ? [Validators.required] : []],
         address: [null, []],
+        PhoneCallingCodeId: [null, []],
         email: [null, [Validators.required, Validators.email, Validators.pattern(EMAIL_REGEX)]],
         passwords: this.fromPassRegister,
         signUpType: ['normal']
@@ -405,11 +432,43 @@ export class MyAccountComponent implements OnInit {
             /** URL with params **/
             if (this.paramsToRedirect) {
               let tempParams = JSON.parse(this.paramsToRedirect);
-              this.router
-                .navigate([this.redirectToOriginPage], {
-                  queryParams: { ...tempParams.params },
-                })
-                .then();
+              if (this.dataToCart?.addToCart) {
+                if (this.dataToCart?.goToPay) {
+                  this.cartService.addToCart(this.dataToCart.product, this.dataToCart.counter).then((carts: Cart[]) => {
+                    console.log(carts);
+                    for (let cart of carts) {
+                      let dataFind = cart.CartItems.find((cartItemx) => cartItemx?.ProductId == this.dataToCart.product.id);
+                      if (dataFind != undefined) {
+                        let cartId = cart?.id;
+                        let BusinessId = cart.BusinessId;
+                        let cartIds = cart?.CartItems ? cart?.CartItems.map((i) => i.id) : cart.CartItems.map((i) => i.id);
+                        console.log(cartIds);
+                        this.router.navigate(['/checkout'], { queryParams: { cartId, cartIds, BusinessId } }).then();
+                        return;
+                      }
+                    }
+                  });
+                 // await carts = this.loggedInUserService._getDataFromStorage('cartItem') || [];
+                 //  console.log(carts);
+                  // const cartId =
+                  // this.router.navigate(['/checkout'], { queryParams: { cartId, cartIds, BusinessId } }).then();
+                } else {
+                  console.log('entrooooooo');
+                  this.cartService.addToCart(this.dataToCart.product, this.dataToCart.counter).then();
+                  this.router
+                    .navigate([this.redirectToOriginPage], {
+                      queryParams: { ...tempParams.params },
+                    })
+                    .then();
+                }
+              } else {
+                this.router
+                  .navigate([this.redirectToOriginPage], {
+                    queryParams: { ...tempParams.params },
+                  })
+                  .then();
+              }
+
             } else {
               this.router.navigate([this.redirectToOriginPage]).then();
             }
@@ -501,6 +560,7 @@ export class MyAccountComponent implements OnInit {
     data.password = data.passwords.password;
     data.lastName = data.lastname;
     data.role = 'Client';
+    console.log(data);
     let token = localStorage.getItem('token');
     if (token != undefined) {
       data.token = token;
@@ -511,7 +571,7 @@ export class MyAccountComponent implements OnInit {
     this.showLoginForm = false;
     this.showResetPassForm = false;
     this.showRegistrationForm = true;
-
+    //
     this.authService.singUp(data).subscribe({
       next: (result) => {
         this.toastr.showInfo(

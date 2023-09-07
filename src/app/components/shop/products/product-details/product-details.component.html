@@ -360,7 +360,7 @@
                 </button>
 
                 <button
-                  (click)='buyNow(product, 1)'
+                  (click)='onGoToCheckouNav()'
                   class='btn-custom my-2 w-100'
                   color='primary'
                   mat-raised-button
@@ -396,6 +396,21 @@
                 &nbsp;
                 {{ typesProducts[product.type].name.es }}
               </p>-->
+            </div>
+          </mat-tab>
+          <mat-tab label="{{ 'Ficha técnica' | translate }}" *ngIf='product?.dataSheetUrl && product?.dataSheetUrl !== null'>
+            <div class='full-desc text-muted' fxLayout='row' fxLayoutAlign='center center' fxLayoutGap='1rem'>
+              <span>{{product?.dataSheetName}}</span>
+              <button
+                (click)="downloadFile(product)"
+                aria-label="Download Data Sheet"
+                class="mr-2"
+                color="primary"
+                mat-mini-fab
+              >
+                <mat-icon>file_download</mat-icon>
+              </button>
+<!--              <a id="downloadLink" style="display: none;"></a>-->
             </div>
           </mat-tab>
           <mat-tab *ngIf='loggedInUser' label="{{ 'Reviews' | translate }}">
@@ -642,34 +657,34 @@
         </a>
 
         <mat-divider class='my-2'></mat-divider>
-        <section *ngIf='!isLoading' fxHide.lt-md>
-          <share-button
-            [description]="this.product?.name?.es + ': \n' + this.product?.shortDescription?.es"
-            [title]='this.product?.name?.es'
-            button='facebook'
-          >
-          </share-button>
-          <share-button
-            [description]="this.product?.name?.es + ': \n' + this.product?.shortDescription?.es"
-            [title]='this.product?.name?.es'
-            button='whatsapp'
-          >
-          </share-button>
-          <share-button
-            [description]="this.product?.name?.es + ': \n' + this.product?.shortDescription?.es"
-            [title]='this.product?.name?.es'
-            button='telegram'
-          >
-          </share-button>
-          <share-button
-            [description]="this.product?.name?.es + ': \n' + this.product?.shortDescription?.es"
-            [image]='this.mainImage?.image'
-            [title]='this.product?.name?.es'
-            button='email'
-          >
-          </share-button>
-        </section>
-        <mat-divider fxHide.lt-md class='my-2'></mat-divider>
+<!--        <section *ngIf='!isLoading' fxHide.lt-md>-->
+<!--          <share-button-->
+<!--            [description]="this.product?.name?.es + ': \n' + this.product?.shortDescription?.es"-->
+<!--            [title]='this.product?.name?.es'-->
+<!--            button='facebook'-->
+<!--          >-->
+<!--          </share-button>-->
+<!--          <share-button-->
+<!--            [description]="this.product?.name?.es + ': \n' + this.product?.shortDescription?.es"-->
+<!--            [title]='this.product?.name?.es'-->
+<!--            button='whatsapp'-->
+<!--          >-->
+<!--          </share-button>-->
+<!--          <share-button-->
+<!--            [description]="this.product?.name?.es + ': \n' + this.product?.shortDescription?.es"-->
+<!--            [title]='this.product?.name?.es'-->
+<!--            button='telegram'-->
+<!--          >-->
+<!--          </share-button>-->
+<!--          <share-button-->
+<!--            [description]="this.product?.name?.es + ': \n' + this.product?.shortDescription?.es"-->
+<!--            [image]='this.mainImage?.image'-->
+<!--            [title]='this.product?.name?.es'-->
+<!--            button='email'-->
+<!--          >-->
+<!--          </share-button>-->
+<!--        </section>-->
+<!--        <mat-divider fxHide.lt-md class='my-2'></mat-divider>-->
       </div>
 
       <ng-template #providerDetails>

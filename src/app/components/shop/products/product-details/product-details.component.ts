@@ -450,6 +450,18 @@ export class ProductDetailsComponent implements OnInit, OnDestroy, AfterViewInit
     };
   }
 
+  downloadFile(product) {
+    // const filePath = product;
+    // const fileUrl = this.imageUrl + product.dataSheetUrl;
+    // const fileName = product.dataSheetName;
+
+    const link = document.createElement('a');
+    link.href = this.imageUrl + product.dataSheetUrl;
+    link.download = product.dataSheetName;
+    link.click();
+
+  }
+
   addLenses(product: any, quantity) {
     if (this.loggedInUserService.getLoggedInUser()) {
       const dialogRef = this.dialog.open(DialogPrescriptionComponent, {
@@ -482,13 +494,20 @@ export class ProductDetailsComponent implements OnInit, OnDestroy, AfterViewInit
   public addToCart(product: any, quantity) {
     console.log('entro aki');
     console.log(product);
+    const dataToSend = {
+      goToPay: false,
+      addToCart: true,
+      counter: this.counter,
+      product: this.product
+    };
       if (this.loggedInUserService.getLoggedInUser()) {
         if (quantity === 0) {
           return false;
         }
         this.cartService.addToCart(product, Math.max(product.minSale, quantity)).then();
       } else {
-        this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
+        this.cartService.saveDataToAddToCart(dataToSend);
+        this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect, dataToSend);
       }
   }
 
@@ -613,9 +632,17 @@ export class ProductDetailsComponent implements OnInit, OnDestroy, AfterViewInit
       //     this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
       //   }
       // } else {
+      const dataToSend = {
+        goToPay: false,
+        addToCart: true,
+        counter: this.counter,
+        product: this.product
+      };
+
         if (this.loggedInUserService.getLoggedInUser()) {
           this.cartService.addToCart(this.product, this.counter).then();
         } else {
+          this.cartService.saveDataToAddToCart(dataToSend);
           this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
         }
       // }
@@ -624,12 +651,33 @@ export class ProductDetailsComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   onAddtoCompListNav() {
-    this.productsService.addToCompare(this.product);
-    this.router.navigate(['/pages/compare']);
+    // this.productsService.addToCompare(this.product);
+    // this.router.navigate(['/pages/compare']);
+    // let ruta = this.route.snapshot.routeConfig.path;
+
+    console.log(this.route.snapshot.routeConfig.path.includes('checkout'));
   }
 
   onGoToCheckouNav() {
-    this.buyNow(this.product, 1);
+    const dataToSend = {
+      goToPay: true,
+      addToCart: true,
+      counter: this.counter,
+      product: this.product
+    };
+    if (this.loggedInUserService.getLoggedInUser()) {
+      this.buyNow(this.product, this.counter);
+    } else {
+      console.log(this.pathToRedirect);
+      console.log(this.paramsToUrlRedirect);
+      // this.paramsToUrlRedirect.params.counter = this.counter;
+      // this.paramsToUrlRedirect.goToPay = true;
+      this.paramsToUrlRedirect.addToCart = true;
+      console.log(this.paramsToUrlRedirect);
+      this.cartService.saveDataToAddToCart(dataToSend);
+      this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect, dataToSend);
+    }
+
   }
 
   onShareProduct() {

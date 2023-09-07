@@ -379,7 +379,10 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
           this.loggedInUserService.$loggedInUserUpdated.next(null);
           const message = this.translate.instant('User successfully unlogged');
           this.showSnackbBar.showSucces(message, 5000);
-          this.router.navigate(['']).then();
+          if (this.route.snapshot.queryParams?.cartId) {
+            this.router.navigate(['']).then();
+          }
+
           this.socketIoService.disconnect();
         },
         (err) => {

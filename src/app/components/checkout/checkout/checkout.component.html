@@ -193,7 +193,7 @@
                 *ngIf="form.get('paymentType').value?.length !== 1 && form.get('paymentType').value?.length !== 2 && form.get('paymentType').value?.length !== 3 && form.get('paymentType').value?.length !== 4"
                 [formControl]="form.get('shippingRequired')"
               >
-                <span class="mat-body-2">{{ 'Solicitar envío' | translate }}</span>
+                <span class="mat-body-2">{{ 'Solicitar envío a domicilio' | translate }}</span>
               </mat-checkbox>
             </div>
 
@@ -586,7 +586,7 @@
                 </div>
               </ng-container>
 
-              <div formGroupName="address" *ngIf='canBeDelivery && showAddress'>
+              <div formGroupName="address" *ngIf='canBeDelivery || showAddress'>
                 <div fxLayout="row" fxLayoutGap="10px">
                   <mat-form-field fxFlex="80" appearance="outline">
                     <mat-label>{{ 'Calle' | translate }}</mat-label>
@@ -651,7 +651,7 @@
                 </mat-form-field>
 
                 <div fxLayout='row' fxLayoutGap='8px' fxFlex="48" class='w-100' fxFlex.lt-md="100">
-                  <guachos-general-autocomplete fxFlex="28" [withoutPaddingBottom]="false" [label]="'Código'"
+                  <guachos-general-autocomplete fxFlex="30" [withoutPaddingBottom]="false" [label]="'Código telefónico'"
                                                 [valueId]="true"
                                                 fxFlex.lt-md="28"
                                                 [displayOptions]="callingCodeDisplayOptions" [field]="['code']"
@@ -659,8 +659,8 @@
                                                 [url]="phoneCodesService.url"
                                                 [formControl]="form.get('PhoneCallingCodeId')"></guachos-general-autocomplete>
 
-                  <mat-form-field appearance="outline" fxFlex="70" fxFlex.lt-md="70" id="phone">
-                    <mat-label>{{ 'Teléfono' | translate }}</mat-label>
+                  <mat-form-field appearance="outline" fxFlex="68" fxFlex.lt-md="70" id="phone">
+                    <mat-label>{{ 'Teléfono celular' | translate }}</mat-label>
                     <!--                      <span class="mr-2" matPrefix>+ 53</span>-->
                     <input
                       (keypress)="utilsService.keyPressNumbers($event)"
@@ -844,12 +844,24 @@
                   <li class="empty-checkout">{{ 'There are no products in cart' | translate }}</li>
                 </ul>
 
-                <ul *ngIf="!loadingCart && showShipping" class="total-amount">
+                <ul *ngIf='!loadingCart && showShipping' class='total-amount'>
                   <li>
                     {{ 'Subtotal' | translate }}:
+<!--                    <span style='font-size: 20px'></span>-->
+
                     <span class="amount px-2">{{
                       getTotalAmountCurrency() | currencyProduct: form.controls['currency'].value
-                    }}</span>
+                      }}</span>
+                  </li>
+                </ul>
+
+                <!-- ============================================ -->
+                <!-- DESCUENTO APLICADO -->
+                <ul *ngIf='!loadingCart && showShipping' class='total-amount'>
+                  <li>
+                    {{ 'Descuento aplicado' | translate }}:
+<!--                    <span style='font-size: 20px'></span>-->
+                    <span class='amount px-2'>{{ cart.offerGiftDiscount.discountGift | currencyProduct: form.controls['currency'].value}}</span>
                   </li>
                 </ul>
 
@@ -968,6 +980,16 @@
                     style="border-radius: 4px"
                   ></div>
                 </ng-container>
+
+
+                <!-- DESCUENTO APLICADO -->
+                <ul class='total-amount' *ngIf='!showShipping'>
+                  <li>
+                    {{ 'Descuento aplicado' | translate }}:
+<!--                    <span></span>-->
+                    <span class='amount px-2'>{{ cart.offerGiftDiscount.discountGift | currencyProduct: form.controls['currency'].value}}</span>
+                  </li>
+                </ul>
 
 
                 <!-- =====TOTAL=====-->
