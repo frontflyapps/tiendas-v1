@@ -360,7 +360,7 @@
                 </button>
 
                 <button
-                  (click)='buyNow(product, 1)'
+                  (click)='onGoToCheckouNav()'
                   class='btn-custom my-2 w-100'
                   color='primary'
                   mat-raised-button
@@ -657,34 +657,34 @@
         </a>
 
         <mat-divider class='my-2'></mat-divider>
-        <section *ngIf='!isLoading' fxHide.lt-md>
-          <share-button
-            [description]="this.product?.name?.es + ': \n' + this.product?.shortDescription?.es"
-            [title]='this.product?.name?.es'
-            button='facebook'
-          >
-          </share-button>
-          <share-button
-            [description]="this.product?.name?.es + ': \n' + this.product?.shortDescription?.es"
-            [title]='this.product?.name?.es'
-            button='whatsapp'
-          >
-          </share-button>
-          <share-button
-            [description]="this.product?.name?.es + ': \n' + this.product?.shortDescription?.es"
-            [title]='this.product?.name?.es'
-            button='telegram'
-          >
-          </share-button>
-          <share-button
-            [description]="this.product?.name?.es + ': \n' + this.product?.shortDescription?.es"
-            [image]='this.mainImage?.image'
-            [title]='this.product?.name?.es'
-            button='email'
-          >
-          </share-button>
-        </section>
-        <mat-divider fxHide.lt-md class='my-2'></mat-divider>
+<!--        <section *ngIf='!isLoading' fxHide.lt-md>-->
+<!--          <share-button-->
+<!--            [description]="this.product?.name?.es + ': \n' + this.product?.shortDescription?.es"-->
+<!--            [title]='this.product?.name?.es'-->
+<!--            button='facebook'-->
+<!--          >-->
+<!--          </share-button>-->
+<!--          <share-button-->
+<!--            [description]="this.product?.name?.es + ': \n' + this.product?.shortDescription?.es"-->
+<!--            [title]='this.product?.name?.es'-->
+<!--            button='whatsapp'-->
+<!--          >-->
+<!--          </share-button>-->
+<!--          <share-button-->
+<!--            [description]="this.product?.name?.es + ': \n' + this.product?.shortDescription?.es"-->
+<!--            [title]='this.product?.name?.es'-->
+<!--            button='telegram'-->
+<!--          >-->
+<!--          </share-button>-->
+<!--          <share-button-->
+<!--            [description]="this.product?.name?.es + ': \n' + this.product?.shortDescription?.es"-->
+<!--            [image]='this.mainImage?.image'-->
+<!--            [title]='this.product?.name?.es'-->
+<!--            button='email'-->
+<!--          >-->
+<!--          </share-button>-->
+<!--        </section>-->
+<!--        <mat-divider fxHide.lt-md class='my-2'></mat-divider>-->
       </div>
 
       <ng-template #providerDetails>

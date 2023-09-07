@@ -494,13 +494,20 @@ export class ProductDetailsComponent implements OnInit, OnDestroy, AfterViewInit
   public addToCart(product: any, quantity) {
     console.log('entro aki');
     console.log(product);
+    const dataToSend = {
+      goToPay: false,
+      addToCart: true,
+      counter: this.counter,
+      product: this.product
+    };
       if (this.loggedInUserService.getLoggedInUser()) {
         if (quantity === 0) {
           return false;
         }
         this.cartService.addToCart(product, Math.max(product.minSale, quantity)).then();
       } else {
-        this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
+        this.cartService.saveDataToAddToCart(dataToSend);
+        this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect, dataToSend);
       }
   }
 
@@ -625,9 +632,17 @@ export class ProductDetailsComponent implements OnInit, OnDestroy, AfterViewInit
       //     this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
       //   }
       // } else {
+      const dataToSend = {
+        goToPay: false,
+        addToCart: true,
+        counter: this.counter,
+        product: this.product
+      };
+
         if (this.loggedInUserService.getLoggedInUser()) {
           this.cartService.addToCart(this.product, this.counter).then();
         } else {
+          this.cartService.saveDataToAddToCart(dataToSend);
           this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect);
         }
       // }
@@ -636,12 +651,33 @@ export class ProductDetailsComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   onAddtoCompListNav() {
-    this.productsService.addToCompare(this.product);
-    this.router.navigate(['/pages/compare']);
+    // this.productsService.addToCompare(this.product);
+    // this.router.navigate(['/pages/compare']);
+    // let ruta = this.route.snapshot.routeConfig.path;
+
+    console.log(this.route.snapshot.routeConfig.path.includes('checkout'));
   }
 
   onGoToCheckouNav() {
-    this.buyNow(this.product, 1);
+    const dataToSend = {
+      goToPay: true,
+      addToCart: true,
+      counter: this.counter,
+      product: this.product
+    };
+    if (this.loggedInUserService.getLoggedInUser()) {
+      this.buyNow(this.product, this.counter);
+    } else {
+      console.log(this.pathToRedirect);
+      console.log(this.paramsToUrlRedirect);
+      // this.paramsToUrlRedirect.params.counter = this.counter;
+      // this.paramsToUrlRedirect.goToPay = true;
+      this.paramsToUrlRedirect.addToCart = true;
+      console.log(this.paramsToUrlRedirect);
+      this.cartService.saveDataToAddToCart(dataToSend);
+      this.cartService.redirectToLoginWithOrigin(this.pathToRedirect, this.paramsToUrlRedirect, dataToSend);
+    }
+
   }
 
   onShareProduct() {
