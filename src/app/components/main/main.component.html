@@ -435,7 +435,7 @@
 
         <a [routerLink]="['/shops-list']" *ngIf='businessConfig?.canShowOurBussiness' class='itemCategory' mat-button routerLinkActive='router-link-active'>
           {{ 'Nuestras tiendas' | translate }}</a>
-        <a [routerLink]="['/products/search']" class='itemCategory' mat-button routerLinkActive='router-link-active'>
+        <a [routerLink]="['/products/search']" class='itemCategory' mat-button routerLinkActive='router-link-active' *ngIf='businessConfig.showAllProducts'>
           {{ 'Todos los productos' | translate }}</a>
 
         <!--        routerLinkActive="router-link-active"-->
