@@ -312,7 +312,7 @@
             <span class="mat-body-1">{{ 'Mis órdenes' | translate }}</span>
           </button>
 
-          <button [routerLink]="['/referred']" mat-menu-item>
+          <button [routerLink]="['/referred']" mat-menu-item *ngIf='businessConfig?.giftRulesReferrer'>
             <mat-icon>person_add</mat-icon>
             <span class="mat-body-1">{{ 'Referidos' | translate }}</span>
           </button>
