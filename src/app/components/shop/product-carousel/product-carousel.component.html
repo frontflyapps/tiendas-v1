@@ -60,7 +60,7 @@
             </a>
 
             <div fxLayout="row" fxLayoutAlign="end end">
-              <span class='coming-soon-text' *ngIf='product.status === "comingSoon"'>{{ 'Próximamente' | translate }}</span>
+              <span class='coming-soon-text' *ngIf='product.status === "comingSoon"' style='margin-top: 2rem'>{{ 'Próximamente' | translate }}</span>
             </div>
 
             <div class="price" *ngIf='product.status !== "comingSoon"'>
