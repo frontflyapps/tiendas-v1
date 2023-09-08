@@ -29,7 +29,11 @@ export class ParsePriceProduct implements PipeTransform {
         }
       }
       if (product?.currencies) {
-        currency = 'USD/MLC';
+        if (product?.currencies.length > 1) {
+          currency = 'USD/MLC';
+        } else {
+          currency = product?.currencies;
+        }
       }
     } else {
       if (product.market == MarketEnum.INTERNATIONAL) {
