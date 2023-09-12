@@ -29,11 +29,10 @@
               <h3 class='price mb-10'>{{ product | parsePriceProduct }}</h3>
               <span
                 class='location-span'
-                *ngIf='showLocationSpan'
               ><mat-icon>room</mat-icon>&nbsp;<strong>{{
                 product.Business?.Province?.name | parseLang: utilsService.getLang()
                 }}</strong
-              >, {{ product.Business?.Municipality?.name | parseLang: utilsService.getLang() }}</span
+              >, {{ showLocationSpan ? ', ' +  product.Business?.Municipality?.name : '' | parseLang: utilsService.getLang() }}</span
               >
             </div>
           </div>
@@ -170,11 +169,10 @@
                 <h3 class='price mb-10'>{{ product | parsePriceProduct }}</h3>
                 <span
                   class='location-span'
-                  *ngIf='showLocationSpan'
                 ><mat-icon>room</mat-icon>&nbsp;<strong>{{
                   product.Business?.Province?.name | parseLang: utilsService.getLang()
                   }}</strong
-                >, {{ product.Business?.Municipality?.name | parseLang: utilsService.getLang() }}</span
+                >, {{ showLocationSpan ? ', ' +  product.Business?.Municipality?.name : '' | parseLang: utilsService.getLang() }}</span
                 >
               </div>
               <div *ngIf='!loadingRelated'>
