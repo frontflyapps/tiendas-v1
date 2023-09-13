@@ -152,6 +152,8 @@ export class ProductDetailsComponent implements OnInit, OnDestroy, AfterViewInit
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
 
+    this.spinner.show();
+
     this.breakpointObserver
       .observe([
         Breakpoints.Medium,
@@ -174,12 +176,15 @@ export class ProductDetailsComponent implements OnInit, OnDestroy, AfterViewInit
       this.productsService.getProductById(productId, stockId).subscribe(
         (data) => {
           this.product = data.data;
+
+          this.spinner.hide();
           console.log(this.product);
           this.getProductsByBusiness(this.product?.BusinessId, this.query);
           this.initStateView();
           this.isLoading = false;
         },
         (error) => {
+          this.spinner.hide();
           this.isLoading = false;
           this.utilsService.errorHandle(error);
           this.errorPage = true;

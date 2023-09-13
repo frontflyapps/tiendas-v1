@@ -298,6 +298,12 @@
     object-position: center;
   }
 }
+h1 {
+  del {
+    color: $grey;
+    font-size: 17px;
+  }
+}
 
 .mini-images-container-selected {
   height: 50px;
@@ -357,6 +363,7 @@
     .product-details {
       padding-bottom: 8px;
       // border-bottom: 1px dashed $grey-light;
+
 
       .nameProduct {
         font-size: 24px !important;
