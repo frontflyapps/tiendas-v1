@@ -27,7 +27,8 @@
       {{'Comparte el código con tus amigos' | translate}}
     </div>
     <div fxFlex="20" fxLayoutAlign="start center">
-      <button mat-flat-button color="primary">{{'Compartir enlace'| translate}}
+      <button mat-flat-button color="primary" (click)="windowOpen()">
+        {{'Compartir enlace'| translate}}
       </button>
     </div>
   </div>

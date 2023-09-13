@@ -13,7 +13,8 @@ export class InviteFriendComponent implements OnInit {
   @Output() close: EventEmitter<any> = new EventEmitter();
 
   constructor(private showToastr: ShowToastrService,
-    private translateService: TranslateService) { }
+    private translateService: TranslateService,
+    private window: Window) { }
 
   ngOnInit(): void {
   }
@@ -22,6 +23,15 @@ export class InviteFriendComponent implements OnInit {
     this.userLinkReferred
       ? this.showToastr.showSucces(this.translateService.instant('Enlace copiado al portapapeles'))
       : this.showToastr.showError(this.translateService.instant('No existe enlace'));
+  }
+
+  windowOpen() {
+    if (!this.userLinkReferred) {
+      this.showToastr.showError(this.translateService.instant('No existe enlace'));
+      return;
+    }
+    const url = `mailto:?subject=Accede%20usando%20mi%20Link%20de%20refererido&body=${this.userLinkReferred.replace('&', '%26')}`
+    this.window.open(url);
   }
 
 }

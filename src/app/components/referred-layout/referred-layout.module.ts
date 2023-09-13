@@ -40,5 +40,8 @@ import { MyFriendsComponent } from './my-friends/my-friends.component';
     MatTooltipModule,
     ClipboardModule,
   ],
+  providers: [
+    { provide: Window, useValue: window }
+  ]
 })
 export class ReferredLayoutModule { }
