@@ -173,7 +173,7 @@ $red-600: mat-color(mat-palette($mat-red), 600);
   left: 0;
   bottom: 56px;
   right: 0;
-  background: rgba(0, 0, 0, 0.15) !important;
+  background: $theme-main-accent !important;
   z-index: 1024;
   display: flex;
   align-items: center;
@@ -189,6 +189,7 @@ $red-600: mat-color(mat-palette($mat-red), 600);
   bottom: 56px;
   right: 0;
   background: rgba(0, 0, 0, 0.48) !important;
+  color: $theme-main-accent !important;
   z-index: 1024;
   display: flex;
   align-items: center;
@@ -215,11 +216,18 @@ $red-600: mat-color(mat-palette($mat-red), 600);
   background-color: $theme-main-red !important;
   border-radius: 4px;
   color: white !important;
-  padding: 0px 4px 0px 4px;
-  font-size: 10px !important;
+  padding: 4px 8px 4px 8px;
+  font-size: 14px !important;
   span{
     color: white !important;
-    font-size: 10px !important;
+    font-size: 14px !important;
+  }
+  @media(min-width: 320px) and (max-width: 1024px) {
+      padding: 2px 8px 2px 8px !important;
+      font-size: 10px !important;
+      span {
+        font-size: 10px !important;
+      }
   }
 }
 

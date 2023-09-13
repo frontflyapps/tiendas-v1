@@ -71,6 +71,7 @@ import { DialogPrescriptionComponent } from './products/dialog-prescription/dial
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatRadioModule } from '@angular/material/radio';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -145,7 +146,8 @@ import { MatRadioModule } from '@angular/material/radio';
     LazyImgModule,
     MatToolbarModule,
     MatStepperModule,
-    MatRadioModule
+    MatRadioModule,
+    NgxSpinnerModule,
   ],
   providers: [
     {

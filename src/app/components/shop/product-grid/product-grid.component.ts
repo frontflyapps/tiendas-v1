@@ -26,6 +26,8 @@ export class ProductGridComponent implements OnInit, OnDestroy {
 
   language: any;
   _unsubscribeAll: Subject<any>;
+  businessConfig = JSON.parse(localStorage.getItem('business-config'));
+  showLocationSpan = this.businessConfig?.showLocationSpan;
   loggedInUser: any = null;
   imageUrl = environment.imageUrl;
 
