@@ -3,9 +3,10 @@
     <mat-icon>room</mat-icon>&nbsp;<strong>{{
       product.Business?.Province?.name | parseLang: utilsService.getLang()
     }}</strong
-    >, {{ showLocationSpan ? ', ' +  product.Business?.Municipality?.name : '' | parseLang: utilsService.getLang() }}
+    > {{ showLocationSpan ? ', ' + product.Business?.Municipality?.name : '' }}
   </span>
 </div>
+
 <div
   [id]="'ProductCardId' + product.id"
   fxLayout="column"
@@ -122,7 +123,7 @@
       <mat-icon>room</mat-icon>&nbsp;<strong>{{
         product.Business?.Province?.name | parseLang: utilsService.getLang()
       }}</strong
-      >, {{ showLocationSpan ? ', ' +  product.Business?.Municipality?.name : '' | parseLang: utilsService.getLang() }}
+      > {{ showLocationSpan ? ', ' +  product.Business?.Municipality?.name : '' }}
     </span>
   </div>
 </div>
