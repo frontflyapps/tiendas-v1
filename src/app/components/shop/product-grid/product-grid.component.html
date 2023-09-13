@@ -1,7 +1,16 @@
+
 <div fxHide fxShow.xs fxShow.sm fxLayout='column' class='product-container'>
   <h2 class='mb-2' style='color: initial; font-weight: 500' fxFlex='100'>{{ products.name | i18nField: translateService.currentLang  }}</h2>
   <div fxLayout='row wrap' fxLayoutAlign='space-between start' fxLayoutGap='gappx'>
     <div *ngFor='let product of products.value' class='container-product mb-2'>
+      <div *ngIf='product?.Business?.Province' class="location-label-sm" fxShow.lt-md fxHide>
+  <span>
+    <mat-icon>room</mat-icon>&nbsp;<strong>{{
+    product.Business?.Province?.name | parseLang: utilsService.getLang()
+    }}</strong
+  >
+  </span>
+      </div>
       <div *ngIf='inLoading' class='loading-shade-main' style='height: 100%; width: 100%'>
         <mat-spinner [diameter]='40'></mat-spinner>
       </div>
