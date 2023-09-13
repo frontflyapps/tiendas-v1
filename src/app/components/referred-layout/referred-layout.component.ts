@@ -6,6 +6,7 @@ import { environment } from '../../../environments/environment';
 import { ReferredService } from '../../core/services/referred/referred.service';
 import { LoggedInUserService } from '../../core/services/loggedInUser/logged-in-user.service';
 import { ShowToastrService } from '../../core/services/show-toastr/show-toastr.service';
+import { componentName } from './componentNameEnum';
 
 
 @Component({
@@ -19,37 +20,24 @@ export class ReferredLayoutComponent implements OnInit {
   form: UntypedFormGroup;
   urlLink = environment.url + 'my-account?modal=registration';
   data: any;
-  hasLink: boolean = true;
+  //hasLink: boolean = true;
   loading = false;
   loggedInUser: any = null;
+  userLinkReferred!: string;
+  componentName = componentName;
+  showinviteComponent = true;
 
   constructor(
-    private fb: UntypedFormBuilder,
-    private translateService: TranslateService,
-    private route: ActivatedRoute,
-    private router: RouterModule,
     private elementService: ReferredService,
     private loggedInUserService: LoggedInUserService,
-    private showToastr: ShowToastrService
   ) {
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
   }
 
   ngOnInit(): void {
     this.refreshData();
-    this.buildForm();
   }
 
-  buildForm() {
-    console.log(this.data?.Codes[0].code);
-    const url = this.urlLink + (this.data?.Codes.length > 0 ? this.data?.Codes[0].code : '');
-    this.form = this.fb.group({
-      link: [url , []],
-    });
-    console.log(url);
-    console.log(this.urlLink);
-    console.log(this.form.value);
-  }
 
   refreshData() {
     this.loading = true;
@@ -62,25 +50,22 @@ export class ReferredLayoutComponent implements OnInit {
         if (user) {
           this.data = user.data;
           if (this.data?.Codes.length > 0) {
-            this.form.get('link').setValue(this.urlLink + '&ref=' + this.data?.Codes[0].code);
+            this.userLinkReferred = this.urlLink + '&ref=' + this.data?.Codes[0].code;
           }
-          console.log(this.data);
-          this.hasLink = true;
-          this.loading = false;
-        } else {
-          this.hasLink = false;
-          this.loading = false;
         }
+        this.loading = false;
       },
       error: (error) => {
-        this.hasLink = false;
+        //this.hasLink = false;
         this.loading = false;
+        this.showinviteComponent = true;
       },
     });
   }
 
-  copyLink() {
-    this.showToastr.showSucces(this.translateService.instant('Enlace copiado al portapapeles'));
+  showComponent(componentName: componentName) {
+    this.showinviteComponent = componentName == this.componentName.InviteFriendComponent;
+    this.refreshData();
   }
 
 }
