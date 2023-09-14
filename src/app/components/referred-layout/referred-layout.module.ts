@@ -17,13 +17,17 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
 import { MatRippleModule } from '@angular/material/core';
 import { InviteFriendComponent } from './invite-friend/invite-friend.component';
 import { MyFriendsComponent } from './my-friends/my-friends.component';
+import { ShareButtonModule } from 'ngx-sharebuttons/button';
+import { ShareComponent } from './share/share.component';
+import { MatDividerModule } from '@angular/material/divider';
 
 
 @NgModule({
   declarations: [
     ReferredLayoutComponent,
     InviteFriendComponent,
-    MyFriendsComponent
+    MyFriendsComponent,
+    ShareComponent
   ],
   imports: [
     CommonModule,
@@ -39,9 +43,8 @@ import { MyFriendsComponent } from './my-friends/my-friends.component';
     MatCardModule,
     MatTooltipModule,
     ClipboardModule,
+    ShareButtonModule,
+    MatDividerModule
   ],
-  providers: [
-    { provide: Window, useValue: window }
-  ]
 })
 export class ReferredLayoutModule { }
