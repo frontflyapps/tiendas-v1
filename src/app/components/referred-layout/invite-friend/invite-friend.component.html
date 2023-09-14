@@ -1,0 +1,50 @@
+<div fxLayout='column' fxLayoutAlign="space-around center">
+  <!-- Get Link -->
+  <div fxLayout='column' fxLayout.gt-sm='row' fxLayoutAlign="center center" class='w-100 m-4'>
+    <div fxFlex="5" fxLayoutAlign="start center">
+      <button mat-fab color="primary" class="cursorNone" disableRipple>
+        <div style="font-size: x-large;">1</div>
+      </button>
+    </div>
+    <div fxFlex="20" fxLayoutAlign="start center">
+      {{'Obtén tu Código' | translate}}
+    </div>
+    <div fxFlex="20" fxLayoutAlign="start center">
+      <button mat-flat-button color="primary" (click)='copyLink()' [cdkCopyToClipboard]="userLinkReferred??''">
+        {{'Copiar enlace' | translate}}
+      </button>
+    </div>
+  </div>
+
+  <!-- Comparte -->
+  <div fxLayout='column' fxLayout.gt-sm='row' fxLayoutAlign="center center" class='w-100 m-4'>
+    <div fxFlex="5" fxLayoutAlign="start center">
+      <button mat-fab color="primary" class="cursorNone" disableRipple>
+        <div style="font-size: x-large;">2</div>
+      </button>
+    </div>
+    <div fxFlex="20" fxLayoutAlign="start center">
+      {{'Comparte el código con tus amigos' | translate}}
+    </div>
+    <div fxFlex="20" fxLayoutAlign="start center">
+      <button mat-flat-button color="primary" (click)="windowOpen()">
+        {{'Compartir enlace'| translate}}
+      </button>
+    </div>
+  </div>
+  <!-- Check -->
+  <div fxLayout='column' fxLayout.gt-sm='row' fxLayoutAlign="center center" class='w-100 m-4'>
+    <div fxFlex="5" fxLayoutAlign="start center">
+      <button mat-fab color="primary" class="cursorNone" disableRipple>
+        <div style="font-size: x-large;">3</div>
+      </button>
+    </div>
+    <div fxFlex="20" fxLayoutAlign="start center">
+      {{'Acumula Premios' | translate}}
+    </div>
+    <div fxFlex="20" fxLayoutAlign="start center">
+      <button mat-flat-button color="primary" (click)="close.emit();">{{'Check'| translate}}
+      </button>
+    </div>
+  </div>
+</div>
