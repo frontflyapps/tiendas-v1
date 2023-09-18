@@ -1,4 +1,4 @@
-<div *ngIf='!loading else loadingtemplate' class='m-4 contentSize'>
+<div class='m-4 contentSize'>
   <app-invite-friend *ngIf="showinviteComponent else friendComponent" [userLinkReferred]="userLinkReferred"
     (close)="showComponent(componentName.MyFriendsComponent)">
   </app-invite-friend>
@@ -10,8 +10,8 @@
   </ng-template>
 </div>
 <!-- Loading Section -->
-<ng-template #loadingtemplate>
-  <div fxLayout='row' fxLayoutAlign='center center' class="loadingSize">
-    <mat-spinner diameter="60" color="accent"></mat-spinner>
-  </div>
-</ng-template>
+<!--<ng-template #loadingtemplate>-->
+<!--  <div fxLayout='row' fxLayoutAlign='center center' class="loadingSize">-->
+<!--    <mat-spinner diameter="60" color="accent"></mat-spinner>-->
+<!--  </div>-->
+<!--</ng-template>-->

@@ -7,6 +7,7 @@ import { ReferredService } from '../../core/services/referred/referred.service';
 import { LoggedInUserService } from '../../core/services/loggedInUser/logged-in-user.service';
 import { ShowToastrService } from '../../core/services/show-toastr/show-toastr.service';
 import { componentName } from './componentNameEnum';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 
 @Component({
@@ -30,6 +31,7 @@ export class ReferredLayoutComponent implements OnInit {
   constructor(
     private elementService: ReferredService,
     private loggedInUserService: LoggedInUserService,
+    private spinner: NgxSpinnerService
   ) {
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
   }
@@ -40,6 +42,7 @@ export class ReferredLayoutComponent implements OnInit {
 
 
   refreshData() {
+    this.spinner.show();
     this.loading = true;
     console.log(this.loggedInUser);
     const data = {
@@ -53,9 +56,11 @@ export class ReferredLayoutComponent implements OnInit {
             this.userLinkReferred = this.urlLink + '&ref=' + this.data?.Codes[0].code;
           }
         }
+        this.spinner.hide();
         this.loading = false;
       },
       error: (error) => {
+        this.spinner.hide();
         //this.hasLink = false;
         this.loading = false;
         this.showinviteComponent = true;

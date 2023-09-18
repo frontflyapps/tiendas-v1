@@ -21,7 +21,7 @@ export class MyFriendsComponent implements OnInit {
 
   claim() {
     //TODO Logica de reclamar el premio
-    this.showToastr.showSucces(this.translateService.instant('Enhorabuena por ser un Parrandero mas. Nuestro equipo se pondrá en contacto con usted para la entrega de su premio...'));
+    this.showToastr.showSucces(this.translateService.instant('Enhorabuena por ser un Parrandero mas. Nuestro equipo se pondrá en contacto con usted para la entrega de su premio...'), this.translateService.instant('Congratulations'), 5000);
   }
 
 }
