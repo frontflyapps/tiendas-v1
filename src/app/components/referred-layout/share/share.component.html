@@ -1,0 +1,14 @@
+<div class="TEST">
+  <h3>{{'Compartir en:' | translate}}</h3>
+  <mat-divider class='my-2'></mat-divider>
+  <div (click)="openLink($event)" class='my-3' fxLayout='row wrap' fxLayoutAlign='start start' fxLayoutGap='gappx'>
+    <share-button *ngIf="facebook" [description]="data.description" [title]='data.title' button='facebook'>
+    </share-button>
+    <share-button *ngIf="whatsapp" [description]="data.description" [title]='data.title' button='whatsapp'>
+    </share-button>
+    <share-button *ngIf="telegram" [description]="data.description" [title]='data.title' button='telegram'>
+    </share-button>
+    <share-button *ngIf="email" [description]="data.description" [title]='data.title' button='email'>
+    </share-button>
+  </div>
+</div>

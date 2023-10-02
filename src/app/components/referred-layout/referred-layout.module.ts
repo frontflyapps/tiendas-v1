@@ -9,16 +9,25 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCardModule } from '@angular/material/card';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import { MatRippleModule } from '@angular/material/core';
+import { InviteFriendComponent } from './invite-friend/invite-friend.component';
+import { MyFriendsComponent } from './my-friends/my-friends.component';
+import { ShareButtonModule } from 'ngx-sharebuttons/button';
+import { ShareComponent } from './share/share.component';
+import { MatDividerModule } from '@angular/material/divider';
 
 
 @NgModule({
   declarations: [
-    ReferredLayoutComponent
+    ReferredLayoutComponent,
+    InviteFriendComponent,
+    MyFriendsComponent,
+    ShareComponent
   ],
   imports: [
     CommonModule,
@@ -34,6 +43,8 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
     MatCardModule,
     MatTooltipModule,
     ClipboardModule,
+    ShareButtonModule,
+    MatDividerModule
   ],
 })
 export class ReferredLayoutModule { }

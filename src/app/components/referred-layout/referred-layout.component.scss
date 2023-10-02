@@ -4,3 +4,17 @@
 .button-share {
   margin-bottom: 17px;
 }
+
+.contentSize {
+  min-height: 80vh;
+  max-height: 30rem;
+}
+
+.loadingSize {
+  min-height: 34rem;
+}
+
+::ng-deep button.cursorNone {
+  cursor: auto !important;
+  box-shadow: none !important;
+}

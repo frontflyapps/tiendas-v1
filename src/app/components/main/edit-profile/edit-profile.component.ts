@@ -99,8 +99,8 @@ export class EditProfileComponent implements OnInit {
       street: [this.loggedInUser && this.loggedInUser.address ? this.loggedInUser.address.street : null, []],
       number: [this.loggedInUser && this.loggedInUser.address ? this.loggedInUser.address.number : null, []],
       between: [this.loggedInUser && this.loggedInUser.address ? this.loggedInUser.address.between : null, []],
-      phone: [this.loggedInUser && this.loggedInUser.phone ? this.loggedInUser.phone : null,  this.businessConfig.phoneRequired ? [Validators.required, Validators.minLength(8)] : []],
-      PhoneCallingCodeId: [this.loggedInUser && this.loggedInUser?.PhoneCallingCodeId ? this.loggedInUser?.PhoneCallingCodeId : null, []],
+      phone: [this.loggedInUser && this.loggedInUser.phone ? this.loggedInUser.phone : null,  this.businessConfig.phoneRequired ? [Validators.required] : []],
+      PhoneCallingCodeId: [this.loggedInUser && this.loggedInUser?.PhoneCallingCodeId ? this.loggedInUser?.PhoneCallingCodeId : null, this.businessConfig.phoneRequired ? [Validators.required] : []],
       email: [
         this.loggedInUser && this.loggedInUser.email ? this.loggedInUser.email : null,
         [Validators.required, Validators.email],
