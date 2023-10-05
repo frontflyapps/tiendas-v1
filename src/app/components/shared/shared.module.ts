@@ -13,9 +13,14 @@ import { DialogCaptchaModule } from './dialog-captcha/dialog-captcha.module';
 import { DialogUploadMediaComponent } from './dialog-upload-media/dialog-upload-media.component';
 import { FileUploadModule } from './file-upload/file-upload.module';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { DialogPhoneComponent } from './dialog-phone/dialog-phone.component';
+import { GuachosGeneralAutocompleteModule } from 'guachos-general-autocomplete';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
-    declarations: [OrderByPipe, DialogUploadMediaComponent],
+    declarations: [OrderByPipe, DialogUploadMediaComponent, DialogPhoneComponent],
   imports: [
     ReactiveFormsModule,
     FormsModule,
@@ -29,6 +34,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     DialogCaptchaModule,
     FileUploadModule,
     MatToolbarModule,
+    GuachosGeneralAutocompleteModule,
+    MatAutocompleteModule,
+    MatFormFieldModule,
+    MatInputModule,
   ],
     exports: [
         ReactiveFormsModule,
@@ -37,6 +46,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
         RouterModule,
         MatButtonModule,
         MatDialogModule,
+      MatFormFieldModule,
+      MatInputModule,
         MatIconModule,
         FlexLayoutModule,
         TranslateModule,

@@ -1,0 +1,43 @@
+<div fxLayout='column' fxLayoutAlign='start start'>
+  <h2>{{'Introduzca su teléfono' | translate}}</h2>
+  <div fxLayout='row' fxLayoutGap='8px' fxFlex="48" class='w-100' fxFlex.lt-md="100" *ngIf='form'>
+    <guachos-general-autocomplete fxFlex="30" [withoutPaddingBottom]="false" [label]="'Código telefónico'"
+                                  [valueId]="true"
+                                  fxFlex.lt-md="28"
+                                  [displayOptions]="callingCodeDisplayOptions" [field]="['code']"
+                                  [filterString]="['filter[$and][code][$like]']"
+                                  [url]="phoneCodesService.url"
+                                  [formControl]="form.get('PhoneCallingCodeId')"></guachos-general-autocomplete>
+
+    <mat-form-field appearance="outline" fxFlex="68" fxFlex.lt-md="70" id="phone">
+      <mat-label>{{ 'Teléfono celular' | translate }}</mat-label>
+      <!--                      <span class="mr-2" matPrefix>+ 53</span>-->
+      <input
+        (keypress)="utilsService.keyPressNumbers($event)"
+        [formControl]="form.get('phone')"
+        matInput
+        autocomplete="off"
+        placeholder="{{ 'Teléfono...' | translate }}"
+      />
+      <mat-hint *ngIf="form.get('phone').value && form.get('phone').valid">
+        {{ 'Número válido' | translate }}
+      </mat-hint>
+      <mat-error
+        *ngIf="
+                      (form.controls['phone'].hasError('minlength') ||
+                        form.controls['phone'].hasError('maxlength')) &&
+                      !form.controls['phone'].hasError('pattern')
+                    "
+      >
+        {{ 'Longitud del número' | translate }}&nbsp;<strong>{{
+        '8 caracteres, Ex: 51234567' | translate
+        }}</strong>
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div fxLayout='row' class='w-100' fxLayoutAlign='end end'>
+    <button mat-raised-button color='primary' [disabled]='validate()' (click)='onSave()'>{{'Guardar' | translate | uppercase}}</button>
+  </div>
+
+</div>
