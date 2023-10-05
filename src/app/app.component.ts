@@ -14,6 +14,9 @@ import { LocalStorageService } from './core/services/localStorage/localStorage.s
 import { RequestCookieSecureService } from './core/services/request-cookie-secure/request-cookie-secure.service';
 import { SplashScreenService } from './core/services/splash-screen/splash-screen.service';
 import { Meta } from '@angular/platform-browser';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { DialogNoCartSelectedComponent } from './components/checkout/no-cart-selected/no-cart-selected.component';
+import { DialogPhoneComponent } from './components/shared/dialog-phone/dialog-phone.component';
 
 @Component({
   selector: 'app-root',
@@ -28,6 +31,8 @@ export class AppComponent {
     width: '40%',
   };
 
+  private businessConfig = this.localStorageService.getFromStorage('business-config');
+
   localDatabaseUsers = environment.localDatabaseUsers;
 
   constructor(
@@ -35,6 +40,7 @@ export class AppComponent {
     private spinner: NgxSpinnerService,
     private translate: TranslateService,
     private router: Router,
+    public dialog: MatDialog,
     private showToastr: ShowToastrService,
     private cookieService: CookieService,
     private loggedInUserService: LoggedInUserService,
@@ -70,15 +76,19 @@ export class AppComponent {
   }
 
   public metaAdd() {
-    this.meta.updateTag({name: 'title', content: 'Tienda Guajiritos'});
-    this.meta.updateTag({name: 'keywords', content: 'HTML, CSS, JavaScript, Angular, Tienda Online B2B, comercio online'});
-    this.meta.updateTag({property: 'og:url', content: 'https://guajiritos.com/'});
-    this.meta.updateTag({property: 'og:site_name', content: 'Tienda Guajiritos'});
-    this.meta.updateTag({property: 'og:image', itemprop: 'image primaryImageOfPage', content: 'https://tienda.guajiritos.com/assets/images/share-img.png'});
-    this.meta.updateTag({property: 'twitter:domain', content: 'https://guajiritos.com/'});
-    this.meta.updateTag({property: 'twitter:title', content: 'Tienda Guajiritos'});
-    this.meta.updateTag({property: 'twitter:description', content: 'Tienda online B2C.'});
-    this.meta.updateTag({property: 'twitter:image', content: 'https://tienda.guajiritos.com/assets/images/share-img.png'});
+    this.meta.updateTag({ name: 'title', content: 'Tienda Guajiritos' });
+    this.meta.updateTag({ name: 'keywords', content: 'HTML, CSS, JavaScript, Angular, Tienda Online B2B, comercio online' });
+    this.meta.updateTag({ property: 'og:url', content: 'https://guajiritos.com/' });
+    this.meta.updateTag({ property: 'og:site_name', content: 'Tienda Guajiritos' });
+    this.meta.updateTag({
+      property: 'og:image',
+      itemprop: 'image primaryImageOfPage',
+      content: 'https://tienda.guajiritos.com/assets/images/share-img.png',
+    });
+    this.meta.updateTag({ property: 'twitter:domain', content: 'https://guajiritos.com/' });
+    this.meta.updateTag({ property: 'twitter:title', content: 'Tienda Guajiritos' });
+    this.meta.updateTag({ property: 'twitter:description', content: 'Tienda online B2C.' });
+    this.meta.updateTag({ property: 'twitter:image', content: 'https://tienda.guajiritos.com/assets/images/share-img.png' });
   }
 
   public onCancelFile(event) {
@@ -90,12 +100,33 @@ export class AppComponent {
   initSystem() {
     const isCookieAccount = this.cookieService.check('account');
     const userLogged = this.loggedInUserService.getLoggedInUser();
+    console.log(userLogged);
+
+    if (this.businessConfig?.phoneRequired === true) {
+      if (userLogged && (userLogged.phone === '' || !userLogged.PhoneCallingCodeId)) {
+        let dialogRef: MatDialogRef<DialogPhoneComponent, any>;
+        dialogRef = this.dialog.open(DialogPhoneComponent, {
+          width: '15cm',
+          maxWidth: '100vw',
+          disableClose: true,
+          data: {
+            phone: userLogged.phone,
+            PhoneCallingCodeId: userLogged.PhoneCallingCodeId
+          },
+        });
+
+        dialogRef.afterClosed().subscribe((result) => {
+        });
+      }
+    }
+
     if (isCookieAccount) {
       try {
         const token = this.encryptDecryptService.decrypt(this.cookieService.get('account'));
         this.authService.getProfile(token).subscribe({
           next: (user) => {
             this.loggedInUserService.updateUserProfile(user.data);
+            console.log(this.loggedInUserService.getLoggedInUser());
           },
           error: (error) => {
             this.loggedInUserService.setLoggedInUser(null);
