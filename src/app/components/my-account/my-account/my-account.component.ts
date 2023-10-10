@@ -265,7 +265,6 @@ export class MyAccountComponent implements OnInit {
         name: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
         lastname: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
         phone: [null, this.businessConfig.phoneRequired ? [Validators.required] : []],
-        code: [null, []],
         PhoneCallingCodeId: [null, this.businessConfig.phoneRequired ? [Validators.required] : []],
         address: [null, []],
         email: [null, [Validators.required, Validators.email, Validators.pattern(EMAIL_REGEX)]],
@@ -277,7 +276,6 @@ export class MyAccountComponent implements OnInit {
       this.regTcpForm = this.fb.group({
         name: [null, [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
         lastname: [null, [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
-        code: [null, []],
         ci: [
           null,
           [Validators.required, Validators.minLength(11), Validators.maxLength(11), Validators.pattern('^[0-9]*$')],
@@ -314,7 +312,6 @@ export class MyAccountComponent implements OnInit {
       this.registrationForm = this.fb.group({
         name: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
         lastname: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
-        code: [null, []],
         PhoneCallingCodeId: [null, this.businessConfig.phoneRequired ? [Validators.required] : []],
         phone: [null, this.businessConfig.phoneRequired ? [Validators.required] : []],
         address: [null, []],
@@ -325,7 +322,6 @@ export class MyAccountComponent implements OnInit {
       this.regTcpForm = this.fb.group({
         name: [null, [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
         lastname: [null, [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
-        code: [null, []],
         ci: [
           null,
           [Validators.required, Validators.minLength(11), Validators.maxLength(11), Validators.pattern('^[0-9]*$')],
