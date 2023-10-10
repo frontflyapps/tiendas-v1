@@ -18,6 +18,7 @@ import { UploadFileModule } from '../shared/upload-file/upload-file.module';
 import { CapitalizeFirstDirective } from 'src/app/core/directives/capitalize-first.directive';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { GuachosGeneralAutocompleteModule } from 'guachos-general-autocomplete';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [MyAccountComponent, ChangePassComponent, CapitalizeFirstDirective],
@@ -37,7 +38,8 @@ import { GuachosGeneralAutocompleteModule } from 'guachos-general-autocomplete';
     MatDividerModule,
     MatAutocompleteModule,
     MatButtonToggleModule,
-    GuachosGeneralAutocompleteModule
+    GuachosGeneralAutocompleteModule,
+    MatCheckboxModule,
   ],
 })
 export class MyAccountModule {}

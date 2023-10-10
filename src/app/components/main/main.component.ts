@@ -172,6 +172,9 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit() {
     this.globalStateOfCookieService.getCookieState() ? this.initComponent() : this.setSubscriptionToCookie();
+    this.categoryMenuServ.filterText$.subscribe(item => {
+      this.searchForm.setValue(item);
+    });
   }
 
   public metaAdd() {
@@ -199,6 +202,12 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
     this.flag = tempFlag ? tempFlag : this.flags[0];
     this.currencies = this.currencyService.getCurrencies();
     this.currency = this.currencyService.getCurrency();
+
+    this.route.queryParams.subscribe((params) => {
+      console.log(params);
+
+      this.searchForm.setValue(params.filterText)
+    })
 
     // ///// Subscribe to events //////////
     this.loggedInUserService.$loggedInUserUpdated.pipe(takeUntil(this._unsubscribeAll)).subscribe((data) => {
@@ -295,6 +304,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onSearch() {
     const searchValue = this.searchForm.value;
+    this.searchForm.value;
     console.log(this.searchForm.value);
     localStorage.setItem('searchText', JSON.stringify(searchValue));
     if (searchValue && searchValue.length > 1) {

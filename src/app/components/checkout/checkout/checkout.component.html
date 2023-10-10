@@ -814,6 +814,28 @@
                 ></textarea>
               </mat-form-field>
             </div>
+            <div class='add-info mb-3' fxLayout='row' fxHide.xs fxHide.sm >
+              <mat-checkbox [formControl]="form.get('checkAge')" fxLayout='row'>
+                    <span>{{'Al registrarse en la tienda usted acepta nuestros' | translate}}
+<!--                      <br>-->
+                    </span>
+                <a [routerLink]="['/term-conditions']">
+                  {{ 'términos y condiciones' | translate }}
+                </a>
+              </mat-checkbox>
+            </div>
+
+            <div class='add-info mb-3' fxLayout='row' fxShow.xs fxShow.sm fxHide>
+              <mat-checkbox [formControl]="form.get('checkAge')" fxLayout='row'>
+                    <span>{{'Al registrarse en la tienda usted acepta nuestros' | translate}}
+                      <br>
+                    </span>
+                <a [routerLink]="['/term-conditions']">
+                  {{ 'términos y condiciones' | translate }}
+                </a>
+              </mat-checkbox>
+            </div>
+
             <h1 *ngIf='noGateway' class="tex-align-center p-4 color-red-500">{{ 'Este negocio no tiene método de pago permitido' }}</h1>
 
             <div class="actions-buttons" fxFlex="grow" fxLayout="row" fxLayoutAlign="space-between start">

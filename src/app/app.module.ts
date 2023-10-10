@@ -22,6 +22,9 @@ import { lastValueFrom, switchMap } from 'rxjs';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { UpdateControllerModule } from './components/shared/updates-controller/update-controller.module';
+import { MAT_AUTOCOMPLETE_SCROLL_STRATEGY, MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MAT_SELECT_SCROLL_STRATEGY_PROVIDER } from '@angular/material/select';
+import { GuachosGeneralAutocompleteModule } from 'guachos-general-autocomplete';
 
 registerLocaleData(localeEs, 'es');
 
@@ -38,6 +41,8 @@ registerLocaleData(localeEs, 'es');
     AppRoutingModule,
     MatSnackBarModule,
     CuDownloadListModule,
+    MatAutocompleteModule,
+    GuachosGeneralAutocompleteModule,
     CoreModule,
     MatDialogModule,
     ToastrModule.forRoot(), // ToastrModule added

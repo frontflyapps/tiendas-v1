@@ -265,11 +265,11 @@ export class MyAccountComponent implements OnInit {
         name: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
         lastname: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
         phone: [null, this.businessConfig.phoneRequired ? [Validators.required] : []],
-        code: [null, []],
-        PhoneCallingCodeId: [null, []],
+        PhoneCallingCodeId: [null, this.businessConfig.phoneRequired ? [Validators.required] : []],
         address: [null, []],
         email: [null, [Validators.required, Validators.email, Validators.pattern(EMAIL_REGEX)]],
         passwords: this.fromPassRegister,
+        checkAge: [null, [Validators.required]],
         signUpType: ['normal']
       });
       return;
@@ -277,7 +277,6 @@ export class MyAccountComponent implements OnInit {
       this.regTcpForm = this.fb.group({
         name: [null, [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
         lastname: [null, [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
-        code: [null, []],
         ci: [
           null,
           [Validators.required, Validators.minLength(11), Validators.maxLength(11), Validators.pattern('^[0-9]*$')],
@@ -291,6 +290,7 @@ export class MyAccountComponent implements OnInit {
           [Validators.required, Validators.minLength(11), Validators.maxLength(11), Validators.pattern('^[0-9]*$')],
         ],
         activity: [null, [Validators.required]],
+        checkAge: [null, [Validators.required]],
         phoneCel: [null, [Validators.pattern(CUBAN_PHONE_START_5), Validators.minLength(8), Validators.maxLength(8)]],
         phone: [null, this.businessConfig.phoneRequired ? [Validators.required, Validators.minLength(8), Validators.maxLength(8)] : [Validators.minLength(8), Validators.maxLength(8)]],
         address: [null, [Validators.required]],
@@ -314,10 +314,10 @@ export class MyAccountComponent implements OnInit {
       this.registrationForm = this.fb.group({
         name: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
         lastname: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
-        code: [null, []],
-        PhoneCallingCodeId: [null, []],
-        phone: [null, this.businessConfig.phoneRequired ? [Validators.required, Validators.minLength(8), Validators.maxLength(8)] : [Validators.minLength(8), Validators.maxLength(8)]],
+        PhoneCallingCodeId: [null, this.businessConfig.phoneRequired ? [Validators.required] : []],
+        phone: [null, this.businessConfig.phoneRequired ? [Validators.required] : []],
         address: [null, []],
+        checkAge: [null, [Validators.required]],
         email: [null, [Validators.required, Validators.email, Validators.pattern(EMAIL_REGEX)]],
         passwords: this.fromPassRegister,
         signUpType: ['normal']
@@ -325,7 +325,6 @@ export class MyAccountComponent implements OnInit {
       this.regTcpForm = this.fb.group({
         name: [null, [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
         lastname: [null, [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
-        code: [null, []],
         ci: [
           null,
           [Validators.required, Validators.minLength(11), Validators.maxLength(11), Validators.pattern('^[0-9]*$')],
@@ -339,6 +338,7 @@ export class MyAccountComponent implements OnInit {
           [Validators.required, Validators.minLength(11), Validators.maxLength(11), Validators.pattern('^[0-9]*$')],
         ],
         activity: [null, [Validators.required]],
+        checkAge: [null, [Validators.required]],
         phoneCel: [null, [Validators.pattern(CUBAN_PHONE_START_5), Validators.minLength(8), Validators.maxLength(8)]],
         phone: [null, this.businessConfig.phoneRequired ? [Validators.required, Validators.minLength(8), Validators.maxLength(8)] : [Validators.minLength(8), Validators.maxLength(8)]],
         PhoneCallingCodeId: [null, []],
@@ -362,7 +362,8 @@ export class MyAccountComponent implements OnInit {
         lastname: [null, [Validators.required, Validators.pattern(/^\w((?!\s{2}).)*/)]],
         phone: [null, this.businessConfig.phoneRequired ? [Validators.required] : []],
         address: [null, []],
-        PhoneCallingCodeId: [null, []],
+        checkAge: [null, [Validators.required]],
+        PhoneCallingCodeId: [null, this.businessConfig.phoneRequired ? [Validators.required] : []],
         email: [null, [Validators.required, Validators.email, Validators.pattern(EMAIL_REGEX)]],
         passwords: this.fromPassRegister,
         signUpType: ['normal']
