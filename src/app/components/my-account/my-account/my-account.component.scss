@@ -8,6 +8,16 @@ app-my-account {
     font-size: 22px;
   }
 
+  mat-checkbox span {
+    font-size: 13px;
+  }
+
+  mat-checkbox a {
+    color: -webkit-link;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
   //.toggle-button{
   //
   //}
