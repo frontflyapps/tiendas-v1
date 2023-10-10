@@ -12,6 +12,12 @@
   }
 }
 
+mat-checkbox a {
+  color: -webkit-link;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
 :host {
   .payment-method-expansion-panel {
     ::ng-deep .mat-expansion-panel-body {
