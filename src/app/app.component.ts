@@ -102,23 +102,23 @@ export class AppComponent {
     const userLogged = this.loggedInUserService.getLoggedInUser();
     console.log(userLogged);
 
-    if (this.businessConfig?.phoneRequired === true) {
-      if (userLogged && (userLogged.phone === '' || !userLogged.PhoneCallingCodeId)) {
-        let dialogRef: MatDialogRef<DialogPhoneComponent, any>;
-        dialogRef = this.dialog.open(DialogPhoneComponent, {
-          width: '15cm',
-          maxWidth: '100vw',
-          disableClose: true,
-          data: {
-            phone: userLogged.phone,
-            PhoneCallingCodeId: userLogged.PhoneCallingCodeId
-          },
-        });
-
-        dialogRef.afterClosed().subscribe((result) => {
-        });
-      }
-    }
+    // if (this.businessConfig?.phoneRequired === true) {
+    //   if (userLogged && (userLogged.phone === '' || !userLogged.PhoneCallingCodeId)) {
+    //     let dialogRef: MatDialogRef<DialogPhoneComponent, any>;
+    //     dialogRef = this.dialog.open(DialogPhoneComponent, {
+    //       width: '15cm',
+    //       maxWidth: '100vw',
+    //       disableClose: true,
+    //       data: {
+    //         phone: userLogged.phone,
+    //         PhoneCallingCodeId: userLogged.PhoneCallingCodeId
+    //       },
+    //     });
+    //
+    //     dialogRef.afterClosed().subscribe((result) => {
+    //     });
+    //   }
+    // }
 
     if (isCookieAccount) {
       try {
