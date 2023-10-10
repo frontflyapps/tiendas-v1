@@ -21,6 +21,7 @@ import { LocalStorageService } from '../../../../core/services/localStorage/loca
 import { TranslateService } from '@ngx-translate/core';
 import { UtilsService } from 'src/app/core/services/utils/utils.service';
 import { DialogSetLocationComponent } from '../../../main/dialog-set-location/dialog-set-location.component';
+import { CategoryMenuNavService } from '../../../../core/services/category-menu-nav.service';
 
 @Component({
   selector: 'app-product-left-sidebar',
@@ -56,6 +57,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
     minPrice: 1,
     maxPrice: null,
   };
+  categoryIdsSelected: any;
   loading = false;
   loadingSearch = false;
   language: any;
@@ -93,6 +95,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private metaService: MetaService,
     private locationService: LocationService,
+    private categoryMenuServ: CategoryMenuNavService,
     public translate: TranslateService,
     public utilsService: UtilsService,
   ) {
@@ -123,7 +126,6 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
       this.queryProduct.order = data?.order ? data.order : '-id';
 
       if (data.CategoryId) {
-        console.log('entro');
         this.paramsSearch.categoryIds = [data.CategoryId];
         this.paramsSearch.minPrice = 0;
         this.paramsSearch.maxPrice = null;
@@ -151,7 +153,14 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
 
       }
 
-      console.log(this.paramsSearch);
+
+      if (this.paramsSearch.categoryIds?.length > 0) {
+        this.paramsSearch.filterText = null;
+
+        this.categoryMenuServ.setFilterText(this.paramsSearch.filterText);
+
+        localStorage.setItem('searchText', JSON.stringify(null));
+      }
 
       this.categoriesIds = [...this.paramsSearch.categoryIds];
       this.brandsIds = [...this.paramsSearch.brandIds];
@@ -445,6 +454,10 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
       if (Array.isArray(this.paramsSearch.categoryIds)) {
         if (this.paramsSearch.categoryIds.length > 0) {
           categoryIds = this.paramsSearch.categoryIds.map((i) => Number(i));
+          this.paramsSearch.filterText = null;
+
+          this.categoryMenuServ.setFilterText(this.paramsSearch.filterText);
+          localStorage.setItem('searchText', JSON.stringify(null));
           console.log(categoryIds);
         }
       } else {
@@ -741,6 +754,15 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
   // Update Categories filter
   onCategoriesChanged(categoryIds) {
     this.paramsSearch.categoryIds = categoryIds;
+
+    if (this.paramsSearch.categoryIds?.length > 0) {
+      this.paramsSearch.filterText = null;
+
+      this.categoryMenuServ.setFilterText(this.paramsSearch.filterText);
+
+      localStorage.setItem('searchText', JSON.stringify(null));
+    }
+
     this.queryProduct.limit = this.initLimit;
     this.queryProduct.offset = 0;
     this.queryProduct.total = 0;

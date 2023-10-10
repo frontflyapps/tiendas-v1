@@ -856,6 +856,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       PhoneCallingCodeId: [null, []],
       info: [null, []],
       paymentType: [null, [Validators.required]],
+      checkAge: [null, [Validators.required]],
       ShippingBusinessId: [null, []],
       shippingType: [this.businessConfig ? this.businessConfig?.shippingType : null],
       configProductsType: [this.businessConfig ? this.businessConfig?.configProductsType : null],
