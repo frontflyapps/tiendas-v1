@@ -218,7 +218,7 @@ export class CartService implements OnDestroy {
         if (data.existGift) {
           this.showToastr.showSucces(
             this.translate.instant(
-              'Se ha añadido un producto gratis por tener más de 75€ en su compra',
+              data?.message,
             ),
             'Éxito',
             5000);

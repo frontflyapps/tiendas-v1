@@ -1,7 +1,10 @@
 <div class='banner-pro container my-3'>
+  <a [href]='image.link' target='_blank'>
+    <img [src]='imageBigPromo' alt='banner' class='image loader' fxHide.lt-md />
+    <img [src]='imageBigPromo' alt='banner' class='image loader' fxHide fxShow.lt-md />
+  </a>
   <!-- <div class="dark-overlay"></div> -->
-  <img [src]='imageBigPromo' alt='banner' class='image loader' fxHide.lt-md />
-  <img [src]='imageBigPromo' alt='banner' class='image loader' fxHide fxShow.lt-md />
+
   <!--<div class="text">
     <p class="title mt-3">
       Compra
