@@ -485,6 +485,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
       BrandIds: brandIds,
       currency: this.currencyService.getCurrency().code,
       CategoryIds: categoryIds,
+      tags: true,
       maxPrice: this.paramsSearch?.maxPrice ? +this.paramsSearch?.maxPrice : 0,
       minPrice: this.paramsSearch?.minPrice ? +this.paramsSearch?.minPrice : 0,
       rating: this.paramsSearch?.rating ? +this.paramsSearch?.rating : null,
@@ -499,8 +500,11 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
         (data: any) => {
           // this.loading = true;
 
-            this.allProducts = data.data;
-            this.allProductsResponse = data.data;
+          this.filterProducts(body.text, data.data);
+
+            // this.allProducts = data.data;
+          console.log(this.allProducts);
+          this.allProductsResponse = data.data;
             this.totalPages = data.meta.total / this.initLimit;
             this.totalProducts = data.meta.pagination.total;
             if (data.meta.total % this.initLimit) {
@@ -563,6 +567,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
           currency: this.currencyService.getCurrency().code,
           BrandIds: brandIds,
           CategoryIds: categoryIds,
+          tags: true,
           maxPrice: this.paramsSearch?.maxPrice ? +this.paramsSearch?.maxPrice : 0,
           minPrice: this.paramsSearch?.minPrice ? +this.paramsSearch?.minPrice : 0,
           rating: this.paramsSearch?.rating ? +this.paramsSearch?.rating : null,
@@ -632,6 +637,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
           currency: this.currencyService.getCurrency().code,
           BrandIds: brandIds,
           CategoryIds: categoryIds,
+          tags: true,
           maxPrice: this.paramsSearch?.maxPrice ? +this.paramsSearch?.maxPrice : 0,
           minPrice: this.paramsSearch?.minPrice ? +this.paramsSearch?.minPrice : 0,
           rating: this.paramsSearch?.rating ? +this.paramsSearch?.rating : null,
@@ -693,6 +699,77 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
   //     this.searchMoreProducts();
   //   }
   // }
+
+  private filterProducts(name: string, arrProducts: any[]) {
+    console.log(name);
+    console.log(arrProducts);
+    let arr1 = [];
+    let arr2 = [];
+    let arr3 = [];
+    let arr4 = [];
+    let newArrayProducts = [];
+
+    arrProducts.forEach((product) => {
+        console.log(product.name.es.split(' ')[0].toLowerCase());
+
+      let arrTemp1 = product.name.es.split(' ')[0].toLowerCase();
+      let arrTemp2: any[] = product.name.es.split(' ');
+      let temp = [];
+      if (arrTemp2.includes('Combo')) {
+        arrTemp2 = arrTemp2.map((item) => item.toLowerCase());
+        console.log(arrTemp2);
+        temp = arrTemp2.filter(elemento => elemento.includes('arroz'));
+        console.log(temp);
+        console.log(temp?.length);
+        console.log(temp?.length > 0);
+      }
+      arrTemp2.shift();
+      arrTemp2 = arrTemp2.map((item) => item.toLowerCase());
+
+        if (arrTemp1 === name) {
+          arr1.push(product);
+        } else if (arrTemp2.includes(name) || temp.length > 0) {
+          arr2.push(product);
+        } else {
+          arr3.push(product);
+        }
+      });
+    newArrayProducts = [...arr1, ...arr2, ...arr3];
+
+
+    // let newArrayProducts = [];
+    // arrProducts.forEach((product) => {
+    //   console.log(product.name.es.split(' ')[0].toLowerCase());
+    //   if (product.name.es.split(' ')[0].toLowerCase() === name) {
+    //     newArrayProducts.push(product);
+    //   }
+    // });
+    // arrProducts.forEach((product) => {
+    //   let arr: any[] = product.name.es.split(' ');
+    //   arr.shift();
+    //   if (arr.includes(name)) {
+    //     newArrayProducts.push(product);
+    //   }
+    // });
+    //
+    // arrProducts.forEach((product) => {
+    //   if (product.tags) {
+    //     product.tags.forEach(item => {
+    //       if (item === name) {
+    //         newArrayProducts.push(product);
+    //       }
+    //     });
+    //   }
+    //
+    //
+    //   // if (product.name.es.split(' ')[0].toLowerCase() === name) {
+    //   //   newArrayProducts.push(product);
+    //   // }
+    // });
+    this.allProducts = newArrayProducts;
+    console.log(this.allProducts);
+    console.log(newArrayProducts);
+  }
 
   OnPaginatorChange(event) {
     if (event) {
