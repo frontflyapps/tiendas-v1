@@ -216,12 +216,16 @@ export class CartService implements OnDestroy {
           5000, );
         this.loggedInUserService._setDataToStorage('cartItem', JSON.stringify(this.carts));
         if (data.existGift) {
-          this.showToastr.showSucces(
-            this.translate.instant(
-              data?.message,
-            ),
-            'Éxito',
-            5000);
+          if (data.message) {
+            data.message.forEach(item => {
+              this.showToastr.showSucces(
+                this.translate.instant(
+                  item,
+                ),
+                'Éxito',
+                5000);
+            });
+          }
         }
         this.$cartItemsUpdated.next(this.carts);
         return this.carts;
