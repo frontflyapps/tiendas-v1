@@ -19,7 +19,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { NavigationService } from '../../core/services/navigation/navigation.service';
 import { LoggedInUserService } from '../../core/services/loggedInUser/logged-in-user.service';
-import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
+import { distinctUntilChanged, startWith, takeUntil, map, debounceTime } from 'rxjs/operators';
 import { Observable, of, Subject } from 'rxjs';
 import { IUser } from '../../core/classes/user.class';
 import { AuthenticationService } from '../../core/services/authentication/authentication.service';
@@ -51,6 +51,7 @@ import { CategoryMenuNavService } from '../../core/services/category-menu-nav.se
 import { Meta } from '@angular/platform-browser';
 import { AppService } from '../../app.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { IPagination } from '../../core/classes/pagination.class';
 
 @Component({
   selector: 'app-main',
@@ -84,6 +85,18 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
   shoppingCartItems: CartItem[] = [];
 
   public banners = [];
+  public loadingProducts = false;
+
+  public displayOptions = {
+    firthLabel: [
+      {
+        type: 'path',
+        path: ['name', this.translate.currentLang],
+      },
+    ],
+  };
+
+  public urlProducts: string = environment.apiUrl + 'search';
 
   compareItems: any[] = [];
   compareItemsObservable: Observable<any[]> = of([]);
@@ -105,13 +118,33 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
       scrollTo: true,
     },
   });
+  queryProduct: IPagination = {
+    limit: 1000,
+    total: 0,
+    offset: 0,
+    order: 'name',
+    page: 1,
+    filter: { filterText: '', properties: ['filter[$or][name][$like]'] },
+  };
+
+  public initLimit = environment.limitSearch;
+  paramsSearch: any = {
+    filterText: null,
+    categoryIds: [],
+    brandIds: [],
+    rating: 0,
+    minPrice: 1,
+    maxPrice: null,
+  };
 
   innerWidth: any;
+  options: any[] = [];
+  filteredOptions: any;
 
   constructor(
     public router: Router,
     private cartService: CartService,
-    private translate: TranslateService,
+    public translate: TranslateService,
     private navigationService: NavigationService,
     public sidenavMenuService: SidebarMenuService,
     public loggedInUserService: LoggedInUserService,
@@ -175,6 +208,67 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
     this.categoryMenuServ.filterText$.subscribe(item => {
       this.searchForm.setValue(item);
     });
+      // this.getProducts();
+    // this.getProducts();
+
+    // this.searchForm.valueChanges.pipe(takeUntil(this._unsubscribeAll), debounceTime(500)).subscribe((value) => {
+    //     this.getProducts();
+    // });
+  }
+
+  getProducts() {
+    this.loadingProducts = true;
+    const body: any = {
+      limit: this.initLimit,
+      offset: this.queryProduct?.offset ? +this.queryProduct?.offset : 0,
+      page: this.queryProduct?.page ? +this.queryProduct?.page : 0,
+      total: this.queryProduct?.total ? +this.queryProduct?.total : 0,
+      order: this.queryProduct?.order ? this.queryProduct?.order : null,
+      BrandIds: null,
+      currency: this.currencyService.getCurrency().code,
+      CategoryIds: null,
+      maxPrice:  0,
+      minPrice: 0,
+      tags: false,
+      rating: null,
+      text: this.searchForm.value ?? null,
+      ProvinceId: this.province?.id || null,
+      MunicipalityId: this.municipality?.id || null,
+    };
+
+    console.log(this.searchForm.value);
+
+    // if (this.searchForm.value) {
+      this.productService.searchProduct(body).subscribe((response) => {
+
+        this.options = response.data;
+        this.filteredOptions = this.searchForm.valueChanges.pipe(
+          startWith(''),
+          map(value => this._filter(value || '')),
+        );
+        this.loadingProducts = false;
+        console.log(this.options);
+      });
+    // }
+
+    // this.loadingProducts = false;
+  }
+
+  public onSelectElement(event?: any) {
+    console.log(event.option.value);
+    this.router.navigate(['/product'], {queryParams: { productId: event.option.value?.id, stockId: event.option.value?.Stock?.id, name: event.option.value?.name?.es, sharedImage: event.option.value?.sharedImage }});
+  }
+
+  private _filter(value: string): string[] {
+    let filterValue;
+    if (typeof value === 'string') {
+      filterValue = value.toLowerCase();
+      if (this.options) {
+        return this.options.filter(option => (option.name.es).toLowerCase().includes(filterValue));
+      } else {
+        return this.options;
+      }
+    }
   }
 
   public metaAdd() {
@@ -304,7 +398,6 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onSearch() {
     const searchValue = this.searchForm.value;
-    this.searchForm.value;
     console.log(this.searchForm.value);
     localStorage.setItem('searchText', JSON.stringify(searchValue));
     if (searchValue && searchValue.length > 1) {

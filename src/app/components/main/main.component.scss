@@ -261,6 +261,13 @@ app-main,
           height: 27px;
         }
       }
+      .spinner-loading {
+        position: absolute;
+        top: 5px;
+        border: 0;
+        margin: 0;
+        right: 35px;
+      }
     }
 
     .userWidgets {

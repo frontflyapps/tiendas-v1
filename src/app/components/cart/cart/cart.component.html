@@ -21,9 +21,9 @@
     <!-- MODO DESKTOP -->
     <!--    ===========================================================-->
     <section *ngIf="carts.length" fxHide.lt-md style="position: relative">
-      <div *ngIf="inLoading" class="loading-shade">
-        <mat-spinner *ngIf="inLoading"></mat-spinner>
-      </div>
+<!--      <div *ngIf="inLoading" class="loading-shade">-->
+<!--        <mat-spinner *ngIf="inLoading"></mat-spinner>-->
+<!--      </div>-->
       <mat-card *ngFor="let cart of carts" class="p-0 mb-4" style="border-radius: 8px">
         <div class="mat-table cart-table">
           <div class="mat-header-row">
@@ -109,7 +109,15 @@
                   </div>
                 </div>
 
-                <div *ngIf="item.Product.type != 'physical'" fxLayout="row" fxLayoutAlign="center center">
+                <div *ngIf="item.Product.type === 'gift'" fxLayout="row" fxLayoutAlign="center center">
+                  <input [(ngModel)]="item.quantity"
+                         class="form-control input-number"
+                         disabled
+                         name="quantity"
+                         type="text" />
+                </div>
+
+                <div *ngIf="item.Product.type != 'physical' && item.Product.type != 'gift'" fxLayout="row" fxLayoutAlign="center center">
                   <input [(ngModel)]="defaultDigitalQuantity"
                          class="form-control input-number"
                          disabled

@@ -10,6 +10,7 @@ import { CartService } from '../../shared/services/cart.service';
 import { ProductService } from '../../shared/services/product.service';
 import { GlobalFacadeService } from '../../../facades/services/global-facade.service';
 import { ConfiguracionService } from '../../../core/services/config/configuracion.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-shopping-widgets',
@@ -41,6 +42,7 @@ export class ShoppingWidgetsComponent implements OnInit, OnDestroy {
     private globalFacadeService: GlobalFacadeService,
     private router: Router,
     private cdr: ChangeDetectorRef,
+    private spinner: NgxSpinnerService,
   ) {
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
@@ -128,12 +130,26 @@ export class ShoppingWidgetsComponent implements OnInit, OnDestroy {
   }
 
   public removeItem(item: any) {
+    this.spinner.show();
     this.cartService.removeFromCart(item).then(
       responseData => {
+    this.spinner.hide();
         // this.globalFacadeService.updateCartState(responseData || []);
         // this.globalFacadeService.updateBusinessState(responseData[0].Business || {});
       },
     );
+    // console.log(item);
+    // let productToDecrease = item.Product;
+    // productToDecrease.Stock = item.Stock;
+    // let quantity = -item.quantity;
+    // this.cartService
+    //   .addToCart(productToDecrease, quantity)
+    //   .then((data) => {
+    //     this.spinner.hide();
+    //   })
+    //   .catch((error) => {
+    //     this.spinner.hide();
+    //   });
   }
 
   public getTotal(cart): any {
