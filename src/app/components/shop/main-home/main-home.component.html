@@ -88,10 +88,10 @@
           <ng-template #bannerPromo1>
             <app-banner-promotion [ngClass]="{'banner-horizontal': visualizationSections[i] === 'slim',
                                                  'banner-vertical': visualizationSections[i] === 'broad'}"
-                                  [_imageBigPromo]='imageUrl + card?.image'></app-banner-promotion>
+                                  [_imageBigPromo]='imageUrl + card?.image' [_image]='card'></app-banner-promotion>
           </ng-template>
           <ng-template #bannerPromo1Xs>
-            <app-banner-promotion [_imageBigPromo]='imageUrl + card?.imageXs'></app-banner-promotion>
+            <app-banner-promotion [_imageBigPromo]='imageUrl + card?.imageXs' [_image]='card'></app-banner-promotion>
           </ng-template>
         </div>
         <!--CATEGORIES-->

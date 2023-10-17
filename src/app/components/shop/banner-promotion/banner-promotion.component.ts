@@ -9,12 +9,20 @@ import { Component, Input, OnInit } from '@angular/core';
 export class BannerPromotionComponent implements OnInit {
   imageUrl = environment.imageUrl;
   imageBigPromo = null;
+  image = null;
   loadImage = true;
   contactUs;
 
   @Input() set _imageBigPromo(value) {
     if (value) {
       this.imageBigPromo = value;
+    }
+  }
+
+  @Input() set _image(value) {
+    if (value) {
+      this.image = value;
+      console.log(this.image);
     }
   }
 

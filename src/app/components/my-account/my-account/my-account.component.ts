@@ -296,6 +296,7 @@ export class MyAccountComponent implements OnInit {
         address: [null, [Validators.required]],
         email: [null, [Validators.required, Validators.email, Validators.pattern(EMAIL_REGEX)]],
         passwords: this.fromPassRegister,
+        PhoneCallingCodeId: [null, []],
         bankAccountCard26: [
           null,
           [Validators.required, Validators.minLength(16), Validators.maxLength(16), Validators.pattern('^[0-9]*$')],
