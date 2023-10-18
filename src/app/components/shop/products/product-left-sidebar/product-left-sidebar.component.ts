@@ -709,32 +709,42 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
     let arr4 = [];
     let newArrayProducts = [];
 
-    arrProducts.forEach((product) => {
-        console.log(product.name.es.split(' ')[0].toLowerCase());
+    if ((arrProducts !== undefined && arrProducts)) {
+      if (arrProducts.length === 0) {
+        this.allProducts = newArrayProducts;
+      } else {
+        arrProducts.forEach((product) => {
+          console.log(product.name.es.split(' ')[0].toLowerCase());
 
-      let arrTemp1 = product.name.es.split(' ')[0].toLowerCase();
-      let arrTemp2: any[] = product.name.es.split(' ');
-      let temp = [];
-      if (arrTemp2.includes('Combo')) {
-        arrTemp2 = arrTemp2.map((item) => item.toLowerCase());
-        console.log(arrTemp2);
-        temp = arrTemp2.filter(elemento => elemento.includes('arroz'));
-        console.log(temp);
-        console.log(temp?.length);
-        console.log(temp?.length > 0);
+          let arrTemp1 = product.name.es.split(' ')[0].toLowerCase();
+          let arrTemp2: any[] = product.name.es.split(' ');
+          let temp = [];
+          if (arrTemp2.includes('Combo')) {
+            arrTemp2 = arrTemp2.map((item) => item.toLowerCase());
+            console.log(arrTemp2);
+            temp = arrTemp2.filter(elemento => elemento.includes('arroz'));
+            console.log(temp);
+            console.log(temp?.length);
+            console.log(temp?.length > 0);
+          }
+          arrTemp2.shift();
+          arrTemp2 = arrTemp2.map((item) => item.toLowerCase());
+
+          if (arrTemp1 === name) {
+            arr1.push(product);
+          } else if (arrTemp2.includes(name) || temp.length > 0) {
+            arr2.push(product);
+          } else {
+            arr3.push(product);
+          }
+        });
+        newArrayProducts = [...arr1, ...arr2, ...arr3];
       }
-      arrTemp2.shift();
-      arrTemp2 = arrTemp2.map((item) => item.toLowerCase());
+    } else {
+      this.allProducts = newArrayProducts;
+    }
 
-        if (arrTemp1 === name) {
-          arr1.push(product);
-        } else if (arrTemp2.includes(name) || temp.length > 0) {
-          arr2.push(product);
-        } else {
-          arr3.push(product);
-        }
-      });
-    newArrayProducts = [...arr1, ...arr2, ...arr3];
+
 
 
     // let newArrayProducts = [];
