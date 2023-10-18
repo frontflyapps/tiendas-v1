@@ -6,32 +6,61 @@
   <div class='container-search'>
     <div class='header'>
       <div></div>
-      <div fxLayoutAlign='start center' fxLayoutGap='1rem'>
+      <div fxLayoutAlign='start center' fxLayoutGap='1rem' fxLayoutGap.xs='2.8rem' fxLayoutGap.sm='2.8rem'>
         <div fxHide fxLayout='row' fxLayoutAlign='space-between start' fxShow.lt-md style='margin-bottom: 5px'>
           <button (click)='openDialog()' mat-button style='border-radius: 25px; border: 1.5px solid rgba(0, 0, 0, 0.12)'>
             <mat-icon>search</mat-icon>
             {{ 'Filtros' | translate }}
           </button>
         </div>
-        <span class='bold'>{{ 'Ordenar' | translate }}</span>
-        <div (click)="onSetOrder(this.queryProduct?.order == 'id' ? '-id' : 'id')"
-          [ngClass]="{ selected: this.queryProduct?.order == 'id' || this.queryProduct?.order == '-id' }" class='chip-order'>
-          {{ 'Creación' | translate }}
-          <mat-icon *ngIf="this.queryProduct?.order == 'id'">north</mat-icon>
-          <mat-icon *ngIf="this.queryProduct?.order == '-id'">south</mat-icon>
+        <div fxHide fxShow.xs fxShow.sm fxLayout='column'>
+          <span class='bold'>{{ 'Ordenar por:' | translate }}</span>
+          <mat-form-field appearance='outline' class='full-width without-padding-bottom'>
+            <!--          <mat-label>{{ 'Ordenar' | translate }}</mat-label>-->
+            <mat-select
+              (selectionChange)="onSelectOrder($event.value)"
+              [formControl]="form.controls['order']"
+              placeholder="{{ 'Orden' | translate }}"
+              type="text">
+              <mat-option *ngFor="let order of allOrders" [value]="order.value">
+                {{ order.viewValue }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
-        <div (click)="onSetOrder(this.queryProduct?.order == 'name' ? '-name' : 'name')"
-          [ngClass]="{ selected: this.queryProduct?.order == 'name' || this.queryProduct?.order == '-name' }" class='chip-order'>
-          {{ 'Nombre' | translate }}
-          <mat-icon *ngIf="this.queryProduct?.order == 'name'">north</mat-icon>
-          <mat-icon *ngIf="this.queryProduct?.order == '-name'">south</mat-icon>
+        <div fxLayout='row' fxHide.xs fxHide.sm class='w-100' fxLayoutAlign='end center' fxLayoutGap='1rem'>
+          <span class='bold' fxHide.xs fxHide.sm>{{ 'Ordenar por:' | translate }}</span>
+          <mat-form-field appearance='outline' class='field-order without-padding-bottom' fxHide.xs fxHide.sm>
+            <!--          <mat-label>{{ 'Ordenar' | translate }}</mat-label>-->
+            <mat-select
+              (selectionChange)="onSelectOrder($event.value)"
+              [formControl]="form.controls['order']"
+              placeholder="{{ 'Seleccione una opción' | translate }}">
+              <mat-option *ngFor="let order of allOrders" [value]="order.value">
+                {{ order.viewValue }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
-        <div (click)="onSetOrder(this.queryProduct?.order == 'fromPrice' ? '-fromPrice' : 'fromPrice')"
-          [ngClass]="{ selected: this.queryProduct?.order == 'fromPrice' || this.queryProduct?.order == '-fromPrice' }" class='chip-order'>
-          {{ 'Precio' | translate }}
-          <mat-icon *ngIf="this.queryProduct?.order == 'fromPrice'">north</mat-icon>
-          <mat-icon *ngIf="this.queryProduct?.order == '-fromPrice'">south</mat-icon>
-        </div>
+
+<!--        <div (click)="onSetOrder(this.queryProduct?.order == 'id' ? '-id' : 'id')"-->
+<!--          [ngClass]="{ selected: this.queryProduct?.order == 'id' || this.queryProduct?.order == '-id' }" class='chip-order'>-->
+<!--          {{ 'Creación' | translate }}-->
+<!--          <mat-icon *ngIf="this.queryProduct?.order == 'id'">north</mat-icon>-->
+<!--          <mat-icon *ngIf="this.queryProduct?.order == '-id'">south</mat-icon>-->
+<!--        </div>-->
+<!--        <div (click)="onSetOrder(this.queryProduct?.order == 'name' ? '-name' : 'name')"-->
+<!--          [ngClass]="{ selected: this.queryProduct?.order == 'name' || this.queryProduct?.order == '-name' }" class='chip-order'>-->
+<!--          {{ 'Nombre' | translate }}-->
+<!--          <mat-icon *ngIf="this.queryProduct?.order == 'name'">north</mat-icon>-->
+<!--          <mat-icon *ngIf="this.queryProduct?.order == '-name'">south</mat-icon>-->
+<!--        </div>-->
+<!--        <div (click)="onSetOrder(this.queryProduct?.order == 'fromPrice' ? '-fromPrice' : 'fromPrice')"-->
+<!--          [ngClass]="{ selected: this.queryProduct?.order == 'fromPrice' || this.queryProduct?.order == '-fromPrice' }" class='chip-order'>-->
+<!--          {{ 'Precio' | translate }}-->
+<!--          <mat-icon *ngIf="this.queryProduct?.order == 'fromPrice'">north</mat-icon>-->
+<!--          <mat-icon *ngIf="this.queryProduct?.order == '-fromPrice'">south</mat-icon>-->
+<!--        </div>-->
       </div>
     </div>
   </div>
