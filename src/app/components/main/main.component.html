@@ -198,13 +198,13 @@
 <!--                                          [filterString]="'filter[$and][name][$like]'"-->
 <!--                                          [valueId]="false"-->
 <!--                                          [withoutPaddingBottom]="true"></guachos-general-autocomplete>-->
-            <input (keyup.enter)='onSearch()' [formControl]='searchForm' placeholder="{{ 'Buscar en la tienda...' | translate }}" type='text' />
-<!--            <mat-spinner *ngIf="this.loadingProducts" color="primary" diameter="30" class='spinner-loading'></mat-spinner>-->
-<!--            <mat-autocomplete #auto="matAutocomplete" (optionSelected)='onSelectElement($event)'>-->
-<!--              <mat-option *ngFor="let option of filteredOptions | async" [value]="option">-->
-<!--                {{option.name | i18nField: translate.currentLang}}-->
-<!--              </mat-option>-->
-<!--            </mat-autocomplete>-->
+            <input (keyup.enter)='onSearch()' [formControl]='searchForm' placeholder="{{ 'Buscar en la tienda...' | translate }}" type='text' [matAutocomplete]="auto" />
+            <mat-spinner *ngIf="this.loadingProducts" color="primary" diameter="30" class='spinner-loading'></mat-spinner>
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)='onSelectElement($event)'>
+              <mat-option *ngFor="let option of filteredOptions" [value]="option">
+                <div [innerHTML]='option.showValue' class='text-filter'></div>
+              </mat-option>
+            </mat-autocomplete>
             <button (click)='onSearch()' class='btn-search'>
               <mat-icon>search</mat-icon>
             </button>
