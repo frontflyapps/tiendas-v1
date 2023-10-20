@@ -1,0 +1,53 @@
+<div fxLayout='column' fxLayoutAlign="space-around center">
+  <!-- Get Link -->
+  <div fxLayout='column' fxLayout.gt-sm='row' fxLayoutAlign="center center" class='w-100 m-4'>
+    <div fxFlex="5" fxLayoutAlign="start center">
+      <button mat-fab color="primary" class="cursorNone" disableRipple>
+        <div style="font-size: x-large;">1</div>
+      </button>
+    </div>
+    <div fxFlex="25" fxLayoutAlign="start center">
+      <span>{{'Obtén tu Código' | translate}}</span>
+
+    </div>
+    <div fxFlex="12" fxLayoutAlign="start center">
+      <button mat-flat-button color="primary" (click)='copyLink()' [cdkCopyToClipboard]="userLinkReferred??''" class='w-100'>
+        {{'Copiar enlace' | translate}}
+      </button>
+    </div>
+  </div>
+
+  <!-- Comparte -->
+  <div fxLayout='column' fxLayout.gt-sm='row' fxLayoutAlign="center center" class='w-100 m-4'>
+    <div fxFlex="5" fxLayoutAlign="start center">
+      <button mat-fab color="primary" class="cursorNone" disableRipple>
+        <div style="font-size: x-large;">2</div>
+      </button>
+    </div>
+    <div fxFlex="25" fxLayoutAlign="start center">
+      <span> {{'Comparte el código con tus amigos' | translate}}</span>
+
+    </div>
+    <div fxFlex="12" fxLayoutAlign="start center">
+      <button mat-flat-button color="primary" (click)="windowOpen()" class='w-100'>
+        {{'Compartir enlace'| translate}}
+      </button>
+    </div>
+  </div>
+  <!-- Check -->
+  <div fxLayout='column' fxLayout.gt-sm='row' fxLayoutAlign="center center" class='w-100 m-4'>
+    <div fxFlex="5" fxLayoutAlign="start center">
+      <button mat-fab color="primary" class="cursorNone" disableRipple>
+        <div style="font-size: x-large;">3</div>
+      </button>
+    </div>
+    <div fxFlex="25" fxLayoutAlign="start center">
+      <span>{{'Acumula Premios' | translate}}</span>
+
+    </div>
+    <div fxFlex="12" fxLayoutAlign="start center">
+      <button mat-flat-button color="primary" (click)="close.emit();" class='w-100'>{{'Comprobar'| translate}}
+      </button>
+    </div>
+  </div>
+</div>

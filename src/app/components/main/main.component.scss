@@ -72,6 +72,16 @@
     height: 35px;
   }
 }
+.resaltado {
+  background-color: yellow;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.text-filter {
+  font-size: 18px;
+  font-weight: 300;
+}
 
 //.title-mat-menu {
 // width: 100%;
@@ -260,6 +270,13 @@ app-main,
           width: 27px;
           height: 27px;
         }
+      }
+      .spinner-loading {
+        position: absolute;
+        top: 5px;
+        border: 0;
+        margin: 0;
+        right: 35px;
       }
     }
 

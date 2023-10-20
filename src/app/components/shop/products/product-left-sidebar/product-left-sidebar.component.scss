@@ -124,16 +124,60 @@
   border-right: 2px solid #eeeeee !important;
 }
 
+.left-sidebar-wrapper {
+  min-height: 1000px !important;
+}
+
 .toggles-wrapper {
   background-color: #fafafa !important;
+  padding: 16px;
+  //position: fixed;
+  //max-height: 800px;
+  //overflow: scroll;
+  left: 5rem;
+}
+
+.filter-sidenav {
+  max-height: 800px;
+  overflow: scroll;
+}
+.filter-sidenav::-webkit-scrollbar {
+  width: 7px;
+  height: 5px;
+  background-color: rgba(0, 0, 0, 0);
+}
+.filter-sidenav::-webkit-scrollbar-thumb {
+  border: 1px solid transparent;
+  box-shadow: inset 0 0 0 24px rgba(0, 0, 0, 0.37);
+  border-radius: 24px;
+}
+
+.title-filters {
+  font-size: 16px;
+  font-weight: 900;
 }
 
 .bg-acordion {
   background-color: #fafafa !important;
 }
+::ng-deep {
+  .without-padding-bottom {
+    .mat-form-field-wrapper {
+      padding-bottom: 0px !important;
+    }
+  }
+}
+
+.field-order {
+  width: 300px !important;
+}
+
+.full-width {
+  width: 100%;
+}
 
 .container-search {
-  max-width: 1500px;
+  //max-width: 1500px;
   padding: 0 16px;
   width: 100%;
   box-sizing: border-box;
