@@ -4,6 +4,41 @@
 .icon-common{
   width: 40px;
 }
+//.container-availability {
+//  background-color: #0b9447;
+//  color: white;
+//  padding: 6px;
+//  border-radius: 8px;
+//  width: 50%;
+//}
+.text-availability {
+font-size: 18px;
+}
+
+.disponibilityHigh {
+  background-color: #0b9447;
+  color: white;
+  padding: 6px;
+  border-radius: 8px;
+  width: 50%;
+}
+
+.disponibilityMedium {
+  background-color: #f6872a;
+  color: white;
+  padding: 6px;
+  border-radius: 8px;
+  width: 50%;
+}
+
+.disponibilityLow {
+  background-color: #ff5b5b;
+  color: white;
+  padding: 6px;
+  border-radius: 8px;
+  width: 50%;
+}
+
 .icon-common-bicon{
   width: 70px;
   height: 40px;

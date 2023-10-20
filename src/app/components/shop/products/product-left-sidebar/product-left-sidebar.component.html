@@ -207,6 +207,19 @@
 <!--            <h3 class='py-4' style='text-align: center'>{{ 'No hay ningún producto disponible' | translate }}</h3>-->
 <!--          </ng-container>-->
         </div>
+        <div *ngIf='totalProducts == 0 && !loadingSearch && allProductsSuggested?.length > 0' class='w-100' fxLayout='row wrap' fxLayoutAlign='start start'>
+          <div
+            class='w-100' fxLayout='row wrap' fxLayoutAlign='start start'
+            infiniteScroll
+            (scrolled)='infiniteScrollSearchMethod()'>
+            <h2>{{'Le sugerimos estos productos' | translate}}:</h2>
+<!--            <app-product *ngFor='let products of allProductsSuggested' [product]='products' fxFlex.lt-md='100'></app-product>-->
+          </div>
+
+<!--          <ng-container *ngIf='allProducts?.length == 0 && !loading && loadingSearch'>-->
+<!--            <h3 class='py-4' style='text-align: center'>{{ 'No hay ningún producto disponible' | translate }}</h3>-->
+<!--          </ng-container>-->
+        </div>
         <span *ngIf='loading && !loadingSearch' fxLayout='row' fxLayoutAlign='center center' class='mb-3 mt-3' style='height: 80vh'>
           <mat-spinner color='primary' diameter='25' fxLayoutAlign='center center'></mat-spinner>
         </span>
@@ -324,11 +337,11 @@
         <!--        </div>-->
       </div>
 
-      <ng-container *ngIf='isHandset'>
-        <div class='popular-products mt-2 pl-3' fxFlex.lt-md='100' fxHide fxShow.lt-md>
-          <app-popular-products></app-popular-products>
-        </div>
-      </ng-container>
+<!--      <ng-container *ngIf='isHandset'>-->
+<!--        <div class='popular-products mt-2 pl-3' fxFlex.lt-md='100' fxHide fxShow.lt-md>-->
+<!--          <app-popular-products></app-popular-products>-->
+<!--        </div>-->
+<!--      </ng-container>-->
     </div>
   </div>
 </div>

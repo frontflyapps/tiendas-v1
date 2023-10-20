@@ -124,12 +124,16 @@
   border-right: 2px solid #eeeeee !important;
 }
 
+.left-sidebar-wrapper {
+  min-height: 1000px !important;
+}
+
 .toggles-wrapper {
   background-color: #fafafa !important;
   padding: 16px;
-  position: fixed;
-  max-height: 800px;
-  overflow: scroll;
+  //position: fixed;
+  //max-height: 800px;
+  //overflow: scroll;
   left: 5rem;
 }
 

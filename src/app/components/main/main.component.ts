@@ -138,7 +138,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
   };
 
   innerWidth: any;
-  options: any[] = [];
+  options: any;
   filteredOptions: any;
 
   constructor(
@@ -211,9 +211,12 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
       // this.getProducts();
     // this.getProducts();
 
-    // this.searchForm.valueChanges.pipe(takeUntil(this._unsubscribeAll), debounceTime(500)).subscribe((value) => {
-    //     this.getProducts();
-    // });
+    this.searchForm.valueChanges.pipe(takeUntil(this._unsubscribeAll), debounceTime(500)).subscribe((value) => {
+      console.log(value);
+      if (value) {
+        this.getFilteredOptions(value);
+      }
+    });
   }
 
   getProducts() {
@@ -238,8 +241,8 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
 
     console.log(this.searchForm.value);
 
-    // if (this.searchForm.value) {
-      this.productService.searchProduct(body).subscribe((response) => {
+    if (this.searchForm.value) {
+      this.productService.getFinderSearch(body).subscribe((response) => {
 
         this.options = response.data;
         this.filteredOptions = this.searchForm.valueChanges.pipe(
@@ -249,22 +252,59 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
         this.loadingProducts = false;
         console.log(this.options);
       });
-    // }
+    }
 
     // this.loadingProducts = false;
   }
 
-  public onSelectElement(event?: any) {
-    console.log(event.option.value);
-    this.router.navigate(['/product'], {queryParams: { productId: event.option.value?.id, stockId: event.option.value?.Stock?.id, name: event.option.value?.name?.es, sharedImage: event.option.value?.sharedImage }});
+  getFilteredOptions(data) {
+    this.loadingProducts = true;
+    const dataToSend = {
+      limit: 10,
+      value: data,
+    };
+    this.productService.getFinderSearch(dataToSend).subscribe((response) => {
+
+      this.options = response.data;
+      this.filteredOptions = this._filter(this.searchForm.value);
+      // this.filteredOptions = this.searchForm.valueChanges.pipe(
+      //   startWith(''),
+      //   map(value => this._filter(value || '')),
+      // );
+      this.loadingProducts = false;
+    });
   }
 
-  private _filter(value: string): string[] {
+  public onSelectElement(event?: any) {
+    console.log(event.option.value);
+    this.router.navigate(['/products/search'], {queryParams: { filterText: event.option.value.value }});
+  }
+
+  private _filter = (value: string): string[] => {
     let filterValue;
+    console.log(value);
     if (typeof value === 'string') {
       filterValue = value.toLowerCase();
+      let newArray: any[] = [];
       if (this.options) {
-        return this.options.filter(option => (option.name.es).toLowerCase().includes(filterValue));
+        // this.options = this.options.map(obj => {
+        //   console.log(obj);
+        //   const temp: string = '<strong>' + 'lec' + '</strong>';
+        //   console.log(temp);
+        //   obj.value = obj.value.replace(filterValue, temp);
+        //   return obj;
+        // });
+        this.options.forEach(function(obj) {
+          console.log(value);
+          console.log(obj);
+          const temp: string = '<strong class="resaltado">' + filterValue + '</strong>';
+          console.log(temp);
+          obj.showValue = obj.value.replace(filterValue, temp);
+          newArray.push(obj);
+        });
+        this.options = newArray;
+        console.log(this.options);
+        return this.options;
       } else {
         return this.options;
       }
@@ -401,6 +441,9 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
     console.log(this.searchForm.value);
     localStorage.setItem('searchText', JSON.stringify(searchValue));
     if (searchValue && searchValue.length > 1) {
+      this.productService.sendFinderSearch(searchValue).subscribe(item => {
+        console.log(item);
+      });
       this.router.navigate(['/products/search'], { queryParams: { filterText: searchValue } }).then();
     } else {
       this.router.navigate(['/products/search']).then();

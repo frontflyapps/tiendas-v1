@@ -43,6 +43,7 @@ export class ProductService {
   urlRecomendedProductId = environment.apiUrl + 'product/:id/recomended/:recomendedId';
   urlPromotion = environment.apiUrl + 'product-promotion/:id';
   urlPreview = environment.apiUrl + 'review';
+  urlFinder = environment.apiUrl + 'finder';
   // -----ADMIN RUTES-------------
   urlProductAdmin = environment.apiUrl + 'admin/product';
   urlProductIdAdmin = environment.apiUrl + 'admin/product/:id';
@@ -263,6 +264,22 @@ export class ProductService {
 
   // //////////////////////////////////////////////////
 
+  sendFinderSearch(data): Observable<any> {
+    const temp = {
+      value: data,
+    };
+    return this.httpClient.post<any>(this.urlFinder, temp);
+  }
+  getFinderSearch(data): Observable<any> {
+    let httpParams = new HttpParams();
+    if (data.limit) {
+      httpParams = httpParams.append('limit', data.limit.toString());
+    }
+    if (data.value) {
+      httpParams = httpParams.append('filter[$and][value][$like]', '%' + data.value + '%');
+    }
+    return this.httpClient.get<any>(this.urlFinder, { params: httpParams });
+  }
   removeProduct(data): Promise<any> {
     return this.httpClient.delete<any>(this.urlProductId.replace(':id', data.id)).toPromise();
   }
