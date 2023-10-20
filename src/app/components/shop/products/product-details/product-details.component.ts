@@ -169,6 +169,10 @@ export class ProductDetailsComponent implements OnInit, OnDestroy, AfterViewInit
       });
 
     this.getProductProfile();
+    this.cartService.$cartItemsUpdated.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {
+      this.spinner.show();
+      this.getProductProfile('cart');
+    });
 
     // this.route.queryParams.subscribe((query) => {
     //   const productId = query.productId;
@@ -501,28 +505,55 @@ export class ProductDetailsComponent implements OnInit, OnDestroy, AfterViewInit
     }
   }
 
-  getProductProfile() {
-    this.route.queryParams.subscribe((query) => {
-      const productId = query.productId;
-      const stockId = query.stockId;
-      this.productsService.productIdDetails = productId;
-      this.isLoading = true;
-      this.productsService.getProductById(productId, stockId).subscribe(
-        (data) => {
-          this.product = data.data;
-          console.log(this.product);
-          this.getProductsByBusiness(this.product?.BusinessId, this.query);
-          this.initStateView();
-          this.isLoading = false;
-        },
-        (error) => {
-          this.isLoading = false;
-          this.utilsService.errorHandle(error);
-          this.errorPage = true;
-          // this.getFeaturedProducts();
-        },
-      );
-    });
+  getProductProfile(cart?: string) {
+    this.spinner.show();
+    if (cart === 'cart') {
+      this.route.queryParams.subscribe((query) => {
+        const productId = query.productId;
+        const stockId = query.stockId;
+        this.productsService.productIdDetails = productId;
+        // this.isLoading = true;
+        this.productsService.getProductById(productId, stockId).subscribe(
+          (data) => {
+            this.product.Stock.quantity = data.data.Stock.quantity;
+            this.spinner.hide();
+            // this.product = data.data;
+            // this.initStateView();
+            // this.isLoading = false;
+          },
+          (error) => {
+            this.isLoading = false;
+            this.utilsService.errorHandle(error);
+            this.errorPage = true;
+            this.spinner.hide();
+            // this.getFeaturedProducts();
+          },
+        );
+      });
+    } else {
+      this.route.queryParams.subscribe((query) => {
+        const productId = query.productId;
+        const stockId = query.stockId;
+        this.productsService.productIdDetails = productId;
+        this.isLoading = true;
+        this.productsService.getProductById(productId, stockId).subscribe(
+          (data) => {
+            this.product = data.data;
+            console.log(this.product);
+            this.getProductsByBusiness(this.product?.BusinessId, this.query);
+            this.initStateView();
+            this.isLoading = false;
+          },
+          (error) => {
+            this.isLoading = false;
+            this.utilsService.errorHandle(error);
+            this.errorPage = true;
+            // this.getFeaturedProducts();
+          },
+        );
+      });
+    }
+
   }
 
   // Add to cart
@@ -541,7 +572,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy, AfterViewInit
         }
         this.cartService.addToCart(product, Math.max(product.minSale, quantity)).then((data: any) => {
           // this.frontProduct(););
-          this.getProductProfile();
+          // this.getProductProfile('cart');
         });
         console.log('entras aki');
 
