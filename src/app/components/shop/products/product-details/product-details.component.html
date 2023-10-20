@@ -304,9 +304,12 @@
                     <div fxLayoutAlign='center center' [ngClass]="{'disponibilityHigh': product?.Stock?.quantity > 15,
                                'disponibilityMedium': (product?.Stock?.quantity <= 15 && product?.Stock?.quantity > 5),
                                'disponibilityLow': product?.Stock?.quantity <= 5}">
-                      <span class='text-availability'>
+                      <span class='text-availability' *ngIf='!loadingAvailability'>
                         {{product?.Stock?.quantity + ' disponibles'}}
                       </span>
+                               <span *ngIf='loadingAvailability' fxLayout='row' fxLayoutAlign='center center'>
+                                <mat-spinner color='primary' diameter='20' fxLayoutAlign='center center'></mat-spinner>
+                                </span>
                     </div>
                   </div>
                   <p

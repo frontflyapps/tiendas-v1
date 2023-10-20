@@ -86,6 +86,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy, AfterViewInit
   searchProductControl = new FormControl();
 
   url = environment.apiUrl + 'landing-page';
+  loadingAvailability = false;
 
   queryFeatured: IPagination = {
     limit: 8,
@@ -170,7 +171,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy, AfterViewInit
 
     this.getProductProfile();
     this.cartService.$cartItemsUpdated.pipe(takeUntil(this._unsubscribeAll)).subscribe((data: any) => {
-      this.spinner.show();
+      // this.spinner.show();
       this.getProductProfile('cart');
     });
 
@@ -506,7 +507,8 @@ export class ProductDetailsComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   getProductProfile(cart?: string) {
-    this.spinner.show();
+    // this.spinner.show();
+    this.loadingAvailability = true;
     if (cart === 'cart') {
       this.route.queryParams.subscribe((query) => {
         const productId = query.productId;
@@ -515,6 +517,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy, AfterViewInit
         // this.isLoading = true;
         this.productsService.getProductById(productId, stockId).subscribe(
           (data) => {
+            this.loadingAvailability = false;
             this.product.Stock.quantity = data.data.Stock.quantity;
             this.spinner.hide();
             // this.product = data.data;
@@ -523,6 +526,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy, AfterViewInit
           },
           (error) => {
             this.isLoading = false;
+            this.loadingAvailability = false;
             this.utilsService.errorHandle(error);
             this.errorPage = true;
             this.spinner.hide();
