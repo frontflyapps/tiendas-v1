@@ -89,7 +89,7 @@ import { GuachosImageModule } from '../shared/guachos-image/guachos-image.module
     MatAutocompleteModule,
     GuachosImagePickerModule,
     GuachosGeneralAutocompleteModule,
-    GuachosImageModule
+    GuachosImageModule,
   ],
   providers: [SidebarMenuService, PreviousRouteService, ConfirmCreateBusinessService],
 })

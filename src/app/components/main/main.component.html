@@ -188,7 +188,23 @@
           <!-- ======== -->
           <!-- SEARCHING -->
           <div class='form-wrap' fxFlex='grow'>
-            <input (keyup.enter)='onSearch()' [formControl]='searchForm' placeholder="{{ 'Buscar en la tienda...' | translate }}" type='text' />
+<!--            <guachos-general-autocomplete [label]="'Buscar en la tienda'"-->
+<!--                                          [isRequired]="true"-->
+<!--                                          [url]="urlProducts"-->
+<!--                                          [debounceTimeValue]="500"-->
+<!--                                          [field]="['name']"-->
+<!--                                          [displayOptions]="displayOptions"-->
+<!--                                          [formControl]="searchForm"-->
+<!--                                          [filterString]="'filter[$and][name][$like]'"-->
+<!--                                          [valueId]="false"-->
+<!--                                          [withoutPaddingBottom]="true"></guachos-general-autocomplete>-->
+            <input (keyup.enter)='onSearch()' [formControl]='searchForm' placeholder="{{ 'Buscar en la tienda...' | translate }}" type='text' [matAutocomplete]="auto" />
+            <mat-spinner *ngIf="this.loadingProducts" color="primary" diameter="30" class='spinner-loading'></mat-spinner>
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)='onSelectElement($event)'>
+              <mat-option *ngFor="let option of filteredOptions" [value]="option">
+                <div [innerHTML]='option.showValue' class='text-filter'></div>
+              </mat-option>
+            </mat-autocomplete>
             <button (click)='onSearch()' class='btn-search'>
               <mat-icon>search</mat-icon>
             </button>

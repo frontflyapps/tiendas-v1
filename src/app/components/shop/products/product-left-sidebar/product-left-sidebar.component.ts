@@ -22,6 +22,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { UtilsService } from 'src/app/core/services/utils/utils.service';
 import { DialogSetLocationComponent } from '../../../main/dialog-set-location/dialog-set-location.component';
 import { CategoryMenuNavService } from '../../../../core/services/category-menu-nav.service';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-product-left-sidebar',
@@ -39,6 +40,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
   public itemsOnCart = 0;
   public theCart: Cart;
   public allProducts: any[] = [];
+  public allProductsSuggested: any[] = [];
   public allProductsResponse: any[] = [];
   public province: any = null;
   public municipality: any = null;
@@ -47,6 +49,34 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
   public totalPages = 0;
   public totalProducts: number;
   public numberOfSearch = 0;
+
+  public form: UntypedFormGroup;
+  public allOrders = [
+    {
+      value: '-id',
+      viewValue: 'LLegadas: Más recientes',
+    },
+    {
+      value: 'id',
+      viewValue: 'LLegadas: Menos recientes',
+    },
+    {
+      value: 'fromPrice',
+      viewValue: 'Precio: Del más bajo al más alto',
+    },
+    {
+      value: '-fromPrice',
+      viewValue: 'Precio: Del más alto al más bajo',
+    },
+    // {
+    //   value: '-rating',
+    //   viewValue: 'Opinión del cliente: Más altas',
+    // },
+    // {
+    //   value: '-featured',
+    //   viewValue: 'Destacados',
+    // },
+  ];
   private isStarting = true;
   resetPrices = false;
   paramsSearch: any = {
@@ -98,6 +128,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
     private categoryMenuServ: CategoryMenuNavService,
     public translate: TranslateService,
     public utilsService: UtilsService,
+    private fb: UntypedFormBuilder,
   ) {
     // this.metaService.setMeta(
     //   'Todos los productos',
@@ -106,6 +137,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
     //   environment.meta?.mainPage?.keywords,
     // );
     this.initSubsLocation();
+    this.buildForm();
     this._unsubscribeAll = new Subject<any>();
     this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
     this.route.queryParams.pipe(takeUntil(this._unsubscribeAll)).subscribe((data) => {
@@ -124,6 +156,8 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
       this.queryProduct.total = data?.total ? data.total : 0;
       this.queryProduct.page = data?.page ? data.page : 1;
       this.queryProduct.order = data?.order ? data.order : '-id';
+      this.form.get('order').setValue(data?.order ? data.order : null);
+      // this.onSelectOrder(data?.order ? data.order : '-id');
 
       if (data.CategoryId) {
         this.paramsSearch.categoryIds = [data.CategoryId];
@@ -140,6 +174,8 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
         this.paramsSearch.filterText = data.filterText;
         this.paramsSearch.minPrice = 0;
         this.paramsSearch.maxPrice = null;
+        this.queryProduct.order = '-id';
+        this.form.get('order').setValue(null);
         this.resetPrices = !this.resetPrices;
 
 
@@ -239,6 +275,20 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
       this.localStorageService.setOnStorage(PRODUCT_COUNT, _response);
       this.setIsOnlyTwoProducts(_response.count);
     });
+  }
+
+  private buildForm() {
+    this.form = this.fb.group({
+      order: [null, []],
+    });
+  }
+
+  public onSelectOrder(event) {
+    console.log(this.form.value);
+    this.queryProduct.order = event;
+    // this.form.get('order').setValue(event);
+    this.initValuesOnSearch();
+    this.searchProducts();
   }
 
   setIsOnlyTwoProducts(count) {
@@ -493,6 +543,14 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
       ProvinceId: this.province?.id || null,
       MunicipalityId: this.municipality?.id || null,
     };
+    // this.router
+    //   .navigate(['/products/search'], {
+    //     queryParams: {
+    //       resfreshId: Math.random(),
+    //       ...this.paramsSearch,
+    //       ...this.queryProduct,
+    //     },
+    //   }).then();
     this.productService
       .searchProduct(body)
       .pipe(takeUntil(this._unsubscribeAll))
@@ -500,9 +558,16 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
         (data: any) => {
           // this.loading = true;
 
-          this.filterProducts(body.text, data.data);
+          if (this.form.get('order').value == null) {
+            console.log('entro');
+            this.filterProducts(body.text, data.data);
+          }
 
-            // this.allProducts = data.data;
+            this.allProducts = data.data;
+          if (data?.suggested) {
+            this.allProductsSuggested = data.suggested;
+            console.log(this.allProductsSuggested);
+          }
           console.log(this.allProducts);
           this.allProductsResponse = data.data;
             this.totalPages = data.meta.total / this.initLimit;
@@ -581,6 +646,10 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
           .subscribe(
             (data: any) => {
               this.allProducts = this.allProducts.concat(data.data);
+
+              if (data?.suggested) {
+                this.allProductsSuggested = this.allProductsSuggested.concat(data.suggested);
+              }
               this.allProductsResponse = this.allProductsResponse.concat(data.data);
               this.totalPages = data.meta.total / this.initLimit;
               this.totalProducts = data.meta.pagination.total;
@@ -653,6 +722,10 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
               if (data.data) {
                 this.allProducts = this.allProducts.concat(data.data);
                 this.allProductsResponse = this.allProductsResponse.concat(data.data);
+              }
+
+              if (data?.suggested) {
+                this.allProductsSuggested = this.allProductsSuggested.concat(data.suggested);
               }
 
               this.totalPages = data.meta.total / this.initLimit;
@@ -816,6 +889,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
     this.allProducts = [];
     this.totalProducts = 0;
     this.allProductsResponse = [];
+    this.allProductsSuggested = [];
     this.initValuesOnSearch();
     // this.paginator.firstPage();
     setTimeout(() => {
@@ -898,6 +972,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
       if ( newLocation ) {
         if ( nowLocation?.province?.id !== newLocation.province?.id || nowLocation?.municipality?.id !== newLocation.municipality?.id ) {
           this.allProducts = [];
+          this.allProductsSuggested = [];
           this.allProductsResponse = [];
           this.totalProducts = 0;
           this.searchProducts();
