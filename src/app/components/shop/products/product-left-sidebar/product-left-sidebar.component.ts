@@ -40,6 +40,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
   public itemsOnCart = 0;
   public theCart: Cart;
   public allProducts: any[] = [];
+  public allProductsSuggested: any[] = [];
   public allProductsResponse: any[] = [];
   public province: any = null;
   public municipality: any = null;
@@ -563,6 +564,10 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
           }
 
             this.allProducts = data.data;
+          if (data?.suggested) {
+            this.allProductsSuggested = data.suggested;
+            console.log(this.allProductsSuggested);
+          }
           console.log(this.allProducts);
           this.allProductsResponse = data.data;
             this.totalPages = data.meta.total / this.initLimit;
@@ -641,6 +646,10 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
           .subscribe(
             (data: any) => {
               this.allProducts = this.allProducts.concat(data.data);
+
+              if (data?.suggested) {
+                this.allProductsSuggested = this.allProductsSuggested.concat(data.suggested);
+              }
               this.allProductsResponse = this.allProductsResponse.concat(data.data);
               this.totalPages = data.meta.total / this.initLimit;
               this.totalProducts = data.meta.pagination.total;
@@ -713,6 +722,10 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
               if (data.data) {
                 this.allProducts = this.allProducts.concat(data.data);
                 this.allProductsResponse = this.allProductsResponse.concat(data.data);
+              }
+
+              if (data?.suggested) {
+                this.allProductsSuggested = this.allProductsSuggested.concat(data.suggested);
               }
 
               this.totalPages = data.meta.total / this.initLimit;
@@ -876,6 +889,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
     this.allProducts = [];
     this.totalProducts = 0;
     this.allProductsResponse = [];
+    this.allProductsSuggested = [];
     this.initValuesOnSearch();
     // this.paginator.firstPage();
     setTimeout(() => {
@@ -958,6 +972,7 @@ export class ProductLeftSidebarComponent implements OnInit, OnDestroy {
       if ( newLocation ) {
         if ( nowLocation?.province?.id !== newLocation.province?.id || nowLocation?.municipality?.id !== newLocation.municipality?.id ) {
           this.allProducts = [];
+          this.allProductsSuggested = [];
           this.allProductsResponse = [];
           this.totalProducts = 0;
           this.searchProducts();
