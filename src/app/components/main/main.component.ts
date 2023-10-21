@@ -300,6 +300,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
           const temp: string = '<strong class="resaltado">' + filterValue + '</strong>';
           console.log(temp);
           obj.showValue = obj.value.replace(filterValue, temp);
+          console.log(obj);
           newArray.push(obj);
         });
         this.options = newArray;

@@ -430,7 +430,9 @@
                  [formControl]='searchForm'
                  fxFlex
                  placeholder="{{ 'Buscar...' | translate }}"
-                 type='search' />
+                 type='search'
+                 [matAutocomplete]="auto"/>
+          <mat-spinner *ngIf="this.loadingProducts" color="primary" diameter="30" class='spinner-loading'></mat-spinner>
           <button (click)='onSearch()'>
             <mat-icon>search</mat-icon>
           </button>
